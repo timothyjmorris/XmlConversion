@@ -37,7 +37,7 @@ class DataIntegrityValidator:
         """Initialize the validator with configuration."""
         self.logger = logging.getLogger(__name__)
         self.config = config or ValidationConfig()
-        self._validation_cache = {}
+
         
     def validate_extraction_results(
         self,

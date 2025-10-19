@@ -5,7 +5,7 @@ Data mapping and transformation engine for XML to relational database conversion
 import re
 import logging
 import json
-from typing import Dict, List, Any, Optional, Union
+from typing import Dict, List, Any, Optional
 from datetime import datetime, date
 # Removed Decimal import - using float for SQL Server compatibility
 
@@ -13,6 +13,7 @@ from ..interfaces import DataMapperInterface
 from ..models import MappingContract, FieldMapping, RelationshipMapping
 from ..exceptions import DataMappingError, ValidationError, DataTransformationError
 from ..validation.element_filter import ElementFilter
+from ..utils import StringUtils, ValidationUtils
 
 
 class DataMapper(DataMapperInterface):
@@ -210,7 +211,7 @@ class DataMapper(DataMapperInterface):
     
     def transform_data_types(self, value: Any, target_type: str) -> Any:
         """Transform value to target data type with comprehensive fallback handling."""
-        if value is None or value == '':
+        if not StringUtils.safe_string_check(value):
             return None  # Return None to exclude from INSERT - no default values injected
         
         try:
@@ -990,7 +991,7 @@ class DataMapper(DataMapperInterface):
             self.logger.debug(f"curr_address_only returned None for {mapping.target_column}")
             return None
         
-        if value is None or value == '':
+        if not StringUtils.safe_string_check(value):
             return self._get_default_for_mapping(mapping)
         
         try:
@@ -1010,7 +1011,7 @@ class DataMapper(DataMapperInterface):
                 elif mapping.mapping_type == 'identity_insert':
                     return self.transform_data_types(value, mapping.data_type)
                 elif mapping.mapping_type == 'default_getutcdate_if_null':
-                    if value is None or value == '':
+                    if not StringUtils.safe_string_check(value):
                         self.logger.debug(f"Applying default_getutcdate_if_null for {mapping.target_column}: {value} -> {datetime.utcnow()}")
                         return datetime.utcnow()
                     # Apply data type transformation to the existing value
@@ -1104,7 +1105,7 @@ class DataMapper(DataMapperInterface):
             attribute_name = mapping.xml_attribute
             value = app_prod_bcard.get(attribute_name)
             
-            if value and value.strip():
+            if StringUtils.safe_string_check(value):
                 self.logger.debug(f"Extracted from last valid PR contact app_prod_bcard: {attribute_name} = {value}")
                 return value
             else:
@@ -1150,7 +1151,7 @@ class DataMapper(DataMapperInterface):
             attribute_name = mapping.xml_attribute
             for address in contact_addresses:
                 value = address.get(attribute_name)
-                if value and value.strip():
+                if StringUtils.safe_string_check(value):
                     self.logger.debug(f"Extracted from last valid PR contact address: {attribute_name} = {value}")
                     return value
             
@@ -1183,7 +1184,7 @@ class DataMapper(DataMapperInterface):
                 address_type = address.get('address_tp_c')
                 if address_type == 'CURR':
                     value = address.get(attribute_name)
-                    if value and value.strip():
+                    if StringUtils.safe_string_check(value):
                         self.logger.debug(f"Extracted from CURR address: {attribute_name} = {value}")
                         return value
             
@@ -1261,21 +1262,11 @@ class DataMapper(DataMapperInterface):
     
     def _extract_numbers_only(self, value: Any) -> str:
         """Extract only numeric characters from value."""
-        if value is None:
-            return ''
-        return re.sub(r'[^0-9]', '', str(value))
+        return StringUtils.extract_numbers_only(value)
     
     def _extract_numeric_value(self, value: Any) -> int:
         """Extract numeric value from text like 'Up to $40' -> 40."""
-        if value is None:
-            return None  # Return None to exclude from INSERT - no default values
-        
-        # Extract all numbers from the string
-        numbers = re.findall(r'\d+', str(value))
-        if numbers:
-            # Return the first (or largest) number found
-            return int(numbers[0])
-        return None  # Return None to exclude from INSERT - no default values
+        return StringUtils.extract_numeric_value(value)
     
     def _find_or_create_record(self, table_records: List[Dict[str, Any]], 
                               mapping: FieldMapping, xml_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -1490,26 +1481,17 @@ class DataMapper(DataMapperInterface):
     
     def _transform_to_integer(self, value: Any) -> int:
         """Transform value to integer."""
-        if isinstance(value, (int, float)):
-            return int(value)
-        
-        str_value = str(value).strip()
-        numeric_part = re.search(r'-?\d+', str_value)
-        if numeric_part:
-            return int(numeric_part.group())
-        
+        result = ValidationUtils.safe_int_conversion(value)
+        if result is not None:
+            return result
         raise ValueError(f"Cannot convert '{value}' to integer")
     
     def _transform_to_decimal(self, value: Any, target_type: str) -> float:
         """Transform value to float for SQL Server compatibility (no Python Decimal objects)."""
-        try:
-            return float(str(value))
-        except (ValueError, TypeError):
-            str_value = str(value).strip()
-            numeric_part = re.search(r'-?\d+\.?\d*', str_value)
-            if numeric_part:
-                return float(numeric_part.group())
-            raise ValueError(f"Cannot convert '{value}' to decimal")
+        result = ValidationUtils.safe_float_conversion(value)
+        if result is not None:
+            return result
+        raise ValueError(f"Cannot convert '{value}' to decimal")
     
     def _transform_to_datetime(self, value: Any, target_type: str) -> str:
         """Transform value to datetime string format for SQL Server compatibility."""
@@ -1651,17 +1633,7 @@ class DataMapper(DataMapperInterface):
         
         return validation_errors
     
-    def get_transformation_rule_engine_stats(self) -> Dict[str, Any]:
-        """Get statistics about transformation rule engine performance."""
-        return {
-            'transformation_stats': self._transformation_stats.copy(),
-            'validation_errors_count': len(self._validation_errors),
-            'enum_mappings_loaded': len(self._enum_mappings),
-            'bit_conversions_loaded': len(self._bit_conversions),
-            'default_values_loaded': len(self._default_values),
-            'validation_rules_loaded': len(self._validation_rules)
-        }
-    
+
     def apply_quality_checks(self, result_tables: Dict[str, List[Dict[str, Any]]]) -> Dict[str, Any]:
         """Apply comprehensive data quality checks and return quality report."""
         quality_report = {
@@ -1748,33 +1720,3 @@ class DataMapper(DataMapperInterface):
         except Exception as e:
             quality_report['quality_issues'].append(f"Data type check error for {table_name} record {record_index}: {e}")
     
-    def create_transformation_summary(self, result_tables: Dict[str, List[Dict[str, Any]]]) -> str:
-        """Create a summary of the transformation process."""
-        summary_lines = [
-            "=== Data Transformation Summary ===",
-            f"Records processed: {self._transformation_stats['records_processed']}",
-            f"Records successful: {self._transformation_stats['records_successful']}",
-            f"Records failed: {self._transformation_stats['records_failed']}",
-            f"Type conversions: {self._transformation_stats['type_conversions']}",
-            f"Enum mappings: {self._transformation_stats['enum_mappings']}",
-            f"Bit conversions: {self._transformation_stats['bit_conversions']}",
-            f"Calculated fields: {self._transformation_stats['calculated_fields']}",
-            f"Fallback values used: {self._transformation_stats['fallback_values']}",
-            "",
-            "Tables created:"
-        ]
-        
-        for table_name, records in result_tables.items():
-            summary_lines.append(f"  - {table_name}: {len(records)} records")
-        
-        if self._validation_errors:
-            summary_lines.extend([
-                "",
-                f"Validation errors ({len(self._validation_errors)}):"
-            ])
-            for error in self._validation_errors[:10]:  # Show first 10 errors
-                summary_lines.append(f"  - {error}")
-            if len(self._validation_errors) > 10:
-                summary_lines.append(f"  ... and {len(self._validation_errors) - 10} more errors")
-        
-        return "\n".join(summary_lines)
