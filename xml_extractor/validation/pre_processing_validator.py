@@ -464,6 +464,9 @@ class PreProcessingValidator:
                     # Last part - store element data
                     if part not in current:
                         current[part] = {}
+                    elif not isinstance(current[part], dict):
+                        # If it's not a dict (e.g., a string), convert it to dict
+                        current[part] = {}
                     
                     # Merge attributes
                     if 'attributes' in element_data:
@@ -646,7 +649,10 @@ def create_sample_validation_scenarios() -> List[Tuple[str, str]]:
 
 if __name__ == '__main__':
     # Run validation on sample scenarios
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
     
     validator = PreProcessingValidator()
     scenarios = create_sample_validation_scenarios()

@@ -52,6 +52,8 @@ class XMLParser(XMLParserInterface):
         # Build set of required element paths for selective parsing
         self.required_paths: Set[str] = set()
         self.required_elements: Set[str] = set()
+        # Only build required paths if a mapping contract is provided.
+        # This enables the parser to skip irrelevant XML sections for performance.
         if mapping_contract:
             self._build_required_paths()
         
@@ -68,30 +70,27 @@ class XMLParser(XMLParserInterface):
     def _build_required_paths(self) -> None:
         """
         Build set of required element paths from mapping contract for selective parsing.
-        
         This optimizes performance by only parsing elements that are actually mapped
         to database columns, skipping large sections of XML that aren't needed.
         """
         if not self.mapping_contract:
             return
-        
+
         # Extract unique XML paths from field mappings
         for mapping in self.mapping_contract.mappings:
             xml_path = mapping.xml_path.strip()
             if xml_path:
-                # Add the full path
                 self.required_paths.add(xml_path)
-                
-                # Add parent paths to ensure we can navigate to the element
+                # Add parent paths so we can navigate to the element in the tree.
                 path_parts = xml_path.split('/')
                 for i in range(1, len(path_parts)):
                     parent_path = '/'.join(path_parts[:i+1])
                     self.required_paths.add(parent_path)
-                
-                # Extract element names for quick filtering
+                # Track element names for quick filtering.
                 if '/' in xml_path:
                     element_name = xml_path.split('/')[-1]
                     self.required_elements.add(element_name)
+                # This enables fast checks for whether a given element is relevant.
         
         # Add relationship paths
         for relationship in self.mapping_contract.relationships:
@@ -102,7 +101,7 @@ class XMLParser(XMLParserInterface):
                     for i in range(1, len(path_parts)):
                         parent_path = '/'.join(path_parts[:i+1])
                         self.required_paths.add(parent_path)
-        
+        # After this, self.required_paths contains all unique XML paths that are relevant for mapping or relationships.
         self.logger.debug(f"Built {len(self.required_paths)} required paths: {sorted(self.required_paths)}")
         self.logger.debug(f"Required elements: {sorted(self.required_elements)}")
     

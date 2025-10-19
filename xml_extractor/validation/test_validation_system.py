@@ -475,7 +475,10 @@ def run_validation_system_tests() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Configure logging
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
     
     # Run tests
     results = run_validation_system_tests()

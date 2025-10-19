@@ -5,7 +5,7 @@ This script checks the JSON mapping contract for completeness and consistency.
 """
 
 import json
-import os
+from pathlib import Path
 from typing import Dict, List, Set
 
 def load_mapping_contract(file_path: str) -> Dict:
@@ -121,7 +121,7 @@ def validate_field_mappings(contract: Dict) -> List[str]:
         # Check target table names
         target_table = mapping.get('target_table', '')
         valid_tables = [
-            'app_base', 'app_operational_cc', 'app_pricing_cc', 'app_transactional_cc',
+            'app_base', 'app_operational_cc', 'app_pricing_cc', 'app_transactional_cc', 'app_solicited_cc',
             'contact_base', 'contact_address', 'contact_employment'
         ]
         if target_table and target_table not in valid_tables:
@@ -177,10 +177,10 @@ def validate_validation_rules(contract: Dict) -> List[str]:
 
 def main():
     """Main validation function."""
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    config_file = os.path.join(script_dir, '..', 'credit_card_mapping_contract.json')
+    script_dir = Path(__file__).parent
+    config_file = script_dir / '..' / 'credit_card_mapping_contract.json'
     
-    if not os.path.exists(config_file):
+    if not config_file.exists():
         print(f"ERROR: Configuration file not found: {config_file}")
         return 1
     

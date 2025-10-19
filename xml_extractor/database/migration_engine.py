@@ -68,8 +68,13 @@ class MigrationEngine(MigrationEngineInterface):
             yield connection
             
         except pyodbc.Error as e:
-            self.logger.error(f"Database connection failed: {e}")
-            raise DatabaseConnectionError(f"Failed to connect to database: {e}")
+            # Only re-raise as DatabaseConnectionError if it's a connection issue, not a data issue
+            if "cast specification" not in str(e) and "converting" not in str(e):
+                self.logger.error(f"Database connection failed: {e}")
+                raise DatabaseConnectionError(f"Failed to connect to database: {e}")
+            else:
+                # Let data conversion errors bubble up to be handled by fallback logic
+                raise
         finally:
             if connection:
                 try:
@@ -213,7 +218,7 @@ class MigrationEngine(MigrationEngineInterface):
                         # Force individual executes for tables with known pyodbc executemany encoding issues
                         # These specific tables have string encoding problems when using executemany with pyodbc
                         # that cause character corruption (strings become question marks in SQL Server)
-                        force_individual_executes = table_name in ['contact_address', 'contact_employment']
+                        force_individual_executes = table_name in ['contact_address', 'contact_employment', 'contact_base']
                         
                         if use_executemany and len(batch_data) > 1 and not force_individual_executes:
                             # Try executemany for better performance
@@ -227,7 +232,7 @@ class MigrationEngine(MigrationEngineInterface):
                                 batch_inserted += 1
                     
                     except pyodbc.Error as e:
-                        if "cast specification" in str(e) and use_executemany:
+                        if ("cast specification" in str(e) or "converting" in str(e)) and use_executemany:
                             # Fall back to individual executes for type compatibility
                             self.logger.warning(f"executemany failed with cast error, falling back to individual executes: {e}")
                             use_executemany = False

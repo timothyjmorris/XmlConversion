@@ -5,7 +5,7 @@ This script tests the database connection and validates the environment is ready
 """
 
 import json
-import os
+import logging
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -22,6 +22,8 @@ class DatabaseConnectionTester:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize with database configuration."""
+        self.logger = logging.getLogger(__name__)
+        
         if config_path is None:
             # Default to config/database_config.json relative to project root
             project_root = Path(__file__).parent.parent.parent
@@ -68,8 +70,8 @@ class DatabaseConnectionTester:
         """Test database connection with specified driver."""
         try:
             conn_str = self.build_connection_string(driver)
-            print(f"Testing connection with driver: {driver or self.config['database']['driver']}")
-            print(f"Connection string: {conn_str}")
+            self.logger.info(f"Testing connection with driver: {driver or self.config['database']['driver']}")
+            self.logger.debug(f"Connection string: {conn_str}")
             
             self.connection = pyodbc.connect(conn_str)
             return True, "Connection successful"

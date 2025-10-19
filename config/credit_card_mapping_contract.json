@@ -29,14 +29,6 @@
       "mapping_type": "identity_insert"
     },
     {
-      "xml_path": "/Provenir/Request",
-      "xml_attribute": "Status",
-      "target_table": "app_operational_cc",
-      "target_column": "status_enum",
-      "data_type": "smallint",
-      "mapping_type": "enum"
-    },
-    {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "app_receive_date",
       "target_table": "app_base",
@@ -192,7 +184,7 @@
       "data_type": "varchar(1)"
     },
     {
-      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_path": "/Provenir/Request/CustData/application/contact_address",
       "xml_attribute": "residence_monthly_pymnt",
       "target_table": "app_operational_cc",
       "target_column": "housing_monthly_payment",
@@ -1362,6 +1354,8 @@
     "char_to_bit": {
       "Y": 1,
       "N": 0,
+      "R": 1,
+      "P": 0,
       "": 0,
       "null": 0,
       " ": 0
@@ -1381,7 +1375,8 @@
     "auth_user_spouse_flag": 0,
     "signature_flag": 0,
     "self_employed_flag": 0,
-    "income_source_nontaxable_flag": 0
+    "income_source_nontaxable_flag": 0,
+    "marketing_segment": "UNKNOWN"
   },
   "validation_rules": {
     "required_identifiers": [

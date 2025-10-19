@@ -160,13 +160,17 @@
     - **Definition of Done**: run E2E test/`test_end_to_end_integration.py` must run and manually validated by user that data is present and mapped correctly.
     - _Requirements: 2.2, 4.1, Data Completeness_
 
-  - [ ] 9.4 Create full round-trip integration test (XML → Database → XML)
-    - Run the program that extracts XML from database and maps back to original structure
-    - Implement database-to-XML reverse mapping using complete mapping contracts
-    - Verify data integrity through complete round-trip transformation
-    - Test with real production XML data from database source tables
-    - Validate that extracted and re-mapped data matches original XML structure
-    - **This is the ultimate litmus test to prove the complete plumbing works**
+  - [x] 9.4 Create comprehensive production XML batch processing test
+    - **Goal: to discover problems and refine the program, proving that it works on production data**
+    - **This requires multiple passes to process all files in the [app_xml] until our logs are clean and mapping is proved.**
+    - Extract real XML files from app_xml table in the database (production-like data)
+    - Process each XML through the complete pipeline: validate → parse → map → insert
+    - Inspect each XML processing outcome to determine if results are acceptable
+    - Identify and fix any data quality issues, mapping errors, or transformation failures
+    - Validate that all database inserts succeed without constraint violations
+    - Ensure mapping contract correctly handles edge cases and invalid data per principles
+    - Iterate through improvements until the entire batch processes confidently
+    - **This is the ultimate litmus test to prove the complete plumbing works on real data**
     - _Requirements: 1.1, 2.1, 4.1, 5.1, Data Integrity Validation_
 
 - [x] 10. Code Quality and Refactoring Phase
@@ -205,6 +209,61 @@
     - Create utility methods for common patterns to reduce code duplication
     - Optimize performance with regex caching and pattern consolidation
     - _Requirements: Code Quality, Performance, Maintainability_
+
+- [ ] 11. Code Quality Improvement Phase
+  - [x] 11.1 Pathlib Migration and Logging Standardization (Phase 1 - Quick Wins)
+    - Replace all `os.path` usage with `pathlib.Path` for cleaner, more robust file handling
+    - Standardize log message formats and levels across all modules
+    - Add structured context to key operations for better debugging
+    - Update file reading/writing to use pathlib methods consistently
+    - _Requirements: Code Quality, Maintainability_
+
+  - [ ] 11.2 Configuration Centralization (Phase 2)
+    - Create `ConfigManager` class to handle all configuration loading
+    - Move database connection strings to environment variables
+    - Centralize mapping contract loading with single source of truth
+    - Consolidate all configuration management into unified system
+    - _Requirements: Configuration Management, Security_
+
+  - [ ] 11.3 Test Infrastructure Improvement (Phase 3)
+    - Create `TestFixtures` base class with shared setup for XML parsing, mapping, validation
+    - Extract common database cleanup/setup patterns into reusable methods
+    - Create helper methods for common test assertions and patterns
+    - Reduce code duplication across all test files
+    - _Requirements: Testing Standards, Maintainability_
+
+  - [ ] 11.4 Type Safety Enhancement (Phase 4)
+    - Convert mapping contract models to dataclasses with comprehensive type hints
+    - Add type hints to all validation and mapping functions
+    - Use `ValidationResult` pattern consistently across all modules
+    - Improve error messages and type enforcement throughout codebase
+    - _Requirements: Type Safety, Code Quality_
+
+  - [ ] 11.5 Modern Python Features Integration (Phase 5)
+    - Complete pathlib integration across entire codebase
+    - Implement structured logging with JSON format for production monitoring
+    - Add comprehensive docstrings with input/output documentation
+    - Standardize error messages and reporting patterns
+    - _Requirements: Modern Python Standards, Documentation_
+
+- [ ] 12. Production Data Quality and Performance Issues (Non-blocking)
+  - [ ] 12.1 Fix enum mapping for complex contact objects
+    - Issue: Contact objects being passed to enum mapping instead of simple values
+    - Error: "No enum mapping found for value '{'mother_maiden_name': 'DAVIS', ...}'"
+    - Solution: Extract the actual enum value from contact context before mapping
+    - _Requirements: Data Quality, Enum Mapping_
+
+  - [ ] 12.2 Enhance bit conversion for disclosure values
+    - Issue: "Unknown bit conversion value: 'P', excluding from INSERT"
+    - Add support for disclosure values: 'R' = true, 'P' = false, 'Y' = true
+    - Update char_to_bit conversion logic in mapping contract
+    - _Requirements: Data Completeness, Bit Conversion_
+
+  - [ ] 12.3 Monitor executemany performance degradation
+    - Issue: Some tables falling back to individual executes due to cast errors
+    - Warning: "executemany failed with cast error, falling back to individual executes"
+    - Monitor impact on batch performance and optimize data type handling
+    - _Requirements: Performance, Batch Processing_
 
 
 

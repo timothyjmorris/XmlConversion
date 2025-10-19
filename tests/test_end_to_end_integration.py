@@ -12,7 +12,6 @@ with actual database insertion and validation.
 import unittest
 import logging
 import tempfile
-import os
 from pathlib import Path
 import sys
 import pyodbc
@@ -43,9 +42,9 @@ class TestEndToEndIntegration(unittest.TestCase):
         """Clean up test database."""
         # Comment out cleanup to leave test data for inspection
         print("🔍 Test data left in database for inspection (app_id=443306)")
-        # if cls.test_db_path and os.path.exists(cls.test_db_path):
+        # if cls.test_db_path and cls.test_db_path.exists():
         #     try:
-        #         os.remove(cls.test_db_path)
+        #         cls.test_db_path.unlink()
         #         print(f"Cleaned up test database: {cls.test_db_path}")
         #     except Exception as e:
         #         print(f"Warning: Could not clean up test database: {e}")
