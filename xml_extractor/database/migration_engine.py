@@ -207,18 +207,15 @@ class MigrationEngine(MigrationEngineInterface):
                     
                     self.logger.debug(f"Inserting batch {batch_start}-{batch_end} into {table_name}")
                     
-                    # Debug: Print SQL and first few parameter sets
-                    if batch_start == 0:
-                        print(f"\n🔍 DEBUG SQL for {table_name}:")
-                        print(f"SQL: {sql}")
-                        print(f"Parameter count: {len(batch_data)}")
-                        for i, params in enumerate(batch_data[:2]):  # Show first 2 parameter sets
-                            print(f"Parameters {i+1}: {params}")
-                            for j, (col, val) in enumerate(zip(columns, params)):
-                                print(f"  {col} = {repr(val)} ({type(val).__name__})")
+
                     
                     try:
-                        if use_executemany and len(batch_data) > 1:
+                        # Force individual executes for tables with known pyodbc executemany encoding issues
+                        # These specific tables have string encoding problems when using executemany with pyodbc
+                        # that cause character corruption (strings become question marks in SQL Server)
+                        force_individual_executes = table_name in ['contact_address', 'contact_employment']
+                        
+                        if use_executemany and len(batch_data) > 1 and not force_individual_executes:
                             # Try executemany for better performance
                             cursor.executemany(sql, batch_data)
                             batch_inserted = len(batch_data)

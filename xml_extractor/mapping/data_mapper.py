@@ -622,7 +622,17 @@ class DataMapper(DataMapperInterface):
                     con_id = parent_contact.get('con_id')
                     
                     # Convert element attributes to the format expected by _create_record_from_mappings
-                    attributes = dict(addr_elem.attrib)
+                    # Ensure proper encoding for string attributes
+                    attributes = {}
+                    for key, value in addr_elem.attrib.items():
+                        if isinstance(value, str):
+                            # Ensure proper UTF-8 encoding
+                            try:
+                                attributes[key] = value.encode('utf-8').decode('utf-8')
+                            except (UnicodeEncodeError, UnicodeDecodeError):
+                                attributes[key] = value
+                        else:
+                            attributes[key] = value
                     context_data = {
                         'attributes': attributes,
                         'con_id': con_id,
@@ -667,7 +677,17 @@ class DataMapper(DataMapperInterface):
                     con_id = parent_contact.get('con_id')
                     
                     # Convert element attributes to the format expected by _create_record_from_mappings
-                    attributes = dict(emp_elem.attrib)
+                    # Ensure proper encoding for string attributes
+                    attributes = {}
+                    for key, value in emp_elem.attrib.items():
+                        if isinstance(value, str):
+                            # Ensure proper UTF-8 encoding
+                            try:
+                                attributes[key] = value.encode('utf-8').decode('utf-8')
+                            except (UnicodeEncodeError, UnicodeDecodeError):
+                                attributes[key] = value
+                        else:
+                            attributes[key] = value
                     context_data = {
                         'attributes': attributes,
                         'con_id': con_id,
