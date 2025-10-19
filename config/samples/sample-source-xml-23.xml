@@ -1,0 +1,449 @@
+﻿<Provenir org="" ProductType="" Version="4.0.0" transactionID="DE0359a750c_1869a1788c0_07ffd1869a17f009_0a147650.3" shred_version="26.0" Org="" manualRule="" resetRegB="" public_token="refused">
+  <Request ID="7357" LockedBy="" _LockedBy="DAVID.JENSEN@MERRICKBANK.COM" Priority="" Process="00050" Readonly="0" Status="" Timeout="" Timestamp="" Trace="" Trans="PROCESS" experian_customerid="" experian_consumerid="" finicity_bypass="N" iovation_sessionid="586b4332-b7fa-415f-b03b-32d37da676fa" btcardtoken="" btresponsecode="" UnLockOnExit="" UserID="" Workflow="20" Version="" transactionCounter="26" isPinned="false" LockedAt="" LastUpdatedBy="TIMOTHY.MORRIS@MERRICKBANK.COM">
+    <CustData>
+      <application address_match_flag="" app_entry_date="2/28/2023" app_receive_date="2/28/2023" app_source_ind="I" app_type_code="SECURE" campaign_num="SC3" coupon_expiration_date="" CPS_letter_sent_flag="" credit_life_ind="" Debit_Funding_Source="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_date="" Debit_Refund_amount="" EODRet="PROCESS" existing_card_account_num="" IP_address="10.20.135.83" last_update_time="2024-06-19 15:47:59.171" mail_cell_pricing="" name_match_flag="" Partner_URL_ID="" population_assignment="" pymnt_prot_plan_ind="" pricing_tier="" processing_expiration_date="" procs_date="" secure_ach_amount="" signature_ind="Y" solicitation_locked="" solicitation_num="SC3000008375" special_offer="3" ssn_match_flag="" swiftpay_num="80093115" TUAccessCode="">
+        <app_product aba_number="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" aggregate_balance="" aggregate_balance5="" analyst_rev_ind="" annual_fee_tp_c="" autopay_ind="" backend_fico_grade="" backend_risk_grade="" bankruptcy_score="" booked_date="" bus_card_name="" cash_advance_ind="" cendant_add_date="" collections_remark_codes_num="" control_accnt_desired_ind="" control_accnt_number="" control_accnt_seq_no="" csi_eligibility_ind="" csi_sent_date="" debt_to_income_ratio="" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" decision_tp_c="PDEP" delphi_score="" discharged_bankruptcy_ind="" disclosures="P" dismissed_bankruptcy_ind="" duplicate_app_ind="" empirica_score="" existing_cardholder_ind="" experian_fico_score="" FICO_BKR3_EX="" FICO_BKR3_TU="" FICO_NextGen3_EX="" FICO_NextGen3_TU="" filed_bankruptcy_ind="" horizon_score="" ics_sent_date="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" letter_requested_ind="" lscampaign_num="" mars_model_score="" merrick_tradelines_num="" monthly_debt="" monthly_income="" multran_booked_date="" neuristics_edge_score="" ninety_day_delinq_num="" one_twenty_day_delinq_num="" overdraft_ind="" override_tp_c="" pd_seq_no="" pd_tp_c="" pending_verif_ind="" pinnacle_score="" policy_override_employee_code="" prev_merrick_inq_num="" precision_score="" prescreen_bkr_score="" prescreen_fico_grade="" prescreen_fico_score="" prescreen_risk_grade="" prescreen_risk_score="" prmy_pd_ind="" pubrec_bankruptcies_num="" regbcloseddays_num="" regbcloseddays_num_counter_offer="" regbcloseddays2_num="" regbnewinfostartdate="" req_plastics_qt="1" req_prod_tp_c="VCRDU" risk_model_score_JH="" risk_model_score_LP="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" Risk_Model_reason3_tp_c="" risk_model_score="" sixty_day_delinq_num="" sixty_ninety_day_delinq_num="" score="" scorecard="" supervisor_rev_ind="" thirty_day_delinq_num="" trades_BKR_filings_num="" trades_remark_codes_num="" Vantage_Score_EX="" Vantage_Score_TU="" Risk_Model_reason4_tp_c="" adverse_actn5_type_cd="" />
+        <comments comment="" comment_seq_number="" comment_type_code="" user_id="" time_stamp="" />
+        <contact banking_aba="" banking_account_number="" banking_accounts_held="" banking_account_type="" mother_maiden_name="LAST" ac_role_tp_c="PR" initials="A" last_name="APPROVE" suffix="" con_id="" title="" first_name="CYNTHIA" birth_date="05/10/1978" ssn="664502346" ssn_last_4="2346" email="TEST@TEST.COM" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="">
+          <app_prod_bcard accnt_bin="" accnt_seq_no="" accnt_type_ind="" account_number="" agent="" allocated_credit_line="" analyst_approved_line="" card_decision_tp_c="NODEC" card_id="" card_name="" issue_card_ind="" multran_accnt_bin="" multran_accnt_seq_no="" multran_account_number="" pd_tp_c="" recur_payment_credit_line="" requested_credit_line="" seq_check="" sys_prin="" />
+          <contact_address address_line_1="1919 SCHENECTADY AVE, BROOKLYN NY 11234-3120" address_seq_no="" address_tp_c="CURR" cell_phone="5555555555" city="BROOKLYN" fax_no="" home_phone="" mailing_city="" mailing_po_box="" mailing_rural_route="" mailing_state="" mailing_unit="" mailing_zip="" months_at_residence="" ownership_tp_c="" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" residence_monthly_pymnt="200" rural_route="" state="NY" street_name="SCHENECTADY AVE" street_number="1919" unit="" years_at_residence="" zip="112343120" />
+          <contact_employment b_city="" b_income_source_nontaxable="N" b_job_title_tp_c="" b_months_at_job="" b_name="" b_othr_inc_basis_tp_c="" b_other_income_amt="" b_other_income_source_tp_c="" b_phone_no="" b_phone_no_ext="" b_primary_income_source_tp_c="" b_salary="200000" b_salary_basis_tp_c="ANNUM" b_state="" b_street_name="" b_street_number="" b_years_at_job="" b_self_employed_ind="" b_unit="" b_zip="" employment_seq_no="" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters cb_disclosure_suppress="" cb_score_suppress="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="A" letter_type_cd="" seq_no="" />
+        <rmts_info aaa_misc_field_4="" address_match_flag="" auth_user_is_spouse="" campaign_number="" CB_prescreen_birth_date="" merrick_appl_number="" name_match_flag="" pri_apt_number="" pri_city="" pri_cur_street_num="" pri_cur_street_name="" pri_po_box_num="" pri_rural_rt_num="" pri_state="" pri_zip_code="" primary_first_name="" primary_last_name="" primary_middle_name="" primary_ssn="" primary_suffix="" special_flag_5="" special_flag_6="" special_flag_7="" special_flag_8="" ssn_match_flag="" transmission_date="" upc8="" upc9="" upc10="" upc12="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <FDR account_number="" Cross_refrence_indicator="" Cross_refrence_number="" External_Primary_Account="" filler="" multran_account_number="" operator_code="" SubTranCode="" swiftpay_number="" terminalID="" transaction_code="" />
+        <Indicators>
+          <Indicator ID="reprocess_counter" value="1.0" />
+        </Indicators>
+      </application>
+    </CustData>
+    <Reports>
+      <EDQ>
+        <output>
+          <QASearchResult VerifyLevel="Verified">
+            <QAAddress DPVStatus="DPVNotConfirmed">
+              <AddressLine>
+                <Label>Building/Firm Name</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Urbanization</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole Street Name</Label>
+                <Line>Schenectady Ave</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole Submitted Street Name</Label>
+                <Line>Schenectady Ave</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Primary Number</Label>
+                <Line>1919</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Street (Pre-directional)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Street (Name)</Label>
+                <Line>Schenectady</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Street (Descriptor)</Label>
+                <Line>Ave</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Street (Post-directional)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole RR/HC</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>RR/HC (Type)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>RR/HC (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole Box Number</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Box Number (Text)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Box Number (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole Secondary Number</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Secondary Number (Type)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Secondary Number (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PO Box</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PO Box (Text)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PO Box (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>General Delivery</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole PMB</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PMB (Text)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PMB (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>City Name</Label>
+                <Line>Brooklyn</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Submitted City Name</Label>
+                <Line>Brooklyn</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>State Code</Label>
+                <Line>NY</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>State Name</Label>
+                <Line>New York</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Zip+4 Code</Label>
+                <Line>11234-3120</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>ZIP Code</Label>
+                <Line>11234</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>+4 Code</Label>
+                <Line>3120</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>County Name</Label>
+                <Line>Kings</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Country</Label>
+                <Line>United States of America</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Two Character ISO Country Code</Label>
+                <Line>US</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Three character ISO country code</Label>
+                <Line>USA</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Retained Sub-premise</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Retained 'Care of' Form</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Retained Pre-street Info</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Retained Post-street Info</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>TIGER Latitude</Label>
+                <Line>40.627987</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>TIGER Longitude</Label>
+                <Line>-73.930772</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>TIGER Match Level</Label>
+                <Line>Four</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>County Code</Label>
+                <Line>047</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Record Type</Label>
+                <Line>S</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Carrier Route</Label>
+                <Line>C054</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Census Tract</Label>
+                <Line>0730</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Congressional District No</Label>
+                <Line>09</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>CMRA Confirmation Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV Seed Ind</Label>
+                <Line>N</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV Confirmation Ind</Label>
+                <Line>N</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV Footnotes</Label>
+                <Line>AAM3</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV Vacant Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV No-Stat Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>PBSA Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>EWS Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Delivery Point Barcode (DPBC)</Label>
+                <Line>/112343120193/</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPC</Label>
+                <Line>19</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Check Digit</Label>
+                <Line>3</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Building/Firm Name Added or Changed</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Primary Number Added or Changed</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Urbanization Added or Changed</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Street Non-trivially Corrected</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Rural Route/Highway Contract Matched</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>City Name Added or Changed</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>City Name Alias Matched</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>State Added or Changed</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>5-digit ZIP Code Added or Corrected</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>+4 Code Added to ZIP or Corrected</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Secondary Number Retained</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Identifiable Pre-Street Information Retained</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>General Pre-Street Information Retained</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Post-Street Information Retained</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>LACS Link Indicator</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>LACS Link Return Code</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>SuiteLink Indicator</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>SuiteLink Return Code</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA New Address</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA Move Status</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA Move Type</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA Move Date</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA Match Code</Label>
+                <Line />
+              </AddressLine>
+            </QAAddress>
+            <VerificationFlags />
+          </QASearchResult>
+        </output>
+      </EDQ>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2023-2-28 15:40:10.88" Source="TestDecisionResponseReturn" Number="0" Description="No matching condition found for [&quot;APPROVE&quot;]" />
+      <Message Timestamp="2023-2-28 15:40:10.88" Source="TransactionManager" Number="0" Description="java.lang.Exception: Process. repoObj_7e8679f3_11ed71bc619_07f9a11f62706cd5:java.lang.Exception: No matching condition found for [&quot;APPROVE&quot;] " />
+      <Message Timestamp="2023-6-22 19:29:41.460" Source="WebService.Outsystems.BankCard PUT Application.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+      <Message Timestamp="2025-01-30 19:58:29.035" Source="SetValue" Number="199" Description="Parent XPATH not found:/Provenir/Request/Rules/Rule[@ID='DFICO']" />
+      <Message Timestamp="2025-01-30 19:58:29.035" Source="SetValue" Number="199" Description="Parent XPATH not found:/Provenir/Request/Rules/Rule[@ID='DFICO']" />
+      <Message Timestamp="2025-01-30 22:22:50.964" Source="SetValue" Number="199" Description="Parent XPATH not found:/Provenir/Request/Rules/Rule[@ID='DFICO']" />
+      <Message Timestamp="2025-01-30 22:22:50.964" Source="SetValue" Number="199" Description="Parent XPATH not found:/Provenir/Request/Rules/Rule[@ID='DFICO']" />
+    </Messages>
+    <Rules />
+    <Journals>
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-12 14:24:16.69" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-16 17:42:38.871" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-16 18:14:25.952" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-17 16:49:41.420" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-19 12:26:14.223" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-19 13:29:16.208" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-19 16:44:23.144" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-20 9:53:09.279" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-26 10:35:08.356" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-10-31 15:05:24.497" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-2 16:46:09.100" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-9 14:28:07.53" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-15 13:37:56.197" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 10:38:19.798" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 11:51:46.403" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 12:12:53.172" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 12:21:42.913" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 13:18:40.287" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 13:24:54.963" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 13:31:49.7" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 13:39:09.881" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 14:02:03.48" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 14:31:08.370" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 15:59:11.499" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 16:06:13.902" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-11-27 16:23:09.756" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-03 20:29:56.079" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-03 23:29:32.233" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-04 14:58:09.783" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-04 15:25:40.892" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-04 19:44:17.222" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-05 00:24:56.136" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-07 12:53:39.548" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-07 13:47:09.289" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-11 14:04:52.054" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-11 14:09:53.604" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-11 15:02:10.537" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-18 20:55:17.017" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-18 21:12:20.272" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-18 21:52:17.114" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2024-06-19 14:13:10.711" Status="Pass" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-06-19 15:47:03.506" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="MP" ID="Reprocess" Timestamp="2024-06-19 15:47:59.172" Status="Request" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2024-06-19 15:47:59.514" Status="false" />
+      <Journal Type="Process" ID="00025" Timestamp="2024-06-19 15:47:59.514" Status="Pass" />
+      <Journal Type="Process" ID="EDQAddressVerification" Timestamp="2024-06-19 15:47:59.667" Status="true" />
+      <Journal Type="Process" ID="00050" Timestamp="2024-06-19 15:47:59.679" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2024-06-19 15:47:59.680" Status="Pass" />
+      <Journal Type="Process" ID="00050" Timestamp="2024-09-30 21:54:43.883" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2024-09-30 21:54:43.888" Status="Pass" />
+      <Journal Type="Process" ID="00050" Timestamp="2024-09-30 22:02:21.538" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2024-09-30 22:02:21.539" Status="Pass" />
+      <Journal Type="Process" ID="00050" Timestamp="2024-09-30 22:07:28.356" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2024-09-30 22:07:28.357" Status="Pass" />
+      <Journal Type="Process" ID="00050" Timestamp="2024-09-30 22:17:38.356" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2024-09-30 22:17:38.356" Status="Pass" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-10-25 22:23:26.541" Status="Opened" />
+      <Journal Type="Process" ID="00050" Timestamp="2025-01-30 19:58:29.130" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-01-30 19:58:29.131" Status="Pass" />
+      <Journal Type="Process" ID="00050" Timestamp="2025-01-30 22:22:51.044" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-01-30 22:22:51.045" Status="Pass" />
+      <Journal Type="Process" ID="00050" Timestamp="2025-04-01 22:33:35.898" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-04-01 22:33:35.898" Status="Pass" />
+      <Journal Type="Process" ID="00050" Timestamp="2025-04-01 23:14:01.355" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-04-01 23:14:01.355" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits />
+  </Request>
+  <queues>
+    <queue name="T All Applications" id="17" />
+    <queue id="17" type="cc" name="T All Applications" />
+    <queue id="17" type="cc" name="T All Applications" />
+  </queues>
+</Provenir>

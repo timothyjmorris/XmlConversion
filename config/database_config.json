@@ -1,0 +1,28 @@
+{
+    "database": {
+        "driver": "ODBC Driver 17 for SQL Server",
+        "server": "localhost\\SQLEXPRESS",
+        "database": "XmlConversionDB",
+        "username": "vscode",
+        "password": "express",
+        "trusted_connection": true,
+        "connection_timeout": 30,
+        "command_timeout": 300,
+        "fast_executemany": true,
+        "autocommit": false
+    },
+    "connection_string_template_sql_auth": "DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password};Connection Timeout={connection_timeout};TrustServerCertificate=yes;Encrypt=no;",
+    "connection_string_template_windows_auth": "DRIVER={driver};SERVER={server};DATABASE={database};Trusted_Connection=yes;Connection Timeout={connection_timeout};TrustServerCertificate=yes;Encrypt=no;",
+    "alternative_drivers": [
+        "ODBC Driver 18 for SQL Server",
+        "ODBC Driver 17 for SQL Server",
+        "SQL Server Native Client 11.0",
+        "SQL Server"
+    ],
+    "test_queries": {
+        "connection_test": "SELECT 1 as test_value",
+        "version_check": "SELECT @@VERSION as sql_version",
+        "database_check": "SELECT DB_NAME() as current_database",
+        "table_check": "SELECT COUNT(*) as table_count FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'"
+    }
+}

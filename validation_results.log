@@ -1,0 +1,33 @@
+2025-10-17 21:10:35,048 - xml_extractor.parsing.xml_parser - INFO - XMLParser initialized with lxml=available
+2025-10-17 21:10:35,090 - xml_extractor.mapping.data_mapper - INFO - Pre-flight validation passed: app_id=154284, valid_contacts=1
+2025-10-17 21:10:35,093 - xml_extractor.mapping.data_mapper - WARNING - Type conversion failed for value 'PR' to type 'smallint': Cannot convert 'PR' to integer
+2025-10-17 21:10:35,096 - xml_extractor.mapping.data_mapper - WARNING - Using fallback value for failed conversion: PR -> smallint
+2025-10-17 21:10:35,098 - xml_extractor.mapping.data_mapper - INFO - Data integrity validation passed
+2025-10-17 21:10:35,408 - xml_extractor.parsing.xml_parser - INFO - XMLParser initialized with lxml=available
+2025-10-17 21:10:36,438 - xml_extractor.validation.pre_processing_validator - WARNING -   WARNING: PR contact 277449 missing recommended fields: last_name
+2025-10-17 21:10:36,589 - xml_extractor.validation.pre_processing_validator - ERROR -   ERROR: CRITICAL: Missing app_id (/Provenir/Request/@ID)
+2025-10-17 21:10:36,639 - xml_extractor.validation.pre_processing_validator - WARNING -   WARNING: PR contact 277449 missing recommended fields: last_name
+2025-10-17 21:10:36,781 - xml_extractor.validation.pre_processing_validator - ERROR -   ERROR: CRITICAL: No valid contacts found (all missing con_id or ac_role_tp_c)
+2025-10-17 21:10:36,803 - xml_extractor.validation.pre_processing_validator - ERROR -   ERROR: CRITICAL: No primary contact (ac_role_tp_c='PR') found
+2025-10-17 21:10:36,842 - xml_extractor.validation.pre_processing_validator - WARNING -   WARNING: Skipping contact - Contact 0: Missing required attributes: con_id
+2025-10-17 21:10:36,859 - xml_extractor.validation.pre_processing_validator - INFO -   SKIPPED: 1 elements total
+2025-10-17 21:10:38,355 - xml_extractor.validation.pre_processing_validator - WARNING -   WARNING: Skipping address - Address 0 for con_id 277449: Missing address_tp_c
+2025-10-17 21:10:38,436 - xml_extractor.validation.pre_processing_validator - WARNING -   WARNING: PR contact 277449 missing recommended fields: last_name
+2025-10-17 21:10:38,550 - xml_extractor.validation.pre_processing_validator - INFO -   SKIPPED: 1 elements total
+2025-10-17 21:10:38,641 - xml_extractor.validation.pre_processing_validator - INFO - Batch validation complete: 2/4 valid (50.0%)
+2025-10-17 21:10:39,733 - xml_extractor.parsing.xml_parser - INFO - XMLParser initialized with lxml=available
+2025-10-17 21:10:39,763 - xml_extractor.parsing.xml_parser - INFO - XMLParser initialized with lxml=available
+2025-10-17 21:10:40,340 - xml_extractor.mapping.data_mapper - INFO - Pre-flight validation passed: app_id=154284, valid_contacts=1
+2025-10-17 21:10:40,357 - xml_extractor.mapping.data_mapper - WARNING - Type conversion failed for value 'PR' to type 'smallint': Cannot convert 'PR' to integer
+2025-10-17 21:10:40,439 - xml_extractor.mapping.data_mapper - WARNING - Using fallback value for failed conversion: PR -> smallint
+2025-10-17 21:10:40,458 - xml_extractor.mapping.data_mapper - INFO - Data integrity validation passed
+2025-10-17 21:10:40,841 - xml_extractor.parsing.xml_parser - INFO - XMLParser initialized with lxml=available
+2025-10-17 21:10:40,886 - xml_extractor.parsing.xml_parser - INFO - XMLParser initialized with lxml=available
+2025-10-17 21:10:41,017 - xml_extractor.parsing.xml_parser - WARNING - XML well-formedness validation failed: Opening and ending tag mismatch: unclosed_tag line 1 and Request, line 1, column 44 (<string>, line 1)
+2025-10-17 21:10:41,029 - xml_extractor.parsing.xml_parser - WARNING - XML doesn't start with <Provenir root element
+2025-10-17 21:10:41,892 - xml_extractor.validation.pre_processing_validator - ERROR -   ERROR: CRITICAL: Missing app_id (/Provenir/Request/@ID)
+2025-10-17 21:10:41,938 - xml_extractor.validation.pre_processing_validator - WARNING -   WARNING: PR contact 123 missing recommended fields: first_name, last_name
+2025-10-17 21:10:43,032 - xml_extractor.validation.pre_processing_validator - ERROR -   ERROR: CRITICAL: No valid contacts found (all missing con_id or ac_role_tp_c)
+2025-10-17 21:10:43,107 - xml_extractor.validation.pre_processing_validator - ERROR -   ERROR: CRITICAL: No primary contact (ac_role_tp_c='PR') found
+2025-10-17 21:10:43,153 - xml_extractor.validation.pre_processing_validator - WARNING -   WARNING: Skipping contact - Contact 0: Missing required attributes: con_id
+2025-10-17 21:10:43,236 - xml_extractor.validation.pre_processing_validator - INFO -   SKIPPED: 1 elements total

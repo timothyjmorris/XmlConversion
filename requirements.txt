@@ -1,0 +1,28 @@
+# Core XML processing
+lxml>=4.9.0
+
+# Database connectivity
+pyodbc>=4.0.35
+
+# Data validation and parsing
+pydantic>=2.0.0
+
+# Performance monitoring
+psutil>=5.9.0
+
+# Logging and configuration
+pyyaml>=6.0
+
+# Development and testing dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
+
+# Optional: For advanced XML processing
+xmlschema>=2.5.0
+
+# Optional: For progress bars and CLI
+tqdm>=4.64.0
+click>=8.1.0

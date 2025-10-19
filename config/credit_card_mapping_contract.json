@@ -1,0 +1,1436 @@
+{
+  "source_table": "app_xml",
+  "source_column": "xml",
+  "xml_root_element": "Provenir",
+  "key_identifiers": {
+    "app_id": {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "ID",
+      "required": true
+    },
+    "con_id_primary": {
+      "xml_path": "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']",
+      "xml_attribute": "con_id",
+      "required": true
+    },
+    "con_id_auth": {
+      "xml_path": "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='AUTH']",
+      "xml_attribute": "con_id",
+      "required": false
+    }
+  },
+  "mappings": [
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "ID",
+      "target_table": "app_base",
+      "target_column": "app_id",
+      "data_type": "int",
+      "mapping_type": "identity_insert"
+    },
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "Status",
+      "target_table": "app_operational_cc",
+      "target_column": "status_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "app_receive_date",
+      "target_table": "app_base",
+      "target_column": "receive_date",
+      "data_type": "datetime",
+      "mapping_type": "default_getutcdate_if_null"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "app_source_ind",
+      "target_table": "app_base",
+      "target_column": "app_source_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "app_type_code",
+      "target_table": "app_base",
+      "target_column": "app_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "decision_tp_c",
+      "target_table": "app_base",
+      "target_column": "decision_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "decision_date",
+      "target_table": "app_base",
+      "target_column": "decision_date",
+      "data_type": "datetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "signature_ind",
+      "target_table": "app_operational_cc",
+      "target_column": "signature_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "Process",
+      "target_table": "app_operational_cc",
+      "target_column": "process_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "LastUpdatedBy",
+      "target_table": "app_operational_cc",
+      "target_column": "last_updated_by",
+      "data_type": "varchar(80)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "assignedTo",
+      "target_table": "app_operational_cc",
+      "target_column": "assigned_to",
+      "data_type": "varchar(80)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "last_update_time",
+      "target_table": "app_operational_cc",
+      "target_column": "last_updated_date",
+      "data_type": "datetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "backend_fico_grade",
+      "target_table": "app_operational_cc",
+      "target_column": "backend_fico_grade",
+      "data_type": "varchar(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "backend_risk_grade",
+      "target_table": "app_operational_cc",
+      "target_column": "backend_risk_grade",
+      "data_type": "varchar(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "regb_start_date",
+      "target_table": "app_operational_cc",
+      "target_column": "regb_start_date",
+      "data_type": "datetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "ssn_match_flag",
+      "target_table": "app_operational_cc",
+      "target_column": "ssn_match_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "mail_cell_pricing",
+      "target_table": "app_pricing_cc",
+      "target_column": "marketing_segment",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "population_assignment",
+      "target_table": "app_pricing_cc",
+      "target_column": "population_assignment_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "pricing_tier",
+      "target_table": "app_pricing_cc",
+      "target_column": "pricing_tier",
+      "data_type": "varchar(2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "campaign_num",
+      "target_table": "app_pricing_cc",
+      "target_column": "campaign_num",
+      "data_type": "varchar(6)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "solicitation_num",
+      "target_table": "app_pricing_cc",
+      "target_column": "solicitation_num",
+      "data_type": "varchar(15)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "special_offer",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_art_code",
+      "data_type": "varchar(2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "special_flag_5",
+      "target_table": "app_pricing_cc",
+      "target_column": "special_flag_5",
+      "data_type": "varchar(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_attribute": "residence_monthly_pymnt",
+      "target_table": "app_operational_cc",
+      "target_column": "housing_monthly_payment",
+      "data_type": "decimal(12,2)",
+      "mapping_type": "last_valid_pr_contact"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_attribute": "allocated_credit_line",
+      "target_table": "app_pricing_cc",
+      "target_column": "credit_line",
+      "data_type": "decimal(12,2)",
+      "mapping_type": "last_valid_pr_contact"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "con_id",
+      "target_table": "contact_base",
+      "target_column": "con_id",
+      "data_type": "int",
+      "mapping_type": "identity_insert"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "first_name",
+      "target_table": "contact_base",
+      "target_column": "first_name",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "last_name",
+      "target_table": "contact_base",
+      "target_column": "last_name",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "ssn",
+      "target_table": "contact_base",
+      "target_column": "ssn",
+      "data_type": "char(9)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "birth_date",
+      "target_table": "contact_base",
+      "target_column": "birth_date",
+      "data_type": "smalldatetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "ac_role_tp_c",
+      "target_table": "contact_base",
+      "target_column": "contact_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "initials",
+      "target_table": "contact_base",
+      "target_column": "middle_initial",
+      "data_type": "varchar(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "mother_maiden_name",
+      "target_table": "contact_base",
+      "target_column": "mother_maiden_name",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "suffix",
+      "target_table": "contact_base",
+      "target_column": "suffix",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "email",
+      "target_table": "contact_base",
+      "target_column": "email",
+      "data_type": "varchar(100)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "city",
+      "target_table": "contact_address",
+      "target_column": "city",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "state",
+      "target_table": "contact_address",
+      "target_column": "state",
+      "data_type": "char(2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "address_tp_c",
+      "target_table": "contact_address",
+      "target_column": "address_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "street_number",
+      "target_table": "contact_address",
+      "target_column": "street_number",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "street_name",
+      "target_table": "contact_address",
+      "target_column": "street_name",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "unit",
+      "target_table": "contact_address",
+      "target_column": "unit",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "po_box",
+      "target_table": "contact_address",
+      "target_column": "po_box",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "rural_route",
+      "target_table": "contact_address",
+      "target_column": "rural_route",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "zip",
+      "target_table": "contact_address",
+      "target_column": "zip",
+      "data_type": "varchar(9)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "months_at_residence",
+      "target_table": "contact_address",
+      "target_column": "months_at_address",
+      "data_type": "smallint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "ownership_tp_c",
+      "target_table": "contact_address",
+      "target_column": "ownership_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "home_phone",
+      "target_table": "contact_base",
+      "target_column": "home_phone",
+      "data_type": "char(10)",
+      "mapping_type": "curr_address_only"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "cell_phone",
+      "target_table": "contact_base",
+      "target_column": "cell_phone",
+      "data_type": "char(10)",
+      "mapping_type": "curr_address_only"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "employment_tp_c",
+      "target_table": "contact_employment",
+      "target_column": "employment_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_name",
+      "target_table": "contact_employment",
+      "target_column": "business_name",
+      "data_type": "varchar(100)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_job_title_tp_c",
+      "target_table": "contact_employment",
+      "target_column": "job_title",
+      "data_type": "varchar(100)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_salary",
+      "target_table": "contact_employment",
+      "target_column": "monthly_salary",
+      "data_type": "decimal(12,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_months_at_job",
+      "target_table": "contact_employment",
+      "target_column": "months_at_job",
+      "data_type": "smallint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_other_income_amt",
+      "target_table": "contact_employment",
+      "target_column": "other_monthly_income",
+      "data_type": "decimal(12,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_primary_income_source_tp_c",
+      "target_table": "contact_employment",
+      "target_column": "income_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_other_income_source_tp_c",
+      "target_table": "contact_employment",
+      "target_column": "other_income_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_self_employed_ind",
+      "target_table": "contact_employment",
+      "target_column": "self_employed_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_income_source_nontaxable",
+      "target_table": "contact_employment",
+      "target_column": "income_source_nontaxable_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_phone_no",
+      "target_table": "contact_employment",
+      "target_column": "phone",
+      "data_type": "char(10)",
+      "mapping_type": "numbers_only"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_city",
+      "target_table": "contact_employment",
+      "target_column": "city",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_state",
+      "target_table": "contact_employment",
+      "target_column": "state",
+      "data_type": "char(2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_street_name",
+      "target_table": "contact_employment",
+      "target_column": "street_name",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_street_number",
+      "target_table": "contact_employment",
+      "target_column": "street_number",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_unit",
+      "target_table": "contact_employment",
+      "target_column": "unit",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_zip",
+      "target_table": "contact_employment",
+      "target_column": "zip",
+      "data_type": "varchar(9)",
+      "mapping_type": "numbers_only"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "minimum_interest_charge",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_min_interest_charge",
+      "data_type": "decimal(5,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "account_setup_fee",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_account_setup_fee",
+      "data_type": "tinyint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "additional_card_fee",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_additional_card_fee",
+      "data_type": "tinyint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "late_payment_fee",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_late_payment_fee",
+      "data_type": "tinyint",
+      "mapping_type": "extract_numeric"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "over_limit_fee",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_over_limit_fee",
+      "data_type": "tinyint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "returned_payment_fee",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_returned_payment_fee",
+      "data_type": "tinyint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "apr",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_purchase_apr",
+      "data_type": "decimal(5,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "annual_fee",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_annual_fee",
+      "data_type": "smallint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "cash_advance_apr",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_cash_advance_apr",
+      "data_type": "decimal(5,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn1_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_code_1",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn2_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_code_2",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn3_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_code_3",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn4_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_code_4",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "analyst_rev_ind",
+      "target_table": "app_transactional_cc",
+      "target_column": "analyst_review_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "booking_paused",
+      "target_table": "app_transactional_cc",
+      "target_column": "booking_paused_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "disclosures",
+      "target_table": "app_transactional_cc",
+      "target_column": "disclosures_read_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "duplicate_app_ind",
+      "target_table": "app_transactional_cc",
+      "target_column": "duplicate_ssn_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "fraud_rev_ind",
+      "target_table": "app_transactional_cc",
+      "target_column": "fraud_review_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "pending_verif_ind",
+      "target_table": "app_transactional_cc",
+      "target_column": "pending_verification_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "supervisor_rev_ind",
+      "target_table": "app_transactional_cc",
+      "target_column": "supervisor_review_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "prescreen_fico_grade",
+      "target_table": "app_solicited_cc",
+      "target_column": "prescreen_fico_grade",
+      "data_type": "char(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "prescreen_risk_grade",
+      "target_table": "app_solicited_cc",
+      "target_column": "prescreen_risk_grade",
+      "data_type": "char(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "CB_prescreen_birth_date",
+      "target_table": "app_solicited_cc",
+      "target_column": "birth_date",
+      "data_type": "smalldatetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "primary_first_name",
+      "target_table": "app_solicited_cc",
+      "target_column": "first_name",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "primary_last_name",
+      "target_table": "app_solicited_cc",
+      "target_column": "last_name",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "primary_middle_name",
+      "target_table": "app_solicited_cc",
+      "target_column": "middle_initial",
+      "data_type": "varchar(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "primary_ssn",
+      "target_table": "app_solicited_cc",
+      "target_column": "ssn",
+      "data_type": "char(9)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "primary_suffix",
+      "target_table": "app_solicited_cc",
+      "target_column": "suffix",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "pri_city",
+      "target_table": "app_solicited_cc",
+      "target_column": "city",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "pri_state",
+      "target_table": "app_solicited_cc",
+      "target_column": "state",
+      "data_type": "char(2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "pri_zip_code",
+      "target_table": "app_solicited_cc",
+      "target_column": "zip",
+      "data_type": "varchar(9)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "pri_cur_street_name",
+      "target_table": "app_solicited_cc",
+      "target_column": "street_name",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "pri_cur_street_num",
+      "target_table": "app_solicited_cc",
+      "target_column": "street_number",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "pri_apt_number",
+      "target_table": "app_solicited_cc",
+      "target_column": "unit",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "pri_po_box_num",
+      "target_table": "app_solicited_cc",
+      "target_column": "po_box",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "pri_rural_rt_num",
+      "target_table": "app_solicited_cc",
+      "target_column": "rural_route",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "Status",
+      "target_table": "app_operational_cc",
+      "target_column": "status_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "ip_address",
+      "target_table": "app_base",
+      "target_column": "ip_address",
+      "data_type": "varchar(39)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "booked_date",
+      "target_table": "app_base",
+      "target_column": "booked_date",
+      "data_type": "datetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "multran_booked_date",
+      "target_table": "app_base",
+      "target_column": "sc_multran_booked_date",
+      "data_type": "datetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "priority",
+      "target_table": "app_operational_cc",
+      "target_column": "priority_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "partner_url_id",
+      "target_table": "app_operational_cc",
+      "target_column": "meta_url",
+      "data_type": "varchar(50)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "secure_ach_amount",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_ach_amount",
+      "data_type": "decimal(12,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "swiftpay_num",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_funding_reference",
+      "data_type": "int"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "verification_source",
+      "target_table": "app_operational_cc",
+      "target_column": "verification_source_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn5_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_code_5",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "regb_end_date",
+      "target_table": "app_operational_cc",
+      "target_column": "regb_end_date",
+      "data_type": "datetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_reason1_tp_c",
+      "target_table": "app_operational_cc",
+      "target_column": "risk_model_score_factor_code_1",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_reason2_tp_c",
+      "target_table": "app_operational_cc",
+      "target_column": "risk_model_score_factor_code_2",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_reason3_tp_c",
+      "target_table": "app_operational_cc",
+      "target_column": "risk_model_score_factor_code_3",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_reason4_tp_c",
+      "target_table": "app_operational_cc",
+      "target_column": "risk_model_score_factor_code_4",
+      "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "banking_aba",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_bank_aba",
+      "data_type": "char(9)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "banking_account_number",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_bank_account_num",
+      "data_type": "varchar(17)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "banking_account_type",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_bank_account_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "auth_user_is_spouse",
+      "target_table": "app_operational_cc",
+      "target_column": "auth_user_spouse_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "debt_to_income_ratio",
+      "target_table": "app_pricing_cc",
+      "target_column": "debt_to_income_ratio",
+      "data_type": "decimal(12,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "decision_model",
+      "target_table": "app_pricing_cc",
+      "target_column": "decision_model_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "monthly_debt",
+      "target_table": "app_pricing_cc",
+      "target_column": "monthly_debt",
+      "data_type": "decimal(12,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "monthly_income",
+      "target_table": "app_pricing_cc",
+      "target_column": "monthly_income",
+      "data_type": "decimal(12,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_attribute": "account_number",
+      "target_table": "app_pricing_cc",
+      "target_column": "account_number",
+      "data_type": "char(16)",
+      "mapping_type": "last_valid_pr_contact"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_attribute": "credit_line2",
+      "target_table": "app_pricing_cc",
+      "target_column": "credit_line_possible",
+      "data_type": "smallint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_attribute": "min_pay_due",
+      "target_table": "app_pricing_cc",
+      "target_column": "min_payment_due",
+      "data_type": "decimal(12,2)",
+      "mapping_type": "last_valid_pr_contact"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_attribute": "multran_account_number",
+      "target_table": "app_pricing_cc",
+      "target_column": "sc_multran_account_num",
+      "data_type": "varchar(16)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "cash_advance_fee",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_cash_advance_fee",
+      "data_type": "tinyint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "cash_advance_percent",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_cash_advance_percent",
+      "data_type": "decimal(5,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "cash_apr_margin",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_cash_advance_margin_apr",
+      "data_type": "decimal(5,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "foreign_percent",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_foreign_percent",
+      "data_type": "decimal(5,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "intro_cash_advance_apr",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_intro_cash_advance_apr",
+      "data_type": "decimal(8,5)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "intro_purchase_apr",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_intro_purchase_apr",
+      "data_type": "decimal(8,5)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "min_payment_fee",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_min_payment_fee",
+      "data_type": "tinyint"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "min_payment_percent",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_min_payment_percent",
+      "data_type": "decimal(5,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "purchase_apr_margin",
+      "target_table": "app_pricing_cc",
+      "target_column": "card_purchase_apr_margin",
+      "data_type": "decimal(5,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "seg_plan_version",
+      "target_table": "app_pricing_cc",
+      "target_column": "segment_plan_version",
+      "data_type": "varchar(3)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "special_flag_6",
+      "target_table": "app_pricing_cc",
+      "target_column": "special_flag_6",
+      "data_type": "char(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "special_flag_7",
+      "target_table": "app_pricing_cc",
+      "target_column": "special_flag_7",
+      "data_type": "char(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/rmts_info",
+      "xml_attribute": "special_flag_8",
+      "target_table": "app_pricing_cc",
+      "target_column": "special_flag_8",
+      "data_type": "char(1)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "expinnumber",
+      "target_table": "app_transactional_cc",
+      "target_column": "ex_freeze_code",
+      "data_type": "varchar(255)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "esign_consent_flag",
+      "target_table": "contact_base",
+      "target_column": "esign_consent_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "paperless_flag",
+      "target_table": "contact_base",
+      "target_column": "paperless_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "sms_consent_flag",
+      "target_table": "contact_base",
+      "target_column": "sms_consent_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "fraud_ind",
+      "target_table": "contact_base",
+      "target_column": "fraud_type_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_addr_1",
+      "target_table": "contact_employment",
+      "target_column": "address_line_1",
+      "data_type": "varchar(100)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+      "xml_attribute": "b_other_income_source_detail",
+      "target_table": "contact_employment",
+      "target_column": "other_income_source_detail",
+      "data_type": "varchar(50)"
+    }
+  ],
+  "relationships": [
+    {
+      "parent_table": "app_base",
+      "child_table": "app_operational_cc",
+      "foreign_key_column": "app_id",
+      "xml_parent_path": "/Provenir/Request",
+      "xml_child_path": "/Provenir/Request"
+    },
+    {
+      "parent_table": "app_base",
+      "child_table": "app_pricing_cc",
+      "foreign_key_column": "app_id",
+      "xml_parent_path": "/Provenir/Request",
+      "xml_child_path": "/Provenir/Request"
+    },
+    {
+      "parent_table": "app_base",
+      "child_table": "app_transactional_cc",
+      "foreign_key_column": "app_id",
+      "xml_parent_path": "/Provenir/Request",
+      "xml_child_path": "/Provenir/Request"
+    },
+    {
+      "parent_table": "app_base",
+      "child_table": "app_solicited_cc",
+      "foreign_key_column": "app_id",
+      "xml_parent_path": "/Provenir/Request",
+      "xml_child_path": "/Provenir/Request"
+    },
+    {
+      "parent_table": "app_base",
+      "child_table": "contact_base",
+      "foreign_key_column": "app_id",
+      "xml_parent_path": "/Provenir/Request",
+      "xml_child_path": "/Provenir/Request/CustData/application/contact"
+    },
+    {
+      "parent_table": "contact_base",
+      "child_table": "contact_address",
+      "foreign_key_column": "con_id",
+      "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+      "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address"
+    },
+    {
+      "parent_table": "contact_base",
+      "child_table": "contact_employment",
+      "foreign_key_column": "con_id",
+      "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+      "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_employment"
+    }
+  ],
+  "enum_mappings": {
+    "product_line_enum": {
+      "": 600
+    },
+    "app_source_enum": {
+      "I": 1,
+      "M": 2,
+      "T": 3,
+      "U": 4
+    },
+    "app_type_enum": {
+      "ALL": 20,
+      "CBC": 21,
+      "FPP": 22,
+      "GEICO": 23,
+      "GPA": 24,
+      "GREST": 25,
+      "HCOSC": 26,
+      "HT1": 27,
+      "PCP": 28,
+      "PCT": 29,
+      "PRODB": 30,
+      "REST": 31,
+      "SECURE": 32
+    },
+    "decision_enum": {
+      "APPRV": 50,
+      "DECLN": 51,
+      "DECNC": 52,
+      "FDBIT": 53,
+      "FGIAC": 54,
+      "NOCHK": 55,
+      "NONE": 56,
+      "PDEP": 57,
+      "PDFIN": 58,
+      "PDNVA": 59,
+      "WITHD": 60
+    },
+    "sc_bank_account_type_enum": {
+      "C": 70,
+      "S": 71
+    },
+    "priority_enum": {
+      "Alloy Error": 80,
+      "Offline Step-Up": 81,
+      "Step-Up Received": 82
+    },
+    "process_enum": {
+      "00050": 100,
+      "00100": 101,
+      "01000": 102,
+      "02000": 103,
+      "03000": 104,
+      "03010": 105,
+      "06000": 106,
+      "07000": 107,
+      "07500": 108,
+      "08000": 109,
+      "09000": 110,
+      "11000": 111,
+      "13000": 112,
+      "20000": 113,
+      "30000": 114,
+      "40000": 115,
+      "99000": 116,
+      "99500": 117
+    },
+    "sc_debit_funding_source_enum": {
+      "ACH": 130,
+      "Check": 131,
+      "Debit": 132,
+      "Mail CC/MO": 133,
+      "Money Gram": 134,
+      "Money Order": 135,
+      "Online Bill Pay": 136,
+      "Undetermined": 137,
+      "Western Union": 138,
+      "WU": 138,
+      "Wire Transfer": 139
+    },
+    "ssn_match_type_enum": {
+      "R": 150,
+      "N": 151,
+      "Y": 152
+    },
+    "status_enum": {
+      "A": 160,
+      "B": 161,
+      "C": 162,
+      "D": 163,
+      "F": 164,
+      "P": 165,
+      "Q": 166,
+      "W": 167
+    },
+    "verification_source_enum": {
+      "CAL": 180,
+      "CF": 181,
+      "CM": 182,
+      "CTC": 183,
+      "EX": 184,
+      "FDR": 185,
+      "FDW": 186,
+      "KIQ": 187,
+      "LNA": 188,
+      "LNI": 189,
+      "LNQ": 190,
+      "MAC": 191,
+      "ORG": 192,
+      "PCR": 193,
+      "PID": 194,
+      "PWS": 195,
+      "SOL": 196,
+      "TLO": 197,
+      "TU": 198
+    },
+    "decision_model_enum": {
+      "Classic 08": 210,
+      "EX FICO 08": 211,
+      "EX FICO 10T": 212,
+      "EXVantage4": 213,
+      "TU FICO 09": 214,
+      "TU FICO 10T": 215,
+      "TU Vantage": 216
+    },
+    "population_assignment_enum": {
+      "02": 230,
+      "1": 231,
+      "2": 232,
+      "3": 233,
+      "BL": 234,
+      "CM": 235,
+      "CONTROL": 236,
+      "DN": 237,
+      "EV": 238,
+      "HD": 239,
+      "HE": 240,
+      "HOLDOUT": 241,
+      "HU": 242,
+      "HV": 243,
+      "HW": 244,
+      "JB": 245,
+      "JH": 246,
+      "L2": 247,
+      "LB": 248,
+      "LP": 249,
+      "SB": 250,
+      "SO": 251,
+      "T": 252,
+      "VIP": 253,
+      "": 229
+    },
+    "contact_type_enum": {
+      "PR": 281,
+      "AUTHU": 280
+    },
+    "fraud_type_enum": {
+      "S": 290,
+      "V": 291
+    },
+    "address_type_enum": {
+      "CURR": 320,
+      "PREV": 321
+    },
+    "ownership_type_enum": {
+      "O": 330,
+      "R": 332,
+      "X": 335
+    },
+    "employment_type_enum": {
+      "CURR": 350,
+      "PREV": 351
+    },
+    "income_type_enum": {
+      "ALLOW": 360,
+      "EMPLOY": 361,
+      "GOVAST": 362,
+      "INVEST": 363,
+      "OTHER": 364,
+      "RENTAL": 365
+    },
+    "other_income_type_enum": {
+      "ALLOW": 380,
+      "ALMONY": 381,
+      "BONUS": 382,
+      "CHDSUP": 383,
+      "CTPYMT": 384,
+      "DISINC": 385,
+      "EMPLOY": 386,
+      "INVEST": 387,
+      "MILTRY": 388,
+      "OTHER": 389,
+      "PNSION": 390,
+      "PUBAST": 391,
+      "RENTAL": 392,
+      "2NDJOB": 393,
+      "SOCSEC": 394,
+      "SPOUSE": 395,
+      "TRUST": 396,
+      "UEMBEN": 397,
+      "UNEMPL": 397,
+      "UNKN": 398,
+      "VA": 399
+    }
+  },
+  "bit_conversions": {
+    "char_to_bit": {
+      "Y": 1,
+      "N": 0,
+      "": 0,
+      "null": 0,
+      " ": 0
+    },
+    "boolean_to_bit": {
+      "true": 1,
+      "false": 0,
+      "": 0,
+      "null": 0
+    }
+  },
+  "default_values": {
+    "product_line_enum": 600,
+    "esign_consent_flag": 0,
+    "paperless_flag": 0,
+    "sms_consent_flag": 0,
+    "auth_user_spouse_flag": 0,
+    "signature_flag": 0,
+    "self_employed_flag": 0,
+    "income_source_nontaxable_flag": 0
+  },
+  "validation_rules": {
+    "required_identifiers": [
+      "app_id",
+      "con_id_primary"
+    ],
+    "optional_identifiers": [
+      "con_id_auth"
+    ],
+    "app_id_validation": {
+      "min_value": 1,
+      "max_value": 999999999
+    },
+    "con_id_validation": {
+      "min_value": 1,
+      "max_value": 999999999,
+      "note": "Applies to both con_id_primary and con_id_auth when present"
+    },
+    "ssn_validation": {
+      "pattern": "^[0-9]{9}$",
+      "exclude_values": [
+        "000000000",
+        "111111111",
+        "222222222",
+        "333333333",
+        "444444444",
+        "555555555",
+        "666666666",
+        "777777777",
+        "888888888",
+        "999999999"
+      ]
+    },
+    "processing_rules": {
+      "abandon_application_if_missing": [
+        "app_id",
+        "con_id_primary"
+      ],
+      "skip_record_if_missing": {
+        "contact_address": [
+          "address_type_enum"
+        ],
+        "contact_employment": [
+          "employment_type_enum"
+        ]
+      },
+      "use_default_if_missing": {
+        "population_assignment_enum": 229
+      }
+    }
+  }
+}
