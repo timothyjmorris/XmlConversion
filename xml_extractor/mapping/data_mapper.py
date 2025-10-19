@@ -70,7 +70,7 @@ class DataMapper(DataMapperInterface):
             
             # Group mappings by target table for efficient processing
             table_mappings = self._group_mappings_by_table(contract.mappings)
-            self.logger.info(f"🔍 DEBUG: Found {len(table_mappings)} tables to process: {list(table_mappings.keys())}")
+            self.logger.debug(f"Found {len(table_mappings)} tables to process: {list(table_mappings.keys())}")
             
             # Process each table's mappings
             for table_name, mappings in table_mappings.items():
@@ -758,11 +758,11 @@ class DataMapper(DataMapperInterface):
                     self.logger.warning(f"Skipping contact record without con_id during table processing")
         elif table_name == 'contact_address':
             # Extract contact_address elements directly from XML data
-            self.logger.info(f"🔍 DEBUG: Extracting contact_address with {len(mappings)} mappings")
+            self.logger.debug(f"Extracting contact_address with {len(mappings)} mappings")
             records = self._extract_contact_address_records(xml_data, mappings, app_id, valid_contacts)
         elif table_name == 'contact_employment':
             # Extract contact_employment elements directly from XML data
-            self.logger.info(f"🔍 DEBUG: Extracting contact_employment with {len(mappings)} mappings")
+            self.logger.debug(f"Extracting contact_employment with {len(mappings)} mappings")
             records = self._extract_contact_employment_records(xml_data, mappings, app_id, valid_contacts)
         else:
             # Create single record for app-level tables
@@ -982,12 +982,12 @@ class DataMapper(DataMapperInterface):
         
         elif mapping.mapping_type == 'curr_address_only':
             # Extract value from the current contact's CURR address only
-            self.logger.debug(f"🔍 DEBUG: Processing curr_address_only mapping for {mapping.target_column}")
+            self.logger.debug(f"Processing curr_address_only mapping for {mapping.target_column}")
             result = self._extract_from_curr_address_only(mapping, context_data)
             if result is not None:
-                self.logger.debug(f"🔍 DEBUG: curr_address_only returned: {result}")
+                self.logger.debug(f"curr_address_only returned: {result}")
                 return self.transform_data_types(result, mapping.data_type)
-            self.logger.debug(f"🔍 DEBUG: curr_address_only returned None for {mapping.target_column}")
+            self.logger.debug(f"curr_address_only returned None for {mapping.target_column}")
             return None
         
         if value is None or value == '':
@@ -1033,7 +1033,7 @@ class DataMapper(DataMapperInterface):
     def _apply_enum_mapping(self, value: Any, mapping: FieldMapping) -> int:
         """Apply enum mapping transformation using loaded enum mappings."""
         str_value = str(value).strip() if value is not None else ''
-        print(f"🔍 DEBUG: _apply_enum_mapping called for {mapping.target_column} with value '{str_value}'")
+
         
         # Determine enum type from target column name
         enum_type = self._determine_enum_type(mapping.target_column)
@@ -1065,7 +1065,7 @@ class DataMapper(DataMapperInterface):
         
         # No valid enum mapping found - return None to exclude column from INSERT
         self.logger.warning(f"No enum mapping found for value '{str_value}' in column {mapping.target_column}, enum_type={enum_type} - excluding column")
-        print(f"🔍 DEBUG: Enum mapping failed for '{str_value}' -> {mapping.target_column}, returning None")
+
         return None
     
     def _extract_from_last_valid_pr_contact(self, mapping: FieldMapping) -> Any:
@@ -1439,7 +1439,7 @@ class DataMapper(DataMapperInterface):
         """Get default value for a data type."""
         # For enum columns, return None to exclude from INSERT if no valid mapping
         if column_name and column_name.endswith('_enum'):
-            print(f"🔍 DEBUG: Enum column {column_name} with no valid mapping - returning None to exclude")
+
             return None
         
         # NO DEFAULT VALUES - always return None to exclude from INSERT
