@@ -30,7 +30,11 @@ from xml_extractor.validation.pre_processing_validator import PreProcessingValid
 from xml_extractor.parsing.xml_parser import XMLParser
 from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.database.migration_engine import MigrationEngine
-from xml_extractor.database.connection_test import DatabaseConnectionTester
+# Import DatabaseConnectionTester from integration tests
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from integration.test_database_connection import DatabaseConnectionTester
 
 
 class TestProductionXMLBatch(unittest.TestCase):
@@ -54,7 +58,7 @@ class TestProductionXMLBatch(unittest.TestCase):
         cls.parser = XMLParser()
         
         # Initialize DataMapper with mapping contract (existing pattern)
-        mapping_contract_path = Path(__file__).parent.parent / "config" / "credit_card_mapping_contract.json"
+        mapping_contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
         cls.mapper = DataMapper(mapping_contract_path=str(mapping_contract_path))
         
         cls.migration_engine = MigrationEngine(cls.connection_string)
@@ -154,6 +158,7 @@ class TestProductionXMLBatch(unittest.TestCase):
                     FROM app_xml 
                     WHERE xml IS NOT NULL 
                     AND DATALENGTH(xml) > 100
+                    AND app_id != 443306  -- Exclude test app_id from pipeline integration test
                     ORDER BY app_id
                 """)
                 

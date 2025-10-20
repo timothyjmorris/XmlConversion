@@ -10,10 +10,10 @@ import logging
 from typing import Dict, List, Any
 from datetime import datetime
 
-from .data_integrity_validator import DataIntegrityValidator
-from .validation_models import ValidationConfig, ValidationSeverity, ValidationType
-from .validation_integration import ValidationOrchestrator, ValidationReporter
-from ..models import MappingContract, FieldMapping, RelationshipMapping
+from xml_extractor.validation.data_integrity_validator import DataIntegrityValidator
+from xml_extractor.validation.validation_models import ValidationConfig, ValidationSeverity, ValidationType
+from xml_extractor.validation.validation_integration import ValidationOrchestrator, ValidationReporter
+from xml_extractor.models import MappingContract, FieldMapping, RelationshipMapping
 
 
 class ValidationSystemTester:

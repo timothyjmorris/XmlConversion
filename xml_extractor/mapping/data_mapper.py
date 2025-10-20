@@ -14,6 +14,7 @@ from ..models import MappingContract, FieldMapping, RelationshipMapping
 from ..exceptions import DataMappingError, ValidationError, DataTransformationError
 from ..validation.element_filter import ElementFilter
 from ..utils import StringUtils, ValidationUtils
+from ..config.config_manager import get_config_manager
 
 
 class DataMapper(DataMapperInterface):
@@ -34,17 +35,30 @@ class DataMapper(DataMapperInterface):
             'fallback_values': 0
         }
         
-        # Load enum mappings and validation rules from contract
-        self._enum_mappings = {}
-        self._bit_conversions = {}
-        self._default_values = {}
-        self._validation_rules = {}
+        # Get centralized configuration
+        self._config_manager = get_config_manager()
         
+        # Use provided path or get from centralized configuration
         if mapping_contract_path:
-            self._load_contract_configurations(mapping_contract_path)
             self._mapping_contract_path = mapping_contract_path
         else:
-            self._mapping_contract_path = None
+            self._mapping_contract_path = self._config_manager.paths.mapping_contract_path
+        
+        # Load enum mappings and validation rules from contract using centralized config
+        # Handle cases where the mapping contract file might not exist during initialization
+        try:
+            self._enum_mappings = self._config_manager.get_enum_mappings(self._mapping_contract_path)
+            self._bit_conversions = self._config_manager.get_bit_conversions(self._mapping_contract_path)
+            self._default_values = self._config_manager.get_default_values(self._mapping_contract_path)
+            self.logger.info(f"DataMapper initialized with mapping contract: {self._mapping_contract_path}")
+            self.logger.debug(f"Loaded {len(self._enum_mappings)} enum mappings, {len(self._bit_conversions)} bit conversions")
+        except Exception as e:
+            self.logger.warning(f"Could not load mapping contract configurations during initialization: {e}")
+            self._enum_mappings = {}
+            self._bit_conversions = {}
+            self._default_values = {}
+        
+        self._validation_rules = {}
     
     def apply_mapping_contract(self, xml_data: Dict[str, Any], 
                              contract: MappingContract,
@@ -112,53 +126,12 @@ class DataMapper(DataMapperInterface):
     
     def map_xml_to_database(self, xml_data: Dict[str, Any], app_id: str, valid_contacts: List[Dict[str, Any]], xml_root=None) -> Dict[str, List[Dict[str, Any]]]:
         """Map XML data to database format using the loaded mapping contract."""
-        if not self._mapping_contract_path:
-            raise DataMappingError("No mapping contract path provided during initialization")
-        
         # Set the XML root for contact extraction
         if xml_root is not None:
             self._current_xml_root = xml_root
         
-        # Load the mapping contract from JSON
-        import json
-        from ..models import MappingContract, FieldMapping, RelationshipMapping
-        
-        with open(self._mapping_contract_path, 'r') as f:
-            contract_data = json.load(f)
-        
-        # Create FieldMapping objects
-        field_mappings = []
-        for mapping in contract_data['mappings']:
-            field_mapping = FieldMapping(
-                xml_path=mapping['xml_path'],
-                target_table=mapping['target_table'],
-                target_column=mapping['target_column'],
-                data_type=mapping['data_type'],
-                xml_attribute=mapping.get('xml_attribute'),
-                mapping_type=mapping.get('mapping_type'),
-                transformation=mapping.get('transformation')
-            )
-            field_mappings.append(field_mapping)
-        
-        # Create RelationshipMapping objects
-        relationship_mappings = []
-        for relationship in contract_data['relationships']:
-            rel_mapping = RelationshipMapping(
-                parent_table=relationship['parent_table'],
-                child_table=relationship['child_table'],
-                foreign_key_column=relationship['foreign_key_column'],
-                xml_parent_path=relationship['xml_parent_path'],
-                xml_child_path=relationship['xml_child_path']
-            )
-            relationship_mappings.append(rel_mapping)
-        
-        mapping_contract = MappingContract(
-            source_table=contract_data['source_table'],
-            source_column=contract_data['source_column'],
-            xml_root_element=contract_data['xml_root_element'],
-            mappings=field_mappings,
-            relationships=relationship_mappings
-        )
+        # Load the mapping contract using centralized configuration
+        mapping_contract = self._config_manager.load_mapping_contract(self._mapping_contract_path)
         
         # Apply the mapping contract with pre-validated data
         return self.apply_mapping_contract(xml_data, mapping_contract, app_id, valid_contacts)
@@ -229,7 +202,7 @@ class DataMapper(DataMapperInterface):
                 return self._transform_to_string(value, max_length)
             
             # Handle numeric types
-            elif target_type in ['int', 'smallint', 'bigint']:
+            elif target_type in ['int', 'smallint', 'bigint', 'tinyint']:
                 return self._transform_to_integer(value)
             
             elif target_type.startswith('decimal'):
@@ -306,22 +279,7 @@ class DataMapper(DataMapperInterface):
         return processed_children
     
     # Helper methods
-    def _load_contract_configurations(self, contract_path: str) -> None:
-        """Load enum mappings and validation rules from mapping contract file."""
-        try:
-            with open(contract_path, 'r') as f:
-                contract_data = json.load(f)
-            
-            self._enum_mappings = contract_data.get('enum_mappings', {})
-            self._bit_conversions = contract_data.get('bit_conversions', {})
-            self._default_values = contract_data.get('default_values', {})
-            self._validation_rules = contract_data.get('validation_rules', {})
-            
-            self.logger.info(f"Loaded contract configurations from {contract_path}")
-            
-        except Exception as e:
-            self.logger.warning(f"Failed to load contract configurations: {e}")
-    
+
     def _extract_app_id(self, xml_data: Dict[str, Any]) -> Optional[str]:
         """Extract app_id from XML data (compatible with XMLParser flat structure)."""
         try:

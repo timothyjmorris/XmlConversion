@@ -2,8 +2,8 @@
 """
 Test validation using the real sample XML with ghost nodes and edge cases.
 
-This test uses the actual sample-source-xml-contact-test.xml file to validate
-our system handles real-world edge cases correctly.
+This test uses the actual `sample-source-xml-contact-test.xml` file to validate
+our system handles real-world edge cases correctly
 """
 
 import unittest
@@ -12,7 +12,7 @@ from pathlib import Path
 import sys
 
 # Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from xml_extractor.validation.pre_processing_validator import PreProcessingValidator
 from xml_extractor.parsing.xml_parser import XMLParser
@@ -24,17 +24,40 @@ class TestRealSampleXMLValidation(unittest.TestCase):
     
     def setUp(self):
         """Set up test fixtures."""
+        # Clean up any existing test data first (app_id 443306) to avoid conflicts
+        self.cleanup_test_data()
+        
         self.validator = PreProcessingValidator()
         self.parser = XMLParser()
         self.mapper = DataMapper()
         
         # Load real sample XML with proper UTF-8 encoding to handle BOM correctly
-        sample_path = Path(__file__).parent.parent / "config" / "samples" / "sample-source-xml-contact-test.xml"
+        sample_path = Path(__file__).parent.parent.parent / "config" / "samples" / "sample-source-xml-contact-test.xml"
         if sample_path.exists():
             with open(sample_path, 'r', encoding='utf-8') as f:
                 self.real_sample_xml = f.read()
         else:
             self.skipTest("Real sample XML file not found")
+    
+    def cleanup_test_data(self):
+        """Clean up any existing test data to avoid conflicts."""
+        try:
+            # Use centralized configuration for database connection
+            from xml_extractor.config.config_manager import get_config_manager
+            config_manager = get_config_manager()
+            connection_string = config_manager.get_database_connection_string()
+            
+            import pyodbc
+            with pyodbc.connect(connection_string) as conn:
+                cursor = conn.cursor()
+                
+                # Only delete from app_base - cascade will handle the rest
+                cursor.execute("DELETE FROM app_base WHERE app_id = 443306")
+                
+                conn.commit()
+                print("🧹 Cleaned up existing test data for app_id 443306")
+        except Exception as e:
+            print(f"⚠️ Cleanup warning: {e}")
     
     def test_real_sample_xml_validation(self):
         """Test validation of real sample XML with edge cases."""

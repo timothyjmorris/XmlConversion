@@ -14,8 +14,6 @@ from .validation_models import (
     ValidationConfig, ValidationSeverity, ValidationType
 )
 from .validation_integration import ValidationOrchestrator, ValidationReporter
-from .test_validation_system import ValidationSystemTester, run_validation_system_tests
-
 __all__ = [
     'DataIntegrityValidator',
     'ValidationResult', 
@@ -25,7 +23,5 @@ __all__ = [
     'ValidationSeverity',
     'ValidationType',
     'ValidationOrchestrator',
-    'ValidationReporter',
-    'ValidationSystemTester',
-    'run_validation_system_tests'
+    'ValidationReporter'
 ]

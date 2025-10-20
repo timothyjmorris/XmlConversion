@@ -349,6 +349,7 @@ class XMLParser(XMLParserInterface):
             Dictionary of extracted element data
         """
         extracted_data = {}
+        element_path = current_path or "unknown"  # Initialize with fallback value
         
         try:
             # Build current element path
@@ -518,17 +519,36 @@ class XMLParser(XMLParserInterface):
             self.logger.warning(f"Could not generate element path: {e}")
             return '/unknown'
     
-    def _clean_tag_name(self, tag: str) -> str:
+    def _clean_tag_name(self, tag) -> str:
         """
         Clean tag name by removing namespace prefixes.
         
         Args:
-            tag: Raw tag name potentially with namespace
+            tag: Raw tag name potentially with namespace (could be string or other type)
             
         Returns:
             Clean tag name without namespace prefix
         """
-        if not tag:
+        # Handle different tag types (string, Cython function, etc.)
+        if hasattr(tag, '__call__'):
+            # If it's a callable (like Cython function), try to get string representation
+            try:
+                tag_str = str(tag)
+                if tag_str and not tag_str.startswith('<'):
+                    tag = tag_str
+                else:
+                    # If string representation isn't useful, try getting the name
+                    tag = getattr(tag, '__name__', 'unknown')
+            except:
+                tag = 'unknown'
+        elif not isinstance(tag, str):
+            # Convert other types to string
+            try:
+                tag = str(tag)
+            except:
+                tag = 'unknown'
+        
+        if not tag or tag == 'None':
             return 'unknown'
         
         # Remove namespace URI if present (format: {namespace}tagname)

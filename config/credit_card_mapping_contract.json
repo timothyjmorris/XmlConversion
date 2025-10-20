@@ -782,7 +782,7 @@
       "data_type": "datetime"
     },
     {
-      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_path": "/Provenir/Request",
       "xml_attribute": "priority",
       "target_table": "app_operational_cc",
       "target_column": "priority_enum",
@@ -805,6 +805,22 @@
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "secure_ach_sent_flag",
+      "target_table": "app_transactional_cc",
+      "target_column": "sc_ach_sent_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "sc_debit_refund_failed_flag",
+      "target_table": "app_transactional_cc",
+      "target_column": "sc_debit_refund_failed_flag",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "swiftpay_num",
       "target_table": "app_operational_cc",
       "target_column": "sc_funding_reference",
@@ -817,6 +833,14 @@
       "target_column": "verification_source_enum",
       "data_type": "smallint",
       "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "credit_life_ind",
+      "target_table": "app_operational_cc",
+      "target_column": "payment_protection_plan",
+      "data_type": "bit",
+      "mapping_type": "char_to_bit"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -865,14 +889,16 @@
       "xml_attribute": "banking_aba",
       "target_table": "app_operational_cc",
       "target_column": "sc_bank_aba",
-      "data_type": "char(9)"
+      "data_type": "char(9)",
+      "mapping_type": "last_valid_pr_contact"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "banking_account_number",
       "target_table": "app_operational_cc",
       "target_column": "sc_bank_account_num",
-      "data_type": "varchar(17)"
+      "data_type": "varchar(17)",
+      "mapping_type": "last_valid_pr_contact"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -881,6 +907,49 @@
       "target_column": "sc_bank_account_type_enum",
       "data_type": "smallint",
       "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "debit_funding_source",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_debit_funding_source_enum",
+      "data_type": "smallint",
+      "mapping_type": "enum"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "debit_initial_deposit_amount",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_debit_initial_deposit_amount",
+      "data_type": "decimal(12,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "debit_initial_deposit_date",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_debit_initial_deposit_date",
+      "data_type": "datetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "debit_nsf_return_date",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_debit_nsf_return_date",
+      "data_type": "datetime"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "debit_refund_amount",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_debit_refund_amount",
+      "data_type": "decimal(12,2)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "debit_refund_date",
+      "target_table": "app_operational_cc",
+      "target_column": "sc_debit_refund_date",
+      "data_type": "datetime"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -932,7 +1001,16 @@
       "xml_attribute": "credit_line2",
       "target_table": "app_pricing_cc",
       "target_column": "credit_line_possible",
-      "data_type": "smallint"
+      "data_type": "smallint",
+      "mapping_type": "last_valid_pr_contact"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_attribute": "max_line",
+      "target_table": "app_pricing_cc",
+      "target_column": "credit_line_max",
+      "data_type": "smallint",
+      "mapping_type": "last_valid_pr_contact"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
@@ -947,7 +1025,8 @@
       "xml_attribute": "multran_account_number",
       "target_table": "app_pricing_cc",
       "target_column": "sc_multran_account_num",
-      "data_type": "varchar(16)"
+      "data_type": "varchar(16)",
+      "mapping_type": "last_valid_pr_contact"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1053,7 +1132,7 @@
       "target_table": "contact_base",
       "target_column": "esign_consent_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": "boolean_to_bit"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1061,7 +1140,7 @@
       "target_table": "contact_base",
       "target_column": "paperless_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": "boolean_to_bit"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1069,7 +1148,7 @@
       "target_table": "contact_base",
       "target_column": "sms_consent_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": "boolean_to_bit"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",

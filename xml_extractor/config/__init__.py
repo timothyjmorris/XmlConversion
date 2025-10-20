@@ -1,5 +1,5 @@
 """Configuration management components."""
 
-from .manager import ConfigurationManager
+from .config_manager import ConfigManager, get_config_manager, reset_config_manager
 
-__all__ = ['ConfigurationManager']
+__all__ = ['ConfigManager', 'get_config_manager', 'reset_config_manager']

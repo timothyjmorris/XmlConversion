@@ -7,6 +7,9 @@ PreProcessingValidator → XMLParser → DataMapper → MigrationEngine
 
 Uses sample-source-xml-contact-test.xml to test the "last valid element" approach
 with actual database insertion and validation.
+    - parse xml
+    - map fields + transform
+    - insert into db
 """
 
 import unittest
@@ -18,7 +21,7 @@ import pyodbc
 from datetime import datetime
 
 # Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from xml_extractor.validation.pre_processing_validator import PreProcessingValidator
 from xml_extractor.parsing.xml_parser import XMLParser
@@ -52,9 +55,14 @@ class TestEndToEndIntegration(unittest.TestCase):
     @classmethod
     def setup_test_database(cls):
         """Set up real database connection for testing."""
-        # Use the real database connection string
-        cls.connection_string = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost\\SQLEXPRESS;DATABASE=XmlConversionDB;Trusted_Connection=yes;Mars_Connection=yes;CharacterSet=UTF-8;"
-        print(f"✅ Using real database: XmlConversionDB on localhost\\SQLEXPRESS")
+        # Use centralized configuration for database connection
+        from xml_extractor.config.config_manager import get_config_manager
+        config_manager = get_config_manager()
+        cls.connection_string = config_manager.get_database_connection_string()
+        print(f"✅ Using centralized database configuration")
+        
+        # Clean up any existing test data once at the beginning
+        cls.cleanup_test_data_once()
     
     @classmethod
     def create_test_tables(cls):
@@ -64,11 +72,10 @@ class TestEndToEndIntegration(unittest.TestCase):
     
     def setUp(self):
         """Set up test fixtures."""
-        # Clean up any existing test data (app_id 443306) to avoid duplicates
-        self.cleanup_test_data()
+        # Note: Cleanup moved to setUpClass to preserve data after tests
         
         # Load sample XML
-        sample_path = Path(__file__).parent.parent / "config" / "samples" / "sample-source-xml-contact-test.xml"
+        sample_path = Path(__file__).parent.parent.parent / "config" / "samples" / "sample-source-xml-contact-test.xml"
         if not sample_path.exists():
             self.skipTest("Sample XML file not found")
         
@@ -80,7 +87,7 @@ class TestEndToEndIntegration(unittest.TestCase):
         self.parser = XMLParser()
         
         # Initialize DataMapper with the mapping contract path so it loads enum mappings
-        mapping_contract_path = Path(__file__).parent.parent / "config" / "credit_card_mapping_contract.json"
+        mapping_contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
         self.mapper = DataMapper(mapping_contract_path=str(mapping_contract_path))
         
         self.migration_engine = MigrationEngine(self.connection_string)

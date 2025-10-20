@@ -13,6 +13,7 @@ from contextlib import contextmanager
 
 from ..interfaces import MigrationEngineInterface
 from ..exceptions import DatabaseConnectionError, SchemaValidationError, XMLExtractionError
+from ..config.config_manager import get_config_manager
 
 
 class MigrationEngine(MigrationEngineInterface):
@@ -23,17 +24,24 @@ class MigrationEngine(MigrationEngineInterface):
     optimized for SQL Server Express LocalDB and production SQL Server instances.
     """
     
-    def __init__(self, connection_string: str, batch_size: int = 1000):
+    def __init__(self, connection_string: Optional[str] = None, batch_size: Optional[int] = None):
         """
         Initialize the migration engine.
         
         Args:
-            connection_string: SQL Server connection string
-            batch_size: Default batch size for bulk operations
+            connection_string: Optional SQL Server connection string. If None, uses centralized config.
+            batch_size: Optional batch size for bulk operations. If None, uses centralized config.
         """
-        self.connection_string = connection_string
-        self.batch_size = batch_size
         self.logger = logging.getLogger(__name__)
+        
+        # Get centralized configuration
+        config_manager = get_config_manager()
+        processing_config = config_manager.get_processing_config()
+        
+        # Use provided values or fall back to centralized configuration
+        self.connection_string = connection_string or config_manager.get_database_connection_string()
+        self.batch_size = batch_size or processing_config.batch_size
+        
         self._connection = None
         self._transaction_active = False
         
@@ -41,6 +49,9 @@ class MigrationEngine(MigrationEngineInterface):
         self._total_records = 0
         self._processed_records = 0
         self._start_time = None
+        
+        self.logger.info(f"MigrationEngine initialized with batch_size={self.batch_size}")
+        self.logger.debug(f"Using database server: {config_manager.database_config.server}")
         
     @contextmanager
     def get_connection(self):
