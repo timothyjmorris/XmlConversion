@@ -187,13 +187,23 @@ class PreProcessingValidator:
                                    errors: List[str]) -> Optional[str]:
         """Extract and validate app_id from XML data."""
         try:
-            # Navigate to /Provenir/Request/@ID
-            request_data = xml_data.get('Provenir', {}).get('Request', {})
+            # Navigate to /Provenir/Request/@ID using XMLParser flat structure
+            request_path = '/Provenir/Request'
+            app_id = None
             
-            if isinstance(request_data, list) and len(request_data) > 0:
-                request_data = request_data[0]
+            if request_path in xml_data:
+                request_element = xml_data[request_path]
+                if isinstance(request_element, dict) and 'attributes' in request_element:
+                    attributes = request_element['attributes']
+                    # Check for lowercase 'id' due to case normalization in XML parser
+                    app_id = attributes.get('id') or attributes.get('ID')
             
-            app_id = request_data.get('ID') if isinstance(request_data, dict) else None
+            # Fallback to nested structure for backward compatibility
+            if not app_id:
+                request_data = xml_data.get('Provenir', {}).get('Request', {})
+                if isinstance(request_data, list) and len(request_data) > 0:
+                    request_data = request_data[0]
+                app_id = request_data.get('ID') if isinstance(request_data, dict) else None
             
             if not app_id:
                 errors.append("CRITICAL: Missing app_id (/Provenir/Request/@ID)")

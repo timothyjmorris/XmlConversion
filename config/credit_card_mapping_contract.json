@@ -138,7 +138,8 @@
       "xml_attribute": "mail_cell_pricing",
       "target_table": "app_pricing_cc",
       "target_column": "marketing_segment",
-      "data_type": "varchar(10)"
+      "data_type": "varchar(10)",
+      "default_value": "UNKNOWN"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -233,7 +234,8 @@
       "xml_attribute": "birth_date",
       "target_table": "contact_base",
       "target_column": "birth_date",
-      "data_type": "smalldatetime"
+      "data_type": "smalldatetime",
+      "default_value": "1900-01-01"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -340,7 +342,8 @@
       "xml_attribute": "months_at_residence",
       "target_table": "contact_address",
       "target_column": "months_at_address",
-      "data_type": "smallint"
+      "data_type": "smallint",
+      "mapping_type": "curr_address_only"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -762,7 +765,7 @@
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
-      "xml_attribute": "ip_address",
+      "xml_attribute": "IP_address",
       "target_table": "app_base",
       "target_column": "ip_address",
       "data_type": "varchar(39)"
@@ -1124,7 +1127,7 @@
       "xml_attribute": "expinnumber",
       "target_table": "app_transactional_cc",
       "target_column": "ex_freeze_code",
-      "data_type": "varchar(255)"
+      "data_type": "varchar(4)"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1455,7 +1458,8 @@
     "signature_flag": 0,
     "self_employed_flag": 0,
     "income_source_nontaxable_flag": 0,
-    "marketing_segment": "UNKNOWN"
+    "marketing_segment": "UNKNOWN",
+    "birth_date": "1900-01-01"
   },
   "validation_rules": {
     "required_identifiers": [

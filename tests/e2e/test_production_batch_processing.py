@@ -24,17 +24,15 @@ from typing import List, Dict, Any, Tuple
 import traceback
 
 # Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
 
 from xml_extractor.validation.pre_processing_validator import PreProcessingValidator
 from xml_extractor.parsing.xml_parser import XMLParser
 from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.database.migration_engine import MigrationEngine
 # Import DatabaseConnectionTester from integration tests
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from integration.test_database_connection import DatabaseConnectionTester
+from tests.integration.test_database_connection import DatabaseConnectionTester
 
 
 class TestProductionXMLBatch(unittest.TestCase):
@@ -58,7 +56,7 @@ class TestProductionXMLBatch(unittest.TestCase):
         cls.parser = XMLParser()
         
         # Initialize DataMapper with mapping contract (existing pattern)
-        mapping_contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
+        mapping_contract_path = project_root / "config" / "credit_card_mapping_contract.json"
         cls.mapper = DataMapper(mapping_contract_path=str(mapping_contract_path))
         
         cls.migration_engine = MigrationEngine(cls.connection_string)
@@ -90,9 +88,13 @@ class TestProductionXMLBatch(unittest.TestCase):
         This is the ultimate litmus test to prove the complete plumbing works.
         """
         print("\n" + "="*100)
-        print("🚀 PRODUCTION XML BATCH PROCESSING TEST")
+        print("🚀 PRODUCTION XML BATCH PROCESSING TEST - ITERATION 3")
         print("="*100)
         print("Goal: Discover problems and refine the program with real production data")
+        print("Previous iterations:")
+        print("  • app_ids 1-4 (✅ 100% success)")
+        print("  • app_ids 5-7 (✅ 100% success, found 'Pass' enum + '0.0' conversion issues)")
+        print("Current iteration: app_ids 8, 9, 10")
         print()
         
         # Step 1: Extract XML files from app_xml table
@@ -151,14 +153,15 @@ class TestProductionXMLBatch(unittest.TestCase):
             with self.migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 
-                # Get a small sample of XML records for testing
+                # ITERATION 3: Process next chunk of XML records (8, 9, 10)
+                # Previous iterations: 1-4 (✅ 100% success), 5-7 (✅ 100% success, found enum/conversion issues)
                 # Use DATALENGTH instead of LEN for TEXT columns
                 cursor.execute("""
-                    SELECT TOP 2 app_id, xml 
+                    SELECT app_id, xml 
                     FROM app_xml 
                     WHERE xml IS NOT NULL 
                     AND DATALENGTH(xml) > 100
-                    AND app_id != 443306  -- Exclude test app_id from pipeline integration test
+                    AND app_id IN (8, 9, 10)  -- Iteration 3: Next chunk after reviewing 1-7
                     ORDER BY app_id
                 """)
                 
@@ -235,7 +238,7 @@ class TestProductionXMLBatch(unittest.TestCase):
             root = self.parser.parse_xml_stream(xml_content)
             xml_data = self.parser.extract_elements(root)
             
-            if not root or not xml_data:
+            if root is None or not xml_data:
                 result['error_stage'] = 'parsing'
                 result['error'] = "Failed to parse XML or extract elements"
                 return result

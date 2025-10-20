@@ -565,15 +565,17 @@ class XMLParser(XMLParserInterface):
     
     def _clean_attribute_name(self, attr_name: str) -> str:
         """
-        Clean attribute name by removing namespace prefixes.
+        Clean attribute name by removing namespace prefixes and normalizing case.
         
         Args:
             attr_name: Raw attribute name potentially with namespace
             
         Returns:
-            Clean attribute name without namespace prefix
+            Clean attribute name without namespace prefix, normalized to lowercase
         """
-        return self._clean_tag_name(attr_name)
+        clean_name = self._clean_tag_name(attr_name)
+        # Keep original casing - case-insensitive lookup handled in data mapper
+        return clean_name
     
     def _process_attribute_value(self, attr_value: str) -> str:
         """

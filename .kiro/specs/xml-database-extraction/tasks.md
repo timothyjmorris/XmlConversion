@@ -173,7 +173,42 @@
     - **This is the ultimate litmus test to prove the complete plumbing works on real data**
     - _Requirements: 1.1, 2.1, 4.1, 5.1, Data Integrity Validation_
 
-- [x] 10. Code Quality and Refactoring Phase
+- [ ] 10. Production Data Iterative Refinement Phase
+  - [x] 10.1 Production XML Batch Processing - Iteration 1
+    - Run test #287 (`test_production_xml_batch_processing`) to process next 2-3 XML records from app_xml table
+    - Analyze processing results and identify missing mappings, validation issues, or transformation failures
+    - Document specific XML paths and values that are not being mapped correctly
+    - Update mapping contract with identified missing mappings based on real production data patterns
+    - Re-run test to validate fixes and measure improvement in success rate
+    - **Goal**: Achieve higher success rate and identify next batch of issues to fix
+    - _Requirements: Production Data Validation, Mapping Completeness_
+
+  - [ ] 10.2 Production XML Batch Processing - Iteration 2
+    - Process next batch of XML records (increase batch size if previous iteration was successful)
+    - Focus on fixing issues identified in previous iteration
+    - Add any missing enum mappings, bit conversions, or calculated field logic
+    - Validate that previous fixes didn't break existing functionality
+    - Document edge cases and unusual data patterns found in production XML
+    - **Goal**: Continue improving success rate and mapping coverage
+    - _Requirements: Production Data Validation, Edge Case Handling_
+
+  - [ ] 10.3 Production XML Batch Processing - Iteration 3
+    - Process larger batch of XML records to test scalability and consistency
+    - Focus on performance optimization and error handling improvements
+    - Validate that all 8 target tables are being populated correctly across different XML patterns
+    - Create comprehensive report of mapping coverage and data quality metrics
+    - **Goal**: Achieve 90%+ success rate on production data batch processing
+    - _Requirements: Production Readiness, Performance Validation_
+
+  - [ ] 10.4 Production Data Quality Validation
+    - Run comprehensive validation comparing source XML data with inserted database records
+    - Verify referential integrity and foreign key relationships across all tables
+    - Validate enum mappings and bit conversions are working correctly with real data
+    - Check for data loss or transformation errors in the complete pipeline
+    - **Goal**: Ensure data integrity and completeness for production deployment
+    - _Requirements: Data Quality Assurance, Production Readiness_
+
+- [x] 11. Code Quality and Refactoring Phase
   - [x] 10.1 Analyze and refactor mapping logic for consistency
     - Audit DataMapper for duplicate transformation logic and consolidate
     - Review enum mapping, bit conversion, and default value handling for redundancy

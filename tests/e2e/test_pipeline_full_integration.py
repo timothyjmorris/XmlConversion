@@ -62,7 +62,7 @@ class TestEndToEndIntegration(unittest.TestCase):
         print(f"✅ Using centralized database configuration")
         
         # Clean up any existing test data once at the beginning
-        cls.cleanup_test_data_once()
+        # Note: cleanup will be done in individual test methods
     
     @classmethod
     def create_test_tables(cls):
@@ -111,6 +111,9 @@ class TestEndToEndIntegration(unittest.TestCase):
         print("\n" + "="*80)
         print("TESTING END-TO-END PIPELINE WITH DATABASE INSERTION")
         print("="*80)
+        
+        # Clean up any existing test data first
+        self.cleanup_test_data()
         
         # Step 1: Validate XML
         print("\n📋 Step 1: Validating XML...")

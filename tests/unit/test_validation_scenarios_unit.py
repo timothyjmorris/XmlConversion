@@ -42,15 +42,15 @@ class TestXMLValidationScenarios(unittest.TestCase):
         
         # Step 2: Parse XML
         root = self.parser.parse_xml_stream(xml_content)
-        elements = self.parser.extract_elements(root)
-        xml_data = self._convert_elements_to_dict(elements)
+        xml_data = self.parser.extract_elements(root)
+        # Use the direct XML data format that DataMapper expects, not converted format
         
-        # Step 3: Apply mapping with validated contacts
-        result = self.mapper.apply_mapping_contract(
+        # Step 3: Apply mapping with validated contacts and XML root
+        result = self.mapper.map_xml_to_database(
             xml_data, 
-            self.mapping_contract, 
             validation_result.app_id, 
-            validation_result.valid_contacts
+            validation_result.valid_contacts,
+            root  # Pass XML root for proper processing
         )
         
         return result, validation_result
@@ -274,7 +274,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         <Provenir>
             <Request ID="154284">
                 <CustData>
-                    <application>
+                    <application app_receive_date="05/20/2016" app_source_ind="I">
                         <contact con_id="277449" ac_role_tp_c="PR" first_name="JOHN">
                             <contact_address city="FARGO" state="ND">
                                 <!-- Missing address_tp_c attribute -->
@@ -302,7 +302,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         <Provenir>
             <Request ID="154284">
                 <CustData>
-                    <application>
+                    <application app_receive_date="05/20/2016" app_source_ind="I">
                         <contact con_id="277449" ac_role_tp_c="PR" first_name="JOHN">
                             <contact_address address_tp_c="CURR" city="FARGO"/>
                             <contact_employment b_salary="75000">
