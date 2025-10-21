@@ -711,7 +711,7 @@ class DataIntegrityValidator:
             extracted_str = str(extracted_value).strip()
             
             # Handle numeric comparisons
-            if data_type in ['int', 'smallint', 'bigint']:
+            if data_type in ['int', 'smallint', 'bigint', 'tinyint']:
                 return int(float(source_str)) == int(float(extracted_str))
             elif data_type.startswith('decimal') or data_type == 'float':
                 return abs(float(source_str) - float(extracted_str)) < 0.01
@@ -782,7 +782,7 @@ class DataIntegrityValidator:
     
     def _is_value_of_expected_type(self, value: Any, expected_type: str) -> bool:
         """Check if value matches expected data type."""
-        if expected_type in ['int', 'smallint', 'bigint']:
+        if expected_type in ['int', 'smallint', 'bigint', 'tinyint']:
             return isinstance(value, int) or (isinstance(value, str) and value.isdigit())
         elif expected_type.startswith('decimal') or expected_type == 'float':
             return isinstance(value, (int, float)) or (isinstance(value, str) and self._is_numeric(value))

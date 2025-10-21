@@ -70,7 +70,13 @@ class TestProductionXMLBatch(unittest.TestCase):
             'parsing_failures': 0,
             'mapping_failures': 0,
             'insertion_failures': 0,
-            'detailed_results': []
+            'detailed_results': [],
+            'data_quality_issues': {
+                'incomplete_applications': 0,
+                'missing_contacts': 0,
+                'missing_primary_contacts': 0,
+                'skipped_contact_tables': 0
+            }
         }
     
     def setUp(self):
@@ -88,13 +94,16 @@ class TestProductionXMLBatch(unittest.TestCase):
         This is the ultimate litmus test to prove the complete plumbing works.
         """
         print("\n" + "="*100)
-        print("🚀 PRODUCTION XML BATCH PROCESSING TEST - ITERATION 3")
+        print("🚀 PRODUCTION XML BATCH PROCESSING TEST - ITERATION 5")
         print("="*100)
-        print("Goal: Discover problems and refine the program with real production data")
+        print("Goal: Continue systematic validation of production data")
+        print("System Status: 🔥 ROCK SOLID - 13/13 apps processed successfully!")
         print("Previous iterations:")
         print("  • app_ids 1-4 (✅ 100% success)")
-        print("  • app_ids 5-7 (✅ 100% success, found 'Pass' enum + '0.0' conversion issues)")
-        print("Current iteration: app_ids 8, 9, 10")
+        print("  • app_ids 5-7 (✅ 100% success)")
+        print("  • app_ids 8-10 (✅ 100% success after fixes)")
+        print("  • app_ids 11-13 (✅ 100% success)")
+        print("Current iteration: app_ids 14, 15, 16")
         print()
         
         # Step 1: Extract XML files from app_xml table
@@ -153,15 +162,16 @@ class TestProductionXMLBatch(unittest.TestCase):
             with self.migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 
-                # ITERATION 3: Process next chunk of XML records (8, 9, 10)
-                # Previous iterations: 1-4 (✅ 100% success), 5-7 (✅ 100% success, found enum/conversion issues)
-                # Use DATALENGTH instead of LEN for TEXT columns
+                # ITERATION 5: Process next chunk of XML records (14, 15, 16)
+                # Previous iterations: ALL 100% SUCCESS after fixes!
+                #   1-4 (✅ 100%), 5-7 (✅ 100%), 8-10 (✅ 100% after fixes), 11-13 (✅ 100%)
+                # System proven stable with 13/13 production records processed successfully
                 cursor.execute("""
                     SELECT app_id, xml 
                     FROM app_xml 
                     WHERE xml IS NOT NULL 
                     AND DATALENGTH(xml) > 100
-                    AND app_id IN (8, 9, 10)  -- Iteration 3: Next chunk after reviewing 1-7
+                    AND app_id IN (14, 15, 16)  -- Iteration 5: Next chunk
                     ORDER BY app_id
                 """)
                 
@@ -220,8 +230,12 @@ class TestProductionXMLBatch(unittest.TestCase):
                 'can_process': validation_result.can_process,
                 'extracted_app_id': validation_result.app_id,
                 'valid_contacts': len(validation_result.valid_contacts) if validation_result.valid_contacts else 0,
-                'validation_errors': validation_result.validation_errors
+                'validation_errors': validation_result.validation_errors,
+                'validation_warnings': validation_result.validation_warnings
             }
+            
+            # Track data quality issues
+            self._track_data_quality_issues(validation_result)
             
             if not validation_result.is_valid or not validation_result.can_process:
                 result['error_stage'] = 'validation'
@@ -342,6 +356,24 @@ class TestProductionXMLBatch(unittest.TestCase):
         
         return insertion_results
     
+    def _track_data_quality_issues(self, validation_result):
+        """Track data quality issues from validation results."""
+        warnings = validation_result.validation_warnings
+        
+        for warning in warnings:
+            if "No valid contacts found" in warning:
+                self.batch_results['data_quality_issues']['missing_contacts'] += 1
+                self.batch_results['data_quality_issues']['incomplete_applications'] += 1
+            elif "No primary contact" in warning:
+                self.batch_results['data_quality_issues']['missing_primary_contacts'] += 1
+            elif "Skipping contact" in warning:
+                # Individual contact issues don't count as incomplete applications
+                pass
+        
+        # Track if this application had no valid contacts (will skip contact tables)
+        if len(validation_result.valid_contacts) == 0:
+            self.batch_results['data_quality_issues']['skipped_contact_tables'] += 3  # contact_base, contact_address, contact_employment
+
     def analyze_batch_results(self):
         """Analyze and report on batch processing results."""
         results = self.batch_results
@@ -397,6 +429,21 @@ class TestProductionXMLBatch(unittest.TestCase):
             print(f"   Total Records Inserted:")
             for table, count in sorted(total_records_inserted.items()):
                 print(f"     {table}: {count} records")
+        
+        # Data quality analysis
+        dq_issues = results['data_quality_issues']
+        if any(dq_issues.values()):
+            print(f"\n⚠️ Data Quality Issues:")
+            if dq_issues['incomplete_applications'] > 0:
+                print(f"   Incomplete Applications: {dq_issues['incomplete_applications']} ({(dq_issues['incomplete_applications']/results['total_processed']*100):.1f}%)")
+            if dq_issues['missing_contacts'] > 0:
+                print(f"   Missing Contacts: {dq_issues['missing_contacts']} applications processed with graceful degradation")
+            if dq_issues['missing_primary_contacts'] > 0:
+                print(f"   Missing Primary Contacts: {dq_issues['missing_primary_contacts']} applications missing PR contact")
+            if dq_issues['skipped_contact_tables'] > 0:
+                print(f"   Skipped Contact Tables: {dq_issues['skipped_contact_tables']} table insertions skipped due to missing contacts")
+        else:
+            print(f"\n✅ Data Quality: No data quality issues detected - all applications had complete contact information")
     
     def validate_batch_success_criteria(self):
         """Validate that batch processing meets success criteria."""
@@ -404,10 +451,10 @@ class TestProductionXMLBatch(unittest.TestCase):
         
         print(f"\n🎯 Validating Success Criteria:")
         
-        # Criterion 1: At least 70% success rate
+        # Criterion 1: At least 90% success rate
         success_rate = (results['successful'] / results['total_processed']) * 100
-        criterion_1 = success_rate >= 70.0
-        print(f"   ✅ Success Rate ≥ 70%: {success_rate:.1f}% {'✓' if criterion_1 else '✗'}")
+        criterion_1 = success_rate >= 90.0
+        print(f"   ✅ Success Rate ≥ 90%: {success_rate:.1f}% {'✓' if criterion_1 else '✗'}")
         
         # Criterion 2: No parsing failures (indicates robust XML handling)
         criterion_2 = results['parsing_failures'] == 0
@@ -435,9 +482,11 @@ class TestProductionXMLBatch(unittest.TestCase):
                 print(f"   - Review database constraints and data types")
                 print(f"   - Improve data transformation logic")
         
-        # Assert for test framework
-        self.assertGreaterEqual(success_rate, 50.0, 
-                               f"Success rate too low: {success_rate:.1f}% (minimum 50% for initial testing)")
+        # Assert for test framework - fail if any criteria not met
+        self.assertTrue(all_criteria_met, 
+                       f"Production batch processing failed criteria: Success Rate: {success_rate:.1f}% (need ≥90%), "
+                       f"Parsing Failures: {results['parsing_failures']} (need 0), "
+                       f"Insertion Failure Rate: {insertion_failure_rate:.1f}% (need ≤10%)")
 
 
 def run_production_batch_test():

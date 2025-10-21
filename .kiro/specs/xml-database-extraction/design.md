@@ -102,18 +102,35 @@ The system follows a pipeline architecture with the following key components:
 - `handleNestedElements(parentId: string, childElements: XMLElement[])`: Cascading ID relationship mapping
 - `validateAndFilterElements(xmlRoot: Element)`: Pre-processing element validation and filtering
 
-**XML Element Validation and Filtering**:
-- **Contact Elements**: Skip if missing `con_id` OR `ac_role_tp_c` attributes
+**XML Element Validation and Graceful Degradation**:
+- **Contact Elements**: Skip if missing `con_id` OR `ac_role_tp_c` attributes, log as data quality warning
 - **Address Elements**: Skip if missing `address_tp_c` attribute (graceful degradation)
 - **Employment Elements**: Skip if missing `employment_tp_c` attribute (graceful degradation)
 - **ID Cascading**: Extract `con_id` from parent contact element and cascade to children
-- **Application Validation**: Require `app_id` and at least one valid contact for processing
+- **Application Processing**: Require only `app_id` for processing; applications without valid contacts use graceful degradation
+- **Graceful Degradation**: Process app_base and application tables while skipping contact-related tables and "last_valid_pr_contact" fields
 
 **Mapping Contract Integration**:
 - Reads existing mapping contract definitions
 - Validates mapping completeness against sample XML
 - Supports complex transformations and calculated fields
 - Handles one-to-many relationships from nested XML with cascading natural keys
+
+### Data Quality Monitor
+
+**Purpose**: Track and report data quality issues and graceful degradation statistics
+
+**Key Interfaces**:
+- `trackIncompleteApplication(app_id: str, issue_type: str)`: Record applications with missing contact data
+- `trackSkippedTable(app_id: str, table_name: str, reason: str)`: Log skipped table insertions
+- `trackSkippedField(app_id: str, field_name: str, reason: str)`: Log skipped field mappings
+- `generateDataQualitySummary() -> Dict`: Produce batch-level data quality metrics
+
+**Data Quality Categories**:
+- **Missing Contacts**: Applications with no valid contact elements
+- **Invalid Contacts**: Contact elements missing required attributes (con_id, ac_role_tp_c)
+- **Partial Contact Data**: Contacts missing address or employment information
+- **Skipped Mappings**: Fields requiring "last_valid_pr_contact" that couldn't be processed
 
 ### Migration Engine
 

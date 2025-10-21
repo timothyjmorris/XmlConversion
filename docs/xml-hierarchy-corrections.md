@@ -44,7 +44,7 @@ This document summarizes the corrections made to the XML processing logic to pro
 
 #### Required for Processing
 - Must have `app_id` from `/Provenir/Request/@ID`
-- Must have at least one valid contact (with both `con_id` and `ac_role_tp_c`)
+- Contacts will be skipped if they are not valid (having both `con_id` and `ac_role_tp_c`)
 
 #### Graceful Handling
 - Missing addresses/employment are outliers, not fatal errors

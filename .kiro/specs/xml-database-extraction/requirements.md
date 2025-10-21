@@ -25,9 +25,9 @@ This feature enables extraction of credit card application XML data stored in th
 #### Acceptance Criteria
 
 1. WHEN the XML_Extractor processes the app_xml.xml column containing Provenir XML, THE XML_Extractor SHALL parse the XML content and identify all nested elements and attributes
-2. THE XML_Extractor SHALL perform pre-flight validation requiring both `/Provenir/Request/@ID` (app_id) and at least one contact element with `con_id` attribute before processing any XML record
+2. THE XML_Extractor SHALL perform pre-flight validation requiring `/Provenir/Request/@ID` (app_id) before processing any XML record
 3. IF the required `/Provenir/Request/@ID` attribute is missing, THEN THE XML_Extractor SHALL reject the entire XML record and log a critical error
-4. IF no contact elements contain a `con_id` attribute, THEN THE XML_Extractor SHALL reject the entire XML record and log a critical error
+4. IF no contact elements contain a `con_id` attribute, THEN THE XML_Extractor SHALL process the application with graceful degradation, log a data quality warning, and skip contact-related tables
 5. THE XML_Extractor SHALL never generate or create app_id or con_id values - these identifiers must exist in the source XML
 4. THE XML_Extractor SHALL preserve the original app_xml.xml column data during the extraction process
 5. THE XML_Extractor SHALL handle the specific Provenir XML structure with nested application, contact, and product elements
@@ -41,12 +41,13 @@ This feature enables extraction of credit card application XML data stored in th
 1. THE Data_Mapper SHALL use the JSON mapping contract to define how Provenir XML elements correspond to target table columns
 2. WHEN XML attributes are encountered, THE Data_Mapper SHALL extract attribute values and apply enum conversions, bit transformations, and default values as specified
 3. THE Data_Mapper SHALL handle nested contact elements by creating proper app_id and con_id foreign key relationships using only existing identifiers from the XML
-4. THE Data_Mapper SHALL skip any contact elements that lack a `con_id` attribute OR lack an `ac_role_tp_c` attribute (ghost elements) and log these occurrences for audit purposes
-5. THE Data_Mapper SHALL cascade the `con_id` from parent contact elements to child contact_address and contact_employment elements
-6. THE Data_Mapper SHALL skip contact_address elements that lack an `address_tp_c` attribute while continuing to process other elements
-7. THE Data_Mapper SHALL skip contact_employment elements that lack an `employment_tp_c` attribute while continuing to process other elements
-6. THE Data_Mapper SHALL apply data type conversions including char-to-bit, enum lookups, and calculated fields
-7. WHERE multiple contact elements exist (PR and AUTH roles), THE Data_Mapper SHALL create separate contact_base records with proper relationships
+4. THE Data_Mapper SHALL skip any contact elements that lack a `con_id` attribute OR lack an `ac_role_tp_c` attribute (ghost elements) and log these occurrences as data quality warnings for audit purposes
+5. WHERE no valid contacts exist, THE Data_Mapper SHALL process the application using graceful degradation: insert app_base and related application tables while skipping contact_base, contact_address, contact_employment tables and any fields requiring "last_valid_pr_contact" mapping
+6. THE Data_Mapper SHALL cascade the `con_id` from parent contact elements to child contact_address and contact_employment elements
+7. THE Data_Mapper SHALL skip contact_address elements that lack an `address_tp_c` attribute while continuing to process other elements
+8. THE Data_Mapper SHALL skip contact_employment elements that lack an `employment_tp_c` attribute while continuing to process other elements
+9. THE Data_Mapper SHALL apply data type conversions including char-to-bit, enum lookups, and calculated fields
+10. WHERE multiple contact elements exist (PR and AUTH roles), THE Data_Mapper SHALL create separate contact_base records with proper relationships
 
 ### Requirement 3
 
@@ -85,6 +86,18 @@ This feature enables extraction of credit card application XML data stored in th
 5. THE Migration_Engine SHALL verify that extracted data meets all database constraints and referential integrity requirements
 
 ### Requirement 6
+
+**User Story:** As a data quality analyst, I want comprehensive tracking and reporting of incomplete applications, so that I can monitor data quality issues and understand the impact of missing contact information on business processes.
+
+#### Acceptance Criteria
+
+1. THE XML_Extractor SHALL track and report applications processed with graceful degradation due to missing contact information
+2. THE Migration_Engine SHALL provide data quality metrics including count of applications without contacts, skipped contact tables, and skipped "last_valid_pr_contact" fields
+3. THE XML_Extractor SHALL log data quality warnings with specific app_id identifiers for applications missing contact information
+4. THE Migration_Engine SHALL generate batch processing summaries that include data quality statistics and degradation counts
+5. THE XML_Extractor SHALL distinguish between different types of data quality issues: missing contacts, invalid contacts, and partial contact data
+
+### Requirement 7
 
 **User Story:** As a database administrator, I want to maintain data lineage and traceability, so that I can track the relationship between original XML data and extracted normalized data.
 

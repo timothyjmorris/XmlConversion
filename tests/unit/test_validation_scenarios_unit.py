@@ -180,7 +180,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         print("✅ Invalid XML missing app_id rejected correctly")
     
     def test_invalid_xml_missing_con_id(self):
-        """Test XML with contact missing con_id - should reject entire application."""
+        """Test XML with contact missing con_id - should process with graceful degradation."""
         xml_content = """
         <Provenir>
             <Request ID="154284">
@@ -199,14 +199,16 @@ class TestXMLValidationScenarios(unittest.TestCase):
         elements = self.parser.extract_elements(root)
         xml_data = self._convert_elements_to_dict(elements)
         
-        with self.assertRaises(Exception) as context:
-            self.mapper.apply_mapping_contract(xml_data, self.mapping_contract)
+        # Should process successfully with graceful degradation
+        result = self.mapper.apply_mapping_contract(xml_data, self.mapping_contract)
         
-        self.assertIn("con_id", str(context.exception).lower())
-        print("✅ Invalid XML missing con_id rejected correctly")
+        # Should have application tables but no contact tables
+        self.assertTrue(len(result) > 0, "Should have some application tables")
+        self.assertNotIn('contact_base', result)
+        print("✅ Invalid XML missing con_id processed with graceful degradation")
     
     def test_invalid_xml_missing_ac_role_tp_c(self):
-        """Test XML with contact missing ac_role_tp_c - should reject entire application."""
+        """Test XML with contact missing ac_role_tp_c - should process with graceful degradation."""
         xml_content = """
         <Provenir>
             <Request ID="154284">
@@ -225,14 +227,16 @@ class TestXMLValidationScenarios(unittest.TestCase):
         elements = self.parser.extract_elements(root)
         xml_data = self._convert_elements_to_dict(elements)
         
-        with self.assertRaises(Exception) as context:
-            self.mapper.apply_mapping_contract(xml_data, self.mapping_contract)
+        # Should process successfully with graceful degradation
+        result = self.mapper.apply_mapping_contract(xml_data, self.mapping_contract)
         
-        self.assertIn("ac_role_tp_c", str(context.exception).lower())
-        print("✅ Invalid XML missing ac_role_tp_c rejected correctly")
+        # Should have application tables but no contact tables
+        self.assertTrue(len(result) > 0, "Should have some application tables")
+        self.assertNotIn('contact_base', result)
+        print("✅ Invalid XML missing ac_role_tp_c processed with graceful degradation")
     
     def test_invalid_xml_no_valid_contacts(self):
-        """Test XML with no valid contacts - should reject entire application."""
+        """Test XML with no valid contacts - should process with graceful degradation."""
         xml_content = """
         <Provenir>
             <Request ID="154284">
@@ -257,12 +261,15 @@ class TestXMLValidationScenarios(unittest.TestCase):
         elements = self.parser.extract_elements(root)
         xml_data = self._convert_elements_to_dict(elements)
         
-        with self.assertRaises(Exception) as context:
-            self.mapper.apply_mapping_contract(xml_data, self.mapping_contract)
+        # Should process successfully with graceful degradation
+        result = self.mapper.apply_mapping_contract(xml_data, self.mapping_contract)
         
-        error_msg = str(context.exception).lower()
-        self.assertTrue("con_id" in error_msg or "ac_role_tp_c" in error_msg)
-        print("✅ Invalid XML with no valid contacts rejected correctly")
+        # Should have application tables but no contact tables
+        self.assertTrue(len(result) > 0, "Should have some application tables")
+        self.assertNotIn('contact_base', result)
+        self.assertNotIn('contact_address', result)
+        self.assertNotIn('contact_employment', result)
+        print("✅ Invalid XML with no valid contacts processed with graceful degradation")
     
     # ========================================
     # GRACEFUL DEGRADATION SCENARIOS

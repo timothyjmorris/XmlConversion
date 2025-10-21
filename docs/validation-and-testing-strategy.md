@@ -49,9 +49,6 @@ End-to-end system validation testing:
 | Scenario | Description | Expected Result |
 |----------|-------------|-----------------|
 | **Missing app_id** | No /Provenir/Request/@ID | Reject entire application |
-| **Missing con_id** | Contact without con_id attribute | Reject entire application |
-| **Missing ac_role_tp_c** | Contact without ac_role_tp_c attribute | Reject entire application |
-| **No Valid Contacts** | All contacts missing required attributes | Reject entire application |
 | **Malformed XML** | Invalid XML syntax | Reject during parsing |
 | **Wrong Root Element** | Not Provenir XML | Reject during validation |
 
@@ -59,6 +56,9 @@ End-to-end system validation testing:
 
 | Scenario | Description | Expected Result |
 |----------|-------------|-----------------|
+| **No Valid Contacts** | All contacts missing con_id or ac_role_tp_c | Process application only, skip contact tables |
+| **Missing con_id** | Contact without con_id attribute | Skip this contact and its children |
+| **Missing ac_role_tp_c** | Contact without ac_role_tp_c attribute | Skip this contact and its children |
 | **Invalid Address** | address missing address_tp_c | Skip address, process contact |
 | **Invalid Employment** | employment missing employment_tp_c | Skip employment, process contact |
 | **Mixed Valid/Invalid** | Some contacts valid, some invalid | Process only valid contacts |
@@ -151,10 +151,10 @@ app_id = extract_app_id(xml_data)
 if not app_id:
     raise ValidationError("Missing app_id - cannot process")
 
-# CRITICAL: Must have at least one valid contact
+# DATA QUALITY: Check for valid contacts - allow graceful degradation
 valid_contacts = extract_valid_contacts(xml_data)
 if not valid_contacts:
-    raise ValidationError("No valid contacts - cannot process")
+    log_warning("DATA QUALITY: No valid contacts found - processing with graceful degradation")
 ```
 
 ### 2. **Contact-Level Validation**

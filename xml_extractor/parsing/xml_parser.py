@@ -206,6 +206,11 @@ class XMLParser(XMLParserInterface):
             xml_content = xml_content[2:]
             self.logger.debug("Removed UTF-16 BE BOM from XML content")
         
+        # Handle BOM that might appear as visible characters (like ï»¿)
+        if xml_content.startswith('ï»¿'):
+            xml_content = xml_content[3:]
+            self.logger.debug("Removed visible UTF-8 BOM characters from XML content")
+        
         # Remove other common hidden characters at the beginning
         while xml_content and ord(xml_content[0]) < 32 and xml_content[0] not in '\t\n\r':
             xml_content = xml_content[1:]

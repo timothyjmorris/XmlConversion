@@ -227,13 +227,14 @@ class DataMapper(DataMapperInterface):
             self._validation_errors.append("CRITICAL: Missing /Provenir/Request/@ID - cannot process XML")
             return False
         
-        # Check for at least one valid contact with BOTH con_id AND ac_role_tp_c
+        # Check for valid contacts - if none found, use graceful degradation
         valid_contacts = self._extract_valid_contacts(xml_data)
         if not valid_contacts:
-            self._validation_errors.append("CRITICAL: No valid contacts found (missing con_id or ac_role_tp_c) - cannot process XML")
-            return False
+            self.logger.warning(f"DATA QUALITY WARNING: No valid contacts found for app_id {app_id} - processing with graceful degradation (contact tables will be skipped)")
+            # Continue processing - don't return False
         
-        self.logger.info(f"Pre-flight validation passed: app_id={app_id}, valid_contacts={len(valid_contacts)}")
+        contact_status = f"{len(valid_contacts)} valid contacts" if valid_contacts else "graceful degradation (no contacts)"
+        self.logger.info(f"Pre-flight validation passed: app_id={app_id}, {contact_status}")
         return True
 
     def _extract_valid_contacts(self, xml_data: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -364,6 +365,9 @@ class DataMapper(DataMapperInterface):
                                mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
         """Extract value from XML data using XPath-like navigation with context support."""
         try:
+            # Handle special mapping types that require custom extraction logic
+            if hasattr(mapping, 'mapping_type') and mapping.mapping_type == 'last_valid_pr_contact':
+                return self._extract_from_last_valid_pr_contact(mapping)
             # Initialize current_data to avoid UnboundLocalError
             current_data = None
 
@@ -479,71 +483,116 @@ class DataMapper(DataMapperInterface):
             return None
 
     def _apply_field_transformation(self, value: Any, mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
-        """Apply field-specific transformations based on mapping type."""
+        """Apply field-specific transformations with support for chained mapping types."""
+        
+        # Debug: Log all transformations for banking fields
+        if 'banking' in mapping.xml_attribute or 'housing' in mapping.target_column:
+            self.logger.info(f"Transforming {mapping.xml_attribute} -> {mapping.target_column}, mapping_type={mapping.mapping_type}, value={value}")
+        
+        # Parse chained mapping types (comma-separated)
+        mapping_types = []
+        if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
+            mapping_types = [mt.strip() for mt in mapping.mapping_type.split(',')]
+        
+        # If no mapping types specified, apply standard data type transformation
+        if not mapping_types:
+            return self.transform_data_types(value, mapping.data_type)
+        
+        current_value = value
+        
+        # Apply each mapping type in sequence
+        for i, mapping_type in enumerate(mapping_types):
+            self.logger.debug(f"Applying mapping type {i+1}/{len(mapping_types)}: '{mapping_type}' to value: {current_value}")
+            
+            try:
+                current_value = self._apply_single_mapping_type(current_value, mapping_type, mapping, context_data)
+                self.logger.debug(f"Result after '{mapping_type}': {current_value}")
+                
+                # Allow certain mapping types to handle None values (don't break the chain)
+                if current_value is None and mapping_type not in ['enum', 'default_getutcdate_if_null']:
+                    self.logger.debug(f"Breaking transformation chain at '{mapping_type}' due to None value")
+                    break
+                    
+            except Exception as e:
+                self.logger.warning(f"Transformation failed at step '{mapping_type}' for {mapping.target_column}: {e}")
+                raise DataTransformationError(
+                    f"Failed to transform value '{current_value}' using mapping type '{mapping_type}' for field {mapping.target_column}",
+                    field_name=mapping.target_column,
+                    source_value=str(current_value),
+                    target_type=mapping.data_type
+                )
+        
+        return current_value
+
+    def _apply_single_mapping_type(self, value: Any, mapping_type: str, mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
+        """Apply a single mapping type transformation."""
         
         # Handle special mapping types that don't depend on input value
-        if mapping.mapping_type == 'last_valid_pr_contact':
-            # Extract value from the last valid PR contact's app_prod_bcard
+        if mapping_type == 'last_valid_pr_contact':
+            # Extract value from the last valid PR contact
+            self.logger.info(f"Processing last_valid_pr_contact mapping for {mapping.target_column}")
             result = self._extract_from_last_valid_pr_contact(mapping)
             if result is not None:
-                return self.transform_data_types(result, mapping.data_type)
+                self.logger.info(f"last_valid_pr_contact returned: {result} for {mapping.target_column}")
+                return result  # Don't apply data type transformation here - let it be chained
+            self.logger.info(f"last_valid_pr_contact returned None for {mapping.target_column}")
             return None
         
-        elif mapping.mapping_type == 'curr_address_only':
+        elif mapping_type == 'curr_address_only':
             # Extract value from the current contact's CURR address only
             self.logger.debug(f"Processing curr_address_only mapping for {mapping.target_column}")
             result = self._extract_from_curr_address_only(mapping, context_data)
             if result is not None:
                 self.logger.debug(f"curr_address_only returned: {result}")
+                # Clean phone numbers to extract only digits
+                if 'phone' in mapping.target_column.lower():
+                    result = StringUtils.extract_numbers_only(result)
+                    if not result:  # If no numbers found, return None
+                        return None
+                # Apply data type transformation to handle truncation for phone numbers
                 return self.transform_data_types(result, mapping.data_type)
             self.logger.debug(f"curr_address_only returned None for {mapping.target_column}")
             return None
         
-        # CRITICAL FIX: Handle enum mappings specially - always call enum mapper even with None/empty values
-        # The enum mapper will handle fallbacks using "" default values
-        if hasattr(mapping, 'mapping_type') and mapping.mapping_type == 'enum':
+        # Handle enum mappings specially - always call enum mapper even with None/empty values
+        elif mapping_type == 'enum':
             result = self._apply_enum_mapping(value, mapping)
             self._transformation_stats['enum_mappings'] += 1
             return result
         
-        if not StringUtils.safe_string_check(value):
+        # Handle other mapping types that require a valid input value
+        elif not StringUtils.safe_string_check(value):
             # Try to get default value for this mapping
             default_value = self._get_default_for_mapping(mapping)
             if default_value is not None:
                 return default_value
             return None
         
-        try:
-            if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
-                if mapping.mapping_type == 'char_to_bit':
-                    result = self._apply_bit_conversion(value)
-                    self._transformation_stats['bit_conversions'] += 1
-                    return result
-                elif mapping.mapping_type == 'numbers_only':
-                    return self._extract_numbers_only(value)
-                elif mapping.mapping_type == 'extract_numeric':
-                    return self._extract_numeric_value(value)
-                elif mapping.mapping_type == 'identity_insert':
-                    return self.transform_data_types(value, mapping.data_type)
-                elif mapping.mapping_type == 'default_getutcdate_if_null':
-                    if not StringUtils.safe_string_check(value):
-                        self.logger.debug(f"Applying default_getutcdate_if_null for {mapping.target_column}: {value} -> {datetime.utcnow()}")
-                        return datetime.utcnow()
-                    # Apply data type transformation to the existing value
-                    return self.transform_data_types(value, mapping.data_type)
-            
-            # Apply standard data type transformation
-            result = self.transform_data_types(value, mapping.data_type)
+        # Apply specific mapping type transformations
+        if mapping_type == 'char_to_bit':
+            result = self._apply_bit_conversion(value)
+            self._transformation_stats['bit_conversions'] += 1
             return result
-            
-        except Exception as e:
-            self.logger.warning(f"Transformation failed for {mapping.target_column}: {e}")
-            raise DataTransformationError(
-                f"Failed to transform value '{value}' for field {mapping.target_column}",
-                field_name=mapping.target_column,
-                source_value=str(value),
-                target_type=mapping.data_type
-            )
+        elif mapping_type == 'numbers_only':
+            result = self._extract_numbers_only(value)
+            if result is not None:
+                # Apply data type transformation to handle truncation
+                return self.transform_data_types(result, mapping.data_type)
+            return None
+        elif mapping_type == 'extract_numeric':
+            return self._extract_numeric_value(value)
+        elif mapping_type == 'identity_insert':
+            return self.transform_data_types(value, mapping.data_type)
+        elif mapping_type == 'default_getutcdate_if_null':
+            if not StringUtils.safe_string_check(value):
+                self.logger.debug(f"Applying default_getutcdate_if_null for {mapping.target_column}: {value} -> {datetime.utcnow()}")
+                return datetime.utcnow()
+            # Apply data type transformation to the existing value
+            return self.transform_data_types(value, mapping.data_type)
+        else:
+            # Unknown mapping type - apply standard data type transformation
+            self.logger.warning(f"Unknown mapping type '{mapping_type}' for {mapping.target_column}, applying standard data type transformation")
+            return self.transform_data_types(value, mapping.data_type)
 
     def _apply_enum_mapping(self, value: Any, mapping: FieldMapping) -> int:
         """Apply enum mapping transformation using loaded enum mappings."""
@@ -687,6 +736,7 @@ class DataMapper(DataMapperInterface):
         Apply cascading ID validation and element filtering rules.
         """
         record = {}
+        applied_defaults = set()  # Track columns that received default values
         
         # Get table name for validation
         table_name = mappings[0].target_table if mappings else ""
@@ -705,14 +755,20 @@ class DataMapper(DataMapperInterface):
                 # Transform the value according to mapping rules
                 transformed_value = self._apply_field_transformation(value, mapping, context_data)
                 
+                # Check if transformation applied a default (e.g., datetime 1900-01-01 for missing birth_date)
+                is_transformation_default = self._is_transformation_default(value, transformed_value, mapping)
+                
                 # Add to record, or use default if transformed value is None
                 if transformed_value is not None:
                     record[mapping.target_column] = transformed_value
+                    if is_transformation_default:
+                        applied_defaults.add(mapping.target_column)  # Track transformation default
                 else:
                     # Try to get default value
                     default_value = self._get_default_for_mapping(mapping)
                     if default_value is not None:
                         record[mapping.target_column] = default_value
+                        applied_defaults.add(mapping.target_column)  # Track applied default
                     # If no default, don't add the column (leave as NULL)
                 
                 self._transformation_stats['type_conversions'] += 1
@@ -721,19 +777,68 @@ class DataMapper(DataMapperInterface):
                 self.logger.warning(f"Failed to apply mapping for {mapping.xml_path}.{mapping.xml_attribute}: {e}")
                 # Apply fallback strategy
                 fallback_value = self._get_fallback_for_mapping(mapping, e)
-                record[mapping.target_column] = fallback_value
+                if fallback_value is not None:
+                    record[mapping.target_column] = fallback_value
+                    applied_defaults.add(mapping.target_column)  # Track fallback as applied default
                 self._transformation_stats['fallback_values'] += 1
         
-        # CRITICAL: Check if record only contains primary/foreign keys (app_id, con_id)
+        # ENHANCED: Check if record only contains keys and applied defaults
         # If so, skip INSERT entirely to avoid creating meaningless empty rows
-        non_key_columns = {k: v for k, v in record.items() 
-                          if k not in ['app_id', 'con_id'] and v is not None}
-        
-        if not non_key_columns:
-            self.logger.info(f"Skipping {table_name} INSERT - record contains only keys with no actual data")
+        if self._should_skip_record(record, table_name, applied_defaults):
             return {}  # Return empty dict to signal "skip this record"
         
         return record
+
+    def _should_skip_record(self, record: Dict[str, Any], table_name: str, applied_defaults: set) -> bool:
+        """
+        Determine if record should be skipped because it only contains keys and applied defaults.
+        
+        Args:
+            record: The record dictionary
+            table_name: Name of the target table
+            applied_defaults: Set of column names that received default values
+            
+        Returns:
+            True if record should be skipped, False otherwise
+        """
+        key_columns = {'app_id', 'con_id'}
+        
+        # Find meaningful data: not keys, not None, and not applied defaults
+        meaningful_data = {k: v for k, v in record.items() 
+                          if k not in key_columns 
+                          and v is not None 
+                          and k not in applied_defaults}
+        
+        if not meaningful_data:
+            self.logger.info(f"Skipping {table_name} INSERT - record contains only keys and applied default values")
+            if applied_defaults:
+                self.logger.debug(f"Applied defaults for {table_name}: {applied_defaults}")
+            return True
+
+        
+        return False
+
+    def _is_transformation_default(self, original_value: Any, transformed_value: Any, mapping: FieldMapping) -> bool:
+        """
+        Check if a transformation applied a default value due to missing/invalid source data.
+        
+        Args:
+            original_value: The original value from XML
+            transformed_value: The transformed value
+            mapping: The field mapping
+            
+        Returns:
+            True if transformation applied a default, False otherwise
+        """
+        # If original value was missing/empty and we got a known default value, it's a transformation default
+        if not StringUtils.safe_string_check(original_value):
+            # Known transformation defaults
+            transformation_defaults = {
+                datetime(1900, 1, 1),  # birth_date default from _transform_to_datetime
+            }
+            return transformed_value in transformation_defaults
+        
+        return False
 
     def _extract_contact_address_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], 
                                        app_id: str, valid_contacts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -884,7 +989,40 @@ class DataMapper(DataMapperInterface):
     
     def _extract_from_curr_address_only(self, mapping, context_data):
         """Extract value from the current contact's CURR address only."""
-        return None
+        if not context_data or not hasattr(self, '_current_xml_root') or self._current_xml_root is None:
+            return None
+        
+        # Get the contact ID from context
+        con_id = context_data.get('con_id')
+        if not con_id:
+            return None
+        
+        try:
+            # Find the contact element with this con_id
+            contact_elements = self._current_xml_root.xpath(f"//contact[@con_id='{con_id}']")
+            if not contact_elements:
+                return None
+            
+            # Use the last contact element (following "last valid" logic)
+            contact_element = contact_elements[-1]
+            
+            # Find the CURR address within this contact
+            curr_address_elements = contact_element.xpath("contact_address[@address_tp_c='CURR']")
+            if not curr_address_elements:
+                return None
+            
+            # Use the last CURR address element
+            curr_address_element = curr_address_elements[-1]
+            
+            # Extract the requested attribute
+            value = curr_address_element.get(mapping.xml_attribute)
+            self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' from CURR address for con_id {con_id}")
+            
+            return value
+            
+        except Exception as e:
+            self.logger.warning(f"Error extracting from curr_address_only for {mapping.xml_attribute}: {e}")
+            return None
     
     def _apply_bit_conversion(self, value):
         """Apply bit conversion transformation using loaded bit conversions."""
@@ -902,13 +1040,44 @@ class DataMapper(DataMapperInterface):
         self.logger.warning(f"No bit conversion found for value '{str_value}' - using default 0")
         return 0
     
+    def _apply_bit_conversion_with_default_tracking(self, value):
+        """Apply bit conversion with tracking of applied defaults."""
+        str_value = str(value).strip() if value is not None else ''
+        
+        # Use char_to_bit conversion from loaded configuration
+        if 'char_to_bit' in self._bit_conversions:
+            bit_map = self._bit_conversions['char_to_bit']
+            if str_value in bit_map:
+                result = bit_map[str_value]
+                self.logger.debug(f"Bit conversion: '{str_value}' -> {result}")
+                
+                # Check if this is a default mapping for missing/empty values
+                is_default = str_value in ['', 'null', ' ']  # These are default mappings
+                return result, is_default
+        
+        # Default fallback - this is always a default
+        self.logger.warning(f"No bit conversion found for value '{str_value}' - using default 0")
+        return 0, True
+    
     def _extract_numbers_only(self, value):
         """Extract only numeric characters from value."""
-        return None
+        if not StringUtils.safe_string_check(value):
+            return None
+        
+        numbers_only = StringUtils.extract_numbers_only(value)
+        
+        # Return None if no numbers found (will be excluded from INSERT)
+        if not numbers_only:
+            return None
+            
+        return numbers_only
     
     def _extract_numeric_value(self, value):
         """Extract numeric value from text."""
-        return None
+        if not StringUtils.safe_string_check(value):
+            return None
+            
+        return StringUtils.extract_numeric_value(value)
     
     def _transform_to_string(self, value, max_length):
         """Transform value to string with length limit."""
@@ -916,7 +1085,17 @@ class DataMapper(DataMapperInterface):
     
     def _transform_to_integer(self, value):
         """Transform value to integer."""
-        return int(value)
+        if value is None:
+            return None
+        try:
+            # Handle string values that might be numeric
+            if isinstance(value, str):
+                value = value.strip()
+                if not value:
+                    return None
+            return round(float(value))  # Use round() for proper rounding instead of truncation
+        except (ValueError, TypeError):
+            return None
     
     def _transform_to_decimal(self, value, target_type):
         """Transform value to decimal with proper NULL handling."""
@@ -934,26 +1113,69 @@ class DataMapper(DataMapperInterface):
             return None  # Return None instead of 0.00 for invalid values
     
     def _transform_to_datetime(self, value, target_type):
-        """Transform value to datetime with fallback for missing birth_date."""
+        """Transform value to datetime - return None for missing values to let default system handle it."""
         if not StringUtils.safe_string_check(value):
-            # Special fallback for birth_date to maintain data integrity
-            return datetime(1900, 1, 1)
+            # Return None - let the mapping contract default system handle missing values
+            return None
         
         try:
             # Handle various datetime formats
             if isinstance(value, str):
-                # Try common formats
-                for fmt in ['%Y-%m-%d', '%m/%d/%Y', '%Y-%m-%d %H:%M:%S']:
+                # Clean up invalid datetime components first
+                cleaned_value = self._clean_datetime_string(value)
+                if not cleaned_value:
+                    return None
+                
+                # Try common formats including the specific format from the XML
+                formats_to_try = [
+                    '%Y-%m-%d %H:%M:%S.%f',  # 2023-10-3 16:26:23.886
+                    '%Y-%m-%d %H:%M:%S',     # 2023-10-3 16:26:23
+                    '%Y-%m-%d',              # 2023-10-3
+                    '%m/%d/%Y',              # 10/3/2023
+                    '%m/%d/%Y %H:%M:%S',     # 10/3/2023 16:26:23
+                ]
+                
+                for fmt in formats_to_try:
                     try:
-                        return datetime.strptime(value, fmt)
+                        return datetime.strptime(cleaned_value, fmt)
                     except ValueError:
                         continue
                         
             return datetime.fromisoformat(str(value).replace('Z', '+00:00'))
         except Exception as e:
             self.logger.warning(f"DateTime conversion failed for '{value}': {e}")
-            # Fallback to 1900-01-01 for data integrity
-            return datetime(1900, 1, 1)
+            # Return None for invalid values - let default system handle it
+            return None
+    
+    def _clean_datetime_string(self, datetime_str):
+        """Clean datetime string to fix common invalid patterns."""
+        if not datetime_str:
+            return None
+        
+        try:
+            # Handle invalid seconds (like 88 seconds)
+            import re
+            # Pattern to match datetime with invalid seconds
+            pattern = r'(\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:)(\d{2})(\.\d+)?'
+            match = re.match(pattern, datetime_str)
+            
+            if match:
+                prefix = match.group(1)  # "2024-8-8 8:08:"
+                seconds = int(match.group(2))  # 88
+                milliseconds = match.group(3) or ""  # ".008"
+                
+                # Fix invalid seconds (clamp to 59)
+                if seconds > 59:
+                    seconds = 59
+                    self.logger.debug(f"Fixed invalid seconds in datetime: {datetime_str}")
+                
+                return f"{prefix}{seconds:02d}{milliseconds}"
+            
+            return datetime_str
+            
+        except Exception as e:
+            self.logger.warning(f"Error cleaning datetime string '{datetime_str}': {e}")
+            return None
     
     def _transform_to_bit(self, value):
         """Transform value to bit."""
@@ -966,6 +1188,107 @@ class DataMapper(DataMapperInterface):
     def _get_fallback_value(self, value, target_type):
         """Get fallback value for failed conversion."""
         return None
+    
+    def _extract_from_last_valid_pr_contact(self, mapping):
+        """Extract value from the last valid PR contact with enhanced debugging."""
+        try:
+            if not hasattr(self, '_current_xml_root') or self._current_xml_root is None:
+                self.logger.warning("No XML root available for last_valid_pr_contact extraction")
+                return None
+            
+            # Find all PR contacts
+            pr_contacts = self._current_xml_root.xpath('.//contact[@ac_role_tp_c="PR"]')
+            if not pr_contacts:
+                self.logger.warning("No PR contacts found in XML")
+                return None
+            
+            # Debug: Log all PR contacts found with their key attributes
+            self.logger.info(f"Found {len(pr_contacts)} PR contacts")
+            for i, contact in enumerate(pr_contacts):
+                con_id = contact.get('con_id', 'UNKNOWN')
+                # Check for banking attributes in each contact
+                banking_aba = contact.get('banking_aba', 'MISSING')
+                banking_account = contact.get('banking_account_number', 'MISSING')
+                self.logger.info(f"PR contact {i}: con_id={con_id}, banking_aba={banking_aba}, banking_account={banking_account}")
+            
+            # Find the last VALID PR contact (one with non-empty con_id AND non-empty ac_role_tp_c)
+            last_valid_pr_contact = None
+            for contact in reversed(pr_contacts):  # Start from the end
+                con_id = contact.get('con_id', '').strip()
+                ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
+                if con_id and ac_role_tp_c:  # Both must be non-empty
+                    last_valid_pr_contact = contact
+                    break
+            
+            if last_valid_pr_contact is None:
+                self.logger.warning("No valid PR contacts found (all have empty con_id or ac_role_tp_c)")
+                return None
+            
+            selected_con_id = last_valid_pr_contact.get('con_id', 'UNKNOWN')
+            self.logger.info(f"Selected last VALID PR contact: con_id={selected_con_id}")
+            
+            # Debug: Log ALL attributes of the selected contact
+            all_contact_attrs = dict(last_valid_pr_contact.attrib)
+            self.logger.info(f"ALL attributes for selected contact {selected_con_id}: {all_contact_attrs}")
+            
+            # Extract the requested attribute directly from the contact or its child elements
+            if 'contact_address' in mapping.xml_path:
+                # Look for contact_address elements within this contact
+                address_elements = last_valid_pr_contact.xpath('.//contact_address')
+                if address_elements:
+                    # Use the last address element
+                    address_element = address_elements[-1]
+                    value = address_element.get(mapping.xml_attribute)
+                    self.logger.info(f"Extracted {mapping.xml_attribute}='{value}' from contact_address for con_id {selected_con_id}")
+                    return value
+            elif 'app_prod_bcard' in mapping.xml_path:
+                # Look for app_prod_bcard element within this contact
+                app_prod_bcard_elements = last_valid_pr_contact.xpath('.//app_prod_bcard')
+                self.logger.info(f"Found {len(app_prod_bcard_elements)} app_prod_bcard elements for con_id {selected_con_id}")
+                if app_prod_bcard_elements:
+                    # Get the last app_prod_bcard element
+                    app_prod_bcard = app_prod_bcard_elements[-1]
+                    
+                    # Debug: Log all attributes in the app_prod_bcard element
+                    all_attrs = dict(app_prod_bcard.attrib)
+                    self.logger.info(f"app_prod_bcard attributes for con_id {selected_con_id}: {all_attrs}")
+                    
+                    value = app_prod_bcard.get(mapping.xml_attribute)
+                    self.logger.info(f"Extracted {mapping.xml_attribute}='{value}' from app_prod_bcard for con_id {selected_con_id}")
+                    return value
+                else:
+                    self.logger.warning(f"No app_prod_bcard elements found for con_id {selected_con_id}")
+            
+            # Always try to extract directly from the contact element first
+            # This handles banking attributes and other contact-level attributes
+            value = last_valid_pr_contact.get(mapping.xml_attribute)
+            self.logger.info(f"Extracted {mapping.xml_attribute}='{value}' directly from contact con_id {selected_con_id}")
+            
+            # If the value is empty/None, check if the attribute exists with a different name
+            if not value:
+                # Check for common attribute name variations
+                attribute_variations = [
+                    mapping.xml_attribute,
+                    mapping.xml_attribute.lower(),
+                    mapping.xml_attribute.upper(),
+                    mapping.xml_attribute.replace('_', ''),
+                    mapping.xml_attribute.replace('sc_bank_', 'banking_'),
+                    mapping.xml_attribute.replace('sc_bank_', ''),
+                ]
+                
+                for attr_variant in attribute_variations:
+                    variant_value = last_valid_pr_contact.get(attr_variant)
+                    if variant_value:
+                        self.logger.info(f"Found value using attribute variant '{attr_variant}': {variant_value}")
+                        return variant_value
+                
+                self.logger.warning(f"No value found for {mapping.xml_attribute} or its variants in contact {selected_con_id}")
+            
+            return value
+            
+        except Exception as e:
+            self.logger.warning(f"Failed to extract from last valid PR contact: {e}")
+            return None
     
     def get_transformation_stats(self):
         """Get transformation statistics."""

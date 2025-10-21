@@ -27,8 +27,8 @@ class ValidationResult:
     
     @property
     def can_process(self) -> bool:
-        """Whether XML can be processed despite warnings."""
-        return self.is_valid and self.app_id and len(self.valid_contacts) > 0
+        """Whether XML can be processed despite warnings - allows graceful degradation for missing contacts."""
+        return self.is_valid and self.app_id
 
 
 class PreProcessingValidator:
@@ -116,8 +116,8 @@ class PreProcessingValidator:
                 xml_data, app_id, valid_contacts, errors, warnings
             )
             
-            # Determine if validation passed
-            is_valid = len(errors) == 0 and app_id is not None and len(valid_contacts) > 0
+            # Determine if validation passed - allow graceful degradation for missing contacts
+            is_valid = len(errors) == 0 and app_id is not None
             
             # Log validation summary
             self._log_validation_summary(
@@ -255,7 +255,7 @@ class PreProcessingValidator:
             all_contacts = self._navigate_to_contacts(xml_data)
             
             if not all_contacts:
-                errors.append("CRITICAL: No contact elements found in XML")
+                warnings.append("DATA QUALITY: No contact elements found in XML - will process application only")
                 return []
             
             # Track validation issues for reporting
@@ -308,7 +308,7 @@ class PreProcessingValidator:
             
             # Check if we have at least one valid contact
             if not valid_contacts:
-                errors.append("CRITICAL: No valid contacts found (all missing con_id or ac_role_tp_c)")
+                warnings.append("DATA QUALITY: No valid contacts found (all missing con_id or ac_role_tp_c) - will process with graceful degradation")
             
             return valid_contacts
             
@@ -374,8 +374,8 @@ class PreProcessingValidator:
         
         # Rule: Must have exactly one PR contact
         pr_contacts = [c for c in valid_contacts if c.get('ac_role_tp_c') == 'PR']
-        if len(pr_contacts) == 0:
-            errors.append("CRITICAL: No primary contact (ac_role_tp_c='PR') found")
+        if len(pr_contacts) == 0 and valid_contacts:  # Only warn if we have contacts but no PR
+            warnings.append("DATA QUALITY: No primary contact (ac_role_tp_c='PR') found - some fields requiring 'last_valid_pr_contact' will be skipped")
         elif len(pr_contacts) > 1:
             warnings.append(f"Multiple primary contacts found ({len(pr_contacts)}), will process all")
         
