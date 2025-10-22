@@ -73,11 +73,27 @@
     - **IMPORTANT**: This project assumes database tables and enums already exist. Table creation and enum insertion should be handled separately by database setup scripts or administrators.
     - _Requirements: 3.4, 4.2, 4.3_
 
-  - [ ] 5.2 Implement parallel processing coordination
+  - [x] 5.2 Implement parallel processing coordination
+
+
+
     - Build multiprocessing.Pool for parallel XML processing across CPU cores
     - Create process-safe work queue distribution using multiprocessing.Queue
     - Implement shared memory progress tracking with multiprocessing.Manager
     - Add coordination between parallel processes and database operations
+    - _Requirements: 4.3, 4.5_
+
+  - [x] 5.3 Current State Benchmark Performance
+
+
+
+
+
+    - I am quickly running out of trial credits and need to evaluate current state for viability
+    - Guage performance using our test data from [app_xml] to retrieve, parse, map & insert
+    - Run as a batch if possible to get metrics as a whole and for each application if possible
+    - Only use test framework if it's faster 
+    - May need to implement some of 6.1 to accomplish this
     - _Requirements: 4.3, 4.5_
 
 - [ ] 6. Add monitoring, logging, and audit capabilities
