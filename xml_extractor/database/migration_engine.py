@@ -35,11 +35,11 @@ class MigrationEngine(MigrationEngineInterface):
         self.logger = logging.getLogger(__name__)
         
         # Get centralized configuration
-        config_manager = get_config_manager()
-        processing_config = config_manager.get_processing_config()
+        self.config_manager = get_config_manager()
+        processing_config = self.config_manager.get_processing_config()
         
         # Use provided values or fall back to centralized configuration
-        self.connection_string = connection_string or config_manager.get_database_connection_string()
+        self.connection_string = connection_string or self.config_manager.get_database_connection_string()
         self.batch_size = batch_size or processing_config.batch_size
         
         self._connection = None
@@ -51,7 +51,9 @@ class MigrationEngine(MigrationEngineInterface):
         self._start_time = None
         
         self.logger.info(f"MigrationEngine initialized with batch_size={self.batch_size}")
-        self.logger.debug(f"Using database server: {config_manager.database_config.server}")
+        self.logger.debug(f"Using database server: {self.config_manager.database_config.server}")
+        if self.config_manager.database_config.schema_prefix:
+            self.logger.info(f"Using schema prefix: {self.config_manager.database_config.schema_prefix}")
         
     @contextmanager
     def get_connection(self):
@@ -154,10 +156,13 @@ class MigrationEngine(MigrationEngineInterface):
             with self.get_connection() as conn:
                 cursor = conn.cursor()
                 
+                # Get qualified table name with schema prefix
+                qualified_table_name = self.config_manager.get_qualified_table_name(table_name)
+                
                 # Enable IDENTITY_INSERT if needed
                 if enable_identity_insert:
-                    cursor.execute(f"SET IDENTITY_INSERT [{table_name}] ON")
-                    self.logger.debug(f"Enabled IDENTITY_INSERT for {table_name}")
+                    cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} ON")
+                    self.logger.debug(f"Enabled IDENTITY_INSERT for {qualified_table_name}")
                 
                 # Enable fast_executemany for optimal performance
                 cursor.fast_executemany = True
@@ -179,8 +184,8 @@ class MigrationEngine(MigrationEngineInterface):
                 column_list = ', '.join(f"[{col}]" for col in columns)
                 placeholders = ', '.join('?' * len(columns))
                 
-                # Build INSERT statement
-                sql = f"INSERT INTO [{table_name}] ({column_list}) VALUES ({placeholders})"
+                # Build INSERT statement with qualified table name
+                sql = f"INSERT INTO {qualified_table_name} ({column_list}) VALUES ({placeholders})"
                 
                 # Debug logging
                 self.logger.warning(f"SQL: {sql}")
@@ -260,8 +265,8 @@ class MigrationEngine(MigrationEngineInterface):
                     
                 # Disable IDENTITY_INSERT if it was enabled
                 if enable_identity_insert:
-                    cursor.execute(f"SET IDENTITY_INSERT [{table_name}] OFF")
-                    self.logger.debug(f"Disabled IDENTITY_INSERT for {table_name}")
+                    cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
+                    self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name}")
                 
                 self.logger.info(f"Successfully inserted {inserted_count} records into {table_name}")
                     
@@ -271,8 +276,9 @@ class MigrationEngine(MigrationEngineInterface):
                 try:
                     with self.get_connection() as conn:
                         cursor = conn.cursor()
-                        cursor.execute(f"SET IDENTITY_INSERT [{table_name}] OFF")
-                        self.logger.debug(f"Disabled IDENTITY_INSERT for {table_name} after error")
+                        qualified_table_name = self.config_manager.get_qualified_table_name(table_name)
+                        cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
+                        self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
                 except:
                     pass  # Don't mask the original error
             
@@ -285,8 +291,9 @@ class MigrationEngine(MigrationEngineInterface):
                 try:
                     with self.get_connection() as conn:
                         cursor = conn.cursor()
-                        cursor.execute(f"SET IDENTITY_INSERT [{table_name}] OFF")
-                        self.logger.debug(f"Disabled IDENTITY_INSERT for {table_name} after error")
+                        qualified_table_name = self.config_manager.get_qualified_table_name(table_name)
+                        cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
+                        self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
                 except:
                     pass  # Don't mask the original error
             

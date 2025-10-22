@@ -31,6 +31,7 @@ class DatabaseConfig:
     command_timeout: int = 300
     mars_connection: bool = True
     charset: str = "UTF-8"
+    schema_prefix: str = ""  # Optional schema prefix for table names (e.g., "sandbox", "dbo")
     
     @classmethod
     def from_environment(cls) -> 'DatabaseConfig':
@@ -50,6 +51,7 @@ class DatabaseConfig:
         command_timeout = int(os.environ.get('XML_EXTRACTOR_DB_COMMAND_TIMEOUT', cls.command_timeout))
         mars_connection = os.environ.get('XML_EXTRACTOR_DB_MARS_CONNECTION', 'true').lower() == 'true'
         charset = os.environ.get('XML_EXTRACTOR_DB_CHARSET', cls.charset)
+        schema_prefix = os.environ.get('XML_EXTRACTOR_DB_SCHEMA_PREFIX', cls.schema_prefix)
         
         # Build connection string based on authentication method
         if trusted_connection:
@@ -91,7 +93,8 @@ class DatabaseConfig:
             connection_timeout=connection_timeout,
             command_timeout=command_timeout,
             mars_connection=mars_connection,
-            charset=charset
+            charset=charset,
+            schema_prefix=schema_prefix
         )
 
 
@@ -191,6 +194,21 @@ class ConfigManager(ConfigurationManagerInterface):
             Database connection string configured from environment variables
         """
         return self.database_config.connection_string
+    
+    def get_qualified_table_name(self, table_name: str) -> str:
+        """
+        Get fully qualified table name with schema prefix if configured.
+        
+        Args:
+            table_name: Base table name (e.g., "app_base")
+            
+        Returns:
+            Qualified table name (e.g., "sandbox.app_base" or "app_base")
+        """
+        if self.database_config.schema_prefix:
+            return f"[{self.database_config.schema_prefix}].[{table_name}]"
+        else:
+            return f"[{table_name}]"
     
     def get_processing_config(self) -> ProcessingConfig:
         """

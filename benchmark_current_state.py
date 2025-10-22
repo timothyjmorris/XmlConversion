@@ -266,7 +266,9 @@ class CurrentStateBenchmark:
         try:
             with self.migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
-                cursor.execute("DELETE FROM app_base WHERE app_id = ?", (app_id,))
+                # Use centralized configuration for schema-aware table name
+                qualified_table_name = self.migration_engine.config_manager.get_qualified_table_name("app_base")
+                cursor.execute(f"DELETE FROM {qualified_table_name} WHERE app_id = ?", (app_id,))
                 conn.commit()
         except Exception:
             pass  # Ignore cleanup errors
