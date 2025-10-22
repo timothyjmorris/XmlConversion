@@ -94,16 +94,11 @@ class TestProductionXMLBatch(unittest.TestCase):
         This is the ultimate litmus test to prove the complete plumbing works.
         """
         print("\n" + "="*100)
-        print("🚀 PRODUCTION XML BATCH PROCESSING TEST - ITERATION 5")
+        print("🚀 PRODUCTION XML BATCH PROCESSING TEST - COMPLETE VALIDATION")
         print("="*100)
-        print("Goal: Continue systematic validation of production data")
-        print("System Status: 🔥 ROCK SOLID - 13/13 apps processed successfully!")
-        print("Previous iterations:")
-        print("  • app_ids 1-4 (✅ 100% success)")
-        print("  • app_ids 5-7 (✅ 100% success)")
-        print("  • app_ids 8-10 (✅ 100% success after fixes)")
-        print("  • app_ids 11-13 (✅ 100% success)")
-        print("Current iteration: app_ids 14, 15, 16")
+        print("Goal: Complete validation of all production data with latest improvements")
+        print("System Status: Testing chained mapping types and phone truncation fixes")
+        print("Processing: Apps 17-24 for performance benchmarking")
         print()
         
         # Step 1: Extract XML files from app_xml table
@@ -113,19 +108,23 @@ class TestProductionXMLBatch(unittest.TestCase):
             self.skipTest("No XML records found in app_xml table")
         
         print(f"Processing {len(xml_records)} XML records...")
+        print()
         
         # Step 2: Process each XML through the complete pipeline
         for i, (app_id, xml_content) in enumerate(xml_records, 1):
+            print(f"App {i:2d} (ID: {app_id:6d}): ", end="", flush=True)
             result = self.process_single_xml(app_id, xml_content, i)
             self.batch_results['detailed_results'].append(result)
             self.batch_results['total_processed'] += 1
             
             if result['success']:
                 self.batch_results['successful'] += 1
-                print(f"✅ {i}")
+                print(f"✅ SUCCESS")
             else:
                 self.batch_results['failed'] += 1
-                print(f"❌ {i}: {result['error_stage']}")
+                print(f"❌ FAILED ({result['error_stage']})")
+                if 'error' in result:
+                    print(f"    Error: {result['error'][:100]}...")  # Truncate long errors
                 
                 # Track failure types
                 if result['error_stage'] == 'validation':
@@ -162,16 +161,14 @@ class TestProductionXMLBatch(unittest.TestCase):
             with self.migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 
-                # ITERATION 5: Process next chunk of XML records (14, 15, 16)
-                # Previous iterations: ALL 100% SUCCESS after fixes!
-                #   1-4 (✅ 100%), 5-7 (✅ 100%), 8-10 (✅ 100% after fixes), 11-13 (✅ 100%)
-                # System proven stable with 13/13 production records processed successfully
+                # COMPLETE VALIDATION: Process ALL XML records (1-16)
+                # Testing latest improvements: chained mapping types + phone truncation fixes
                 cursor.execute("""
                     SELECT app_id, xml 
                     FROM app_xml 
                     WHERE xml IS NOT NULL 
                     AND DATALENGTH(xml) > 100
-                    AND app_id IN (14, 15, 16)  -- Iteration 5: Next chunk
+                    AND app_id BETWEEN 1 AND 24  -- Complete benchmark 1-24
                     ORDER BY app_id
                 """)
                 
@@ -273,21 +270,35 @@ class TestProductionXMLBatch(unittest.TestCase):
             result['mapped_tables'] = list(mapped_data.keys())
             
             # Stage 4: Database Insertion
-            insertion_results = self.insert_mapped_data(mapped_data)
-            result['inserted_records'] = insertion_results
-            
-            # Check if all insertions were successful
-            total_inserted = sum(insertion_results.values())
-            if total_inserted == 0:
+            try:
+                insertion_results = self.insert_mapped_data(mapped_data)
+                result['inserted_records'] = insertion_results
+                
+                # Check if all insertions were successful
+                total_inserted = sum(insertion_results.values())
+                if total_inserted == 0:
+                    result['error_stage'] = 'insertion'
+                    result['error'] = "No records were inserted into database"
+                    return result
+                
+                # Success!
+                result['success'] = True
+                
+            except Exception as insertion_error:
                 result['error_stage'] = 'insertion'
-                result['error'] = "No records were inserted into database"
+                result['error'] = str(insertion_error)
+                result['traceback'] = traceback.format_exc()
                 return result
             
-            # Success!
-            result['success'] = True
-            
         except Exception as e:
-            result['error_stage'] = result['error_stage'] or 'unknown'
+            # Determine error stage based on what we've completed so far
+            if result['validation_result'] is None:
+                result['error_stage'] = 'validation'
+            elif 'mapped_tables' not in result or result['mapped_tables'] is None:
+                result['error_stage'] = 'mapping'
+            else:
+                result['error_stage'] = 'unknown'
+            
             result['error'] = str(e)
             result['traceback'] = traceback.format_exc()
         
@@ -315,9 +326,11 @@ class TestProductionXMLBatch(unittest.TestCase):
                 # Commit the transaction to ensure cleanup is applied
                 conn.commit()
                 
-                print(f"    🧹 Cleaned {rows_deleted} records for app_id {app_id}")
+                # Cleanup completed - will be reported in main output
+                pass
             else:
-                print(f"    ✅ No existing data for app_id {app_id}")
+                # No cleanup needed - will be reported in main output  
+                pass
     
     def insert_mapped_data(self, mapped_data: Dict[str, List[Dict[str, Any]]]) -> Dict[str, int]:
         """

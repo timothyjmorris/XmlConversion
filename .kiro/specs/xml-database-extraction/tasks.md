@@ -183,13 +183,20 @@
     - **Goal**: Achieve higher success rate and identify next batch of issues to fix
     - _Requirements: Production Data Validation, Mapping Completeness_
 
-  - [ ] 10.2 Production XML Batch Processing - Iteration 2
-    - Process next batch of XML records (increase batch size if previous iteration was successful)
-    - Focus on fixing issues identified in previous iteration
-    - Add any missing enum mappings, bit conversions, or calculated field logic
-    - Validate that previous fixes didn't break existing functionality
-    - Document edge cases and unusual data patterns found in production XML
-    - **Goal**: Continue improving success rate and mapping coverage
+  - [-] 10.2 Production XML Batch Processing - Sanity check
+
+
+
+    - After many changes, we need to establish the we still have quality data going into the database:
+      - all data is being inserted correctly into the database
+      - no missing rows
+      - no rows with all nulls or only nulls and system-assigned default values
+      - correct columns with nulls/empty are skipped
+      - correct table rows are skipped, e.g. missing contact_address values
+      - all mapped data is valid and consistent
+      - all enum mappings are working correctly
+      - all bit conversions are working correctly
+      - all default values are working correctly  
     - _Requirements: Production Data Validation, Edge Case Handling_
 
   - [ ] 10.3 Production XML Batch Processing - Iteration 3

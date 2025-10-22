@@ -98,7 +98,14 @@ class TestEndToEndIntegration(unittest.TestCase):
             with pyodbc.connect(self.connection_string) as conn:
                 cursor = conn.cursor()
                 
-                # Only delete from app_base - cascade will handle the rest
+                # Clean up in reverse dependency order to avoid FK constraint issues
+                cursor.execute("DELETE FROM contact_employment WHERE con_id IN (738936, 738937)")
+                cursor.execute("DELETE FROM contact_address WHERE con_id IN (738936, 738937)")
+                cursor.execute("DELETE FROM contact_base WHERE con_id IN (738936, 738937)")
+                cursor.execute("DELETE FROM app_solicited_cc WHERE app_id = 443306")
+                cursor.execute("DELETE FROM app_transactional_cc WHERE app_id = 443306")
+                cursor.execute("DELETE FROM app_pricing_cc WHERE app_id = 443306")
+                cursor.execute("DELETE FROM app_operational_cc WHERE app_id = 443306")
                 cursor.execute("DELETE FROM app_base WHERE app_id = 443306")
                 
                 conn.commit()

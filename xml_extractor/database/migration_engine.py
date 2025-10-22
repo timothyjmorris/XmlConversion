@@ -183,8 +183,8 @@ class MigrationEngine(MigrationEngineInterface):
                 sql = f"INSERT INTO [{table_name}] ({column_list}) VALUES ({placeholders})"
                 
                 # Debug logging
-                self.logger.debug(f"SQL: {sql}")
-                self.logger.debug(f"Columns with data: {columns}")
+                self.logger.warning(f"SQL: {sql}")
+                self.logger.warning(f"Columns with data: {columns}")
                 self.logger.debug(f"Excluded empty columns: {set(all_columns) - set(columns)}")
                 
                 # Prepare data tuples in correct order, only including columns with data
@@ -207,11 +207,11 @@ class MigrationEngine(MigrationEngineInterface):
                         values.append(val)
                     data_tuples.append(tuple(values))
                     
-                    # Debug first record
-                    if len(data_tuples) == 1:
-                        self.logger.debug(f"First record values: {values}")
+                    # Debug ALL records for contact_base
+                    if table_name == 'contact_base':
+                        self.logger.warning(f"Record {len(data_tuples)}: {values}")
                         for i, (col, val) in enumerate(zip(columns, values)):
-                            self.logger.debug(f"  {i}: {col} = {repr(val)} ({type(val).__name__})")
+                            self.logger.warning(f"  {i}: {col} = {repr(val)} ({type(val).__name__})")
                 
                 # Try executemany first for performance, fall back to individual executes if needed
                 batch_start = 0

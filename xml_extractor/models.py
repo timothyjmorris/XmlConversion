@@ -41,6 +41,7 @@ class FieldMapping:
     xml_attribute: Optional[str] = None
     mapping_type: Optional[str] = None
     transformation: Optional[str] = None
+    default_value: Optional[str] = None
     
     def __post_init__(self):
         """Validate field mapping configuration."""

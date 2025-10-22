@@ -496,6 +496,11 @@ class DataMapper(DataMapperInterface):
         
         # If no mapping types specified, apply standard data type transformation
         if not mapping_types:
+            # Check for default value if input is empty
+            if not StringUtils.safe_string_check(value):
+                default_value = self._get_default_for_mapping(mapping)
+                if default_value is not None:
+                    return default_value
             return self.transform_data_types(value, mapping.data_type)
         
         current_value = value
@@ -685,31 +690,38 @@ class DataMapper(DataMapperInterface):
         table_name = mappings[0].target_table if mappings else 'unknown'
         
         if table_name == 'contact_base':
-            # Create separate records for each VALID contact (those with con_id)
+            # For contact_base, we need to ensure unique con_ids (PK constraint)
+            # Group contacts by con_id only and take the last valid one
+            unique_contacts = {}
             for contact in valid_contacts:
-                # Only process contacts that have con_id
                 if 'con_id' in contact and contact['con_id']:
-                    # Find the corresponding XML contact element for curr_address_only mappings
-                    contact_element = None
-                    if hasattr(self, '_current_xml_root') and self._current_xml_root is not None:
-                        # Find the XML contact element with matching con_id
-                        contact_elements = self._current_xml_root.xpath(f"//contact[@con_id='{contact['con_id']}']")
-                        if contact_elements:
-                            contact_element = contact_elements[-1]  # Get the last one (following last valid logic)
-                    
-                    # Create context with both contact data and XML element
-                    context_with_element = contact.copy()
-                    if contact_element is not None:
-                        context_with_element['contact_element'] = contact_element
-                    
-                    record = self._create_record_from_mappings(xml_data, mappings, context_with_element)
-                    # Skip empty records (happens when contact_address/employment lacks con_id)
-                    if record:
-                        record['con_id'] = int(contact['con_id']) if str(contact['con_id']).isdigit() else contact['con_id']
-                        record['app_id'] = int(app_id) if app_id.isdigit() else app_id
-                        records.append(record)
+                    con_id = contact['con_id']
+                    # Always take the last contact for each con_id (overwrites duplicates)
+                    unique_contacts[con_id] = contact
+            
+            # DEBUG: Log the input valid_contacts
+            self.logger.warning(f"DEBUG: Processing contact_base with {len(valid_contacts)} valid_contacts")
+            for i, contact in enumerate(valid_contacts):
+                self.logger.warning(f"DEBUG: Contact {i+1}: con_id={contact.get('con_id')}, ac_role_tp_c={contact.get('ac_role_tp_c')}, first_name={contact.get('first_name')}")
+            
+            # DEBUG: Log the unique_contacts after deduplication
+            self.logger.warning(f"DEBUG: After deduplication: {len(unique_contacts)} unique contacts")
+            for con_id, contact in unique_contacts.items():
+                self.logger.warning(f"DEBUG: Unique contact: con_id={con_id}, ac_role_tp_c={contact.get('ac_role_tp_c')}, first_name={contact.get('first_name')}")
+            
+            # Create records for unique contacts only
+            for con_id, contact in unique_contacts.items():
+                # Use ONLY the contact data from valid_contacts (already cleaned by PreProcessingValidator)
+                # Do NOT look up XML elements to avoid getting wrong/duplicate contact data
+                record = self._create_record_from_mappings(xml_data, mappings, contact)
+                # Skip empty records (happens when contact_address/employment lacks con_id)
+                if record:
+                    record['con_id'] = int(contact['con_id']) if str(contact['con_id']).isdigit() else contact['con_id']
+                    record['app_id'] = int(app_id) if app_id.isdigit() else app_id
+                    records.append(record)
+                    self.logger.warning(f"DEBUG: Created contact_base record for con_id={con_id}, record={record}")
                 else:
-                    self.logger.warning(f"Skipping contact record without con_id during table processing")
+                    self.logger.warning(f"Skipping empty contact_base record for con_id={con_id}")
         elif table_name == 'contact_address':
             # Extract contact_address elements directly from XML data
             self.logger.debug(f"Extracting contact_address with {len(mappings)} mappings")
@@ -741,16 +753,18 @@ class DataMapper(DataMapperInterface):
         # Get table name for validation
         table_name = mappings[0].target_table if mappings else ""
         
-        # Apply element filtering rules based on required attributes
-        if table_name in ['contact_base']:
-            if not context_data or not context_data.get('con_id'):
-                self.logger.warning(f"Skipping {table_name} record - no con_id in context")
-                return {}  # Skip contact without con_id
+        # Apply element filtering rules based on required attributes  
+        # REMOVED: This validation was preventing contact_base records from being created
+        # The con_id validation is already handled in the calling code
         
         for mapping in mappings:
             try:
                 # Extract value from XML data
                 value = self._extract_value_from_xml(xml_data, mapping, context_data)
+                
+                # DEBUG: Log extraction for birth_date fields
+                if mapping.target_column == 'birth_date':
+                    self.logger.warning(f"EXTRACT: table={table_name}, column={mapping.target_column}, xml_path={mapping.xml_path}, xml_attribute={mapping.xml_attribute}, extracted_value={value}")
                 
                 # Transform the value according to mapping rules
                 transformed_value = self._apply_field_transformation(value, mapping, context_data)
@@ -763,12 +777,22 @@ class DataMapper(DataMapperInterface):
                     record[mapping.target_column] = transformed_value
                     if is_transformation_default:
                         applied_defaults.add(mapping.target_column)  # Track transformation default
+                    # DEBUG: Log birth_date specifically
+                    if mapping.target_column == 'birth_date':
+                        self.logger.warning(f"BIRTH_DATE: table={table_name}, transformed_value={transformed_value}, is_default={is_transformation_default}, context_data={context_data.get('first_name') if context_data else 'None'}")
                 else:
                     # Try to get default value
                     default_value = self._get_default_for_mapping(mapping)
                     if default_value is not None:
                         record[mapping.target_column] = default_value
                         applied_defaults.add(mapping.target_column)  # Track applied default
+                                # DEBUG: Log birth_date default
+                        if mapping.target_column == 'birth_date':
+                            self.logger.warning(f"BIRTH_DATE: table={table_name}, using default_value={default_value}")
+                    else:
+                        # DEBUG: Log missing birth_date
+                        if mapping.target_column == 'birth_date':
+                            self.logger.warning(f"BIRTH_DATE: table={table_name}, NO DEFAULT VALUE - will be NULL! mapping.default_value={getattr(mapping, 'default_value', 'NOT_SET')}")
                     # If no default, don't add the column (leave as NULL)
                 
                 self._transformation_stats['type_conversions'] += 1
@@ -793,6 +817,9 @@ class DataMapper(DataMapperInterface):
         """
         Determine if record should be skipped because it only contains keys and applied defaults.
         
+        FIXED LOGIC: Keep applied defaults if there's ANY meaningful data in the record.
+        Only skip if record has ONLY keys and applied defaults with no real data.
+        
         Args:
             record: The record dictionary
             table_name: Name of the target table
@@ -809,13 +836,29 @@ class DataMapper(DataMapperInterface):
                           and v is not None 
                           and k not in applied_defaults}
         
+        # DEBUG: Log what we're evaluating
+        self.logger.warning(f"RECORD EVALUATION for {table_name}:")
+        self.logger.warning(f"  Total columns: {list(record.keys())}")
+        self.logger.warning(f"  Applied defaults: {applied_defaults}")
+        self.logger.warning(f"  Meaningful data: {list(meaningful_data.keys())}")
+        
+        # Skip records if they only have keys and applied defaults (no meaningful data)
         if not meaningful_data:
-            self.logger.info(f"Skipping {table_name} INSERT - record contains only keys and applied default values")
+            # Keep records with applied defaults for tables with NOT NULL constraints
+            tables_with_required_defaults = {
+                'contact_base', 'app_pricing_cc', 'app_solicited_cc', 
+                'app_transactional_cc', 'app_operational_cc'
+            }
+            if table_name in tables_with_required_defaults and applied_defaults:
+                self.logger.warning(f"KEEPING {table_name} record with applied defaults: {applied_defaults}")
+                return False
+            self.logger.warning(f"SKIPPING {table_name} INSERT - record contains only keys and applied default values")
             if applied_defaults:
                 self.logger.debug(f"Applied defaults for {table_name}: {applied_defaults}")
             return True
-
-        
+            
+        # Keep records with meaningful data (applied defaults will be included automatically)
+        self.logger.warning(f"KEEPING {table_name} record - has meaningful data: {list(meaningful_data.keys())}")
         return False
 
     def _is_transformation_default(self, original_value: Any, transformed_value: Any, mapping: FieldMapping) -> bool:
@@ -941,6 +984,18 @@ class DataMapper(DataMapperInterface):
     
     def _get_default_for_mapping(self, mapping):
         """Get default value for mapping."""
+        # TARGETED SUPPRESSION: Only suppress defaults for specific problematic mappings
+        # where applying defaults creates meaningless data
+        suppress_defaults_for = {
+            # Don't apply birth_date default for rmts_info when CB_prescreen_birth_date is missing
+            ('/Provenir/Request/CustData/application/rmts_info', 'CB_prescreen_birth_date', 'app_solicited_cc', 'birth_date'),
+        }
+        
+        mapping_key = (mapping.xml_path, mapping.xml_attribute, mapping.target_table, mapping.target_column)
+        if mapping_key in suppress_defaults_for:
+            self.logger.debug(f"Suppressing default for {mapping.target_table}.{mapping.target_column} when {mapping.xml_attribute} is missing")
+            return None
+        
         # Check if mapping has a default_value
         if hasattr(mapping, 'default_value') and mapping.default_value:
             return self.transform_data_types(mapping.default_value, mapping.data_type)

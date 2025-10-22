@@ -527,7 +527,8 @@ class ConfigManager(ConfigurationManagerInterface):
                     data_type=mapping_data.get('data_type', ''),
                     xml_attribute=mapping_data.get('xml_attribute'),
                     mapping_type=mapping_data.get('mapping_type'),
-                    transformation=mapping_data.get('transformation')
+                    transformation=mapping_data.get('transformation'),
+                    default_value=mapping_data.get('default_value')
                 )
                 mappings.append(field_mapping)
             
