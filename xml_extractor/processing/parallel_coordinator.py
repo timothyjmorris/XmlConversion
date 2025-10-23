@@ -373,11 +373,21 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
             _worker_progress_dict['worker_stats'][worker_id]['processed'] += 1
             _worker_progress_dict['worker_stats'][worker_id]['failed'] += 1
         
+        # Determine error stage from exception type and category
+        error_stage = 'unknown'
+        if hasattr(e, 'error_category'):
+            if e.error_category == 'constraint_violation':
+                error_stage = 'constraint_violation'
+            elif e.error_category == 'database_error':
+                error_stage = 'database_error'
+            elif e.error_category == 'system_error':
+                error_stage = 'system_error'
+        
         return WorkResult(
             sequence=work_item.sequence,
             app_id=work_item.app_id,
             success=False,
-            error_stage='unknown',
+            error_stage=error_stage,
             error_message=str(e),
             processing_time=time.time() - start_time
         )

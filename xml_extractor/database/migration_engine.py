@@ -81,12 +81,18 @@ class MigrationEngine(MigrationEngineInterface):
             yield connection
             
         except pyodbc.Error as e:
-            # Only re-raise as DatabaseConnectionError if it's a connection issue, not a data issue
-            if "cast specification" not in str(e) and "converting" not in str(e):
+            error_str = str(e).lower()
+            # Only re-raise as DatabaseConnectionError if it's actually a connection issue
+            if any(conn_error in error_str for conn_error in [
+                'connection', 'login', 'server', 'network', 'timeout', 'cannot open database'
+            ]) and not any(data_error in error_str for data_error in [
+                'primary key', 'foreign key', 'check constraint', 'duplicate key', 
+                'cast specification', 'converting', 'null constraint'
+            ]):
                 self.logger.error(f"Database connection failed: {e}")
                 raise DatabaseConnectionError(f"Failed to connect to database: {e}")
             else:
-                # Let data conversion errors bubble up to be handled by fallback logic
+                # Let data/constraint errors bubble up to be handled by bulk insert error handling
                 raise
         finally:
             if connection:
@@ -282,9 +288,28 @@ class MigrationEngine(MigrationEngineInterface):
                 except:
                     pass  # Don't mask the original error
             
-            error_msg = f"Bulk insert failed for table {table_name}: {e}"
-            self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg)
+            # Categorize database errors for better error reporting
+            error_str = str(e).lower()
+            if 'primary key constraint' in error_str or 'duplicate key' in error_str:
+                error_msg = f"Primary key violation in {table_name}: {e}"
+                self.logger.error(error_msg)
+                raise XMLExtractionError(error_msg, error_category="constraint_violation")
+            elif 'foreign key constraint' in error_str:
+                error_msg = f"Foreign key violation in {table_name}: {e}"
+                self.logger.error(error_msg)
+                raise XMLExtractionError(error_msg, error_category="constraint_violation")
+            elif 'check constraint' in error_str:
+                error_msg = f"Check constraint violation in {table_name}: {e}"
+                self.logger.error(error_msg)
+                raise XMLExtractionError(error_msg, error_category="constraint_violation")
+            elif 'cannot insert null' in error_str or 'not null constraint' in error_str:
+                error_msg = f"NULL constraint violation in {table_name}: {e}"
+                self.logger.error(error_msg)
+                raise XMLExtractionError(error_msg, error_category="constraint_violation")
+            else:
+                error_msg = f"Database error during bulk insert into {table_name}: {e}"
+                self.logger.error(error_msg)
+                raise XMLExtractionError(error_msg, error_category="database_error")
         except Exception as e:
             # Ensure IDENTITY_INSERT is turned off even on error
             if enable_identity_insert:
@@ -299,7 +324,7 @@ class MigrationEngine(MigrationEngineInterface):
             
             error_msg = f"Unexpected error during bulk insert into {table_name}: {e}"
             self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg)
+            raise XMLExtractionError(error_msg, error_category="system_error")
         
         return inserted_count
     

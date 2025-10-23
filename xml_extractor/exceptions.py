@@ -9,16 +9,18 @@ that can occur during XML processing and data extraction.
 class XMLExtractionError(Exception):
     """Base exception for all XML extraction related errors."""
     
-    def __init__(self, message: str, source_record_id: str = None):
+    def __init__(self, message: str, source_record_id: str = None, error_category: str = None):
         """
         Initialize XML extraction error.
         
         Args:
             message: Error description
             source_record_id: Optional identifier of the source record that caused the error
+            error_category: Optional category for error classification (constraint_violation, database_error, system_error, etc.)
         """
         super().__init__(message)
         self.source_record_id = source_record_id
+        self.error_category = error_category
 
 
 class XMLParsingError(XMLExtractionError):

@@ -200,38 +200,53 @@ class ProductionProcessor:
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 
-                # Build query
+                # Build query - exclude apps that have already been processed
                 if limit:
                     query = f"""
-                        SELECT app_id, xml 
-                        FROM app_xml 
-                        WHERE xml IS NOT NULL 
-                        AND DATALENGTH(xml) > 100
-                        ORDER BY app_id
+                        SELECT ax.app_id, ax.xml 
+                        FROM app_xml ax
+                        LEFT JOIN app_base ab ON ax.app_id = ab.app_id
+                        WHERE ax.xml IS NOT NULL 
+                        AND DATALENGTH(ax.xml) > 100
+                        AND ab.app_id IS NULL  -- Only get apps not already processed
+                        ORDER BY ax.app_id
                         OFFSET {offset} ROWS
                         FETCH NEXT {limit} ROWS ONLY
                     """
                 else:
                     query = f"""
-                        SELECT app_id, xml 
-                        FROM app_xml 
-                        WHERE xml IS NOT NULL 
-                        AND DATALENGTH(xml) > 100
-                        ORDER BY app_id
+                        SELECT ax.app_id, ax.xml 
+                        FROM app_xml ax
+                        LEFT JOIN app_base ab ON ax.app_id = ab.app_id
+                        WHERE ax.xml IS NOT NULL 
+                        AND DATALENGTH(ax.xml) > 100
+                        AND ab.app_id IS NULL  -- Only get apps not already processed
+                        ORDER BY ax.app_id
                         OFFSET {offset} ROWS
                     """
                 
                 cursor.execute(query)
                 rows = cursor.fetchall()
                 
+                seen_app_ids = set()
                 for row in rows:
                     app_id = row[0]
                     xml_content = row[1]
                     
                     if xml_content and len(xml_content.strip()) > 0:
+                        # Check for duplicate app_ids in the same batch
+                        if app_id in seen_app_ids:
+                            self.logger.warning(f"Duplicate app_id {app_id} found in app_xml table - skipping duplicate")
+                            continue
+                        seen_app_ids.add(app_id)
                         xml_records.append((app_id, xml_content))
                 
-                self.logger.info(f"Extracted {len(xml_records)} XML records")
+                self.logger.info(f"Extracted {len(xml_records)} XML records (excluding already processed)")
+                
+                # Log if we found any duplicates
+                if len(seen_app_ids) < len(rows):
+                    duplicates_found = len(rows) - len(seen_app_ids)
+                    self.logger.warning(f"Found {duplicates_found} duplicate app_ids in app_xml table")
                 
         except Exception as e:
             self.logger.error(f"Failed to extract XML records: {e}")
@@ -240,7 +255,19 @@ class ProductionProcessor:
         return xml_records
     
     def process_batch(self, xml_records: List[Tuple[int, str]]) -> dict:
-        """Process a batch of XML records with full monitoring."""
+        """
+        Process a batch of XML applications with full monitoring.
+        
+        Success Rate Definition:
+            success_rate = (applications_successful / applications_processed) * 100
+            
+            - applications_successful: XML applications completely processed with data inserted into database
+            - applications_processed: Total XML applications attempted 
+            - applications_failed: XML applications that failed at any stage (parsing, mapping, or insertion)
+            
+        Returns:
+            Dictionary containing processing metrics including failed_apps list with failure details
+        """
         if not xml_records:
             self.logger.warning("No XML records to process")
             return {}
@@ -261,6 +288,31 @@ class ProductionProcessor:
         processing_result = coordinator.process_xml_batch(xml_records)
         end_time = time.time()
         
+        # Extract failed app details from individual results
+        individual_results = processing_result.performance_metrics.get('individual_results', [])
+        failed_apps = []
+        
+        for result in individual_results:
+            if not result.get('success', True):
+                failed_app = {
+                    'app_id': result.get('app_id'),
+                    'error_stage': result.get('error_stage', 'unknown'),
+                    'error_message': result.get('error_message', 'No error message available'),
+                    'processing_time': result.get('processing_time', 0)
+                }
+                failed_apps.append(failed_app)
+        
+        # Categorize failures by stage
+        failure_summary = {
+            'parsing_failures': len([f for f in failed_apps if f['error_stage'] == 'parsing']),
+            'mapping_failures': len([f for f in failed_apps if f['error_stage'] == 'mapping']),
+            'insertion_failures': len([f for f in failed_apps if f['error_stage'] == 'insertion']),
+            'constraint_violations': len([f for f in failed_apps if f['error_stage'] == 'constraint_violation']),
+            'database_errors': len([f for f in failed_apps if f['error_stage'] == 'database_error']),
+            'system_errors': len([f for f in failed_apps if f['error_stage'] == 'system_error']),
+            'unknown_failures': len([f for f in failed_apps if f['error_stage'] == 'unknown'])
+        }
+        
         # Calculate metrics
         metrics = {
             'session_id': self.session_id,
@@ -277,19 +329,55 @@ class ProductionProcessor:
             'parallel_efficiency': processing_result.performance_metrics.get('parallel_efficiency', 0),
             'worker_count': self.workers,
             'server': self.server,
-            'database': self.database
+            'database': self.database,
+            'failed_apps': failed_apps,
+            'failure_summary': failure_summary
         }
         
         # Log summary
         self.logger.info("="*60)
         self.logger.info("BATCH PROCESSING COMPLETE")
         self.logger.info("="*60)
-        self.logger.info(f"Records Processed: {metrics['records_processed']}")
+        self.logger.info(f"Applications Processed: {metrics['records_processed']}")
         self.logger.info(f"Success Rate: {metrics['success_rate']:.1f}%")
-        self.logger.info(f"Throughput: {metrics['records_per_minute']:.1f} records/minute")
+        self.logger.info(f"Throughput: {metrics['records_per_minute']:.1f} applications/minute")
         self.logger.info(f"Total Time: {metrics['total_processing_time']:.2f} seconds")
-        self.logger.info(f"Records Inserted: {metrics['total_records_inserted']}")
+        self.logger.info(f"Database Records Inserted: {metrics['total_records_inserted']}")
         self.logger.info(f"Parallel Efficiency: {metrics['parallel_efficiency']*100:.1f}%")
+        
+        # Log failure details if any
+        if metrics['records_failed'] > 0:
+            self.logger.warning(f"Failed Applications: {metrics['records_failed']}")
+            
+            # Log failure breakdown
+            failure_summary = metrics['failure_summary']
+            if failure_summary['parsing_failures'] > 0:
+                self.logger.warning(f"  Parsing Failures: {failure_summary['parsing_failures']} (XML structure/format issues)")
+            if failure_summary['mapping_failures'] > 0:
+                self.logger.warning(f"  Mapping Failures: {failure_summary['mapping_failures']} (Data transformation issues)")
+            if failure_summary['insertion_failures'] > 0:
+                self.logger.warning(f"  Insertion Failures: {failure_summary['insertion_failures']} (General database insertion issues)")
+            if failure_summary['constraint_violations'] > 0:
+                self.logger.warning(f"  Constraint Violations: {failure_summary['constraint_violations']} (Primary key, foreign key, null constraints)")
+            if failure_summary['database_errors'] > 0:
+                self.logger.warning(f"  Database Errors: {failure_summary['database_errors']} (Connection, timeout, SQL errors)")
+            if failure_summary['system_errors'] > 0:
+                self.logger.warning(f"  System Errors: {failure_summary['system_errors']} (Unexpected system issues)")
+            if failure_summary['unknown_failures'] > 0:
+                self.logger.warning(f"  Unknown Failures: {failure_summary['unknown_failures']} (Unclassified errors)")
+            
+            # Log failed app_ids (keep it concise)
+            failed_app_ids = [str(f['app_id']) for f in metrics['failed_apps']]
+            if len(failed_app_ids) <= 10:
+                self.logger.warning(f"  Failed App IDs: {', '.join(failed_app_ids)}")
+            else:
+                self.logger.warning(f"  Failed App IDs: {', '.join(failed_app_ids[:10])} ... and {len(failed_app_ids)-10} more")
+            
+            # Log detailed errors at DEBUG level
+            for failed_app in metrics['failed_apps']:
+                self.logger.debug(f"  App {failed_app['app_id']}: {failed_app['error_stage']} - {failed_app['error_message']}")
+        else:
+            self.logger.info("✅ All records processed successfully!")
         
         # Save metrics to file
         self._save_metrics(metrics)
@@ -338,6 +426,17 @@ class ProductionProcessor:
         offset = 0
         total_processed = 0
         total_successful = 0
+        total_failed = 0
+        all_failed_apps = []
+        overall_failure_summary = {
+            'parsing_failures': 0,
+            'mapping_failures': 0,
+            'insertion_failures': 0,
+            'constraint_violations': 0,
+            'database_errors': 0,
+            'system_errors': 0,
+            'unknown_failures': 0
+        }
         overall_start = time.time()
         
         while True:
@@ -358,6 +457,14 @@ class ProductionProcessor:
             # Update totals
             total_processed += metrics.get('records_processed', 0)
             total_successful += metrics.get('records_successful', 0)
+            total_failed += metrics.get('records_failed', 0)
+            
+            # Accumulate failed apps and failure summary
+            all_failed_apps.extend(metrics.get('failed_apps', []))
+            batch_failure_summary = metrics.get('failure_summary', {})
+            for key in overall_failure_summary:
+                overall_failure_summary[key] += batch_failure_summary.get(key, 0)
+            
             offset += len(batch_records)
             
             # Check if we've reached the limit
@@ -367,21 +474,58 @@ class ProductionProcessor:
         # Final summary
         overall_time = time.time() - overall_start
         overall_rate = total_processed / (overall_time / 60) if overall_time > 0 else 0
+        overall_success_rate = (total_successful/total_processed*100) if total_processed > 0 else 0
         
         self.logger.info("="*80)
         self.logger.info("FULL PROCESSING COMPLETE")
         self.logger.info("="*80)
-        self.logger.info(f"Total Records Processed: {total_processed}")
+        self.logger.info(f"Total Applications Processed: {total_processed}")
         self.logger.info(f"Total Successful: {total_successful}")
-        self.logger.info(f"Overall Success Rate: {(total_successful/total_processed*100):.1f}%")
+        self.logger.info(f"Total Failed: {total_failed}")
+        self.logger.info(f"Overall Success Rate: {overall_success_rate:.1f}%")
         self.logger.info(f"Overall Time: {overall_time/60:.1f} minutes")
-        self.logger.info(f"Overall Rate: {overall_rate:.1f} records/minute")
+        self.logger.info(f"Overall Rate: {overall_rate:.1f} applications/minute")
+        
+        # Log overall failure summary if there were failures
+        if total_failed > 0:
+            self.logger.warning("="*60)
+            self.logger.warning("FAILURE ANALYSIS")
+            self.logger.warning("="*60)
+            
+            if overall_failure_summary['parsing_failures'] > 0:
+                self.logger.warning(f"Parsing Failures: {overall_failure_summary['parsing_failures']} (XML structure/format issues)")
+            if overall_failure_summary['mapping_failures'] > 0:
+                self.logger.warning(f"Mapping Failures: {overall_failure_summary['mapping_failures']} (Data transformation issues)")
+            if overall_failure_summary['insertion_failures'] > 0:
+                self.logger.warning(f"Insertion Failures: {overall_failure_summary['insertion_failures']} (General database insertion issues)")
+            if overall_failure_summary['constraint_violations'] > 0:
+                self.logger.warning(f"Constraint Violations: {overall_failure_summary['constraint_violations']} (Primary key, foreign key, null constraints)")
+            if overall_failure_summary['database_errors'] > 0:
+                self.logger.warning(f"Database Errors: {overall_failure_summary['database_errors']} (Connection, timeout, SQL errors)")
+            if overall_failure_summary['system_errors'] > 0:
+                self.logger.warning(f"System Errors: {overall_failure_summary['system_errors']} (Unexpected system issues)")
+            if overall_failure_summary['unknown_failures'] > 0:
+                self.logger.warning(f"Unknown Failures: {overall_failure_summary['unknown_failures']} (Unclassified errors)")
+            
+            # Log sample of failed app_ids for investigation
+            failed_app_ids = [str(f['app_id']) for f in all_failed_apps]
+            unique_failed_ids = list(dict.fromkeys(failed_app_ids))  # Remove duplicates while preserving order
+            
+            if len(unique_failed_ids) <= 20:
+                self.logger.warning(f"Failed App IDs: {', '.join(unique_failed_ids)}")
+            else:
+                self.logger.warning(f"Failed App IDs (first 20): {', '.join(unique_failed_ids[:20])}")
+                self.logger.warning(f"Total unique failed apps: {len(unique_failed_ids)}")
         
         return {
             'total_processed': total_processed,
             'total_successful': total_successful,
+            'total_failed': total_failed,
+            'overall_success_rate': overall_success_rate,
             'overall_time_minutes': overall_time / 60,
-            'overall_rate_per_minute': overall_rate
+            'overall_rate_per_minute': overall_rate,
+            'failed_apps': all_failed_apps,
+            'failure_summary': overall_failure_summary
         }
 
 
