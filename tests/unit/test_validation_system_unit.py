@@ -5,25 +5,36 @@ This module provides test cases and validation scenarios to ensure
 the validation system works correctly with various data conditions.
 """
 
+import unittest
 import json
 import logging
+import sys
+import os
 from typing import Dict, List, Any
 from datetime import datetime
 
-from xml_extractor.validation.data_integrity_validator import DataIntegrityValidator
-from xml_extractor.validation.validation_models import ValidationConfig, ValidationSeverity, ValidationType
-from xml_extractor.validation.validation_integration import ValidationOrchestrator, ValidationReporter
-from xml_extractor.models import MappingContract, FieldMapping, RelationshipMapping
+# Add the project root to the path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+
+try:
+    from xml_extractor.validation.data_integrity_validator import DataIntegrityValidator
+    from xml_extractor.validation.validation_models import ValidationConfig, ValidationSeverity, ValidationType
+    from xml_extractor.validation.validation_integration import ValidationOrchestrator, ValidationReporter
+    from xml_extractor.models import MappingContract, FieldMapping, RelationshipMapping
+except ImportError as e:
+    print(f"Import error: {e}")
+    print("This test requires the xml_extractor package to be installed or available in the Python path")
+    sys.exit(1)
 
 
-class ValidationSystemTester:
+class TestValidationSystem(unittest.TestCase):
     """
     Test harness for the data integrity validation system.
     
     Provides test scenarios and validation of the validation system itself.
     """
     
-    def __init__(self):
+    def setUp(self):
         """Initialize the test harness."""
         self.logger = logging.getLogger(__name__)
         
@@ -35,7 +46,7 @@ class ValidationSystemTester:
             Test results summary
         """
         test_results = {
-            'timestamp': datetime.utcnow().isoformat(),
+            'timestamp': datetime.now().isoformat(),
             'tests_run': 0,
             'tests_passed': 0,
             'tests_failed': 0,
@@ -44,7 +55,7 @@ class ValidationSystemTester:
         
         # Test scenarios
         test_scenarios = [
-            ('test_valid_data_validation', self._test_valid_data_validation),
+            ('test_valid_data_validation', self._run_valid_data_validation),
             ('test_missing_app_id_validation', self._test_missing_app_id_validation),
             ('test_missing_contact_id_validation', self._test_missing_contact_id_validation),
             ('test_referential_integrity_validation', self._test_referential_integrity_validation),
@@ -101,8 +112,63 @@ class ValidationSystemTester:
         
         return test_results
     
-    def _test_valid_data_validation(self) -> Dict[str, Any]:
+    def test_valid_data_validation(self):
         """Test validation with valid data."""
+        # Create test data
+        source_xml_data = self._create_valid_xml_data()
+        extracted_tables = self._create_valid_extracted_tables()
+        mapping_contract = self._create_test_mapping_contract()
+        
+        # Run validation
+        validator = DataIntegrityValidator(ValidationConfig())
+        result = validator.validate_extraction_results(
+            source_xml_data=source_xml_data,
+            extracted_tables=extracted_tables,
+            mapping_contract=mapping_contract,
+            source_record_id="123456"  # Match the app_id from test data
+        )
+        
+        # Validate results
+        self.assertTrue(result.validation_passed, "Valid data should pass validation")
+        self.assertEqual(result.total_errors, 0, "Valid data should have no errors")
+    
+    def test_missing_app_id_validation(self):
+        """Test validation with missing app_id."""
+        result = self._test_missing_app_id_validation()
+        self.assertTrue(result['passed'], result.get('error', 'Test failed'))
+    
+    def test_missing_contact_id_validation(self):
+        """Test validation with missing contact IDs."""
+        result = self._test_missing_contact_id_validation()
+        self.assertTrue(result['passed'], result.get('error', 'Test failed'))
+    
+    def test_referential_integrity_validation(self):
+        """Test referential integrity validation."""
+        result = self._test_referential_integrity_validation()
+        self.assertTrue(result['passed'], result.get('error', 'Test failed'))
+    
+    def test_constraint_compliance_validation(self):
+        """Test constraint compliance validation."""
+        result = self._test_constraint_compliance_validation()
+        self.assertTrue(result['passed'], result.get('error', 'Test failed'))
+    
+    def test_data_quality_metrics(self):
+        """Test data quality metrics calculation."""
+        result = self._test_data_quality_metrics()
+        self.assertTrue(result['passed'], result.get('error', 'Test failed'))
+    
+    def test_validation_orchestrator(self):
+        """Test validation orchestrator functionality."""
+        result = self._test_validation_orchestrator()
+        self.assertTrue(result['passed'], result.get('error', 'Test failed'))
+    
+    def test_validation_reporter(self):
+        """Test validation reporter functionality."""
+        result = self._test_validation_reporter()
+        self.assertTrue(result['passed'], result.get('error', 'Test failed'))
+    
+    def _run_valid_data_validation(self) -> Dict[str, Any]:
+        """Run valid data validation test and return result."""
         try:
             # Create test data
             source_xml_data = self._create_valid_xml_data()
@@ -115,18 +181,14 @@ class ValidationSystemTester:
                 source_xml_data=source_xml_data,
                 extracted_tables=extracted_tables,
                 mapping_contract=mapping_contract,
-                source_record_id="test_123"
+                source_record_id="123456"  # Match the app_id from test data
             )
             
-            # Validate results
+            # Check results
             if result.validation_passed and result.total_errors == 0:
-                return {'passed': True, 'details': {'validation_id': result.validation_id}}
+                return {'passed': True, 'details': {'records_validated': result.total_records_validated}}
             else:
-                return {
-                    'passed': False,
-                    'error': f"Valid data failed validation: {result.total_errors} errors",
-                    'details': {'errors': [str(e) for e in result.errors[:5]]}
-                }
+                return {'passed': False, 'error': f'Validation failed: {result.total_errors} errors'}
                 
         except Exception as e:
             return {'passed': False, 'error': str(e)}
@@ -413,14 +475,14 @@ class ValidationSystemTester:
         """Create valid extracted tables for testing."""
         return {
             'app_base': [
-                {'app_id': 123456, 'name': 'Test Application', 'created_date': datetime.utcnow()}
+                {'app_id': 123456, 'name': 'Test Application', 'created_date': datetime.now()}
             ],
             'contact_base': [
-                {'con_id': 789, 'app_id': 123456, 'name': 'John Doe', 'created_date': datetime.utcnow()},
-                {'con_id': 101112, 'app_id': 123456, 'name': 'Jane Doe', 'created_date': datetime.utcnow()}
+                {'con_id': 789, 'app_id': 123456, 'name': 'John Doe', 'created_date': datetime.now()},
+                {'con_id': 101112, 'app_id': 123456, 'name': 'Jane Doe', 'created_date': datetime.now()}
             ],
             'contact_address': [
-                {'con_id': 789, 'app_id': 123456, 'address_line1': '123 Main St', 'created_date': datetime.utcnow()}
+                {'con_id': 789, 'app_id': 123456, 'address_line1': '123 Main St', 'created_date': datetime.now()}
             ]
         }
     
@@ -469,32 +531,49 @@ def run_validation_system_tests() -> Dict[str, Any]:
     Returns:
         Test results summary
     """
-    tester = ValidationSystemTester()
+    tester = TestValidationSystem()
+    tester.setUp()
     return tester.run_comprehensive_tests()
 
 
-if __name__ == "__main__":
+def run_custom_test_harness():
+    """Run the custom test harness for standalone execution."""
     # Configure logging
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
     
-    # Run tests
+    print("\n🧪 VALIDATION SYSTEM UNIT TESTS")
+    print("=" * 80)
+    
+    # Run tests using the custom harness
     results = run_validation_system_tests()
     
-    # Print results
-    print("\n" + "=" * 80)
-    print("VALIDATION SYSTEM TEST RESULTS")
+    # Print results in a nice format
+    print(f"📋 Tests Run: {results['tests_run']}")
+    print(f"✅ Tests Passed: {results['tests_passed']}")
+    print(f"❌ Tests Failed: {results['tests_failed']}")
+    print(f"📊 Success Rate: {results['success_rate']:.1f}%")
+    
+    if results['test_details']:
+        print("\n📋 Test Details:")
+        for test in results['test_details']:
+            status = "✅ PASS" if test['passed'] else "❌ FAIL"
+            print(f"  {test['test_name']}: {status}")
+            if not test['passed'] and test.get('error'):
+                print(f"    Error: {test['error']}")
+    
+    if results['tests_failed'] == 0:
+        print("\n🎉 ALL VALIDATION SYSTEM TESTS PASSED!")
+        print("   System validation components are working correctly")
+    else:
+        print(f"\n⚠️  {results['tests_failed']} tests failed - check errors above")
+    
     print("=" * 80)
-    print(f"Tests Run: {results['tests_run']}")
-    print(f"Tests Passed: {results['tests_passed']}")
-    print(f"Tests Failed: {results['tests_failed']}")
-    print(f"Success Rate: {results['success_rate']:.1f}%")
-    print("\nTest Details:")
-    for test in results['test_details']:
-        status = "PASS" if test['passed'] else "FAIL"
-        print(f"  {test['test_name']}: {status}")
-        if not test['passed'] and test.get('error'):
-            print(f"    Error: {test['error']}")
-    print("=" * 80)
+    return results['tests_failed'] == 0
+
+
+if __name__ == "__main__":
+    success = run_custom_test_harness()
+    sys.exit(0 if success else 1)

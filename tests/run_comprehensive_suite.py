@@ -55,8 +55,7 @@ class TestSuiteRunner:
                 sys.executable, '-m', 'pytest',
                 str(test_path),
                 '-v',
-                '--tb=short',
-                f'--timeout={timeout}'
+                '--tb=short'
             ]
             
             # Add category-specific options

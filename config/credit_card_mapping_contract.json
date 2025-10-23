@@ -227,7 +227,8 @@
       "xml_attribute": "ssn",
       "target_table": "contact_base",
       "target_column": "ssn",
-      "data_type": "char(9)"
+      "data_type": "char(9)",
+      "mapping_type": "numbers_only"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -342,7 +343,8 @@
       "xml_attribute": "zip",
       "target_table": "contact_address",
       "target_column": "zip",
-      "data_type": "varchar(9)"
+      "data_type": "varchar(9)",
+      "mapping_type": "numbers_only"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -703,7 +705,8 @@
       "xml_attribute": "primary_ssn",
       "target_table": "app_solicited_cc",
       "target_column": "ssn",
-      "data_type": "char(9)"
+      "data_type": "char(9)",
+      "mapping_type": "numbers_only"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -731,7 +734,8 @@
       "xml_attribute": "pri_zip_code",
       "target_table": "app_solicited_cc",
       "target_column": "zip",
-      "data_type": "varchar(9)"
+      "data_type": "varchar(9)",
+      "mapping_type": "numbers_only"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",

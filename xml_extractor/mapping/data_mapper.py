@@ -753,15 +753,8 @@ class DataMapper(DataMapperInterface):
                     # Always take the last contact for each con_id (overwrites duplicates)
                     unique_contacts[con_id] = contact
             
-            # DEBUG: Log the input valid_contacts
-            self.logger.warning(f"DEBUG: Processing contact_base with {len(valid_contacts)} valid_contacts")
-            for i, contact in enumerate(valid_contacts):
-                self.logger.warning(f"DEBUG: Contact {i+1}: con_id={contact.get('con_id')}, ac_role_tp_c={contact.get('ac_role_tp_c')}, first_name={contact.get('first_name')}")
-            
-            # DEBUG: Log the unique_contacts after deduplication
-            self.logger.warning(f"DEBUG: After deduplication: {len(unique_contacts)} unique contacts")
-            for con_id, contact in unique_contacts.items():
-                self.logger.warning(f"DEBUG: Unique contact: con_id={con_id}, ac_role_tp_c={contact.get('ac_role_tp_c')}, first_name={contact.get('first_name')}")
+            # Log contact processing summary
+            self.logger.debug(f"Processing contact_base: {len(valid_contacts)} valid contacts -> {len(unique_contacts)} unique contacts")
             
             # Create records for unique contacts only
             for con_id, contact in unique_contacts.items():
@@ -773,9 +766,9 @@ class DataMapper(DataMapperInterface):
                     record['con_id'] = int(contact['con_id']) if str(contact['con_id']).isdigit() else contact['con_id']
                     record['app_id'] = int(app_id) if app_id.isdigit() else app_id
                     records.append(record)
-                    self.logger.warning(f"DEBUG: Created contact_base record for con_id={con_id}, record={record}")
+                    self.logger.debug(f"Created contact_base record for con_id={con_id}")
                 else:
-                    self.logger.warning(f"Skipping empty contact_base record for con_id={con_id}")
+                    self.logger.debug(f"Skipping empty contact_base record for con_id={con_id}")
         elif table_name == 'contact_address':
             # Extract contact_address elements directly from XML data
             self.logger.debug(f"Extracting contact_address with {len(mappings)} mappings")
@@ -816,9 +809,9 @@ class DataMapper(DataMapperInterface):
                 # Extract value from XML data
                 value = self._extract_value_from_xml(xml_data, mapping, context_data)
                 
-                # DEBUG: Log extraction for birth_date fields
+                # Log extraction for birth_date fields (debug level)
                 if mapping.target_column == 'birth_date':
-                    self.logger.warning(f"EXTRACT: table={table_name}, column={mapping.target_column}, xml_path={mapping.xml_path}, xml_attribute={mapping.xml_attribute}, extracted_value={value}")
+                    self.logger.debug(f"Extracted birth_date: table={table_name}, value={value}")
                 
                 # Transform the value according to mapping rules
                 transformed_value = self._apply_field_transformation(value, mapping, context_data)
@@ -831,22 +824,22 @@ class DataMapper(DataMapperInterface):
                     record[mapping.target_column] = transformed_value
                     if is_transformation_default:
                         applied_defaults.add(mapping.target_column)  # Track transformation default
-                    # DEBUG: Log birth_date specifically
+                    # Log birth_date transformation (debug level)
                     if mapping.target_column == 'birth_date':
-                        self.logger.warning(f"BIRTH_DATE: table={table_name}, transformed_value={transformed_value}, is_default={is_transformation_default}, context_data={context_data.get('first_name') if context_data else 'None'}")
+                        self.logger.debug(f"Transformed birth_date: {transformed_value} (default: {is_transformation_default})")
                 else:
                     # Try to get default value
                     default_value = self._get_default_for_mapping(mapping)
                     if default_value is not None:
                         record[mapping.target_column] = default_value
                         applied_defaults.add(mapping.target_column)  # Track applied default
-                                # DEBUG: Log birth_date default
+                                # Log birth_date default (debug level)
                         if mapping.target_column == 'birth_date':
-                            self.logger.warning(f"BIRTH_DATE: table={table_name}, using default_value={default_value}")
+                            self.logger.debug(f"Using birth_date default: {default_value}")
                     else:
-                        # DEBUG: Log missing birth_date
+                        # Log missing birth_date (debug level)
                         if mapping.target_column == 'birth_date':
-                            self.logger.warning(f"BIRTH_DATE: table={table_name}, NO DEFAULT VALUE - will be NULL! mapping.default_value={getattr(mapping, 'default_value', 'NOT_SET')}")
+                            self.logger.debug(f"No birth_date default - will be NULL")
                     # If no default, don't add the column (leave as NULL)
                 
                 self._transformation_stats['type_conversions'] += 1
@@ -890,11 +883,8 @@ class DataMapper(DataMapperInterface):
                           and v is not None 
                           and k not in applied_defaults}
         
-        # DEBUG: Log what we're evaluating
-        self.logger.warning(f"RECORD EVALUATION for {table_name}:")
-        self.logger.warning(f"  Total columns: {list(record.keys())}")
-        self.logger.warning(f"  Applied defaults: {applied_defaults}")
-        self.logger.warning(f"  Meaningful data: {list(meaningful_data.keys())}")
+        # Log record evaluation summary
+        self.logger.debug(f"Record evaluation for {table_name}: {len(meaningful_data)} meaningful fields, {len(applied_defaults)} defaults")
         
         # Skip records if they only have keys and applied defaults (no meaningful data)
         if not meaningful_data:
@@ -904,15 +894,13 @@ class DataMapper(DataMapperInterface):
                 'app_transactional_cc', 'app_operational_cc'
             }
             if table_name in tables_with_required_defaults and applied_defaults:
-                self.logger.warning(f"KEEPING {table_name} record with applied defaults: {applied_defaults}")
+                self.logger.debug(f"Keeping {table_name} record with applied defaults")
                 return False
-            self.logger.warning(f"SKIPPING {table_name} INSERT - record contains only keys and applied default values")
-            if applied_defaults:
-                self.logger.debug(f"Applied defaults for {table_name}: {applied_defaults}")
+            self.logger.debug(f"Skipping {table_name} INSERT - only keys and defaults")
             return True
             
         # Keep records with meaningful data (applied defaults will be included automatically)
-        self.logger.warning(f"KEEPING {table_name} record - has meaningful data: {list(meaningful_data.keys())}")
+        self.logger.debug(f"Keeping {table_name} record - has meaningful data")
         return False
 
     def _is_transformation_default(self, original_value: Any, transformed_value: Any, mapping: FieldMapping) -> bool:
@@ -948,7 +936,7 @@ class DataMapper(DataMapperInterface):
                 filtered_elements = element_filter.filter_valid_elements(self._current_xml_root)
                 valid_addresses = filtered_elements['addresses']
                 
-                self.logger.info(f"Processing {len(valid_addresses)} valid address elements")
+                self.logger.debug(f"Processing {len(valid_addresses)} valid address elements")
                 
                 for addr_elem in valid_addresses:
                     # Get parent contact info
@@ -968,7 +956,7 @@ class DataMapper(DataMapperInterface):
                     if record:
                         record['con_id'] = int(con_id) if str(con_id).isdigit() else con_id
                         records.append(record)
-                        self.logger.info(f"✅ Created contact_address record for con_id {con_id}")
+                        self.logger.debug(f"Created contact_address record for con_id {con_id}")
                         
             except Exception as e:
                 self.logger.error(f"Error in centralized address filtering: {e}")
@@ -977,7 +965,7 @@ class DataMapper(DataMapperInterface):
         else:
             self.logger.warning("No XML root available for address extraction")
         
-        self.logger.info(f"Extracted {len(records)} contact_address records")
+        self.logger.debug(f"Extracted {len(records)} contact_address records")
         return records
 
     def _extract_contact_employment_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], 
@@ -991,7 +979,7 @@ class DataMapper(DataMapperInterface):
                 filtered_elements = element_filter.filter_valid_elements(self._current_xml_root)
                 valid_employments = filtered_elements['employments']
                 
-                self.logger.info(f"Processing {len(valid_employments)} valid employment elements")
+                self.logger.debug(f"Processing {len(valid_employments)} valid employment elements")
                 
                 for emp_elem in valid_employments:
                     # Get parent contact info
@@ -1011,7 +999,7 @@ class DataMapper(DataMapperInterface):
                     if record:
                         record['con_id'] = int(con_id) if str(con_id).isdigit() else con_id
                         records.append(record)
-                        self.logger.info(f"✅ Created contact_employment record for con_id {con_id}")
+                        self.logger.debug(f"Created contact_employment record for con_id {con_id}")
                         
             except Exception as e:
                 self.logger.error(f"Error in centralized employment filtering: {e}")
@@ -1020,7 +1008,7 @@ class DataMapper(DataMapperInterface):
         else:
             self.logger.warning("No XML root available for employment extraction")
         
-        self.logger.info(f"Extracted {len(records)} contact_employment records")
+        self.logger.debug(f"Extracted {len(records)} contact_employment records")
         return records
 
     # Placeholder methods for missing functionality

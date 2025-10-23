@@ -73,8 +73,8 @@ class ValidationOrchestrator:
             self.logger.error(f"Validation orchestration failed: {e}")
             # Create error validation result
             error_result = ValidationResult(
-                validation_id=f"error_{datetime.utcnow().isoformat()}",
-                timestamp=datetime.utcnow(),
+                validation_id=f"error_{datetime.now().isoformat()}",
+                timestamp=datetime.now(),
                 source_record_id=source_record_id,
                 validation_passed=False
             )
@@ -110,7 +110,7 @@ class ValidationOrchestrator:
             'execution_time_ms': 0
         }
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now()
         
         try:
             for i, result in enumerate(batch_results):
@@ -133,7 +133,7 @@ class ValidationOrchestrator:
                         batch_summary['overall_passed'] = False
             
             # Calculate execution time
-            end_time = datetime.utcnow()
+            end_time = datetime.now()
             batch_summary['execution_time_ms'] = (end_time - start_time).total_seconds() * 1000
             
             self.logger.info(
@@ -169,7 +169,7 @@ class ValidationOrchestrator:
             "=" * 80,
             "DATA INTEGRITY VALIDATION REPORT",
             "=" * 80,
-            f"Generated: {datetime.utcnow().isoformat()}",
+            f"Generated: {datetime.now().isoformat()}",
             f"Total Validations: {len(validation_results)}",
             ""
         ]
@@ -356,7 +356,7 @@ class ValidationReporter:
         """Generate JSON format validation report."""
         return {
             'report_metadata': {
-                'generated_at': datetime.utcnow().isoformat(),
+                'generated_at': datetime.now().isoformat(),
                 'total_validations': len(validation_results),
                 'report_version': '1.0'
             },

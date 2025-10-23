@@ -63,7 +63,7 @@ class DataIntegrityValidator:
         
         result = ValidationResult(
             validation_id=validation_id,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(),
             source_record_id=source_record_id
         )
         

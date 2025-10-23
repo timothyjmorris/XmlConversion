@@ -423,7 +423,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
     # ========================================
     
     def test_duplicate_con_ids(self):
-        """Test XML with duplicate con_ids - should handle appropriately."""
+        """Test XML with duplicate con_ids - should use last valid element approach."""
         xml_content = """
         <Provenir>
             <Request ID="154284">
@@ -437,11 +437,16 @@ class TestXMLValidationScenarios(unittest.TestCase):
         </Provenir>
         """
         
-        # Should process both contacts (business rule: duplicates allowed)
+        # Should use "last valid element" approach - only 1 contact record (JANE, the last one)
         result, validation_result = self._process_xml_with_validation(xml_content, "test_duplicate_con_ids")
-        self.assertEqual(len(result['contact_base']), 2)
+        self.assertEqual(len(result['contact_base']), 1)
         
-        print("✅ Duplicate con_ids handled correctly")
+        # Verify it's the last contact (JANE)
+        contact = result['contact_base'][0]
+        self.assertEqual(contact['first_name'], 'JANE')
+        self.assertEqual(contact['con_id'], 277449)
+        
+        print("✅ Duplicate con_ids handled correctly using last valid element approach")
     
     def test_special_characters_in_attributes(self):
         """Test XML with special characters in attributes."""
