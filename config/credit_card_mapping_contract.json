@@ -350,7 +350,8 @@
       "target_table": "contact_address",
       "target_column": "months_at_address",
       "data_type": "smallint",
-      "mapping_type": "curr_address_only"
+      "mapping_type": "calculated_field",
+      "expression": "months_at_residence + (years_at_residence * 12)"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -403,14 +404,18 @@
       "xml_attribute": "b_salary",
       "target_table": "contact_employment",
       "target_column": "monthly_salary",
-      "data_type": "decimal(12,2)"
+      "data_type": "decimal(12,2)",
+      "mapping_type": "calculated_field",
+      "expression": "CASE WHEN b_salary_basis_tp_c = 'ANNUM' THEN b_salary / 12 WHEN b_salary_basis_tp_c = 'MONTH' THEN b_salary * 12 WHEN b_salary_basis_tp_c = 'HOURLY' THEN b_salary WHEN b_salary_basis_tp_c = '' THEN b_salary ELSE b_salary END"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_months_at_job",
       "target_table": "contact_employment",
       "target_column": "months_at_job",
-      "data_type": "smallint"
+      "data_type": "smallint",
+      "mapping_type": "calculated_field",
+      "expression": "b_months_at_job + (b_years_at_job * 12)"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",

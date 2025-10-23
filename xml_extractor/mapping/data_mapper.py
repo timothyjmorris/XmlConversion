@@ -15,6 +15,7 @@ from ..exceptions import DataMappingError, ValidationError, DataTransformationEr
 from ..validation.element_filter import ElementFilter
 from ..utils import StringUtils, ValidationUtils
 from ..config.config_manager import get_config_manager
+from .calculated_field_engine import CalculatedFieldEngine
 
 
 class DataMapper(DataMapperInterface):
@@ -594,6 +595,8 @@ class DataMapper(DataMapperInterface):
                 return datetime.utcnow()
             # Apply data type transformation to the existing value
             return self.transform_data_types(value, mapping.data_type)
+        elif mapping_type == 'calculated_field':
+            return self._apply_calculated_field_mapping(value, mapping, context_data)
         else:
             # Unknown mapping type - apply standard data type transformation
             self.logger.warning(f"Unknown mapping type '{mapping_type}' for {mapping.target_column}, applying standard data type transformation")
@@ -670,6 +673,40 @@ class DataMapper(DataMapperInterface):
                 return enum_type
         
         return None 
+    
+    def _apply_calculated_field_mapping(self, value: Any, mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
+        """Apply calculated field mapping using expressions."""
+        try:
+            # Get the expression from the mapping
+            expression = mapping.expression
+            if not expression:
+                self.logger.warning(f"No expression found for calculated field: {mapping.target_column}")
+                return None
+            
+            # Initialize calculated field engine if not already done
+            if not hasattr(self, '_calculated_field_engine'):
+                self._calculated_field_engine = CalculatedFieldEngine()
+            
+            # Get the element data from context_data (for contact employment/address records)
+            element_data = {}
+            if context_data and 'attributes' in context_data:
+                element_data = context_data['attributes']
+            
+            # Evaluate the expression using the element data
+            result = self._calculated_field_engine.evaluate_expression(expression, element_data, mapping.target_column)
+            
+            self.logger.debug(f"Calculated field expression '{expression}' evaluated to: {result}")
+            self._transformation_stats['calculated_fields'] += 1
+            
+            # Apply data type transformation to the result
+            if result is not None:
+                return self.transform_data_types(result, mapping.data_type)
+            return None
+            
+        except Exception as e:
+            self.logger.error(f"Error evaluating calculated field expression for '{mapping.target_column}': {e}")
+            return None
+    
     def _group_mappings_by_table(self, mappings: List[FieldMapping]) -> Dict[str, List[FieldMapping]]:
         """Group field mappings by target table."""
         table_mappings = {}

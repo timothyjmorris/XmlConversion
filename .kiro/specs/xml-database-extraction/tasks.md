@@ -199,7 +199,7 @@
     - **Goal**: Achieve higher success rate and identify next batch of issues to fix
     - _Requirements: Production Data Validation, Mapping Completeness_
 
-  - [-] 10.2 Production XML Batch Processing - Sanity check
+  - [x] 10.2 Production XML Batch Processing - Sanity check
 
 
 
@@ -323,7 +323,21 @@
     - Monitor impact on batch performance and optimize data type handling
     - _Requirements: Performance, Batch Processing_
 
+  - [ ] 12.4 Fix calculated fields and expressions functionality used by data mapper
 
+
+
+
+
+    - Issue: calculated_field_engine.py appears to be working and data contract is right. But it's not making it to the insert statement.
+    - Example:  /contact_employment/ b_months_at_job="6" b_years_at_job="1" is in database as 6
+    - Test using known #sample-source-xml-contact-test.xml with #test_pipeline_full_integration.py
+    Stop trying to validate database from your python command line - it always fails; use a function or test module instead.
+    - _Requirements: Data Completeness, Calculated Fields_
+
+- [ ] 9.2 Production Data Quality and Performance Issues (Blocking)
+  - [ ] 9.1 Fix executemany performance degradation
+    - Issue: Some tables falling back to individual executes due to cast errors
 
 
 

@@ -32,6 +32,8 @@ class DatabaseConfig:
     mars_connection: bool = True
     charset: str = "UTF-8"
     schema_prefix: str = ""  # Optional schema prefix for table names (e.g., "sandbox", "dbo")
+    connection_pooling: bool = True  # Enable connection pooling for better performance
+    packet_size: int = 4096  # Network packet size (4096 is default, can be 512-32767)
     
     @classmethod
     def from_environment(cls) -> 'DatabaseConfig':
@@ -52,6 +54,8 @@ class DatabaseConfig:
         mars_connection = os.environ.get('XML_EXTRACTOR_DB_MARS_CONNECTION', 'true').lower() == 'true'
         charset = os.environ.get('XML_EXTRACTOR_DB_CHARSET', cls.charset)
         schema_prefix = os.environ.get('XML_EXTRACTOR_DB_SCHEMA_PREFIX', cls.schema_prefix)
+        connection_pooling = os.environ.get('XML_EXTRACTOR_DB_CONNECTION_POOLING', 'true').lower() == 'true'
+        packet_size = int(os.environ.get('XML_EXTRACTOR_DB_PACKET_SIZE', cls.packet_size))
         
         # Build connection string based on authentication method
         if trusted_connection:
@@ -65,7 +69,11 @@ class DatabaseConfig:
                 f"Encrypt=no;"
             )
             if mars_connection:
-                connection_string += "Mars_Connection=yes;"
+                connection_string += "MultipleActiveResultSets=True;"
+            if connection_pooling:
+                connection_string += "Pooling=True;"
+            if packet_size != 4096:  # Only add if different from default
+                connection_string += f"Packet Size={packet_size};"
             if charset:
                 connection_string += f"CharacterSet={charset};"
         else:
@@ -82,7 +90,11 @@ class DatabaseConfig:
                 f"Encrypt=no;"
             )
             if mars_connection:
-                connection_string += "Mars_Connection=yes;"
+                connection_string += "MultipleActiveResultSets=True;"
+            if connection_pooling:
+                connection_string += "Pooling=True;"
+            if packet_size != 4096:  # Only add if different from default
+                connection_string += f"Packet Size={packet_size};"
         
         return cls(
             connection_string=connection_string,
@@ -94,7 +106,9 @@ class DatabaseConfig:
             command_timeout=command_timeout,
             mars_connection=mars_connection,
             charset=charset,
-            schema_prefix=schema_prefix
+            schema_prefix=schema_prefix,
+            connection_pooling=connection_pooling,
+            packet_size=packet_size
         )
 
 
@@ -546,7 +560,8 @@ class ConfigManager(ConfigurationManagerInterface):
                     xml_attribute=mapping_data.get('xml_attribute'),
                     mapping_type=mapping_data.get('mapping_type'),
                     transformation=mapping_data.get('transformation'),
-                    default_value=mapping_data.get('default_value')
+                    default_value=mapping_data.get('default_value'),
+                    expression=mapping_data.get('expression')
                 )
                 mappings.append(field_mapping)
             

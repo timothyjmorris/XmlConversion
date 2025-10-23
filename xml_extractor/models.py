@@ -33,6 +33,7 @@ class FieldMapping:
         data_type: Target data type for the column
         mapping_type: Type of mapping (enum, char_to_bit, identity_insert, etc.)
         transformation: Optional transformation rule to apply
+        expression: Optional calculated field expression for calculated_field mapping type
     """
     xml_path: str
     target_table: str
@@ -42,6 +43,7 @@ class FieldMapping:
     mapping_type: Optional[str] = None
     transformation: Optional[str] = None
     default_value: Optional[str] = None
+    expression: Optional[str] = None
     
     def __post_init__(self):
         """Validate field mapping configuration."""
