@@ -369,6 +369,19 @@ class DataMapper(DataMapperInterface):
             # Handle special mapping types that require custom extraction logic
             if hasattr(mapping, 'mapping_type') and mapping.mapping_type == 'last_valid_pr_contact':
                 return self._extract_from_last_valid_pr_contact(mapping)
+            
+            # Handle application-level attributes that need to be threaded to contact_base
+            if (mapping.target_table == 'contact_base' and 
+                mapping.xml_path == '/Provenir/Request/CustData/application' and
+                context_data is not None):
+                # Extract from application level, not contact level
+                app_path = '/Provenir/Request/CustData/application'
+                if app_path in xml_data and isinstance(xml_data[app_path], dict):
+                    app_element = xml_data[app_path]
+                    if 'attributes' in app_element and mapping.xml_attribute in app_element['attributes']:
+                        return app_element['attributes'][mapping.xml_attribute]
+                return None
+            
             # Initialize current_data to avoid UnboundLocalError
             current_data = None
 
@@ -577,6 +590,10 @@ class DataMapper(DataMapperInterface):
         # Apply specific mapping type transformations
         if mapping_type == 'char_to_bit':
             result = self._apply_bit_conversion(value)
+            self._transformation_stats['bit_conversions'] += 1
+            return result
+        elif mapping_type == 'boolean_to_bit':
+            result = self._apply_boolean_to_bit_conversion(value)
             self._transformation_stats['bit_conversions'] += 1
             return result
         elif mapping_type == 'numbers_only':
@@ -1130,6 +1147,25 @@ class DataMapper(DataMapperInterface):
         
         # Default fallback
         self.logger.warning(f"No bit conversion found for value '{str_value}' - using default 0")
+        return 0
+    
+    def _apply_boolean_to_bit_conversion(self, value):
+        """Apply boolean to bit conversion transformation using loaded bit conversions."""
+        str_value = str(value).strip().lower() if value is not None else ''
+        
+        # Use boolean_to_bit conversion from loaded configuration
+        if 'boolean_to_bit' in self._bit_conversions:
+            bit_map = self._bit_conversions['boolean_to_bit']
+            if str_value in bit_map:
+                return bit_map[str_value]
+        
+        # Default fallback for common boolean values
+        if str_value in ['true', '1', 'yes', 'y']:
+            return 1
+        elif str_value in ['false', '0', 'no', 'n', '']:
+            return 0
+        
+        # Default to 0 for unknown values
         return 0
     
     def _apply_bit_conversion_with_default_tracking(self, value):
