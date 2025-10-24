@@ -329,19 +329,25 @@ class DataMapper(DataMapperInterface):
         for each path, allowing us to get all contacts.
         """
         contacts = []
-        
         try:
             # Use XPath to find all contact elements
             contact_elements = xml_root.xpath('.//contact[@ac_role_tp_c]')
-            
             for contact_elem in contact_elements:
                 # Extract all attributes as a dictionary
                 contact_dict = dict(contact_elem.attrib)
+
+                # Extract child employment elements
+                employment_elems = contact_elem.xpath('./contact_employment')
+                contact_dict['contact_employment'] = [dict(emp.attrib) for emp in employment_elems]
+
+                # Extract child address elements
+                address_elems = contact_elem.xpath('./contact_address')
+                contact_dict['contact_address'] = [dict(addr.attrib) for addr in address_elems]
+
                 contacts.append(contact_dict)
-                
+
             self.logger.debug(f"Parsed {len(contacts)} contacts directly from XML root")
             return contacts
-            
         except Exception as e:
             self.logger.warning(f"Error parsing contacts from XML root: {e}")
             return []
