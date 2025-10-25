@@ -2,17 +2,19 @@
 """
 Production XML Batch Processing Test
 
-This test extracts real XML files from the app_xml table and processes them
+This test extracts sample XML files from the app_xml table and processes them
 through the complete pipeline to discover problems and refine the program.
 
 The goal is to prove the system works on production data by:
-1. Extracting XML from app_xml table (production-like data)
-2. Processing each XML through: validate → parse → map → insert
-3. Inspecting outcomes and identifying issues
-4. Iterating improvements until confident batch processing
+    1. Extracting XML from app_xml table (production-like data)
+    2. Processing each XML through: validate → parse → map → insert
+    3. Inspecting outcomes and identifying issues
+    4. Iterating improvements until confident batch processing
 
 This test acts as a pure orchestrator - it does NOT implement new functionality,
 only exercises existing components to discover issues.
+
+NOTE: this test deletes destination data first!!! Comment out the cleanup step if you want to manually do this.
 """
 
 import unittest

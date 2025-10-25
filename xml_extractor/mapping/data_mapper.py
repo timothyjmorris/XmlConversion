@@ -311,54 +311,43 @@ class DataMapper(DataMapperInterface):
 
     def _extract_valid_contacts(self, xml_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
-        Extract valid contacts using 'last valid element' approach for duplicates.
-        
-        Rules:
+        Extract valid contacts using 'last valid element' logic:
         - Only contacts with BOTH con_id AND ac_role_tp_c are considered
-        - Only PR and AUTH contact types are valid (AUTHU is invalid)
-        - For duplicates (same con_id + ac_role_tp_c), take the LAST valid one
+        - Only PR and AUTHU contact types are valid (future TODO: use "contact_type_enum" from mapping contract to future-proof types)
+        - Max of one contact per type is returned (last PR, last AUTHU)
+        - NOTE: not checking if con_id is duplicated across contact type
+        Returns a list of contacts which can safely be inserted.
         """
-        valid_contacts = []
-        contact_groups = {}
-
         try:
-            # Navigate to contact elements
             contacts = self._navigate_to_contacts(xml_data)
+            self.logger.info(f"PR contacts found: {[(c.get('con_id', '').strip(), c.get('first_name', ''), c.get('ac_role_tp_c', '')) for c in contacts if isinstance(c, dict) and c.get('ac_role_tp_c', '').strip() == 'PR']}")
 
-            # Group contacts by con_id + ac_role_tp_c to handle duplicates
-            for contact in contacts:
-                if isinstance(contact, dict):
-                    con_id = contact.get('con_id', '').strip()
-                    ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
-                    
-                    # Skip contacts with empty con_id
-                    if not con_id:
-                        self.logger.warning(f"Skipping contact with empty con_id")
-                        continue
-                    
-                    # Only PR and AUTHU are valid contact types
-                    if ac_role_tp_c not in ['PR', 'AUTHU']:
-                        self.logger.warning(f"Skipping contact with invalid ac_role_tp_c: {ac_role_tp_c}")
-                        continue
-                    
-                    # Create unique key for grouping
-                    contact_key = f"{con_id}_{ac_role_tp_c}"
-                    
-                    # Store the contact (last one will overwrite duplicates)
-                    contact_groups[contact_key] = contact
-            
-            # Process the last valid contact for each unique combination
-            for contact_key, contact in contact_groups.items():
-                try:
-                    valid_contacts.append(contact)
-                except Exception as e:
-                    self.logger.warning(f"Error processing contact {contact_key}: {e}")
+            pr_latest = None
+            authu_latest = None
+
+            # Scan contacts in reverse to get last occurrence
+            for contact in reversed(contacts):
+                if not isinstance(contact, dict):
                     continue
-                    
+                con_id = contact.get('con_id', '').strip()
+                ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
+                if not con_id or not ac_role_tp_c:
+                    continue
+                if ac_role_tp_c == 'PR' and pr_latest is None:
+                    pr_latest = contact
+                elif ac_role_tp_c == 'AUTHU' and authu_latest is None:
+                    authu_latest = contact
+
+            valid_contacts = []
+            if pr_latest:
+                valid_contacts.append(pr_latest)
+            if authu_latest:
+                valid_contacts.append(authu_latest)
+
+            return valid_contacts
         except Exception as e:
             self.logger.warning(f"Failed to extract valid contacts: {e}")
-            
-        return valid_contacts
+            return []
 
     def _navigate_to_contacts(self, xml_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
@@ -458,13 +447,14 @@ class DataMapper(DataMapperInterface):
 
         Context Data Usage:
         - For contact-level mappings: context_data contains the specific contact's data
-        - For calculated fields: context_data provides flattened cross-element references
-        - For app-level mappings: context_data enables threading application data to contacts
-
-        Args:
-            xml_data: Flattened XML data dictionary from XMLParser
-            mapping: Field mapping configuration with xml_path, xml_attribute, etc.
-            context_data: Optional context for contact-specific or calculated field extraction
+            seen_con_ids_authu = set()
+            for contact in reversed(contacts):
+                if isinstance(contact, dict):
+                    con_id = contact.get('con_id', '').strip()
+                    ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
+                    if ac_role_tp_c == 'AUTHU' and con_id and con_id not in seen_con_ids_authu:
+                        authu_contacts.insert(0, contact)
+                        seen_con_ids_authu.add(con_id)
 
         Returns:
             Extracted value or None if not found. For calculated fields, returns sentinel string.
