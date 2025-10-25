@@ -924,10 +924,10 @@ class DataMapper(DataMapperInterface):
             table_mappings[table_name].append(mapping)
         
         # DEBUG: Log mappings for app_operational_cc
-        if 'app_operational_cc' in table_mappings:
-            print(f"DEBUG: Found {len(table_mappings['app_operational_cc'])} mappings for app_operational_cc")
-            for mapping in table_mappings['app_operational_cc']:
-                print(f"  Mapping: {mapping.target_column} -> {mapping.xml_path}.{mapping.xml_attribute}, type={mapping.mapping_type}")
+        # if 'app_operational_cc' in table_mappings:
+        #     print(f"DEBUG: Found {len(table_mappings['app_operational_cc'])} mappings for app_operational_cc")
+        #     for mapping in table_mappings['app_operational_cc']:
+        #         print(f"  Mapping: {mapping.target_column} -> {mapping.xml_path}.{mapping.xml_attribute}, type={mapping.mapping_type}")
         
         return table_mappings
 
@@ -941,10 +941,10 @@ class DataMapper(DataMapperInterface):
         table_name = mappings[0].target_table if mappings else ""
         
         # DEBUG: Log mappings for app_operational_cc
-        if table_name == 'app_operational_cc':
-            print(f"DEBUG: Processing {len(mappings)} mappings for app_operational_cc")
-            for mapping in mappings:
-                print(f"  Mapping: {mapping.target_column} -> {mapping.xml_path}.{mapping.xml_attribute}, type={mapping.mapping_type}")
+        # if table_name == 'app_operational_cc':
+        #     print(f"DEBUG: Processing {len(mappings)} mappings for app_operational_cc")
+        #     for mapping in mappings:
+        #         print(f"  Mapping: {mapping.target_column} -> {mapping.xml_path}.{mapping.xml_attribute}, type={mapping.mapping_type}")
         
         # Determine if this is a contact-related table (only actual contact tables, not app tables)
         table_name = mappings[0].target_table if mappings else 'unknown'
