@@ -24,17 +24,44 @@ from .validation_models import (
 
 class DataIntegrityValidator:
     """
-    Comprehensive data integrity validation system for XML extraction.
-    
-    Provides validation capabilities including:
-    - End-to-end validation comparing source XML with extracted data
-    - Referential integrity checking for foreign key relationships
-    - Constraint compliance validation for target tables
-    - Data quality reporting with detailed error information
+    Core validation engine that ensures data integrity throughout the XML-to-database transformation pipeline.
+
+    This validator performs comprehensive checks to guarantee that extracted data maintains fidelity
+    with the source XML while conforming to database constraints and business rules. It serves as
+    the final quality gate before data is committed to the database.
+
+    Validation Categories:
+    - End-to-End Consistency: Verifies that all source XML data is correctly transformed and present
+      in the extracted tables, checking field-level mappings and data type conversions
+    - Referential Integrity: Validates foreign key relationships between related tables, ensuring
+      child records have valid parent references (e.g., contact_address records reference valid contacts)
+    - Constraint Compliance: Enforces database constraints including required fields, data types,
+      field lengths, and business rules (SSN format, date ranges, etc.)
+    - Data Quality Metrics: Calculates completeness, validity, and accuracy percentages across
+      all extracted data
+
+    Integration Points:
+    - Called by ValidationOrchestrator after DataMapper completes extraction
+    - Receives flattened XML data from XMLParser and relational tables from DataMapper
+    - Returns detailed ValidationResult with categorized errors and quality metrics
+    - Supports both individual record and batch validation scenarios
+
+    Error Handling Strategy:
+    - Categorizes issues by severity (CRITICAL/ERROR/WARNING/INFO)
+    - Provides detailed context including source values, expected values, and record identifiers
+    - Continues validation after non-critical errors to provide complete assessment
+    - Generates actionable error reports for debugging and data quality improvement
     """
     
     def __init__(self, config: Optional[ValidationConfig] = None):
-        """Initialize the validator with configuration."""
+        """
+        Initialize the data integrity validator with configuration settings.
+
+        Args:
+            config: ValidationConfig object controlling which validation types to enable,
+                   error thresholds, timeouts, and reporting preferences. If None, uses
+                   default configuration with all validation types enabled.
+        """
         self.logger = logging.getLogger(__name__)
         self.config = config or ValidationConfig()
 
@@ -47,16 +74,35 @@ class DataIntegrityValidator:
         source_record_id: Optional[str] = None
     ) -> ValidationResult:
         """
-        Perform comprehensive validation of extraction results.
-        
+        Execute comprehensive validation suite on completed extraction results.
+
+        This method orchestrates all configured validation checks to ensure the extracted
+        relational data accurately represents the source XML while conforming to database
+        constraints and business rules.
+
+        Validation Flow:
+        1. End-to-End Consistency: Compares source XML fields with extracted database records
+        2. Referential Integrity: Validates foreign key relationships between tables
+        3. Constraint Compliance: Checks required fields, data types, and business rules
+        4. Data Quality Metrics: Calculates completeness, validity, and accuracy statistics
+
         Args:
-            source_xml_data: Original parsed XML data
-            extracted_tables: Extracted relational data organized by table
-            mapping_contract: Mapping contract used for extraction
-            source_record_id: Optional identifier for the source record
-            
+            source_xml_data: Flattened XML data dictionary from XMLParser (XPath-like keys)
+            extracted_tables: Dictionary mapping table names to lists of record dictionaries
+                            from DataMapper.apply_mapping_contract()
+            mapping_contract: FieldMapping definitions used during extraction
+            source_record_id: Optional application ID or other identifier for error reporting
+
         Returns:
-            ValidationResult containing all validation findings
+            ValidationResult containing:
+            - Overall pass/fail status
+            - Categorized errors by severity and type
+            - Data quality metrics and statistics
+            - Integrity check results
+            - Execution time and performance data
+
+        Raises:
+            No exceptions raised - validation errors are collected and returned in ValidationResult
         """
         start_time = time.time()
         validation_id = str(uuid.uuid4())

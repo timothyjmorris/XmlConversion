@@ -1,8 +1,24 @@
 """
-Data models for the validation system.
+Validation Data Models and Structures
 
-This module defines the data structures used for validation results,
-error reporting, and integrity checking.
+This module defines the core data structures used throughout the validation system
+for representing validation results, errors, configurations, and integrity check outcomes.
+These models provide a standardized interface for validation components to communicate
+findings and enable consistent error reporting and result aggregation.
+
+Key Data Structures:
+- ValidationError: Individual validation issues with severity, type, and context
+- ValidationResult: Complete validation outcome for a single record or operation
+- IntegrityCheckResult: Results from specific integrity validation checks
+- ValidationConfig: Configuration settings controlling validation behavior
+- Enums: Standardized severity levels and validation types for consistent categorization
+
+The models are designed to support:
+- Hierarchical error organization (severity, type, location)
+- Rich context information for debugging and reporting
+- Performance tracking and execution metrics
+- Flexible configuration for different validation scenarios
+- Serialization support for persistence and cross-system communication
 """
 
 from dataclasses import dataclass, field
@@ -31,19 +47,32 @@ class ValidationType(Enum):
 @dataclass
 class ValidationError:
     """
-    Represents a validation error or issue.
-    
-    Attributes:
-        error_type: Type of validation that failed
-        severity: Severity level of the error
-        message: Human-readable error message
-        table_name: Name of the table where error occurred
-        record_index: Index of the record with the error
-        field_name: Name of the field with the error
-        expected_value: Expected value (if applicable)
-        actual_value: Actual value that caused the error
-        source_record_id: Identifier from source XML
-        additional_context: Additional context information
+    Represents a single validation issue with comprehensive context information.
+
+    This class encapsulates all details about a validation failure, providing rich
+    context for debugging, reporting, and data quality improvement. Each error
+    includes categorization, location information, and expected vs actual values.
+
+    Error Categorization:
+    - error_type: The category of validation that failed (DATA_INTEGRITY, REFERENTIAL_INTEGRITY, etc.)
+    - severity: Impact level (CRITICAL blocks processing, ERROR needs attention, WARNING should be reviewed)
+
+    Location Context:
+    - table_name: Which database table the error occurred in
+    - record_index: Position in the result set (for batch processing)
+    - field_name: Specific column/field with the issue
+    - source_record_id: Original XML/application identifier for traceability
+
+    Value Context:
+    - expected_value: What the system expected to find
+    - actual_value: What was actually present in the data
+    - additional_context: Any extra information relevant to the error
+
+    Usage:
+    - Collected by validators and aggregated in ValidationResult
+    - Used for generating detailed error reports and quality metrics
+    - Supports filtering and analysis by severity, type, or location
+    - Enables automated error handling and data correction workflows
     """
     error_type: ValidationType
     severity: ValidationSeverity

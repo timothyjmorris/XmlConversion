@@ -1,9 +1,26 @@
 """
-Integration module for data integrity validation system.
+Validation Integration and Orchestration Layer
 
-This module provides integration points for the validation system with
-the main extraction pipeline, including validation orchestration and
-reporting capabilities.
+This module provides the integration layer that connects validation components with the
+main XML extraction pipeline. It orchestrates validation workflows, manages result aggregation,
+and provides reporting capabilities for comprehensive data quality assessment.
+
+Key Responsibilities:
+- Orchestrates multi-stage validation workflows across the extraction pipeline
+- Provides integration points with DataMapper, XMLParser, and MigrationEngine
+- Manages validation result aggregation and reporting
+- Supports both individual record and batch validation scenarios
+- Enables configurable validation strategies based on processing requirements
+
+Integration Architecture:
+- ValidationOrchestrator: Coordinates validation execution and result management
+- ValidationReporter: Generates detailed reports in multiple formats
+- Connects with DataIntegrityValidator for core validation logic
+- Integrates with PreProcessingValidator for early quality gates
+- Provides hooks for custom validation extensions and reporting
+
+The integration layer ensures validation is seamlessly woven into the extraction workflow,
+providing comprehensive quality assurance without disrupting the processing pipeline.
 """
 
 import logging
@@ -18,10 +35,38 @@ from .validation_models import ValidationResult, ValidationConfig, ValidationErr
 
 class ValidationOrchestrator:
     """
-    Orchestrates validation processes across the extraction pipeline.
-    
-    Provides centralized validation coordination, result aggregation,
-    and integration with existing extraction components.
+    Central coordinator for validation processes across the XML extraction pipeline.
+
+    This orchestrator manages the execution of validation workflows, coordinates between
+    different validation components, and provides unified result aggregation and reporting.
+    It serves as the main integration point between validation logic and the extraction pipeline.
+
+    Orchestration Responsibilities:
+    - Coordinates pre-processing validation (structure, business rules)
+    - Executes comprehensive data integrity validation post-extraction
+    - Manages batch validation scenarios with result aggregation
+    - Provides progress tracking and performance monitoring
+    - Generates unified validation reports across multiple records
+
+    Validation Workflow:
+    1. Pre-Processing: Validates XML structure and business rules before extraction
+    2. Post-Extraction: Validates data integrity, referential integrity, and constraints
+    3. Result Aggregation: Combines results from multiple validation stages
+    4. Report Generation: Creates comprehensive reports in multiple formats
+    5. History Management: Tracks validation results over time for trend analysis
+
+    Integration Points:
+    - DataMapper: Receives extracted tables for integrity validation
+    - XMLParser: Receives source XML data for end-to-end validation
+    - MigrationEngine: Can validate data before/after database insertion
+    - CLI Tools: Provides validation status and detailed error reporting
+    - Batch Processors: Supports high-throughput validation scenarios
+
+    Configuration Options:
+    - Enables/disables specific validation types based on processing requirements
+    - Configures error thresholds and reporting preferences
+    - Supports custom validation extensions and result handlers
+    - Provides performance tuning options for large-scale processing
     """
     
     def __init__(self, 

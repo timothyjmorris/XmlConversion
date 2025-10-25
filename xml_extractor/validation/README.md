@@ -32,19 +32,52 @@ The Data Integrity Validation System provides comprehensive validation capabilit
 
 ## Architecture
 
+### Complete Validation Pipeline
+
+The validation system operates as a multi-layered pipeline that ensures data quality at every stage of the XML-to-database transformation process:
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   XML Source    │──▶│ Pre-Processing   │───▶│   Extraction    │──▶│  Data Integrity │
+│                 │    │   Validation     │    │   Pipeline      │    │   Validation    │
+│ • Raw XML file  │    │ • ElementFilter  │    │ • XMLParser     │    │ • End-to-End    │
+│ • Provenir data │    │ • Business rules │    │ • DataMapper    │    │ • Referential   │
+└─────────────────┘    └──────────────────┘    └─────────────────┘    └─────────────────┘
+                              │                        │                        │
+                              ▼                        ▼                        ▼
+                       ┌──────────────────┐    ┌───────────────────┐    ┌───────────────────┐
+                       │ ValidationResult │    │ Extracted Tables  │    │ ValidationResult  │
+                       │ • Can process?   │    │ • Relational data │    │ • Quality OK?     │
+                       │ • Early errors   │    │ • Ready for DB    │    │ • Detailed errors │
+                       └──────────────────┘    └───────────────────┘    └───────────────────┘
+```
+
 ### Core Components
 
-1. **DataIntegrityValidator**: Main validation engine
-2. **ValidationOrchestrator**: Coordinates validation processes
-3. **ValidationReporter**: Generates reports and metrics
-4. **ValidationModels**: Data structures for validation results
+1. **ElementFilter** (`element_filter.py`): First quality gate - filters XML elements based on data-model.md rules
+2. **PreProcessingValidator** (`pre_processing_validator.py`): Validates XML structure and business rules before extraction
+3. **DataIntegrityValidator** (`data_integrity_validator.py`): Comprehensive post-extraction validation engine
+4. **ValidationOrchestrator** (`validation_integration.py`): Coordinates validation across the entire pipeline
+5. **ValidationReporter** (`validation_integration.py`): Generates detailed reports in multiple formats
+6. **ValidationModels** (`validation_models.py`): Standardized data structures for validation results and errors
+
+### Integration with Main Pipeline
+
+The validation system integrates seamlessly with the core extraction components:
+
+- **XMLParser**: Provides flattened XML data for end-to-end validation
+- **DataMapper**: Supplies extracted relational tables for integrity checking
+- **MigrationEngine**: Can validate data before database insertion
+- **CLI Tools**: Display validation status and progress
+- **Batch Processors**: Support high-throughput validation scenarios
 
 ### Validation Types
 
-- `END_TO_END`: Source-to-target data consistency
+- `END_TO_END`: Source-to-target data consistency validation
 - `REFERENTIAL_INTEGRITY`: Foreign key relationship validation
-- `CONSTRAINT_COMPLIANCE`: Database constraint validation
-- `DATA_QUALITY`: Data quality metrics and analysis
+- `CONSTRAINT_COMPLIANCE`: Database constraint and business rule validation
+- `DATA_QUALITY`: Completeness, validity, and accuracy metrics
+- `DATA_INTEGRITY`: General data integrity checks
 
 ### Severity Levels
 
@@ -52,6 +85,101 @@ The Data Integrity Validation System provides comprehensive validation capabilit
 - `ERROR`: Significant issues that affect data integrity
 - `WARNING`: Minor issues that should be reviewed
 - `INFO`: Informational messages
+
+## Complete Program Flow
+
+### End-to-End XML Processing Pipeline
+
+The validation system is an integral part of the complete XML-to-database processing pipeline described in the [main README.md](../../README.md). The validation components serve as quality gates at multiple stages:
+
+1. **XML Ingestion** → Raw Provenir XML files
+2. **Pre-Processing Validation** → ElementFilter + PreProcessingValidator
+   - Validates XML structure and required elements
+   - Filters invalid contacts and child elements
+   - Ensures business rule compliance
+   - **Fail Fast**: Rejects invalid XML early to save processing time
+3. **XML Parsing** → XMLParser with selective parsing
+   - Extracts only required elements based on mapping contracts
+   - Produces flattened data structure for fast lookups
+   - Handles contact deduplication and attribute extraction
+4. **Data Mapping** → DataMapper with calculated fields
+   - Applies complex mapping types (calculated_field, enum, last_valid_pr_contact, etc.)
+   - Evaluates SQL-like expressions with cross-element references
+   - Transforms data types and handles special mappings
+5. **Data Integrity Validation** → DataIntegrityValidator
+   - End-to-end consistency checking (source XML vs extracted data)
+   - Referential integrity validation (foreign key relationships)
+   - Constraint compliance (required fields, data types, business rules)
+   - Data quality metrics calculation
+6. **Database Migration** → MigrationEngine
+   - Bulk insert operations with performance optimizations
+   - Schema validation and transaction management
+   - Progress tracking and error recovery
+7. **Validation Orchestration** → ValidationOrchestrator
+   - Coordinates all validation stages
+   - Aggregates results and generates reports
+   - Supports batch processing and progress monitoring
+
+### Quality Gates and Decision Points
+
+- **Gate 1**: Pre-processing validation determines if XML can be processed
+- **Gate 2**: Data integrity validation determines if extracted data meets quality standards
+- **Gate 3**: Migration success determines if data was successfully loaded to database
+
+### Error Propagation and Recovery
+
+- **Critical Errors**: Stop processing immediately (missing app_id, malformed XML)
+- **Validation Errors**: Log issues but continue processing (data quality issues)
+- **Recovery Strategies**: Graceful degradation, detailed error reporting, automated retries
+
+## Validation-Specific Integration
+
+### Pre-Processing Integration
+```python
+from xml_extractor.validation import PreProcessingValidator
+
+# Validate before extraction
+validator = PreProcessingValidator(mapping_contract)
+result = validator.validate_xml_for_processing(xml_content)
+
+if result.can_process:
+    # Proceed with extraction
+    xml_data = parser.parse_xml(xml_content)
+    tables = mapper.apply_mapping_contract(xml_data, mapping_contract)
+else:
+    # Handle validation failures
+    print(f"Cannot process: {result.validation_errors}")
+```
+
+### Post-Extraction Integration
+```python
+from xml_extractor.validation import DataIntegrityValidator
+
+# Validate after extraction
+validator = DataIntegrityValidator()
+result = validator.validate_extraction_results(xml_data, tables, mapping_contract)
+
+if result.validation_passed:
+    # Proceed with database migration
+    engine = MigrationEngine()
+    engine.execute_bulk_insert(tables['app_operational_cc'], 'app_operational_cc')
+else:
+    # Handle validation issues
+    print(f"Validation failed: {result.total_errors} errors")
+```
+
+### Orchestrated Validation
+```python
+from xml_extractor.validation import ValidationOrchestrator
+
+# Complete validation workflow
+orchestrator = ValidationOrchestrator()
+result = orchestrator.validate_complete_extraction(xml_data, tables, mapping_contract)
+
+# Generate comprehensive report
+report = orchestrator.generate_validation_report([result])
+print(report)
+```
 
 ## Usage Examples
 
@@ -166,18 +294,20 @@ with open('validation_report.json', 'w') as f:
     json.dump(json_report, f, indent=2)
 ```
 
-## Configuration Options
+## Configuration
 
 ### ValidationConfig Parameters
 
-- `enable_end_to_end_validation`: Enable source-to-target consistency checks
-- `enable_referential_integrity`: Enable foreign key validation
-- `enable_constraint_compliance`: Enable database constraint validation
-- `enable_data_quality_checks`: Enable data quality metrics calculation
-- `max_errors_per_check`: Maximum errors to collect per validation check
-- `validation_timeout_ms`: Timeout for validation operations
-- `strict_mode`: Whether to fail validation on any error
-- `generate_detailed_report`: Whether to generate detailed validation reports
+The `ValidationConfig` class controls which validation types are enabled and how they behave:
+
+- `enable_end_to_end_validation`: Enable comparison of source XML with extracted data (recommended: True)
+- `enable_referential_integrity`: Enable foreign key relationship validation (recommended: True)
+- `enable_constraint_compliance`: Enable database constraint validation (recommended: True)
+- `enable_data_quality_checks`: Enable completeness/validity metrics calculation (recommended: True)
+- `max_errors_per_check`: Maximum errors to collect per validation check (default: 100)
+- `validation_timeout_ms`: Timeout for validation operations (default: 30000ms)
+- `strict_mode`: Whether to fail validation on any error (default: False)
+- `generate_detailed_report`: Whether to generate detailed validation reports (default: True)
 
 ## Validation Results
 

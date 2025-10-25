@@ -1,7 +1,26 @@
 """
-Pre-processing validation framework for XML data.
+Pre-Processing Validation Framework
 
-Validates XML structure and business rules before any processing begins.
+This module provides comprehensive validation of XML data and business rules before
+any extraction or transformation processing begins. It serves as the initial quality
+gate, ensuring that source XML meets minimum requirements for successful processing.
+
+Key Validation Areas:
+- XML Structure Integrity: Validates basic XML format and required root elements
+- Business Rule Compliance: Ensures required identifiers (app_id) and relationships exist
+- Contact Validation: Verifies contact elements have required attributes and valid enum values
+- Data Completeness: Checks for minimum viable data to prevent wasted processing
+- Graceful Degradation: Allows processing to continue with warnings for non-critical issues
+
+Integration Points:
+- Called by CLI tools and batch processors before initiating extraction
+- Used by ValidationOrchestrator for comprehensive validation workflows
+- Provides ValidationResult with detailed error/warning categorization
+- Supports both individual file and batch validation scenarios
+
+The framework implements a "fail fast with detailed feedback" approach, catching
+issues early to prevent wasted processing time and providing actionable error messages
+for data quality improvement.
 """
 
 import logging
@@ -33,9 +52,38 @@ class ValidationResult:
 
 class PreProcessingValidator:
     """
-    Comprehensive pre-processing validator for Provenir XML.
-    
-    Validates all business rules and requirements before any data processing.
+    Comprehensive pre-processing validator that ensures XML data meets minimum requirements for extraction.
+
+    This validator performs thorough checks on XML structure and business rules before any
+    transformation processing begins. It implements a multi-layered validation approach that
+    catches issues early, preventing wasted processing time and providing detailed feedback
+    for data quality improvement.
+
+    Validation Layers:
+    1. XML Structure: Validates basic XML format, encoding, and required root elements
+    2. Business Rules: Ensures required identifiers (app_id) and minimum data requirements
+    3. Contact Validation: Verifies contact elements have required attributes and valid values
+    4. Relationship Checks: Validates parent-child relationships and data consistency
+    5. Graceful Degradation: Allows processing with warnings for non-critical issues
+
+    Key Validation Rules:
+    - Must have valid app_id from /Provenir/Request/@ID
+    - Must have at least one valid contact with both con_id and ac_role_tp_c
+    - Contacts must have valid ac_role_tp_c values (PR, AUTHU)
+    - Child elements (addresses, employment) must belong to valid contacts
+    - XML must be well-formed and parseable
+
+    Processing Strategy:
+    - Fail fast for critical errors (missing app_id, malformed XML)
+    - Allow graceful degradation for missing contacts (logs warnings, continues with app-level data)
+    - Provide detailed error categorization for debugging and data quality improvement
+    - Support both individual file and batch validation scenarios
+
+    Integration Points:
+    - Called by CLI tools before initiating extraction workflows
+    - Used by ValidationOrchestrator for comprehensive validation pipelines
+    - Provides ValidationResult with actionable error and warning details
+    - Enables early rejection of invalid data to optimize processing efficiency
     """
     
     def __init__(self, mapping_contract: Optional[MappingContract] = None):

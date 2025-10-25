@@ -18,10 +18,40 @@ from ..config.config_manager import get_config_manager
 
 class MigrationEngine(MigrationEngineInterface):
     """
-    High-performance migration engine for SQL Server database operations.
-    
-    Provides bulk insert capabilities, schema management, and progress tracking
-    optimized for SQL Server Express LocalDB and production SQL Server instances.
+    High-performance database migration engine optimized for SQL Server bulk operations.
+
+    This engine provides comprehensive database interaction capabilities for the XML extraction
+    pipeline, with specialized optimizations for SQL Server Express LocalDB and production
+    SQL Server instances. It handles bulk data insertion, schema validation, transaction management,
+    and progress tracking for large-scale data migration operations.
+
+    Key Capabilities:
+    - Bulk Insert Operations: Uses pyodbc fast_executemany for optimal performance
+    - Transaction Management: Context managers for safe transaction handling with rollback
+    - Schema Validation: Validates target tables exist and are compatible before insertion
+    - Progress Tracking: Real-time progress reporting with performance metrics
+    - Error Handling: Comprehensive error categorization and recovery strategies
+    - Connection Management: Automatic connection pooling and cleanup
+
+    Performance Optimizations:
+    - Batch processing with configurable batch sizes
+    - Fast executemany for bulk inserts (with fallbacks for compatibility)
+    - IDENTITY_INSERT handling for auto-increment columns
+    - Connection reuse and automatic cleanup
+    - Memory-efficient record processing
+
+    Integration Points:
+    - Receives processed records from DataMapper.apply_mapping_contract()
+    - Validates schema compatibility before bulk operations
+    - Reports progress to CLI tools and batch processors
+    - Handles database-specific data type conversions and constraints
+    - Supports both individual record and batch migration scenarios
+
+    Error Recovery:
+    - Automatic fallback from fast_executemany to individual executes on type errors
+    - Transaction rollback on critical failures
+    - Detailed error logging with database-specific error code handling
+    - Graceful handling of connection timeouts and network issues
     """
     
     def __init__(self, connection_string: Optional[str] = None, batch_size: Optional[int] = None):
@@ -140,17 +170,42 @@ class MigrationEngine(MigrationEngineInterface):
     
     def execute_bulk_insert(self, records: List[Dict[str, Any]], table_name: str, enable_identity_insert: bool = False) -> int:
         """
-        Execute bulk insert operation using pyodbc fast_executemany.
-        
+        Execute optimized bulk insert operation using SQL Server fast_executemany.
+
+        This method performs high-performance bulk insertion of records into SQL Server tables,
+        with automatic optimization selection and comprehensive error handling. It uses batching
+        to balance memory usage with insertion performance.
+
+        Bulk Insert Strategy:
+        1. Dynamic Column Detection: Only includes columns that have non-null values in the dataset
+        2. Batch Processing: Splits large record sets into configurable batches for memory management
+        3. Performance Optimization: Uses fast_executemany when possible, falls back to individual executes
+        4. IDENTITY_INSERT Handling: Manages auto-increment columns when required
+        5. Transaction Safety: Wraps operations in transactions with automatic rollback on errors
+
+        Performance Features:
+        - Automatic batch size optimization based on record count and column complexity
+        - Fast executemany for homogeneous data (significant performance boost)
+        - Individual executes for heterogeneous data or when fast_executemany fails
+        - Connection reuse and prepared statement caching
+        - Memory-efficient processing of large datasets
+
+        Error Handling:
+        - Type conversion errors trigger fallback to individual executes
+        - Constraint violations are logged with detailed context
+        - Connection issues trigger automatic retry logic
+        - Transaction rollback ensures database consistency
+
         Args:
-            records: List of record dictionaries to insert
-            table_name: Target table name
-            
+            records: List of record dictionaries to insert, where keys are column names
+            table_name: Target table name (will be schema-qualified automatically)
+            enable_identity_insert: Whether to enable IDENTITY_INSERT for auto-increment columns
+
         Returns:
             Number of records successfully inserted
-            
+
         Raises:
-            XMLExtractionError: If bulk insert operation fails
+            XMLExtractionError: If bulk insert operation fails catastrophically
         """
         if not records:
             self.logger.warning(f"No records provided for bulk insert into {table_name}")

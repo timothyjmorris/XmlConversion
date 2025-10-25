@@ -1,8 +1,23 @@
 """
-Centralized element filtering for XML processing.
+Centralized XML Element Filtering Engine
 
-This module provides a centralized approach to filtering XML elements based on 
-required attributes and valid enum values, following the data-model.md rules strictly.
+This module provides the authoritative filtering logic for XML elements during parsing,
+ensuring only valid, complete elements are processed based on strict data-model.md rules.
+It serves as the first quality gate in the XML processing pipeline, preventing invalid
+or incomplete data from entering the extraction process.
+
+Key Responsibilities:
+- Validates required attributes (con_id, ac_role_tp_c) for contact elements
+- Filters elements based on valid enum values from data-model.md
+- Implements "last valid element" logic for duplicate contacts
+- Provides filtered element collections to downstream processors
+- Logs filtering decisions for audit and debugging purposes
+
+Integration Points:
+- Called by XMLParser during selective parsing to determine which elements to extract
+- Used by MigrationEngine for contact_address and contact_employment record creation
+- Provides filtered collections to DataMapper for relationship-aware processing
+- Ensures data integrity before any transformation logic is applied
 """
 
 import logging
@@ -16,7 +31,34 @@ class ValidationError(Exception):
 
 
 class ElementFilter:
-    """Centralized element filtering following data-model.md rules."""
+    """
+    Authoritative XML element filtering engine implementing data-model.md validation rules.
+
+    This class centralizes all element filtering logic to ensure consistency across the
+    entire XML processing pipeline. It validates elements against required attributes
+    and valid enum values, implementing the "last valid element" deduplication strategy.
+
+    Filtering Rules Applied:
+    - Contacts: Must have both con_id AND ac_role_tp_c (PR or AUTHU only)
+    - Addresses: Must have valid address_tp_c (CURR, PREV, PATR)
+    - Employment: Must have valid employment_tp_c (CURR, PREV)
+    - Duplicates: For contacts with same con_id + ac_role_tp_c, keep last occurrence
+
+    Valid Enum Values (from data-model.md):
+    - ac_role_tp_c: {"PR", "AUTHU"} (Primary Responsible, Authorized User)
+    - address_tp_c: {"CURR", "PREV", "PATR"} (Current, Previous, Parent)
+    - employment_tp_c: {"CURR", "PREV"} (Current, Previous)
+
+    Processing Strategy:
+    1. Extract and validate app_id from Request/@ID
+    2. Filter contacts based on required attributes and valid enum values
+    3. Apply "last valid element" logic for contact deduplication
+    4. Filter child elements (addresses, employment) from valid contacts only
+    5. Return filtered collections with comprehensive logging
+
+    This ensures that only high-quality, complete data enters the transformation pipeline,
+    preventing downstream issues and maintaining data integrity throughout processing.
+    """
     
     # Valid enum values from data-model.md
     VALID_AC_ROLE_TP_C = {"PR", "AUTHU"}

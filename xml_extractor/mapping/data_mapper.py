@@ -1,5 +1,34 @@
 """
-Data mapping and transformation engine for XML to relational database conversion.
+Data Mapping and Transformation Engine
+
+This module provides the core data transformation pipeline for converting complex XML credit application
+data into relational database format. It handles multiple mapping types including calculated fields,
+enum mappings, contact-specific extractions, and cross-element references.
+
+Key Features:
+- Complex calculated field expressions with CASE/WHEN logic and cross-element references
+- Enum mapping with configurable value transformations (string → integer)
+- Contact-specific data extraction (last valid PR contact, current address filtering)
+- Type-safe data transformations with proper NULL handling for database compatibility
+- Context-aware field extraction that separates application vs contact-level data
+- Comprehensive error handling and transformation statistics tracking
+
+Mapping Types Supported:
+- calculated_field: Evaluates SQL-like expressions with cross-element references
+- last_valid_pr_contact: Extracts from the most recent valid PR (Primary Responsible) contact
+- curr_address_only: Filters to current (CURR) addresses only, excluding PREV/MAIL addresses
+- enum: Maps string values to integer codes using configurable enum mappings
+- char_to_bit/boolean_to_bit: Converts Y/N or boolean values to 0/1 bit fields
+- extract_numeric/numbers_only: Extracts numeric values from formatted strings
+- default_getutcdate_if_null: Provides current timestamp for missing datetime fields
+- identity_insert: Handles auto-increment fields during bulk inserts
+
+The engine processes XML data through a multi-stage pipeline:
+1. Pre-flight validation (app_id and contact requirements)
+2. Contact extraction and deduplication (last valid element approach)
+3. Field mapping application with context building for calculated fields
+4. Data type transformation with database-specific handling
+5. Record creation with intelligent NULL vs default value decisions
 """
 
 import re
@@ -19,10 +48,52 @@ from .calculated_field_engine import CalculatedFieldEngine
 
 
 class DataMapper(DataMapperInterface):
-    """Data mapping and transformation engine for converting XML data to relational format."""
+    """
+    Core data mapping engine that orchestrates the transformation of XML credit application data
+    into relational database records.
+
+    This class handles the complex orchestration of:
+    - Loading and applying mapping contracts from configuration
+    - Building context data for calculated field evaluation (flattens XML structure)
+    - Applying multiple mapping types with proper precedence and chaining
+    - Contact-specific data extraction with deduplication logic
+    - Type-safe transformations with database-specific NULL handling
+    - Progress tracking and error reporting for large-scale data migrations
+
+    The mapper separates concerns between application-level and contact-level data,
+    ensuring calculated fields can reference data across the entire XML structure while
+    contact fields are properly scoped to their respective contact contexts.
+
+    Key Design Decisions:
+    - Calculated fields use sentinel values to trigger expression evaluation
+    - Context data is built once per record to avoid redundant XML parsing
+    - Enum mappings return None (excluded from INSERT) when no valid mapping exists,
+      preserving data integrity by not fabricating default values
+    - Contact extraction uses 'last valid element' approach for duplicate handling
+    - Address filtering prioritizes CURR (current) addresses over PREV/MAIL types
+    """
     
     def __init__(self, mapping_contract_path: Optional[str] = None):
-        """Initialize the DataMapper with logging and validation setup."""
+        """
+        Initialize the DataMapper with centralized configuration and mapping contract loading.
+
+        Loads enum mappings, bit conversions, and default values from the mapping contract
+        JSON file. These configurations enable the various mapping types (enum, char_to_bit,
+        calculated_field, etc.) to function properly.
+
+        Args:
+            mapping_contract_path: Optional path to mapping contract JSON file.
+                                If None, uses path from centralized configuration.
+
+        Configuration Loaded:
+        - _enum_mappings: Dict mapping enum_type names to value→integer mappings
+        - _bit_conversions: Dict for Y/N → 0/1 and boolean → bit transformations
+        - _default_values: Dict of fallback values for specific column mappings
+        - _validation_rules: Dict of validation constraints (currently unused)
+
+        The initialization is designed to be fault-tolerant - if the mapping contract
+        cannot be loaded, empty dictionaries are used as fallbacks.
+        """
         self.logger = logging.getLogger(__name__)
         self._validation_errors = []
         self._transformation_stats = {
@@ -370,7 +441,34 @@ class DataMapper(DataMapperInterface):
 
     def _extract_value_from_xml(self, xml_data: Dict[str, Any], 
                                mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
-        """Extract value from XML data using XPath-like navigation with context support."""
+        """
+        Extract value from XML data using XPath-like navigation with context-aware field resolution.
+
+        This method handles the complex logic of extracting values from the flattened XML structure,
+        with special handling for different mapping types and context scenarios. The XML data is
+        pre-flattened by the XMLParser into a dictionary structure where keys are XPath-like paths.
+
+        Special Cases Handled:
+        - calculated_field: Returns sentinel value to trigger expression evaluation instead of XML extraction
+        - last_valid_pr_contact: Delegates to specialized contact extraction method
+        - contact_base application attributes: When context_data is available, extracts app-level data
+          for threading into contact records (e.g., app_id, application dates)
+        - Contact-specific mappings: When context_data provided, navigates within contact scope
+          instead of global XML structure
+
+        Context Data Usage:
+        - For contact-level mappings: context_data contains the specific contact's data
+        - For calculated fields: context_data provides flattened cross-element references
+        - For app-level mappings: context_data enables threading application data to contacts
+
+        Args:
+            xml_data: Flattened XML data dictionary from XMLParser
+            mapping: Field mapping configuration with xml_path, xml_attribute, etc.
+            context_data: Optional context for contact-specific or calculated field extraction
+
+        Returns:
+            Extracted value or None if not found. For calculated fields, returns sentinel string.
+        """
         try:
             # Handle special mapping types that require custom extraction logic
             if hasattr(mapping, 'mapping_type') and mapping.mapping_type == 'last_valid_pr_contact':
@@ -635,7 +733,34 @@ class DataMapper(DataMapperInterface):
             return self.transform_data_types(value, mapping.data_type)
 
     def _apply_enum_mapping(self, value: Any, mapping: FieldMapping) -> int:
-        """Apply enum mapping transformation using loaded enum mappings."""
+        """
+        Apply enum mapping transformation, converting string values to integer codes.
+
+        This method implements a deliberate design choice: when no valid enum mapping exists
+        for a value, it returns None instead of a fabricated default. This causes the column
+        to be excluded from the INSERT statement, leaving the database column NULL.
+
+        Design Rationale:
+        - NULL indicates "no source data available" vs. "explicitly set to default"
+        - Preserves data integrity by not inventing values
+        - Allows applications to distinguish between missing XML data and default assignments
+        - Follows database best practices for optional enumerated fields
+
+        The mapping process:
+        1. Convert input value to string and strip whitespace
+        2. Determine enum_type from column name using pattern matching
+        3. Look up the enum_type in _enum_mappings (loaded from config)
+        4. Try exact match first, then case-insensitive match
+        5. Use default value from enum map if available (key='')
+        6. Return None if no valid mapping found (column excluded from INSERT)
+
+        Args:
+            value: Input value to be mapped (typically string from XML)
+            mapping: Field mapping containing target_column and other metadata
+
+        Returns:
+            Integer enum value if mapping found, None otherwise (excludes column from INSERT)
+        """
         # CRITICAL FIX: Check if a contact object is being passed instead of a simple value
         if isinstance(value, dict) and 'con_id' in value and 'ac_role_tp_c' in value:
             self.logger.warning(f"Contact object passed to enum mapping for {mapping.target_column} - returning None to exclude column")
@@ -681,7 +806,34 @@ class DataMapper(DataMapperInterface):
         return None
 
     def _determine_enum_type(self, column_name: str) -> Optional[str]:
-        """Determine enum type from column name."""
+        """
+        Determine the enum type name for a given column based on naming patterns.
+
+        This method maps database column names to enum type identifiers that are used
+        as keys in the _enum_mappings dictionary. The mapping uses common patterns
+        found in credit application data:
+
+        Direct Mappings (column_name matches enum_type):
+        - Columns ending in '_enum' use the column name directly
+
+        Pattern-Based Mappings:
+        - 'status' → 'status_enum' (app_status, process_status, etc.)
+        - 'process' → 'process_enum'
+        - 'app_source' → 'app_source_enum'
+        - 'contact_type' → 'contact_type_enum'
+        - 'address_type' → 'address_type_enum'
+        - etc.
+
+        This indirection allows the same enum mapping to be reused across multiple
+        columns that represent the same conceptual type (e.g., multiple status columns
+        can all use the 'status_enum' mapping).
+
+        Args:
+            column_name: Database column name to map to enum type
+
+        Returns:
+            Enum type name (key in _enum_mappings) or None if no pattern matches
+        """
         if column_name.endswith('_enum'):
             return column_name
         

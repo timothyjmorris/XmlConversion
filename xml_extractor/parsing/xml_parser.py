@@ -27,7 +27,26 @@ from ..models import ProcessingConfig, MappingContract
 class XMLParser(XMLParserInterface):
     """
     High-performance XML parser optimized for Provenir credit application data extraction.
-    
+
+    This parser implements a selective parsing strategy that only extracts elements and attributes
+    that are defined in the mapping contract, dramatically reducing memory usage and processing time
+    for large XML files. Instead of building a full DOM tree, it uses streaming parsing to extract
+    only the required data paths.
+
+    Key Optimization Strategies:
+    - Selective Element Processing: Only processes XML elements that appear in mapping contracts
+    - Streaming Parsing: Uses lxml.etree.iterparse() to avoid loading entire XML into memory
+    - XPath-like Path Construction: Builds flattened dictionary structure with XPath-style keys
+    - Attribute vs Element Distinction: Properly handles XML attributes vs child elements
+    - Contact Deduplication: Implements "last valid element" logic for duplicate contact records
+    - Memory-Efficient Flattening: Converts hierarchical XML to flat dictionary for fast lookups
+
+    The parser produces a flattened data structure where:
+    - Keys are XPath-like paths (e.g., "/Provenir/Request/CustData/application/app_id")
+    - Values are either simple values, lists (for repeated elements), or nested dicts
+    - Contact elements are deduplicated using the last valid element approach
+    - Attributes are preserved with case-insensitive access
+
     Features:
     - Memory-efficient selective parsing (only processes required elements)
     - Streaming XML processing using lxml.etree.iterparse()
@@ -40,10 +59,20 @@ class XMLParser(XMLParserInterface):
     def __init__(self, config: Optional[ProcessingConfig] = None, mapping_contract: Optional[MappingContract] = None):
         """
         Initialize XML parser with configuration and optional mapping contract for selective parsing.
-        
+
+        When a mapping contract is provided, the parser analyzes all field mappings to build sets of
+        required XML paths and element names. This enables selective parsing where only relevant
+        XML sections are processed, dramatically improving performance for large XML files.
+
+        Selective Parsing Setup:
+        - required_paths: Set of complete XPath-like paths that need to be extracted
+        - required_elements: Set of element names that appear in any mapping (for faster filtering)
+        - If no mapping contract provided, parser falls back to full XML processing
+
         Args:
-            config: Processing configuration for parser behavior
-            mapping_contract: Optional mapping contract to enable selective parsing
+            config: Processing configuration controlling parser behavior and performance settings
+            mapping_contract: Optional mapping contract defining which XML elements to extract.
+                            When provided, enables memory-efficient selective parsing.
         """
         self.config = config or ProcessingConfig()
         self.mapping_contract = mapping_contract

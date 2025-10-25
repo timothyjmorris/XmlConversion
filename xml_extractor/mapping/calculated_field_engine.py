@@ -26,13 +26,40 @@ from ..utils import ValidationUtils
 
 class CalculatedFieldEngine:
     """
-    Engine for evaluating calculated field expressions safely and efficiently.
-    
-    Supports:
-    - Arithmetic operations: +, -, *, /
-    - Conditional logic: CASE WHEN ... THEN ... ELSE ... END
-    - Field references from the same XML element
-    - Type-safe evaluation with proper error handling
+    Safe and efficient engine for evaluating calculated field expressions in XML-to-database mappings.
+
+    This engine provides SQL-like expression evaluation with safety restrictions to prevent code injection
+    while supporting complex business logic. It enables cross-element references using dotted notation,
+    allowing calculated fields to access data from any part of the XML structure.
+
+    Expression Language Features:
+    - Arithmetic: +, -, *, / with proper operator precedence
+    - Comparisons: =, !=, <, >, <=, >=
+    - Logical: AND, OR, NOT
+    - Conditional: CASE WHEN ... THEN ... ELSE ... END
+    - String operations: LIKE pattern matching
+    - Date operations: DATE('yyyy-mm-dd hh:mm:ss') constructor
+    - Null checking: IS EMPTY, IS NOT EMPTY
+    - Cross-element references: table.field or element.subfield notation
+
+    Safety Features:
+    - Restricted to safe mathematical operations only (no file I/O, system calls, etc.)
+    - Expression validation before evaluation
+    - Error handling with detailed logging
+    - Memory-safe evaluation with recursion limits
+    - Type coercion for database compatibility
+
+    Cross-Element Reference Resolution:
+    - References like 'application.app_receive_date' access data from the flattened XML structure
+    - Supports both direct field access and nested element traversal
+    - Context-aware evaluation where field values are resolved from the provided data context
+    - Fallback to None for missing references (graceful degradation)
+
+    Performance Optimizations:
+    - Pre-compiled regex patterns for expression parsing
+    - Efficient CASE statement parsing and evaluation
+    - Cached safe operations dictionary
+    - Minimal memory allocation during evaluation
     """
     
     def __init__(self):
@@ -59,18 +86,33 @@ class CalculatedFieldEngine:
     def evaluate_expression(self, expression: str, element_data: Dict[str, Any], 
                           target_column: str) -> Optional[Union[int, float, Decimal, str]]:
         """
-        Evaluate a calculated field expression using data from the current XML element.
-        
+        Evaluate a calculated field expression with support for cross-element references and complex logic.
+
+        This method parses and evaluates SQL-like expressions that can reference data from any part
+        of the XML structure using dotted notation. It supports both simple arithmetic and complex
+        CASE WHEN conditional logic.
+
+        Expression Types:
+        - Arithmetic: "field1 + field2 * 12"
+        - CASE statements: "CASE WHEN condition THEN value ELSE default END"
+        - Cross-element: "application.app_receive_date > DATE('2023-10-11')"
+
+        Cross-Element Reference Resolution:
+        - element_data contains flattened XML data with keys like 'application.app_id', 'contact.con_id'
+        - References are resolved by direct dictionary lookup
+        - Missing references return None (graceful degradation)
+        - Supports nested object access with dot notation
+
         Args:
-            expression: The expression to evaluate (arithmetic or CASE statement)
-            element_data: Dictionary of field values from the current XML element
-            target_column: Name of the target column (for error reporting)
-            
+            expression: SQL-like expression string to evaluate
+            element_data: Flattened dictionary of all available XML data for cross-element references
+            target_column: Column name for error reporting and logging context
+
         Returns:
-            Calculated value or None if evaluation fails
-            
+            Evaluated result (int, float, Decimal, str) or None if evaluation fails
+
         Raises:
-            DataTransformationError: If expression evaluation fails
+            DataTransformationError: If expression syntax is invalid or evaluation fails
         """
         self.logger.debug(f"Evaluating expression for {target_column}: {expression}")
         self.logger.debug(f"Element data keys: {list(element_data.keys())[:20]}")  # First 20 keys

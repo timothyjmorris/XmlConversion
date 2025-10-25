@@ -68,41 +68,148 @@ python production_processor.py \
 
 ```
 xml_extractor/
-├── __init__.py              # Main package with core exports
-├── models.py                # Core data classes and models
-├── interfaces.py            # Abstract interfaces and base classes
-├── exceptions.py            # Custom exception classes
-├── cli.py                   # Command-line interface (xml-extractor command)
-├── config/                  # Configuration management components
-│   ├── config_manager.py    # Centralized configuration system
-│   └── __init__.py
-├── parsing/                 # XML parsing components  
-│   ├── xml_parser.py        # High-performance XML parser
-│   └── __init__.py
-├── mapping/                 # Data mapping and transformation
-│   ├── data_mapper.py       # XML to database mapping engine
-│   ├── calculated_field_engine.py  # Calculated field expressions
-│   └── __init__.py
-├── database/                # Database connection and migration
-│   ├── migration_engine.py  # Database operations and bulk insert
-│   └── __init__.py
-└── validation/              # Data validation and quality checks
-    ├── pre_processing_validator.py  # XML validation and contact extraction
-    └── __init__.py
+├── __init__.py                        # Main package with core exports
+├── cli.py                             # Command-line interface (xml-extractor command)
+├── models.py                          # Core data classes and models
+├── interfaces.py                      # Abstract interfaces and base classes
+├── exceptions.py                      # Custom exception classes
+├── utils.py                           # Utility functions and helpers
+├── config/                            # Configuration management
+│   └── manager.py                      # Centralized configuration system
+├── database/                          # Database operations and migration
+│   ├── connection_test.py              # Database connectivity testing
+│   └── migration_engine.py             # High-performance bulk insert operations
+├── mapping/                           # Data transformation and mapping
+│   ├── data_mapper.py                  # Core XML-to-database mapping engine
+│   ├── reverse_mapper.py               # Reverse mapping utilities
+│   └── calculated_field_engine.py      # Calculated field expression evaluation
+├── parsing/                           # XML parsing and processing
+│   └── xml_parser.py                   # Memory-efficient XML parser
+└── validation/                        # Multi-layered data validation system
+    ├── data_integrity_validator.py     # End-to-end validation engine
+    ├── element_filter.py               # XML element filtering and validation
+    ├── pre_processing_validator.py     # Pre-extraction validation
+    ├── validation_integration.py       # Validation orchestration
+    ├── validation_models.py            # Validation data structures
+    ├── test_validation_system.py       # Validation system tests
+    └── README.md                       # Validation system documentation
 
 # Production Scripts
-production_processor.py      # Main production processing script
+production_processor.py                     # Main production processing script
 
-# Configuration
+# Configuration & Samples
 config/
-├── credit_card_mapping_contract.json  # Field mapping definitions
-└── samples/                 # Sample XML files for testing
+├── credit_card_mapping_contract.json       # CRITICAL project contract for field mapping definitions
+├── data-model.md                           # Data model specifications
+├── database_config.json                    # Database configuration
+└── samples/                                # Sample files and documentation
+    ├── configuration_summary.md
+    ├── create_destination_tables.sql
+    ├── enum_handling_guide.md
+    ├── insert_enum_values.sql
+    ├── migrate_table_logic.sql
+    ├── new_datamodel_queries.sql
+    ├── README.md
+    ├── sample-source-xml-contact-test.xml  # Key source file used in tests to validate complex mappings
+    ├── test_mapping_contract.py    
+    └── validate_mapping_contract.sql
 
-# Documentation  
+# Documentation
 docs/
-├── production-deployment.md # Production deployment guide
-└── *.md                    # Additional documentation
+├── bulk-insert-architecture.md             # Bulk insert design and optimization
+├── data-intake-and-preparation.md          # Data intake processes
+├── mapping-principles.md                   # Mapping system principles
+├── testing-philosophy.md                   # Testing approach and strategy
+├── validation-and-testing-strategy.md      # Validation framework
+└── xml-hierarchy-corrections.md            # XML structure corrections
+
+# Tests
+tests/
+├── test_end_to_end_integration.py          # End-to-end integration tests
+├── test_production_xml_batch.py            # Production batch processing tests
+├── test_real_sample_xml_validation.py      # Real XML validation tests
+└── test_xml_validation_scenarios.py        # XML validation scenarios
+
+
+# Build & Dependencies
+setup.py                                    # Package setup configuration
+requirements.txt                            # Python dependencies
+README.md                                   # This file
 ```
+
+## 🏗️ System Architecture
+
+### Complete XML-to-Database Processing Pipeline
+
+The XML Database Extraction System operates as a comprehensive pipeline that transforms XML content stored in database text columns into normalized relational structures:
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   XML Source    │──▶│ Pre-Processing   │───▶│   Extraction    │──▶│  Data Integrity │
+│                 │    │   Validation     │    │   Pipeline      │    │   Validation    │
+│ • Raw XML file  │    │ • ElementFilter  │    │ • XMLParser     │    │ • End-to-End    │
+│ • Provenir data │    │ • Business rules │    │ • DataMapper    │    │ • Referential   │
+└─────────────────┘    └──────────────────┘    └─────────────────┘    └─────────────────┘
+                              │                        │                        │
+                              ▼                        ▼                        ▼
+                       ┌──────────────────┐    ┌───────────────────┐    ┌───────────────────┐
+                       │ ValidationResult │    │ Extracted Tables  │    │ ValidationResult  │
+                       │ • Can process?   │    │ • Relational data │    │ • Quality OK?     │
+                       │ • Early errors   │    │ • Ready for DB    │    │ • Detailed errors │
+                       └──────────────────┘    └───────────────────┘    └───────────────────┘
+```
+
+### Processing Stages
+
+1. **XML Source (Database)** → Raw Provenir XML data from database text columns
+2. **Pre-Processing Validation** → ElementFilter + PreProcessingValidator quality gate
+3. **Extraction Pipeline** → XMLParser + DataMapper transformation engine
+4. **Data Integrity Validation** → DataIntegrityValidator quality assurance
+5. **Database Migration** → MigrationEngine bulk insert operations
+
+### Quality Gates
+
+- **Gate 1**: Pre-processing validation (can we process this XML?)
+- **Gate 2**: Data integrity validation (is extracted data quality acceptable?)
+- **Gate 3**: Migration success (were records successfully loaded?)
+
+### Core Components Integration
+
+#### XMLParser (`parsing/xml_parser.py`)
+- **Purpose**: Memory-efficient XML parsing with selective element extraction
+- **Key Features**: Selective parsing, contact deduplication, flattened data structures
+- **Integration**: Provides data to DataMapper and validation components
+
+#### DataMapper (`mapping/data_mapper.py`) 
+- **Purpose**: Core data transformation engine orchestrating XML-to-database conversion
+- **Key Features**: Complex mapping types, calculated field evaluation, enum handling
+- **Integration**: Receives flattened XML from XMLParser, supplies tables to MigrationEngine
+
+#### CalculatedFieldEngine (`mapping/calculated_field_engine.py`)
+- **Purpose**: Safe evaluation of calculated field expressions with cross-element references
+- **Key Features**: SQL-like expression language, safety features, performance optimization
+- **Integration**: Called by DataMapper for complex field calculations
+
+#### MigrationEngine (`database/migration_engine.py`)
+- **Purpose**: High-performance database operations with SQL Server optimizations
+- **Key Features**: Bulk insert operations, transaction management, progress tracking
+- **Integration**: Receives extracted tables from DataMapper, validates schema compatibility
+
+#### Validation System (`validation/`)
+- **Purpose**: Multi-layered validation ensuring data quality throughout the pipeline
+- **Components**: ElementFilter, PreProcessingValidator, DataIntegrityValidator, ValidationOrchestrator
+- **Integration**: Validates at multiple pipeline stages, provides quality gates and reporting
+
+### Configuration Management
+- **Centralized Config**: Environment variable-based configuration system
+- **Mapping Contracts**: JSON-based field mapping definitions with calculated field support
+- **Schema Flexibility**: Configurable database schema prefixes for multi-environment support
+
+### Performance Characteristics
+- **Target Performance**: >150 records/minute with >90% success rate
+- **Scalability**: Multi-worker parallel processing, configurable batch sizes
+- **Memory Efficiency**: Streaming XML parsing, configurable memory limits
+- **Monitoring**: Real-time progress tracking and comprehensive metrics
 
 ## 🔧 Core Components
 
