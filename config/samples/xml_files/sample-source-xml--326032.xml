@@ -1,0 +1,90 @@
+﻿<Provenir ID="326032" Org="" sessionID="" stack="" Version="" ProductType="" error="" message="eyJhZ3JlZW1lbnRzIjp7ImNoZWNrYm94X3NlbmRfY2FyZF90b19wb19ib3giOiJTZW5kIG15IGNhcmQgdG8gYSBQLk8uIGJveCIsICAicGhvbmVfbnVtYmVyIjogIkJ5IHByb3ZpZGluZyB0aGlzIGluZm9ybWF0aW9uLCBJIGdpdmUgbXkgZXhwcmVzcyB3cml0dGVuIGNvbnNlbnQgZm9yIE1lcnJpY2sgQmFuayBhbmQgaXRzIHNlcnZpY2UgcHJvdmlkZXJzIHRvIGNvbnRhY3QgbWUsIGJ5IHBob25lLCBlbWFpbCwgb3IgU01TIHRleHQgbWVzc2FnaW5nLCBpbiBjb25uZWN0aW9uIHdpdGggbXkgQWNjb3VudC4uLi4uIiwgInBob25lX3R5cGUiOiJQaG9uZSBudW1iZXIgdHlwZSIsImNoZWNrYm94X25vbl90YXhhYmxlX2luY29tZSI6IkNoZWNrIGlmIGluY29tZSBpcyBub24tdGF4YWJsZSIsImNoZWNrYm94X2VzaWduIjoiQnkgc3VibWl0dGluZyB0aGlzIGFwcGxpY2F0aW9uLCBJIGNvbmZpcm0gdGhhdCBJIGhhdmUgcmVhZCBhbmQgYWdyZWUgdG8gdGhlIHRlcm1zIHNldCBmb3J0aCBpbiB0aGUgRS1TaWduIERpc2Nsb3N1cmUsIG15IGNvbXB1dGVyIHNhdGlzZmllcyB0aGUgaGFyZHdhcmUgYW5kIHNvZnR3YXJlIHJlcXVpcmVtZW50cyB3aXRoaW4gdGhlIGRpc2Nsb3N1cmUsIGFuZCBJIGNhbiBhY2Nlc3MgdGhpcyBTYW1wbGUgUERGLiBJbiBhZGRpdGlvbiwgSSBnaXZlIG15IGFmZmlybWF0aXZlIGNvbnNlbnQgZm9yIE1lcnJpY2sgQmFuayB0byBwcm92aWRlIG1lIHdpdGggdGhlIGVsZWN0cm9uaWMgY29tbXVuaWNhdGlvbnMgYXMgZGVzY3JpYmVkIHdpdGhpbiB0aGUgZGlzY2xvc3VyZS4iLCJwYWdlXzBfYnV0dG9uX05leHRfZGlzY2xvc3VyZSI6IiAiLCJwYWdlXzFfYnV0dG9uX1N1Ym1pdCBhcHBsaWNhdGlvbl9kaXNjbG9zdXJlIjoiICIsImRpc3BsYXlfVGVybXNBbmRDb25kaXRpb25zTGluayI6IltEb3dubG9hZCBvciBwcmludCB0aGUgVGVybXMgJiBDb25kaXRpb25zXShodHRwczovL3d3dy5tZXJyaWNrYmFuay5jb20vLS9tZWRpYS9GaWxlcy9PbmxpbmUtUHJpY2luZy9TY2h1bWVyX0JveF9BQSkiLCJ3ZWJ2aWV3X1Rlcm1zQW5kQ29uZGl0aW9ucyI6Imh0dHBzOi8vd3d3Lm1lcnJpY2tiYW5rLmNvbS8tL21lZGlhL0ZpbGVzL09ubGluZS1QcmljaW5nL1NjaHVtZXJfQm94X0FBIiwid2Vidmlld19FU2lnbkRpc2Nsb3N1cmUiOiJodHRwczovL3d3dy5tZXJyaWNrYmFuay5jb20vLS9tZWRpYS9GaWxlcy9Fc2lnbiIsImRpc3BsYXlfcGxlYXNlX25vdGUiOiJQTEVBU0UgTk9URTogQ29uc2VudGluZyB0byByZWNlaXZlIENvbW11bmljYXRpb25zIHVuZGVyIHRoaXMgRS1TaWduIERpc2Nsb3N1cmUgd2lsbCBub3QgYXV0b21hdGljYWxseSBlbnJvbGwgeW91IGluIG91ciBQYXBlcmxlc3MgU3RhdGVtZW50cyBwcm9ncmFtLiBZb3UgbXVzdCBjb21wbGV0ZSBhIHNlcGFyYXRlIG9ubGluZSBlbnJvbGxtZW50IHRvIHN0b3AgcmVjZWl2aW5nIGJ5IFVTIE1haWwgcGFwZXIgYWNjb3VudCBzdGF0ZW1lbnRzLiIsImRpc3BsYXlfc3VibWl0X2NvbnNlbnQiOiJCeSBjbGlja2luZyBTdWJtaXQsIHlvdSBjb25zZW50IHRvIE1lcnJpY2sgQmFuayBzaGFyaW5nIGluZm9ybWF0aW9uIHJlZ2FyZGluZyB0aGlzIGFwcGxpY2F0aW9uIGFuZCBpdHMgY3JlZGl0IGRlY2lzaW9uIHdpdGggQ3JlZGl0IEthcm1hLiBUaGUgaW5mbyB3aWxsIGJlIHVzZWQgdG8gZW5oYW5jZSBDcmVkaXQgS2FybWHDouKCrOKEonMgc2VydmljZXMsIGluc2lnaHRzIGFuZCByZWNvbW1lbmRhdGlvbnMgZm9yIHlvdS4iLCJjYXJkRGV0YWlscyI6IiMjIyMgX19DYXJkIGRldGFpbHNfXy0gRWFzeSBBcHBseSBCdWxsZXQgIzEtIEVhc3kgQXBwbHkgQnVsbGV0ICMyW1Rlcm1zICYgQ29uZGl0aW9uc10oaHR0cHM6Ly9jay5hcHBseS5jcmVkaXRrYXJtYS5jb20vdGVybXMpIn0sImFwcGxpY2FudCI6eyJwYXBlcmxlc3NfY29uc2VudF9zZWxlY3Rpb24iOiAiWSIsICJtaWRkbGVfaW5pdGlhbCI6IiIsImFkZHJlc3NfbGluZTIiOiIiLCJkYXRlX29mX2JpcnRoIjoiMTk3Ni0wMS0wMSIsImNhcmRfYXJ0IjoiMiIsInNlbmRfY2FyZF90b19wb19ib3giOiIiLCJub25fdGF4YWJsZV9pbmNvbWUiOiJ0cnVlIiwiZmlyc3RfbmFtZSI6IiBST05BTEQiLCJsYXN0X25hbWUiOiJERU5JU09OIiwiYWRkcmVzc19saW5lMSI6IjE4MDAgSEFMTFBFQ0sgUEwiLCJjaXR5IjoiQ09MVU1CVVMiLCJzdGF0ZSI6Ik9IIiwicG9zdGFsX2NvZGUiOiI0MzIwOSIsImVtYWlsIjoiZXJpYy5ldmFuc0BtZXJyaWNrYmFuay5jb20iLCJwaG9uZV9udW1iZXIiOiI4MDE4MDE4MDE4IiwicGhvbmVfdHlwZSI6IkhPTUUiLCJtb3RoZXJfbWFpZGVuX25hbWUiOiJtb20iLCJncm9zc19hbm51YWxfaW5jb21lIjoiMTIzNDU2IiwiaW5jb21lX3R5cGUiOiJBTExPV0FOQ0UiLCJtb250aGx5X21vcnRnYWdlX29yX3JlbnQiOiIxMjAwLjUwIiwiZXNpZ24iOiJ0cnVlIiwic3NuIjoiNjY2MjIyNDc5In0sImRpc3BsYXkiOnsic3RhdGUiOiJGbG9yaWRhIiwicGhvbmVfbnVtYmVyIjoiKDkwNCk3MDEtNTU1NSIsInBob25lX3R5cGUiOiJIb21lIiwibm9uX3RheGFibGVfaW5jb21lIjoiQ2hlY2sgaWYgaW5jb21lIGlzIG5vbi10YXhhYmxlIiwib3RoZXJfaW5jb21lX3R5cGUiOiJQYXJlbnRzIC8gQmVuZWZhY3RvciAvIEFsbG93YW5jZSIsImVzaWduIjoiQnkgc3VibWl0dGluZyB0aGlzIGFwcGxpY2F0aW9uLCBJIGNvbmZpcm0gdGhhdCBJIGhhdmUgcmVhZCBhbmQgYWdyZWUgdG8gdGhlIHRlcm1zIHNldCBmb3J0aCBpbiB0aGUgRS1TaWduIERpc2Nsb3N1cmUsIG15IGNvbXB1dGVyIHNhdGlzZmllcyB0aGUgaGFyZHdhcmUgYW5kIHNvZnR3YXJlIHJlcXVpcmVtZW50cyB3aXRoaW4gdGhlIGRpc2Nsb3N1cmUsIGFuZCBJIGNhbiBhY2Nlc3MgdGhpcyBTYW1wbGUgUERGLiBJbiBhZGRpdGlvbiwgSSBnaXZlIG15IGFmZmlybWF0aXZlIGNvbnNlbnQgZm9yIE1lcnJpY2sgQmFuayB0byBwcm92aWRlIG1lIHdpdGggdGhlIGVsZWN0cm9uaWMgY29tbXVuaWNhdGlvbnMgYXMgZGVzY3JpYmVkIHdpdGhpbiB0aGUgZGlzY2xvc3VyZS4ifSwiZm9ybWF0dGVkIjp7ImRhdGVfb2ZfYmlydGgiOiIwNzA0MTk3NiIsInBob25lX251bWJlciI6IjkwNDcwMTU1NTUiLCJzc24iOiI2NjYtNTMtNzkzMyIsImFkZHJlc3MiOiIzMjMzIEdBTElMRUUgU1QifSwibWV0YWRhdGEiOnsiY29udGVudElkIjoiQ0NNZXJyaWNrQmFuazEzMDIiLCJhcHBsaWVkX2RhdGUiOiIyMDIwLTA2LTAxIiwiYXBwbGllZF90aW1lc3RhbXAiOiIxNTkxMDcxNDE1IiwiaXBfYWRkcmVzcyI6IjEyNy4wLjAuMSIsInVzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoTWFjaW50b3NoOyBJbnRlbCBNYWMgT1MgWCAxMF8xNF82KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvODMuMC40MTAzLjYxIFNhZmFyaS81MzcuMzYiLCJyZXZlbnVlX2lkIjoidGVzdDE3NjAwMzczMDAiLCAic3VyZXR5IjoiTEJfUEEifSwicHJvZHVjdCI6eyJQcm9kdWN0Q29kZSI6IlVGRTMxMkkxNUwifSwiYXBwbGljYXRpb25faWQiOiI5YTU5MDA2Yy05NGVmLTRiZDItYWYzZi0wNjRhMmJlMmVhZWIifQ==" ck_duplicate="0" appType="LB" shred_version="1.0">
+  <Request ID="326032" UserID="" Workflow="1" Timestamp="" Status="P" Trans="CKAPP" Readonly="" Process="01000" Version="" Priority="" Timeout="" Trace="" LockedBy="" useAlloyService="1">
+    <CustData>
+      <application app_type_code="PRODB" procs_date="2025-10-09 19:12:50.669" app_receive_date="2025-10-09 19:12:50.603" last_update_time="" signature_ind="Y" coupon_expiration_date="" name_match_flag="" address_match_flag="" ssn_match_flag="" pricing_tier="59" solicitation_num="" pymnt_prot_plan_ind="" credit_life_ind="0" campaign_num="U2FL" app_entry_date="" swiftpay_num="" mail_cell_pricing="UFE312I15L" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" app_channel="" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="2" CPS_letter_sent_flag="" population_assignment="SO" verification_source="" EODRet="WEBAPP" processing_expiration_date="" solicitation_locked="" secure_ach_amount="" IP_address="127.0.0.1" EXPinNumber="" assignedTo="" updatedBy="" priority="" paperless_flag="true" sms_consent_flag="true" esign_consent_flag="true">
+        <app_product decision_tp_c="NONE" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="" prescreen_risk_score="" risk_model_score="" prescreen_risk_grade="" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="N" bank_debt_to_income_ratio="" regb_start_date="2025-10-9 19:12:50.0" regb_end_date="" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" decision_score="" decision_model="" />
+        <contact con_id="522776" ac_role_tp_c="PR" title="" first_name="RONALD" initials="" last_name="DENISON" suffix="" ssn="666222479" email="eric.evans@merrickbank.com" birth_date="01/01/1976" mother_maiden_name="mom" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="" age="" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="U2FL" card_name="" requested_credit_line="" allocated_credit_line="500" accnt_type_ind="" card_decision_tp_c="NODEC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="1000" />
+          <contact_address address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" rural_route="" state="OH" street_name="1800 HALLPECK PL" street_number="" unit="" home_phone="8018018018" months_at_residence="" address_line_1="1800 HALLPECK PL COLUMBUS, OH 43209" cell_phone="" city="COLUMBUS" zip="43209" years_at_residence="" residence_monthly_pymnt="1200.5" />
+          <contact_employment employment_tp_c="CURR" b_salary="123456" b_salary_basis_tp_c="ANNUM" b_income_source_nontaxable="Y" b_primary_income_source_tp_c="ALLOW" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="2025-10-09 19:12:50.602" campaign_number="" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="" primary_middle_name="" primary_last_name="" primary_suffix="" primary_ssn="" pri_cur_street_num="" pri_cur_street_name="" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="" pri_state="" pri_zip_code="" special_flag_5="R" special_flag_6="G" special_flag_7="A" special_flag_8="A" aaa_misc_field_4="" misc_field_6="" upc8="" upc9="" upc10="" upc12="" CB_prescreen_birth_date="" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" minimum_interest_charge="1" account_setup_fee="0" additional_card_fee="12" late_payment_fee="40" over_limit_fee="0" returned_payment_fee="40" apr="34.45" annual_fee="72" cash_advance_apr="35.00" cash_advance_fee="10" cash_advance_percent="4" cash_apr_margin="32.20" foreign_percent="2" intro_cash_advance_apr="0.09589" intro_purchase_apr="0.09438" min_payment_fee="35" min_payment_percent="1.00" purchase_apr_margin="27.20" seg_plan_version="26" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="Solitude_Prescreen" value="E3" />
+          <Indicator ID="CreditBureauPulled" value="0" />
+        </Indicators>
+        <scores />
+        <analytics>
+          <analytic analytic_id="user_agent" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36" />
+          <analytic analytic_id="content_id" value="CCMerrickBank1302" />
+          <analytic analytic_id="surety" value="LB_PA" />
+          <analytic analytic_id="revenue_id" value="test1760037300" />
+          <analytic analytic_id="application_id" value="9a59006c-94ef-4bd2-af3f-064a2be2eaeb" />
+          <analytic analytic_id="status" value="P" />
+          <analytic analytic_id="payoutExclusion_CKG" value="" />
+        </analytics>
+        <communications />
+      </application>
+    </CustData>
+    <Reports>
+      <EDQ>
+        <output>
+          <QASearchResult>
+            <QAPicklist AutoFormatSafe="false" MaxMatches="true">
+              <FullPicklistMoniker />
+              <Prompt>Enter search</Prompt>
+              <Total>0</Total>
+            </QAPicklist>
+            <VerificationFlags />
+          </QASearchResult>
+        </output>
+      </EDQ>
+    </Reports>
+    <Messages />
+    <Rules>
+      <Rule guid="repoObj_0eae199ad_1646bf093e4_07fda1646bf093e4" ID="NMADD" Description="Applicant-entered address does not return EDQ match and cannot be parsed" Timestamp="2025-10-09 19:12:50.601" Severity="98" Override="0" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07a1d110cc68c20a" ID="PAMHN" Description="Primary applicant address information missing street number." Timestamp="2025-10-09 19:12:50.709" Severity="63" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="NMADD" Timestamp="2025-10-09 19:12:50.601" Status="true" />
+      <Journal Type="Process" ID="EDQAddressVerification" Timestamp="2025-10-09 19:12:50.602" Status="true" />
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2025-10-09 19:12:50.603" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2025-10-09 19:12:50.669" Status="Pass" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-10-09 19:12:50.690" Status="Pass" />
+      <Journal Type="Process" ID="00098" Timestamp="2025-10-09 19:12:50.690" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2025-10-09 19:12:50.705" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="2025-10-09 19:12:50.706" Status="Pass" />
+      <Journal Type="Process" ID="00500" Timestamp="2025-10-09 19:12:50.706" Status="Pass" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2025-10-09 19:12:50.707" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2025-10-09 19:12:50.708" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2025-10-09 19:12:50.708" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2025-10-09 19:12:50.709" Status="true" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2025-10-09 19:12:50.709" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2025-10-09 19:12:50.710" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2025-10-09 19:12:50.710" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2025-10-09 19:12:50.711" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2025-10-09 19:12:50.711" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2025-10-09 19:12:50.712" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2025-10-09 19:12:50.712" Status="false" />
+      <Journal Type="Rule" ID="APPGENDEL" Timestamp="2025-10-09 19:12:50.713" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="2025-10-09 19:12:50.720" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-10-09 19:12:50.724" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits />
+    <Documents />
+    <temp_app_variables />
+    <TriggeredRules />
+  </Request>
+  <queues>
+    <queue name="Review" id="63" type="cc" />
+    <queue name="A PreBureau Verification PreApproved" id="1" />
+    <queue name="T All Applications" id="17" />
+  </queues>
+</Provenir>

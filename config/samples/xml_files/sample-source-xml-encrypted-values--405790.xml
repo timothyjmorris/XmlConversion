@@ -1,0 +1,1305 @@
+﻿<Provenir ID="405790" TestType="emcrtyped values" ProductType="" Version="4.0.0" transactionID="DE067a6171_1804de80371_07ffd1804de89e20_0a147650.67" Org="">
+  <Request ID="405790" LockedBy="TIMOTHY.MORRIS@MERRICKBANK.COM" _LockedBy="TIMOTHY.MORRIS@MERRICKBANK.COM" Priority="" Process="20000" Readonly="0" Status="" Timeout="" Timestamp="" Trace="" Trans="REPROCESS" experian_customerid="" experian_consumerid="" finicity_bypass="N" iovation_sessionid="e940a4b9-ee71-4dca-9501-163861cbd6aa" btcardtoken="" btresponsecode="" UnLockOnExit="" UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Workflow="1" Version="" transactionCounter="6" LockedAt="2022-5-2 18:53:18.609" LastUpdatedBy="TIMOTHY.MORRIS@MERRICKBANK.COM">
+    <CustData>
+      <application address_match_flag="" app_entry_date="4/26/2022" app_receive_date="4/26/2022" app_source_ind="I" app_type_code="PRODB" campaign_num="W2E" coupon_expiration_date="06/19/2022" CPS_letter_sent_flag="" credit_life_ind="" Debit_Funding_Source="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_date="" Debit_Refund_amount="" EODRet="REPROCESS" existing_card_account_num="" IP_address="10.20.135.103" last_update_time="" mail_cell_pricing="WEAAL2N102" name_match_flag="Y" Partner_URL_ID="" population_assignment="CM" pymnt_prot_plan_ind="" pricing_tier="59" processing_expiration_date="06/24/2022" procs_date="2022-4-26 11:13:12.138" secure_ach_amount="" signature_ind="Y" solicitation_locked="" solicitation_num="05225T31637T" special_offer="4" ssn_match_flag="Y" swiftpay_num="" TUAccessCode="">
+        <app_product aba_number="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" aggregate_balance="" aggregate_balance5="" analyst_rev_ind="N" annual_fee_tp_c="" autopay_ind="" backend_fico_grade="F" backend_risk_grade="U" bankruptcy_score="" booked_date="" bus_card_name="" cash_advance_ind="" cendant_add_date="" collections_remark_codes_num="" control_accnt_desired_ind="" control_accnt_number="" control_accnt_seq_no="" csi_eligibility_ind="" csi_sent_date="" debt_to_income_ratio="12.34" decision_date="2022-5-2 18:53:52.922" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" decision_tp_c="APPRV" delphi_score="" discharged_bankruptcy_ind="" disclosures="P" dismissed_bankruptcy_ind="" duplicate_app_ind="N" empirica_score="" existing_cardholder_ind="" experian_fico_score="0" FICO_BKR3_EX="" FICO_BKR3_TU="" FICO_NextGen3_EX="" FICO_NextGen3_TU="" filed_bankruptcy_ind="" horizon_score="" ics_sent_date="" intrnl_fraud_ssn_ind="N" intrnl_fraud_address_ind="N" letter_requested_ind="" lscampaign_num="" mars_model_score="" merrick_tradelines_num="" monthly_debt="1758.866" monthly_income="14250" multran_booked_date="" neuristics_edge_score="" ninety_day_delinq_num="" one_twenty_day_delinq_num="" overdraft_ind="" override_tp_c="" pd_seq_no="" pd_tp_c="" pending_verif_ind="N" pinnacle_score="" policy_override_employee_code="" prev_merrick_inq_num="" precision_score="0" prescreen_bkr_score="" prescreen_fico_grade="P" prescreen_fico_score="749" prescreen_risk_grade="A" prescreen_risk_score="373" prmy_pd_ind="" pubrec_bankruptcies_num="" regbcloseddays_num="" regbcloseddays_num_counter_offer="" regbcloseddays2_num="" regbnewinfostartdate="" req_plastics_qt="1" req_prod_tp_c="VCRDU" risk_model_score_JH="" risk_model_score_LP="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" Risk_Model_reason3_tp_c="" risk_model_score="" sixty_day_delinq_num="" sixty_ninety_day_delinq_num="" score="" scorecard="" supervisor_rev_ind="N" thirty_day_delinq_num="" trades_BKR_filings_num="" trades_remark_codes_num="" Vantage_Score_EX="" Vantage_Score_TU="" regb_start_date="2022-4-26 0:0:0.0" regb_end_date="" EX_DIE_score="48" EX_TIE_score="65" EX_FICO_08_score="766" EX_EVS_score="0" TU_L2C_score="0" decision_model="EX FICO 08" decision_score="766" DIE_Plus_Score="49.21" adverse_actn5_type_cd="" />
+        <comments comment="zge/9WmiNsY1qlOD+Jda/xF24gMDda0GHIpdMs4dVeXSXEYovtr24OBBBYB9zFdYKSGw5yzraKzP +pir/a4pPw==^" comment_seq_number="1" comment_type_code="SA" user_id="MAC" time_stamp="2022-4-26 11:13:16.986" related_to="" />
+        <contact banking_aba="" banking_account_number="" banking_accounts_held="" banking_account_type="" mother_maiden_name="l5HAEwkUpNjx6cmrApO+dQ==^" ac_role_tp_c="PR" initials="" last_name="DENNIS" suffix="" con_id="607623" title="" first_name="MORAN" birth_date="V2DC8WZpmYQH+K9HvNoFuA==" ssn="hxjMnT9N5sefccFPz6MJbg==" ssn_last_4="1323" email="TERREN.CLARK@MERRICKBANK.COM" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" age="20">
+          <app_prod_bcard accnt_bin="" accnt_seq_no="" accnt_type_ind="" account_number="" agent="" allocated_credit_line="1100" analyst_approved_line="" card_decision_tp_c="APPRV" card_id="" card_name="" issue_card_ind="Y" multran_accnt_bin="" multran_accnt_seq_no="" multran_account_number="" pd_tp_c="W2E" recur_payment_credit_line="" requested_credit_line="" seq_check="" sys_prin="" credit_line2="2200" min_pay_due="65.45" />
+          <contact_address address_line_1="" address_seq_no="" address_tp_c="CURR" cell_phone="" city="NORWALK" fax_no="" home_phone="6239510847" mailing_city="" mailing_po_box="" mailing_rural_route="" mailing_state="" mailing_unit="" mailing_zip="" months_at_residence="" ownership_tp_c="" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" residence_monthly_pymnt="1100" rural_route="" state="CT" street_name="MOREHOUSE LN" street_number="30" unit="" years_at_residence="" zip="06850" />
+          <contact_employment b_city="" b_income_source_nontaxable="N" b_job_title_tp_c="" b_months_at_job="" b_name="" b_othr_inc_basis_tp_c="" b_other_income_amt="" b_other_income_source_tp_c="" b_phone_no="" b_phone_no_ext="" b_primary_income_source_tp_c="EMPLOY" b_salary="171000" b_salary_basis_tp_c="ANNUM" b_state="" b_street_name="" b_street_number="" b_years_at_job="" b_self_employed_ind="" b_unit="" b_zip="" employment_seq_no="" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters cb_disclosure_suppress="" cb_score_suppress="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" letter_type_cd="" seq_no="" />
+        <rmts_info aaa_misc_field_4="" address_match_flag="" auth_user_is_spouse="" campaign_number="W2E" CB_prescreen_birth_date="vjpGY6wDzP5/9KV6vH/btw==" merrick_appl_number="" name_match_flag="" pri_apt_number="" pri_city="NORWALK" pri_cur_street_num="30" pri_cur_street_name="MOREHOUSE LN" pri_po_box_num="" pri_rural_rt_num="" pri_state="CT" pri_zip_code="068500000" primary_first_name="MORAN" primary_last_name="DENNIS" primary_middle_name="" primary_ssn="2ohrbps/9tISFxK0Fy8zkA==" primary_suffix="" special_flag_5="9" special_flag_6="A" special_flag_7="A" special_flag_8="A" ssn_match_flag="" transmission_date="2022-4-26 11:13:12.13" upc8="884" upc9="754" upc10="749" upc12="0" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="1100.0000" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" IovationToken="0e1d45ae-8880-498e-8342-8595bf2ea637" IovationExpireAt="2022-05-03T01:23:47.7937396Z" IovationTokenSite="Merrick_Bank_TestSite_CC" IovationCaseId="e940a4b9-ee71-4dca-9501-163861cbd6aa|1e61fe97-ea71-4436-8d56-847eaca98047" Ratio_Used="DIEPLUS" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <FDR account_number="" Cross_refrence_indicator="" Cross_refrence_number="" External_Primary_Account="" filler="" multran_account_number="" operator_code="" SubTranCode="" swiftpay_number="" terminalID="" transaction_code="" />
+        <scores>
+          <score score_identifier="FRAUDFORCE" score="6.0" />
+          <score score_identifier="V4" score="754" />
+        </scores>
+        <Indicators>
+          <Indicator ID="deviceID" value="f01c9c92-a588-4711-9957-5bd46161d7ec" />
+          <Indicator ID="MLA" value="N" />
+        </Indicators>
+        <comments comment_seq_number="2" comment="zge/9WmiNsY1qlOD+Jda/xF24gMDda0GHIpdMs4dVeXSXEYovtr24OBBBYB9zFdYKSGw5yzraKzP +pir/a4pPw==^" user_id="MAC" comment_type_code="SA" related_to="" time_stamp="2022-5-2 15:29:7.179" />
+        <comments comment_seq_number="3" comment="zge/9WmiNsY1qlOD+Jda/xF24gMDda0GHIpdMs4dVeXSXEYovtr24OBBBYB9zFdYKSGw5yzraKzP +pir/a4pPw==^" user_id="MAC" comment_type_code="SA" related_to="" time_stamp="2022-5-2 18:53:52.755" />
+      </application>
+    </CustData>
+    <Reports>
+      <IovationCase>
+        <JSON IdentityConsentId="null" TransactionProcessingTime="19" Timestamp="2022-04-26T17:13:13.0589589Z" Transaction="null" CaseType="0" CaseNumber="CreditCard405790" Id="e940a4b9-ee71-4dca-9501-163861cbd6aa|41bbd01d-4d72-4930-8243-b24185654035" LocationConsentId="null" SessionId="e940a4b9-ee71-4dca-9501-163861cbd6aa" MarketType="0">
+          <Customer DateOfBirth="2002-03-04T00:00:00Z" SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" Id="6c35b4a5-7105-4c00-8106-30881abcdfff" LastName="TESTB" AccountNumber="null">
+            <Addresses>
+              <ArrayElementObject IsDefault="true" FirstName="BOB" Address2="null" Address3="null" PostalCode="30326" Address1="200 BALLPARK ST" City="ATLANTA" Timestamp="0001-01-01T00:00:00Z" Type="0" State="GA" Id="73ede4ce-979b-4283-9ad1-25827d9b6a4d" LastName="TESTB" CountryCode="US" />
+            </Addresses>
+            <SocialAccounts />
+            <Emails />
+          </Customer>
+          <Payments />
+          <Statuses>
+            <ArrayElementObject Status="8" Comment="Status added by Trustev to set current status to placed" Id="6325b88c-fad3-49dc-8045-ab702d31cad8" Timestamp="2022-04-26T17:13:13.3115898Z" />
+          </Statuses>
+        </JSON>
+      </IovationCase>
+      <IovationDecision report_time="2022-4-26 11:13:14.123">
+        <JSON PlatformVersion="V1" Comment="Decision for Default" TransactionProcessingTime="435" AuthenticatedDataRequest="null" CaseId="e940a4b9-ee71-4dca-9501-163861cbd6aa|41bbd01d-4d72-4930-8243-b24185654035" TruValidateConsumerId="null" Timestamp="2022-04-26T17:13:13.9795801Z" Result="1" IdentityVerificationPayloadUrl="null" Score="10" Type="0" ExtendedDeviceInformation="null" Confidence="59" Version="103" CaseNumber="CreditCard405790" Id="9e25a3cd-cc2a-4e1c-811a-8f82b7d3c0d3" SessionId="e940a4b9-ee71-4dca-9501-163861cbd6aa">
+          <RawData OS="null" NavigatorLanguage="en-US" ScreenHeight="864" BINInformation="null" NavigatorPlugins="[{&quot;name&quot;:&quot;PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;Chrome PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;Chromium PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;Microsoft Edge PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;WebKit built-in PDF&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2}]" ScreenColorDepth="24" TrustevCustomerId="6c35b4a5-7105-4c00-8106-30881abcdfff" Transaction="null" CaseType="0" DeviceTag="f01c9c92-a588-4711-9957-5bd46161d7ec" ScreenWidth="1536" NavigatorOscpu="undefined" Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36">
+            <Customer SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" LastName="TESTB">
+              <Emails />
+            </Customer>
+            <IPAddresses>
+              <ArrayElementObject ConnectionType="" HostingFacility="false" LineSpeed="" SLD="merrickbank" City="south jordan" ClientIp="204.10.148.229" TLD="com" Continent="north america" State="utah" Country="united states" AnonymizerStatus="" Id="a67c8224-12f2-400f-befb-49de186f2fc9" ProxyType="" CountryCode="us" RoutingType="" />
+            </IPAddresses>
+            <Location>
+              <Addresses TUPrimaryFile="200 BALLPARK ST, , , ATLANTA, GA, US" />
+              <Coordinates DeviceBrowser="null" IP="40.55938,-111.9824" DeviceCellular="null" />
+            </Location>
+          </RawData>
+          <ComputedData CaseType="0">
+            <Transaction>
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Transaction>
+            <ExtendedDevice IsRegistrationRisky="null" PredictiveMlRisk="null" Risk="null" />
+            <Customer IsIDMVMatchingSummaryRiskMedium="null" IsIDMVMatchingSummaryRiskLow="null" HasSuspiciousHistory="true" IsIDMVMatchingSummaryRiskHigh="null" CaseType="0" IsNameAddressCombinationValid="false" HasBadHistory="false" IsReturningToPlatform="true" HasGoodHistory="true">
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Customer>
+            <Device IsFlashEnabled="null" IsJSEnabled="true" IsJavaEnabled="false" />
+            <Phone IsPhoneRisky="null" />
+            <WhiteList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <BlackList WasCustomerIdHit="false" WasFullEmailAddressHit="false" CaseType="0" WasIPHit="false" WasPostCodeHit="false" WasAccountNumberHit="false" WasEmailDomainHit="false" WasBinHit="false" />
+            <GreyList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <Velocity IsConsumerIdPostCodeVelocityHigh="null" IsConsumerIdEmailVelocityHigh="null" IsConsumerIdVelocityHigh="null" IsConsumerIdIPVelocityHigh="null" IsEmailVelocityHigh="null" IsConsumerIdSsnVelocityHigh="null" IsConsumerIdPhoneNumberVelocityHigh="null" DecisionsWithin30Days="744" IsAccountNumberVelocityHigh="null" DecisionsWithin1Hour="4" DecisionsWithin24Hours="23" IsConsumerIdAccountNumberVelocityHigh="null" CaseType="0" IsDeviceIdVelocityHigh="null" IsPhoneNumberVelocityHigh="null" IsPostCodeVelocityHigh="null" IsAddressLine1VelocityHigh="null" DecisionsWithin7Days="285" IsIPVelocityHigh="null" IsSsnVelocityHigh="null" IsConsumerIdAddressLine1VelocityHigh="null" IsConsumerIdDeviceIdVelocityHigh="null" />
+            <Location CaseType="0" BIN="null" IsIPCountryDomestic="true" />
+          </ComputedData>
+          <Authentication Id="e940a4b9-ee71-4dca-9501-163861cbd6aa|41bbd01d-4d72-4930-8243-b24185654035" Timestamp="0001-01-01T00:00:00Z">
+            <DocumentAuthentication Status="4" OCRDataStatus="0" OCRData="null" Url="null">
+              <FailedAlgorithms />
+              <FailureReasons />
+            </DocumentAuthentication>
+            <OTP Status="7" Language="0" Passcode="null" AuthURL="null" Timestamp="0001-01-01T00:00:00Z" DeliveryType="0" />
+            <KBA Status="-1" AnswerUrl="n/a" MultiPassStatus="0" Timestamp="2022-04-26T17:13:14.0733084Z">
+              <MultiPassQuestions />
+              <Questions />
+            </KBA>
+          </Authentication>
+        </JSON>
+      </IovationDecision>
+      <EX>
+        <Raw>1100046042622121314TCTB0706405790K11204262022@13000230766P33100830AJ@13000230065P        IW@13000230048P        D4@13000230754P64498565V4@3220018 666091323@335004216/MORAN//DENNIS//1964E61208201964@335003617/PETER//MCLONEY//    E105A@3360096061602222251230206S        39/30/MOREHOUSE/LN///NORWALK/CT/068504420K2200615201602062022@336010006130718100       S        43/1965 N/CREEK/CIR///ALPHARETTA/GA/300041356K2200601201307122018@336010008100711100       A        43/66/QUEEN/ST/APT/2705/HONOLULU/HI/968134446K2200828201007262011@337010806180618221JEANS RESTAURNT EQUIP16426 S STAPLES ST15CORPUS CRIST TX01 784013331 K2200615201806152018@337009405170517223SELF EMPLOYEE-JENN'S RE14CORPUS CHRISTI01 01           K2200502201705022017@357028019N12120715    07REV200000800L00000198H0404210000000011          CR0001 A9174100162220475B2149900000000B429B000000000000000000000000B520          062215B6361362837DZ21MISC. DEPT. &amp; VARIETYF3160715A3110719K4681204201207012015        0404202106222015                07012015@357026419N08160617    07REV100002317L00002317H0607170000000011          CR0001 A91501100057702B2141200000000B416BCCCCCCCCCCCB520          011817B6352156646BB20CAP ONE/BERNIE&amp;PHYLSF3160617A3110719K4680804201606012017        0607201701182017                06012017@357028419N03110417    07REV100000500L00000110H0408170000000011          CR0001 A913551054024B2142400000000B428B00000000000000000000000B520          072011B6332322630CG18COMENITYBANK/NY&amp;COF3160417A3110719J31200000022K4680328201104012017        0408201707202011                04012017@357029419N03140416    07REV200002000L00001982H0411160000000011          CR0001 A9205856370424043916B2142400000000B428B000000000000000000CCCCCB520          062414B6362312210CS21COMENITY BANK/TDYSMANF3160416A3110719J31200000101K4680326201404012016        0411201606242014                04012016@357023519N12110313    18REV100005000L00000060H0312130000000011          CR0001 A913467301150B2141600000000B419B000000000000C-B6251233910BC10JPMCB CARDF3160313A3111819K4681201201103012013        03122013                        03012013@357023419N12110313    18REV100005000L         0312130000000011          CR0001 A913467801562B2141600000000B418B0000000000000B6251233910BC10JPMCB CARDF3160313A3111819K4681201201103012013        03122013                        03012013@357026919N09200222    07REV000001200L00000117H022222        12          CR0001 A9206018596217683335B2141800000000B422B000000000000000CCB520          100420B6293607370CG14SYNCB/OLD NAVYF3160222A2110719K4680919202002012022        0222202210042020                02012022@357026219N04210921    47REV400065000L00065000H092821        12          CR0001 A9206903690500430646B2140400000000B408BCCCB520          072821B6364119000BB21CLC CONSUMER SERVICESF3160921A2118919K4680404202109012021        0928202107282021                09012021@3570257  P04210921    26360200520000O         091021        12          CI0001 A9172770008056301B2140100000000B405BB520          071221B6377950144FM22SELECT PORTFOLIO SVCINF3160921A21126  K4680404202109012021        0910202107122021                09012021@3570273  P12170521    26360400225000O         050121        12          CI0001 A9173840007459241B2144000000000B429BCCCCCCCCCCCCCCCCCCCCCCCCB520          040221B6291860946FS14CAPITAL ONE NAF3160521A21126  K4681208201705012021        0501202104022021                05012021@3570250  P09160420    00060100042061O         042820        12          CI0001 A91810027313590854B2144400000000B429BCCCCCCCCCCCCCCCCCCCCCCCCB6251101969BB10JPMCB AUTOF3160420A21100  K4680905201604012020        04282020                        04012020@357025419N09171219    18REV100007500L00000016H120219        12          CR0001 A916430550007347B2142700000000B429B0000000000000000000000CCB6316230125BC16BAC/FLEET-BKCARDF3161219A2111819K4680921201712012019        12022019                        12012019@357024219N07161119    07REV100001179L00001180H112819        12          CR0001 A916603259015888B2143900000000B429BCCCCCCCCCCCCCCCCCCCCCCCCB6191138180BB04BANKF3161119A2110719K4680728201611012019        11282019                        11012019@357024219N07160819    07REV100002575L00002576H081119        12          CR0001 A916603259009070B2143600000000B429BCCCCCCCCCCCCCCCCCC------B6191138180BB04BANKF3160819A2110719K4680728201608012019        08112019                        08012019@357025219N11080419    18REV100015000L00002562H042219        12          CR0001 A916433905512983B2149900000000B429B000000000000000000000000B6291270341BC14CITICARDS CBNAF3160419A2111819K4681101200804012019        04222019                        04012019@3570256  P02160219    00036100021280O         022419        12          CI0001 A91223038275B2143700000000B429BCCCCCCCCCCCCCCCCCCCCCCCCB6371631440FA22FORD MOTOR CREDIT COMPF3160219A21100  K4680225201602012019        02242019                        02012019@357023319N11170418    18REV100007000L         050618        12          CR0001 A9204417121172423264B2140600000000B410BB0B00B6251310331BC10JPMCB CARDF3160418A2111819K4681114201704012018        05062018                        04012018@3570240  P07160518    26360200191100O         050518        12          CI0001 A9171508018990920B2141600000000B420B-------------CCB6253900510FM10JPMCB HOMEF3160518A21126  K4680728201605012018        05052018                        05012018@3570249  P07160118    26360200191100O         011618        12          CI0001 A9141966063865B2140800000000B412BCCC-CCCB6332991739FM18MORTGAGE COMPANIESF3160118A21126  J31200190653K4680728201601012018        01162018                        01012018@357022419N02031017    180011 UNKNOWN          102817        12          CR0001 A922007325077017358261B2140100000000B405BB6191229200BC04AMEXF3161017A2111819K4680201200310012017        10282017                        10012017@357024819N09160217    18REV100001500L00000336H020817        12          CR0001 A916030984296707B2142400000000B428BCCCCCCCCCCCCCCCCCCCCCCCB6262310220DC11KOHLS/CHASEF3160217A2111819K4680908201602012017        02082017                        02012017@357024419N08161216    07UNK100007500L00001040H122816        12          CR0001 A9209002446001244599B2140500000000B409B-CCCB6372545240FP22SPRINGLEAF FINANCIAL SF3161216A2110719K4680826201612012016        12282016                        12012016@3570233  P07161116    26360700191100O         110116        12          CI0001 A913437135355B2140300000000B407B-CB6356991306FM20CHAPEL MORTGAGE CORPF3161116A21126  K4680728201611012016        11012016                        11012016@3570252  P11120716    18REV100004000L00001723H072816        12          CR0001 A9144022980000B2144400000000B429B000000000000000000000000B6311290016BC16BANK CREDIT CARDF3160716A21118  K4681119201207012016        07282016                        07012016@3570233  P07111012    18REV100005000L00003049H102812        12          CR0001 A9083316B2141600000000B420B00CCCCCCCCCCCCCB6271230305BC12HSBC/HBSB NAF3161012A21118  K4680701201110012012        10282012                        10012012@3570271  P03170222    18REV100006500L00003245H0224220000104811          OR0001 A916601100150064B2145900000000B429CCCCCCCCCCCCCCCCCCCCCCCCCB52000000019S 021922B6283276502BC13DISCOVER BANKF3160222A11118  K4680326201702012022        0224202202192022                02012022@3570277  P03170222    18REV100019300L00011998H0217220000407311          OR0001 A916549113035693B2146000000000B429CCCCCCCCCCCCCCCCCCCCCCCCCB52000000139S 021422B6341211870BC19UNIVERSAL CARD CBNAF3160222A11118  K4680323201702012022        0217202202142022                02012022@3570272  P11140222    18REV100026100L00017500H0213220000000011          OR0001 A9204417124345648023B2148700000000B4290CCCCCCCCCCCCCCCCCCCCCCCCB520          060218B6253182310BC10JPMCB CARDF3160222A11118  K4681124201402012022        0213202206022018                02012022@3570272  P12200222    07REV100003000L00001730H0210220000000011          OR0001 A9206019181201110212B2141400000000B41800000CCCC00CCCB520          090621B6361231620BC21SYNCB/LINCOLN MERCURYF3160222A11107  K4681216202002012022        0210202209062021                02012022@3570229  P08210222    07REV100010143L00008890H0203220000889011          OR0001 A916504994017113B2140600000000B410CCCCC0B6251323300DC10SEARS/CBNAF3160222A11107  K4680806202102012022        02032022                        02012022@3570238  P07170222    15REV700001000L00001000H0201220000000011          OR0001 A91286681192B2145500000000B4290000000000000000000000000B6191100775BB04BANKF3160222A11115  K4680701201702012022        02012022                        02012022@3570246  P05210122    07REV100006500L00001985H0128220000000011          OR0001 A916603259010331B2140900000000B4130CCCCCCCCB520          110921B6191138180BB04BANKF3160122A11107  K4680517202101012022        0128202211092021                01012022@3570224  P06030122    18001100002229H         0128220000124111          OR0001 A922007325077017335252B2140100000000B405CB6191229200BC04AMEXF3160122A11118  K4680601200301012022        01282022                        01012022@3570224  P01160122    18REV100007000L00003096H0128220000041611          OR0001 A922007325077017356161B2140100000000B405CB6191229200BC04AMEXF3160122A11118  K4680122201601012022        01282022                        01012022@3570224  P06030122    18REV100007001H         0128220000122111          OR0001 A922007325077017535252B2140100000000B405CB6191229200BC04AMEXF3160122A11118  K4680601200301012022        01282022                        01012022@3570243  P08210122    26360100359650O         0128220035944211          OI0001 A913105358158B2140300000000B407CCCB52000002047S       B6253991532BM10BK OF AMERF3160122A11126  K4680806202101012022        01282022                        01012022@3570239  P04191019    07REV100000699H         1028190000000011          OR0001 A9208620011000008613B2140700000000B4110CCCCCCB6301331200ZR15TD RCS/ABED.COMF3161019A11107  K4680420201910012019        10282019                        10012019@3570283  P05170319    07REV100002000L00001349H0316190000000011          OR0001 A9202736060903933563B2142400000000B4280CCCCCCCCCCCCCCCCCCCCCCCB520          112217B6372501076FZ22CAPITAL ONE/OFFICE MAXF3160319A41107  K4680510201703012019        0316201911222017                03012019@3590076020522 UNKNOWN31UNKB6371622020FA22CAPITAL ONE AUTO FINANK51202052022@3590072020322 UNKNOWN08UNKB6331975421FR18MORTGAGE REPORTERSK51202032022@3590071122121 UNKNOWN31UNKB6326108400BB17SANTANDER BANK NAK51212212021@3590075080621 UNKNOWN31UNKB6361351920DC21COMPLETE DEPT. STORESK51208062021@3590068072821 UNKNOWN08UNKB6293970658  14SERVICE &amp; PROFK51207282021@3590068071221 UNKNOWN08UNKB6293970658  14SERVICE &amp; PROFK51207122021@3590068071021 UNKNOWN08UNKB6293970658  14SERVICE &amp; PROFK51207102021@3590076051721 UNKNOWN31UNKB6371151250BB22CITIFINANCIAL RETAIL SK51205172021@3590068032821 UNKNOWN08UNKB6291974443FR14EQUIFAX-LANDAMK51203282021@3590068122720 UNKNOWN08UNKB6291974443FR14EQUIFAX-LANDAMK51212272020@3590068122720 UNKNOWN08UNKB6293988260  14SERVICE &amp; PROFK51212272020@3590058111420 UNKNOWN31UNKB6190127060BB04AMEXK51211142020@3590072072820 UNKNOWN08UNKB6331972824FR18MORTGAGE REPORTERSK51207282020@361003657241204 MLA NO RECORD FOUND@836161001ALJ5030000000000ALJ5320000001000ALJ5730000000000ALL0000000000038ALL0100000000038ALL0135000000000ALL0136000000000ALL0200000000038ALL0216000000012ALL0300000000038ALL0317000000016ALL0318000000017ALL0400000000013ALL0416000000011ALL0439000000005ALL0446000000011ALL0448000000007ALL0700000000025ALL1300000000038ALL1360000000012ALL1370000000016ALL1380000000017ALL2000000000011ALL2001000000000ALL2002000000096ALL2005000000008ALL2009000000000ALL2136000000000ALL2176000000000ALL2206000000000ALL2328000000000ALL2380000000000ALL2480000000000ALL2720000000000ALL2800000000000ALL2870000000000ALL2900000000000ALL3510000000007ALL4980000000096ALL5020000376331ALL5030000376331ALL5320000448423ALL5360000000000ALL5460000000000ALL5820000002627ALL5825000002627ALL5830000002627ALL5835000002627ALL6120000000001ALL6160000000001ALL6220000000001ALL6230000000001ALL6250000000001ALL6270000000001ALL6310000000002ALL6320000000001ALL7110000000084ALL7116000000994ALL7140000000018ALL7310000000029ALL7320000000018ALL7330000000100ALL7331000000100ALL7336000000032ALL7337000000042ALL7338000000045ALL7340000000000ALL7350000000000ALL7360000000000ALL7370000000000ALL7936000000100ALL7937000000100ALL7938000000100ALL8020000003048ALL8026000999994ALL8120000000008ALL8150000009996ALL8151000009996ALL8152000009996ALL8153000009996ALL8157000009996ALL8160000009996ALL8164000009996ALL8167000009996ALL8170000000004ALL8220000000230ALL8221000000230ALL8225000009994ALL8270000000226ALL8320000000080ALL8321000000080ALL8325000009994ALL8352000009996ALL8355000009996ALL8358000009996ALL8370000000047ALL9120000000000ALL9121000000000ALL9122000000000ALL9123000000000@836161001ALL9130000000000ALL9141000000000ALL9210000009999ALL9211000009999ALL9220000009999ALL9221000009999ALL9951000000000ALX3510000000007ALX5020000376331ALX5030000376331ALX5039000376331ALX5830000002627ALX5839000002627ALX8220000000230AUA0438000000000AUA1380000000001AUA2350000000000AUA5020999999997AUA5320999999997AUA5400000042061AUA5420999999997AUA5520999999997AUA8120000000067AUT5020999999997AUT5620999999997BAX0416000000007BAX3510000000005BAX5020000007999BAX5030000007999BCA0300000000015BCA0416000000007BCA1300000000015BCA2350000000000BCA2380000000000BCA3510000000005BCA3511000000000BCA5020000007999BCA5030000007999BCA5121000000000BCA6210000000997BCA8110000000028BCA8120000000053BCA8150000009996BCA8151000009996BCA8153000009996BCA8157000009996BCA8160000009996BCA8220000000230BCA8320000000119BCC0300000000013BCC0400000000006BCC0416000000006BCC0446000000006BCC1300000000013BCC1360000000006BCC1370000000006BCC1380000000006BCC2328000000000BCC2350000000000BCC2380000000000BCC2800000000000BCC3341000000005BCC3342000000003BCC3343000000003BCC3344000000003BCC3345000000003BCC3346000000003BCC3421000000000BCC3423000000000BCC3510000000004BCC3511000000000BCC3515000000003BCC5020000006758BCC5030000006758BCC5120000004073BCC5320000066901BCC5400000026100BCC5420000026100BCC5421000001000BCC5422000007001BCC5520000011150BCC5620000060143BCC5627000054363BCC5830000000224BCC7110000000010BCC7117000000994BCC7120000000021BCC7130000000021BCC7140000000009BCC8120000000053BCC8220000000226BCC8320000000102BCC8337000000007BCC8338000000014BCX0416000000006BCX0436000000000BCX1300000000013BCX3422000000000BCX3423000000000BCX3510000000004@836161001BCX5020000006758BCX5030000006758BCX5320000066901BCX5420000026100BCX5830000000224BCX7110000000010BRC0300000000027BRC0400000000011BRC0416000000009BRC1300000000027BRC2800000000000BRC3425000000001BRC3510000000006BRC5020000016889BRC5030000016889BRC5320000087773BRC5620000070884BRC5830000000580BRC7140000000018BRC8151000009996BRC8220000000230BRC8320000000092COL2750000000000COL2758000000000COL3200000000000COL5060000000000COL8165000009998CRU1300000000098FIP1300000000098FIP1380000000098ILJ5030999999998ILJ5320999999998ILN0438000000000ILN1300000000002ILN1360000000097ILN1380000000001ILN2800000000000ILN5020999999997ILN5320999999997ILN5400000042061ILN5420999999997ILN5520999999997ILN6220000000994ILN7430000000100ILN7436000000997ILN7438000000050ILN7440000000000ILN8120000000067ILN8150000009996ILN8151000009996ILN8153000009996ILN8157000009996ILN8220000000074ILN8320000000071IQA9417000000001IQB9410000000003IQB9415000000000IQB9510000000004IQR9416000000000IQT9420000000013IQT9422000000000IQT9425000000002IQT9846000000994MFX5029000359442MTA0416000000001MTA5020000359442MTA5030000359442MTA5320000359650MTA5400000520000MTA5421000359650MTF0300000000006MTF5020000359442MTF5100000359442MTF5620000000208MTX5039000359442PIL1300000000098REV0300000000028REV0316000000010REV0416000000009REV1300000000028REV1360000000010REV1370000000012REV1380000000012REV2320000000000REV2380000000000REV2800000000000REV2841000000000REV3421000000001REV3422000000001REV3423000000000REV3510000000005REV5020000015648REV5030000015648REV5320000086544REV5420000026100REV5620000070896REV5627000065116REV5830000000580REV6160000000001REV7110000000018@836098601REV7140000000018REV7410000000032REV7420000000018REV7430000000100REV7436000000036REV7437000000043REV7460000000000REV8120000000008REV8150000009996REV8151000009996REV8153000009996REV8157000009996REV8220000000226REV8320000000078RTA0300000000014RTA1300000000014RTA5030000008890RTA5320000019643RTA5830000000356RTA8151000009996RTR0300000000014RTR0437000000002RTR1300000000014RTR1380000000005RTR3422000000001RTR5030000008890RTR5320000019643RTR5420000010143RTR5520000006548RTR5620000010753RTR5627000010753RTR5830000000356RTR8120000000008STU0300000000000STU1100000000098STU2558000000098STU5031999999998USE0300000000000MTA2126000000000MERTRD 000000000MERINQ 000000000AGGBAL 000015648BK4COLL000000000MERTRD2000000000DEL30  000000000DEL60  000000000DEL90  000000000DEL120 000000000GOODPAY000000999BADPAY 000000999THICK  000000226THICK2 000000226BKTYPE 000000000BKTYPE2000000000BK2    000000000BKRECEN000009999BDELINQ000000000PRECTRD000000000AGGREV 000015648TRDOPN 000000006PRECDRG000000000@950001607017054@</Raw>
+        <EXReport>
+          <EX_110 RecordID="110" RecordLength="0046" ReportDate="042622" ReportTime="121314" Preamble="TCTB" ARFVersionNumber="07" MKeywordTextLength="06" MKeywordText="405790">
+            <Sub_K1 SubsegmentIndicator="K1" SubsegmentLength="12" Y2KReportDate="04262022" />
+          </EX_110>
+          <EX_130 RecordID="130" RecordLength="0023" RiskScore="0766" Evaluation="P" ScoreFactorCodes="33100830" ModelTypeIndicator="AJ" />
+          <EX_130 RecordID="130" RecordLength="0023" RiskScore="0065" Evaluation="P" ScoreFactorCodes="        " ModelTypeIndicator="IW" />
+          <EX_130 RecordID="130" RecordLength="0023" RiskScore="0048" Evaluation="P" ScoreFactorCodes="        " ModelTypeIndicator="D4" />
+          <EX_130 RecordID="130" RecordLength="0023" RiskScore="0754" Evaluation="P" ScoreFactorCodes="64498565" ModelTypeIndicator="V4" />
+          <EX_322 RecordID="322" RecordLength="0018" SSNVariationIndicator=" " SocialSecurityNumber="hxjMnT9N5sefccFPz6MJbg==" />
+          <EX_335 RecordID="335" RecordLength="0042" LengthofName="16" NameText="/MORAN//DENNIS//" FirstName="MORAN" MiddleName="" Surname="DENNIS" SecondSurname="" GenerationCode="" YearofBirth="1964">
+            <Sub_E6 SubsegmentIndicator="E6" SubsegmentLength="12" DateOfBirth="vRQVA8rreVZtZ9oq1SNGWQ==" />
+          </EX_335>
+          <EX_335 RecordID="335" RecordLength="0036" LengthofName="17" NameText="/PETER//MCLONEY//" FirstName="PETER" MiddleName="" Surname="MCLONEY" SecondSurname="" GenerationCode="" YearofBirth="    ">
+            <Sub_E1 SubsegmentIndicator="E1" SubsegmentLength="05" NameType="A" />
+          </EX_335>
+          <EX_336 RecordID="336" RecordLength="0096" FirstReportedDate="0616" LastUpdatedDate="0222" OriginationCode="2" NumberTimesReported="25" LastSubcodeReporting="1230206" DwellingType="S" HomeOwnershipCode=" " GensusGEOCode="       " LengthofAddress="39" AddressText="/30/MOREHOUSE/LN///NORWALK/CT/068504420" StreetPrefix="30" StreetName="MOREHOUSE" StreetSuffix="LN" ExclusionWord="" ExclusionNumber="" City="NORWALK" State="CT" ZipCode="068504420">
+            <Sub_K2 SubsegmentIndicator="K2" SubsegmentLength="20" Y2KFirstReportedDate="06152016" Y2KLastUpdatedDate="02062022" />
+          </EX_336>
+          <EX_336 RecordID="336" RecordLength="0100" FirstReportedDate="0613" LastUpdatedDate="0718" OriginationCode="1" NumberTimesReported="00" LastSubcodeReporting="       " DwellingType="S" HomeOwnershipCode=" " GensusGEOCode="       " LengthofAddress="43" AddressText="/1965 N/CREEK/CIR///ALPHARETTA/GA/300041356" StreetPrefix="1965 N" StreetName="CREEK" StreetSuffix="CIR" ExclusionWord="" ExclusionNumber="" City="ALPHARETTA" State="GA" ZipCode="300041356">
+            <Sub_K2 SubsegmentIndicator="K2" SubsegmentLength="20" Y2KFirstReportedDate="06012013" Y2KLastUpdatedDate="07122018" />
+          </EX_336>
+          <EX_336 RecordID="336" RecordLength="0100" FirstReportedDate="0810" LastUpdatedDate="0711" OriginationCode="1" NumberTimesReported="00" LastSubcodeReporting="       " DwellingType="A" HomeOwnershipCode=" " GensusGEOCode="       " LengthofAddress="43" AddressText="/66/QUEEN/ST/APT/2705/HONOLULU/HI/968134446" StreetPrefix="66" StreetName="QUEEN" StreetSuffix="ST" ExclusionWord="APT" ExclusionNumber="2705" City="HONOLULU" State="HI" ZipCode="968134446">
+            <Sub_K2 SubsegmentIndicator="K2" SubsegmentLength="20" Y2KFirstReportedDate="08282010" Y2KLastUpdatedDate="07262011" />
+          </EX_336>
+          <EX_337 RecordID="337" RecordLength="0108" FirstReportedDate="0618" LastUpdatedDate="0618" OriginationCode="2" LengthofEmployerName="21" EmployerName="JEANS RESTAURNT EQUIP" Lengthof1stLineAddress="16" FirstLineofAddress="426 S STAPLES ST" Lengthof2ndLineofAddress="15" SecondLineofAddress="CORPUS CRIST TX" LengthofExtraLineofAddress="01" ExtraLineofAddress=" " EmployerZIPCode="784013331 ">
+            <Sub_K2 SubsegmentIndicator="K2" SubsegmentLength="20" Y2KFirstReportedDate="06152018" Y2KLastUpdatedDate="06152018" />
+          </EX_337>
+          <EX_337 RecordID="337" RecordLength="0094" FirstReportedDate="0517" LastUpdatedDate="0517" OriginationCode="2" LengthofEmployerName="23" EmployerName="SELF EMPLOYEE-JENN'S RE" Lengthof1stLineAddress="14" FirstLineofAddress="CORPUS CHRISTI" Lengthof2ndLineofAddress="01" SecondLineofAddress=" " LengthofExtraLineofAddress="01" ExtraLineofAddress=" " EmployerZIPCode="          ">
+            <Sub_K2 SubsegmentIndicator="K2" SubsegmentLength="20" Y2KFirstReportedDate="05022017" Y2KLastUpdatedDate="05022017" />
+          </EX_337>
+          <EX_357 RecordID="357" RecordLength="0280" SpecialCommentCode="19" Evaluation="N" DateOpen="1212" StatusDate="0715" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="2" Amount1="00000800" Amount1Qualifier="L" Amount2="00000198" Amount2Qualifier="H" BalanceDate="040421" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="17" AccountNumber="4100162220475" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="99" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B000000000000000000000000" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="062215" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="36" Subcode="1362837" KOB="DZ" LengthofSubName="21" SubscriberName="MISC. DEPT. &amp; VARIETY" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0715" AccountConditionCode="A3" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="12042012" Y2KStatusDate="07012015" Y2KMaxDelinqDate="        " Y2KBalanceDate="04042021" Y2KLastPaymentDate="06222015" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="07012015" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0264" SpecialCommentCode="19" Evaluation="N" DateOpen="0816" StatusDate="0617" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="1" Amount1="00002317" Amount1Qualifier="L" Amount2="00002317" Amount2Qualifier="H" BalanceDate="060717" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="15" AccountNumber="01100057702" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="12" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="16" PaymentProfile="BCCCCCCCCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="011817" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="35" Subcode="2156646" KOB="BB" LengthofSubName="20" SubscriberName="CAP ONE/BERNIE&amp;PHYLS" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0617" AccountConditionCode="A3" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="08042016" Y2KStatusDate="06012017" Y2KMaxDelinqDate="        " Y2KBalanceDate="06072017" Y2KLastPaymentDate="01182017" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="06012017" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0284" SpecialCommentCode="19" Evaluation="N" DateOpen="0311" StatusDate="0417" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="1" Amount1="00000500" Amount1Qualifier="L" Amount2="00000110" Amount2Qualifier="H" BalanceDate="040817" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="13" AccountNumber="551054024" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="24" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="28" PaymentProfile="B00000000000000000000000" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="072011" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="33" Subcode="2322630" KOB="CG" LengthofSubName="18" SubscriberName="COMENITYBANK/NY&amp;CO" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0417" AccountConditionCode="A3" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="19" />
+            <Sub_J3 SubsegmentIndicator="J3" SubsegmentLength="12" ActualPaymentAmount="00000022" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="03282011" Y2KStatusDate="04012017" Y2KMaxDelinqDate="        " Y2KBalanceDate="04082017" Y2KLastPaymentDate="07202011" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="04012017" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0294" SpecialCommentCode="19" Evaluation="N" DateOpen="0314" StatusDate="0416" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="2" Amount1="00002000" Amount1Qualifier="L" Amount2="00001982" Amount2Qualifier="H" BalanceDate="041116" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="5856370424043916" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="24" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="28" PaymentProfile="B000000000000000000CCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="062414" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="36" Subcode="2312210" KOB="CS" LengthofSubName="21" SubscriberName="COMENITY BANK/TDYSMAN" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0416" AccountConditionCode="A3" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="19" />
+            <Sub_J3 SubsegmentIndicator="J3" SubsegmentLength="12" ActualPaymentAmount="00000101" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="03262014" Y2KStatusDate="04012016" Y2KMaxDelinqDate="        " Y2KBalanceDate="04112016" Y2KLastPaymentDate="06242014" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="04012016" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0235" SpecialCommentCode="19" Evaluation="N" DateOpen="1211" StatusDate="0313" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00005000" Amount1Qualifier="L" Amount2="00000060" Amount2Qualifier="H" BalanceDate="031213" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="13" AccountNumber="467301150" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="16" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="19" PaymentProfile="B000000000000C-" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="1233910" KOB="BC" LengthofSubName="10" SubscriberName="JPMCB CARD" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0313" AccountConditionCode="A3" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="12012011" Y2KStatusDate="03012013" Y2KMaxDelinqDate="        " Y2KBalanceDate="03122013" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="03012013" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0234" SpecialCommentCode="19" Evaluation="N" DateOpen="1211" StatusDate="0313" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00005000" Amount1Qualifier="L" Amount2="        " Amount2Qualifier=" " BalanceDate="031213" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="13" AccountNumber="467801562" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="16" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="18" PaymentProfile="B0000000000000" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="1233910" KOB="BC" LengthofSubName="10" SubscriberName="JPMCB CARD" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0313" AccountConditionCode="A3" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="12012011" Y2KStatusDate="03012013" Y2KMaxDelinqDate="        " Y2KBalanceDate="03122013" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="03012013" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0269" SpecialCommentCode="19" Evaluation="N" DateOpen="0920" StatusDate="0222" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="0" Amount1="00001200" Amount1Qualifier="L" Amount2="00000117" Amount2Qualifier="H" BalanceDate="022222" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="6018596217683335" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="18" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="22" PaymentProfile="B000000000000000CC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="100420" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="29" Subcode="3607370" KOB="CG" LengthofSubName="14" SubscriberName="SYNCB/OLD NAVY" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0222" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="09192020" Y2KStatusDate="02012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="02222022" Y2KLastPaymentDate="10042020" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="02012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0262" SpecialCommentCode="19" Evaluation="N" DateOpen="0421" StatusDate="0921" MaximumDelinquencyDate="    " TypeCode="47" Terms="REV" ECOA="4" Amount1="00065000" Amount1Qualifier="L" Amount2="00065000" Amount2Qualifier="H" BalanceDate="092821" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="6903690500430646" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="04" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="08" PaymentProfile="BCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="072821" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="36" Subcode="4119000" KOB="BB" LengthofSubName="21" SubscriberName="CLC CONSUMER SERVICES" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0921" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="89" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="04042021" Y2KStatusDate="09012021" Y2KMaxDelinqDate="        " Y2KBalanceDate="09282021" Y2KLastPaymentDate="07282021" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="09012021" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0257" SpecialCommentCode="  " Evaluation="P" DateOpen="0421" StatusDate="0921" MaximumDelinquencyDate="    " TypeCode="26" Terms="360" ECOA="2" Amount1="00520000" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="091021" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="17" AccountNumber="2770008056301" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="01" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="05" PaymentProfile="B" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="071221" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="7950144" KOB="FM" LengthofSubName="22" SubscriberName="SELECT PORTFOLIO SVCIN" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0921" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="26" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="04042021" Y2KStatusDate="09012021" Y2KMaxDelinqDate="        " Y2KBalanceDate="09102021" Y2KLastPaymentDate="07122021" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="09012021" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0273" SpecialCommentCode="  " Evaluation="P" DateOpen="1217" StatusDate="0521" MaximumDelinquencyDate="    " TypeCode="26" Terms="360" ECOA="4" Amount1="00225000" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="050121" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="17" AccountNumber="3840007459241" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="40" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="BCCCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="040221" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="29" Subcode="1860946" KOB="FS" LengthofSubName="14" SubscriberName="CAPITAL ONE NA" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0521" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="26" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="12082017" Y2KStatusDate="05012021" Y2KMaxDelinqDate="        " Y2KBalanceDate="05012021" Y2KLastPaymentDate="04022021" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="05012021" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0250" SpecialCommentCode="  " Evaluation="P" DateOpen="0916" StatusDate="0420" MaximumDelinquencyDate="    " TypeCode="00" Terms="060" ECOA="1" Amount1="00042061" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="042820" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="18" AccountNumber="10027313590854" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="44" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="BCCCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="1101969" KOB="BB" LengthofSubName="10" SubscriberName="JPMCB AUTO" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0420" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="00" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="09052016" Y2KStatusDate="04012020" Y2KMaxDelinqDate="        " Y2KBalanceDate="04282020" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="04012020" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0254" SpecialCommentCode="19" Evaluation="N" DateOpen="0917" StatusDate="1219" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00007500" Amount1Qualifier="L" Amount2="00000016" Amount2Qualifier="H" BalanceDate="120219" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="430550007347" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="27" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B0000000000000000000000CC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="31" Subcode="6230125" KOB="BC" LengthofSubName="16" SubscriberName="BAC/FLEET-BKCARD" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1219" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="09212017" Y2KStatusDate="12012019" Y2KMaxDelinqDate="        " Y2KBalanceDate="12022019" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="12012019" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0242" SpecialCommentCode="19" Evaluation="N" DateOpen="0716" StatusDate="1119" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="1" Amount1="00001179" Amount1Qualifier="L" Amount2="00001180" Amount2Qualifier="H" BalanceDate="112819" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="603259015888" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="39" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="BCCCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="19" Subcode="1138180" KOB="BB" LengthofSubName="04" SubscriberName="BANK" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1119" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="07282016" Y2KStatusDate="11012019" Y2KMaxDelinqDate="        " Y2KBalanceDate="11282019" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="11012019" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0242" SpecialCommentCode="19" Evaluation="N" DateOpen="0716" StatusDate="0819" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="1" Amount1="00002575" Amount1Qualifier="L" Amount2="00002576" Amount2Qualifier="H" BalanceDate="081119" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="603259009070" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="36" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="BCCCCCCCCCCCCCCCCCC------" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="19" Subcode="1138180" KOB="BB" LengthofSubName="04" SubscriberName="BANK" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0819" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="07282016" Y2KStatusDate="08012019" Y2KMaxDelinqDate="        " Y2KBalanceDate="08112019" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="08012019" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0252" SpecialCommentCode="19" Evaluation="N" DateOpen="1108" StatusDate="0419" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00015000" Amount1Qualifier="L" Amount2="00002562" Amount2Qualifier="H" BalanceDate="042219" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="433905512983" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="99" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B000000000000000000000000" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="29" Subcode="1270341" KOB="BC" LengthofSubName="14" SubscriberName="CITICARDS CBNA" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0419" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="11012008" Y2KStatusDate="04012019" Y2KMaxDelinqDate="        " Y2KBalanceDate="04222019" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="04012019" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0256" SpecialCommentCode="  " Evaluation="P" DateOpen="0216" StatusDate="0219" MaximumDelinquencyDate="    " TypeCode="00" Terms="036" ECOA="1" Amount1="00021280" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="022419" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="12" AccountNumber="23038275" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="37" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="BCCCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="1631440" KOB="FA" LengthofSubName="22" SubscriberName="FORD MOTOR CREDIT COMP" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0219" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="00" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="02252016" Y2KStatusDate="02012019" Y2KMaxDelinqDate="        " Y2KBalanceDate="02242019" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="02012019" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0233" SpecialCommentCode="19" Evaluation="N" DateOpen="1117" StatusDate="0418" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00007000" Amount1Qualifier="L" Amount2="        " Amount2Qualifier=" " BalanceDate="050618" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="4417121172423264" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="06" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="10" PaymentProfile="BB0B00" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="1310331" KOB="BC" LengthofSubName="10" SubscriberName="JPMCB CARD" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0418" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="11142017" Y2KStatusDate="04012018" Y2KMaxDelinqDate="        " Y2KBalanceDate="05062018" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="04012018" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0240" SpecialCommentCode="  " Evaluation="P" DateOpen="0716" StatusDate="0518" MaximumDelinquencyDate="    " TypeCode="26" Terms="360" ECOA="2" Amount1="00191100" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="050518" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="17" AccountNumber="1508018990920" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="16" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="20" PaymentProfile="B-------------CC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="3900510" KOB="FM" LengthofSubName="10" SubscriberName="JPMCB HOME" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0518" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="26" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="07282016" Y2KStatusDate="05012018" Y2KMaxDelinqDate="        " Y2KBalanceDate="05052018" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="05012018" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0249" SpecialCommentCode="  " Evaluation="P" DateOpen="0716" StatusDate="0118" MaximumDelinquencyDate="    " TypeCode="26" Terms="360" ECOA="2" Amount1="00191100" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="011618" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="14" AccountNumber="1966063865" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="08" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="12" PaymentProfile="BCCC-CCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="33" Subcode="2991739" KOB="FM" LengthofSubName="18" SubscriberName="MORTGAGE COMPANIES" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0118" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="26" EnhancedSpecialComments="  " />
+            <Sub_J3 SubsegmentIndicator="J3" SubsegmentLength="12" ActualPaymentAmount="00190653" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="07282016" Y2KStatusDate="01012018" Y2KMaxDelinqDate="        " Y2KBalanceDate="01162018" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="01012018" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0224" SpecialCommentCode="19" Evaluation="N" DateOpen="0203" StatusDate="1017" MaximumDelinquencyDate="    " TypeCode="18" Terms="001" ECOA="1" Amount1=" UNKNOWN" Amount1Qualifier=" " Amount2="        " Amount2Qualifier=" " BalanceDate="102817" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="22" AccountNumber="007325077017358261" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="01" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="05" PaymentProfile="B" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="19" Subcode="1229200" KOB="BC" LengthofSubName="04" SubscriberName="AMEX" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1017" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="02012003" Y2KStatusDate="10012017" Y2KMaxDelinqDate="        " Y2KBalanceDate="10282017" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="10012017" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0248" SpecialCommentCode="19" Evaluation="N" DateOpen="0916" StatusDate="0217" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00001500" Amount1Qualifier="L" Amount2="00000336" Amount2Qualifier="H" BalanceDate="020817" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="030984296707" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="24" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="28" PaymentProfile="BCCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="26" Subcode="2310220" KOB="DC" LengthofSubName="11" SubscriberName="KOHLS/CHASE" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0217" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="09082016" Y2KStatusDate="02012017" Y2KMaxDelinqDate="        " Y2KBalanceDate="02082017" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="02012017" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0244" SpecialCommentCode="19" Evaluation="N" DateOpen="0816" StatusDate="1216" MaximumDelinquencyDate="    " TypeCode="07" Terms="UNK" ECOA="1" Amount1="00007500" Amount1Qualifier="L" Amount2="00001040" Amount2Qualifier="H" BalanceDate="122816" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="9002446001244599" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="05" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="09" PaymentProfile="B-CCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="2545240" KOB="FP" LengthofSubName="22" SubscriberName="SPRINGLEAF FINANCIAL S" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1216" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="19" />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="08262016" Y2KStatusDate="12012016" Y2KMaxDelinqDate="        " Y2KBalanceDate="12282016" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="12012016" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0233" SpecialCommentCode="  " Evaluation="P" DateOpen="0716" StatusDate="1116" MaximumDelinquencyDate="    " TypeCode="26" Terms="360" ECOA="7" Amount1="00191100" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="110116" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="13" AccountNumber="437135355" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="03" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="07" PaymentProfile="B-C" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="35" Subcode="6991306" KOB="FM" LengthofSubName="20" SubscriberName="CHAPEL MORTGAGE CORP" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1116" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="26" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="07282016" Y2KStatusDate="11012016" Y2KMaxDelinqDate="        " Y2KBalanceDate="11012016" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="11012016" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0252" SpecialCommentCode="  " Evaluation="P" DateOpen="1112" StatusDate="0716" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00004000" Amount1Qualifier="L" Amount2="00001723" Amount2Qualifier="H" BalanceDate="072816" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="14" AccountNumber="4022980000" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="44" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B000000000000000000000000" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="31" Subcode="1290016" KOB="BC" LengthofSubName="16" SubscriberName="BANK CREDIT CARD" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0716" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="11192012" Y2KStatusDate="07012016" Y2KMaxDelinqDate="        " Y2KBalanceDate="07282016" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="07012016" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0233" SpecialCommentCode="  " Evaluation="P" DateOpen="0711" StatusDate="1012" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00005000" Amount1Qualifier="L" Amount2="00003049" Amount2Qualifier="H" BalanceDate="102812" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="08" AccountNumber="3316" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="16" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="20" PaymentProfile="B00CCCCCCCCCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="27" Subcode="1230305" KOB="BC" LengthofSubName="12" SubscriberName="HSBC/HBSB NA" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1012" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="07012011" Y2KStatusDate="10012012" Y2KMaxDelinqDate="        " Y2KBalanceDate="10282012" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="10012012" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0271" SpecialCommentCode="  " Evaluation="P" DateOpen="0317" StatusDate="0222" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00006500" Amount1Qualifier="L" Amount2="00003245" Amount2Qualifier="H" BalanceDate="022422" BalanceAmount="00001048" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="601100150064" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="59" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="CCCCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="00000019" MonthlyPaymentType="S" Frequency=" " LastPaymentDate="021922" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="28" Subcode="3276502" KOB="BC" LengthofSubName="13" SubscriberName="DISCOVER BANK" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0222" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="03262017" Y2KStatusDate="02012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="02242022" Y2KLastPaymentDate="02192022" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="02012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0277" SpecialCommentCode="  " Evaluation="P" DateOpen="0317" StatusDate="0222" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00019300" Amount1Qualifier="L" Amount2="00011998" Amount2Qualifier="H" BalanceDate="021722" BalanceAmount="00004073" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="549113035693" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="60" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="CCCCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="00000139" MonthlyPaymentType="S" Frequency=" " LastPaymentDate="021422" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="34" Subcode="1211870" KOB="BC" LengthofSubName="19" SubscriberName="UNIVERSAL CARD CBNA" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0222" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="03232017" Y2KStatusDate="02012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="02172022" Y2KLastPaymentDate="02142022" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="02012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0272" SpecialCommentCode="  " Evaluation="P" DateOpen="1114" StatusDate="0222" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00026100" Amount1Qualifier="L" Amount2="00017500" Amount2Qualifier="H" BalanceDate="021322" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="4417124345648023" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="87" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="0CCCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="060218" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="3182310" KOB="BC" LengthofSubName="10" SubscriberName="JPMCB CARD" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0222" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="11242014" Y2KStatusDate="02012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="02132022" Y2KLastPaymentDate="06022018" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="02012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0272" SpecialCommentCode="  " Evaluation="P" DateOpen="1220" StatusDate="0222" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="1" Amount1="00003000" Amount1Qualifier="L" Amount2="00001730" Amount2Qualifier="H" BalanceDate="021022" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="6019181201110212" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="14" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="18" PaymentProfile="00000CCCC00CCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="090621" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="36" Subcode="1231620" KOB="BC" LengthofSubName="21" SubscriberName="SYNCB/LINCOLN MERCURY" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0222" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="12162020" Y2KStatusDate="02012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="02102022" Y2KLastPaymentDate="09062021" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="02012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0229" SpecialCommentCode="  " Evaluation="P" DateOpen="0821" StatusDate="0222" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="1" Amount1="00010143" Amount1Qualifier="L" Amount2="00008890" Amount2Qualifier="H" BalanceDate="020322" BalanceAmount="00008890" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="504994017113" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="06" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="10" PaymentProfile="CCCCC0" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="1323300" KOB="DC" LengthofSubName="10" SubscriberName="SEARS/CBNA" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0222" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="08062021" Y2KStatusDate="02012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="02032022" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="02012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0238" SpecialCommentCode="  " Evaluation="P" DateOpen="0717" StatusDate="0222" MaximumDelinquencyDate="    " TypeCode="15" Terms="REV" ECOA="7" Amount1="00001000" Amount1Qualifier="L" Amount2="00001000" Amount2Qualifier="H" BalanceDate="020122" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="12" AccountNumber="86681192" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="55" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="0000000000000000000000000" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="19" Subcode="1100775" KOB="BB" LengthofSubName="04" SubscriberName="BANK" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0222" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="15" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="07012017" Y2KStatusDate="02012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="02012022" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="02012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0246" SpecialCommentCode="  " Evaluation="P" DateOpen="0521" StatusDate="0122" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="1" Amount1="00006500" Amount1Qualifier="L" Amount2="00001985" Amount2Qualifier="H" BalanceDate="012822" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="603259010331" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="09" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="13" PaymentProfile="0CCCCCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="110921" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="19" Subcode="1138180" KOB="BB" LengthofSubName="04" SubscriberName="BANK" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0122" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="05172021" Y2KStatusDate="01012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="01282022" Y2KLastPaymentDate="11092021" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="01012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0224" SpecialCommentCode="  " Evaluation="P" DateOpen="0603" StatusDate="0122" MaximumDelinquencyDate="    " TypeCode="18" Terms="001" ECOA="1" Amount1="00002229" Amount1Qualifier="H" Amount2="        " Amount2Qualifier=" " BalanceDate="012822" BalanceAmount="00001241" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="22" AccountNumber="007325077017335252" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="01" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="05" PaymentProfile="C" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="19" Subcode="1229200" KOB="BC" LengthofSubName="04" SubscriberName="AMEX" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0122" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="06012003" Y2KStatusDate="01012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="01282022" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="01012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0224" SpecialCommentCode="  " Evaluation="P" DateOpen="0116" StatusDate="0122" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00007000" Amount1Qualifier="L" Amount2="00003096" Amount2Qualifier="H" BalanceDate="012822" BalanceAmount="00000416" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="22" AccountNumber="007325077017356161" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="01" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="05" PaymentProfile="C" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="19" Subcode="1229200" KOB="BC" LengthofSubName="04" SubscriberName="AMEX" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0122" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="01222016" Y2KStatusDate="01012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="01282022" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="01012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0224" SpecialCommentCode="  " Evaluation="P" DateOpen="0603" StatusDate="0122" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00007001" Amount1Qualifier="H" Amount2="        " Amount2Qualifier=" " BalanceDate="012822" BalanceAmount="00001221" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="22" AccountNumber="007325077017535252" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="01" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="05" PaymentProfile="C" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="19" Subcode="1229200" KOB="BC" LengthofSubName="04" SubscriberName="AMEX" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0122" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="18" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="06012003" Y2KStatusDate="01012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="01282022" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="01012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0243" SpecialCommentCode="  " Evaluation="P" DateOpen="0821" StatusDate="0122" MaximumDelinquencyDate="    " TypeCode="26" Terms="360" ECOA="1" Amount1="00359650" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="012822" BalanceAmount="00359442" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="13" AccountNumber="105358158" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="03" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="07" PaymentProfile="CCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="00002047" MonthlyPaymentType="S" Frequency=" " LastPaymentDate="      " />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="3991532" KOB="BM" LengthofSubName="10" SubscriberName="BK OF AMER" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0122" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="26" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="08062021" Y2KStatusDate="01012022" Y2KMaxDelinqDate="        " Y2KBalanceDate="01282022" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="01012022" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0239" SpecialCommentCode="  " Evaluation="P" DateOpen="0419" StatusDate="1019" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="1" Amount1="00000699" Amount1Qualifier="H" Amount2="        " Amount2Qualifier=" " BalanceDate="102819" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="8620011000008613" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="07" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="11" PaymentProfile="0CCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="30" Subcode="1331200" KOB="ZR" LengthofSubName="15" SubscriberName="TD RCS/ABED.COM" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1019" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="04202019" Y2KStatusDate="10012019" Y2KMaxDelinqDate="        " Y2KBalanceDate="10282019" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="10012019" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0283" SpecialCommentCode="  " Evaluation="P" DateOpen="0517" StatusDate="0319" MaximumDelinquencyDate="    " TypeCode="07" Terms="REV" ECOA="1" Amount1="00002000" Amount1Qualifier="L" Amount2="00001349" Amount2Qualifier="H" BalanceDate="031619" BalanceAmount="00000000" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="2736060903933563" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="24" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="28" PaymentProfile="0CCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="112217" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="2501076" KOB="FZ" LengthofSubName="22" SubscriberName="CAPITAL ONE/OFFICE MAX" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0319" AccountConditionCode="A4" EnhancedPaymentStatus="11" EnhancedType="07" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="05102017" Y2KStatusDate="03012019" Y2KMaxDelinqDate="        " Y2KBalanceDate="03162019" Y2KLastPaymentDate="11222017" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="03012019" />
+          </EX_357>
+          <EX_359 RecordID="359" RecordLength="0076" InquiryDate="020522" Amount=" UNKNOWN" Type="31" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="1622020" KOB="FA" LengthofSubName="22" SubscriberName="CAPITAL ONE AUTO FINAN" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="02052022" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0072" InquiryDate="020322" Amount=" UNKNOWN" Type="08" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="33" Subcode="1975421" KOB="FR" LengthofSubName="18" SubscriberName="MORTGAGE REPORTERS" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="02032022" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0071" InquiryDate="122121" Amount=" UNKNOWN" Type="31" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="32" Subcode="6108400" KOB="BB" LengthofSubName="17" SubscriberName="SANTANDER BANK NA" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="12212021" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0075" InquiryDate="080621" Amount=" UNKNOWN" Type="31" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="36" Subcode="1351920" KOB="DC" LengthofSubName="21" SubscriberName="COMPLETE DEPT. STORES" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="08062021" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0068" InquiryDate="072821" Amount=" UNKNOWN" Type="08" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="29" Subcode="3970658" KOB="  " LengthofSubName="14" SubscriberName="SERVICE &amp; PROF" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="07282021" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0068" InquiryDate="071221" Amount=" UNKNOWN" Type="08" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="29" Subcode="3970658" KOB="  " LengthofSubName="14" SubscriberName="SERVICE &amp; PROF" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="07122021" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0068" InquiryDate="071021" Amount=" UNKNOWN" Type="08" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="29" Subcode="3970658" KOB="  " LengthofSubName="14" SubscriberName="SERVICE &amp; PROF" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="07102021" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0076" InquiryDate="051721" Amount=" UNKNOWN" Type="31" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="1151250" KOB="BB" LengthofSubName="22" SubscriberName="CITIFINANCIAL RETAIL S" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="05172021" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0068" InquiryDate="032821" Amount=" UNKNOWN" Type="08" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="29" Subcode="1974443" KOB="FR" LengthofSubName="14" SubscriberName="EQUIFAX-LANDAM" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="03282021" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0068" InquiryDate="122720" Amount=" UNKNOWN" Type="08" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="29" Subcode="1974443" KOB="FR" LengthofSubName="14" SubscriberName="EQUIFAX-LANDAM" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="12272020" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0068" InquiryDate="122720" Amount=" UNKNOWN" Type="08" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="29" Subcode="3988260" KOB="  " LengthofSubName="14" SubscriberName="SERVICE &amp; PROF" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="12272020" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0058" InquiryDate="111420" Amount=" UNKNOWN" Type="31" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="19" Subcode="0127060" KOB="BB" LengthofSubName="04" SubscriberName="AMEX" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="11142020" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0072" InquiryDate="072820" Amount=" UNKNOWN" Type="08" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="33" Subcode="1972824" KOB="FR" LengthofSubName="18" SubscriberName="MORTGAGE REPORTERS" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="07282020" />
+          </EX_359>
+          <EX_361 RecordID="361" RecordLength="0036" PrimaryMessageNum="57" TextLength="24" MessageText="1204 MLA NO RECORD FOUND" SecondaryMessageNum="1204" />
+          <EX_836 RecordID="836" RecordLength="1610" MessageCode="01">
+            <Attributes AttributeID="ALJ5030" AttributeValue="000000000" />
+            <Attributes AttributeID="ALJ5320" AttributeValue="000001000" />
+            <Attributes AttributeID="ALJ5730" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL0000" AttributeValue="000000038" />
+            <Attributes AttributeID="ALL0100" AttributeValue="000000038" />
+            <Attributes AttributeID="ALL0135" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL0136" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL0200" AttributeValue="000000038" />
+            <Attributes AttributeID="ALL0216" AttributeValue="000000012" />
+            <Attributes AttributeID="ALL0300" AttributeValue="000000038" />
+            <Attributes AttributeID="ALL0317" AttributeValue="000000016" />
+            <Attributes AttributeID="ALL0318" AttributeValue="000000017" />
+            <Attributes AttributeID="ALL0400" AttributeValue="000000013" />
+            <Attributes AttributeID="ALL0416" AttributeValue="000000011" />
+            <Attributes AttributeID="ALL0439" AttributeValue="000000005" />
+            <Attributes AttributeID="ALL0446" AttributeValue="000000011" />
+            <Attributes AttributeID="ALL0448" AttributeValue="000000007" />
+            <Attributes AttributeID="ALL0700" AttributeValue="000000025" />
+            <Attributes AttributeID="ALL1300" AttributeValue="000000038" />
+            <Attributes AttributeID="ALL1360" AttributeValue="000000012" />
+            <Attributes AttributeID="ALL1370" AttributeValue="000000016" />
+            <Attributes AttributeID="ALL1380" AttributeValue="000000017" />
+            <Attributes AttributeID="ALL2000" AttributeValue="000000011" />
+            <Attributes AttributeID="ALL2001" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2002" AttributeValue="000000096" />
+            <Attributes AttributeID="ALL2005" AttributeValue="000000008" />
+            <Attributes AttributeID="ALL2009" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2136" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2176" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2206" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2328" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2380" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2480" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2720" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2800" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2870" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2900" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL3510" AttributeValue="000000007" />
+            <Attributes AttributeID="ALL4980" AttributeValue="000000096" />
+            <Attributes AttributeID="ALL5020" AttributeValue="000376331" />
+            <Attributes AttributeID="ALL5030" AttributeValue="000376331" />
+            <Attributes AttributeID="ALL5320" AttributeValue="000448423" />
+            <Attributes AttributeID="ALL5360" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL5460" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL5820" AttributeValue="000002627" />
+            <Attributes AttributeID="ALL5825" AttributeValue="000002627" />
+            <Attributes AttributeID="ALL5830" AttributeValue="000002627" />
+            <Attributes AttributeID="ALL5835" AttributeValue="000002627" />
+            <Attributes AttributeID="ALL6120" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6160" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6220" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6230" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6250" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6270" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6310" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL6320" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL7110" AttributeValue="000000084" />
+            <Attributes AttributeID="ALL7116" AttributeValue="000000994" />
+            <Attributes AttributeID="ALL7140" AttributeValue="000000018" />
+            <Attributes AttributeID="ALL7310" AttributeValue="000000029" />
+            <Attributes AttributeID="ALL7320" AttributeValue="000000018" />
+            <Attributes AttributeID="ALL7330" AttributeValue="000000100" />
+            <Attributes AttributeID="ALL7331" AttributeValue="000000100" />
+            <Attributes AttributeID="ALL7336" AttributeValue="000000032" />
+            <Attributes AttributeID="ALL7337" AttributeValue="000000042" />
+            <Attributes AttributeID="ALL7338" AttributeValue="000000045" />
+            <Attributes AttributeID="ALL7340" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL7350" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL7360" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL7370" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL7936" AttributeValue="000000100" />
+            <Attributes AttributeID="ALL7937" AttributeValue="000000100" />
+            <Attributes AttributeID="ALL7938" AttributeValue="000000100" />
+            <Attributes AttributeID="ALL8020" AttributeValue="000003048" />
+            <Attributes AttributeID="ALL8026" AttributeValue="000999994" />
+            <Attributes AttributeID="ALL8120" AttributeValue="000000008" />
+            <Attributes AttributeID="ALL8150" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8151" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8152" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8153" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8157" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8160" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8164" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8167" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8170" AttributeValue="000000004" />
+            <Attributes AttributeID="ALL8220" AttributeValue="000000230" />
+            <Attributes AttributeID="ALL8221" AttributeValue="000000230" />
+            <Attributes AttributeID="ALL8225" AttributeValue="000009994" />
+            <Attributes AttributeID="ALL8270" AttributeValue="000000226" />
+            <Attributes AttributeID="ALL8320" AttributeValue="000000080" />
+            <Attributes AttributeID="ALL8321" AttributeValue="000000080" />
+            <Attributes AttributeID="ALL8325" AttributeValue="000009994" />
+            <Attributes AttributeID="ALL8352" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8355" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8358" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8370" AttributeValue="000000047" />
+            <Attributes AttributeID="ALL9120" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9121" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9122" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9123" AttributeValue="000000000" />
+          </EX_836>
+          <EX_836 RecordID="836" RecordLength="1610" MessageCode="01">
+            <Attributes AttributeID="ALL9130" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9141" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9210" AttributeValue="000009999" />
+            <Attributes AttributeID="ALL9211" AttributeValue="000009999" />
+            <Attributes AttributeID="ALL9220" AttributeValue="000009999" />
+            <Attributes AttributeID="ALL9221" AttributeValue="000009999" />
+            <Attributes AttributeID="ALL9951" AttributeValue="000000000" />
+            <Attributes AttributeID="ALX3510" AttributeValue="000000007" />
+            <Attributes AttributeID="ALX5020" AttributeValue="000376331" />
+            <Attributes AttributeID="ALX5030" AttributeValue="000376331" />
+            <Attributes AttributeID="ALX5039" AttributeValue="000376331" />
+            <Attributes AttributeID="ALX5830" AttributeValue="000002627" />
+            <Attributes AttributeID="ALX5839" AttributeValue="000002627" />
+            <Attributes AttributeID="ALX8220" AttributeValue="000000230" />
+            <Attributes AttributeID="AUA0438" AttributeValue="000000000" />
+            <Attributes AttributeID="AUA1380" AttributeValue="000000001" />
+            <Attributes AttributeID="AUA2350" AttributeValue="000000000" />
+            <Attributes AttributeID="AUA5020" AttributeValue="999999997" />
+            <Attributes AttributeID="AUA5320" AttributeValue="999999997" />
+            <Attributes AttributeID="AUA5400" AttributeValue="000042061" />
+            <Attributes AttributeID="AUA5420" AttributeValue="999999997" />
+            <Attributes AttributeID="AUA5520" AttributeValue="999999997" />
+            <Attributes AttributeID="AUA8120" AttributeValue="000000067" />
+            <Attributes AttributeID="AUT5020" AttributeValue="999999997" />
+            <Attributes AttributeID="AUT5620" AttributeValue="999999997" />
+            <Attributes AttributeID="BAX0416" AttributeValue="000000007" />
+            <Attributes AttributeID="BAX3510" AttributeValue="000000005" />
+            <Attributes AttributeID="BAX5020" AttributeValue="000007999" />
+            <Attributes AttributeID="BAX5030" AttributeValue="000007999" />
+            <Attributes AttributeID="BCA0300" AttributeValue="000000015" />
+            <Attributes AttributeID="BCA0416" AttributeValue="000000007" />
+            <Attributes AttributeID="BCA1300" AttributeValue="000000015" />
+            <Attributes AttributeID="BCA2350" AttributeValue="000000000" />
+            <Attributes AttributeID="BCA2380" AttributeValue="000000000" />
+            <Attributes AttributeID="BCA3510" AttributeValue="000000005" />
+            <Attributes AttributeID="BCA3511" AttributeValue="000000000" />
+            <Attributes AttributeID="BCA5020" AttributeValue="000007999" />
+            <Attributes AttributeID="BCA5030" AttributeValue="000007999" />
+            <Attributes AttributeID="BCA5121" AttributeValue="000000000" />
+            <Attributes AttributeID="BCA6210" AttributeValue="000000997" />
+            <Attributes AttributeID="BCA8110" AttributeValue="000000028" />
+            <Attributes AttributeID="BCA8120" AttributeValue="000000053" />
+            <Attributes AttributeID="BCA8150" AttributeValue="000009996" />
+            <Attributes AttributeID="BCA8151" AttributeValue="000009996" />
+            <Attributes AttributeID="BCA8153" AttributeValue="000009996" />
+            <Attributes AttributeID="BCA8157" AttributeValue="000009996" />
+            <Attributes AttributeID="BCA8160" AttributeValue="000009996" />
+            <Attributes AttributeID="BCA8220" AttributeValue="000000230" />
+            <Attributes AttributeID="BCA8320" AttributeValue="000000119" />
+            <Attributes AttributeID="BCC0300" AttributeValue="000000013" />
+            <Attributes AttributeID="BCC0400" AttributeValue="000000006" />
+            <Attributes AttributeID="BCC0416" AttributeValue="000000006" />
+            <Attributes AttributeID="BCC0446" AttributeValue="000000006" />
+            <Attributes AttributeID="BCC1300" AttributeValue="000000013" />
+            <Attributes AttributeID="BCC1360" AttributeValue="000000006" />
+            <Attributes AttributeID="BCC1370" AttributeValue="000000006" />
+            <Attributes AttributeID="BCC1380" AttributeValue="000000006" />
+            <Attributes AttributeID="BCC2328" AttributeValue="000000000" />
+            <Attributes AttributeID="BCC2350" AttributeValue="000000000" />
+            <Attributes AttributeID="BCC2380" AttributeValue="000000000" />
+            <Attributes AttributeID="BCC2800" AttributeValue="000000000" />
+            <Attributes AttributeID="BCC3341" AttributeValue="000000005" />
+            <Attributes AttributeID="BCC3342" AttributeValue="000000003" />
+            <Attributes AttributeID="BCC3343" AttributeValue="000000003" />
+            <Attributes AttributeID="BCC3344" AttributeValue="000000003" />
+            <Attributes AttributeID="BCC3345" AttributeValue="000000003" />
+            <Attributes AttributeID="BCC3346" AttributeValue="000000003" />
+            <Attributes AttributeID="BCC3421" AttributeValue="000000000" />
+            <Attributes AttributeID="BCC3423" AttributeValue="000000000" />
+            <Attributes AttributeID="BCC3510" AttributeValue="000000004" />
+            <Attributes AttributeID="BCC3511" AttributeValue="000000000" />
+            <Attributes AttributeID="BCC3515" AttributeValue="000000003" />
+            <Attributes AttributeID="BCC5020" AttributeValue="000006758" />
+            <Attributes AttributeID="BCC5030" AttributeValue="000006758" />
+            <Attributes AttributeID="BCC5120" AttributeValue="000004073" />
+            <Attributes AttributeID="BCC5320" AttributeValue="000066901" />
+            <Attributes AttributeID="BCC5400" AttributeValue="000026100" />
+            <Attributes AttributeID="BCC5420" AttributeValue="000026100" />
+            <Attributes AttributeID="BCC5421" AttributeValue="000001000" />
+            <Attributes AttributeID="BCC5422" AttributeValue="000007001" />
+            <Attributes AttributeID="BCC5520" AttributeValue="000011150" />
+            <Attributes AttributeID="BCC5620" AttributeValue="000060143" />
+            <Attributes AttributeID="BCC5627" AttributeValue="000054363" />
+            <Attributes AttributeID="BCC5830" AttributeValue="000000224" />
+            <Attributes AttributeID="BCC7110" AttributeValue="000000010" />
+            <Attributes AttributeID="BCC7117" AttributeValue="000000994" />
+            <Attributes AttributeID="BCC7120" AttributeValue="000000021" />
+            <Attributes AttributeID="BCC7130" AttributeValue="000000021" />
+            <Attributes AttributeID="BCC7140" AttributeValue="000000009" />
+            <Attributes AttributeID="BCC8120" AttributeValue="000000053" />
+            <Attributes AttributeID="BCC8220" AttributeValue="000000226" />
+            <Attributes AttributeID="BCC8320" AttributeValue="000000102" />
+            <Attributes AttributeID="BCC8337" AttributeValue="000000007" />
+            <Attributes AttributeID="BCC8338" AttributeValue="000000014" />
+            <Attributes AttributeID="BCX0416" AttributeValue="000000006" />
+            <Attributes AttributeID="BCX0436" AttributeValue="000000000" />
+            <Attributes AttributeID="BCX1300" AttributeValue="000000013" />
+            <Attributes AttributeID="BCX3422" AttributeValue="000000000" />
+            <Attributes AttributeID="BCX3423" AttributeValue="000000000" />
+            <Attributes AttributeID="BCX3510" AttributeValue="000000004" />
+          </EX_836>
+          <EX_836 RecordID="836" RecordLength="1610" MessageCode="01">
+            <Attributes AttributeID="BCX5020" AttributeValue="000006758" />
+            <Attributes AttributeID="BCX5030" AttributeValue="000006758" />
+            <Attributes AttributeID="BCX5320" AttributeValue="000066901" />
+            <Attributes AttributeID="BCX5420" AttributeValue="000026100" />
+            <Attributes AttributeID="BCX5830" AttributeValue="000000224" />
+            <Attributes AttributeID="BCX7110" AttributeValue="000000010" />
+            <Attributes AttributeID="BRC0300" AttributeValue="000000027" />
+            <Attributes AttributeID="BRC0400" AttributeValue="000000011" />
+            <Attributes AttributeID="BRC0416" AttributeValue="000000009" />
+            <Attributes AttributeID="BRC1300" AttributeValue="000000027" />
+            <Attributes AttributeID="BRC2800" AttributeValue="000000000" />
+            <Attributes AttributeID="BRC3425" AttributeValue="000000001" />
+            <Attributes AttributeID="BRC3510" AttributeValue="000000006" />
+            <Attributes AttributeID="BRC5020" AttributeValue="000016889" />
+            <Attributes AttributeID="BRC5030" AttributeValue="000016889" />
+            <Attributes AttributeID="BRC5320" AttributeValue="000087773" />
+            <Attributes AttributeID="BRC5620" AttributeValue="000070884" />
+            <Attributes AttributeID="BRC5830" AttributeValue="000000580" />
+            <Attributes AttributeID="BRC7140" AttributeValue="000000018" />
+            <Attributes AttributeID="BRC8151" AttributeValue="000009996" />
+            <Attributes AttributeID="BRC8220" AttributeValue="000000230" />
+            <Attributes AttributeID="BRC8320" AttributeValue="000000092" />
+            <Attributes AttributeID="COL2750" AttributeValue="000000000" />
+            <Attributes AttributeID="COL2758" AttributeValue="000000000" />
+            <Attributes AttributeID="COL3200" AttributeValue="000000000" />
+            <Attributes AttributeID="COL5060" AttributeValue="000000000" />
+            <Attributes AttributeID="COL8165" AttributeValue="000009998" />
+            <Attributes AttributeID="CRU1300" AttributeValue="000000098" />
+            <Attributes AttributeID="FIP1300" AttributeValue="000000098" />
+            <Attributes AttributeID="FIP1380" AttributeValue="000000098" />
+            <Attributes AttributeID="ILJ5030" AttributeValue="999999998" />
+            <Attributes AttributeID="ILJ5320" AttributeValue="999999998" />
+            <Attributes AttributeID="ILN0438" AttributeValue="000000000" />
+            <Attributes AttributeID="ILN1300" AttributeValue="000000002" />
+            <Attributes AttributeID="ILN1360" AttributeValue="000000097" />
+            <Attributes AttributeID="ILN1380" AttributeValue="000000001" />
+            <Attributes AttributeID="ILN2800" AttributeValue="000000000" />
+            <Attributes AttributeID="ILN5020" AttributeValue="999999997" />
+            <Attributes AttributeID="ILN5320" AttributeValue="999999997" />
+            <Attributes AttributeID="ILN5400" AttributeValue="000042061" />
+            <Attributes AttributeID="ILN5420" AttributeValue="999999997" />
+            <Attributes AttributeID="ILN5520" AttributeValue="999999997" />
+            <Attributes AttributeID="ILN6220" AttributeValue="000000994" />
+            <Attributes AttributeID="ILN7430" AttributeValue="000000100" />
+            <Attributes AttributeID="ILN7436" AttributeValue="000000997" />
+            <Attributes AttributeID="ILN7438" AttributeValue="000000050" />
+            <Attributes AttributeID="ILN7440" AttributeValue="000000000" />
+            <Attributes AttributeID="ILN8120" AttributeValue="000000067" />
+            <Attributes AttributeID="ILN8150" AttributeValue="000009996" />
+            <Attributes AttributeID="ILN8151" AttributeValue="000009996" />
+            <Attributes AttributeID="ILN8153" AttributeValue="000009996" />
+            <Attributes AttributeID="ILN8157" AttributeValue="000009996" />
+            <Attributes AttributeID="ILN8220" AttributeValue="000000074" />
+            <Attributes AttributeID="ILN8320" AttributeValue="000000071" />
+            <Attributes AttributeID="IQA9417" AttributeValue="000000001" />
+            <Attributes AttributeID="IQB9410" AttributeValue="000000003" />
+            <Attributes AttributeID="IQB9415" AttributeValue="000000000" />
+            <Attributes AttributeID="IQB9510" AttributeValue="000000004" />
+            <Attributes AttributeID="IQR9416" AttributeValue="000000000" />
+            <Attributes AttributeID="IQT9420" AttributeValue="000000013" />
+            <Attributes AttributeID="IQT9422" AttributeValue="000000000" />
+            <Attributes AttributeID="IQT9425" AttributeValue="000000002" />
+            <Attributes AttributeID="IQT9846" AttributeValue="000000994" />
+            <Attributes AttributeID="MFX5029" AttributeValue="000359442" />
+            <Attributes AttributeID="MTA0416" AttributeValue="000000001" />
+            <Attributes AttributeID="MTA5020" AttributeValue="000359442" />
+            <Attributes AttributeID="MTA5030" AttributeValue="000359442" />
+            <Attributes AttributeID="MTA5320" AttributeValue="000359650" />
+            <Attributes AttributeID="MTA5400" AttributeValue="000520000" />
+            <Attributes AttributeID="MTA5421" AttributeValue="000359650" />
+            <Attributes AttributeID="MTF0300" AttributeValue="000000006" />
+            <Attributes AttributeID="MTF5020" AttributeValue="000359442" />
+            <Attributes AttributeID="MTF5100" AttributeValue="000359442" />
+            <Attributes AttributeID="MTF5620" AttributeValue="000000208" />
+            <Attributes AttributeID="MTX5039" AttributeValue="000359442" />
+            <Attributes AttributeID="PIL1300" AttributeValue="000000098" />
+            <Attributes AttributeID="REV0300" AttributeValue="000000028" />
+            <Attributes AttributeID="REV0316" AttributeValue="000000010" />
+            <Attributes AttributeID="REV0416" AttributeValue="000000009" />
+            <Attributes AttributeID="REV1300" AttributeValue="000000028" />
+            <Attributes AttributeID="REV1360" AttributeValue="000000010" />
+            <Attributes AttributeID="REV1370" AttributeValue="000000012" />
+            <Attributes AttributeID="REV1380" AttributeValue="000000012" />
+            <Attributes AttributeID="REV2320" AttributeValue="000000000" />
+            <Attributes AttributeID="REV2380" AttributeValue="000000000" />
+            <Attributes AttributeID="REV2800" AttributeValue="000000000" />
+            <Attributes AttributeID="REV2841" AttributeValue="000000000" />
+            <Attributes AttributeID="REV3421" AttributeValue="000000001" />
+            <Attributes AttributeID="REV3422" AttributeValue="000000001" />
+            <Attributes AttributeID="REV3423" AttributeValue="000000000" />
+            <Attributes AttributeID="REV3510" AttributeValue="000000005" />
+            <Attributes AttributeID="REV5020" AttributeValue="000015648" />
+            <Attributes AttributeID="REV5030" AttributeValue="000015648" />
+            <Attributes AttributeID="REV5320" AttributeValue="000086544" />
+            <Attributes AttributeID="REV5420" AttributeValue="000026100" />
+            <Attributes AttributeID="REV5620" AttributeValue="000070896" />
+            <Attributes AttributeID="REV5627" AttributeValue="000065116" />
+            <Attributes AttributeID="REV5830" AttributeValue="000000580" />
+            <Attributes AttributeID="REV6160" AttributeValue="000000001" />
+            <Attributes AttributeID="REV7110" AttributeValue="000000018" />
+          </EX_836>
+          <EX_836 RecordID="836" RecordLength="986" MessageCode="01">
+            <Attributes AttributeID="REV7140" AttributeValue="000000018" />
+            <Attributes AttributeID="REV7410" AttributeValue="000000032" />
+            <Attributes AttributeID="REV7420" AttributeValue="000000018" />
+            <Attributes AttributeID="REV7430" AttributeValue="000000100" />
+            <Attributes AttributeID="REV7436" AttributeValue="000000036" />
+            <Attributes AttributeID="REV7437" AttributeValue="000000043" />
+            <Attributes AttributeID="REV7460" AttributeValue="000000000" />
+            <Attributes AttributeID="REV8120" AttributeValue="000000008" />
+            <Attributes AttributeID="REV8150" AttributeValue="000009996" />
+            <Attributes AttributeID="REV8151" AttributeValue="000009996" />
+            <Attributes AttributeID="REV8153" AttributeValue="000009996" />
+            <Attributes AttributeID="REV8157" AttributeValue="000009996" />
+            <Attributes AttributeID="REV8220" AttributeValue="000000226" />
+            <Attributes AttributeID="REV8320" AttributeValue="000000078" />
+            <Attributes AttributeID="RTA0300" AttributeValue="000000014" />
+            <Attributes AttributeID="RTA1300" AttributeValue="000000014" />
+            <Attributes AttributeID="RTA5030" AttributeValue="000008890" />
+            <Attributes AttributeID="RTA5320" AttributeValue="000019643" />
+            <Attributes AttributeID="RTA5830" AttributeValue="000000356" />
+            <Attributes AttributeID="RTA8151" AttributeValue="000009996" />
+            <Attributes AttributeID="RTR0300" AttributeValue="000000014" />
+            <Attributes AttributeID="RTR0437" AttributeValue="000000002" />
+            <Attributes AttributeID="RTR1300" AttributeValue="000000014" />
+            <Attributes AttributeID="RTR1380" AttributeValue="000000005" />
+            <Attributes AttributeID="RTR3422" AttributeValue="000000001" />
+            <Attributes AttributeID="RTR5030" AttributeValue="000008890" />
+            <Attributes AttributeID="RTR5320" AttributeValue="000019643" />
+            <Attributes AttributeID="RTR5420" AttributeValue="000010143" />
+            <Attributes AttributeID="RTR5520" AttributeValue="000006548" />
+            <Attributes AttributeID="RTR5620" AttributeValue="000010753" />
+            <Attributes AttributeID="RTR5627" AttributeValue="000010753" />
+            <Attributes AttributeID="RTR5830" AttributeValue="000000356" />
+            <Attributes AttributeID="RTR8120" AttributeValue="000000008" />
+            <Attributes AttributeID="STU0300" AttributeValue="000000000" />
+            <Attributes AttributeID="STU1100" AttributeValue="000000098" />
+            <Attributes AttributeID="STU2558" AttributeValue="000000098" />
+            <Attributes AttributeID="STU5031" AttributeValue="999999998" />
+            <Attributes AttributeID="USE0300" AttributeValue="000000000" />
+            <Attributes AttributeID="MTA2126" AttributeValue="000000000" />
+            <Attributes AttributeID="MERTRD " AttributeValue="000000000" />
+            <Attributes AttributeID="MERINQ " AttributeValue="000000000" />
+            <Attributes AttributeID="AGGBAL " AttributeValue="000015648" />
+            <Attributes AttributeID="BK4COLL" AttributeValue="000000000" />
+            <Attributes AttributeID="MERTRD2" AttributeValue="000000000" />
+            <Attributes AttributeID="DEL30  " AttributeValue="000000000" />
+            <Attributes AttributeID="DEL60  " AttributeValue="000000000" />
+            <Attributes AttributeID="DEL90  " AttributeValue="000000000" />
+            <Attributes AttributeID="DEL120 " AttributeValue="000000000" />
+            <Attributes AttributeID="GOODPAY" AttributeValue="000000999" />
+            <Attributes AttributeID="BADPAY " AttributeValue="000000999" />
+            <Attributes AttributeID="THICK  " AttributeValue="000000226" />
+            <Attributes AttributeID="THICK2 " AttributeValue="000000226" />
+            <Attributes AttributeID="BKTYPE " AttributeValue="000000000" />
+            <Attributes AttributeID="BKTYPE2" AttributeValue="000000000" />
+            <Attributes AttributeID="BK2    " AttributeValue="000000000" />
+            <Attributes AttributeID="BKRECEN" AttributeValue="000009999" />
+            <Attributes AttributeID="BDELINQ" AttributeValue="000000000" />
+            <Attributes AttributeID="PRECTRD" AttributeValue="000000000" />
+            <Attributes AttributeID="AGGREV " AttributeValue="000015648" />
+            <Attributes AttributeID="TRDOPN " AttributeValue="000000006" />
+            <Attributes AttributeID="PRECDRG" AttributeValue="000000000" />
+          </EX_836>
+          <EX_950 RecordID="950" RecordLength="0016" TotalSegments="070" TotalLength="17054" />
+        </EXReport>
+      </EX>
+      <IovationCase>
+        <JSON IdentityConsentId="null" TransactionProcessingTime="210" Timestamp="2022-05-02T21:29:03.664091Z" Transaction="null" CaseType="0" CaseNumber="CreditCard405790" Id="e940a4b9-ee71-4dca-9501-163861cbd6aa|f6f70e67-fd40-4a48-9157-25407010fadb" LocationConsentId="null" SessionId="e940a4b9-ee71-4dca-9501-163861cbd6aa" MarketType="0">
+          <Customer DateOfBirth="2002-03-04T00:00:00Z" SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" Id="6c35b4a5-7105-4c00-8106-30881abcdfff" LastName="TESTB" AccountNumber="null">
+            <Addresses>
+              <ArrayElementObject IsDefault="true" FirstName="BOB" Address2="null" Address3="null" PostalCode="30326" Address1="200 BALLPARK ST" City="ATLANTA" Timestamp="0001-01-01T00:00:00Z" Type="0" State="GA" Id="f85358d9-9422-4771-8d27-a3788685277e" LastName="TESTB" CountryCode="US" />
+            </Addresses>
+            <SocialAccounts />
+            <Emails />
+          </Customer>
+          <Payments />
+          <Statuses>
+            <ArrayElementObject Status="8" Comment="Status added by Trustev to set current status to placed" Id="85c75e2d-cd1a-4c47-8e01-1ad29b9d244c" Timestamp="2022-05-02T21:29:04.1342219Z" />
+          </Statuses>
+        </JSON>
+      </IovationCase>
+      <IovationDecision report_time="2022-5-2 15:29:4.959">
+        <JSON PlatformVersion="V1" Comment="Decision for Default" TransactionProcessingTime="651" AuthenticatedDataRequest="null" CaseId="e940a4b9-ee71-4dca-9501-163861cbd6aa|f6f70e67-fd40-4a48-9157-25407010fadb" TruValidateConsumerId="null" Timestamp="2022-05-02T21:29:04.8230753Z" Result="1" IdentityVerificationPayloadUrl="null" Score="6" Type="0" ExtendedDeviceInformation="null" Confidence="59" Version="103" CaseNumber="CreditCard405790" Id="f70e2764-a690-4e8c-abc5-b1b1e30a7315" SessionId="e940a4b9-ee71-4dca-9501-163861cbd6aa">
+          <RawData OS="null" NavigatorLanguage="en-US" ScreenHeight="864" BINInformation="null" NavigatorPlugins="[{&quot;name&quot;:&quot;PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;Chrome PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;Chromium PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;Microsoft Edge PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;WebKit built-in PDF&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2}]" ScreenColorDepth="24" TrustevCustomerId="6c35b4a5-7105-4c00-8106-30881abcdfff" Transaction="null" CaseType="0" DeviceTag="f01c9c92-a588-4711-9957-5bd46161d7ec" ScreenWidth="1536" NavigatorOscpu="undefined" Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36">
+            <Customer SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" LastName="TESTB">
+              <Emails />
+            </Customer>
+            <IPAddresses>
+              <ArrayElementObject ConnectionType="" HostingFacility="false" LineSpeed="" SLD="merrickbank" City="south jordan" ClientIp="204.10.148.229" TLD="com" Continent="north america" State="utah" Country="united states" AnonymizerStatus="" Id="a67c8224-12f2-400f-befb-49de186f2fc9" ProxyType="" CountryCode="us" RoutingType="" />
+            </IPAddresses>
+            <Location>
+              <Addresses TUPrimaryFile="200 BALLPARK ST, , , ATLANTA, GA, US" />
+              <Coordinates DeviceBrowser="null" IP="40.55938,-111.9824" DeviceCellular="null" />
+            </Location>
+          </RawData>
+          <ComputedData CaseType="0">
+            <Transaction>
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Transaction>
+            <ExtendedDevice IsRegistrationRisky="null" PredictiveMlRisk="null" Risk="null" />
+            <Customer IsIDMVMatchingSummaryRiskMedium="null" IsIDMVMatchingSummaryRiskLow="null" HasSuspiciousHistory="true" IsIDMVMatchingSummaryRiskHigh="null" CaseType="0" IsNameAddressCombinationValid="false" HasBadHistory="false" IsReturningToPlatform="true" HasGoodHistory="true">
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Customer>
+            <Device IsFlashEnabled="null" IsJSEnabled="true" IsJavaEnabled="false" />
+            <Phone IsPhoneRisky="null" />
+            <WhiteList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <BlackList WasCustomerIdHit="false" WasFullEmailAddressHit="false" CaseType="0" WasIPHit="false" WasPostCodeHit="false" WasAccountNumberHit="false" WasEmailDomainHit="false" WasBinHit="false" />
+            <GreyList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <Velocity IsConsumerIdPostCodeVelocityHigh="null" IsConsumerIdEmailVelocityHigh="null" IsConsumerIdVelocityHigh="null" IsConsumerIdIPVelocityHigh="null" IsEmailVelocityHigh="null" IsConsumerIdSsnVelocityHigh="null" IsConsumerIdPhoneNumberVelocityHigh="null" DecisionsWithin30Days="571" IsAccountNumberVelocityHigh="null" DecisionsWithin1Hour="2" DecisionsWithin24Hours="7" IsConsumerIdAccountNumberVelocityHigh="null" CaseType="0" IsDeviceIdVelocityHigh="null" IsPhoneNumberVelocityHigh="null" IsPostCodeVelocityHigh="null" IsAddressLine1VelocityHigh="null" DecisionsWithin7Days="154" IsIPVelocityHigh="null" IsSsnVelocityHigh="null" IsConsumerIdAddressLine1VelocityHigh="null" IsConsumerIdDeviceIdVelocityHigh="null" />
+            <Location CaseType="0" BIN="null" IsIPCountryDomestic="true" />
+          </ComputedData>
+          <Authentication Id="e940a4b9-ee71-4dca-9501-163861cbd6aa|f6f70e67-fd40-4a48-9157-25407010fadb" Timestamp="0001-01-01T00:00:00Z">
+            <DocumentAuthentication Status="4" OCRDataStatus="0" OCRData="null" Url="null">
+              <FailedAlgorithms />
+              <FailureReasons />
+            </DocumentAuthentication>
+            <OTP Status="7" Language="0" Passcode="null" AuthURL="null" Timestamp="0001-01-01T00:00:00Z" DeliveryType="0" />
+            <KBA Status="-1" AnswerUrl="n/a" MultiPassStatus="0" Timestamp="2022-05-02T21:29:04.936915Z">
+              <MultiPassQuestions />
+              <Questions />
+            </KBA>
+          </Authentication>
+        </JSON>
+      </IovationDecision>
+      <IovationCase>
+        <JSON IdentityConsentId="null" TransactionProcessingTime="106" Timestamp="2022-05-03T00:53:48.5401578Z" Transaction="null" CaseType="0" CaseNumber="CreditCard405790" Id="e940a4b9-ee71-4dca-9501-163861cbd6aa|1e61fe97-ea71-4436-8d56-847eaca98047" LocationConsentId="null" SessionId="e940a4b9-ee71-4dca-9501-163861cbd6aa" MarketType="0">
+          <Customer DateOfBirth="2002-03-04T00:00:00Z" SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" Id="6c35b4a5-7105-4c00-8106-30881abcdfff" LastName="TESTB" AccountNumber="null">
+            <Addresses>
+              <ArrayElementObject IsDefault="true" FirstName="BOB" Address2="null" Address3="null" PostalCode="30326" Address1="200 BALLPARK ST" City="ATLANTA" Timestamp="0001-01-01T00:00:00Z" Type="0" State="GA" Id="bbecadbe-a554-4aa4-880d-51857b84f11f" LastName="TESTB" CountryCode="US" />
+            </Addresses>
+            <SocialAccounts />
+            <Emails />
+          </Customer>
+          <Payments />
+          <Statuses>
+            <ArrayElementObject Status="8" Comment="Status added by Trustev to set current status to placed" Id="f15a6c42-98db-4a2b-837f-3043f5516f46" Timestamp="2022-05-03T00:53:49.0190097Z" />
+          </Statuses>
+        </JSON>
+      </IovationCase>
+      <IovationDecision report_time="2022-5-2 18:53:49.818">
+        <JSON PlatformVersion="V1" Comment="Decision for Default" TransactionProcessingTime="682" AuthenticatedDataRequest="null" CaseId="e940a4b9-ee71-4dca-9501-163861cbd6aa|1e61fe97-ea71-4436-8d56-847eaca98047" TruValidateConsumerId="null" Timestamp="2022-05-03T00:53:49.8516383Z" Result="1" IdentityVerificationPayloadUrl="null" Score="6" Type="0" ExtendedDeviceInformation="null" Confidence="59" Version="103" CaseNumber="CreditCard405790" Id="66997564-fb63-4d96-8c47-8188e0ae1df5" SessionId="e940a4b9-ee71-4dca-9501-163861cbd6aa">
+          <RawData OS="null" NavigatorLanguage="en-US" ScreenHeight="864" BINInformation="null" NavigatorPlugins="[{&quot;name&quot;:&quot;PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;Chrome PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;Chromium PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;Microsoft Edge PDF Viewer&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2},{&quot;name&quot;:&quot;WebKit built-in PDF&quot;,&quot;description&quot;:&quot;Portable Document Format&quot;,&quot;filename&quot;:&quot;internal-pdf-viewer&quot;,&quot;length&quot;:2}]" ScreenColorDepth="24" TrustevCustomerId="6c35b4a5-7105-4c00-8106-30881abcdfff" Transaction="null" CaseType="0" DeviceTag="f01c9c92-a588-4711-9957-5bd46161d7ec" ScreenWidth="1536" NavigatorOscpu="undefined" Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36">
+            <Customer SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" LastName="TESTB">
+              <Emails />
+            </Customer>
+            <IPAddresses>
+              <ArrayElementObject ConnectionType="" HostingFacility="false" LineSpeed="" SLD="merrickbank" City="south jordan" ClientIp="204.10.148.229" TLD="com" Continent="north america" State="utah" Country="united states" AnonymizerStatus="" Id="a67c8224-12f2-400f-befb-49de186f2fc9" ProxyType="" CountryCode="us" RoutingType="" />
+            </IPAddresses>
+            <Location>
+              <Addresses TUPrimaryFile="200 BALLPARK ST, , , ATLANTA, GA, US" />
+              <Coordinates DeviceBrowser="null" IP="40.55938,-111.9824" DeviceCellular="null" />
+            </Location>
+          </RawData>
+          <ComputedData CaseType="0">
+            <Transaction>
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Transaction>
+            <ExtendedDevice IsRegistrationRisky="null" PredictiveMlRisk="null" Risk="null" />
+            <Customer IsIDMVMatchingSummaryRiskMedium="null" IsIDMVMatchingSummaryRiskLow="null" HasSuspiciousHistory="true" IsIDMVMatchingSummaryRiskHigh="null" CaseType="0" IsNameAddressCombinationValid="false" HasBadHistory="false" IsReturningToPlatform="true" HasGoodHistory="true">
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Customer>
+            <Device IsFlashEnabled="null" IsJSEnabled="true" IsJavaEnabled="false" />
+            <Phone IsPhoneRisky="null" />
+            <WhiteList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <BlackList WasCustomerIdHit="false" WasFullEmailAddressHit="false" CaseType="0" WasIPHit="false" WasPostCodeHit="false" WasAccountNumberHit="false" WasEmailDomainHit="false" WasBinHit="false" />
+            <GreyList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <Velocity IsConsumerIdPostCodeVelocityHigh="null" IsConsumerIdEmailVelocityHigh="null" IsConsumerIdVelocityHigh="null" IsConsumerIdIPVelocityHigh="null" IsEmailVelocityHigh="null" IsConsumerIdSsnVelocityHigh="null" IsConsumerIdPhoneNumberVelocityHigh="null" DecisionsWithin30Days="578" IsAccountNumberVelocityHigh="null" DecisionsWithin1Hour="0" DecisionsWithin24Hours="14" IsConsumerIdAccountNumberVelocityHigh="null" CaseType="0" IsDeviceIdVelocityHigh="null" IsPhoneNumberVelocityHigh="null" IsPostCodeVelocityHigh="null" IsAddressLine1VelocityHigh="null" DecisionsWithin7Days="155" IsIPVelocityHigh="null" IsSsnVelocityHigh="null" IsConsumerIdAddressLine1VelocityHigh="null" IsConsumerIdDeviceIdVelocityHigh="null" />
+            <Location CaseType="0" BIN="null" IsIPCountryDomestic="true" />
+          </ComputedData>
+          <Authentication Id="e940a4b9-ee71-4dca-9501-163861cbd6aa|1e61fe97-ea71-4436-8d56-847eaca98047" Timestamp="0001-01-01T00:00:00Z">
+            <DocumentAuthentication Status="4" OCRDataStatus="0" OCRData="null" Url="null">
+              <FailedAlgorithms />
+              <FailureReasons />
+            </DocumentAuthentication>
+            <OTP Status="7" Language="0" Passcode="null" AuthURL="null" Timestamp="0001-01-01T00:00:00Z" DeliveryType="0" />
+            <KBA Status="-1" AnswerUrl="n/a" MultiPassStatus="0" Timestamp="2022-05-03T00:53:49.9298362Z">
+              <MultiPassQuestions />
+              <Questions />
+            </KBA>
+          </Authentication>
+        </JSON>
+      </IovationDecision>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2022-5-2 15:29:5.845" Source="WebService.SentiLink.POST SentiLink Scores.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+      <Message Timestamp="2022-5-2 15:29:5.852" Source="SentiLink PullSentiLinkScoresReport Process" Number="500" Description="Fail: Webservice Error. POST SentiLink Scores Adaptor was not Successful." />
+      <Message Timestamp="2022-5-2 18:53:50.724" Source="WebService.SentiLink.POST SentiLink Scores.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+      <Message Timestamp="2022-5-2 18:53:50.737" Source="SentiLink PullSentiLinkScoresReport Process" Number="500" Description="Fail: Webservice Error. POST SentiLink Scores Adaptor was not Successful." />
+    </Messages>
+    <Rules />
+    <Journals>
+      <Journal Type="Script" ID="ProcStart" Timestamp="2022-4-26 11:13:12.13" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="Tue Apr 26 11:13:12 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2022-4-26 11:13:12.288" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="Tue Apr 26 11:13:12 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2022-4-26 11:13:12.292" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="Tue Apr 26 11:13:12 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2022-4-26 11:13:12.304" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Tue Apr 26 11:13:12 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2022-4-26 11:13:12.305" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="Tue Apr 26 11:13:12 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2022-4-26 11:13:12.306" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2022-4-26 11:13:12.308" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2022-4-26 11:13:12.308" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2022-4-26 11:13:12.310" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2022-4-26 11:13:12.310" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2022-4-26 11:13:12.311" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2022-4-26 11:13:12.311" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2022-4-26 11:13:12.312" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2022-4-26 11:13:12.312" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2022-4-26 11:13:12.312" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2022-4-26 11:13:12.313" Status="false" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2022-4-26 11:13:12.313" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2022-4-26 11:13:12.313" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2022-4-26 11:13:12.314" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2022-4-26 11:13:12.314" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Tue Apr 26 11:13:12 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="ID Vision" Timestamp="Tue Apr 26 11:13:14 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2022-4-26 11:13:14.171" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2022-4-26 11:13:14.172" Status="false" />
+      <Journal Type="Rule" ID="SSNMM" Timestamp="2022-4-26 11:13:14.173" Status="false" />
+      <Journal Type="Rule" ID="PMACI" Timestamp="2022-4-26 11:13:14.709" Status="false" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2022-4-26 11:13:14.710" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2022-4-26 11:13:14.713" Status="false" />
+      <Journal Type="Process" ID="02000" Timestamp="Tue Apr 26 11:13:14 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2022-4-26 11:13:14.719" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="Tue Apr 26 11:13:14 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="CBRER" Timestamp="2022-4-26 11:13:15.488" Status="false" />
+      <Journal Type="Rule" ID="CBFRZ" Timestamp="2022-4-26 11:13:15.488" Status="false" />
+      <Journal Type="Process" ID="06000" Timestamp="Tue Apr 26 11:13:15 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="SCRBLNK" Timestamp="2022-4-26 11:13:15.496" Status="false" />
+      <Journal Type="Rule" ID="CBMNA" Timestamp="2022-4-26 11:13:15.496" Status="false" />
+      <Journal Type="Process" ID="07000" Timestamp="Tue Apr 26 11:13:15 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="BKFIL" Timestamp="2022-4-26 11:13:15.634" Status="false" />
+      <Journal Type="Rule" ID="CBPDC" Timestamp="2022-4-26 11:13:15.637" Status="false" />
+      <Journal Type="Rule" ID="SCRFLR" Timestamp="2022-4-26 11:13:15.641" Status="false" />
+      <Journal Type="Rule" ID="CB30D" Timestamp="2022-4-26 11:13:15.659" Status="false" />
+      <Journal Type="Rule" ID="90120" Timestamp="2022-4-26 11:13:15.670" Status="false" />
+      <Journal Type="Rule" ID="CBMNT" Timestamp="2022-4-26 11:13:15.681" Status="false" />
+      <Journal Type="Rule" ID="INCSRD" Timestamp="2022-4-26 11:13:15.682" Status="false" />
+      <Journal Type="Rule" ID="CBHAB" Timestamp="2022-4-26 11:13:15.694" Status="false" />
+      <Journal Type="Rule" ID="DFICO" Timestamp="2022-4-26 11:13:15.695" Status="false" />
+      <Journal Type="Rule" ID="CB60D" Timestamp="2022-4-26 11:13:15.706" Status="false" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2022-4-26 11:13:15.832" Status="false" />
+      <Journal Type="Process" ID="07500" Timestamp="Tue Apr 26 11:13:15 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2022-4-26 11:13:15.835" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2022-4-26 11:13:15.837" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2022-4-26 11:13:15.838" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2022-4-26 11:13:15.838" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2022-4-26 11:13:15.839" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2022-4-26 11:13:15.839" Status="false" />
+      <Journal Type="Rule" ID="CBFNI" Timestamp="2022-4-26 11:13:15.840" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2022-4-26 11:13:15.840" Status="false" />
+      <Journal Type="Rule" ID="CBLNI" Timestamp="2022-4-26 11:13:15.841" Status="false" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2022-4-26 11:13:15.852" Status="false" />
+      <Journal Type="Rule" ID="CBRDC" Timestamp="2022-4-26 11:13:15.882" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2022-4-26 11:13:15.882" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Tue Apr 26 11:13:15 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="EMAILAGE" Timestamp="2022-4-26 11:13:15.883" Status="false" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2022-4-26 11:13:16.679" Status="false" />
+      <Journal Type="Rule" ID="CBFRA" Timestamp="2022-4-26 11:13:16.680" Status="false" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2022-4-26 11:13:16.680" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2022-4-26 11:13:16.681" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2022-4-26 11:13:16.681" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2022-4-26 11:13:16.681" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2022-4-26 11:13:16.682" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2022-4-26 11:13:16.682" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2022-4-26 11:13:16.682" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2022-4-26 11:13:16.789" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2022-4-26 11:13:16.986" Status="false" />
+      <Journal Type="Rule" ID="DUPDID" Timestamp="2022-4-26 11:13:16.987" Status="false" />
+      <Journal Type="Rule" ID="VRFYAU" Timestamp="2022-4-26 11:13:16.990" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Tue Apr 26 11:13:16 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="MM3AD" Timestamp="2022-4-26 11:13:16.993" Status="false" />
+      <Journal Type="Rule" ID="MM3NM" Timestamp="2022-4-26 11:13:16.994" Status="false" />
+      <Journal Type="Rule" ID="MMSSN" Timestamp="2022-4-26 11:13:16.994" Status="false" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2022-4-26 11:13:16.995" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2022-4-26 11:13:16.996" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2022-4-26 11:13:16.997" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2022-4-26 11:13:16.998" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2022-4-26 11:13:17.0" Status="false" />
+      <Journal Type="Rule" ID="INCMISS" Timestamp="2022-4-26 11:13:17.1" Status="false" />
+      <Journal Type="Rule" ID="PAMPH" Timestamp="2022-4-26 11:13:17.1" Status="false" />
+      <Journal Type="Rule" ID="VFPAA" Timestamp="2022-4-26 11:13:17.2" Status="false" />
+      <Journal Type="Process" ID="11000" Timestamp="Tue Apr 26 11:13:17 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2022-4-26 11:13:17.97" Status="false" />
+      <Journal Type="Process" ID="12000" Timestamp="Tue Apr 26 11:13:17 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="DUPEMAIL" Timestamp="2022-4-26 11:13:17.100" Status="false" />
+      <Journal Type="Rule" ID="DUPNAME" Timestamp="2022-4-26 11:13:17.101" Status="false" />
+      <Journal Type="Rule" ID="MLAMISS" Timestamp="2022-4-26 11:13:17.101" Status="false" />
+      <Journal Type="Process" ID="13000" Timestamp="Tue Apr 26 11:13:17 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="Update Case Status" Timestamp="Tue Apr 26 11:13:17 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="20000" Timestamp="Tue Apr 26 11:13:17 MDT 2022" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By Timothy.Morris@MerrickBank.com" Timestamp="2022-5-2 15:28:53.753" Status="Opened" />
+      <Journal Type="MP" ID="REPRR" Timestamp="2022-5-2 15:29:2.488" Status="" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2022-5-2 15:29:2.625" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="Mon May 02 15:29:02 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2022-5-2 15:29:2.627" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="Mon May 02 15:29:02 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2022-5-2 15:29:2.629" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Mon May 02 15:29:02 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2022-5-2 15:29:2.630" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="Mon May 02 15:29:02 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2022-5-2 15:29:2.631" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2022-5-2 15:29:2.633" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2022-5-2 15:29:2.633" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2022-5-2 15:29:2.634" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2022-5-2 15:29:2.635" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2022-5-2 15:29:2.635" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2022-5-2 15:29:2.636" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2022-5-2 15:29:2.636" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2022-5-2 15:29:2.636" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2022-5-2 15:29:2.637" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2022-5-2 15:29:2.637" Status="false" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2022-5-2 15:29:2.637" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2022-5-2 15:29:2.638" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2022-5-2 15:29:2.638" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2022-5-2 15:29:2.639" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Mon May 02 15:29:02 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="ID Vision" Timestamp="Mon May 02 15:29:04 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2022-5-2 15:29:5.2" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2022-5-2 15:29:5.3" Status="false" />
+      <Journal Type="Rule" ID="SSNMM" Timestamp="2022-5-2 15:29:5.4" Status="false" />
+      <Journal Type="Rule" ID="PMACI" Timestamp="2022-5-2 15:29:5.517" Status="false" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2022-5-2 15:29:5.518" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2022-5-2 15:29:5.521" Status="false" />
+      <Journal Type="Process" ID="02000" Timestamp="Mon May 02 15:29:05 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="SL_ID_Theft_Score" Timestamp="2022-5-2 15:29:5.853" Status="false" />
+      <Journal Type="Rule" ID="SL_Synthetic" Timestamp="2022-5-2 15:29:5.853" Status="false" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2022-5-2 15:29:5.858" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="Mon May 02 15:29:05 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="06000" Timestamp="Mon May 02 15:29:05 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="SCRBLNK" Timestamp="2022-5-2 15:29:5.865" Status="false" />
+      <Journal Type="Rule" ID="CBMNA" Timestamp="2022-5-2 15:29:5.866" Status="false" />
+      <Journal Type="Process" ID="07000" Timestamp="Mon May 02 15:29:05 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="BKFIL" Timestamp="2022-5-2 15:29:5.991" Status="false" />
+      <Journal Type="Rule" ID="CBPDC" Timestamp="2022-5-2 15:29:5.992" Status="false" />
+      <Journal Type="Rule" ID="SCRFLR" Timestamp="2022-5-2 15:29:5.993" Status="false" />
+      <Journal Type="Rule" ID="CB30D" Timestamp="2022-5-2 15:29:6.13" Status="false" />
+      <Journal Type="Rule" ID="90120" Timestamp="2022-5-2 15:29:6.26" Status="false" />
+      <Journal Type="Rule" ID="CBMNT" Timestamp="2022-5-2 15:29:6.36" Status="false" />
+      <Journal Type="Rule" ID="INCSRD" Timestamp="2022-5-2 15:29:6.37" Status="false" />
+      <Journal Type="Rule" ID="CBHAB" Timestamp="2022-5-2 15:29:6.48" Status="false" />
+      <Journal Type="Rule" ID="DFICO" Timestamp="2022-5-2 15:29:6.49" Status="false" />
+      <Journal Type="Rule" ID="CB60D" Timestamp="2022-5-2 15:29:6.59" Status="false" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2022-5-2 15:29:6.189" Status="false" />
+      <Journal Type="Process" ID="07500" Timestamp="Mon May 02 15:29:06 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2022-5-2 15:29:6.200" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2022-5-2 15:29:6.202" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2022-5-2 15:29:6.203" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2022-5-2 15:29:6.203" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2022-5-2 15:29:6.204" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2022-5-2 15:29:6.204" Status="false" />
+      <Journal Type="Rule" ID="CBFNI" Timestamp="2022-5-2 15:29:6.205" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2022-5-2 15:29:6.205" Status="false" />
+      <Journal Type="Rule" ID="CBLNI" Timestamp="2022-5-2 15:29:6.206" Status="false" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2022-5-2 15:29:6.217" Status="false" />
+      <Journal Type="Rule" ID="CBRDC" Timestamp="2022-5-2 15:29:6.248" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2022-5-2 15:29:6.249" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Mon May 02 15:29:06 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="EMAILAGE" Timestamp="2022-5-2 15:29:6.250" Status="false" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2022-5-2 15:29:6.873" Status="false" />
+      <Journal Type="Rule" ID="CBFRA" Timestamp="2022-5-2 15:29:6.873" Status="false" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2022-5-2 15:29:6.874" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2022-5-2 15:29:6.874" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2022-5-2 15:29:6.874" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2022-5-2 15:29:6.875" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2022-5-2 15:29:6.875" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2022-5-2 15:29:6.875" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2022-5-2 15:29:6.876" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2022-5-2 15:29:6.973" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2022-5-2 15:29:7.179" Status="false" />
+      <Journal Type="Rule" ID="DUPDID" Timestamp="2022-5-2 15:29:7.180" Status="false" />
+      <Journal Type="Rule" ID="VRFYAU" Timestamp="2022-5-2 15:29:7.180" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Mon May 02 15:29:07 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="MM3AD" Timestamp="2022-5-2 15:29:7.182" Status="false" />
+      <Journal Type="Rule" ID="MM3NM" Timestamp="2022-5-2 15:29:7.182" Status="false" />
+      <Journal Type="Rule" ID="MMSSN" Timestamp="2022-5-2 15:29:7.183" Status="false" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2022-5-2 15:29:7.183" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2022-5-2 15:29:7.184" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2022-5-2 15:29:7.184" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2022-5-2 15:29:7.185" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2022-5-2 15:29:7.185" Status="false" />
+      <Journal Type="Rule" ID="INCMISS" Timestamp="2022-5-2 15:29:7.186" Status="false" />
+      <Journal Type="Rule" ID="PAMPH" Timestamp="2022-5-2 15:29:7.186" Status="false" />
+      <Journal Type="Rule" ID="VFPAA" Timestamp="2022-5-2 15:29:7.187" Status="false" />
+      <Journal Type="Process" ID="11000" Timestamp="Mon May 02 15:29:07 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2022-5-2 15:29:7.303" Status="false" />
+      <Journal Type="Process" ID="12000" Timestamp="Mon May 02 15:29:07 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="DUPEMAIL" Timestamp="2022-5-2 15:29:7.311" Status="false" />
+      <Journal Type="Rule" ID="DUPNAME" Timestamp="2022-5-2 15:29:7.319" Status="false" />
+      <Journal Type="Rule" ID="MLAMISS" Timestamp="2022-5-2 15:29:7.320" Status="false" />
+      <Journal Type="Process" ID="13000" Timestamp="Mon May 02 15:29:07 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="Update Case Status" Timestamp="Mon May 02 15:29:07 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="20000" Timestamp="Mon May 02 15:29:07 MDT 2022" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By Timothy.Morris@MerrickBank.com" Timestamp="2022-5-2 18:53:18.607" Status="Opened" />
+      <Journal Type="MP" ID="REPRR" Timestamp="2022-5-2 18:53:46.899" Status="" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2022-5-2 18:53:47.47" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="Mon May 02 18:53:47 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2022-5-2 18:53:47.55" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="Mon May 02 18:53:47 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2022-5-2 18:53:47.63" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Mon May 02 18:53:47 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2022-5-2 18:53:47.69" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="Mon May 02 18:53:47 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2022-5-2 18:53:47.74" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2022-5-2 18:53:47.85" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2022-5-2 18:53:47.88" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2022-5-2 18:53:47.97" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2022-5-2 18:53:47.98" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2022-5-2 18:53:47.100" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2022-5-2 18:53:47.101" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2022-5-2 18:53:47.103" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2022-5-2 18:53:47.104" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2022-5-2 18:53:47.106" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2022-5-2 18:53:47.107" Status="false" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2022-5-2 18:53:47.108" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2022-5-2 18:53:47.110" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2022-5-2 18:53:47.110" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2022-5-2 18:53:47.112" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Mon May 02 18:53:47 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="ID Vision" Timestamp="Mon May 02 18:53:49 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2022-5-2 18:53:49.871" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2022-5-2 18:53:49.873" Status="false" />
+      <Journal Type="Rule" ID="SSNMM" Timestamp="2022-5-2 18:53:49.873" Status="false" />
+      <Journal Type="Rule" ID="PMACI" Timestamp="2022-5-2 18:53:50.415" Status="false" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2022-5-2 18:53:50.418" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2022-5-2 18:53:50.427" Status="false" />
+      <Journal Type="Process" ID="02000" Timestamp="Mon May 02 18:53:50 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="SL_ID_Theft_Score" Timestamp="2022-5-2 18:53:50.738" Status="false" />
+      <Journal Type="Rule" ID="SL_Synthetic" Timestamp="2022-5-2 18:53:50.739" Status="false" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2022-5-2 18:53:50.749" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="Mon May 02 18:53:50 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="06000" Timestamp="Mon May 02 18:53:50 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="SCRBLNK" Timestamp="2022-5-2 18:53:50.790" Status="false" />
+      <Journal Type="Rule" ID="CBMNA" Timestamp="2022-5-2 18:53:50.791" Status="false" />
+      <Journal Type="Process" ID="07000" Timestamp="Mon May 02 18:53:50 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="BKFIL" Timestamp="2022-5-2 18:53:50.997" Status="false" />
+      <Journal Type="Rule" ID="CBPDC" Timestamp="2022-5-2 18:53:51.0" Status="false" />
+      <Journal Type="Rule" ID="SCRFLR" Timestamp="2022-5-2 18:53:51.3" Status="false" />
+      <Journal Type="Rule" ID="CB30D" Timestamp="2022-5-2 18:53:51.20" Status="false" />
+      <Journal Type="Rule" ID="90120" Timestamp="2022-5-2 18:53:51.35" Status="false" />
+      <Journal Type="Rule" ID="CBMNT" Timestamp="2022-5-2 18:53:51.52" Status="false" />
+      <Journal Type="Rule" ID="INCSRD" Timestamp="2022-5-2 18:53:51.54" Status="false" />
+      <Journal Type="Rule" ID="CBHAB" Timestamp="2022-5-2 18:53:51.69" Status="false" />
+      <Journal Type="Rule" ID="DFICO" Timestamp="2022-5-2 18:53:51.71" Status="false" />
+      <Journal Type="Rule" ID="CB60D" Timestamp="2022-5-2 18:53:51.83" Status="false" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2022-5-2 18:53:51.248" Status="false" />
+      <Journal Type="Process" ID="07500" Timestamp="Mon May 02 18:53:51 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2022-5-2 18:53:51.259" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2022-5-2 18:53:51.265" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2022-5-2 18:53:51.273" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2022-5-2 18:53:51.274" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2022-5-2 18:53:51.275" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2022-5-2 18:53:51.276" Status="false" />
+      <Journal Type="Rule" ID="CBFNI" Timestamp="2022-5-2 18:53:51.278" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2022-5-2 18:53:51.280" Status="false" />
+      <Journal Type="Rule" ID="CBLNI" Timestamp="2022-5-2 18:53:51.281" Status="false" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2022-5-2 18:53:51.294" Status="false" />
+      <Journal Type="Rule" ID="CBRDC" Timestamp="2022-5-2 18:53:51.332" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2022-5-2 18:53:51.333" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Mon May 02 18:53:51 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="EMAILAGE" Timestamp="2022-5-2 18:53:51.335" Status="false" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2022-5-2 18:53:52.268" Status="false" />
+      <Journal Type="Rule" ID="CBFRA" Timestamp="2022-5-2 18:53:52.270" Status="false" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2022-5-2 18:53:52.271" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2022-5-2 18:53:52.271" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2022-5-2 18:53:52.272" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2022-5-2 18:53:52.273" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2022-5-2 18:53:52.273" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2022-5-2 18:53:52.274" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2022-5-2 18:53:52.275" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2022-5-2 18:53:52.383" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2022-5-2 18:53:52.658" Status="false" />
+      <Journal Type="Rule" ID="DUPDID" Timestamp="2022-5-2 18:53:52.755" Status="false" />
+      <Journal Type="Rule" ID="VRFYAU" Timestamp="2022-5-2 18:53:52.756" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Mon May 02 18:53:52 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="MM3AD" Timestamp="2022-5-2 18:53:52.759" Status="false" />
+      <Journal Type="Rule" ID="MM3NM" Timestamp="2022-5-2 18:53:52.760" Status="false" />
+      <Journal Type="Rule" ID="MMSSN" Timestamp="2022-5-2 18:53:52.762" Status="false" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2022-5-2 18:53:52.764" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2022-5-2 18:53:52.765" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2022-5-2 18:53:52.766" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2022-5-2 18:53:52.767" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2022-5-2 18:53:52.768" Status="false" />
+      <Journal Type="Rule" ID="INCMISS" Timestamp="2022-5-2 18:53:52.770" Status="false" />
+      <Journal Type="Rule" ID="PAMPH" Timestamp="2022-5-2 18:53:52.771" Status="false" />
+      <Journal Type="Rule" ID="VFPAA" Timestamp="2022-5-2 18:53:52.771" Status="false" />
+      <Journal Type="Process" ID="11000" Timestamp="Mon May 02 18:53:52 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2022-5-2 18:53:52.902" Status="false" />
+      <Journal Type="Process" ID="12000" Timestamp="Mon May 02 18:53:52 MDT 2022" Status="Pass" />
+      <Journal Type="Rule" ID="DUPEMAIL" Timestamp="2022-5-2 18:53:52.912" Status="false" />
+      <Journal Type="Rule" ID="DUPNAME" Timestamp="2022-5-2 18:53:52.920" Status="false" />
+      <Journal Type="Rule" ID="MLAMISS" Timestamp="2022-5-2 18:53:52.921" Status="false" />
+      <Journal Type="Process" ID="13000" Timestamp="Mon May 02 18:53:52 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="Update Case Status" Timestamp="Mon May 02 18:53:53 MDT 2022" Status="Pass" />
+      <Journal Type="Process" ID="20000" Timestamp="Mon May 02 18:53:53 MDT 2022" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits />
+  </Request>
+</Provenir>

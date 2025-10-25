@@ -1,0 +1,64 @@
+﻿<Provenir ID="312193" x-trace-id="3bb05bbc-b019-4633-8394-f01e602941fc" action="" transactionID="1106" errorCode="0" status="pass validation" Org="" shred_version="4.0">
+  <application entryDateTime="2022-05-22T09:55:15Z" referralPartnerID="" ipAddress="1.1.1.1" deviceIDSessionID="ahasdf-82348as-asdfjasdfj" receiveDateTime="2022-05-22T09:55:15Z" solicitationNumber="SC1000002423" signatureIndicator="true" cardSelection="2" appTypeCode="PRODB" campaignNumber="SC3">
+    <funding abaNumber="" fundingReferenceNumber="904831813" accountType="" billingTreeResponseCode="" billingTreeCardToken="" accountNumber="" />
+    <flags bypassFinicity="true" />
+    <employment monthsAtJob="464" zip="84095" annualSalary="50000" streetNumber="10705" city="South Jordan" otherAnnualIncome="0" streetName="S Jordan Gateway" unit="" otherIncomeSource="" phone="8015551234" employer="Merrick Bank" position="Analyst" state="UT" selfEmployed="false" salaryNonTaxable="false" />
+    <applicant lastName="Doe" motherMaidenName="Smith" monthsAtResidence="461" suffix="" birthDate="1970-01-01" ssn="555555555" firstName="John" middleInitial="M" monthlyHousing="550" email="name@email.com" housingSituation="rent">
+      <address>
+        <ArrayElementObject zip="97486" poBox="546" streetName="" unit="" streetNumber="" city="FantisyVille" zip4="4444" state="IL" type="current" singleLine="PO Box 546 FantisyVille, IL 87486-4444" ruralRoute="" />
+        <ArrayElementObject zip="97486" poBox="" streetName="Main Street" unit="Apt 5" streetNumber="123" city="FantisyVille" zip4="4444" state="IL" type="patriot" singleLine="123 Main Street Apt 5 FantisyVille, IL 97486 - 4444 " ruralRoute="" />
+        <ArrayElementObject zip="97486" poBox="" streetName="Second Street" unit="" streetNumber="123" city="Wishville" zip4="4444" state="IL" type="previous" singleLine="123 Second Street Wishville IL 97486 - 4444 " ruralRoute="" />
+      </address>
+      <phone>
+        <ArrayElementObject number="8885551234" type="mobile" />
+        <ArrayElementObject number="8885554321" type="home" />
+      </phone>
+    </applicant>
+  </application>
+  <Request iovation_sessionid="ahasdf-82348as-asdfjasdfj" finicity_bypass="Y" Trans="WEBAPP" ID="312193" UserID="" transactionCounter="1" Workflow="1" Process="40000" Status="Pass">
+    <CustData>
+      <application IP_address="1.1.1.1" special_offer="2" solicitation_num="SC1000002423" Partner_URL_ID="" campaign_num="SC3D" app_type_code="PRODB" signature_ind="Y" app_receive_date="05/22/2022" app_entry_date="2022-5-22 9:55:15" EODRet="WEBAPP" procs_date="2022-9-17 3:07:32.783">
+        <contact email="name@email.com" first_name="John" last_name="Doe" initials="M" mother_maiden_name="Smith" ssn="555555555" suffix="" birth_date="1970-01-01" ssn_last_4="5555" ac_role_tp_c="PR" con_id="486722">
+          <contact_address address_tp_c="CURR" address_line_1="PO Box 546 FantisyVille, IL 87486-4444" city="FantisyVille" rural_route="" state="IL" po_box="546" street_name="" street_number="" unit="" Patriot_Act_address_line_1="123 Main Street Apt 5 FantisyVille, IL 97486 - 4444 " Patriot_Act_city="FantisyVille" Patriot_Act_state="IL" Patriot_Act_rural_route="" Patriot_Act_street_name="Main Street" Patriot_Act_street_number="123" Patriot_Act_unit="Apt 5" home_phone="8885554321" cell_phone="8885551234" residence_monthly_pymnt="550" ownership_tp_c="R" years_at_residence="38" months_at_residence="5" zip="97486-4444" Patriot_Act_zip="97486-4444" />
+          <contact_address city="Wishville" po_box="" rural_route="" address_line_1="123 Second Street Wishville IL 97486 - 4444 " state="IL" street_name="Second Street" street_number="123" unit="" zip="97486-4444" address_tp_c="PREV" />
+          <contact_employment b_phone_no="8015551234" b_unit="" b_zip="84095" b_state="UT" b_street_name="S Jordan Gateway" b_street_number="10705" b_salary="50000" b_city="South Jordan" b_other_income_amt="0" b_name="Merrick Bank" b_job_title_tp_c="Analyst" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="8" b_years_at_job="38" employment_tp_c="CURR" />
+          <app_prod_bcard pd_tp_c="SC3" />
+        </contact>
+        <rmts_info primary_first_name="" primary_last_name="" transmission_date="2022-9-17 3:07:32.571" />
+        <TempVariables Env_c="1" />
+        <app_product regb_start_date="2022-5-22 0:0:0.0" regb_end_date="2022-09-17" duplicate_app_ind="Y" decision_tp_c="WITHD" decision_date="2022-9-17 3:07:33.184" pending_verif_ind="N" supervisor_rev_ind="N" analyst_rev_ind="N" regbcloseddays_num="118" />
+        <comments comment_seq_number="1" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312176, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.70" />
+        <comments comment_seq_number="2" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312177, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.81" />
+        <comments comment_seq_number="3" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312178, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.93" />
+        <comments comment_seq_number="4" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312179, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.104" />
+        <comments comment_seq_number="5" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312180, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.114" />
+        <comments comment_seq_number="6" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312182, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.126" />
+        <comments comment_seq_number="7" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312183, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.136" />
+        <comments comment_seq_number="8" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312184, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.149" />
+        <comments comment_seq_number="9" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312185, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.165" />
+        <comments comment_seq_number="10" comment="Rule DUPSN: Reported Solicitation Number: SC1000002423 Matches a Previous Applicant's Solicitation Number: SC1000002423   , Previous Applicant Name: John, Doe, Application ID: 312186, Campaign Number: SC3   " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" time_stamp="2022-9-17 3:07:33.181" />
+        <comments comment_seq_number="11" comment="*-* DEV TESTING MEMO *-*" user_id="TIMOTHY.MORRIS@MERRICKBANK.COM" comment_type_code="" related_to="" time_stamp="2024-08-05 20:41:50.220" isPinned="false" />
+        <comments comment_seq_number="12" comment="*-* DEV TESTING MEMO *-*" user_id="TIMOTHY.MORRIS@MERRICKBANK.COM" comment_type_code="" related_to="" time_stamp="2024-08-06 13:23:53.769" isPinned="false" />
+        <comments comment_seq_number="13" comment="*-* DEV TESTING MEMO *-*" user_id="TIMOTHY.MORRIS@MERRICKBANK.COM" comment_type_code="" related_to="" time_stamp="2024-08-06 14:37:16.063" isPinned="false" />
+        <comments comment_seq_number="14" comment="*--* BULK COMMENT TEST *--*" user_id="TIMOTHY.MORRIS@MERRICKBANK.COM" comment_type_code="" related_to="" time_stamp="2024-08-07 23:51:51.639" isPinned="false" />
+        <communications />
+      </application>
+    </CustData>
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2022-9-17 3:07:32.573" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2022-9-17 3:07:32.783" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2022-9-17 3:07:33.182" Status="true" />
+      <Journal Type="Process" ID="00095" Timestamp="2022-9-17 3:07:33.183" Status="Fail" />
+      <Journal Type="Process" ID="40000" Timestamp="2022-9-17 3:07:33.189" Status="Pass" />
+    </Journals>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079f6110cc68c231" ID="DUPSN" Description="Duplicate application found via solicitation number match. See comments." Timestamp="2022-9-17 3:07:33.182" Severity="0" Override="0" AllowOverride="1" />
+    </Rules>
+    <Audits>
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="New Comment" To="*-* DEV TESTING MEMO *-*" From="" Timestamp="2024-08-05 20:41:50.221" Source="Bulk Update" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="New Comment" To="*-* DEV TESTING MEMO *-*" From="" Timestamp="2024-08-06 13:23:53.770" Source="Bulk Update" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="New Comment" To="*-* DEV TESTING MEMO *-*" From="" Timestamp="2024-08-06 14:37:16.064" Source="Bulk Update" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="New Comment" To="*--* BULK COMMENT TEST *--*" From="" Timestamp="2024-08-07 23:51:51.640" Source="Bulk Update" />
+    </Audits>
+  </Request>
+</Provenir>

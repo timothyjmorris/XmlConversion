@@ -166,9 +166,8 @@ class TestProductionXMLBatch(unittest.TestCase):
                 cursor.execute("""
                     SELECT app_id, xml 
                     FROM app_xml 
-                    WHERE xml IS NOT NULL 
-                    AND DATALENGTH(xml) > 100
-                    AND app_id BETWEEN 1 AND 24  -- Complete benchmark 1-24
+                    WHERE DATALENGTH(xml) > 100
+                    -- AND app_id BETWEEN 1 AND 24  -- Complete benchmark 1-24
                     ORDER BY app_id
                 """)
                 

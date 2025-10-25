@@ -298,14 +298,16 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
                 processing_time=time.time() - start_time
             )
         
-        # Clean up existing data
-        try:
-            with _worker_migration_engine.get_connection() as conn:
-                cursor = conn.cursor()
-                cursor.execute("DELETE FROM app_base WHERE app_id = ?", (validation_result.app_id,))
-                conn.commit()
-        except Exception:
-            pass  # Ignore cleanup errors
+        # Clean up existing data -- local development only
+        """
+        # try:
+        #     with _worker_migration_engine.get_connection() as conn:
+        #         cursor = conn.cursor()
+        #         cursor.execute("DELETE FROM app_base WHERE app_id = ?", (validation_result.app_id,))
+        #         conn.commit()
+        # except Exception:
+        #     pass  # Ignore cleanup errors
+        """
         
         # Stage 2: Parsing
         root = _worker_parser.parse_xml_stream(work_item.xml_content)

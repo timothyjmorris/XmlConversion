@@ -1,0 +1,52 @@
+﻿<Provenir ID="416602" x-trace-id="037e3890-e0e2-4f42-aa4f-9a7da60066b0" action="" transactionID="3" errorCode="0" status="pass validation" Org="" shred_version="131.0">
+  <application entryDateTime="2022-09-21T19:59:23.108Z" referralPartnerID="https://www.partner.com/loansRfun" ipAddress="0.59.235.228" deviceIDSessionID="4d7917b4-5417-431c-86f4-e227aeebc0ef" receiveDateTime="2022-09-21T19:59:23.108Z" solicitationNumber="SC1000002423" signatureIndicator="true" cardSelection="2" appTypeCode="PRODB" action="" campaignNumber="SC3">
+    <funding abaNumber="419282064" fundingReferenceNumber="189334200" accountType="checking" billingTreeResponseCode="" billingTreeCardToken="" accountNumber="11357306" />
+    <flags bypassFinicity="true" />
+    <employment monthsAtJob="464" zip="04095-0123" annualSalary="50000.0" streetNumber="558" city="Billings" otherAnnualIncome="5643.21" streetName="Prohaska Manors" unit="C" otherIncomeSource="this" phone="8015551234" employer="Bashirian, Frami and Willms" position="Human Infrastructure Manager" state="UT" selfEmployed="false" salaryNonTaxable="false" />
+    <applicant lastName="Schowalter" motherMaidenName="Keebler" monthsAtResidence="461" suffix="I" birthDate="1970-01-01" ssn="055050555" firstName="Shanon" middleInitial="M" monthlyHousing="550" email="Demetris_Adams@gmail.com" housingSituation="rent">
+      <address>
+        <ArrayElementObject zip="07486" poBox="546" streetName="" unit="" streetNumber="" city="FantisyVille" zip4="0444" state="IL" type="current" singleLine="PO Box 546 FantisyVille, IL 07486-0444" ruralRoute="" />
+        <ArrayElementObject zip="07486" poBox="" streetName="Main Street" unit="Apt 5" streetNumber="123" city="FantisyVille" zip4="0444" state="IL" type="patriot" singleLine="123 Main Street Apt 5 FantisyVille, IL 07486-0444 " ruralRoute="" />
+        <ArrayElementObject zip="07486" poBox="" streetName="Second Street" unit="" streetNumber="123" city="Wishville" zip4="0444" state="IL" type="previous" singleLine="123 Second Street Wishville IL 07486-0444 " ruralRoute="" />
+      </address>
+      <phone>
+        <ArrayElementObject number="8885551234" type="mobile" />
+        <ArrayElementObject number="8885554321" type="home" />
+      </phone>
+    </applicant>
+  </application>
+  <Request iovation_sessionid="4d7917b4-5417-431c-86f4-e227aeebc0ef" finicity_bypass="Y" Trans="" ID="416602" UserID="" transactionCounter="153" Process="30000" Status="Q" Workflow="">
+    <CustData>
+      <application IP_address="0.59.235.228" special_offer="2" solicitation_num="SC1000002423" Partner_URL_ID="https://www.partner.com/loansRfun" campaign_num="SC3" app_type_code="PRODB" signature_ind="Y" app_receive_date="09/21/2022" app_entry_date="2022-9-21 19:59:23" EODRet="WEBAPP" procs_date="2022-9-21 13:59:23.500">
+        <contact email="Demetris_Adams@gmail.com" first_name="Shanon" last_name="Schowalter" initials="M" mother_maiden_name="Keebler" ssn="055050555" suffix="I" birth_date="1970-01-01" ssn_last_4="0555" ac_role_tp_c="PR" con_id="629000">
+          <contact_address address_tp_c="CURR" address_line_1="PO Box 546 FantisyVille, IL 07486-0444" city="FantisyVille" rural_route="" state="IL" po_box="546" street_name="" street_number="" unit="" Patriot_Act_address_line_1="123 Main Street Apt 5 FantisyVille, IL 07486-0444 " Patriot_Act_city="FantisyVille" Patriot_Act_state="IL" Patriot_Act_rural_route="" Patriot_Act_street_name="Main Street" Patriot_Act_street_number="123" Patriot_Act_unit="Apt 5" home_phone="8885554321" cell_phone="8885551234" residence_monthly_pymnt="550" ownership_tp_c="R" years_at_residence="38" months_at_residence="5" zip="7486-444" Patriot_Act_zip="7486-444" />
+          <contact_address city="Wishville" po_box="" rural_route="" address_line_1="123 Second Street Wishville IL 07486-0444 " state="IL" street_name="Second Street" street_number="123" unit="" zip="7486-444" address_tp_c="PREV" />
+          <contact_employment b_phone_no="8015551234" b_unit="C" b_zip="04095-0123" b_state="UT" b_street_name="Prohaska Manors" b_street_number="558" b_salary="50000.0" b_city="Billings" b_other_income_amt="5643.21" b_name="Bashirian, Frami and Willms" b_job_title_tp_c="Human Infrastructure Manager" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="8" b_years_at_job="38" employment_tp_c="CURR" />
+          <app_prod_bcard pd_tp_c="SC3" card_decision_tp_c="DECNC" />
+        </contact>
+        <rmts_info primary_first_name="" primary_last_name="" transmission_date="2022-9-21 13:59:23.314" />
+        <TempVariables Env_c="1" unused="" />
+        <app_product regb_start_date="2022-9-21 0:0:0.0" regb_end_date="2023-09-15" supervisor_rev_ind="N" pending_verif_ind="N" decision_tp_c="DECNC" decision_date="2023-9-15 12:54:36.846" regbcloseddays_num="359" analyst_rev_ind="N" />
+        <comments comment_seq_number="1" comment="Application not decisioned within 15 days.  Referred to Supervisor." user_id="System" time_stamp="2023-2-15 15:00:53.920" />
+        <letters seq_no="1" letter_type_cd="940" date_sent="08/04/2023" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" cb_disclosure_suppress="Y" cb_score_suppress="Y" letter_sent_ind="Y" comm_duplicate="Y" />
+        <communications>
+          <communication comm_id="5786" bureau_id="" bureau_score="" bureau_score_date="" letter_type_code="940" reason_type_1="" reason_type_2="" reason_type_3="" reason_type_4="" reason_code_1="" reason_code_2="" reason_code_3="" reason_code_4="" reason_text_1="" reason_text_2="" reason_text_3="" reason_text_4="" score_factor_code_1="" score_factor_code_2="" score_factor_code_3="" score_factor_code_4="" score_factor_code_5="" score_factor_text_1="" score_factor_text_2="" score_factor_text_3="" score_factor_text_4="" score_factor_text_5="" bureau_no_disclosure_flag="true" bureau_no_score_flag="true" temp_hold_flag="false">
+            <deliveries>
+              <delivery delivery_id="5601" delivery_method="letter" sent_date="2023-8-4 11:13:53.608" response_date="" response_detail="" />
+            </deliveries>
+          </communication>
+        </communications>
+      </application>
+    </CustData>
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2022-9-21 13:59:23.316" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2022-9-21 13:59:23.498" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-8-4 11:13:53.608" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-8-4 11:23:34.687" Status="Pass" />
+      <Journal UserID="MAC" Type="DECLN" ID="416602" Timestamp="2023-9-15 12:54:36.846" Status="" />
+    </Journals>
+    <Messages>
+      <Message Timestamp="2023-5-11 14:22:46.93" Source="WebService.Outsystems.BankCard PUT Application.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 405" />
+    </Messages>
+  </Request>
+</Provenir>

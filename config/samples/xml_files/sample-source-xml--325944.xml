@@ -1,0 +1,1443 @@
+﻿<Provenir ID="325944" Org="" sessionID="" stack="" Version="" ProductType="" error="" x-trace-id="From Postman" action="" app_source="API" transactionID="7198" errorCode="0" status="pass validation" appType="CC" shred_version="62.0">
+  <Request ID="325944" UserID="" Workflow="" Timestamp="" Status="P" Trans="LetterCallUs" Readonly="0" Process="03010" Version="" Priority="" Timeout="" Trace="" LockedBy="" iovation_sessionid="f2eb3482-b7e8-400f-a036-b5f82e6176f6" iovation_blackbox="hello lovely" triggerFinicity="N" triggerNova="" triggerQA="N" btcardtoken="" btresponsecode="" useAlloyService="1" _LockedBy="" LockedAt="" LastUpdatedBy="JOSHUA.RAMSEY@MERRICKBANK.COM">
+    <CustData>
+      <application app_type_code="PRODB" procs_date="2025-06-12 18:56:50.031" app_receive_date="2025-06-12 18:56:49.968" last_update_time="2025-09-05 15:36:33.379" signature_ind="Y" coupon_expiration_date="" name_match_flag="" address_match_flag="" ssn_match_flag="" pricing_tier="59" solicitation_num="ALLOY000311Z" pymnt_prot_plan_ind="" credit_life_ind="" campaign_num="Z3G" app_entry_date="06/12/2025" swiftpay_num="" mail_cell_pricing="ZGAX6FN115" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" app_channel="" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="1" CPS_letter_sent_flag="" population_assignment="DN" verification_source="" EODRet="WEBAPP" processing_expiration_date="" solicitation_locked="" secure_ach_amount="" IP_address="150.2.243.13" EXPinNumber="" assignedTo="jasen.haslund@merrickbank.com" updatedBy="" priority="" paperless_flag="true" sms_consent_flag="true">
+        <app_product decision_tp_c="" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="N" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="Y" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="Y" csi_eligibility_ind="" monthly_debt="" monthly_income="12500" precision_score="" experian_fico_score="" prescreen_fico_score="800" prescreen_risk_score="399" risk_model_score="" prescreen_risk_grade="A" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="N" bank_debt_to_income_ratio="" regb_start_date="2025-6-12 18:56:49.0" regb_end_date="" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" decision_score="" decision_model="" />
+        <contact con_id="522681" ac_role_tp_c="PR" title="" first_name="SARA" initials="" last_name="DAVIS" suffix="" ssn="666388850" email="bob.davis@merrickbank.com" birth_date="05/10/1978" mother_maiden_name="Kuhn" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="" age="" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="1250" accnt_type_ind="" card_decision_tp_c="" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="2500" />
+          <contact_address residence_monthly_pymnt="0.00" address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_unit="" city="WEST JORDAN" rural_route="" state="UT" po_box="" street_name="W STONE MEADOW DR" street_number="1425" unit="" cell_phone="5102811111" address_line_1="" zip="00011" Patriot_Act_zip="" />
+          <contact_employment b_unit="" b_zip="" b_state="" b_street_name="" b_street_number="" b_salary="75000.00" b_city="" b_other_income_amt="0" b_name="Feeney - Howe" b_job_title_tp_c="Dynamic Accounts Producer" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="5" b_years_at_job="3" b_primary_income_source_tp_c="EMPLOY" b_salary_basis_tp_c="ANNUM" b_othr_inc_basis_tp_c="ANNUM" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="2025-06-12 18:56:50.063" campaign_number="Z3G" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="SARA" primary_middle_name="" primary_last_name="DAVIS" primary_suffix="" primary_ssn="66388856" pri_cur_street_num="1425" pri_cur_street_name="W STONE MEADOW DR" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="WEST JORDAN" pri_state="UT" pri_zip_code="84088" special_flag_5="R" special_flag_6="A" special_flag_7="A" special_flag_8="A" aaa_misc_field_4="" misc_field_6="" upc8="800" upc9="" upc10="800" upc12="" CB_prescreen_birth_date="06/09/1978" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" minimum_interest_charge="0" account_setup_fee="0" additional_card_fee="0" late_payment_fee="40" over_limit_fee="0" returned_payment_fee="0" apr="34.70" annual_fee="0" cash_advance_apr="35.00" cash_advance_fee="10" cash_advance_percent="4" cash_apr_margin="32.20" foreign_percent="0" intro_cash_advance_apr="0.09589" intro_purchase_apr="0.09506" min_payment_fee="35" min_payment_percent="1.00" purchase_apr_margin="27.20" seg_plan_version="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="03010" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="CreditBureauPulled" value="0" />
+          <Indicator ID="InternetResponsesOn" value="Y" />
+          <Indicator ID="AlloyJourneyStatus" value="pending_step_up" />
+          <Indicator ID="AlloyJourneyApplicationToken" value="JA-i0z7ZDjnGl4E36vU7zsV" />
+        </Indicators>
+        <scores />
+        <analytics>
+          <analytic analytic_id="alloy_score_socure_sigma_fraud" value="0.1" />
+          <analytic analytic_id="alloy_tag_CIP_Address_Not_Verified" value="true" />
+          <analytic analytic_id="alloy_tag_Phone_Match" value="true" />
+          <analytic analytic_id="alloy_tag_CIP_DOB_Verified" value="true" />
+          <analytic analytic_id="alloy_tag_CIP_Name_Verified" value="true" />
+          <analytic analytic_id="alloy_tag_CIP_SSN_Verified" value="true" />
+          <analytic analytic_id="alloy_tag_CIP_Review" value="true" />
+        </analytics>
+        <comments comment_seq_number="1" comment="Application not decisioned within 15 days.  Referred to Supervisor." user_id="System" time_stamp="2025-08-08 13:53:23.912" />
+        <communications>
+          <communication comm_id="28" bureau_id="" bureau_score="" bureau_score_date="" letter_type_code="940" reason_type_1="" reason_type_2="" reason_type_3="" reason_type_4="" reason_code_1="" reason_code_2="" reason_code_3="" reason_code_4="" reason_text_1="" reason_text_2="" reason_text_3="" reason_text_4="" score_factor_code_1="" score_factor_code_2="" score_factor_code_3="" score_factor_code_4="" score_factor_code_5="" score_factor_text_1="" score_factor_text_2="" score_factor_text_3="" score_factor_text_4="" score_factor_text_5="" bureau_no_disclosure_flag="true" bureau_no_score_flag="true" temp_hold_flag="false">
+            <deliveries>
+              <delivery delivery_id="28" delivery_method="letter" sent_date="" response_date="" response_detail="" />
+            </deliveries>
+          </communication>
+        </communications>
+      </application>
+    </CustData>
+    <Reports>
+      <AlloyJourney recent_outcome="null" closed_at="null" archived_at="null" sandbox="true" created_at="1749754656504" external_application_id="DEV-325944" complete_outcome="null" is_part_of_shadow_test="false" is_escalated="false" updated_at="1749754657244" is_archived="false" is_shadow_application="false" external_group_id="null" is_rerun="false" journey_application_status="Pending" journey_application_token="JA-i0z7ZDjnGl4E36vU7zsV" external_partner_id="null" status="pending_step_up" report_time="2025-06-12 18:56:51.125">
+        <_links>
+          <self href="/v1/journeys/J-3m9tReu9UD2xwba3Ea4b/applications/JA-i0z7ZDjnGl4E36vU7zsV" />
+        </_links>
+        <terminal_reconciliation_output />
+        <_embedded is_pending_additional_entities="false">
+          <journey journey_name="Walkthrough Journey" journey_type="application" journey_token="J-3m9tReu9UD2xwba3Ea4b" journey_version_num="15">
+            <_links>
+              <callback_by_entity_application_token>
+                <EA-dJIrAmU5nDW2pycLJw5R href="/v1/journeys/J-3m9tReu9UD2xwba3Ea4b/applications/JA-i0z7ZDjnGl4E36vU7zsV/" />
+              </callback_by_entity_application_token>
+              <self href="/v1/journeys/J-3m9tReu9UD2xwba3Ea4b" />
+              <callback href="/v1/journeys/J-3m9tReu9UD2xwba3Ea4b/applications/JA-i0z7ZDjnGl4E36vU7zsV/" />
+            </_links>
+          </journey>
+          <child_entities>
+            <ArrayElementObject entity_application_status="pending_step_up" entity_application_branch_name="persons" sandbox_persona_name="Trigger MB Rule - CIPADDR" external_entity_identifier="325944" created="2025-06-12T18:57:36.559Z" name="SARA DAVIS" entity_application_token="EA-dJIrAmU5nDW2pycLJw5R" entity_application_outcome="null" type="person" token="P-SePQHTKZ8HlQ3vtjkP3F" />
+          </child_entities>
+          <reruns />
+          <rerun />
+          <entity external_entity_identifier="null" name="null" type="group" token="G-MsDxFLZZh9QP1MlbBKUF" />
+          <events>
+            <ArrayElementObject journey_application_event_token="359443946" entity_application_token="null" type="started_application" entity_token="G-MsDxFLZZh9QP1MlbBKUF" journey_type="application" journey_application_token="JA-i0z7ZDjnGl4E36vU7zsV" timestamp="1749754656535">
+              <_embedded>
+                <node name="null" id="null" type="null" />
+              </_embedded>
+              <_links />
+            </ArrayElementObject>
+            <ArrayElementObject journey_application_event_token="359443947" evaluation_token="S-UvJBMjoTzW20HshMcbCe" entity_application_token="EA-dJIrAmU5nDW2pycLJw5R" type="started_evaluation" entity_token="P-SePQHTKZ8HlQ3vtjkP3F" journey_type="application" journey_application_token="JA-i0z7ZDjnGl4E36vU7zsV" timestamp="1749754656609">
+              <evaluation_tokens_sorted_by_created_dec>
+                <ArrayElementString>S-UvJBMjoTzW20HshMcbCe</ArrayElementString>
+              </evaluation_tokens_sorted_by_created_dec>
+              <_embedded>
+                <node workflow_name="Fraud &amp; CIP (Walkthrough)" name="Fraud &amp; CIP (Walkthrough)" id="b8b86b08-548c-4f7a-b4e5-edf761d9d005" type="workflow">
+                  <config application_version_id="13" workflow_current_version="13" application_token="pv9J5XUEb1eVr5OfJpFJf6Zad81MonUB" workflow_version_id="13" workflow_type="person" workflow_token="pv9J5XUEb1eVr5OfJpFJf6Zad81MonUB" />
+                </node>
+              </_embedded>
+              <_links>
+                <evaluation href="/v1/evaluations/S-UvJBMjoTzW20HshMcbCe" />
+              </_links>
+            </ArrayElementObject>
+            <ArrayElementObject evaluation_token="S-UvJBMjoTzW20HshMcbCe" type="completed_evaluation" journey_application_event_token="359443948" entity_application_token="EA-dJIrAmU5nDW2pycLJw5R" entity_token="P-SePQHTKZ8HlQ3vtjkP3F" journey_type="application" journey_application_token="JA-i0z7ZDjnGl4E36vU7zsV" outcome="Step Up Required" timestamp="1749754657192">
+              <_links>
+                <evaluation href="/v1/evaluations/S-UvJBMjoTzW20HshMcbCe" />
+              </_links>
+              <evaluation_data_by_evaluation_token>
+                <S-UvJBMjoTzW20HshMcbCe status_code="201" group_token="G-MsDxFLZZh9QP1MlbBKUF" champion_challenger_id="null" evaluation_token="S-UvJBMjoTzW20HshMcbCe" error="null" application_version_id="13" parent_entity_token="null" audit_archive="null" application_token="pv9J5XUEb1eVr5OfJpFJf6Zad81MonUB" entity_token="P-SePQHTKZ8HlQ3vtjkP3F" timestamp="1749754657130">
+                  <summary result="success" score="0.77" alloy_fraud_score="null" outcome="Step Up Required">
+                    <custom_fields skip_lexis_nexis="false" />
+                    <services Lexis__Nexis__Instant__ID="executed" Iovation="executed" Identity__Element__Velocity="executed" List="executed" Emailage="executed" Socure__30="executed" Sentilink="executed" />
+                    <outcome_reasons>
+                      <ArrayElementString>CIP Name Verified</ArrayElementString>
+                      <ArrayElementString>CIP Review</ArrayElementString>
+                    </outcome_reasons>
+                    <tags>
+                      <ArrayElementString>CIP Address Not Verified</ArrayElementString>
+                      <ArrayElementString>Phone Match</ArrayElementString>
+                      <ArrayElementString>CIP DOB Verified</ArrayElementString>
+                      <ArrayElementString>CIP Name Verified</ArrayElementString>
+                      <ArrayElementString>CIP SSN Verified</ArrayElementString>
+                      <ArrayElementString>CIP Review</ArrayElementString>
+                    </tags>
+                  </summary>
+                  <supplied income="12500.0" name_first="SARA" ip_address_v4="150.2.243.13" email_address="bob.davis@merrickbank.com" iovation_blackbox="hello lovely" birth_date="1978-05-10" phone_number="5102811111" name_last="DAVIS" document_ssn="666388850">
+                    <addresses>
+                      <ArrayElementObject line_1="1425 W STONE MEADOW DR" country_code="US" city="WEST JORDAN" state="UT" type="primary" postal_code="00011" />
+                    </addresses>
+                    <meta channel="MailOffer" />
+                    <application_meta channel="MailOffer" source_type="Online" skip_lexis_nexis="false" />
+                  </supplied>
+                  <formatted income="12500.0" name_first="SARA" ip_address_v4="150.2.243.13" address_postal_code="00011" address_country_code="US" birth_date="1978-05-10" address_state="UT" name_last="DAVIS" address_city="WEST JORDAN" email_address="bob.davis@merrickbank.com" iovation_blackbox="hello lovely" address_line_1="1425 W STONE MEADOW DR" phone_number="5102811111" age="47" document_ssn="666388850">
+                    <addresses>
+                      <ArrayElementObject line_1="1425 W STONE MEADOW DR" country_code="US" city="WEST JORDAN" state="UT" type="primary" postal_code="00011" />
+                    </addresses>
+                  </formatted>
+                  <matching average_score="0.77">
+                    <address score="0.49">
+                      <matched>
+                        <ArrayElementString>Socure 30</ArrayElementString>
+                      </matched>
+                      <unmatched>
+                        <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                      </unmatched>
+                    </address>
+                    <phone score="0.99">
+                      <matched>
+                        <ArrayElementString>Socure 30</ArrayElementString>
+                        <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                      </matched>
+                      <unmatched />
+                    </phone>
+                    <dob score="0.99">
+                      <matched>
+                        <ArrayElementString>Socure 30</ArrayElementString>
+                        <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                      </matched>
+                      <unmatched />
+                    </dob>
+                    <name score="0.66">
+                      <matched>
+                        <ArrayElementString>Socure 30</ArrayElementString>
+                        <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                      </matched>
+                      <unmatched>
+                        <ArrayElementString>Emailage</ArrayElementString>
+                      </unmatched>
+                    </name>
+                    <email score="0.49">
+                      <matched>
+                        <ArrayElementString>Socure 30</ArrayElementString>
+                      </matched>
+                      <unmatched>
+                        <ArrayElementString>Emailage</ArrayElementString>
+                      </unmatched>
+                    </email>
+                    <ssn score="0.99">
+                      <matched>
+                        <ArrayElementString>Socure 30</ArrayElementString>
+                        <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                      </matched>
+                      <unmatched />
+                    </ssn>
+                  </matching>
+                  <diligence identity_questions="null" financial="null" device="null">
+                    <fraud score="0.18" average_score="0.18">
+                      <sources>
+                        <Iovation normalized_score="0.5" raw_score="0" attribute="SureScore" />
+                        <Socure__30 normalized_score="0.03" raw_score="0.1" attribute="Sigma Fraud Score" />
+                        <Sentilink normalized_score="0" raw_score="0" attribute="Abuse score" />
+                      </sources>
+                      <flags />
+                    </fraud>
+                    <watchlists>
+                      <lists>
+                        <ArrayElementString>BES</ArrayElementString>
+                        <ArrayElementString>CFTC</ArrayElementString>
+                        <ArrayElementString>DTC</ArrayElementString>
+                        <ArrayElementString>EUDT</ArrayElementString>
+                        <ArrayElementString>FBI</ArrayElementString>
+                        <ArrayElementString>FCEN</ArrayElementString>
+                        <ArrayElementString>FAR</ArrayElementString>
+                        <ArrayElementString>IMW</ArrayElementString>
+                        <ArrayElementString>OFAC</ArrayElementString>
+                        <ArrayElementString>OCC</ArrayElementString>
+                        <ArrayElementString>OSFI</ArrayElementString>
+                        <ArrayElementString>PEP</ArrayElementString>
+                        <ArrayElementString>SDT</ArrayElementString>
+                        <ArrayElementString>UNNT</ArrayElementString>
+                        <ArrayElementString>BIS</ArrayElementString>
+                        <ArrayElementString>WBIF</ArrayElementString>
+                      </lists>
+                      <matches />
+                    </watchlists>
+                  </diligence>
+                  <formatted_responses>
+                    <Lexis__Nexis__Instant__ID>
+                      <data exactNameMatch="true" identity_theft_risk="1" dob_match_level="8">
+                        <reverse_phone name_first="THOMAS" address_state="VA" address_postal_code_last5="23220" name_last="NICHOLAS" address_city="RICHMOND" />
+                        <address commercial_mail="false" po_box="false" />
+                        <reverse_name_address phone_number="8043563199" />
+                        <watchlists sdt="false" fincen="false" unnt="false" fbi="false" ofac="0" bis="false" occ="false" eudt="false" bes="false" dtc="false" imw="false" osfi="false" far="false" pep="0" cftc="false" wbif="false" />
+                        <followup_codes />
+                        <risk_codes />
+                        <verification name_first_address_ssn="true" name_first_address="true" name_first_ssn="true" dob_month="true" name_first_address_phone="true" name_first_phone="true" name_first_last_phone="true" address_ssn="true" name_first_last="true" name_first_last_address="true" name_last_address="true" dob_year="true" name_first_last_address_ssn="true" name_last_phone="true" name_first_last_address_phone="true" name_last_address_phone="true" name_last_address_ssn="true" name_first_last_ssn="true" name_last_ssn="true" address_phone="true" dob_day="true" />
+                        <ssn issuance_start_date="1977-01-1" issuance_end_date="1979-12-1" issuance_state="VIRGINIA" />
+                      </data>
+                      <matching>
+                        <address score="0" matched="false" />
+                        <phone score="1" matched="true" />
+                        <dob score="1" matched="true" />
+                        <name score="1" matched="true" />
+                        <ssn score="1" matched="true" />
+                      </matching>
+                      <diligence identity_questions="null">
+                        <fraud score="null" flags="null" />
+                        <financial credit="null" banking="null" />
+                        <watchlists>
+                          <lists>
+                            <ArrayElementString>BES</ArrayElementString>
+                            <ArrayElementString>CFTC</ArrayElementString>
+                            <ArrayElementString>DTC</ArrayElementString>
+                            <ArrayElementString>EUDT</ArrayElementString>
+                            <ArrayElementString>FBI</ArrayElementString>
+                            <ArrayElementString>FCEN</ArrayElementString>
+                            <ArrayElementString>FAR</ArrayElementString>
+                            <ArrayElementString>IMW</ArrayElementString>
+                            <ArrayElementString>OFAC</ArrayElementString>
+                            <ArrayElementString>OCC</ArrayElementString>
+                            <ArrayElementString>OSFI</ArrayElementString>
+                            <ArrayElementString>PEP</ArrayElementString>
+                            <ArrayElementString>SDT</ArrayElementString>
+                            <ArrayElementString>UNNT</ArrayElementString>
+                            <ArrayElementString>BIS</ArrayElementString>
+                            <ArrayElementString>WBIF</ArrayElementString>
+                          </lists>
+                          <matches />
+                        </watchlists>
+                      </diligence>
+                    </Lexis__Nexis__Instant__ID>
+                    <Iovation>
+                      <data num_times_device_seen_by_alloy="0" mobile_system_carrier_country_code="US" devicebbage="0" longitude_coordinate="0" days_since_device_first_seen_by_alloy="0" _3rd_party_os="false" real_ip_country_code="US" result_exists="true" device_browser_language="ES-US" realipaddress_loc_region="" iovation_mobile_system_simulator="0" mobile_system_network_operator_country="US" device_information_not_provided="false" latitude_coordinate="0" ip_address_country_lob="false" score_number="0" accounts_per_device="false" device_alias="410576478044459999" real_ip_country="UNITED STATES" days_since_first_seen="1">
+                        <realipaddress>
+                          <loc city="" />
+                        </realipaddress>
+                      </data>
+                    </Iovation>
+                    <Identity__Element__Velocity>
+                      <data>
+                        <decision>
+                          <entities>
+                            <ip_address_v4 _30_days="0" />
+                            <email_address _30_days="0" />
+                            <ssn _30_days="1" />
+                          </entities>
+                        </decision>
+                      </data>
+                    </Identity__Element__Velocity>
+                    <List>
+                      <data confidence="1" full_business_address_match_max_score="0" />
+                      <matching>
+                        <ip_address_v6 score="0" matched="false" />
+                        <ip_address_v4 score="0" matched="false" />
+                        <security_question score="0" matched="false" />
+                        <business_fein score="0" matched="false" />
+                        <address_country_code score="0" matched="false" />
+                        <external_counterparty_id score="0" matched="false" />
+                        <address_state score="0" matched="false" />
+                        <security_qa score="0" matched="false" />
+                        <business_address_city score="0" matched="false" />
+                        <name_last score="0" matched="false" />
+                        <business_address_country_code score="0" matched="false" />
+                        <ssn score="0" matched="false" />
+                        <digital_profile_uuid score="0" matched="false" />
+                        <business_address_state score="0" matched="false" />
+                        <security_answer score="0" matched="false" />
+                        <external_entity_id score="0" matched="false" />
+                        <document_national_id score="0" matched="false" />
+                        <business_type score="0" matched="false" />
+                        <address_line_1 score="0" matched="false" />
+                        <address_line_2 score="0" matched="false" />
+                        <business_registry_id score="0" matched="false" />
+                        <session_uuid score="0" matched="false" />
+                        <email score="0" matched="false" />
+                        <business_address_postal_code score="0" matched="false" />
+                        <fingerprint_uuid score="0" matched="false" />
+                        <name_first score="0" matched="false" />
+                        <business_name score="0" matched="false" />
+                        <address score="0" matched="false" />
+                        <alt_phone_number score="0" matched="false" />
+                        <address_postal_code score="0" matched="false" />
+                        <entity_and_counterparty score="0" matched="false" />
+                        <funding_account score="0" matched="false" />
+                        <name_and_dob score="0" matched="false" />
+                        <business_external_identifier score="0" matched="false" />
+                        <routing_number score="0" matched="false" />
+                        <smart_uuid score="0" matched="false" />
+                        <address_city score="0" matched="false" />
+                        <name_middle score="0" matched="false" />
+                        <business_address_line_2 score="0" matched="false" />
+                        <business_address_line_1 score="0" matched="false" />
+                        <name_and_dob_and_ssn score="0" matched="false" />
+                        <phone score="0" matched="false" />
+                        <dob score="0" matched="false" />
+                        <name score="0" matched="false" />
+                        <email_domain score="0" matched="false" />
+                        <mothers_maiden_name score="0" matched="false" />
+                        <device_alias score="0" matched="false" />
+                      </matching>
+                    </List>
+                    <Socure__30>
+                      <data error_message="&quot;&quot;" error_message_type_2="&quot;&quot;" watchlist_handler_error="false">
+                        <reasonCodes />
+                        <global_watchlist r180="false" r185="false" r186="false" r181="false" r182="false" r183="false" r184="false" />
+                        <fraudScores sigma="0.1" sigmaFirstParty="0.686" sigmaSynthetic="0.1" generic="0.1" />
+                        <eCBSV R998="false" R999="false" I999="true" R996="false" R997="false" I998="true" />
+                        <socure>
+                          <prefill ssnFirst5="5" />
+                        </socure>
+                        <rules>
+                          <reason_codes R653="false" R610="false" R561="false" />
+                        </rules>
+                        <http_status error="false" message="" status="success" />
+                        <kycValidation zip="true" firstName="true" surName="true" streetAddress="true" city="true" dob="true" mobileNumber="true" state="true" ssn="true" />
+                        <watchLists domesticPEP="0" adverse_media_max_correlation_score="100" adverseMedia="0" internationalOFAC="0" domesticOFAC="0" ofac_sdn_max_correlation_score="100" FinCEN_311_Special_Measures_list_max_matchScore="0" enforcement="0" adverseMedia_Consolidated_list_max_matchScore="0" ofac="0" ofac_consolidated_max_correlation_score="100" OFAC_Consolidated_list_max_matchScore="0" pep_max_correlation_score="0" OFAC_SDN_list_max_matchScore="0" united_nations_consolidated_max_correlation_score="100" Cuban_Restricted_Entities_list_max_matchScore="0" internationalPEP="0" />
+                      </data>
+                      <matching>
+                        <address score="0.99" matched="true" />
+                        <phone score="0.99" matched="true" />
+                        <dob score="0.99" matched="true" />
+                        <name score="0.99" matched="true" />
+                        <email score="0.99" matched="true" />
+                        <ssn score="0.99" matched="true" />
+                      </matching>
+                    </Socure__30>
+                    <Emailage>
+                      <data days_since_email_first_verified="5861" has_EAReasonVelocityLevel="false" emailage_lastflaggedon_less_than_12months="true" domaincountryname="" ipNotFound="true" emailage_source_industry="" domainrelevantinfoID="501" />
+                      <matching>
+                        <name score="0" matched="false" />
+                        <email score="0" matched="false" />
+                      </matching>
+                    </Emailage>
+                    <Sentilink>
+                      <data years_since_filing_date="-1" error="false">
+                        <reasonCodes>
+                          <moreFraudyCodes />
+                          <lessFraudyCodes />
+                          <allReasonCodes />
+                        </reasonCodes>
+                        <scores sentilink_id_theft_score="0" sentilink_third_party_synthetic_score="0" sentilink_abuse_score="0" sentilink_first_party_synthetic_score="0" />
+                        <sentilink stringified_response="" />
+                        <consumer_history number_of_ssns="1" shared_ssn_count="0" />
+                      </data>
+                    </Sentilink>
+                  </formatted_responses>
+                  <related_data>
+                    <social>
+                      <ArrayElementObject id="dog" type="Facebook" url="https://www.facebook.com/dog" />
+                      <ArrayElementObject id="dog" type="Google Plus" url="https://plus.google.com/dog" />
+                    </social>
+                  </related_data>
+                  <meta channel="MailOffer" />
+                  <raw_responses>
+                    <Lexis__Nexis__Instant__ID>
+                      <ArrayElementObject>
+                        <response>
+                          <Header Status="0" TransactionId="0" />
+                          <Result AdditionalScore2="0" UniqueId="1567805191" AdditionalScore1="0" InstantIDVersion="1" AddressCMRA="false" PhoneOfNameAddress="8043563199" PassportValidated="false" NameAddressSSNSummary="12" DOBMatchLevel="8" DOBVerified="true" SSNFoundForLexID="true" AddressPOBox="false">
+                            <VerifiedInput HomePhone="8043563199" SSN="61252xxxx">
+                              <Address StreetName="STUART" State="VA" Zip4="2186" StreetNumber="3000" UnitDesignation="APT" City="RICHMOND" UnitNumber="1" Zip5="23220" StreetSuffix="AVE" StreetAddress1="3000 STUART AVE" />
+                              <DOB Month="04" Year="1986" Day="XX" />
+                              <Name Last="NICHOLAS" First="THOMAS" />
+                            </VerifiedInput>
+                            <ComprehensiveVerification ComprehensiveVerificationIndex="50">
+                              <RiskIndicators>
+                                <RiskIndicator />
+                              </RiskIndicators>
+                              <PotentialFollowupActions>
+                                <FollowupAction>
+                                  <ArrayElementObject RiskCode="B" Description="Verify name with Social (via SSN card, DL if applicable, paycheck stub, or other Government Issued ID)" />
+                                  <ArrayElementObject RiskCode="C" Description="Verify name with Address (via DL, utility bill, Directory Assistance, paycheck stub, or other Government Issued ID)" />
+                                </FollowupAction>
+                              </PotentialFollowupActions>
+                            </ComprehensiveVerification>
+                            <InputEcho HomePhone="8043563199" SSN="612527378">
+                              <ApplicationDateTime Month="12" Year="2015" Minute="5" Second="2" Hour24="16" Day="16" />
+                              <OwnOrRent />
+                              <Passport MachineReadableLine2="" MachineReadableLine1="" Number="" Country="">
+                                <ExpirationDate />
+                              </Passport>
+                              <Address Zip5="23220" />
+                              <Channel />
+                              <Name Last="NICHOLAS" First="THOMAS" />
+                            </InputEcho>
+                            <SSNInfo Valid="G" IssuedLocation="VIRGINIA">
+                              <IssuedEndDate Month="12" Year="1979" />
+                              <IssuedStartDate Month="01" Year="1977" />
+                            </SSNInfo>
+                            <WatchLists>
+                              <WatchList />
+                            </WatchLists>
+                            <NameAddressPhone Summary="12" />
+                            <ReversePhone>
+                              <Address StreetName="STUART" State="VA" StreetNumber="300" UnitDesignation="APT" City="RICHMOND" UnitNumber="1" Zip5="23220" StreetSuffix="AVE" StreetAddress1="3000 STUART AVE APT 1" />
+                              <Name Last="NICHOLAS" First="THOMAS" />
+                            </ReversePhone>
+                            <CurrentName Last="NICHOLAS" First="THOMAS" />
+                            <ChronologyHistories>
+                              <ChronologyHistory>
+                                <ArrayElementObject IsBestAddress="true">
+                                  <Address StreetName="STUART" State="VA" Zip4="2186" StreetNumber="300" UnitDesignation="APT" City="RICHMOND" UnitNumber="1" Zip5="23220" StreetSuffix="AVE" StreetAddress1="3000 STUART AVE APT 1" />
+                                  <DateLastSeen Month="07" Year="2015" />
+                                  <DateFirstSeen Month="09" Year="2007" />
+                                </ArrayElementObject>
+                                <ArrayElementObject Phone="8043563199">
+                                  <Address State="MD" Zip4="4851" City="FORT WASHINGTON" Zip5="20749" StreetAddress1="PO BOX 44851" />
+                                  <DateLastSeen Month="07" Year="2013" />
+                                  <DateFirstSeen Month="02" Year="1999" />
+                                </ArrayElementObject>
+                                <ArrayElementObject Phone="8043563199">
+                                  <Address State="VA" Zip4="6495" City="FREDERICKSBURG" Zip5="22406" StreetAddress1="606 ENGLAND POINTE DR" />
+                                  <DateLastSeen Month="07" Year="2013" />
+                                  <DateFirstSeen Month="05" Year="2000" />
+                                </ArrayElementObject>
+                              </ChronologyHistory>
+                            </ChronologyHistories>
+                          </Result>
+                        </response>
+                      </ArrayElementObject>
+                    </Lexis__Nexis__Instant__ID>
+                    <Iovation>
+                      <ArrayElementObject mobile_dot_build_dot_product="IPHONE" reason="Other Subscriber Financial Evidence" ipaddress="127.0.0.1" device_dot_os="WINDOWS NT 5.1" device_dot_alias="159301833594571345" device_dot_type="MAC" ipaddress_dot_isp="CHARTER COMMUNICATIONS" mobile_dot_system_dot_carrierCountryCode="US" device_dot_firstseen="2016-03-22T22:16:30.769Z" device_dot_browser_dot_version="3.6.3" result="A" ruleset_dot_rulesmatched="0" realipaddress_dot_source="subscriber" registration_dot_check_dot_matchstatus="NONE_REGISTERED" trackingnumber="807429173349464111" device_dot_bb_dot_age="1000" registration_dot_check_dot_measureofchange="NONE" mlvalue1="0" mobile_dot_device_dot_charging="0" mobile_dot_system_dot_simulator="0" mobile_dot_location_dot_timezone="AMERICA/NEW_YORK" mobile_dot_device_dot_manufacturer="APPLE" device_dot_flash_dot_installed="1" device_dot_tz="-480" ipaddress_dot_loc_dot_region="NEW YORK" mobile_dot_system_dot_jailrootDetected="0" ruleset_dot_score="0" mobile_dot_app_dot_exeName="ABAPPONBOARDING" device_dot_browser_dot_configuredlang="EN-US,EN;Q=0.5" device_dot_screen="1240x768" device_dot_flash_dot_enabled="1" ipaddress_dot_loc_dot_countrycode="US" mobile_dot_build_dot_device="IPHONE" mobile_dot_device_dot_brand="APPLE" device_dot_bb_dot_timestamp="2010-06-01T14:43:21Z" device_dot_browser_dot_lang="EN-US" device_dot_flash_dot_version="10.2.4.0" realipaddress="127.0.0.1" mobile_dot_system_dot_localeCurrency="USD" mobile_dot_location_dot_enabled="1" device_dot_new="1" device_dot_cookie_dot_enabled="1" mobile_dot_device_dot_model="IPHONE 12" device_dot_js_dot_enabled="1" device_dot_browser_dot_type="FIREFOX" mobile_dot_system_dot_localeLang="EN_US">
+                        <rules jailbreak_root_detected="false" transactions_per_ip_address="false" ip_address_risk_50_percent="false" timezone_geolocation_mismatch="false" suspect_os="false" ip_address_country="false" suspect_device_data="false" geolocation_mismatch="false" isp_watch_list="false" mobile_emulator_detected="false" proxy_in_use="false" device_not_provided="false" non_US_IP="false" Device__Info__Not__Provided="false" transactions_per_device="false" evidence_exists_owned="false" ip_address_emea="false" tor_exit_node_ip="false" device_risk_global_50_percent="false" evidence_exists_non_owned="false" _3rd_party_device_info_not_provided="false" ip_address_mismatch="false" ip_address_distance_greater_800="false" RPS__Applications__per__IP__Address__2="false" invalid_blackbox="false" suspect_screen_resolution="false" device_risk_local_20_percent="false" />
+                        <mobile>
+                          <system carrier="T-MOBILE" networkOperatorName="T-MOBILE" />
+                        </mobile>
+                      </ArrayElementObject>
+                    </Iovation>
+                    <Identity__Element__Velocity>
+                      <ArrayElementObject>
+                        <data>
+                          <decision>
+                            <entities>
+                              <ip_address_v4 _30_days="0" />
+                              <email_address _30_days="0" />
+                              <ssn _30_days="1" />
+                            </entities>
+                          </decision>
+                        </data>
+                      </ArrayElementObject>
+                    </Identity__Element__Velocity>
+                    <List>
+                      <ArrayElementArray />
+                    </List>
+                    <Socure__30>
+                      <ArrayElementObject msg="" referenceId="12345" status="">
+                        <nameEmailCorrelation score="0.99">
+                          <reasonCodes />
+                        </nameEmailCorrelation>
+                        <kycPlus>
+                          <reasonCodes />
+                          <fieldValidations zip="0.99" firstName="0.99" surName="0.99" streetAddress="0.99" city="0.99" mobileNumber="0.99" dob="0.99" driverLicense="0.99" state="0.99" ssn="0.99" />
+                          <bestMatchedEntity firstName="SARA" surName="DAVIS" dob="1978-05-10" mobileNumber="+15102811111" middleName="Doc" suffix="Jr" ssn="666388850">
+                            <associatedAddresses>
+                              <ArrayElementObject zip="00011" firstSeenDate="2020-01-01" streetAddress="1425 W STONE MEADOW DR, Apt 2" city="WEST JORDAN" state="UT">
+                                <reasonCodes />
+                              </ArrayElementObject>
+                            </associatedAddresses>
+                            <normalizedAddress zip="00011" streetAddress="1425 W STONE MEADOW DR, Apt 2" city="WEST JORDAN" state="UT" />
+                            <associatedPhoneNumbers>
+                              <ArrayElementObject phoneNumber="+15102811111" type="landline" />
+                            </associatedPhoneNumbers>
+                          </bestMatchedEntity>
+                        </kycPlus>
+                        <firstPartyFraud>
+                          <reasonCodes />
+                          <signals>
+                            <achTransaction countACHTxnFraudCategoryOther="0" countACHTxnReturnCategoryBadStandingOriginatorAccount="0" totalReturnACHTxnAmount="8000" countFraudACHDebitTxns="0" countACHTxnFraudCategorySuspectedFPF="0" countACHTxnReturnCategoryError="0" countACHTxnFraudCategoryDelinquency="0" countReturnACHDebitTxns="0" countReturnACHTxns="6" countACHTxnReturnCategoryFraudulentActivity="0" countACHTxnFraudCategorySuspectedTPF="0" countReturnACHCreditTxns="6" countACHTxnReturnCategoryAccountNotFound="0" countFraudACHTxns="0" countFraudACHCreditTxns="0">
+                              <listReturnACHTxnDates>
+                                <ArrayElementString>20220216</ArrayElementString>
+                                <ArrayElementString>20220224</ArrayElementString>
+                                <ArrayElementString>20220615</ArrayElementString>
+                                <ArrayElementString>20220616</ArrayElementString>
+                              </listReturnACHTxnDates>
+                              <listFraudACHTxnDates />
+                              <listDaysBetweenReturnACHTxn>
+                                <ArrayElementInteger>1</ArrayElementInteger>
+                                <ArrayElementInteger>8</ArrayElementInteger>
+                                <ArrayElementInteger>111</ArrayElementInteger>
+                                <ArrayElementInteger>112</ArrayElementInteger>
+                                <ArrayElementInteger>119</ArrayElementInteger>
+                                <ArrayElementInteger>120</ArrayElementInteger>
+                              </listDaysBetweenReturnACHTxn>
+                              <listDaysToFraudACHTxn />
+                              <listDaysToReturnACHTxns>
+                                <ArrayElementInteger>338</ArrayElementInteger>
+                                <ArrayElementInteger>458</ArrayElementInteger>
+                                <ArrayElementInteger>457</ArrayElementInteger>
+                                <ArrayElementInteger>346</ArrayElementInteger>
+                              </listDaysToReturnACHTxns>
+                              <listDaysBetweenFraudACHTxn />
+                            </achTransaction>
+                            <application countApplicationDeclineReasonOther="1" countApplicationFraudCategoryDelinquency="0" countApplicationDeclineReasonSuspectedFPF="0" countApplicationFraudCategorySuspectedFPF="0" countDeclinedApplications="2" countApplicationFraud="0" countApplicationDeclineReasonSuspectedTPF="0" countApplicationFraudCategorySuspectedTPF="0" countApplicationFraudCategoryOther="0" countApprovedApplications="3" countApplications="9">
+                              <listApplicationDates>
+                                <ArrayElementString>20160602</ArrayElementString>
+                                <ArrayElementString>20210315</ArrayElementString>
+                              </listApplicationDates>
+                              <listDaysBetweenApplications>
+                                <ArrayElementInteger>3149</ArrayElementInteger>
+                              </listDaysBetweenApplications>
+                            </application>
+                            <checkTransaction countFraudCheckTxns="0" totalStopCheckTxnAmount="900" countCheckTxnFraudCategorySuspectedTPF="0" countCheckTxnReturnCategoryBadStandingOriginatorAccount="0" countStopCheckDebitTxns="0" countCheckTxnReturnCategoryError="1" countStopCheckCreditTxns="2" countCheckTxnReturnCategoryAccountNotFound="0" countCheckTxnReturnCategoryFraudulentActivity="0" countReturnCheckDebitTxns="0" countCheckTxnFraudCategoryOther="0" countCheckTxnFraudCategorySuspectedFPF="0" countFraudCheckCreditTxns="0" countCheckTxnReturnCategoryOther="0" countReturnCheckTxns="1" countReturnCheckCreditTxns="1" countCheckTxnReturnCategorySuspiciousActivity="0" countStopCheckTxns="2" countCheckTxnFraudCategoryDelinquency="0" totalReturnCheckTxnAmount="250">
+                              <listDaysBetweenFraudCheckTxn />
+                              <listStopCheckTxnDates>
+                                <ArrayElementString>20210304</ArrayElementString>
+                                <ArrayElementString>20210305</ArrayElementString>
+                              </listStopCheckTxnDates>
+                              <listDaysToStopCheckTxn />
+                              <listDaysBetweenReturnCheckTxn />
+                              <listDaysToFraudCheckTxn />
+                              <listDaysBetweenStopCheckTxn>
+                                <ArrayElementInteger>1</ArrayElementInteger>
+                              </listDaysBetweenStopCheckTxn>
+                              <listDaysToReturnCheckTxn />
+                              <listReturnCheckTxnDates>
+                                <ArrayElementString>20210310</ArrayElementString>
+                              </listReturnCheckTxnDates>
+                              <listFraudCheckTxnDates />
+                            </checkTransaction>
+                            <cardTransaction countCardTxnDisputeOutcomeNotGranted="24" countCardTxnFraudCategoryOther="0" countDisputeCardDomesticTxns="0" countStopCardTxns="0" countDisputeCardInternationalTxns="0" countCardTxnDisputeCategoryAuthorized="26" countFraudCardTxns="0" totalDisputeCardTxnAmount="7220.62" countFraudCardInternationalTxns="0" countFraudCardDomesticTxns="0" countDisputeCardTxns="26" countCardTxnDisputeOutcomeGranted="2" countCardTxnDisputeCategoryUnauthorized="0" countCardTxnDisputeOutcomeOther="0">
+                              <listDaysBetweenStopCardTxn />
+                              <listDaysBetweenFraudCardTxn />
+                              <listStopCardTxnDates />
+                              <listDaysToStopCardTxn />
+                              <listDisputeCardTxnDates>
+                                <ArrayElementString>20200411</ArrayElementString>
+                                <ArrayElementString>20210818</ArrayElementString>
+                              </listDisputeCardTxnDates>
+                              <listFraudCardTxnDates />
+                              <listDaysToFraudCardTxn />
+                              <listDaysBetweenDisputeCardTxn>
+                                <ArrayElementInteger>494</ArrayElementInteger>
+                              </listDaysBetweenDisputeCardTxn>
+                              <listDaysToDisputeCardTxn />
+                            </cardTransaction>
+                            <identity countDistinctState="3" countDistinctZip="7" countDistinctMobileNumber="5" countInstitutions="9" countDistinctSurName="2" countUniqueUsers="11" countDistinctDOB="1" countDistinctPhysicalAddress="11" countDistinctFirstName="2" countDistinctCity="7" countDistinctEmail="4" />
+                            <account countClosedAccountUserRequest="1" countAccountFraudCategorySuspectedFPF="2" countAccountStatusActive="4" countAccountStatusClosed="8" countFraudAccounts="3" countAccountsWithFraudLoss="2" countAccountFraudCategoryDelinquency="1" countAccountFraudCategorySuspectedTPF="0" countAccountFraudCategoryOther="0" countAccounts="12" totalAccountFraudLossAmount="4328.71">
+                              <listFraudLabeledAccountDates>
+                                <ArrayElementString>20201003</ArrayElementString>
+                                <ArrayElementString>20220812</ArrayElementString>
+                              </listFraudLabeledAccountDates>
+                              <listAccountClosedDates>
+                                <ArrayElementString>20180927</ArrayElementString>
+                                <ArrayElementString>20201003</ArrayElementString>
+                              </listAccountClosedDates>
+                              <listDaysBetweenAccountOpening>
+                                <ArrayElementInteger>1857</ArrayElementInteger>
+                              </listDaysBetweenAccountOpening>
+                              <listDaysToFraudLabeledAccount>
+                                <ArrayElementInteger>176</ArrayElementInteger>
+                                <ArrayElementInteger>619</ArrayElementInteger>
+                                <ArrayElementInteger>515</ArrayElementInteger>
+                              </listDaysToFraudLabeledAccount>
+                              <listDaysToAccountClosure>
+                                <ArrayElementInteger>515</ArrayElementInteger>
+                                <ArrayElementInteger>549</ArrayElementInteger>
+                              </listDaysToAccountClosure>
+                              <listDaysBetweenAccountLabeledFraud>
+                                <ArrayElementInteger>678</ArrayElementInteger>
+                              </listDaysBetweenAccountLabeledFraud>
+                              <listAccountOpenDates>
+                                <ArrayElementString>20170327</ArrayElementString>
+                                <ArrayElementString>20190123</ArrayElementString>
+                              </listAccountOpenDates>
+                              <listDaysBetweenAccountClosures>
+                                <ArrayElementInteger>1944</ArrayElementInteger>
+                              </listDaysBetweenAccountClosures>
+                            </account>
+                          </signals>
+                          <scores>
+                            <ArrayElementObject score="0.686" name="Identity Manipulation" version="1.0" />
+                          </scores>
+                        </firstPartyFraud>
+                        <addressRisk score="0">
+                          <reasonCodes />
+                        </addressRisk>
+                        <social>
+                          <reasonCodes />
+                          <profilesFound>
+                            <ArrayElementString>https://gravatar.com/dog</ArrayElementString>
+                            <ArrayElementString>http://vimeo.com/dog</ArrayElementString>
+                            <ArrayElementString>https://www.facebook.com/dog</ArrayElementString>
+                            <ArrayElementString>https://plus.google.com/dog</ArrayElementString>
+                          </profilesFound>
+                        </social>
+                        <prefill zip="00011" firstName="John" surName="Smith" streetAddress="1425 W STONE MEADOW DR, Apt 2" city="WEST JORDAN" dob="1978-05-10" middleName="Doc" state="UT" suffix="Jr">
+                          <associatedAddresses>
+                            <ArrayElementObject zip="00011" streetAddress="1425 W STONE MEADOW DR" city="WEST JORDAN" state="UT" />
+                            <ArrayElementObject zip="00011" streetAddress="1425 W STONE MEADOW DR" city="WEST JORDAN" state="UT" />
+                            <ArrayElementObject zip="00011" streetAddress="1425 W STONE MEADOW DR" city="WEST JORDAN" state="UT" />
+                          </associatedAddresses>
+                        </prefill>
+                        <emailRisk score="0">
+                          <reasonCodes />
+                        </emailRisk>
+                        <alertList>
+                          <reasonCodes />
+                          <matches />
+                        </alertList>
+                        <deviceRisk score="0">
+                          <reasonCodes />
+                        </deviceRisk>
+                        <error msg="&quot;&quot;" />
+                        <synthetic>
+                          <scores>
+                            <ArrayElementObject score="0.1" name="synthetic" version="1.0" />
+                          </scores>
+                        </synthetic>
+                        <nameAddressCorrelation score="0.99">
+                          <reasonCodes />
+                        </nameAddressCorrelation>
+                        <kyc>
+                          <reasonCodes />
+                          <fieldValidations zip="0.99" firstName="0.99" surName="0.99" streetAddress="0.99" city="0.99" mobileNumber="0.99" dob="0.99" driverLicense="0.99" state="0.99" ssn="0.99" />
+                        </kyc>
+                        <phoneRisk score="0">
+                          <reasonCodes />
+                        </phoneRisk>
+                        <accountIntelligence>
+                          <reasonCodes />
+                          <account ownershipScore="1" availabilityScore="1" />
+                        </accountIntelligence>
+                        <fraud>
+                          <reasonCodes />
+                          <scores>
+                            <ArrayElementObject score="0.1" name="generic" version="3.0" />
+                            <ArrayElementObject score="0.1" name="sigma" version="3.0" />
+                          </scores>
+                        </fraud>
+                        <watchlist>
+                          <reasonCodes />
+                        </watchlist>
+                        <namePhoneCorrelation score="0.99">
+                          <reasonCodes />
+                        </namePhoneCorrelation>
+                      </ArrayElementObject>
+                    </Socure__30>
+                    <Emailage>
+                      <ArrayElementObject country="US" domaincategory="Webmail" firstVerificationDate="2009-05-25T23:44:00Z" ip_riskreasonid="311" ip_continentCode="" ipdistancekm="10" EARiskBand="Fraud Score 1 to 100" emailAge="2009-05-25T23:44:00Z" source_industry="null" domainrisklevel="Moderate" smfriends="121" ipdomain="" eName="Sandbox+User" totalhits="32" ip_countryCode="" domainname="gmail.com" EAReasonID="14" domainrisklevelID="3" ip_corporateProxy="" dob="" status="Verified" ipriskcountry="" ipcountrymatch="" gender="male" domaincorporate="no" ip_netSpeedCell="broadband" fraudRisk="088 Very Low" domainrelevantinfo="&quot;&quot;" ip_country="" uniquehits="1" title="Sandbox+User" ip_userType="wifi" ip_org="" EAReason="Email Created at least 6.2 Years Ago" ipasnum="" domainExists="Yes" ip_reputation="Good" EAStatusID="2" EAAdviceID="3" company="Sandbox+Company" domaincompany="Alloy" ip_anonymousdetected="No" email="bob.davis%40merrickbank.com" fraud_type="&quot;&quot;" ip_risklevelid="1" EARiskBandID="1" emailExists="Yes" ip_isp="" EAScore="88" ipdistancemil="10" domaincountryname="United States" imageurl="http%3a%2f%2fwww.emailage.com%2fEmailAgeImage%2fcvYbawVv1rg3YyjMqKEUlpsZXM5xltKl8a3ebEcl5XqAMtOnv8Ls3sh5Bp8EPwBl.png" location="Sandbox%2c+NY" lastVerificationDate="2025-06-12T18:57:37.020Z" EAAdvice="Lower Fraud Risk" domainrelevantinfoID="408" domainAge="1995-08-13T07:00:00Z">
+                        <smlinks>
+                          <ArrayElementObject link="https://www.facebook.com/888888888" source="Facebook" />
+                        </smlinks>
+                      </ArrayElementObject>
+                    </Emailage>
+                    <Sentilink>
+                      <ArrayElementObject transaction_id="" environment="SANDBOX" notes="" customer_id="123456789" application_id="123" timestamp="2019-10-18T16:10:48.167669899Z" latency_ms="131">
+                        <scores>
+                          <ArrayElementObject score="0" name="sentilink_abuse_score" version="1.3.1" />
+                          <ArrayElementObject score="0" name="sentilink_first_party_synthetic_score" version="1.3.1" />
+                          <ArrayElementObject score="0" name="sentilink_third_party_synthetic_score" version="1.3.1" />
+                          <ArrayElementObject score="0" name="sentilink_abuse_score" version="3.1.4" />
+                          <ArrayElementObject score="0" name="sentilink_id_theft_score" version="3.1.4" />
+                        </scores>
+                      </ArrayElementObject>
+                    </Sentilink>
+                  </raw_responses>
+                </S-UvJBMjoTzW20HshMcbCe>
+              </evaluation_data_by_evaluation_token>
+              <evaluation_tokens_sorted_by_created_dec>
+                <ArrayElementString>S-UvJBMjoTzW20HshMcbCe</ArrayElementString>
+              </evaluation_tokens_sorted_by_created_dec>
+              <evaluation_result status_code="201" group_token="G-MsDxFLZZh9QP1MlbBKUF" champion_challenger_id="null" evaluation_token="S-UvJBMjoTzW20HshMcbCe" error="null" application_version_id="13" parent_entity_token="null" audit_archive="null" application_token="pv9J5XUEb1eVr5OfJpFJf6Zad81MonUB" entity_token="P-SePQHTKZ8HlQ3vtjkP3F" timestamp="1749754657130">
+                <summary result="success" score="0.77" alloy_fraud_score="null" outcome="Step Up Required">
+                  <custom_fields skip_lexis_nexis="false" />
+                  <services Lexis__Nexis__Instant__ID="executed" Iovation="executed" Identity__Element__Velocity="executed" List="executed" Emailage="executed" Socure__30="executed" Sentilink="executed" />
+                  <outcome_reasons>
+                    <ArrayElementString>CIP Name Verified</ArrayElementString>
+                    <ArrayElementString>CIP Review</ArrayElementString>
+                  </outcome_reasons>
+                  <tags>
+                    <ArrayElementString>CIP Address Not Verified</ArrayElementString>
+                    <ArrayElementString>Phone Match</ArrayElementString>
+                    <ArrayElementString>CIP DOB Verified</ArrayElementString>
+                    <ArrayElementString>CIP Name Verified</ArrayElementString>
+                    <ArrayElementString>CIP SSN Verified</ArrayElementString>
+                    <ArrayElementString>CIP Review</ArrayElementString>
+                  </tags>
+                </summary>
+                <supplied income="12500.0" name_first="SARA" ip_address_v4="150.2.243.13" email_address="bob.davis@merrickbank.com" iovation_blackbox="hello lovely" birth_date="1978-05-10" phone_number="5102811111" name_last="DAVIS" document_ssn="666388850">
+                  <addresses>
+                    <ArrayElementObject line_1="1425 W STONE MEADOW DR" country_code="US" city="WEST JORDAN" state="UT" type="primary" postal_code="00011" />
+                  </addresses>
+                  <meta channel="MailOffer" />
+                  <application_meta channel="MailOffer" source_type="Online" skip_lexis_nexis="false" />
+                </supplied>
+                <formatted income="12500.0" name_first="SARA" ip_address_v4="150.2.243.13" address_postal_code="00011" address_country_code="US" birth_date="1978-05-10" address_state="UT" name_last="DAVIS" address_city="WEST JORDAN" email_address="bob.davis@merrickbank.com" iovation_blackbox="hello lovely" address_line_1="1425 W STONE MEADOW DR" phone_number="5102811111" age="47" document_ssn="666388850">
+                  <addresses>
+                    <ArrayElementObject line_1="1425 W STONE MEADOW DR" country_code="US" city="WEST JORDAN" state="UT" type="primary" postal_code="00011" />
+                  </addresses>
+                </formatted>
+                <matching average_score="0.77">
+                  <address score="0.49">
+                    <matched>
+                      <ArrayElementString>Socure 30</ArrayElementString>
+                    </matched>
+                    <unmatched>
+                      <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                    </unmatched>
+                  </address>
+                  <phone score="0.99">
+                    <matched>
+                      <ArrayElementString>Socure 30</ArrayElementString>
+                      <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                    </matched>
+                    <unmatched />
+                  </phone>
+                  <dob score="0.99">
+                    <matched>
+                      <ArrayElementString>Socure 30</ArrayElementString>
+                      <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                    </matched>
+                    <unmatched />
+                  </dob>
+                  <name score="0.66">
+                    <matched>
+                      <ArrayElementString>Socure 30</ArrayElementString>
+                      <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                    </matched>
+                    <unmatched>
+                      <ArrayElementString>Emailage</ArrayElementString>
+                    </unmatched>
+                  </name>
+                  <email score="0.49">
+                    <matched>
+                      <ArrayElementString>Socure 30</ArrayElementString>
+                    </matched>
+                    <unmatched>
+                      <ArrayElementString>Emailage</ArrayElementString>
+                    </unmatched>
+                  </email>
+                  <ssn score="0.99">
+                    <matched>
+                      <ArrayElementString>Socure 30</ArrayElementString>
+                      <ArrayElementString>Lexis Nexis Instant ID</ArrayElementString>
+                    </matched>
+                    <unmatched />
+                  </ssn>
+                </matching>
+                <diligence identity_questions="null" financial="null" device="null">
+                  <fraud score="0.18" average_score="0.18">
+                    <sources>
+                      <Iovation normalized_score="0.5" raw_score="0" attribute="SureScore" />
+                      <Socure__30 normalized_score="0.03" raw_score="0.1" attribute="Sigma Fraud Score" />
+                      <Sentilink normalized_score="0" raw_score="0" attribute="Abuse score" />
+                    </sources>
+                    <flags />
+                  </fraud>
+                  <watchlists>
+                    <lists>
+                      <ArrayElementString>BES</ArrayElementString>
+                      <ArrayElementString>CFTC</ArrayElementString>
+                      <ArrayElementString>DTC</ArrayElementString>
+                      <ArrayElementString>EUDT</ArrayElementString>
+                      <ArrayElementString>FBI</ArrayElementString>
+                      <ArrayElementString>FCEN</ArrayElementString>
+                      <ArrayElementString>FAR</ArrayElementString>
+                      <ArrayElementString>IMW</ArrayElementString>
+                      <ArrayElementString>OFAC</ArrayElementString>
+                      <ArrayElementString>OCC</ArrayElementString>
+                      <ArrayElementString>OSFI</ArrayElementString>
+                      <ArrayElementString>PEP</ArrayElementString>
+                      <ArrayElementString>SDT</ArrayElementString>
+                      <ArrayElementString>UNNT</ArrayElementString>
+                      <ArrayElementString>BIS</ArrayElementString>
+                      <ArrayElementString>WBIF</ArrayElementString>
+                    </lists>
+                    <matches />
+                  </watchlists>
+                </diligence>
+                <formatted_responses>
+                  <Lexis__Nexis__Instant__ID>
+                    <data exactNameMatch="true" identity_theft_risk="1" dob_match_level="8">
+                      <reverse_phone name_first="THOMAS" address_state="VA" address_postal_code_last5="23220" name_last="NICHOLAS" address_city="RICHMOND" />
+                      <address commercial_mail="false" po_box="false" />
+                      <reverse_name_address phone_number="8043563199" />
+                      <watchlists sdt="false" fincen="false" unnt="false" fbi="false" ofac="0" bis="false" occ="false" eudt="false" bes="false" dtc="false" imw="false" osfi="false" far="false" pep="0" cftc="false" wbif="false" />
+                      <followup_codes />
+                      <risk_codes />
+                      <verification name_first_address_ssn="true" name_first_address="true" name_first_ssn="true" dob_month="true" name_first_address_phone="true" name_first_phone="true" name_first_last_phone="true" address_ssn="true" name_first_last="true" name_first_last_address="true" name_last_address="true" dob_year="true" name_first_last_address_ssn="true" name_last_phone="true" name_first_last_address_phone="true" name_last_address_phone="true" name_last_address_ssn="true" name_first_last_ssn="true" name_last_ssn="true" address_phone="true" dob_day="true" />
+                      <ssn issuance_start_date="1977-01-1" issuance_end_date="1979-12-1" issuance_state="VIRGINIA" />
+                    </data>
+                    <matching>
+                      <address score="0" matched="false" />
+                      <phone score="1" matched="true" />
+                      <dob score="1" matched="true" />
+                      <name score="1" matched="true" />
+                      <ssn score="1" matched="true" />
+                    </matching>
+                    <diligence identity_questions="null">
+                      <fraud score="null" flags="null" />
+                      <financial credit="null" banking="null" />
+                      <watchlists>
+                        <lists>
+                          <ArrayElementString>BES</ArrayElementString>
+                          <ArrayElementString>CFTC</ArrayElementString>
+                          <ArrayElementString>DTC</ArrayElementString>
+                          <ArrayElementString>EUDT</ArrayElementString>
+                          <ArrayElementString>FBI</ArrayElementString>
+                          <ArrayElementString>FCEN</ArrayElementString>
+                          <ArrayElementString>FAR</ArrayElementString>
+                          <ArrayElementString>IMW</ArrayElementString>
+                          <ArrayElementString>OFAC</ArrayElementString>
+                          <ArrayElementString>OCC</ArrayElementString>
+                          <ArrayElementString>OSFI</ArrayElementString>
+                          <ArrayElementString>PEP</ArrayElementString>
+                          <ArrayElementString>SDT</ArrayElementString>
+                          <ArrayElementString>UNNT</ArrayElementString>
+                          <ArrayElementString>BIS</ArrayElementString>
+                          <ArrayElementString>WBIF</ArrayElementString>
+                        </lists>
+                        <matches />
+                      </watchlists>
+                    </diligence>
+                  </Lexis__Nexis__Instant__ID>
+                  <Iovation>
+                    <data num_times_device_seen_by_alloy="0" mobile_system_carrier_country_code="US" devicebbage="0" longitude_coordinate="0" days_since_device_first_seen_by_alloy="0" _3rd_party_os="false" real_ip_country_code="US" result_exists="true" device_browser_language="ES-US" realipaddress_loc_region="" iovation_mobile_system_simulator="0" mobile_system_network_operator_country="US" device_information_not_provided="false" latitude_coordinate="0" ip_address_country_lob="false" score_number="0" accounts_per_device="false" device_alias="410576478044459999" real_ip_country="UNITED STATES" days_since_first_seen="1">
+                      <realipaddress>
+                        <loc city="" />
+                      </realipaddress>
+                    </data>
+                  </Iovation>
+                  <Identity__Element__Velocity>
+                    <data>
+                      <decision>
+                        <entities>
+                          <ip_address_v4 _30_days="0" />
+                          <email_address _30_days="0" />
+                          <ssn _30_days="1" />
+                        </entities>
+                      </decision>
+                    </data>
+                  </Identity__Element__Velocity>
+                  <List>
+                    <data confidence="1" full_business_address_match_max_score="0" />
+                    <matching>
+                      <ip_address_v6 score="0" matched="false" />
+                      <ip_address_v4 score="0" matched="false" />
+                      <security_question score="0" matched="false" />
+                      <business_fein score="0" matched="false" />
+                      <address_country_code score="0" matched="false" />
+                      <external_counterparty_id score="0" matched="false" />
+                      <address_state score="0" matched="false" />
+                      <security_qa score="0" matched="false" />
+                      <business_address_city score="0" matched="false" />
+                      <name_last score="0" matched="false" />
+                      <business_address_country_code score="0" matched="false" />
+                      <ssn score="0" matched="false" />
+                      <digital_profile_uuid score="0" matched="false" />
+                      <business_address_state score="0" matched="false" />
+                      <security_answer score="0" matched="false" />
+                      <external_entity_id score="0" matched="false" />
+                      <document_national_id score="0" matched="false" />
+                      <business_type score="0" matched="false" />
+                      <address_line_1 score="0" matched="false" />
+                      <address_line_2 score="0" matched="false" />
+                      <business_registry_id score="0" matched="false" />
+                      <session_uuid score="0" matched="false" />
+                      <email score="0" matched="false" />
+                      <business_address_postal_code score="0" matched="false" />
+                      <fingerprint_uuid score="0" matched="false" />
+                      <name_first score="0" matched="false" />
+                      <business_name score="0" matched="false" />
+                      <address score="0" matched="false" />
+                      <alt_phone_number score="0" matched="false" />
+                      <address_postal_code score="0" matched="false" />
+                      <entity_and_counterparty score="0" matched="false" />
+                      <funding_account score="0" matched="false" />
+                      <name_and_dob score="0" matched="false" />
+                      <business_external_identifier score="0" matched="false" />
+                      <routing_number score="0" matched="false" />
+                      <smart_uuid score="0" matched="false" />
+                      <address_city score="0" matched="false" />
+                      <name_middle score="0" matched="false" />
+                      <business_address_line_2 score="0" matched="false" />
+                      <business_address_line_1 score="0" matched="false" />
+                      <name_and_dob_and_ssn score="0" matched="false" />
+                      <phone score="0" matched="false" />
+                      <dob score="0" matched="false" />
+                      <name score="0" matched="false" />
+                      <email_domain score="0" matched="false" />
+                      <mothers_maiden_name score="0" matched="false" />
+                      <device_alias score="0" matched="false" />
+                    </matching>
+                  </List>
+                  <Socure__30>
+                    <data error_message="&quot;&quot;" error_message_type_2="&quot;&quot;" watchlist_handler_error="false">
+                      <reasonCodes />
+                      <global_watchlist r180="false" r185="false" r186="false" r181="false" r182="false" r183="false" r184="false" />
+                      <fraudScores sigma="0.1" sigmaFirstParty="0.686" sigmaSynthetic="0.1" generic="0.1" />
+                      <eCBSV R998="false" R999="false" I999="true" R996="false" R997="false" I998="true" />
+                      <socure>
+                        <prefill ssnFirst5="5" />
+                      </socure>
+                      <rules>
+                        <reason_codes R653="false" R610="false" R561="false" />
+                      </rules>
+                      <http_status error="false" message="" status="success" />
+                      <kycValidation zip="true" firstName="true" surName="true" streetAddress="true" city="true" dob="true" mobileNumber="true" state="true" ssn="true" />
+                      <watchLists domesticPEP="0" adverse_media_max_correlation_score="100" adverseMedia="0" internationalOFAC="0" domesticOFAC="0" ofac_sdn_max_correlation_score="100" FinCEN_311_Special_Measures_list_max_matchScore="0" enforcement="0" adverseMedia_Consolidated_list_max_matchScore="0" ofac="0" ofac_consolidated_max_correlation_score="100" OFAC_Consolidated_list_max_matchScore="0" pep_max_correlation_score="0" OFAC_SDN_list_max_matchScore="0" united_nations_consolidated_max_correlation_score="100" Cuban_Restricted_Entities_list_max_matchScore="0" internationalPEP="0" />
+                    </data>
+                    <matching>
+                      <address score="0.99" matched="true" />
+                      <phone score="0.99" matched="true" />
+                      <dob score="0.99" matched="true" />
+                      <name score="0.99" matched="true" />
+                      <email score="0.99" matched="true" />
+                      <ssn score="0.99" matched="true" />
+                    </matching>
+                  </Socure__30>
+                  <Emailage>
+                    <data days_since_email_first_verified="5861" has_EAReasonVelocityLevel="false" emailage_lastflaggedon_less_than_12months="true" domaincountryname="" ipNotFound="true" emailage_source_industry="" domainrelevantinfoID="501" />
+                    <matching>
+                      <name score="0" matched="false" />
+                      <email score="0" matched="false" />
+                    </matching>
+                  </Emailage>
+                  <Sentilink>
+                    <data years_since_filing_date="-1" error="false">
+                      <reasonCodes>
+                        <moreFraudyCodes />
+                        <lessFraudyCodes />
+                        <allReasonCodes />
+                      </reasonCodes>
+                      <scores sentilink_id_theft_score="0" sentilink_third_party_synthetic_score="0" sentilink_abuse_score="0" sentilink_first_party_synthetic_score="0" />
+                      <sentilink stringified_response="" />
+                      <consumer_history number_of_ssns="1" shared_ssn_count="0" />
+                    </data>
+                  </Sentilink>
+                </formatted_responses>
+                <related_data>
+                  <social>
+                    <ArrayElementObject id="dog" type="Facebook" url="https://www.facebook.com/dog" />
+                    <ArrayElementObject id="dog" type="Google Plus" url="https://plus.google.com/dog" />
+                  </social>
+                </related_data>
+                <meta channel="MailOffer" />
+                <raw_responses>
+                  <Lexis__Nexis__Instant__ID>
+                    <ArrayElementObject>
+                      <response>
+                        <Header Status="0" TransactionId="0" />
+                        <Result AdditionalScore2="0" UniqueId="1567805191" AdditionalScore1="0" InstantIDVersion="1" AddressCMRA="false" PhoneOfNameAddress="8043563199" PassportValidated="false" NameAddressSSNSummary="12" DOBMatchLevel="8" DOBVerified="true" SSNFoundForLexID="true" AddressPOBox="false">
+                          <VerifiedInput HomePhone="8043563199" SSN="61252xxxx">
+                            <Address StreetName="STUART" State="VA" Zip4="2186" StreetNumber="3000" UnitDesignation="APT" City="RICHMOND" UnitNumber="1" Zip5="23220" StreetSuffix="AVE" StreetAddress1="3000 STUART AVE" />
+                            <DOB Month="04" Year="1986" Day="XX" />
+                            <Name Last="NICHOLAS" First="THOMAS" />
+                          </VerifiedInput>
+                          <ComprehensiveVerification ComprehensiveVerificationIndex="50">
+                            <RiskIndicators>
+                              <RiskIndicator />
+                            </RiskIndicators>
+                            <PotentialFollowupActions>
+                              <FollowupAction>
+                                <ArrayElementObject RiskCode="B" Description="Verify name with Social (via SSN card, DL if applicable, paycheck stub, or other Government Issued ID)" />
+                                <ArrayElementObject RiskCode="C" Description="Verify name with Address (via DL, utility bill, Directory Assistance, paycheck stub, or other Government Issued ID)" />
+                              </FollowupAction>
+                            </PotentialFollowupActions>
+                          </ComprehensiveVerification>
+                          <InputEcho HomePhone="8043563199" SSN="612527378">
+                            <ApplicationDateTime Month="12" Year="2015" Minute="5" Second="2" Hour24="16" Day="16" />
+                            <OwnOrRent />
+                            <Passport MachineReadableLine2="" MachineReadableLine1="" Number="" Country="">
+                              <ExpirationDate />
+                            </Passport>
+                            <Address Zip5="23220" />
+                            <Channel />
+                            <Name Last="NICHOLAS" First="THOMAS" />
+                          </InputEcho>
+                          <SSNInfo Valid="G" IssuedLocation="VIRGINIA">
+                            <IssuedEndDate Month="12" Year="1979" />
+                            <IssuedStartDate Month="01" Year="1977" />
+                          </SSNInfo>
+                          <WatchLists>
+                            <WatchList />
+                          </WatchLists>
+                          <NameAddressPhone Summary="12" />
+                          <ReversePhone>
+                            <Address StreetName="STUART" State="VA" StreetNumber="300" UnitDesignation="APT" City="RICHMOND" UnitNumber="1" Zip5="23220" StreetSuffix="AVE" StreetAddress1="3000 STUART AVE APT 1" />
+                            <Name Last="NICHOLAS" First="THOMAS" />
+                          </ReversePhone>
+                          <CurrentName Last="NICHOLAS" First="THOMAS" />
+                          <ChronologyHistories>
+                            <ChronologyHistory>
+                              <ArrayElementObject IsBestAddress="true">
+                                <Address StreetName="STUART" State="VA" Zip4="2186" StreetNumber="300" UnitDesignation="APT" City="RICHMOND" UnitNumber="1" Zip5="23220" StreetSuffix="AVE" StreetAddress1="3000 STUART AVE APT 1" />
+                                <DateLastSeen Month="07" Year="2015" />
+                                <DateFirstSeen Month="09" Year="2007" />
+                              </ArrayElementObject>
+                              <ArrayElementObject Phone="8043563199">
+                                <Address State="MD" Zip4="4851" City="FORT WASHINGTON" Zip5="20749" StreetAddress1="PO BOX 44851" />
+                                <DateLastSeen Month="07" Year="2013" />
+                                <DateFirstSeen Month="02" Year="1999" />
+                              </ArrayElementObject>
+                              <ArrayElementObject Phone="8043563199">
+                                <Address State="VA" Zip4="6495" City="FREDERICKSBURG" Zip5="22406" StreetAddress1="606 ENGLAND POINTE DR" />
+                                <DateLastSeen Month="07" Year="2013" />
+                                <DateFirstSeen Month="05" Year="2000" />
+                              </ArrayElementObject>
+                            </ChronologyHistory>
+                          </ChronologyHistories>
+                        </Result>
+                      </response>
+                    </ArrayElementObject>
+                  </Lexis__Nexis__Instant__ID>
+                  <Iovation>
+                    <ArrayElementObject mobile_dot_build_dot_product="IPHONE" reason="Other Subscriber Financial Evidence" ipaddress="127.0.0.1" device_dot_os="WINDOWS NT 5.1" device_dot_alias="159301833594571345" device_dot_type="MAC" ipaddress_dot_isp="CHARTER COMMUNICATIONS" mobile_dot_system_dot_carrierCountryCode="US" device_dot_firstseen="2016-03-22T22:16:30.769Z" device_dot_browser_dot_version="3.6.3" result="A" ruleset_dot_rulesmatched="0" realipaddress_dot_source="subscriber" registration_dot_check_dot_matchstatus="NONE_REGISTERED" trackingnumber="807429173349464111" device_dot_bb_dot_age="1000" registration_dot_check_dot_measureofchange="NONE" mlvalue1="0" mobile_dot_device_dot_charging="0" mobile_dot_system_dot_simulator="0" mobile_dot_location_dot_timezone="AMERICA/NEW_YORK" mobile_dot_device_dot_manufacturer="APPLE" device_dot_flash_dot_installed="1" device_dot_tz="-480" ipaddress_dot_loc_dot_region="NEW YORK" mobile_dot_system_dot_jailrootDetected="0" ruleset_dot_score="0" mobile_dot_app_dot_exeName="ABAPPONBOARDING" device_dot_browser_dot_configuredlang="EN-US,EN;Q=0.5" device_dot_screen="1240x768" device_dot_flash_dot_enabled="1" ipaddress_dot_loc_dot_countrycode="US" mobile_dot_build_dot_device="IPHONE" mobile_dot_device_dot_brand="APPLE" device_dot_bb_dot_timestamp="2010-06-01T14:43:21Z" device_dot_browser_dot_lang="EN-US" device_dot_flash_dot_version="10.2.4.0" realipaddress="127.0.0.1" mobile_dot_system_dot_localeCurrency="USD" mobile_dot_location_dot_enabled="1" device_dot_new="1" device_dot_cookie_dot_enabled="1" mobile_dot_device_dot_model="IPHONE 12" device_dot_js_dot_enabled="1" device_dot_browser_dot_type="FIREFOX" mobile_dot_system_dot_localeLang="EN_US">
+                      <rules jailbreak_root_detected="false" transactions_per_ip_address="false" ip_address_risk_50_percent="false" timezone_geolocation_mismatch="false" suspect_os="false" ip_address_country="false" suspect_device_data="false" geolocation_mismatch="false" isp_watch_list="false" mobile_emulator_detected="false" proxy_in_use="false" device_not_provided="false" non_US_IP="false" Device__Info__Not__Provided="false" transactions_per_device="false" evidence_exists_owned="false" ip_address_emea="false" tor_exit_node_ip="false" device_risk_global_50_percent="false" evidence_exists_non_owned="false" _3rd_party_device_info_not_provided="false" ip_address_mismatch="false" ip_address_distance_greater_800="false" RPS__Applications__per__IP__Address__2="false" invalid_blackbox="false" suspect_screen_resolution="false" device_risk_local_20_percent="false" />
+                      <mobile>
+                        <system carrier="T-MOBILE" networkOperatorName="T-MOBILE" />
+                      </mobile>
+                    </ArrayElementObject>
+                  </Iovation>
+                  <Identity__Element__Velocity>
+                    <ArrayElementObject>
+                      <data>
+                        <decision>
+                          <entities>
+                            <ip_address_v4 _30_days="0" />
+                            <email_address _30_days="0" />
+                            <ssn _30_days="1" />
+                          </entities>
+                        </decision>
+                      </data>
+                    </ArrayElementObject>
+                  </Identity__Element__Velocity>
+                  <List>
+                    <ArrayElementArray />
+                  </List>
+                  <Socure__30>
+                    <ArrayElementObject msg="" referenceId="12345" status="">
+                      <nameEmailCorrelation score="0.99">
+                        <reasonCodes />
+                      </nameEmailCorrelation>
+                      <kycPlus>
+                        <reasonCodes />
+                        <fieldValidations zip="0.99" firstName="0.99" surName="0.99" streetAddress="0.99" city="0.99" mobileNumber="0.99" dob="0.99" driverLicense="0.99" state="0.99" ssn="0.99" />
+                        <bestMatchedEntity firstName="SARA" surName="DAVIS" dob="1978-05-10" mobileNumber="+15102811111" middleName="Doc" suffix="Jr" ssn="666388850">
+                          <associatedAddresses>
+                            <ArrayElementObject zip="00011" firstSeenDate="2020-01-01" streetAddress="1425 W STONE MEADOW DR, Apt 2" city="WEST JORDAN" state="UT">
+                              <reasonCodes />
+                            </ArrayElementObject>
+                          </associatedAddresses>
+                          <normalizedAddress zip="00011" streetAddress="1425 W STONE MEADOW DR, Apt 2" city="WEST JORDAN" state="UT" />
+                          <associatedPhoneNumbers>
+                            <ArrayElementObject phoneNumber="+15102811111" type="landline" />
+                          </associatedPhoneNumbers>
+                        </bestMatchedEntity>
+                      </kycPlus>
+                      <firstPartyFraud>
+                        <reasonCodes />
+                        <signals>
+                          <achTransaction countACHTxnFraudCategoryOther="0" countACHTxnReturnCategoryBadStandingOriginatorAccount="0" totalReturnACHTxnAmount="8000" countFraudACHDebitTxns="0" countACHTxnFraudCategorySuspectedFPF="0" countACHTxnReturnCategoryError="0" countACHTxnFraudCategoryDelinquency="0" countReturnACHDebitTxns="0" countReturnACHTxns="6" countACHTxnReturnCategoryFraudulentActivity="0" countACHTxnFraudCategorySuspectedTPF="0" countReturnACHCreditTxns="6" countACHTxnReturnCategoryAccountNotFound="0" countFraudACHTxns="0" countFraudACHCreditTxns="0">
+                            <listReturnACHTxnDates>
+                              <ArrayElementString>20220216</ArrayElementString>
+                              <ArrayElementString>20220224</ArrayElementString>
+                              <ArrayElementString>20220615</ArrayElementString>
+                              <ArrayElementString>20220616</ArrayElementString>
+                            </listReturnACHTxnDates>
+                            <listFraudACHTxnDates />
+                            <listDaysBetweenReturnACHTxn>
+                              <ArrayElementInteger>1</ArrayElementInteger>
+                              <ArrayElementInteger>8</ArrayElementInteger>
+                              <ArrayElementInteger>111</ArrayElementInteger>
+                              <ArrayElementInteger>112</ArrayElementInteger>
+                              <ArrayElementInteger>119</ArrayElementInteger>
+                              <ArrayElementInteger>120</ArrayElementInteger>
+                            </listDaysBetweenReturnACHTxn>
+                            <listDaysToFraudACHTxn />
+                            <listDaysToReturnACHTxns>
+                              <ArrayElementInteger>338</ArrayElementInteger>
+                              <ArrayElementInteger>458</ArrayElementInteger>
+                              <ArrayElementInteger>457</ArrayElementInteger>
+                              <ArrayElementInteger>346</ArrayElementInteger>
+                            </listDaysToReturnACHTxns>
+                            <listDaysBetweenFraudACHTxn />
+                          </achTransaction>
+                          <application countApplicationDeclineReasonOther="1" countApplicationFraudCategoryDelinquency="0" countApplicationDeclineReasonSuspectedFPF="0" countApplicationFraudCategorySuspectedFPF="0" countDeclinedApplications="2" countApplicationFraud="0" countApplicationDeclineReasonSuspectedTPF="0" countApplicationFraudCategorySuspectedTPF="0" countApplicationFraudCategoryOther="0" countApprovedApplications="3" countApplications="9">
+                            <listApplicationDates>
+                              <ArrayElementString>20160602</ArrayElementString>
+                              <ArrayElementString>20210315</ArrayElementString>
+                            </listApplicationDates>
+                            <listDaysBetweenApplications>
+                              <ArrayElementInteger>3149</ArrayElementInteger>
+                            </listDaysBetweenApplications>
+                          </application>
+                          <checkTransaction countFraudCheckTxns="0" totalStopCheckTxnAmount="900" countCheckTxnFraudCategorySuspectedTPF="0" countCheckTxnReturnCategoryBadStandingOriginatorAccount="0" countStopCheckDebitTxns="0" countCheckTxnReturnCategoryError="1" countStopCheckCreditTxns="2" countCheckTxnReturnCategoryAccountNotFound="0" countCheckTxnReturnCategoryFraudulentActivity="0" countReturnCheckDebitTxns="0" countCheckTxnFraudCategoryOther="0" countCheckTxnFraudCategorySuspectedFPF="0" countFraudCheckCreditTxns="0" countCheckTxnReturnCategoryOther="0" countReturnCheckTxns="1" countReturnCheckCreditTxns="1" countCheckTxnReturnCategorySuspiciousActivity="0" countStopCheckTxns="2" countCheckTxnFraudCategoryDelinquency="0" totalReturnCheckTxnAmount="250">
+                            <listDaysBetweenFraudCheckTxn />
+                            <listStopCheckTxnDates>
+                              <ArrayElementString>20210304</ArrayElementString>
+                              <ArrayElementString>20210305</ArrayElementString>
+                            </listStopCheckTxnDates>
+                            <listDaysToStopCheckTxn />
+                            <listDaysBetweenReturnCheckTxn />
+                            <listDaysToFraudCheckTxn />
+                            <listDaysBetweenStopCheckTxn>
+                              <ArrayElementInteger>1</ArrayElementInteger>
+                            </listDaysBetweenStopCheckTxn>
+                            <listDaysToReturnCheckTxn />
+                            <listReturnCheckTxnDates>
+                              <ArrayElementString>20210310</ArrayElementString>
+                            </listReturnCheckTxnDates>
+                            <listFraudCheckTxnDates />
+                          </checkTransaction>
+                          <cardTransaction countCardTxnDisputeOutcomeNotGranted="24" countCardTxnFraudCategoryOther="0" countDisputeCardDomesticTxns="0" countStopCardTxns="0" countDisputeCardInternationalTxns="0" countCardTxnDisputeCategoryAuthorized="26" countFraudCardTxns="0" totalDisputeCardTxnAmount="7220.62" countFraudCardInternationalTxns="0" countFraudCardDomesticTxns="0" countDisputeCardTxns="26" countCardTxnDisputeOutcomeGranted="2" countCardTxnDisputeCategoryUnauthorized="0" countCardTxnDisputeOutcomeOther="0">
+                            <listDaysBetweenStopCardTxn />
+                            <listDaysBetweenFraudCardTxn />
+                            <listStopCardTxnDates />
+                            <listDaysToStopCardTxn />
+                            <listDisputeCardTxnDates>
+                              <ArrayElementString>20200411</ArrayElementString>
+                              <ArrayElementString>20210818</ArrayElementString>
+                            </listDisputeCardTxnDates>
+                            <listFraudCardTxnDates />
+                            <listDaysToFraudCardTxn />
+                            <listDaysBetweenDisputeCardTxn>
+                              <ArrayElementInteger>494</ArrayElementInteger>
+                            </listDaysBetweenDisputeCardTxn>
+                            <listDaysToDisputeCardTxn />
+                          </cardTransaction>
+                          <identity countDistinctState="3" countDistinctZip="7" countDistinctMobileNumber="5" countInstitutions="9" countDistinctSurName="2" countUniqueUsers="11" countDistinctDOB="1" countDistinctPhysicalAddress="11" countDistinctFirstName="2" countDistinctCity="7" countDistinctEmail="4" />
+                          <account countClosedAccountUserRequest="1" countAccountFraudCategorySuspectedFPF="2" countAccountStatusActive="4" countAccountStatusClosed="8" countFraudAccounts="3" countAccountsWithFraudLoss="2" countAccountFraudCategoryDelinquency="1" countAccountFraudCategorySuspectedTPF="0" countAccountFraudCategoryOther="0" countAccounts="12" totalAccountFraudLossAmount="4328.71">
+                            <listFraudLabeledAccountDates>
+                              <ArrayElementString>20201003</ArrayElementString>
+                              <ArrayElementString>20220812</ArrayElementString>
+                            </listFraudLabeledAccountDates>
+                            <listAccountClosedDates>
+                              <ArrayElementString>20180927</ArrayElementString>
+                              <ArrayElementString>20201003</ArrayElementString>
+                            </listAccountClosedDates>
+                            <listDaysBetweenAccountOpening>
+                              <ArrayElementInteger>1857</ArrayElementInteger>
+                            </listDaysBetweenAccountOpening>
+                            <listDaysToFraudLabeledAccount>
+                              <ArrayElementInteger>176</ArrayElementInteger>
+                              <ArrayElementInteger>619</ArrayElementInteger>
+                              <ArrayElementInteger>515</ArrayElementInteger>
+                            </listDaysToFraudLabeledAccount>
+                            <listDaysToAccountClosure>
+                              <ArrayElementInteger>515</ArrayElementInteger>
+                              <ArrayElementInteger>549</ArrayElementInteger>
+                            </listDaysToAccountClosure>
+                            <listDaysBetweenAccountLabeledFraud>
+                              <ArrayElementInteger>678</ArrayElementInteger>
+                            </listDaysBetweenAccountLabeledFraud>
+                            <listAccountOpenDates>
+                              <ArrayElementString>20170327</ArrayElementString>
+                              <ArrayElementString>20190123</ArrayElementString>
+                            </listAccountOpenDates>
+                            <listDaysBetweenAccountClosures>
+                              <ArrayElementInteger>1944</ArrayElementInteger>
+                            </listDaysBetweenAccountClosures>
+                          </account>
+                        </signals>
+                        <scores>
+                          <ArrayElementObject score="0.686" name="Identity Manipulation" version="1.0" />
+                        </scores>
+                      </firstPartyFraud>
+                      <addressRisk score="0">
+                        <reasonCodes />
+                      </addressRisk>
+                      <social>
+                        <reasonCodes />
+                        <profilesFound>
+                          <ArrayElementString>https://gravatar.com/dog</ArrayElementString>
+                          <ArrayElementString>http://vimeo.com/dog</ArrayElementString>
+                          <ArrayElementString>https://www.facebook.com/dog</ArrayElementString>
+                          <ArrayElementString>https://plus.google.com/dog</ArrayElementString>
+                        </profilesFound>
+                      </social>
+                      <prefill zip="00011" firstName="John" surName="Smith" streetAddress="1425 W STONE MEADOW DR, Apt 2" city="WEST JORDAN" dob="1978-05-10" middleName="Doc" state="UT" suffix="Jr">
+                        <associatedAddresses>
+                          <ArrayElementObject zip="00011" streetAddress="1425 W STONE MEADOW DR" city="WEST JORDAN" state="UT" />
+                          <ArrayElementObject zip="00011" streetAddress="1425 W STONE MEADOW DR" city="WEST JORDAN" state="UT" />
+                          <ArrayElementObject zip="00011" streetAddress="1425 W STONE MEADOW DR" city="WEST JORDAN" state="UT" />
+                        </associatedAddresses>
+                      </prefill>
+                      <emailRisk score="0">
+                        <reasonCodes />
+                      </emailRisk>
+                      <alertList>
+                        <reasonCodes />
+                        <matches />
+                      </alertList>
+                      <deviceRisk score="0">
+                        <reasonCodes />
+                      </deviceRisk>
+                      <error msg="&quot;&quot;" />
+                      <synthetic>
+                        <scores>
+                          <ArrayElementObject score="0.1" name="synthetic" version="1.0" />
+                        </scores>
+                      </synthetic>
+                      <nameAddressCorrelation score="0.99">
+                        <reasonCodes />
+                      </nameAddressCorrelation>
+                      <kyc>
+                        <reasonCodes />
+                        <fieldValidations zip="0.99" firstName="0.99" surName="0.99" streetAddress="0.99" city="0.99" mobileNumber="0.99" dob="0.99" driverLicense="0.99" state="0.99" ssn="0.99" />
+                      </kyc>
+                      <phoneRisk score="0">
+                        <reasonCodes />
+                      </phoneRisk>
+                      <accountIntelligence>
+                        <reasonCodes />
+                        <account ownershipScore="1" availabilityScore="1" />
+                      </accountIntelligence>
+                      <fraud>
+                        <reasonCodes />
+                        <scores>
+                          <ArrayElementObject score="0.1" name="generic" version="3.0" />
+                          <ArrayElementObject score="0.1" name="sigma" version="3.0" />
+                        </scores>
+                      </fraud>
+                      <watchlist>
+                        <reasonCodes />
+                      </watchlist>
+                      <namePhoneCorrelation score="0.99">
+                        <reasonCodes />
+                      </namePhoneCorrelation>
+                    </ArrayElementObject>
+                  </Socure__30>
+                  <Emailage>
+                    <ArrayElementObject country="US" domaincategory="Webmail" firstVerificationDate="2009-05-25T23:44:00Z" ip_riskreasonid="311" ip_continentCode="" ipdistancekm="10" EARiskBand="Fraud Score 1 to 100" emailAge="2009-05-25T23:44:00Z" source_industry="null" domainrisklevel="Moderate" smfriends="121" ipdomain="" eName="Sandbox+User" totalhits="32" ip_countryCode="" domainname="gmail.com" EAReasonID="14" domainrisklevelID="3" ip_corporateProxy="" dob="" status="Verified" ipriskcountry="" ipcountrymatch="" gender="male" domaincorporate="no" ip_netSpeedCell="broadband" fraudRisk="088 Very Low" domainrelevantinfo="&quot;&quot;" ip_country="" uniquehits="1" title="Sandbox+User" ip_userType="wifi" ip_org="" EAReason="Email Created at least 6.2 Years Ago" ipasnum="" domainExists="Yes" ip_reputation="Good" EAStatusID="2" EAAdviceID="3" company="Sandbox+Company" domaincompany="Alloy" ip_anonymousdetected="No" email="bob.davis%40merrickbank.com" fraud_type="&quot;&quot;" ip_risklevelid="1" EARiskBandID="1" emailExists="Yes" ip_isp="" EAScore="88" ipdistancemil="10" domaincountryname="United States" imageurl="http%3a%2f%2fwww.emailage.com%2fEmailAgeImage%2fcvYbawVv1rg3YyjMqKEUlpsZXM5xltKl8a3ebEcl5XqAMtOnv8Ls3sh5Bp8EPwBl.png" location="Sandbox%2c+NY" lastVerificationDate="2025-06-12T18:57:37.020Z" EAAdvice="Lower Fraud Risk" domainrelevantinfoID="408" domainAge="1995-08-13T07:00:00Z">
+                      <smlinks>
+                        <ArrayElementObject link="https://www.facebook.com/888888888" source="Facebook" />
+                      </smlinks>
+                    </ArrayElementObject>
+                  </Emailage>
+                  <Sentilink>
+                    <ArrayElementObject transaction_id="" environment="SANDBOX" notes="" customer_id="123456789" application_id="123" timestamp="2019-10-18T16:10:48.167669899Z" latency_ms="131">
+                      <scores>
+                        <ArrayElementObject score="0" name="sentilink_abuse_score" version="1.3.1" />
+                        <ArrayElementObject score="0" name="sentilink_first_party_synthetic_score" version="1.3.1" />
+                        <ArrayElementObject score="0" name="sentilink_third_party_synthetic_score" version="1.3.1" />
+                        <ArrayElementObject score="0" name="sentilink_abuse_score" version="3.1.4" />
+                        <ArrayElementObject score="0" name="sentilink_id_theft_score" version="3.1.4" />
+                      </scores>
+                    </ArrayElementObject>
+                  </Sentilink>
+                </raw_responses>
+              </evaluation_result>
+              <_embedded>
+                <node workflow_name="Fraud &amp; CIP (Walkthrough)" name="Fraud &amp; CIP (Walkthrough)" id="b8b86b08-548c-4f7a-b4e5-edf761d9d005" type="workflow">
+                  <config application_version_id="13" workflow_current_version="13" application_token="pv9J5XUEb1eVr5OfJpFJf6Zad81MonUB" workflow_version_id="13" workflow_type="person" workflow_token="pv9J5XUEb1eVr5OfJpFJf6Zad81MonUB" />
+                </node>
+              </_embedded>
+            </ArrayElementObject>
+            <ArrayElementObject journey_application_event_token="359443949" entity_application_token="EA-dJIrAmU5nDW2pycLJw5R" type="pending_step_up" entity_token="P-SePQHTKZ8HlQ3vtjkP3F" journey_type="application" journey_application_token="JA-i0z7ZDjnGl4E36vU7zsV" timestamp="1749754657231">
+              <_embedded>
+                <node workflow_name="Document Verification" name="Document Verification" id="3dfc8702-919a-4af7-a416-87012cc00c55" type="step_up">
+                  <sdk_config pills="null" links_color_content_link_text_hover="null" document_type_button_background_color="" surface_modal_customization="Surface Modal Customization" typography_font_family_subtitle="null" onfido_language="en" onfido_welcome_display_text="null" primary_button_customization="Primary Button Customization" cross_device="null" error_color_content_alert_error_link_active="null" document_type_button_border_color_upon_hover="" secondary_button_border_color_on_click_tap="" links="null" error_color_background_alert_error="null" typography_options="null" icon_color_background_icon="null" icon_option="null" primary_button_border_color_on_click_tap="" warning_color_background_alert_info_link_hover="null" document_type_button_customization="Document Type Button Customization" onfido_force_cross_device="false" cross_device_color_background_qr_code="null" document_type_button_background_color_on_click_tap="" typography_color_content_subtitle="null" error_popups="null" secondary_button_background_color_upon_hover="" document_type_button_text_color="" primary_button_background_color_on_click_tap="" onfido_sms_country_code="" surface_modal_background_color="" links_color_background_link_active="null" document_type_button_border_color="" typography_font_family_body="null" warning_color_background_alert_info="null" secondary_button_customization="Secondary Button Customization" icon_buttons="null" document_type_button_border_color_on_click_tap="" typography_color_content_body="null" typography_color_content_title="null" typography_font_weight_title="null" secondary_button_text_color="" typography_font_weight_body="null" surface_modal_border_style="" selector_color_background_dropdown_item_hover="null" secondary_button_background_color="" secondary_button_background_color_on_click_tap="" icon_color_background_button_icon_hover="null" icon_color_input_outline="null" typography_font_weight_subtitle="null" warning_popups="null" links_color_border_link_underline="null" icon_color_background_button_icon_active="null" primary_button_background_color_upon_hover="" primary_button_text_color="" typography_font_size_subtitle="null" selector="null" primary_button_border_color_upon_hover="" camera="null" error_color_content_alert_error_link_hover="null" typography_font_size_title="null" pills_color_content_info_pill="null" surface_modal_border_width="" primary_button_background_color="" warning_color_content_alert_info="null" typography_font_size_body="null" document_type_button_background_color_upon_hover="" selector_color_background_selector="null" surface_modal_border_color="" warning_color_background_alert_info_link_active="null" primary_button_border_color="" error_color_content_alert_error="null" surface_modal_border_radius="" camera_color_background_button_camera_active="null" secondary_button_border_color_upon_hover="" secondary_button_border_color="" plugin="Onfido" onfido_face="Facial similarity photo" camera_color_background_button_camera_hover="null" icon_color_icon="null" typography_font_family_title="null" pills_color_background_info_pill="null" links_color_background_link_hover="null">
+                    <onfido_reports>
+                      <ArrayElementString>Document</ArrayElementString>
+                    </onfido_reports>
+                  </sdk_config>
+                  <config application_version_id="5" workflow_current_version="5" application_token="Mwp4qyGOf7QdOBSpU6Eyc5t6vvlk8odr" workflow_version_id="5" workflow_type="person" workflow_token="Mwp4qyGOf7QdOBSpU6Eyc5t6vvlk8odr" />
+                </node>
+              </_embedded>
+              <_links />
+            </ArrayElementObject>
+          </events>
+          <entity_applications>
+            <ArrayElementObject entity_application_status="pending_step_up" sdk_link="null" entity_application_status_details="null" external_entity_identifier="325944" entity_application_token="EA-dJIrAmU5nDW2pycLJw5R" entity_application_outcome="null" entity_token="P-SePQHTKZ8HlQ3vtjkP3F" dimensions="null">
+              <output>
+                <matrix_models />
+                <output_attributes />
+                <outcome_reasons>
+                  <ArrayElementObject name="CIP Name Verified" type="null" />
+                  <ArrayElementObject name="CIP Review" type="null" />
+                </outcome_reasons>
+                <tags>
+                  <ArrayElementString>CIP Address Not Verified</ArrayElementString>
+                  <ArrayElementString>Phone Match</ArrayElementString>
+                  <ArrayElementString>CIP DOB Verified</ArrayElementString>
+                  <ArrayElementString>CIP Name Verified</ArrayElementString>
+                  <ArrayElementString>CIP SSN Verified</ArrayElementString>
+                  <ArrayElementString>CIP Review</ArrayElementString>
+                </tags>
+              </output>
+            </ArrayElementObject>
+          </entity_applications>
+        </_embedded>
+        <application_meta channel="MailOffer" source_type="Online" skip_lexis_nexis="false" />
+        <HTTPHeaders Status-Code="201" x-request-id="b9696605-09a1-4139-ac52-1cdc35d53b3d" Status-Message="HTTP/1.1 201 Created" server="envoy" x-envoy-upstream-service-time="993" alloy-response-type="success" vary="Origin" x-frame-options="sameorigin" Connection="keep-alive" strict-transport-security="max-age=63072000; preload" Date="Thu, 12 Jun 2025 18:57:37 GMT" x-amzn-trace-id="Root=1-684b2320-3a7bdc257f5daa8e3e1c08f9" x-xss-protection="1; mode=block" x-content-type-options="nosniff" alloy-ratelimit-reset="1749754661" alloy-ratelimit-remaining="9" Content-Length="57355" alloy-ratelimit-limit="10" Content-Type="application/json; charset=utf-8" />
+      </AlloyJourney>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2025-08-26 20:53:44.083" Source="CreateAttribute" Number="194" Description="There must be at least one Parent Node:/Provenir/queues:undefined" />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_0effdf0d_194d2f658f3_07fd5194d2f658f3" ID="CIPADDR" Description="Address not verified." Timestamp="2025-06-12 18:56:51.152" Severity="93" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2025-06-12 18:56:49.968" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2025-06-12 18:56:50.031" Status="Pass" />
+      <Journal Type="Rule" ID="ALLOY_ERROR" Timestamp="2025-06-12 18:56:51.130" Status="false" />
+      <Journal Type="Process" ID="Alloy Journey Service" Timestamp="2025-06-12 18:56:51.140" Status="Pass" />
+      <Journal Type="Rule" ID="VRFYAU" Timestamp="2025-06-12 18:56:51.142" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="2025-06-12 18:56:51.142" Status="Pass" />
+      <Journal Type="Rule" ID="ALLOY_ERROR" Timestamp="2025-06-12 18:56:51.143" Status="false" />
+      <Journal Type="Rule" ID="EMAILVEL" Timestamp="2025-06-12 18:56:51.144" Status="false" />
+      <Journal Type="Rule" ID="EMAILFRAUD" Timestamp="2025-06-12 18:56:51.145" Status="false" />
+      <Journal Type="Rule" ID="CIPSSN" Timestamp="2025-06-12 18:56:51.146" Status="false" />
+      <Journal Type="Rule" ID="ADDRWARNFRAUD" Timestamp="2025-06-12 18:56:51.147" Status="false" />
+      <Journal Type="Rule" ID="DEVICEFRAUD" Timestamp="2025-06-12 18:56:51.147" Status="false" />
+      <Journal Type="Rule" ID="IDTHEFTFRAUD" Timestamp="2025-06-12 18:56:51.148" Status="false" />
+      <Journal Type="Rule" ID="IDWARNFRAUD" Timestamp="2025-06-12 18:56:51.149" Status="false" />
+      <Journal Type="Rule" ID="IPVEL" Timestamp="2025-06-12 18:56:51.149" Status="false" />
+      <Journal Type="Rule" ID="SSNVEL" Timestamp="2025-06-12 18:56:51.150" Status="false" />
+      <Journal Type="Rule" ID="SSNWARNFRAUD" Timestamp="2025-06-12 18:56:51.150" Status="false" />
+      <Journal Type="Rule" ID="SYNTHETICFRAUD" Timestamp="2025-06-12 18:56:51.151" Status="false" />
+      <Journal Type="Rule" ID="CIPADDR" Timestamp="2025-06-12 18:56:51.152" Status="true" />
+      <Journal Type="Rule" ID="CIPDOB" Timestamp="2025-06-12 18:56:51.153" Status="false" />
+      <Journal Type="Rule" ID="CIPNAME" Timestamp="2025-06-12 18:56:51.154" Status="false" />
+      <Journal Type="Rule" ID="DOBMISKEY" Timestamp="2025-06-12 18:56:51.154" Status="false" />
+      <Journal Type="Rule" ID="SSNMISKEY" Timestamp="2025-06-12 18:56:51.155" Status="false" />
+      <Journal Type="Process" ID="03010" Timestamp="2025-06-12 18:56:51.163" Status="Fail" />
+      <Journal Type="Process" ID="Alloy Friends and Family Process" Timestamp="2025-06-12 18:56:51.235" Status="Fail" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-12 18:57:01.374" Status="Opened" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-24 20:01:38.770" Status="Opened" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-03 19:11:30.479" Status="Opened" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="TM" ID="LetterCallUs" Timestamp="2025-07-03 19:12:14.131" Status="P" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="API" ID="Letter Type (918)" Timestamp="2025-07-03 19:12:43.372" Status="Communication Created" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-03 19:16:03.061" Status="Opened" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-07 14:58:43.887" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-09 22:02:32.239" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-09 22:02:41.081" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-09 22:10:02.167" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-09 23:02:26.990" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-10 20:57:26.297" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-10 22:40:11.019" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-14 14:05:12.807" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-15 14:46:28.357" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-15 16:52:18.655" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-15 23:37:18.627" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-21 19:30:28.737" Status="Opened" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-01 22:53:05.769" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-01 22:53:05.769" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-01 23:47:58.148" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-01 23:47:58.149" Status="Pass" />
+      <Journal UserID="JOSHUA.RAMSEY@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-08-07 20:05:28.904" Status="Opened" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-07 23:46:53.062" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-07 23:46:53.063" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-08 13:53:26.764" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-08 13:53:26.765" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-09 19:12:29.481" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-09 19:12:29.482" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-09 19:24:16.787" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-09 19:24:16.787" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-09 19:31:34.819" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-09 19:31:34.820" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-09 22:45:48.136" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-09 22:45:48.136" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-12 23:55:23.790" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-12 23:55:23.791" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-13 02:19:13.412" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-13 02:19:13.414" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-13 02:43:58.342" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-13 02:43:58.342" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-13 02:57:45.206" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-13 02:57:45.206" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-13 15:21:38.423" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-13 15:21:38.424" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-13 15:33:01.282" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-13 15:33:01.283" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-13 16:00:32.962" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-13 16:00:32.964" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-13 16:02:40.580" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-13 16:02:40.580" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-14 02:58:54.857" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-14 02:58:54.857" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-14 23:01:53.769" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-14 23:01:53.769" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-15 21:31:55.273" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-15 21:31:55.274" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-15 23:56:28.302" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-15 23:56:28.302" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-15 23:59:24.399" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-15 23:59:24.400" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-08-16 02:01:33.187" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-08-16 02:01:33.187" Status="Pass" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-08-26 15:33:24.154" Status="Opened" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-08-26 17:38:54.776" Status="Opened" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-08-26 20:53:41.018" Status="Opened" />
+      <Journal UserID="JOSHUA.RAMSEY@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-09-05 15:36:25.983" Status="Opened" />
+      <Journal UserID="JOSHUA.RAMSEY@MERRICKBANK.COM" Type="TM" ID="LetterCallUs" Timestamp="2025-09-05 15:36:33.384" Status="P" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-09-05 21:57:10.502" Status="Opened" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-09-08 15:44:06.084" Status="Opened" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-08 16:47:16.309" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-08 16:47:16.309" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-09 19:41:07.453" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-09 19:41:07.453" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-30 22:59:06.036" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-30 22:59:06.036" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-30 23:16:32.304" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-30 23:16:32.305" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-30 23:32:21.341" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-30 23:32:21.342" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-30 23:34:12.390" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-30 23:34:12.390" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-30 23:43:42.861" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-30 23:43:42.861" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-30 23:44:04.104" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-30 23:44:04.105" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-30 23:53:16.593" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-30 23:53:16.594" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-10-01 00:00:13.773" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-10-01 00:00:13.773" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-10-01 00:06:51.206" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-10-01 00:06:51.206" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-10-01 00:16:15.084" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-10-01 00:16:15.087" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits>
+      <Audit UserID="JASEN.HASLUND@MERRICKBANK.COM" XPATH="Housing Payment" To="555.00" From="550.00" Timestamp="2025-08-26 15:33:33.759" Source="API" />
+      <Audit UserID="JASEN.HASLUND@MERRICKBANK.COM" XPATH="Housing Payment" To="123.00" From="555.00" Timestamp="2025-08-26 17:38:55.288" Source="API" />
+      <Audit UserID="JASEN.HASLUND@MERRICKBANK.COM" XPATH="Housing Payment" To="0.00" From="123.00" Timestamp="2025-08-26 17:39:13.675" Source="API" />
+      <Audit UserID="JASEN.HASLUND@MERRICKBANK.COM" XPATH="App Assigned" To="jasen.haslund@merrickbank.com" From="" Timestamp="2025-08-26 20:53:43.982" Source="API" />
+      <Audit UserID="JASEN.HASLUND@MERRICKBANK.COM" XPATH="Annual Income (primary)" To="75000.00" From="150000" Timestamp="2025-08-26 20:53:52.471" Source="API" />
+    </Audits>
+    <Documents />
+    <temp_app_variables />
+    <TriggeredRules />
+  </Request>
+  <queues>
+    <queue name="Manager" id="65" type="cc" />
+    <queue name="T All Applications" id="17" />
+  </queues>
+</Provenir>

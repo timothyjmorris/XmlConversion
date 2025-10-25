@@ -1,0 +1,64 @@
+﻿<Provenir ID="312638" Org="" sessionID="" stack="" Version="" ProductType="" x-trace-id="From Postman" action="" app_source="API" transactionID="2775" errorCode="0" status="pass validation" appType="cc" shred_version="5.0">
+  <Request ID="312638" UserID="" Workflow="1" Timestamp="" Status="" Trans="" Readonly="" Process="30000" Version="" Priority="" Timeout="" Trace="" LockedBy="" iovation_sessionid="54618083-1786-4e72-a761-61bc2562b336" finicity_bypass="N" btcardtoken="" btresponsecode="" transactionCounter="3" JMSPriority="0">
+    <CustData>
+      <application app_type_code="PRODB" procs_date="2023-5-10 16:24:32.866" app_receive_date="2023-5-10 16:24:32.647" last_update_time="" signature_ind="Y" coupon_expiration_date="" name_match_flag="N" address_match_flag="" ssn_match_flag="Y" pricing_tier="" solicitation_num="05235T09489T" pymnt_prot_plan_ind="" credit_life_ind="" campaign_num="X2E" app_entry_date="05/10/2023" swiftpay_num="" mail_cell_pricing="" existing_card_account_num="" Partner_URL_ID="https://www.partner.com/loansRfun" app_source_ind="" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="1" CPS_letter_sent_flag="" population_assignment="" verification_source="" EODRet="WEBAPP" processing_expiration_date="" solicitation_locked="" secure_ach_amount="" IP_address="104.86.168.187" EXPinNumber="">
+        <app_product decision_tp_c="DECNC" decision_date="2023-5-10 16:24:33.178" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="N" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="N" analyst_rev_ind="N" regbcloseddays_num="0" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="N" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="" prescreen_risk_score="" risk_model_score="" prescreen_risk_grade="" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="" bank_debt_to_income_ratio="" regb_start_date="2023-5-10 16:24:32.0" regb_end_date="2023-05-10" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" />
+        <contact con_id="497559" ac_role_tp_c="PR" title="" first_name="DAVID" initials="R" last_name="LANDIS" suffix="" ssn="666027949" email="boba@aol.com" birth_date="05/10/1978" mother_maiden_name="Hills" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="7949" age="" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="" accnt_type_ind="" card_decision_tp_c="DECNC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="" />
+          <contact_address address_tp_c="CURR" city="Pell City" rural_route="" state="AL" po_box="" street_name="Coxwell" street_number="945" unit="" cell_phone="8885551224" residence_monthly_pymnt="550" address_line_1="" zip="35125" Patriot_Act_zip="" />
+          <contact_address address_tp_c="" address_line_1="" zip="" />
+          <contact_employment b_unit="" b_zip="" b_state="" b_street_name="" b_street_number="" b_salary="150000" b_city="" b_other_income_amt="0" b_name="" b_job_title_tp_c="" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="0" b_years_at_job="0" b_primary_income_source_tp_c="EMPLOY" b_salary_basis_tp_c="ANNUM" b_othr_inc_basis_tp_c="ANNUM" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="1" letter_type_cd="937" date_sent="05/10/2023" dec_reason_c_1="102" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="Y" cb_score_suppress="Y" cb_disclosure_suppress="Y" comm_duplicate="Y" />
+        <rmts_info merrick_appl_number="" transmission_date="2023-5-10 16:24:32.647" campaign_number="" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="" primary_middle_name="" primary_last_name="" primary_suffix="" primary_ssn="" pri_cur_street_num="" pri_cur_street_name="" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="" pri_state="" pri_zip_code="" special_flag_5="" special_flag_6="" special_flag_7="" special_flag_8="" aaa_misc_field_4="" misc_field_6="" upc8="" upc9="" upc10="" upc12="" CB_prescreen_birth_date="" auth_user_is_spouse="N" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" unused="" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="CreditBureauPulled" value="0" />
+        </Indicators>
+        <scores />
+        <analytics />
+        <contact ac_role_tp_c="AUTHU" birth_date="1969-01-01" first_name="FIRST" last_name="NAMEEND" suffix="" ssn="666712913" initials="" con_id="497560">
+          <app_prod_bcard card_decision_tp_c="DECLN" issue_card_ind="N" />
+        </contact>
+        <comments comment_seq_number="1" comment="*-* DEV TESTING MEMO *-*" user_id="TIMOTHY.MORRIS@MERRICKBANK.COM" comment_type_code="" related_to="" time_stamp="2024-08-05 20:41:35.503" isPinned="false" />
+        <comments comment_seq_number="2" comment="*-* DEV TESTING MEMO *-*" user_id="TIMOTHY.MORRIS@MERRICKBANK.COM" comment_type_code="" related_to="" time_stamp="2024-08-06 13:23:38.983" isPinned="false" />
+        <comments comment_seq_number="3" comment="*-* DEV TESTING MEMO *-*" user_id="TIMOTHY.MORRIS@MERRICKBANK.COM" comment_type_code="" related_to="" time_stamp="2024-08-06 14:37:05.802" isPinned="false" />
+        <comments comment_seq_number="4" comment="*-* DEV TESTING MEMO *-*" user_id="TIMOTHY.MORRIS@MERRICKBANK.COM" comment_type_code="" related_to="" time_stamp="2024-08-06 19:55:59.865" isPinned="false" />
+        <communications />
+      </application>
+    </CustData>
+    <Reports />
+    <Messages />
+    <Rules>
+      <Rule guid="repoObj_6b890dfb_137bce963b7_07dad138d9c2340e" ID="MMPINFO" Description="Primary applicant first name, SSN, date of birth mismatch solicited information." Timestamp="2023-5-10 16:24:33.163" Severity="60" Override="0" AllowOverride="0" />
+    </Rules>
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2023-5-10 16:24:32.647" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2023-5-10 16:24:32.866" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2023-5-10 16:24:33.116" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2023-5-10 16:24:33.116" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2023-5-10 16:24:33.116" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="2023-5-10 16:24:33.116" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2023-5-10 16:24:33.163" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="2023-5-10 16:24:33.163" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2023-5-10 16:24:33.163" Status="true" />
+      <Journal Type="Process" ID="00500" Timestamp="2023-5-10 16:24:33.178" Status="Fail" />
+      <Journal Type="Process" ID="30000" Timestamp="2023-5-10 16:24:33.444" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-7-10 13:07:32.822" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-7-10 13:07:51.923" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits>
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="New Comment" To="*-* DEV TESTING MEMO *-*" From="" Timestamp="2024-08-05 20:41:35.504" Source="Bulk Update" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="New Comment" To="*-* DEV TESTING MEMO *-*" From="" Timestamp="2024-08-06 13:23:38.984" Source="Bulk Update" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="New Comment" To="*-* DEV TESTING MEMO *-*" From="" Timestamp="2024-08-06 14:37:05.803" Source="Bulk Update" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="New Comment" To="*-* DEV TESTING MEMO *-*" From="" Timestamp="2024-08-06 19:55:59.866" Source="Bulk Update" />
+    </Audits>
+    <Documents />
+    <TriggeredRules />
+  </Request>
+</Provenir>
