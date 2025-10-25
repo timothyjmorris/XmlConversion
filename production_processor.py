@@ -8,12 +8,13 @@ minimal overhead and maximum throughput.
 
 Usage:
     Windows Auth:
-        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 25 --limit 25
+        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 25 --limit 25 --log-level INFO
     SQL Server Auth:
-        python production_processor.py --server "your-sql-server" --database "YourDatabase" --username "your-user" --password "your-pass" --workers 4
+        python production_processor.py --server "your-sql-server" --database "YourDatabase" --username "your-user" --password "your-pass" --workers 4 --log-level INFO
     Performance Testing
         python production_processor.py --server "your-sql-server" --database "YourDatabase" --workers 4 --limit 1000 --log-level ERROR
 
+    * don't forget to use --log-level INFO (or higher to see progress in console!)
 
     Batch vs Limit Explained
     --batch-size (Processing Batches)
@@ -154,16 +155,39 @@ class ProductionProcessor:
         # Configure logging
         log_file = logs_dir / f"production_{self.session_id}.log"
         
-        logging.basicConfig(
-            level=getattr(logging, log_level.upper()),
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            handlers=[
-                logging.FileHandler(log_file),
-                logging.StreamHandler(sys.stdout)
-            ]
-        )
+        # Set root logger level to suppress all other module noise
+        logging.getLogger().setLevel(logging.WARNING)
         
+        # Configure our specific logger
         self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(getattr(logging, log_level.upper()))
+        
+        # Remove any existing handlers to avoid duplicates
+        for handler in self.logger.handlers[:]:
+            self.logger.removeHandler(handler)
+        
+        # Create formatters
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        
+        # File handler (logs everything at our configured level)
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(getattr(logging, log_level.upper()))
+        file_handler.setFormatter(formatter)
+        
+        # Console handler (only shows INFO and above for our logger)
+        console_handler = logging.StreamHandler(sys.stdout)
+        console_handler.setLevel(logging.INFO)
+        console_handler.setFormatter(formatter)
+        
+        # Add handlers to our logger
+        self.logger.addHandler(file_handler)
+        self.logger.addHandler(console_handler)
+        
+        # Suppress all other loggers (xml_extractor modules, etc.)
+        logging.getLogger('xml_extractor').setLevel(logging.WARNING)
+        logging.getLogger('lxml').setLevel(logging.WARNING)
+        logging.getLogger('urllib3').setLevel(logging.WARNING)
+        
         self.logger.info(f"Logging initialized: {log_file}")
     
     def test_connection(self) -> bool:
