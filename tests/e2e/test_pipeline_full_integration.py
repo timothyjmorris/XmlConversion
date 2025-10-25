@@ -220,6 +220,137 @@ class TestEndToEndIntegration(unittest.TestCase):
             print(f"✅ Contacts verified: {contact_count} records")
             print(f"   - PR Contact: con_id={pr_contact[0]}, name={pr_contact[2]}")
             print(f"   - AUTHU Contact: con_id={authu_contact[0]}, name={pr_contact[2]}")
+            
+            # Verify curr_address_only mapping for home_phone and cell_phone on PR contact
+            cursor.execute("""
+                SELECT home_phone, cell_phone 
+                FROM contact_base 
+                WHERE con_id = 738936
+            """)
+            phone_record = cursor.fetchone()
+            home_phone = phone_record[0]
+            cell_phone = phone_record[1]
+            
+            print(f"✅ Phone fields verified: home_phone='{home_phone}', cell_phone='{cell_phone}'")
+            
+            # Verify curr_address_only extracts from CURR address
+            self.assertIsNotNone(home_phone, "home_phone should not be null")
+            self.assertEqual(home_phone.strip(), '505100230', f"home_phone should be '505100230' but got '{home_phone}'")
+            
+            self.assertIsNotNone(cell_phone, "cell_phone should not be null") 
+            self.assertEqual(cell_phone.strip(), '111222333', f"cell_phone should be '111222333' but got '{cell_phone}'")
+            
+            # Check app_operational_cc table for calculated fields
+            cursor.execute("SELECT cb_score_factor_type_1, cb_score_factor_type_2, assigned_to, backend_fico_grade, cb_score_factor_code_1, meta_url, priority_enum, housing_monthly_payment FROM app_operational_cc WHERE app_id = 443306")
+            operational_record = cursor.fetchone()
+            self.assertIsNotNone(operational_record, "Should have app_operational_cc record")
+            
+            cb_score_factor_type_1 = operational_record[0]
+            cb_score_factor_type_2 = operational_record[1]
+            assigned_to = operational_record[2]
+            backend_fico_grade = operational_record[3]
+            cb_score_factor_code_1 = operational_record[4]
+            meta_url = operational_record[5]
+            priority_enum = operational_record[6]
+            housing_monthly_payment = operational_record[7]
+            
+            print(f"✅ app_operational_cc verified: cb_score_factor_type_1='{cb_score_factor_type_1}', cb_score_factor_type_2='{cb_score_factor_type_2}'")
+            print(f"   - assigned_to='{assigned_to}', backend_fico_grade='{backend_fico_grade}', cb_score_factor_code_1='{cb_score_factor_code_1}'")
+            print(f"   - meta_url='{meta_url}', priority_enum={priority_enum}, housing_monthly_payment={housing_monthly_payment}")
+            
+            # Verify calculated field values based on contract expressions
+            # cb_score_factor_type_1 should return 'AJ' based on the complex CASE WHEN logic
+            self.assertEqual(cb_score_factor_type_1, 'AJ', f"cb_score_factor_type_1 should be 'AJ' but got '{cb_score_factor_type_1}'")
+            
+            # cb_score_factor_type_2 should return None (NULL in database) when falling through to ELSE
+            # The CASE WHEN expression returns '' which gets converted to NULL in the database
+            self.assertIsNone(cb_score_factor_type_2, f"cb_score_factor_type_2 should be None (NULL) but got '{cb_score_factor_type_2}'")
+            
+            # Verify other fields are not null when calculated fields are used
+            self.assertIsNotNone(assigned_to, "assigned_to should not be null")
+            self.assertEqual(assigned_to, 'test-tacular@testy.com', f"assigned_to should be 'test-tacular@testy.com' but got '{assigned_to}'")
+            
+            self.assertIsNotNone(backend_fico_grade, "backend_fico_grade should not be null")
+            self.assertEqual(backend_fico_grade, 'F', f"backend_fico_grade should be 'F' but got '{backend_fico_grade}'")
+            
+            self.assertIsNotNone(cb_score_factor_code_1, "cb_score_factor_code_1 should not be null")
+            self.assertEqual(cb_score_factor_code_1, 'AA ANYTHIN', f"cb_score_factor_code_1 should be 'AA ANYTHIN' but got '{cb_score_factor_code_1}'")
+            
+            self.assertIsNotNone(meta_url, "meta_url should not be null")
+            self.assertEqual(meta_url, 'meta-bro-url.com', f"meta_url should be 'meta-bro-url.com' but got '{meta_url}'")
+            
+            self.assertIsNotNone(priority_enum, "priority_enum should not be null")
+            self.assertEqual(priority_enum, 80, f"priority_enum should be 80 but got {priority_enum}")
+            
+            # Verify housing_monthly_payment from last valid PR contact
+            self.assertIsNotNone(housing_monthly_payment, "housing_monthly_payment should not be null")
+            self.assertEqual(float(housing_monthly_payment), 893.55, f"housing_monthly_payment should be 893.55 but got {housing_monthly_payment}")
+    
+    def test_curr_address_filtering_logic(self):
+        """Test that CURR address filtering works correctly for housing_monthly_payment."""
+        print("\n" + "="*80)
+        print("TESTING CURR ADDRESS FILTERING LOGIC")
+        print("="*80)
+        
+        # Parse the XML to get the root element
+        root = self.parser.parse_xml_stream(self.sample_xml)
+        
+        # Set the _current_xml_root on the mapper (required for the method to work)
+        self.mapper._current_xml_root = root
+        
+        # Test the _extract_from_last_valid_pr_contact method directly
+        from xml_extractor.mapping.data_mapper import FieldMapping
+        
+        # Create a mapping for housing_monthly_payment
+        housing_mapping = FieldMapping(
+            xml_path="/Provenir/Request/CustData/application/contact/contact_address",
+            xml_attribute="residence_monthly_pymnt",
+            target_table="app_operational_cc",
+            target_column="housing_monthly_payment",
+            data_type="decimal(12,2)",
+            mapping_type="last_valid_pr_contact"
+        )
+        
+        # Extract the value using the mapper
+        result = self.mapper._extract_from_last_valid_pr_contact(housing_mapping)
+        
+        # Verify it extracts the CURR address value (893.55), not the PREV address value (empty)
+        self.assertIsNotNone(result, "housing_monthly_payment should be extracted")
+        self.assertEqual(float(result), 893.55, f"Should extract CURR address value 893.55, got {result}")
+        
+        print(f"✅ CURR address filtering working: extracted {result} from CURR address")
+        
+        # Test with a field that doesn't exist in CURR addresses to verify fallback logic
+        # Create a mapping for a non-existent attribute
+        nonexistent_mapping = FieldMapping(
+            xml_path="/Provenir/Request/CustData/application/contact/contact_address",
+            xml_attribute="nonexistent_attribute",
+            target_table="app_operational_cc",
+            target_column="test_field",
+            data_type="varchar(50)",
+            mapping_type="last_valid_pr_contact"
+        )
+        
+        nonexistent_result = self.mapper._extract_from_last_valid_pr_contact(nonexistent_mapping)
+        self.assertIsNone(nonexistent_result, "Non-existent attribute should return None")
+        
+        print("✅ Fallback logic working: non-existent attribute returns None")
+        
+        # Test that banking fields (which don't use address filtering) still work
+        banking_mapping = FieldMapping(
+            xml_path="/Provenir/Request/CustData/application/contact",
+            xml_attribute="banking_aba",
+            target_table="app_operational_cc",
+            target_column="sc_bank_aba",
+            data_type="char(9)",
+            mapping_type="last_valid_pr_contact"
+        )
+        
+        banking_result = self.mapper._extract_from_last_valid_pr_contact(banking_mapping)
+        self.assertIsNotNone(banking_result, "Banking field should be extracted")
+        self.assertEqual(banking_result, "19201920", f"Should extract banking ABA 19201920, got {banking_result}")
+        
+        print(f"✅ Banking field extraction working: extracted {banking_result} (not affected by CURR filtering)")
     
     def test_last_valid_element_approach(self):
         """Test that the 'last valid element' approach works correctly."""

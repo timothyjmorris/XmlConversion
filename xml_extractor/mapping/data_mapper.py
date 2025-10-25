@@ -376,6 +376,10 @@ class DataMapper(DataMapperInterface):
             if hasattr(mapping, 'mapping_type') and mapping.mapping_type == 'last_valid_pr_contact':
                 return self._extract_from_last_valid_pr_contact(mapping)
             
+            # For calculated fields, skip XML extraction entirely - return sentinel value to trigger expression evaluation
+            if hasattr(mapping, 'mapping_type') and mapping.mapping_type == 'calculated_field':
+                return "__CALCULATED_FIELD_SENTINEL__"
+            
             # Handle application-level attributes that need to be threaded to contact_base
             if (mapping.target_table == 'contact_base' and 
                 mapping.xml_path == '/Provenir/Request/CustData/application' and
@@ -391,12 +395,14 @@ class DataMapper(DataMapperInterface):
             # Initialize current_data to avoid UnboundLocalError
             current_data = None
 
-            # If context_data is provided (for contact-specific mappings), handle nested paths
-            if context_data:
+            # Handle contact-specific mappings with context_data when available
+            if context_data and ('contact' in mapping.xml_path or 
+                               'contact_address' in mapping.xml_path or 
+                               'contact_employment' in mapping.xml_path):
                 # For contact_address and contact_employment, context_data contains {'attributes': {...}}
                 # BUT skip this for special mapping types that have their own handling
                 if (('contact_address' in mapping.xml_path or 'contact_employment' in mapping.xml_path) and 
-                    mapping.mapping_type not in ['curr_address_only']):
+                    mapping.mapping_type not in ['curr_address_only', 'last_valid_pr_contact']):
                     # Extract directly from context attributes
                     if mapping.xml_attribute and 'attributes' in context_data:
                         attributes = context_data['attributes']
@@ -440,7 +446,7 @@ class DataMapper(DataMapperInterface):
                             return None
                         return current_data
             else:
-                # Standard navigation from root
+                # Standard navigation from root for non-contact mappings (or when context_data is not available)
                 # First try direct path lookup (for flat XML structure)
                 full_path = mapping.xml_path
                 if full_path in xml_data:
@@ -505,14 +511,13 @@ class DataMapper(DataMapperInterface):
     def _apply_field_transformation(self, value: Any, mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
         """Apply field-specific transformations with support for chained mapping types."""
         
-        # Debug: Log all transformations for banking fields
-        if 'banking' in mapping.xml_attribute or 'housing' in mapping.target_column:
-            self.logger.info(f"Transforming {mapping.xml_attribute} -> {mapping.target_column}, mapping_type={mapping.mapping_type}, value={value}")
-        
         # Parse chained mapping types (comma-separated)
         mapping_types = []
         if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
             mapping_types = [mt.strip() for mt in mapping.mapping_type.split(',')]
+            self.logger.debug(f"Parsed mapping_types for {mapping.target_column}: {mapping_types}")
+        else:
+            self.logger.debug(f"No mapping_type for {mapping.target_column}")
         
         # If no mapping types specified, apply standard data type transformation
         if not mapping_types:
@@ -578,6 +583,10 @@ class DataMapper(DataMapperInterface):
                 return self.transform_data_types(result, mapping.data_type)
             self.logger.debug(f"curr_address_only returned None for {mapping.target_column}")
             return None
+        
+        # Handle calculated fields with sentinel value - always evaluate expression
+        elif mapping_type == 'calculated_field' and value == "__CALCULATED_FIELD_SENTINEL__":
+            return self._apply_calculated_field_mapping(None, mapping, context_data)
         
         # Handle enum mappings specially - always call enum mapper even with None/empty values
         elif mapping_type == 'enum':
@@ -710,19 +719,42 @@ class DataMapper(DataMapperInterface):
             if not hasattr(self, '_calculated_field_engine'):
                 self._calculated_field_engine = CalculatedFieldEngine()
             
-            # Get the element data from context_data (for contact employment/address records)
+            # Get the element data from context_data
+            # For contact-level mappings, use context_data['attributes'] if available
+            # For app-level mappings, use the entire context_data (which contains flattened cross-element references)
             element_data = {}
-            if context_data and 'attributes' in context_data:
-                element_data = context_data['attributes']
+            if context_data:
+                if 'attributes' in context_data:
+                    # Contact-level mapping (employment, address)
+                    element_data = context_data['attributes']
+                else:
+                    # App-level mapping with cross-element context
+                    element_data = context_data
             
             # Evaluate the expression using the element data
             result = self._calculated_field_engine.evaluate_expression(expression, element_data, mapping.target_column)
+            
+            # Debug logging for specific calculated fields
+            if mapping.target_column in ['cb_score_factor_code_1', 'cb_score_factor_code_2']:
+                self.logger.warning(f"DEBUG: Calculated field '{mapping.target_column}' expression evaluation completed with result: {repr(result)}")
+                self.logger.warning(f"DEBUG: Context data keys: {list(element_data.keys()) if element_data else 'None'}")
+                if 'adverse_actn1_type_cd' in element_data:
+                    self.logger.warning(f"DEBUG: adverse_actn1_type_cd = '{element_data.get('adverse_actn1_type_cd')}'")
+                if 'adverse_actn2_type_cd' in element_data:
+                    self.logger.warning(f"DEBUG: adverse_actn2_type_cd = '{element_data.get('adverse_actn2_type_cd')}'")
+                if 'app_receive_date' in element_data:
+                    self.logger.warning(f"DEBUG: app_receive_date = '{element_data.get('app_receive_date')}'")
+                if 'population_assignment' in element_data:
+                    self.logger.warning(f"DEBUG: population_assignment = '{element_data.get('population_assignment')}'")
             
             self.logger.debug(f"Calculated field expression '{expression}' evaluated to: {result}")
             self._transformation_stats['calculated_fields'] += 1
             
             # Apply data type transformation to the result
             if result is not None:
+                # Special handling for empty strings in calculated fields - preserve them for string types
+                if result == '' and (mapping.data_type.startswith('varchar') or mapping.data_type.startswith('char')):
+                    return result
                 return self.transform_data_types(result, mapping.data_type)
             return None
             
@@ -738,6 +770,13 @@ class DataMapper(DataMapperInterface):
             if table_name not in table_mappings:
                 table_mappings[table_name] = []
             table_mappings[table_name].append(mapping)
+        
+        # DEBUG: Log mappings for app_operational_cc
+        if 'app_operational_cc' in table_mappings:
+            print(f"DEBUG: Found {len(table_mappings['app_operational_cc'])} mappings for app_operational_cc")
+            for mapping in table_mappings['app_operational_cc']:
+                print(f"  Mapping: {mapping.target_column} -> {mapping.xml_path}.{mapping.xml_attribute}, type={mapping.mapping_type}")
+        
         return table_mappings
 
     def _process_table_mappings(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], 
@@ -747,6 +786,15 @@ class DataMapper(DataMapperInterface):
         
         # Determine if this is a contact-related table (only actual contact tables, not app tables)
         # Get table name from the first mapping
+        table_name = mappings[0].target_table if mappings else ""
+        
+        # DEBUG: Log mappings for app_operational_cc
+        if table_name == 'app_operational_cc':
+            print(f"DEBUG: Processing {len(mappings)} mappings for app_operational_cc")
+            for mapping in mappings:
+                print(f"  Mapping: {mapping.target_column} -> {mapping.xml_path}.{mapping.xml_attribute}, type={mapping.mapping_type}")
+        
+        # Determine if this is a contact-related table (only actual contact tables, not app tables)
         table_name = mappings[0].target_table if mappings else 'unknown'
         
         if table_name == 'contact_base':
@@ -785,7 +833,15 @@ class DataMapper(DataMapperInterface):
             records = self._extract_contact_employment_records(xml_data, mappings, app_id, valid_contacts)
         else:
             # Create single record for app-level tables
-            record = self._create_record_from_mappings(xml_data, mappings)
+            # Check if this table has calculated field mappings that need enhanced context
+            has_calculated_fields = any(m.mapping_type == 'calculated_field' for m in mappings)
+            if has_calculated_fields:
+                # Build enhanced context for calculated fields that may reference cross-element data
+                context_data = self._build_app_level_context(xml_data, valid_contacts, app_id)
+                record = self._create_record_from_mappings(xml_data, mappings, context_data)
+            else:
+                # Use original xml_data for regular field mappings
+                record = self._create_record_from_mappings(xml_data, mappings)
             # Only add app_id and append if record has actual data (not empty)
             if record:  # Check if record is not empty
                 if app_id:
@@ -814,6 +870,10 @@ class DataMapper(DataMapperInterface):
             try:
                 # Extract value from XML data
                 value = self._extract_value_from_xml(xml_data, mapping, context_data)
+                
+                # DEBUG: Log calculated field processing
+                if mapping.mapping_type == 'calculated_field':
+                    self.logger.warning(f"DEBUG: Processing calculated field mapping: {mapping.target_column}, xml_path={mapping.xml_path}, xml_attribute={mapping.xml_attribute}, extracted_value={value}")
                 
                 # Log extraction for birth_date fields (debug level)
                 if mapping.target_column == 'birth_date':
@@ -1059,36 +1119,7 @@ class DataMapper(DataMapperInterface):
         """Get fallback value for mapping."""
         return None
     
-    def _extract_from_last_valid_pr_contact(self, mapping):
-        """Extract value from the last valid PR contact's app_prod_bcard element."""
-        try:
-            if not hasattr(self, '_current_xml_root') or self._current_xml_root is None:
-                return None
-            
-            # Find all PR contacts
-            pr_contacts = self._current_xml_root.xpath('.//contact[@ac_role_tp_c="PR"]')
-            if not pr_contacts:
-                return None
-            
-            # Get the last valid PR contact
-            last_pr_contact = pr_contacts[-1]
-            
-            # Look for app_prod_bcard element within this contact
-            app_prod_bcard_elements = last_pr_contact.xpath('.//app_prod_bcard')
-            if not app_prod_bcard_elements:
-                return None
-            
-            # Get the last app_prod_bcard element
-            app_prod_bcard = app_prod_bcard_elements[-1]
-            
-            # Extract the requested attribute
-            value = app_prod_bcard.get(mapping.xml_attribute)
-            self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' from last valid PR contact's app_prod_bcard")
-            return value
-            
-        except Exception as e:
-            self.logger.warning(f"Failed to extract from last valid PR contact: {e}")
-            return None
+
     
     def _extract_from_curr_address_only(self, mapping, context_data):
         """Extract value from the current contact's CURR address only."""
@@ -1311,27 +1342,29 @@ class DataMapper(DataMapperInterface):
         """Get fallback value for failed conversion."""
         return None
     
-    def _extract_from_last_valid_pr_contact(self, mapping):
+    def _extract_from_last_valid_pr_contact(self, mapping, context_data=None):
         """Extract value from the last valid PR contact with enhanced debugging."""
+        self.logger.debug(f"ENTERING _extract_from_last_valid_pr_contact for field {mapping.target_column}")
         try:
             if not hasattr(self, '_current_xml_root') or self._current_xml_root is None:
-                self.logger.warning("No XML root available for last_valid_pr_contact extraction")
+                self.logger.debug("No XML root available for last_valid_pr_contact extraction")
                 return None
             
             # Find all PR contacts
             pr_contacts = self._current_xml_root.xpath('.//contact[@ac_role_tp_c="PR"]')
+            self.logger.debug(f"Found {len(pr_contacts)} PR contacts via xpath")
             if not pr_contacts:
-                self.logger.warning("No PR contacts found in XML")
+                self.logger.debug("No PR contacts found in XML")
                 return None
             
             # Debug: Log all PR contacts found with their key attributes
-            self.logger.info(f"Found {len(pr_contacts)} PR contacts")
+            self.logger.debug(f"Found {len(pr_contacts)} PR contacts")
             for i, contact in enumerate(pr_contacts):
                 con_id = contact.get('con_id', 'UNKNOWN')
                 # Check for banking attributes in each contact
                 banking_aba = contact.get('banking_aba', 'MISSING')
                 banking_account = contact.get('banking_account_number', 'MISSING')
-                self.logger.info(f"PR contact {i}: con_id={con_id}, banking_aba={banking_aba}, banking_account={banking_account}")
+                self.logger.debug(f"PR contact {i}: con_id={con_id}, banking_aba={banking_aba}, banking_account={banking_account}")
             
             # Find the last VALID PR contact (one with non-empty con_id AND non-empty ac_role_tp_c)
             last_valid_pr_contact = None
@@ -1343,48 +1376,60 @@ class DataMapper(DataMapperInterface):
                     break
             
             if last_valid_pr_contact is None:
-                self.logger.warning("No valid PR contacts found (all have empty con_id or ac_role_tp_c)")
+                self.logger.debug("No valid PR contacts found (all have empty con_id or ac_role_tp_c)")
                 return None
             
             selected_con_id = last_valid_pr_contact.get('con_id', 'UNKNOWN')
-            self.logger.info(f"Selected last VALID PR contact: con_id={selected_con_id}")
-            
-            # Debug: Log ALL attributes of the selected contact
-            all_contact_attrs = dict(last_valid_pr_contact.attrib)
-            self.logger.info(f"ALL attributes for selected contact {selected_con_id}: {all_contact_attrs}")
+            self.logger.debug(f"Selected last VALID PR contact: con_id={selected_con_id}")
             
             # Extract the requested attribute directly from the contact or its child elements
             if 'contact_address' in mapping.xml_path:
                 # Look for contact_address elements within this contact
                 address_elements = last_valid_pr_contact.xpath('.//contact_address')
-                if address_elements:
-                    # Use the last address element
-                    address_element = address_elements[-1]
+                
+                # Filter to only CURR (current) addresses - these have the most relevant data
+                curr_address_elements = [addr for addr in address_elements if addr.get('address_tp_c') == 'CURR']
+                
+                # Use CURR addresses if available, otherwise fall back to all addresses
+                target_addresses = curr_address_elements if curr_address_elements else address_elements
+                
+                if target_addresses:
+                    # Find the first address that has the required attribute
+                    selected_address = None
+                    for addr in target_addresses:
+                        if addr.get(mapping.xml_attribute):
+                            selected_address = addr
+                            break
+                    
+                    if selected_address is None:
+                        # If no address has the attribute, fall back to the last one
+                        selected_address = target_addresses[-1]
+                    
+                    address_element = selected_address
                     value = address_element.get(mapping.xml_attribute)
-                    self.logger.info(f"Extracted {mapping.xml_attribute}='{value}' from contact_address for con_id {selected_con_id}")
                     return value
             elif 'app_prod_bcard' in mapping.xml_path:
                 # Look for app_prod_bcard element within this contact
                 app_prod_bcard_elements = last_valid_pr_contact.xpath('.//app_prod_bcard')
-                self.logger.info(f"Found {len(app_prod_bcard_elements)} app_prod_bcard elements for con_id {selected_con_id}")
+                self.logger.debug(f"Found {len(app_prod_bcard_elements)} app_prod_bcard elements for con_id {selected_con_id}")
                 if app_prod_bcard_elements:
                     # Get the last app_prod_bcard element
                     app_prod_bcard = app_prod_bcard_elements[-1]
                     
                     # Debug: Log all attributes in the app_prod_bcard element
                     all_attrs = dict(app_prod_bcard.attrib)
-                    self.logger.info(f"app_prod_bcard attributes for con_id {selected_con_id}: {all_attrs}")
+                    self.logger.debug(f"app_prod_bcard attributes for con_id {selected_con_id}: {all_attrs}")
                     
                     value = app_prod_bcard.get(mapping.xml_attribute)
-                    self.logger.info(f"Extracted {mapping.xml_attribute}='{value}' from app_prod_bcard for con_id {selected_con_id}")
+                    self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' from app_prod_bcard for con_id {selected_con_id}")
                     return value
                 else:
-                    self.logger.warning(f"No app_prod_bcard elements found for con_id {selected_con_id}")
+                    self.logger.debug(f"No app_prod_bcard elements found for con_id {selected_con_id}")
             
             # Always try to extract directly from the contact element first
             # This handles banking attributes and other contact-level attributes
             value = last_valid_pr_contact.get(mapping.xml_attribute)
-            self.logger.info(f"Extracted {mapping.xml_attribute}='{value}' directly from contact con_id {selected_con_id}")
+            self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' directly from contact con_id {selected_con_id}")
             
             # If the value is empty/None, check if the attribute exists with a different name
             if not value:
@@ -1401,15 +1446,15 @@ class DataMapper(DataMapperInterface):
                 for attr_variant in attribute_variations:
                     variant_value = last_valid_pr_contact.get(attr_variant)
                     if variant_value:
-                        self.logger.info(f"Found value using attribute variant '{attr_variant}': {variant_value}")
+                        self.logger.debug(f"Found value using attribute variant '{attr_variant}': {variant_value}")
                         return variant_value
                 
-                self.logger.warning(f"No value found for {mapping.xml_attribute} or its variants in contact {selected_con_id}")
+                self.logger.debug(f"No value found for {mapping.xml_attribute} or its variants in contact {selected_con_id}")
             
             return value
             
         except Exception as e:
-            self.logger.warning(f"Failed to extract from last valid PR contact: {e}")
+            self.logger.debug(f"Failed to extract from last valid PR contact: {e}")
             return None
     
     def get_transformation_stats(self):
@@ -1449,5 +1494,62 @@ class DataMapper(DataMapperInterface):
             except Exception as e:
                 self.logger.warning(f"Failed to process nested element {i}: {e}")
                 continue
+    
+    def _build_app_level_context(self, xml_data: Dict[str, Any], valid_contacts: List[Dict[str, Any]], app_id: str) -> Dict[str, Any]:
+        """
+        Build enhanced context for app-level calculated fields that may reference cross-element data.
         
-        return processed_children
+        This provides access to contact, address, and employment data for expressions like:
+        - contact.field_name (references primary contact data)
+        - address.field_name (references address data)
+        - employment.field_name (references employment data)
+        - app_product.field_name (references app_product data)
+        - application.field_name (references application data)
+        """
+        context = {}
+        
+        # Flatten all contact data for easy access
+        if valid_contacts:
+            # Primary contact (first PR contact or first contact)
+            pr_contacts = [c for c in valid_contacts if c.get('ac_role_tp_c') == 'PR']
+            primary_contact = pr_contacts[0] if pr_contacts else valid_contacts[0]
+            
+            # Add contact fields with 'contact.' prefix for cross-element references
+            for key, value in primary_contact.items():
+                if key and value is not None:
+                    context[f'contact.{key}'] = value
+            
+            # Add all contacts data
+            context['contacts'] = valid_contacts
+            
+            # Add primary contact data without prefix for backward compatibility
+            context.update(primary_contact)
+        
+        # Add app_id for reference
+        if app_id:
+            context['app_id'] = app_id
+        
+        # Add application and app_product data with dotted prefixes for cross-element references
+        for path, element in xml_data.items():
+            if isinstance(element, dict) and 'attributes' in element:
+                attrs = element['attributes']
+                if path.endswith('/application'):
+                    # Add application fields with 'application.' prefix
+                    for key, value in attrs.items():
+                        if key and value is not None:
+                            context[f'application.{key}'] = value
+                    # Also add without prefix for direct access
+                    context.update(attrs)
+                elif path.endswith('/app_product'):
+                    # Add app_product fields with 'app_product.' prefix
+                    for key, value in attrs.items():
+                        if key and value is not None:
+                            context[f'app_product.{key}'] = value
+                    # Also add without prefix for direct access
+                    context.update(attrs)
+        
+        self.logger.debug(f"Built app-level context with {len(context)} keys")
+        for key in sorted(context.keys())[:10]:  # Log first 10 keys
+            self.logger.debug(f"Context key: {key} = {context[key]}")
+        
+        return context

@@ -230,76 +230,95 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
         def get_mapping(target_column):
             return next(m for m in self.contract.mappings if m.target_column == target_column)
 
-        # Use DataMapper's valid contact extraction logic
-        # Use XML root and DataMapper's _parse_all_contacts_from_root to traverse child elements
         xml_root = self.mapper._current_xml_root
         contacts = self.mapper._parse_all_contacts_from_root(xml_root)
         found = 0
-        def get_mapping(target_column):
-            return next(m for m in self.contract.mappings if m.target_column == target_column)
-
-        for contact in valid_contacts:
+        # Existing assertions for calculated fields
+        for contact in contacts:
             ac_role_tp_c = contact.get('ac_role_tp_c')
-            # Employment elements
             for emp in contact.get('contact_employment', []):
-                # 1. PR/CURR, b_months_at_job="10" b_years_at_job="2"
                 if emp.get('b_months_at_job') == '10' and emp.get('b_years_at_job') == '2':
                     mapping = get_mapping("months_at_job")
                     result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': emp})
                     expected_value = 34
-                    print(f"[DEBUG] {ac_role_tp_c}/CURR contact_employment: b_months_at_job=10, b_years_at_job=2, result={result}")
                     self.assertEqual(result, expected_value)
                     found += 1
-                # 2. PR/PREV, b_months_at_job="32" b_years_at_job="1"
                 if emp.get('b_months_at_job') == '32' and emp.get('b_years_at_job') == '1':
                     mapping = get_mapping("months_at_job")
                     result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': emp})
                     expected_value = 44
-                    print(f"[DEBUG] {ac_role_tp_c}/PREV contact_employment: b_months_at_job=32, b_years_at_job=1, result={result}")
                     self.assertEqual(result, expected_value)
                     found += 1
-                # 3. PR/CURR, b_salary="120000" b_salary_basis_tp_c="ANNUM"
                 if emp.get('b_salary') == '120000' and emp.get('b_salary_basis_tp_c') == 'ANNUM':
                     mapping = get_mapping("monthly_salary")
                     result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': emp})
                     expected_value = 10000
-                    print(f"[DEBUG] {ac_role_tp_c}/CURR contact_employment: b_salary=120000, b_salary_basis_tp_c=ANNUM, result={result}")
                     self.assertEqual(result, expected_value)
                     found += 1
-                # 4. PR/PREV, b_salary="4000" b_salary_basis_tp_c="MONTH"
                 if emp.get('b_salary') == '4000' and emp.get('b_salary_basis_tp_c') == 'MONTH':
                     mapping = get_mapping("monthly_salary")
                     result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': emp})
                     expected_value = 48000
-                    print(f"[DEBUG] {ac_role_tp_c}/PREV contact_employment: b_salary=4000, b_salary_basis_tp_c=MONTH, result={result}")
                     self.assertEqual(result, expected_value)
                     found += 1
-            # Address elements
             for addr in contact.get('contact_address', []):
-                # 5. PR/CURR, months_at_residence="11" years_at_residence="2"
                 if addr.get('months_at_residence') == '11' and addr.get('years_at_residence') == '2':
                     mapping = get_mapping("months_at_address")
                     result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': addr})
                     expected_value = 35
-                    print(f"[DEBUG] {ac_role_tp_c}/CURR contact_address: months_at_residence=11, years_at_residence=2, result={result}")
                     self.assertEqual(result, expected_value)
                     found += 1
-                # 6. PR/PREV, months_at_residence="41" years_at_residence="1"
                 if addr.get('months_at_residence') == '41' and addr.get('years_at_residence') == '1':
                     mapping = get_mapping("months_at_address")
                     result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': addr})
                     expected_value = 53
-                    print(f"[DEBUG] {ac_role_tp_c}/PREV contact_address: months_at_residence=41, years_at_residence=1, result={result}")
                     self.assertEqual(result, expected_value)
                     found += 1
-                # 7. AUTHU/CURR, months_at_residence="3" years_at_residence="2"
                 if ac_role_tp_c == 'AUTHU' and addr.get('months_at_residence') == '3' and addr.get('years_at_residence') == '2':
                     mapping = get_mapping("months_at_address")
                     result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': addr})
                     expected_value = 27
-                    print(f"[DEBUG] AUTHU/CURR contact_address: months_at_residence=3, years_at_residence=2, result={result}")
                     self.assertEqual(result, expected_value)
                     found += 1
+
+        # New assertions for qualified references, LIKE, and DATE comparisons
+        # Test cb_score_factor_code_1 and cb_score_factor_code_2 against actual contract expressions
+        for path, element in self.parsed_xml.items():
+            if path.endswith('app_product'):
+                attrs = element.get('attributes', {})
+                app_attrs = None
+                # Find the application element for context
+                for app_path, app_element in self.parsed_xml.items():
+                    if app_path.endswith('application'):
+                        app_attrs = app_element.get('attributes', {})
+                        break
+
+                if app_attrs:
+                    # Build proper context for app-level calculated fields using the same method as the system
+                    context_data = self.mapper._build_app_level_context(self.parsed_xml, valid_contacts, '443306')
+                    
+                    # Debug: Print context keys
+                    print(f"[DEBUG] Context keys: {sorted(context_data.keys())[:20]}")
+                    if 'app_product.adverse_actn1_type_cd' in context_data:
+                        print(f"[DEBUG] app_product.adverse_actn1_type_cd = {context_data['app_product.adverse_actn1_type_cd']}")
+                    if 'application.app_receive_date' in context_data:
+                        print(f"[DEBUG] application.app_receive_date = {context_data['application.app_receive_date']}")
+                    if 'application.population_assignment' in context_data:
+                        print(f"[DEBUG] application.population_assignment = {context_data['application.population_assignment']}")
+
+                    # Test cb_score_factor_type_1: Should return 'AJ' based on contract expression
+                    # Expression: CASE WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' ELSE '' END
+                    mapping1 = get_mapping("cb_score_factor_type_1")
+                    result1 = self.mapper._apply_calculated_field_mapping(None, mapping1, context_data=context_data)
+                    # adverse_actn1_type_cd = "V4 ACTION 1" (not empty), app_receive_date > '2023-10-11', population_assignment = 'CM' -> should return 'AJ'
+                    self.assertEqual(result1, 'AJ', f"cb_score_factor_type_1 should return 'AJ' but got '{result1}'")
+
+                    # Test cb_score_factor_type_2: Should return '' based on contract expression
+                    # Expression: CASE WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2050-01-01 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' ELSE '' END
+                    mapping2 = get_mapping("cb_score_factor_type_2")
+                    result2 = self.mapper._apply_calculated_field_mapping(None, mapping2, context_data=context_data)
+                    # adverse_actn2_type_cd = "AA ACTION 2" (not empty but not LIKE 'V4_%'), app_receive_date not > '2050-01-01', app_type_code != 'SECURE' -> should return ''
+                    self.assertEqual(result2, '', f"cb_score_factor_code_2 should return '' but got '{result2}'")
         self.assertGreaterEqual(found, 7, f"Not all expected calculated field elements found and tested. Found {found}.")
 
     def test_expression_syntax_and_result(self):

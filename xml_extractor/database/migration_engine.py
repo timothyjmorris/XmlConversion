@@ -176,11 +176,12 @@ class MigrationEngine(MigrationEngineInterface):
                 # Get all columns from the first record to maintain consistent column order
                 all_columns = list(records[0].keys())
                 
-                # Filter out columns that are empty/null in ALL records
+                # Filter out columns that are None in ALL records
+                # Allow empty strings as they represent valid data that should be converted to NULL
                 columns_with_data = []
                 for col in all_columns:
                     has_data = any(
-                        record.get(col) is not None and record.get(col) != '' 
+                        record.get(col) is not None
                         for record in records
                     )
                     if has_data:
@@ -223,6 +224,14 @@ class MigrationEngine(MigrationEngineInterface):
                         self.logger.warning(f"Record {len(data_tuples)}: {values}")
                         for i, (col, val) in enumerate(zip(columns, values)):
                             self.logger.warning(f"  {i}: {col} = {repr(val)} ({type(val).__name__})")
+                    
+                    # Debug app_operational_cc records for calculated fields
+                    if table_name == 'app_operational_cc':
+                        self.logger.warning(f"DEBUG: app_operational_cc Record {len(data_tuples)}: {values}")
+                        for i, (col, val) in enumerate(zip(columns, values)):
+                            self.logger.warning(f"DEBUG: app_operational_cc {i}: {col} = {repr(val)} ({type(val).__name__})")
+                            if col in ['cb_score_factor_code_1', 'cb_score_factor_code_2']:
+                                self.logger.warning(f"DEBUG: CALCULATED FIELD {col} = '{val}' (expected: cb_score_factor_code_1='AJ', cb_score_factor_code_2='')")
                 
                 # Try executemany first for performance, fall back to individual executes if needed
                 batch_start = 0

@@ -2,18 +2,23 @@
 Calculated Field Engine for XML Database Extraction system.
 
 Provides safe expression evaluation for calculated field mappings with
-support for arithmetic operations and conditional logic. 
-Expression can use SQL syntax for conditionals (CASE/WHEN/THEN/ELSE/END)
+- Support for arithmetic operations, comparisons and conditional logic. 
+- Expression can use SQL syntax for conditionals (CASE/WHEN/THEN/ELSE/END)
+- Supports datetime comparisons with function `DATE('yyyy-mm-dd hh:mm:ss')`
+- 'Empty-check' evalutions with `IS EMPTY` / `IS NOT EMPTY` and `''`
+- Handles 'cross element' references with dot notation (e.g., 'contact.field_name')
 
 Examples for 'calculated_field' as a mapping_type in the mapping contract:
     "expression": "b_months_at_job + (b_years_at_job * 12)"
     "expression": "CASE WHEN b_salary_basis_tp_c = 'ANNUM' THEN b_salary / 12 WHEN b_salary_basis_tp_c = 'MONTH' THEN b_salary * 12 WHEN b_salary_basis_tp_c = 'HOURLY' THEN b_salary WHEN b_salary_basis_tp_c = '' THEN b_salary ELSE b_salary END"
+    "expression": "CASE WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' ELSE '' END"
 """
 
 import re
 import logging
-from typing import Dict, Any, Optional, Union
+from typing import Dict, Any, Optional, Union, List
 from decimal import Decimal
+from datetime import datetime
 
 from ..exceptions import DataTransformationError
 from ..utils import ValidationUtils
@@ -67,6 +72,15 @@ class CalculatedFieldEngine:
         Raises:
             DataTransformationError: If expression evaluation fails
         """
+        self.logger.debug(f"Evaluating expression for {target_column}: {expression}")
+        self.logger.debug(f"Element data keys: {list(element_data.keys())[:20]}")  # First 20 keys
+        if 'app_product.adverse_actn1_type_cd' in element_data:
+            self.logger.debug(f"app_product.adverse_actn1_type_cd = {element_data['app_product.adverse_actn1_type_cd']}")
+        if 'application.app_receive_date' in element_data:
+            self.logger.debug(f"application.app_receive_date = {element_data['application.app_receive_date']}")
+        if 'application.population_assignment' in element_data:
+            self.logger.debug(f"application.population_assignment = {element_data['application.population_assignment']}")
+        
         try:
             # Handle CASE statements
             if 'CASE' in expression.upper():
@@ -90,6 +104,9 @@ class CalculatedFieldEngine:
         
         Supports multiple WHEN clauses and optional ELSE clause.
         """
+        self.logger.debug(f"Evaluating CASE statement for {target_column}: {expression}")
+        print(f"DEBUG: Evaluating CASE statement for {target_column}")
+        
         # Parse CASE statement structure
         case_match = self._case_pattern.search(expression)
         if not case_match:
@@ -107,8 +124,10 @@ class CalculatedFieldEngine:
         
         # Simple parser for WHEN/THEN pairs
         parts = re.split(r'\s+WHEN\s+', case_body, flags=re.IGNORECASE)
+        self.logger.debug(f"CASE parsing: expression='{expression}', case_body='{case_body}', parts={parts}")
         
         for part in parts:  # Process all parts (first part is not empty after removing CASE keyword)
+            self.logger.debug(f"Processing CASE part: '{part}'")
             if 'THEN' in part.upper():
                 when_then = re.split(r'\s+THEN\s+', part, maxsplit=1, flags=re.IGNORECASE)
                 if len(when_then) == 2:
@@ -126,37 +145,115 @@ class CalculatedFieldEngine:
                         then_value = value_part
                     
                     when_then_pairs.append((condition, then_value))
+                    self.logger.debug(f"Parsed WHEN/THEN pair: condition='{condition}', then_value='{then_value}', else_value='{else_value}'")
         
         # Evaluate WHEN conditions in order
         for condition, then_value in when_then_pairs:
-            if self._evaluate_condition(condition, element_data):
-                return self._evaluate_value_expression(then_value, element_data)
+            try:
+                if self._evaluate_condition(condition, element_data):
+                    result = self._evaluate_value_expression(then_value, element_data)
+                    self.logger.debug(f"CASE: WHEN condition matched, returning: {repr(result)}")
+                    return result
+            except Exception as e:
+                self.logger.error(f"CASE: Error evaluating WHEN condition '{condition}': {e}")
+                continue
         
         # If no WHEN condition matched, use ELSE value
-        if else_value:
-            return self._evaluate_value_expression(else_value, element_data)
+        self.logger.debug(f"CASE: No WHEN conditions matched, else_value='{else_value}'")
+        if else_value is not None:
+            try:
+                result = self._evaluate_value_expression(else_value, element_data)
+                self.logger.debug(f"CASE: Returning ELSE value: {repr(result)}")
+                return result
+            except Exception as e:
+                self.logger.error(f"CASE: Error evaluating ELSE value '{else_value}': {e}")
+                return None
         
         # No condition matched and no ELSE clause
+        self.logger.debug("CASE: No conditions matched and no ELSE clause")
         return None
     
     def _evaluate_condition(self, condition: str, element_data: Dict[str, Any]) -> bool:
         """
-        Evaluate a boolean condition (e.g., "b_salary_basis_tp_c = 'ANNUM'").
+        Evaluate a boolean condition, supporting compound conditions with AND/OR.
         
-        Supports: =, !=, <, >, <=, >=, IS NULL, IS NOT NULL
+        Supports: =, !=, <, >, <=, >=, IS NULL, IS NOT NULL, DATE() function, LIKE operator, IS EMPTY/NOT EMPTY
         """
         condition = condition.strip()
+        print(f"[DEBUG] Evaluating compound condition: '{condition}'")
+        
+        # Handle compound conditions with AND/OR
+        if ' AND ' in condition.upper():
+            parts = self._split_condition(condition, 'AND')
+            print(f"[DEBUG] AND condition split into {len(parts)} parts: {parts}")
+            results = [self._evaluate_simple_condition(part.strip(), element_data) for part in parts]
+            print(f"[DEBUG] AND results: {results}")
+            return all(results)
+        elif ' OR ' in condition.upper():
+            parts = self._split_condition(condition, 'OR')
+            print(f"[DEBUG] OR condition split into {len(parts)} parts: {parts}")
+            results = [self._evaluate_simple_condition(part.strip(), element_data) for part in parts]
+            print(f"[DEBUG] OR results: {results}")
+            return any(results)
+        else:
+            # Single condition
+            result = self._evaluate_simple_condition(condition, element_data)
+            print(f"[DEBUG] Single condition result: {result}")
+            return result
+    
+    def _split_condition(self, condition: str, operator: str) -> List[str]:
+        """Split a compound condition on AND/OR, respecting parentheses."""
+        # Simple split for now - doesn't handle nested parentheses
+        return condition.upper().split(f' {operator} ')
+    
+    def _evaluate_simple_condition(self, condition: str, element_data: Dict[str, Any]) -> bool:
+        
+        # Handle IS EMPTY / IS NOT EMPTY
+        if 'IS EMPTY' in condition.upper():
+            field_name = condition.upper().replace('IS EMPTY', '').strip()
+            actual_field = self._find_field_case_insensitive(field_name, element_data)
+            field_value = element_data.get(actual_field, '') if actual_field else ''
+            result = field_value is None or str(field_value).strip() == ''
+            self.logger.debug(f"IS EMPTY check: field='{field_name}', actual_field='{actual_field}', value='{field_value}', result={result}")
+            return result
+        
+        if 'IS NOT EMPTY' in condition.upper():
+            field_name = condition.upper().replace('IS NOT EMPTY', '').strip()
+            actual_field = self._find_field_case_insensitive(field_name, element_data)
+            field_value = element_data.get(actual_field, '') if actual_field else ''
+            result = field_value is not None and str(field_value).strip() != ''
+            self.logger.debug(f"IS NOT EMPTY check: field='{field_name}', actual_field='{actual_field}', value='{field_value}', result={result}")
+            return result
         
         # Handle IS NULL / IS NOT NULL
         if 'IS NULL' in condition.upper():
             field_name = condition.upper().replace('IS NULL', '').strip()
-            field_value = element_data.get(field_name)
+            actual_field = self._find_field_case_insensitive(field_name, element_data)
+            field_value = element_data.get(actual_field, '') if actual_field else ''
             return field_value is None or field_value == ''
         
         if 'IS NOT NULL' in condition.upper():
             field_name = condition.upper().replace('IS NOT NULL', '').strip()
-            field_value = element_data.get(field_name)
+            actual_field = self._find_field_case_insensitive(field_name, element_data)
+            field_value = element_data.get(actual_field, '') if actual_field else ''
             return field_value is not None and field_value != ''
+        
+        # Handle LIKE operator
+        if ' LIKE ' in condition.upper():
+            parts = condition.upper().split(' LIKE ', 1)
+            if len(parts) == 2:
+                left_field = parts[0].strip()
+                pattern = parts[1].strip().strip("'\"")
+                
+                # Find the actual field name case-insensitively
+                actual_field = None
+                for key in element_data.keys():
+                    if key.upper() == left_field:
+                        actual_field = key
+                        break
+                
+                left_val = str(element_data.get(actual_field, '')) if actual_field else ''
+                return self._matches_like_pattern(left_val, pattern)
         
         # Handle comparison operators
         operators = ['!=', '<=', '>=', '=', '<', '>']
@@ -165,32 +262,139 @@ class CalculatedFieldEngine:
             if op in condition:
                 parts = condition.split(op, 1)
                 if len(parts) == 2:
-                    left_field = parts[0].strip()
-                    right_value = parts[1].strip().strip("'\"")  # Remove quotes
+                    left_expr = parts[0].strip()
+                    right_expr = parts[1].strip()
                     
-                    left_val = element_data.get(left_field, '')
+                    # Handle DATE() function calls
+                    left_val = self._extract_date_value(left_expr, element_data)
+                    right_val = self._extract_date_value(right_expr, element_data)
                     
-                    # Convert values for comparison
-                    left_val_str = str(left_val) if left_val is not None else ''
-                    right_val_str = str(right_value)
+                    # If not DATE() functions, get regular field values
+                    if left_val is None:
+                        left_val = element_data.get(self._find_field_case_insensitive(left_expr, element_data), '')
+                    if right_val is None:
+                        # Check if right_expr is a quoted literal
+                        if (right_expr.startswith("'") and right_expr.endswith("'")) or \
+                           (right_expr.startswith('"') and right_expr.endswith('"')):
+                            right_val = right_expr[1:-1]  # Remove quotes
+                        else:
+                            right_val = element_data.get(self._find_field_case_insensitive(right_expr, element_data), '')
                     
-                    # Perform comparison
+                    # Debug logging
+                    print(f"[DEBUG] Comparison: left_expr='{left_expr}', right_expr='{right_expr}', left_val='{left_val}' (type: {type(left_val)}), right_val='{right_val}' (type: {type(right_val)}), op='{op}'")
+                    
+                    # Perform comparison with proper type handling
                     if op == '=':
-                        return left_val_str == right_val_str
+                        result = self._safe_compare(left_val, right_val, lambda x, y: x == y)
+                        print(f"[DEBUG] Equality comparison result: {result}")
+                        return result
+                        if 'b_salary_basis_tp_c' in condition:
+                            self.logger.debug(f"Equality comparison result: {result}")
+                    # Perform comparison with proper type handling
+                    if op == '=':
+                        result = self._safe_compare(left_val, right_val, lambda x, y: x == y)
+                        print(f"[DEBUG] Equality comparison result: {result}")
+                        return result
                     elif op == '!=':
-                        return left_val_str != right_val_str
+                        return self._safe_compare(left_val, right_val, lambda x, y: x != y)
                     elif op == '<':
-                        return self._safe_numeric_compare(left_val, right_value, lambda x, y: x < y)
+                        return self._safe_compare(left_val, right_val, lambda x, y: x < y)
                     elif op == '>':
-                        return self._safe_numeric_compare(left_val, right_value, lambda x, y: x > y)
+                        return self._safe_compare(left_val, right_val, lambda x, y: x > y)
                     elif op == '<=':
-                        return self._safe_numeric_compare(left_val, right_value, lambda x, y: x <= y)
+                        return self._safe_compare(left_val, right_val, lambda x, y: x <= y)
                     elif op == '>=':
-                        return self._safe_numeric_compare(left_val, right_value, lambda x, y: x >= y)
+                        return self._safe_compare(left_val, right_val, lambda x, y: x >= y)
                 
                 break
         
         return False
+    
+    def _extract_date_value(self, expr: str, element_data: Dict[str, Any]) -> Optional[datetime]:
+        """Extract date value from DATE() function call or return None if not a DATE() call."""
+        expr = expr.strip()
+        if expr.upper().startswith('DATE(') and expr.endswith(')'):
+            # Extract the content from DATE(content)
+            content = expr[5:-1].strip()
+            
+            # Check if it's a quoted literal
+            if (content.startswith("'") and content.endswith("'")) or \
+               (content.startswith('"') and content.endswith('"')):
+                # It's a literal date string
+                date_str = content[1:-1]  # Remove quotes
+            else:
+                # It's a field reference
+                field_value = element_data.get(content)
+                if field_value is None:
+                    return None
+                date_str = str(field_value)
+            
+            # Try to parse the date string
+            try:
+                # Try to parse as date (assuming YYYY-MM-DD format)
+                return datetime.strptime(date_str, '%Y-%m-%d')
+            except ValueError:
+                # If parsing fails, try other common formats
+                for fmt in ['%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M:%S.%f']:
+                    try:
+                        return datetime.strptime(date_str, fmt)
+                    except ValueError:
+                        continue
+                # If all parsing fails, return None
+                return None
+    
+    def _matches_like_pattern(self, value: str, pattern: str) -> bool:
+        """Check if value matches SQL LIKE pattern with % and _ wildcards."""
+        # Convert SQL LIKE pattern to regex
+        # % matches any sequence of characters
+        # _ matches any single character
+        regex_pattern = pattern.replace('%', '.*').replace('_', '.')
+        # Escape the pattern, but since we already converted % and _, we're good
+        try:
+            return bool(re.match(f'^{regex_pattern}$', value, re.IGNORECASE))
+        except re.error:
+            # If regex compilation fails, fall back to simple string matching
+            return pattern == value
+    
+    def _safe_compare(self, left_val: Any, right_val: Any, compare_func) -> bool:
+        """Safely compare values, handling both dates and numeric types."""
+        # If both are datetime objects, compare directly
+        if isinstance(left_val, datetime) and isinstance(right_val, datetime):
+            return compare_func(left_val, right_val)
+        
+        # If one is datetime and other is string, try to parse the string as date
+        if isinstance(left_val, datetime) and isinstance(right_val, str):
+            try:
+                # Try the same formats as _extract_date_value
+                for fmt in ['%Y-%m-%d', '%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M:%S.%f']:
+                    try:
+                        right_date = datetime.strptime(right_val, fmt)
+                        return compare_func(left_val, right_date)
+                    except ValueError:
+                        continue
+                return False
+            except ValueError:
+                return False
+        
+        if isinstance(right_val, datetime) and isinstance(left_val, str):
+            try:
+                # Try the same formats as _extract_date_value
+                for fmt in ['%Y-%m-%d', '%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M:%S.%f']:
+                    try:
+                        left_date = datetime.strptime(left_val, fmt)
+                        return compare_func(left_date, right_val)
+                    except ValueError:
+                        continue
+                return False
+            except ValueError:
+                return False
+        
+        # If both are strings, do string comparison
+        if isinstance(left_val, str) and isinstance(right_val, str):
+            return compare_func(left_val, right_val)
+        
+        # Fall back to numeric comparison
+        return self._safe_numeric_compare(left_val, right_val, compare_func)
     
     def _safe_numeric_compare(self, left_val: Any, right_val: Any, compare_func) -> bool:
         """Safely compare numeric values with type conversion."""
@@ -201,15 +405,34 @@ class CalculatedFieldEngine:
         except (ValueError, TypeError):
             return False
     
+    def _find_field_case_insensitive(self, field_name: str, element_data: Dict[str, Any]) -> Optional[str]:
+        """Find the actual field name in element_data case-insensitively."""
+        field_upper = field_name.upper()
+        for key in element_data.keys():
+            if key.upper() == field_upper:
+                return key
+        return None
+    
     def _evaluate_value_expression(self, expression: str, element_data: Dict[str, Any]) -> Optional[Union[int, float, Decimal, str]]:
         """
         Evaluate a value expression (could be field name, literal, or arithmetic).
+        Supports cross-element field references like 'contact.field_name'.
         """
         expression = expression.strip()
         
-        # If it's a simple field reference
+        # If it's a simple field reference (including dotted cross-element references)
         if expression in element_data:
             return element_data[expression]
+        
+        # Handle dotted field references (cross-element access)
+        if '.' in expression:
+            parts = expression.split('.', 1)
+            if len(parts) == 2:
+                prefix, field_name = parts
+                # Check if it's a cross-element reference like 'contact.field_name'
+                cross_ref = f"{prefix}.{field_name}"
+                if cross_ref in element_data:
+                    return element_data[cross_ref]
         
         # If it's a quoted literal
         if (expression.startswith("'") and expression.endswith("'")) or \
@@ -238,13 +461,13 @@ class CalculatedFieldEngine:
         # Create safe namespace with only field values and safe operations
         safe_namespace = {
             '__builtins__': {},  # Remove all built-in functions
-            # Add field values as variables
+            # Add field values as variables (including dotted cross-element references)
             **{k: ValidationUtils.safe_float_conversion(v, 0.0) 
                for k, v in element_data.items() if v is not None}
         }
         
-        # Validate expression contains only safe characters
-        if not re.match(r'^[a-zA-Z0-9_+\-*/().\s]+$', expression):
+        # Validate expression contains only safe characters (allow dots for cross-element refs and quotes for literals)
+        if not re.match(r'^[a-zA-Z0-9_+\-*/().\'"\s]+$', expression):
             raise DataTransformationError(f"Expression contains unsafe characters: {expression}")
         
         # Replace field names with safe variable names (in case they have special chars)
@@ -270,6 +493,38 @@ class CalculatedFieldEngine:
         except Exception as e:
             self.logger.warning(f"Arithmetic evaluation failed for '{expression}': {e}")
             return None
+    
+    def _find_field_case_insensitive(self, field_name: str, element_data: Dict[str, Any]) -> Optional[str]:
+        """
+        Find the actual field name in element_data using case-insensitive lookup.
+        Also handles qualified field references like 'app_product.field_name'.
+        
+        Args:
+            field_name: The field name to find (may be qualified with dots)
+            element_data: Dictionary containing field values
+            
+        Returns:
+            The actual field name if found, None otherwise
+        """
+        # Handle qualified references (e.g., 'app_product.adverse_actn1_type_cd')
+        if '.' in field_name:
+            # Look for the qualified reference directly
+            if field_name in element_data:
+                return field_name
+            
+            # Try case-insensitive qualified lookup
+            field_name_upper = field_name.upper()
+            for key in element_data.keys():
+                if key.upper() == field_name_upper:
+                    return key
+        else:
+            # Simple field name lookup
+            field_name_upper = field_name.upper()
+            for key in element_data.keys():
+                if key.upper() == field_name_upper:
+                    return key
+        
+        return None
     
     def validate_expression(self, expression: str) -> bool:
         """

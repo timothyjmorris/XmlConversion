@@ -578,28 +578,80 @@
       "xml_attribute": "adverse_actn1_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_1",
-      "data_type": "varchar(10)"
+	    "data_type": "varchar(10)"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn2_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_2",
-      "data_type": "varchar(10)"
+	    "data_type": "varchar(10)"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn3_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_3",
-      "data_type": "varchar(10)"
+	    "data_type": "varchar(10)"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn4_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_4",
-      "data_type": "varchar(10)"
+	    "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn5_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_code_5",
+	    "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn1_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_type_1",
+	    "data_type": "varchar(25)",
+	    "mapping_type": "calculated_field",
+      "expression": "CASE WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn1_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn2_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_type_2",
+	    "data_type": "varchar(25)",
+	    "mapping_type": "calculated_field",
+      "expression": "CASE WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn2_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn3_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_type_3",
+      "data_type": "varchar(25)",
+      "mapping_type": "calculated_field",
+      "expression": "CASE WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn3_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn4_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_type_4",
+      "data_type": "varchar(25)",
+      "mapping_type": "calculated_field",
+      "expression": "CASE WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn4_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "adverse_actn5_type_cd",
+      "target_table": "app_operational_cc",
+      "target_column": "cb_score_factor_type_5",
+      "data_type": "varchar(25)",
+      "mapping_type": "calculated_field",
+      "expression": "CASE WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn5_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -864,13 +916,6 @@
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
-      "xml_attribute": "adverse_actn5_type_cd",
-      "target_table": "app_operational_cc",
-      "target_column": "cb_score_factor_code_5",
-      "data_type": "varchar(10)"
-    },
-    {
-      "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "regb_end_date",
       "target_table": "app_operational_cc",
       "target_column": "regb_end_date",
@@ -903,6 +948,42 @@
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_code_4",
       "data_type": "varchar(10)"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_reason1_tp_c",
+      "target_table": "app_operational_cc",
+      "target_column": "risk_model_score_factor_type_1",
+      "data_type": "varchar(25)",
+	    "mapping_type": "calculated_field",
+	    "expression": "CASE WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_reason2_tp_c",
+      "target_table": "app_operational_cc",
+      "target_column": "risk_model_score_factor_type_2",
+      "data_type": "varchar(25)",
+	    "mapping_type": "calculated_field",
+	    "expression": "CASE WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_reason3_tp_c",
+      "target_table": "app_operational_cc",
+      "target_column": "risk_model_score_factor_type_3",
+      "data_type": "varchar(25)",
+	    "mapping_type": "calculated_field",
+	    "expression": "CASE WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_reason4_tp_c",
+      "target_table": "app_operational_cc",
+      "target_column": "risk_model_score_factor_type_4",
+      "data_type": "varchar(25)",
+	    "mapping_type": "calculated_field",
+	    "expression": "CASE WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",

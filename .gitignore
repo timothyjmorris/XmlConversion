@@ -54,6 +54,7 @@ coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
+*.pyc
 
 # Database
 *.db
