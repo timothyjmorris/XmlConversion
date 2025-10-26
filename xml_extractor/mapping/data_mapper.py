@@ -315,35 +315,44 @@ class DataMapper(DataMapperInterface):
         - Only contacts with BOTH con_id AND ac_role_tp_c are considered
         - Only PR and AUTHU contact types are valid (future TODO: use "contact_type_enum" from mapping contract to future-proof types)
         - Max of one contact per type is returned (last PR, last AUTHU)
-        - NOTE: not checking if con_id is duplicated across contact type
+        - This function also deduplicates contacts by con_id across types (to prevent SQL errors)
+        - In the case of duplicates by con_id across types, the PR contact is preferred over AUTHU
         Returns a list of contacts which can safely be inserted.
         """
         try:
             contacts = self._navigate_to_contacts(xml_data)
-            self.logger.info(f"PR contacts found: {[(c.get('con_id', '').strip(), c.get('first_name', ''), c.get('ac_role_tp_c', '')) for c in contacts if isinstance(c, dict) and c.get('ac_role_tp_c', '').strip() == 'PR']}")
+            self.logger.info(f"Contacts found: {[(c.get('con_id', '').strip(), c.get('first_name', ''), c.get('ac_role_tp_c', '')) for c in contacts if isinstance(c, dict)]}")
 
-            pr_latest = None
-            authu_latest = None
-
-            # Scan contacts in reverse to get last occurrence
-            for contact in reversed(contacts):
+            # Only consider contacts with required fields: con_id and ac_role_tp_c
+            filtered_contacts = []
+            for contact in contacts:
                 if not isinstance(contact, dict):
                     continue
                 con_id = contact.get('con_id', '').strip()
                 ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
                 if not con_id or not ac_role_tp_c:
                     continue
-                if ac_role_tp_c == 'PR' and pr_latest is None:
-                    pr_latest = contact
-                elif ac_role_tp_c == 'AUTHU' and authu_latest is None:
-                    authu_latest = contact
+                if ac_role_tp_c not in ('PR', 'AUTHU'):
+                    continue
+                filtered_contacts.append(contact)
 
-            valid_contacts = []
-            if pr_latest:
-                valid_contacts.append(pr_latest)
-            if authu_latest:
-                valid_contacts.append(authu_latest)
+            # For each con_id, keep only the last PR if present, else last AUTHU
+            con_id_map = {}
+            for contact in filtered_contacts:
+                con_id = contact.get('con_id', '').strip()
+                ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
+                # Always overwrite with latest contact
+                if con_id not in con_id_map:
+                    con_id_map[con_id] = contact
+                else:
+                    # If current is PR, always prefer it
+                    if ac_role_tp_c == 'PR':
+                        con_id_map[con_id] = contact
+                    # If existing is not PR, overwrite with latest AUTHU
+                    elif con_id_map[con_id].get('ac_role_tp_c', '') != 'PR':
+                        con_id_map[con_id] = contact
 
+            valid_contacts = list(con_id_map.values())
             return valid_contacts
         except Exception as e:
             self.logger.warning(f"Failed to extract valid contacts: {e}")
@@ -640,6 +649,30 @@ class DataMapper(DataMapperInterface):
                     target_type=mapping.data_type
                 )
         
+        # For string fields, apply mapping_type first (if any), then trim, truncate, trim again
+        if current_value is not None and isinstance(current_value, str):
+            # Apply mapping_type transformation if present and not already applied
+            mapping_types = []
+            if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
+                mapping_types = [mt.strip() for mt in mapping.mapping_type.split(',')]
+            # Only apply numbers_only if not already applied in chain
+            if 'numbers_only' in mapping_types:
+                import re
+                current_value = re.sub(r'[^0-9]', '', current_value)
+            # First trim
+            current_value = current_value.strip()
+            # Truncate
+            max_length = None
+            if mapping.data_type and (mapping.data_type.startswith('varchar') or mapping.data_type.startswith('char')):
+                import re
+                match = re.search(r'\((\d+)\)', mapping.data_type)
+                if match:
+                    max_length = int(match.group(1))
+            if max_length:
+                current_value = current_value[:max_length]
+            # Final trim
+            current_value = current_value.strip()
+            return current_value
         return current_value
 
     def _apply_single_mapping_type(self, value: Any, mapping_type: str, mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
@@ -940,31 +973,16 @@ class DataMapper(DataMapperInterface):
         table_name = mappings[0].target_table if mappings else 'unknown'
         
         if table_name == 'contact_base':
-            # For contact_base, we need to ensure unique con_ids (PK constraint)
-            # Group contacts by con_id only and take the last valid one
-            unique_contacts = {}
+            # valid_contacts is already deduped by con_id
             for contact in valid_contacts:
-                if 'con_id' in contact and contact['con_id']:
-                    con_id = contact['con_id']
-                    # Always take the last contact for each con_id (overwrites duplicates)
-                    unique_contacts[con_id] = contact
-            
-            # Log contact processing summary
-            self.logger.debug(f"Processing contact_base: {len(valid_contacts)} valid contacts -> {len(unique_contacts)} unique contacts")
-            
-            # Create records for unique contacts only
-            for con_id, contact in unique_contacts.items():
-                # Use ONLY the contact data from valid_contacts (already cleaned by PreProcessingValidator)
-                # Do NOT look up XML elements to avoid getting wrong/duplicate contact data
                 record = self._create_record_from_mappings(xml_data, mappings, contact)
-                # Skip empty records (happens when contact_address/employment lacks con_id)
                 if record:
                     record['con_id'] = int(contact['con_id']) if str(contact['con_id']).isdigit() else contact['con_id']
                     record['app_id'] = int(app_id) if app_id.isdigit() else app_id
                     records.append(record)
-                    self.logger.debug(f"Created contact_base record for con_id={con_id}")
+                    self.logger.debug(f"Created contact_base record for con_id={contact['con_id']}")
                 else:
-                    self.logger.debug(f"Skipping empty contact_base record for con_id={con_id}")
+                    self.logger.debug(f"Skipping empty contact_base record for con_id={contact['con_id']}")
         elif table_name == 'contact_address':
             # Extract contact_address elements directly from XML data
             self.logger.debug(f"Extracting contact_address with {len(mappings)} mappings")
@@ -1071,32 +1089,55 @@ class DataMapper(DataMapperInterface):
     def _should_skip_record(self, record: Dict[str, Any], table_name: str, applied_defaults: set) -> bool:
         """
         Determine if record should be skipped because it only contains keys and applied defaults.
-        
-        FIXED LOGIC: Keep applied defaults if there's ANY meaningful data in the record.
+
+        For app_base: Only app_id is required to keep the record (even if all other fields are defaults or missing).
+        For other tables: Keep applied defaults if there's ANY meaningful data in the record.
         Only skip if record has ONLY keys and applied defaults with no real data.
-        
+
         Args:
             record: The record dictionary
             table_name: Name of the target table
             applied_defaults: Set of column names that received default values
-            
+
         Returns:
             True if record should be skipped, False otherwise
         """
         key_columns = {'app_id', 'con_id'}
-        
+
+        # Special case: app_base only requires app_id to be kept
+        if table_name == 'app_base':
+            if 'app_id' in record:
+                self.logger.debug(f"Keeping app_base record with app_id (special case)")
+                return False
+            else:
+                self.logger.debug(f"Skipping app_base record - missing app_id")
+                return True
+
         # Find meaningful data: not keys, not None, and not applied defaults
         meaningful_data = {k: v for k, v in record.items() 
                           if k not in key_columns 
                           and v is not None 
                           and k not in applied_defaults}
-        
+
         # Log record evaluation summary
         self.logger.debug(f"Record evaluation for {table_name}: {len(meaningful_data)} meaningful fields, {len(applied_defaults)} defaults")
-        
+
+        # Disallow app_pricing_cc inserts if required fields are missing or empty
+        if table_name == 'app_pricing_cc':
+            required_fields = ['campaign_num']
+            for field in required_fields:
+                if field not in record or not StringUtils.safe_string_check(record[field]):
+                    self.logger.debug(f"Skipping app_pricing_cc record - missing or empty required field: {field}")
+                    return True
+        # Disallow app_operational_cc inserts if required fields are missing or empty
+        if table_name == 'app_operational_cc':
+            required_fields = ['sc_bank_aba']
+            for field in required_fields:
+                if field not in record or not StringUtils.safe_string_check(record[field]):
+                    self.logger.debug(f"Skipping app_operational_cc record - missing or empty required field: {field}")
+                    return True
         # Skip records if they only have keys and applied defaults (no meaningful data)
         if not meaningful_data:
-            # Keep records with applied defaults for tables with NOT NULL constraints
             tables_with_required_defaults = {
                 'contact_base', 'app_pricing_cc', 'app_solicited_cc', 
                 'app_transactional_cc', 'app_operational_cc'

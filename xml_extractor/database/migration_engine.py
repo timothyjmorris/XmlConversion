@@ -63,6 +63,12 @@ class MigrationEngine(MigrationEngineInterface):
             batch_size: Optional batch size for bulk operations. If None, uses centralized config.
         """
         self.logger = logging.getLogger(__name__)
+        # DEBUG: Attach root logger handlers for troubleshooting
+        # Comment out for production to suppress detailed SQL insert output
+        root_logger = logging.getLogger()
+        for handler in root_logger.handlers:
+            self.logger.addHandler(handler)
+        self.logger.setLevel(logging.WARNING)
         
         # Get centralized configuration
         self.config_manager = get_config_manager()

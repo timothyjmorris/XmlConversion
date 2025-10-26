@@ -7,32 +7,129 @@ if base_dir not in sys.path:
 from xml_extractor.mapping.data_mapper import DataMapper
 
 class TestExtractValidContacts(unittest.TestCase):
+    def test_no_valid_contacts(self):
+        # All contacts missing required fields, should return empty list
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '', 'ac_role_tp_c': 'PR', 'first_name': 'NoId'},
+                {'con_id': '2', 'ac_role_tp_c': '', 'first_name': 'NoType'},
+                {'con_id': '3', 'first_name': 'NoRole'},
+                {},
+            ]
+        }
+        self.mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = self.mapper._extract_valid_contacts(xml_data)
+        self.assertEqual(len(contacts), 0)
+    
+    def test_pr_and_authu_same_con_id(self):
+        # PR and AUTHU with same con_id, PR should be chosen -- and also return the non-duplicate AUTHU
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'PrimaryUser', 'contact_type_enum': 1},
+                {'con_id': '1', 'ac_role_tp_c': 'AUTHU', 'first_name': 'AuthUser', 'contact_type_enum': 2},
+                {'con_id': '2', 'ac_role_tp_c': 'AUTHU', 'first_name': 'OtherAuth', 'contact_type_enum': 2},
+            ]
+        }
+        self.mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = self.mapper._extract_valid_contacts(xml_data)
+        self.assertEqual(len(contacts), 2)
+        self.assertTrue(any(c['first_name'] == 'PrimaryUser' and c['con_id'] == '1' for c in contacts))
+        self.assertTrue(any(c['first_name'] == 'OtherAuth' and c['con_id'] == '2' for c in contacts))
+
+    def test_missing_required_fields(self):
+        # Contact missing contact_type_enum should be excluded
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '1', 'ac_role_tp_c': '', 'first_name': 'PrimaryUser'},  # Missing contact_type_enum
+                {'con_id': '2', 'ac_role_tp_c': 'AUTHU', 'first_name': 'OtherAuth', 'contact_type_enum': 2},
+            ]
+        }
+        self.mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = self.mapper._extract_valid_contacts(xml_data)
+        # Only contact with all required fields should be present
+        self.assertEqual(len(contacts), 1)
+        self.assertTrue(all('contact_type_enum' in c for c in contacts))
+        self.assertTrue(any(c['first_name'] == 'OtherAuth' and c['con_id'] == '2' for c in contacts))
+
+    def test_multiple_contacts_same_con_id(self):
+        # Multiple contacts with same con_id, PR should be chosen
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '1', 'ac_role_tp_c': 'AUTHU', 'first_name': 'AuthUser', 'contact_type_enum': 2},
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'PrimaryUser', 'contact_type_enum': 1},
+                {'con_id': '1', 'ac_role_tp_c': 'AUTHU', 'first_name': 'AuthUser2', 'contact_type_enum': 2},
+            ]
+        }
+        self.mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = self.mapper._extract_valid_contacts(xml_data)
+        self.assertEqual(len(contacts), 1)
+        self.assertTrue(any(c['first_name'] == 'PrimaryUser' and c['con_id'] == '1' for c in contacts))
+
+    def test_only_one_contact(self):
+        # Only one contact present
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'PrimaryUser', 'contact_type_enum': 1},
+            ]
+        }
+        self.mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = self.mapper._extract_valid_contacts(xml_data)
+        self.assertEqual(len(contacts), 1)
+        self.assertTrue(any(c['first_name'] == 'PrimaryUser' and c['con_id'] == '1' for c in contacts))
+        self.assertTrue(all('contact_type_enum' in c for c in contacts))
+    
+    def test_priority_pr_over_authu(self):
+        # PR and AUTHU with same con_id, PR should be chosen
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '1', 'ac_role_tp_c': 'AUTHU', 'first_name': 'AuthUser'},
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'PrimaryUser'},  # Should be selected
+                {'con_id': '2', 'ac_role_tp_c': 'AUTHU', 'first_name': 'OtherAuth'},
+            ]
+        }
+        self.mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = self.mapper._extract_valid_contacts(xml_data)
+        # Only PR for con_id=1, AUTHU for con_id=2
+        self.assertEqual(len(contacts), 2)
+        self.assertTrue(any(c['first_name'] == 'PrimaryUser' and c['con_id'] == '1' for c in contacts))
+        self.assertTrue(any(c['first_name'] == 'OtherAuth' and c['con_id'] == '2' for c in contacts))
+    
+    def test_dedupe_across_types(self):
+        # PR and AUTHU with same con_id, only last contact (PR) should be returned
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'PrimaryUser'},  # Should be selected (last for con_id=1)
+                {'con_id': '1', 'ac_role_tp_c': 'AUTHU', 'first_name': 'AuthUser'},                
+            ]
+        }
+        self.mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = self.mapper._extract_valid_contacts(xml_data)
+        # Only last contact for con_id=1 (PR) and con_id=2 (AUTHU)
+        self.assertEqual(len(contacts), 1)
+        self.assertTrue(any(c['first_name'] == 'PrimaryUser' and c['con_id'] == '1' for c in contacts))
+
     def setUp(self):
         self.mapper = DataMapper()
 
-    def test_last_valid_pr_and_authu_contacts(self):
+    def test_last_contact_per_con_id(self):
         # Simulate XML data with multiple PR and AUTHU contacts
         xml_data = {
             '/Provenir/Request/contact': [
                 {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'Alice'},
                 {'con_id': '2', 'ac_role_tp_c': 'AUTHU', 'first_name': 'Bob'},
-                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'Carol'},   # Should NOT be selected (first PR)
-                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'Dave'},    # Should be selected (last "valid" PR)
-                {'con_id': '2', 'ac_role_tp_c': 'AUTHU', 'first_name': 'Eve'},  # Should be selected (last AUTHU)
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'Carol'},   # Should NOT be selected (not last)
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'Dave'},    # Should be selected (last for con_id=1)
+                {'con_id': '2', 'ac_role_tp_c': 'AUTHU', 'first_name': 'Eve'},  # Should be selected (last for con_id=2)
                 {'con_id': '', 'ac_role_tp_c': 'PR', 'first_name': 'Frank'},    # Should NOT be selected (no con_id)
             ]
         }
         # Patch _navigate_to_contacts to return our test contacts
         self.mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
         contacts = self.mapper._extract_valid_contacts(xml_data)
-        pr_contacts = [c for c in contacts if c['ac_role_tp_c'] == 'PR']
-        authu_contacts = [c for c in contacts if c['ac_role_tp_c'] == 'AUTHU']
-        # Only last PR contact (Frank)
-        self.assertEqual(len(pr_contacts), 1)
-        self.assertEqual(pr_contacts[0]['first_name'], 'Dave')
-        # Only last AUTHU contact (Eve)
-        self.assertEqual(len(authu_contacts), 1)
-        self.assertEqual(authu_contacts[0]['first_name'], 'Eve')
+        # Should only have last for con_id=1 and con_id=2
+        self.assertEqual(len(contacts), 2)
+        self.assertTrue(any(c['first_name'] == 'Dave' and c['con_id'] == '1' for c in contacts))
+        self.assertTrue(any(c['first_name'] == 'Eve' and c['con_id'] == '2' for c in contacts))
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,7 +8,7 @@ minimal overhead and maximum throughput.
 
 Usage:
     Windows Auth:
-        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 25 --limit 25 --log-level INFO
+        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 50 --limit 50 --log-level WARNING
     SQL Server Auth:
         python production_processor.py --server "your-sql-server" --database "YourDatabase" --username "your-user" --password "your-pass" --workers 4 --log-level INFO
     Performance Testing
@@ -187,6 +187,10 @@ class ProductionProcessor:
         logging.getLogger('xml_extractor').setLevel(logging.WARNING)
         logging.getLogger('lxml').setLevel(logging.WARNING)
         logging.getLogger('urllib3').setLevel(logging.WARNING)
+
+        # DEBUG: Enable detailed migration engine warnings for troubleshooting
+        # Comment out the next line for production runs to suppress SQL insert details
+        logging.getLogger('xml_extractor.database.migration_engine').setLevel(logging.WARNING)
         
         self.logger.info(f"Logging initialized: {log_file}")
     

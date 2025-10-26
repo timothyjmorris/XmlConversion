@@ -145,10 +145,45 @@ class PreProcessingValidator:
             
             # Step 3: Convert to data structure
             xml_data = self._convert_elements_to_data_structure(elements)
-            
-            # Step 4: Validate application-level requirements
+
+            # Step 3.5: Defensive schema and product line validation
             app_id = self._extract_and_validate_app_id(xml_data, errors)
-            
+            # Check for Rec Lending in nested structure
+            has_rec_lending_app = False
+            try:
+                has_rec_lending_app = (
+                    'Provenir' in xml_data and
+                    'Request' in xml_data['Provenir'] and
+                    'CustData' in xml_data['Provenir']['Request'] and
+                    'IL_application' in xml_data['Provenir']['Request']['CustData']
+                )
+            except Exception:
+                pass
+            if has_rec_lending_app:
+                errors.append(
+                    "Unsupported application type: Rec Lending (product_line_enum 601) detected. "
+                    "Current version only supports Credit Card (product_line_enum 600). "
+                    "Rec Lending and other types will require future enhancements."
+                )
+            # Check for Credit Card application in nested structure
+            has_credit_card_app = False
+            try:
+                has_credit_card_app = (
+                    'Provenir' in xml_data and
+                    'Request' in xml_data['Provenir'] and
+                    'CustData' in xml_data['Provenir']['Request'] and
+                    'application' in xml_data['Provenir']['Request']['CustData']
+                )
+            except Exception:
+                pass
+            if not has_credit_card_app:
+                errors.append(
+                    "Missing required Credit Card application element: /Provenir/Request/CustData/application. "
+                    "Current version only supports Credit Card (product_line_enum 600). "
+                    "Rec Lending and other types will require future enhancements."
+                )
+            # Defensive: If app_id is missing or invalid, error is already appended by _extract_and_validate_app_id
+
             # Step 5: Validate contacts and collect valid ones
             valid_contacts = self._validate_and_collect_contacts(
                 xml_data, errors, warnings, skipped_elements
