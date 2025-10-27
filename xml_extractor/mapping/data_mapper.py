@@ -35,7 +35,7 @@ import logging
 import json
 from typing import Dict, List, Any, Optional
 from datetime import datetime, date
-# Removed Decimal import - using float for SQL Server compatibility
+from decimal import Decimal, ROUND_HALF_UP
 
 from ..interfaces import DataMapperInterface
 from ..models import MappingContract, FieldMapping, RelationshipMapping
@@ -153,7 +153,7 @@ class DataMapper(DataMapperInterface):
             if xml_root is not None:
                 self._current_xml_root = xml_root
 
-            if not valid_contacts:
+            if valid_contacts is None:
                 # PRE-FLIGHT VALIDATION: Must have app_id and at least one con_id or don't process
                 if not self._pre_flight_validation(xml_data):
                     # If validation fails, do not process this XML record
@@ -225,7 +225,7 @@ class DataMapper(DataMapperInterface):
             elif target_type in ['int', 'smallint', 'bigint', 'tinyint']:
                 return self._transform_to_integer(value)
             
-            elif target_type.startswith('decimal'):
+            elif target_type == 'decimal':
                 return self._transform_to_decimal(value, target_type)
             
             elif target_type == 'float':
@@ -313,9 +313,8 @@ class DataMapper(DataMapperInterface):
         Extract valid contacts using 'last valid element' logic:
         - Only contacts with BOTH con_id AND ac_role_tp_c are considered
         - Only PR and AUTHU contact types are valid (future TODO: use "contact_type_enum" from mapping contract to future-proof types)
-        - Max of one contact per type is returned (last PR, last AUTHU)
+        - Max of one contact per con_id is returned (last valid element wins)
         - This function also deduplicates contacts by con_id across types (to prevent SQL errors)
-        - In the case of duplicates by con_id across types, the PR contact is preferred over AUTHU
         Returns a list of contacts which can safely be inserted.
         """
         try:
@@ -335,21 +334,21 @@ class DataMapper(DataMapperInterface):
                     continue
                 filtered_contacts.append(contact)
 
-            # For each con_id, keep only the last PR if present, else last AUTHU
+            # For each con_id, prefer PR contact over AUTHU (business rule: PR takes precedence)
             con_id_map = {}
             for contact in filtered_contacts:
                 con_id = contact.get('con_id', '').strip()
                 ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
-                # Always overwrite with latest contact
                 if con_id not in con_id_map:
                     con_id_map[con_id] = contact
                 else:
-                    # If current is PR, always prefer it
+                    # If current contact is PR, always prefer it over existing
                     if ac_role_tp_c == 'PR':
                         con_id_map[con_id] = contact
-                    # If existing is not PR, overwrite with latest AUTHU
-                    elif con_id_map[con_id].get('ac_role_tp_c', '') != 'PR':
+                    # If existing is not PR and current is AUTHU, keep the latest AUTHU
+                    elif con_id_map[con_id].get('ac_role_tp_c', '').strip() != 'PR':
                         con_id_map[con_id] = contact
+                    # If existing is PR, keep it (don't overwrite with AUTHU)
 
             valid_contacts = list(con_id_map.values())
             return valid_contacts
@@ -608,8 +607,6 @@ class DataMapper(DataMapperInterface):
         """Apply field-specific transformations with support for chained mapping types."""
         
         # Use mapping_type as a list (already normalized in FieldMapping)
-        if getattr(mapping, 'target_column', None) == 'po_box':
-            self.logger.warning(f"DEBUG: _apply_field_transformation for po_box: value='{value}', data_length={getattr(mapping, 'data_length', None)}, type={type(value)}")
         mapping_types = []
         if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
             if isinstance(mapping.mapping_type, list):
@@ -1020,18 +1017,14 @@ class DataMapper(DataMapperInterface):
         """
         record = {}
         applied_defaults = set()  # Track columns that received default values
+        conditional_defaults = set()  # Track columns with conditional defaults that may be excluded
         
         # Get table name for validation
         table_name = mappings[0].target_table if mappings else ""
-        # Targeted debug for po_box mapping
-        for mapping in mappings:
-            if getattr(mapping, 'target_column', None) == 'po_box':
-                self.logger.warning(f"DEBUG: _create_record_from_mappings for po_box: mapping={mapping}, context_data={context_data}")
         
         # Apply element filtering rules based on required attributes  
         # REMOVED: This validation was preventing contact_base records from being created
-        # The con_id validation is already handled in the calling code
-        
+        # The con_id validation is already handled in the calling code        
         for mapping in mappings:
             try:
                 # Extract value from XML data
@@ -1064,7 +1057,11 @@ class DataMapper(DataMapperInterface):
                     default_value = self._get_default_for_mapping(mapping)
                     if default_value is not None:
                         record[mapping.target_column] = default_value
-                        applied_defaults.add(mapping.target_column)  # Track applied default
+                        # Check if this is a conditional default that should be excluded when record is empty
+                        if hasattr(mapping, 'exclude_default_when_record_empty') and mapping.exclude_default_when_record_empty:
+                            conditional_defaults.add(mapping.target_column)
+                        else:
+                            applied_defaults.add(mapping.target_column)  # Track applied default
                                 # Log birth_date default (debug level)
                         if mapping.target_column == 'birth_date':
                             self.logger.debug(f"Using birth_date default: {default_value}")
@@ -1087,12 +1084,21 @@ class DataMapper(DataMapperInterface):
         
         # ENHANCED: Check if record only contains keys and applied defaults
         # If so, skip INSERT entirely to avoid creating meaningless empty rows
-        if self._should_skip_record(record, table_name, applied_defaults):
+        # For conditional defaults, remove them when record would be skipped
+        should_skip = self._should_skip_record(record, table_name, applied_defaults, conditional_defaults)
+        if should_skip:
             return {}  # Return empty dict to signal "skip this record"
+        
+        # If record will be kept but has conditional defaults, check if we should exclude them
+        if conditional_defaults and self._should_exclude_conditional_defaults(record, table_name, applied_defaults, conditional_defaults):
+            for col in conditional_defaults:
+                if col in record:
+                    del record[col]
+                    self.logger.debug(f"Excluded conditional default {col} from {table_name} record")
         
         return record
 
-    def _should_skip_record(self, record: Dict[str, Any], table_name: str, applied_defaults: set) -> bool:
+    def _should_skip_record(self, record: Dict[str, Any], table_name: str, applied_defaults: set, conditional_defaults: set) -> bool:
         """
         Determine if record should be skipped because it only contains keys and applied defaults.
 
@@ -1110,10 +1116,52 @@ class DataMapper(DataMapperInterface):
         """
         key_columns = {'app_id', 'con_id'}
 
-        # Special case: app_base only requires app_id to be kept
-        # ERRONEOUS BLOCK REMOVED: This code referenced undefined variables and caused runtime errors during tests.
+        # Special case: app_base only requires app_id to keep the record
+        if table_name == 'app_base':
+            return False  # Never skip app_base records
 
-    def _is_transformation_default(self, original_value: Any, transformed_value: Any, mapping: FieldMapping) -> bool:
+        # For other tables: Check if record has only keys and applied defaults
+        meaningful_columns = set(record.keys()) - key_columns - applied_defaults
+
+        # If there are meaningful (non-default, non-key) columns, keep the record
+        if meaningful_columns:
+            return False
+
+        # Record has only keys and/or applied defaults - should be skipped
+        # Exception: contact_base should be kept even with minimal data for relationship integrity
+        if table_name == 'contact_base':
+            return False
+
+        return True
+
+    def _should_exclude_conditional_defaults(self, record: Dict[str, Any], table_name: str, applied_defaults: set, conditional_defaults: set) -> bool:
+        """
+        Determine if conditional defaults should be excluded from a record that will be kept.
+
+        Conditional defaults (like birth_date) should be excluded when the record has minimal
+        meaningful data - i.e., mostly just keys and other defaults.
+
+        Args:
+            record: The record dictionary
+            table_name: Name of the target table
+            applied_defaults: Set of columns with regular applied defaults
+            conditional_defaults: Set of columns with conditional defaults
+
+        Returns:
+            True if conditional defaults should be excluded, False otherwise
+        """
+        key_columns = {'app_id', 'con_id'}
+
+        # Calculate meaningful columns (non-key, non-default data)
+        all_defaults = applied_defaults | conditional_defaults
+        meaningful_columns = set(record.keys()) - key_columns - all_defaults
+
+        # If record has substantial meaningful data, keep conditional defaults
+        if len(meaningful_columns) >= 2:  # At least 2 meaningful columns
+            return False
+
+        # Record has minimal meaningful data - exclude conditional defaults
+        return True
         """
         Check if a transformation applied a default value due to missing/invalid source data.
         
@@ -1236,18 +1284,6 @@ class DataMapper(DataMapperInterface):
     
     def _get_default_for_mapping(self, mapping):
         """Get default value for mapping."""
-        # TARGETED SUPPRESSION: Only suppress defaults for specific problematic mappings
-        # where applying defaults creates meaningless data
-        suppress_defaults_for = {
-            # Don't apply birth_date default for rmts_info when CB_prescreen_birth_date is missing
-            ('/Provenir/Request/CustData/application/rmts_info', 'CB_prescreen_birth_date', 'app_solicited_cc', 'birth_date'),
-        }
-        
-        mapping_key = (mapping.xml_path, mapping.xml_attribute, mapping.target_table, mapping.target_column)
-        if mapping_key in suppress_defaults_for:
-            self.logger.debug(f"Suppressing default for {mapping.target_table}.{mapping.target_column} when {mapping.xml_attribute} is missing")
-            return None
-        
         # Check if mapping has a default_value
         if hasattr(mapping, 'default_value') and mapping.default_value:
             return self.transform_data_types(mapping.default_value, mapping.data_type)
@@ -1328,14 +1364,9 @@ class DataMapper(DataMapperInterface):
             if str_value in bit_map:
                 return bit_map[str_value]
         
-        # Default fallback for common boolean values
-        if str_value in ['true', '1', 'yes', 'y']:
-            return 1
-        elif str_value in ['false', '0', 'no', 'n', '']:
-            return 0
-        
-        # Default to 0 for unknown values
-        return 0
+        # No fallback - if not in contract, return None to exclude from INSERT
+        self.logger.warning(f"No boolean_to_bit conversion found for value '{str_value}' - excluding from INSERT")
+        return None
     
     def _apply_bit_conversion_with_default_tracking(self, value):
         """Apply bit conversion with tracking of applied defaults."""
@@ -1391,7 +1422,6 @@ class DataMapper(DataMapperInterface):
                 if not value:
                     return None
             # Use decimal for proper rounding (round half up)
-            from decimal import Decimal, ROUND_HALF_UP
             val = Decimal(str(value)).quantize(Decimal('1'), rounding=ROUND_HALF_UP)
             return int(val)
         except (ValueError, TypeError):
@@ -1410,7 +1440,6 @@ class DataMapper(DataMapperInterface):
             if precision is None:
                 precision = 2
             # Use decimal.Decimal for proper rounding (round half up, not banker's rounding)
-            from decimal import Decimal, ROUND_HALF_UP
             val = Decimal(str(value)).quantize(Decimal('0.' + '0' * precision), rounding=ROUND_HALF_UP)
             return float(val)
         except (ValueError, TypeError) as e:
@@ -1427,7 +1456,6 @@ class DataMapper(DataMapperInterface):
             if str(value).strip() == '':
                 return None
             # Use decimal.Decimal for proper rounding (round half up, not banker's rounding)
-            from decimal import Decimal, ROUND_HALF_UP
             val = Decimal(str(value)).quantize(Decimal('0.' + '0' * precision), rounding=ROUND_HALF_UP)
             return float(val)
         except (ValueError, TypeError) as e:
@@ -1526,15 +1554,6 @@ class DataMapper(DataMapperInterface):
                 self.logger.debug("No PR contacts found in XML")
                 return None
             
-            # Debug: Log all PR contacts found with their key attributes
-            self.logger.debug(f"Found {len(pr_contacts)} PR contacts")
-            for i, contact in enumerate(pr_contacts):
-                con_id = contact.get('con_id', 'UNKNOWN')
-                # Check for banking attributes in each contact
-                banking_aba = contact.get('banking_aba', 'MISSING')
-                banking_account = contact.get('banking_account_number', 'MISSING')
-                self.logger.debug(f"PR contact {i}: con_id={con_id}, banking_aba={banking_aba}, banking_account={banking_account}")
-            
             # Find the last VALID PR contact (one with non-empty con_id AND non-empty ac_role_tp_c)
             last_valid_pr_contact = None
             for contact in reversed(pr_contacts):  # Start from the end
@@ -1574,9 +1593,9 @@ class DataMapper(DataMapperInterface):
                     # If the field is a decimal, apply rounding/truncation using contract data_length
                     if value is not None and mapping.data_type and mapping.data_type == 'decimal' and mapping.data_length is not None:
                         try:
-                            val = float(value)
-                            val = round(val, mapping.data_length)
-                            return val
+                            # Use decimal for proper rounding (round half up, not banker's rounding)
+                            val = Decimal(str(value)).quantize(Decimal('0.' + '0' * mapping.data_length), rounding=ROUND_HALF_UP)
+                            return float(val)
                         except Exception:
                             return value
                     return value
@@ -1709,3 +1728,13 @@ class DataMapper(DataMapperInterface):
             self.logger.debug(f"Context key: {key} = {context[key]}")
         
         return context
+
+    def _is_transformation_default(self, original_value: Any, transformed_value: Any, mapping: FieldMapping) -> bool:
+        """Check if the transformation resulted in applying a default value."""
+        # If original value was None or empty and we got a transformed value, it might be a default
+        if original_value is None or (isinstance(original_value, str) and not original_value.strip()):
+            # Check if the transformed value matches known defaults
+            default_value = self._get_default_for_mapping(mapping)
+            if default_value is not None and transformed_value == default_value:
+                return True
+        return False

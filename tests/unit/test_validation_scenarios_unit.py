@@ -437,16 +437,16 @@ class TestXMLValidationScenarios(unittest.TestCase):
         </Provenir>
         """
         
-        # Should use "last valid element" approach - only 1 contact record (JANE, the last one)
+        # Should prefer PR contact over AUTHU when con_id duplicates - only 1 contact record (JOHN, the PR one)
         result, validation_result = self._process_xml_with_validation(xml_content, "test_duplicate_con_ids")
         self.assertEqual(len(result['contact_base']), 1)
         
-        # Verify it's the last contact (JANE)
+        # Verify it's the PR contact (JOHN) - PR preferred over AUTHU
         contact = result['contact_base'][0]
-        self.assertEqual(contact['first_name'], 'JANE')
+        self.assertEqual(contact['first_name'], 'JOHN')
         self.assertEqual(contact['con_id'], 277449)
         
-        print("✅ Duplicate con_ids handled correctly using last valid element approach")
+        print("✅ Duplicate con_ids handled correctly - PR preferred over AUTHU")
     
     def test_special_characters_in_attributes(self):
         """Test XML with special characters in attributes."""

@@ -45,6 +45,10 @@ class FieldMapping:
     transformation: Optional[str] = None
     default_value: Optional[str] = None
     expression: Optional[str] = None
+    description: Optional[str] = None
+    required: Optional[bool] = None
+    nullable: Optional[bool] = None
+    exclude_default_when_record_empty: Optional[bool] = None
 
     def __post_init__(self):
         """Validate field mapping configuration and normalize mapping_type."""
