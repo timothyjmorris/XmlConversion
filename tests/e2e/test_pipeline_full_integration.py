@@ -235,10 +235,10 @@ class TestEndToEndIntegration(unittest.TestCase):
             
             # Verify curr_address_only extracts from CURR address
             self.assertIsNotNone(home_phone, "home_phone should not be null")
-            self.assertEqual(home_phone.strip(), '505100230', f"home_phone should be '505100230' but got '{home_phone}'")
+            self.assertEqual(home_phone.strip(), '5051002300', f"home_phone should be '5051002300' but got '{home_phone}'")
             
             self.assertIsNotNone(cell_phone, "cell_phone should not be null") 
-            self.assertEqual(cell_phone.strip(), '111222333', f"cell_phone should be '111222333' but got '{cell_phone}'")
+            self.assertEqual(cell_phone.strip(), '5555555555', f"cell_phone should be '5555555555' but got '{cell_phone}'")
             
             # Check app_operational_cc table for calculated fields
             cursor.execute("SELECT cb_score_factor_type_1, cb_score_factor_type_2, assigned_to, backend_fico_grade, cb_score_factor_code_1, meta_url, priority_enum, housing_monthly_payment FROM app_operational_cc WHERE app_id = 443306")
@@ -260,6 +260,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             
             # Verify calculated field values based on contract expressions
             # cb_score_factor_type_1 should return 'AJ' based on the complex CASE WHEN logic
+            # (adverse_actn1_type_cd is not empty, population_assignment = 'CM', app_receive_date > 2023-10-11)
             self.assertEqual(cb_score_factor_type_1, 'AJ', f"cb_score_factor_type_1 should be 'AJ' but got '{cb_score_factor_type_1}'")
             
             # cb_score_factor_type_2 should return None (NULL in database) when falling through to ELSE
@@ -307,7 +308,8 @@ class TestEndToEndIntegration(unittest.TestCase):
             xml_attribute="residence_monthly_pymnt",
             target_table="app_operational_cc",
             target_column="housing_monthly_payment",
-            data_type="decimal(12,2)",
+            data_type="decimal",
+            data_length=2,
             mapping_type="last_valid_pr_contact"
         )
         
@@ -327,7 +329,8 @@ class TestEndToEndIntegration(unittest.TestCase):
             xml_attribute="nonexistent_attribute",
             target_table="app_operational_cc",
             target_column="test_field",
-            data_type="varchar(50)",
+            data_type="string",
+            data_length=50,
             mapping_type="last_valid_pr_contact"
         )
         
@@ -342,14 +345,15 @@ class TestEndToEndIntegration(unittest.TestCase):
             xml_attribute="banking_aba",
             target_table="app_operational_cc",
             target_column="sc_bank_aba",
-            data_type="char(9)",
+            data_type="string",
+            data_length=9,
             mapping_type="last_valid_pr_contact"
         )
-        
-        banking_result = self.mapper._extract_from_last_valid_pr_contact(banking_mapping)
+
+        value = self.mapper._extract_from_last_valid_pr_contact(banking_mapping)
+        banking_result = self.mapper._apply_field_transformation(value, banking_mapping)
         self.assertIsNotNone(banking_result, "Banking field should be extracted")
-        self.assertEqual(banking_result, "19201920", f"Should extract banking ABA 19201920, got {banking_result}")
-        
+        self.assertEqual(banking_result, "192019207", f"Should extract banking ABA 192019207, got {banking_result}")
         print(f"✅ Banking field extraction working: extracted {banking_result} (not affected by CURR filtering)")
     
     def test_last_valid_element_approach(self):

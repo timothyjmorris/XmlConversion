@@ -19,41 +19,6 @@ from MB_XmlConversionKiro.xml_extractor.mapping.data_mapper import DataMapper
 from MB_XmlConversionKiro.xml_extractor.models import MappingContract
 
 class TestMappingTypesAndExpressions(unittest.TestCase):
-    def test_debug_print_all_contacts_and_addresses(self):
-        """
-        Debug: Print all contact_employment and contact_address elements and their attributes from parsed XML.
-        """
-        print("\n[DEBUG] All contact_employment elements:")
-        for path, element in self.parsed_xml.items():
-            if path.endswith('contact_employment'):
-                print(f"  Path: {path}")
-                print(f"    Attributes: {element.get('attributes', {})}")
-        print("\n[DEBUG] All contact_address elements:")
-        for path, element in self.parsed_xml.items():
-            if path.endswith('contact_address'):
-                print(f"  Path: {path}")
-                print(f"    Attributes: {element.get('attributes', {})}")
-    @classmethod
-    def setUpClass(cls):
-        contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
-        sample_xml_path = Path(__file__).parent.parent.parent / "config" / "samples" / "sample-source-xml-contact-test.xml"
-        with open(contract_path, 'r') as f:
-            contract_data = json.load(f)
-        # Convert mappings and relationships to objects
-        from MB_XmlConversionKiro.xml_extractor.models import FieldMapping, RelationshipMapping
-        mappings = [FieldMapping(**m) for m in contract_data.get('mappings', [])]
-        relationships = [RelationshipMapping(**r) for r in contract_data.get('relationships', [])]
-        cls.contract = MappingContract(
-            source_table=contract_data.get('source_table'),
-            source_column=contract_data.get('source_column'),
-            xml_root_element=contract_data.get('xml_root_element'),
-            mappings=mappings,
-            relationships=relationships
-        )
-        with open(sample_xml_path, 'r') as f:
-            cls.sample_xml = f.read()
-        # Initialize DataMapper with contract path to load enum mappings as in production
-        cls.mapper = DataMapper(mapping_contract_path=str(contract_path))
     @classmethod
     def setUpClass(cls):
         contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
@@ -97,9 +62,13 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
         }
         found_types = set()
         for mapping in self.contract.mappings:
-            if 'mapping_type' in mapping.__dict__ and mapping.mapping_type:
-                for mt in str(mapping.mapping_type).split(','):
-                    found_types.add(mt.strip())
+            if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
+                if isinstance(mapping.mapping_type, list):
+                    found_types.update(mapping.mapping_type)
+                else:
+                    # Fallback for string format
+                    for mt in str(mapping.mapping_type).split(','):
+                        found_types.add(mt.strip())
         missing = found_types - supported_types
         self.assertEqual(len(missing), 0, f"Unsupported mapping types found: {missing}")
 
@@ -107,18 +76,18 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
         """Ensure every mapping_type is exercised by sample XML and mapping code."""
         exercised_types = set()
         for mapping in self.contract.mappings:
-            if 'mapping_type' in mapping.__dict__ and mapping.mapping_type:
-                for mt in str(mapping.mapping_type).split(','):
-                    # Try to extract value for this mapping from sample XML
-                    value = self.mapper._extract_value_from_xml(self.parsed_xml, mapping)
-                    if value is not None:
-                        exercised_types.add(mt.strip())
+            if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
+                mapping_types = mapping.mapping_type if isinstance(mapping.mapping_type, list) else [mt.strip() for mt in str(mapping.mapping_type).split(',')]
+                # Try to extract value for this mapping from sample XML
+                value = self.mapper._extract_value_from_xml(self.parsed_xml, mapping)
+                if value is not None:
+                    exercised_types.update(mapping_types)
         # All contract mapping types should be exercised
         contract_types = set()
         for mapping in self.contract.mappings:
-            if 'mapping_type' in mapping.__dict__ and mapping.mapping_type:
-                for mt in str(mapping.mapping_type).split(','):
-                    contract_types.add(mt.strip())
+            if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
+                mapping_types = mapping.mapping_type if isinstance(mapping.mapping_type, list) else [mt.strip() for mt in str(mapping.mapping_type).split(',')]
+                contract_types.update(mapping_types)
         # Allow for some mapping types to be optional/not present in every sample
         optional_types = {'last_valid_pr_contact'}
         missing = contract_types - exercised_types - optional_types
@@ -208,20 +177,6 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
             if ac_role_tp_c not in ['PR', 'AUTHU']:
                 continue
             valid_contacts.append(contact)
-        import pprint
-        print("\n[DEBUG] Full valid contact structures:")
-        for idx, contact in enumerate(valid_contacts):
-            print(f"Contact {idx}:")
-            pprint.pprint(contact)
-        print("\n[DEBUG] Parsed valid contacts and children:")
-        for idx, contact in enumerate(valid_contacts):
-            print(f"Contact {idx}: ac_role_tp_c={contact.get('ac_role_tp_c')}")
-            if 'contact_employment' in contact:
-                for emp in contact['contact_employment']:
-                    print(f"  Employment: b_months_at_job={emp.get('b_months_at_job')}, b_years_at_job={emp.get('b_years_at_job')}, b_salary={emp.get('b_salary')}, b_salary_basis_tp_c={emp.get('b_salary_basis_tp_c')}")
-            if 'contact_address' in contact:
-                for addr in contact['contact_address']:
-                    print(f"  Address: months_at_residence={addr.get('months_at_residence')}, years_at_residence={addr.get('years_at_residence')}")
         # ...existing code...
         """
         Functional test: Validate calculated field expressions for known XML input.
@@ -239,44 +194,44 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
             for emp in contact.get('contact_employment', []):
                 if emp.get('b_months_at_job') == '10' and emp.get('b_years_at_job') == '2':
                     mapping = get_mapping("months_at_job")
-                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': emp})
+                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=emp)
                     expected_value = 34
                     self.assertEqual(result, expected_value)
                     found += 1
                 if emp.get('b_months_at_job') == '32' and emp.get('b_years_at_job') == '1':
                     mapping = get_mapping("months_at_job")
-                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': emp})
+                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=emp)
                     expected_value = 44
                     self.assertEqual(result, expected_value)
                     found += 1
-                if emp.get('b_salary') == '120000' and emp.get('b_salary_basis_tp_c') == 'ANNUM':
+                if emp.get('b_salary') == '120000.656' and emp.get('b_salary_basis_tp_c') == 'ANNUM':
                     mapping = get_mapping("monthly_salary")
-                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': emp})
-                    expected_value = 10000
+                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=emp)
+                    expected_value = 10000.05
                     self.assertEqual(result, expected_value)
                     found += 1
                 if emp.get('b_salary') == '4000' and emp.get('b_salary_basis_tp_c') == 'MONTH':
                     mapping = get_mapping("monthly_salary")
-                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': emp})
+                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=emp)
                     expected_value = 48000
                     self.assertEqual(result, expected_value)
                     found += 1
             for addr in contact.get('contact_address', []):
                 if addr.get('months_at_residence') == '11' and addr.get('years_at_residence') == '2':
                     mapping = get_mapping("months_at_address")
-                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': addr})
+                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=addr)
                     expected_value = 35
                     self.assertEqual(result, expected_value)
                     found += 1
                 if addr.get('months_at_residence') == '41' and addr.get('years_at_residence') == '1':
                     mapping = get_mapping("months_at_address")
-                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': addr})
+                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=addr)
                     expected_value = 53
                     self.assertEqual(result, expected_value)
                     found += 1
                 if ac_role_tp_c == 'AUTHU' and addr.get('months_at_residence') == '3' and addr.get('years_at_residence') == '2':
                     mapping = get_mapping("months_at_address")
-                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={'attributes': addr})
+                    result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=addr)
                     expected_value = 27
                     self.assertEqual(result, expected_value)
                     found += 1
@@ -296,15 +251,6 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
                 if app_attrs:
                     # Build proper context for app-level calculated fields using the same method as the system
                     context_data = self.mapper._build_app_level_context(self.parsed_xml, valid_contacts, '443306')
-                    
-                    # Debug: Print context keys
-                    print(f"[DEBUG] Context keys: {sorted(context_data.keys())[:20]}")
-                    if 'app_product.adverse_actn1_type_cd' in context_data:
-                        print(f"[DEBUG] app_product.adverse_actn1_type_cd = {context_data['app_product.adverse_actn1_type_cd']}")
-                    if 'application.app_receive_date' in context_data:
-                        print(f"[DEBUG] application.app_receive_date = {context_data['application.app_receive_date']}")
-                    if 'application.population_assignment' in context_data:
-                        print(f"[DEBUG] application.population_assignment = {context_data['application.population_assignment']}")
 
                     # Test cb_score_factor_type_1: Should return 'AJ' based on contract expression
                     # Expression: CASE WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' ELSE '' END
@@ -319,7 +265,44 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
                     result2 = self.mapper._apply_calculated_field_mapping(None, mapping2, context_data=context_data)
                     # adverse_actn2_type_cd = "AA ACTION 2" (not empty but not LIKE 'V4_%'), app_receive_date not > '2050-01-01', app_type_code != 'SECURE' -> should return ''
                     self.assertEqual(result2, '', f"cb_score_factor_code_2 should return '' but got '{result2}'")
+                    # Test risk_model_score_factor_type_1: Should return 'AJ' based on contract expression
+                    # Expression: CASE WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END
+                    mapping_risk1 = get_mapping("risk_model_score_factor_type_1")
+                    result_risk1 = self.mapper._apply_calculated_field_mapping(None, mapping_risk1, context_data=context_data)
+                    # Risk_Model_reason1_tp_c = "RISK MODEL REASON 1" (not empty), population_assignment = 'CM' -> should return '' (no match)
+                    self.assertEqual(result_risk1, '', f"risk_model_score_factor_type_1 should return '' but got '{result_risk1}'")
+
         self.assertGreaterEqual(found, 7, f"Not all expected calculated field elements found and tested. Found {found}.")
+
+    def test_risk_model_calculated_fields_case_insensitive(self):
+        """Test that risk_model calculated fields work with case-insensitive XML attribute matching."""
+        def get_mapping(target_column):
+            return next(m for m in self.contract.mappings if m.target_column == target_column)
+
+        # Build context using the same method as the system
+        xml_root = self.mapper._current_xml_root
+        all_contacts = self.mapper._parse_all_contacts_from_root(xml_root)
+        valid_contacts = []
+        for contact in all_contacts:
+            con_id = contact.get('con_id', '').strip()
+            ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
+            if not con_id:
+                continue
+            if ac_role_tp_c not in ['PR', 'AUTHU']:
+                continue
+            valid_contacts.append(contact)
+        
+        context_data = self.mapper._build_app_level_context(self.parsed_xml, valid_contacts, '443306')
+        
+        # Test that Risk_Model_reason1_tp_c (with capital R and M) is accessible as app_product.risk_model_reason1_tp_c (lowercase)
+        self.assertIn('app_product.risk_model_reason1_tp_c', context_data, "Context should contain lowercase version of Risk_Model_reason1_tp_c")   
+        self.assertEqual(context_data['app_product.risk_model_reason1_tp_c'], 'RISK MODEL REASON 1', "Context should have correct value for risk_model_reason1_tp_c")
+        
+        # Test the calculated field
+        mapping = get_mapping("risk_model_score_factor_type_1")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        # With population_assignment = 'CM', should return '' since none of the WHEN conditions match
+        self.assertEqual(result, '', f"risk_model_score_factor_type_1 should return '' for population_assignment='CM' but got '{result}'")
 
     def test_expression_syntax_and_result(self):
         """

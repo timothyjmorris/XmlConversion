@@ -39,20 +39,27 @@ class FieldMapping:
     target_table: str
     target_column: str
     data_type: str
+    data_length: Optional[int] = None
     xml_attribute: Optional[str] = None
-    mapping_type: Optional[str] = None
+    mapping_type: Optional[list] = None
     transformation: Optional[str] = None
     default_value: Optional[str] = None
     expression: Optional[str] = None
-    
+
     def __post_init__(self):
-        """Validate field mapping configuration."""
+        """Validate field mapping configuration and normalize mapping_type."""
         if not self.xml_path:
             raise ValueError("xml_path cannot be empty")
         if not self.target_table:
             raise ValueError("target_table cannot be empty")
         if not self.target_column:
             raise ValueError("target_column cannot be empty")
+        # Normalize mapping_type to always be a list
+        if self.mapping_type is not None:
+            if isinstance(self.mapping_type, str):
+                self.mapping_type = [mt.strip() for mt in self.mapping_type.split(",")]
+            elif not isinstance(self.mapping_type, list):
+                self.mapping_type = [self.mapping_type]
 
 
 @dataclass
@@ -82,6 +89,8 @@ class RelationshipMapping:
 
 
 @dataclass
+
+@dataclass
 class MappingContract:
     """
     Complete mapping contract defining how XML data maps to relational structure.
@@ -90,14 +99,20 @@ class MappingContract:
         source_table: Name of the source table containing XML data
         source_column: Column name containing the XML content
         xml_root_element: Root element name in the XML structure
+        key_identifiers: Optional dictionary of key identifiers
         mappings: List of field mappings for individual elements/attributes
         relationships: List of relationship mappings for nested structures
     """
     source_table: str
     source_column: str
     xml_root_element: str
-    mappings: List[FieldMapping]
-    relationships: List[RelationshipMapping]
+    key_identifiers: Optional[Dict[str, Any]] = None
+    mappings: List[FieldMapping] = None
+    relationships: List[RelationshipMapping] = None
+    enum_mappings: Optional[Dict[str, Any]] = None
+    bit_conversions: Optional[Dict[str, Any]] = None
+    default_values: Optional[Dict[str, Any]] = None
+    validation_rules: Optional[Dict[str, Any]] = None
     
     def __post_init__(self):
         """Validate mapping contract configuration."""

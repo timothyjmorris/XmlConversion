@@ -26,7 +26,7 @@
       "target_table": "app_base",
       "target_column": "app_id",
       "data_type": "int",
-      "mapping_type": "identity_insert"
+      "mapping_type": ["identity_insert"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -34,7 +34,7 @@
       "target_table": "app_base",
       "target_column": "receive_date",
       "data_type": "datetime",
-      "mapping_type": "default_getutcdate_if_null"
+      "mapping_type": ["default_getutcdate_if_null"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -42,7 +42,7 @@
       "target_table": "app_base",
       "target_column": "app_source_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -50,7 +50,7 @@
       "target_table": "app_base",
       "target_column": "app_type_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -58,7 +58,7 @@
       "target_table": "app_base",
       "target_column": "decision_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -73,7 +73,7 @@
       "target_table": "app_operational_cc",
       "target_column": "signature_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request",
@@ -81,21 +81,23 @@
       "target_table": "app_operational_cc",
       "target_column": "process_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request",
       "xml_attribute": "LastUpdatedBy",
       "target_table": "app_operational_cc",
       "target_column": "last_updated_by",
-      "data_type": "varchar(80)"
+      "data_type": "string",
+      "data_length": 80
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "assignedTo",
       "target_table": "app_operational_cc",
       "target_column": "assigned_to",
-      "data_type": "varchar(80)"
+      "data_type": "string",
+      "data_length": 80
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -109,14 +111,16 @@
       "xml_attribute": "backend_fico_grade",
       "target_table": "app_operational_cc",
       "target_column": "backend_fico_grade",
-      "data_type": "varchar(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "backend_risk_grade",
       "target_table": "app_operational_cc",
       "target_column": "backend_risk_grade",
-      "data_type": "varchar(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -131,14 +135,15 @@
       "target_table": "app_operational_cc",
       "target_column": "ssn_match_type_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "mail_cell_pricing",
       "target_table": "app_pricing_cc",
       "target_column": "marketing_segment",
-      "data_type": "varchar(10)",
+      "data_type": "string",
+      "data_length": 10,
       "default_value": "UNKNOWN"
     },
     {
@@ -147,58 +152,65 @@
       "target_table": "app_pricing_cc",
       "target_column": "population_assignment_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "pricing_tier",
       "target_table": "app_pricing_cc",
       "target_column": "pricing_tier",
-      "data_type": "varchar(2)"
+      "data_type": "string",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "campaign_num",
       "target_table": "app_pricing_cc",
       "target_column": "campaign_num",
-      "data_type": "varchar(6)"
+      "data_type": "string",
+      "data_length": 6
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "solicitation_num",
       "target_table": "app_pricing_cc",
       "target_column": "solicitation_num",
-      "data_type": "varchar(15)"
+      "data_type": "string",
+      "data_length": 15
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "special_offer",
       "target_table": "app_pricing_cc",
       "target_column": "card_art_code",
-      "data_type": "varchar(2)"
+      "data_type": "string",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "special_flag_5",
       "target_table": "app_pricing_cc",
       "target_column": "special_flag_5",
-      "data_type": "varchar(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "residence_monthly_pymnt",
       "target_table": "app_operational_cc",
       "target_column": "housing_monthly_payment",
-      "data_type": "decimal(12,2)",
-      "mapping_type": "last_valid_pr_contact"
+      "data_type": "decimal",
+      "data_length": 2,
+      "mapping_type": ["last_valid_pr_contact"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
       "xml_attribute": "allocated_credit_line",
       "target_table": "app_pricing_cc",
       "target_column": "credit_line",
-      "data_type": "decimal(12,2)",
-      "mapping_type": "last_valid_pr_contact"
+      "data_type": "decimal",
+      "data_length": 2,
+      "mapping_type": ["last_valid_pr_contact"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -206,29 +218,32 @@
       "target_table": "contact_base",
       "target_column": "con_id",
       "data_type": "int",
-      "mapping_type": "identity_insert"
+      "mapping_type": ["identity_insert"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "first_name",
       "target_table": "contact_base",
       "target_column": "first_name",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "last_name",
       "target_table": "contact_base",
       "target_column": "last_name",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "ssn",
       "target_table": "contact_base",
       "target_column": "ssn",
-      "data_type": "char(9)",
-      "mapping_type": "numbers_only"
+      "data_type": "string",
+      "mapping_type": ["numbers_only"],
+      "data_length": 9
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -244,49 +259,55 @@
       "target_table": "contact_base",
       "target_column": "contact_type_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "initials",
       "target_table": "contact_base",
       "target_column": "middle_initial",
-      "data_type": "varchar(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "mother_maiden_name",
       "target_table": "contact_base",
       "target_column": "mother_maiden_name",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "suffix",
       "target_table": "contact_base",
       "target_column": "suffix",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "email",
       "target_table": "contact_base",
       "target_column": "email",
-      "data_type": "varchar(100)"
+      "data_type": "string",
+      "data_length": 100
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "city",
       "target_table": "contact_address",
       "target_column": "city",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "state",
       "target_table": "contact_address",
       "target_column": "state",
-      "data_type": "char(2)"
+      "data_type": "string",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -294,57 +315,64 @@
       "target_table": "contact_address",
       "target_column": "address_type_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "address_line_1",
       "target_table": "contact_address",
       "target_column": "address_line_1",
-      "data_type": "varchar(100)"
+      "data_type": "string",
+      "data_length": 100
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "street_number",
       "target_table": "contact_address",
       "target_column": "street_number",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "street_name",
       "target_table": "contact_address",
       "target_column": "street_name",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "unit",
       "target_table": "contact_address",
       "target_column": "unit",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "po_box",
       "target_table": "contact_address",
       "target_column": "po_box",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "rural_route",
       "target_table": "contact_address",
       "target_column": "rural_route",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "zip",
       "target_table": "contact_address",
       "target_column": "zip",
-      "data_type": "varchar(9)",
-      "mapping_type": "numbers_only"
+      "data_type": "string",
+      "mapping_type": ["numbers_only"],
+      "data_length": 9
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -352,7 +380,7 @@
       "target_table": "contact_address",
       "target_column": "months_at_address",
       "data_type": "smallint",
-      "mapping_type": "calculated_field",
+      "mapping_type": ["calculated_field"],
       "expression": "months_at_residence + (years_at_residence * 12)"
     },
     {
@@ -361,23 +389,25 @@
       "target_table": "contact_address",
       "target_column": "ownership_type_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "home_phone",
       "target_table": "contact_base",
       "target_column": "home_phone",
-      "data_type": "char(9)",
-      "mapping_type": "curr_address_only"
+      "data_type": "string",
+      "data_length": 10,
+      "mapping_type": ["curr_address_only", "numbers_only"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "cell_phone",
       "target_table": "contact_base",
       "target_column": "cell_phone",
-      "data_type": "char(9)",
-      "mapping_type": "curr_address_only"
+      "data_type": "string",
+      "data_length": 10,
+      "mapping_type": ["curr_address_only", "numbers_only"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -385,29 +415,32 @@
       "target_table": "contact_employment",
       "target_column": "employment_type_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_name",
       "target_table": "contact_employment",
       "target_column": "business_name",
-      "data_type": "varchar(100)"
+      "data_type": "string",
+      "data_length": 100
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_job_title_tp_c",
       "target_table": "contact_employment",
       "target_column": "job_title",
-      "data_type": "varchar(100)"
+      "data_type": "string",
+      "data_length": 100
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_salary",
       "target_table": "contact_employment",
       "target_column": "monthly_salary",
-      "data_type": "decimal(12,2)",
-      "mapping_type": "calculated_field",
+      "data_type": "decimal",
+      "data_length": 2,
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN b_salary_basis_tp_c = 'ANNUM' THEN b_salary / 12 WHEN b_salary_basis_tp_c = 'MONTH' THEN b_salary * 12 WHEN b_salary_basis_tp_c = 'HOURLY' THEN b_salary WHEN b_salary_basis_tp_c = '' THEN b_salary ELSE b_salary END"
     },
     {
@@ -416,7 +449,7 @@
       "target_table": "contact_employment",
       "target_column": "months_at_job",
       "data_type": "smallint",
-      "mapping_type": "calculated_field",
+      "mapping_type": ["calculated_field"],
       "expression": "b_months_at_job + (b_years_at_job * 12)"
     },
     {
@@ -424,7 +457,8 @@
       "xml_attribute": "b_other_income_amt",
       "target_table": "contact_employment",
       "target_column": "other_monthly_income",
-      "data_type": "decimal(12,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -432,7 +466,7 @@
       "target_table": "contact_employment",
       "target_column": "income_type_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -440,7 +474,7 @@
       "target_table": "contact_employment",
       "target_column": "other_income_type_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -448,7 +482,7 @@
       "target_table": "contact_employment",
       "target_column": "self_employed_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -456,65 +490,73 @@
       "target_table": "contact_employment",
       "target_column": "income_source_nontaxable_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_phone_no",
       "target_table": "contact_employment",
       "target_column": "phone",
-      "data_type": "char(9)",
-      "mapping_type": "numbers_only"
+      "data_type": "string",
+      "mapping_type": ["numbers_only"],
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_city",
       "target_table": "contact_employment",
       "target_column": "city",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_state",
       "target_table": "contact_employment",
       "target_column": "state",
-      "data_type": "char(2)"
+      "data_type": "string",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_street_name",
       "target_table": "contact_employment",
       "target_column": "street_name",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_street_number",
       "target_table": "contact_employment",
       "target_column": "street_number",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_unit",
       "target_table": "contact_employment",
       "target_column": "unit",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_zip",
       "target_table": "contact_employment",
       "target_column": "zip",
-      "data_type": "varchar(9)",
-      "mapping_type": "numbers_only"
+      "data_type": "string",
+      "mapping_type": ["numbers_only"],
+      "data_length": 9
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "minimum_interest_charge",
       "target_table": "app_pricing_cc",
       "target_column": "card_min_interest_charge",
-      "data_type": "decimal(5,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -536,7 +578,7 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_late_payment_fee",
       "data_type": "tinyint",
-      "mapping_type": "extract_numeric"
+      "mapping_type": ["extract_numeric"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -557,7 +599,8 @@
       "xml_attribute": "apr",
       "target_table": "app_pricing_cc",
       "target_column": "card_purchase_apr",
-      "data_type": "decimal(5,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -571,87 +614,98 @@
       "xml_attribute": "cash_advance_apr",
       "target_table": "app_pricing_cc",
       "target_column": "card_cash_advance_apr",
-      "data_type": "decimal(5,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn1_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_1",
-	    "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn2_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_2",
-	    "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn3_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_3",
-	    "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn4_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_4",
-	    "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn5_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_5",
-	    "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn1_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_1",
-	    "data_type": "varchar(25)",
-	    "mapping_type": "calculated_field",
-      "expression": "CASE WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn1_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
+      "data_type": "string",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn1_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
+      "data_length": 25
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn2_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_2",
-	    "data_type": "varchar(25)",
-	    "mapping_type": "calculated_field",
-      "expression": "CASE WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn2_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
+      "data_type": "string",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn2_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
+      "data_length": 25
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn3_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_3",
-      "data_type": "varchar(25)",
-      "mapping_type": "calculated_field",
-      "expression": "CASE WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn3_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
+      "data_type": "string",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn3_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
+      "data_length": 25
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn4_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_4",
-      "data_type": "varchar(25)",
-      "mapping_type": "calculated_field",
-      "expression": "CASE WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn4_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
+      "data_type": "string",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn4_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
+      "data_length": 25
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "adverse_actn5_type_cd",
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_5",
-      "data_type": "varchar(25)",
-      "mapping_type": "calculated_field",
-      "expression": "CASE WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn5_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END"
+      "data_type": "string",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn5_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
+      "data_length": 25
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -659,7 +713,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "analyst_review_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -667,7 +721,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "booking_paused_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -675,7 +729,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "disclosures_read_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -683,7 +737,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "duplicate_ssn_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -691,7 +745,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "fraud_review_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -699,7 +753,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "pending_verification_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -707,21 +761,23 @@
       "target_table": "app_transactional_cc",
       "target_column": "supervisor_review_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "prescreen_fico_grade",
       "target_table": "app_solicited_cc",
       "target_column": "prescreen_fico_grade",
-      "data_type": "char(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "prescreen_risk_grade",
       "target_table": "app_solicited_cc",
       "target_column": "prescreen_risk_grade",
-      "data_type": "char(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -736,93 +792,106 @@
       "xml_attribute": "primary_first_name",
       "target_table": "app_solicited_cc",
       "target_column": "first_name",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "primary_last_name",
       "target_table": "app_solicited_cc",
       "target_column": "last_name",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "primary_middle_name",
       "target_table": "app_solicited_cc",
       "target_column": "middle_initial",
-      "data_type": "varchar(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "primary_ssn",
       "target_table": "app_solicited_cc",
       "target_column": "ssn",
-      "data_type": "char(9)",
-      "mapping_type": "numbers_only"
+      "data_type": "string",
+      "mapping_type": ["numbers_only"],
+      "data_length": 9
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "primary_suffix",
       "target_table": "app_solicited_cc",
       "target_column": "suffix",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "pri_city",
       "target_table": "app_solicited_cc",
       "target_column": "city",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "pri_state",
       "target_table": "app_solicited_cc",
       "target_column": "state",
-      "data_type": "char(2)"
+      "data_type": "string",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "pri_zip_code",
       "target_table": "app_solicited_cc",
       "target_column": "zip",
-      "data_type": "varchar(9)",
-      "mapping_type": "numbers_only"
+      "data_type": "string",
+      "mapping_type": ["numbers_only"],
+      "data_length": 9
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "pri_cur_street_name",
       "target_table": "app_solicited_cc",
       "target_column": "street_name",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "pri_cur_street_num",
       "target_table": "app_solicited_cc",
       "target_column": "street_number",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "pri_apt_number",
       "target_table": "app_solicited_cc",
       "target_column": "unit",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "pri_po_box_num",
       "target_table": "app_solicited_cc",
       "target_column": "po_box",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "pri_rural_rt_num",
       "target_table": "app_solicited_cc",
       "target_column": "rural_route",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request",
@@ -830,14 +899,15 @@
       "target_table": "app_operational_cc",
       "target_column": "status_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "IP_address",
       "target_table": "app_base",
       "target_column": "ip_address",
-      "data_type": "varchar(39)"
+      "data_type": "string",
+      "data_length": 39
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -859,21 +929,23 @@
       "target_table": "app_operational_cc",
       "target_column": "priority_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "partner_url_id",
       "target_table": "app_operational_cc",
       "target_column": "meta_url",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "secure_ach_amount",
       "target_table": "app_operational_cc",
       "target_column": "sc_ach_amount",
-      "data_type": "decimal(12,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -881,15 +953,15 @@
       "target_table": "app_transactional_cc",
       "target_column": "sc_ach_sent_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
-      "xml_attribute": "sc_debit_refund_failed_flag",
+      "xml_attribute": "debit_refund_failed",
       "target_table": "app_transactional_cc",
       "target_column": "sc_debit_refund_failed_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -904,7 +976,7 @@
       "target_table": "app_operational_cc",
       "target_column": "verification_source_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -912,7 +984,7 @@
       "target_table": "app_operational_cc",
       "target_column": "payment_protection_plan",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -926,80 +998,90 @@
       "xml_attribute": "risk_model_reason1_tp_c",
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_code_1",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "risk_model_reason2_tp_c",
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_code_2",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "risk_model_reason3_tp_c",
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_code_3",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "risk_model_reason4_tp_c",
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_code_4",
-      "data_type": "varchar(10)"
+      "data_type": "string",
+      "data_length": 10
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "risk_model_reason1_tp_c",
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_type_1",
-      "data_type": "varchar(25)",
-	    "mapping_type": "calculated_field",
-	    "expression": "CASE WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END"
+      "data_type": "string",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
+      "data_length": 25
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "risk_model_reason2_tp_c",
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_type_2",
-      "data_type": "varchar(25)",
-	    "mapping_type": "calculated_field",
-	    "expression": "CASE WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END"
+      "data_type": "string",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
+      "data_length": 25
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "risk_model_reason3_tp_c",
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_type_3",
-      "data_type": "varchar(25)",
-	    "mapping_type": "calculated_field",
-	    "expression": "CASE WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END"
+      "data_type": "string",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
+      "data_length": 25
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "risk_model_reason4_tp_c",
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_type_4",
-      "data_type": "varchar(25)",
-	    "mapping_type": "calculated_field",
-	    "expression": "CASE WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END"
+      "data_type": "string",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
+      "data_length": 25
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "banking_aba",
       "target_table": "app_operational_cc",
       "target_column": "sc_bank_aba",
-      "data_type": "char(9)",
-      "mapping_type": "last_valid_pr_contact"
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact"],
+      "data_length": 9
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "banking_account_number",
       "target_table": "app_operational_cc",
       "target_column": "sc_bank_account_num",
-      "data_type": "varchar(17)",
-      "mapping_type": "last_valid_pr_contact"
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact"],
+      "data_length": 17
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -1007,7 +1089,7 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_bank_account_type_enum",
       "data_type": "smallint",
-      "mapping_type": "last_valid_pr_contact,enum"
+      "mapping_type": ["last_valid_pr_contact", "enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1015,14 +1097,15 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_funding_source_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "debit_initial_deposit_amount",
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_initial_deposit_amount",
-      "data_type": "decimal(12,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1043,7 +1126,8 @@
       "xml_attribute": "debit_refund_amount",
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_refund_amount",
-      "data_type": "decimal(12,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1058,14 +1142,15 @@
       "target_table": "app_operational_cc",
       "target_column": "auth_user_spouse_flag",
       "data_type": "bit",
-      "mapping_type": "char_to_bit"
+      "mapping_type": ["char_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "debt_to_income_ratio",
       "target_table": "app_pricing_cc",
       "target_column": "debt_to_income_ratio",
-      "data_type": "decimal(12,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1073,29 +1158,32 @@
       "target_table": "app_pricing_cc",
       "target_column": "decision_model_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "monthly_debt",
       "target_table": "app_pricing_cc",
       "target_column": "monthly_debt",
-      "data_type": "decimal(12,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "monthly_income",
       "target_table": "app_pricing_cc",
       "target_column": "monthly_income",
-      "data_type": "decimal(12,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
       "xml_attribute": "account_number",
       "target_table": "app_pricing_cc",
       "target_column": "account_number",
-      "data_type": "char(16)",
-      "mapping_type": "last_valid_pr_contact"
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact"],
+      "data_length": 16
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
@@ -1103,7 +1191,7 @@
       "target_table": "app_pricing_cc",
       "target_column": "credit_line_possible",
       "data_type": "smallint",
-      "mapping_type": "last_valid_pr_contact"
+      "mapping_type": ["last_valid_pr_contact"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
@@ -1111,23 +1199,25 @@
       "target_table": "app_pricing_cc",
       "target_column": "credit_line_max",
       "data_type": "smallint",
-      "mapping_type": "last_valid_pr_contact"
+      "mapping_type": ["last_valid_pr_contact"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
       "xml_attribute": "min_pay_due",
       "target_table": "app_pricing_cc",
       "target_column": "min_payment_due",
-      "data_type": "decimal(12,2)",
-      "mapping_type": "last_valid_pr_contact"
+      "data_type": "decimal",
+      "data_length": 2,
+      "mapping_type": ["last_valid_pr_contact"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
       "xml_attribute": "multran_account_number",
       "target_table": "app_pricing_cc",
       "target_column": "sc_multran_account_num",
-      "data_type": "varchar(16)",
-      "mapping_type": "last_valid_pr_contact"
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact"],
+      "data_length": 16
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1141,35 +1231,40 @@
       "xml_attribute": "cash_advance_percent",
       "target_table": "app_pricing_cc",
       "target_column": "card_cash_advance_percent",
-      "data_type": "decimal(5,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "cash_apr_margin",
       "target_table": "app_pricing_cc",
       "target_column": "card_cash_advance_margin_apr",
-      "data_type": "decimal(5,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "foreign_percent",
       "target_table": "app_pricing_cc",
       "target_column": "card_foreign_percent",
-      "data_type": "decimal(5,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "intro_cash_advance_apr",
       "target_table": "app_pricing_cc",
       "target_column": "card_intro_cash_advance_apr",
-      "data_type": "decimal(8,5)"
+      "data_type": "decimal",
+      "data_length": 5
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "intro_purchase_apr",
       "target_table": "app_pricing_cc",
       "target_column": "card_intro_purchase_apr",
-      "data_type": "decimal(8,5)"
+      "data_type": "decimal",
+      "data_length": 5
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1183,49 +1278,56 @@
       "xml_attribute": "min_payment_percent",
       "target_table": "app_pricing_cc",
       "target_column": "card_min_payment_percent",
-      "data_type": "decimal(5,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "purchase_apr_margin",
       "target_table": "app_pricing_cc",
       "target_column": "card_purchase_apr_margin",
-      "data_type": "decimal(5,2)"
+      "data_type": "decimal",
+      "data_length": 2
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "seg_plan_version",
       "target_table": "app_pricing_cc",
       "target_column": "segment_plan_version",
-      "data_type": "varchar(3)"
+      "data_type": "string",
+      "data_length": 3
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "special_flag_6",
       "target_table": "app_pricing_cc",
       "target_column": "special_flag_6",
-      "data_type": "char(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "special_flag_7",
       "target_table": "app_pricing_cc",
       "target_column": "special_flag_7",
-      "data_type": "char(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "special_flag_8",
       "target_table": "app_pricing_cc",
       "target_column": "special_flag_8",
-      "data_type": "char(1)"
+      "data_type": "string",
+      "data_length": 1
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "expinnumber",
       "target_table": "app_transactional_cc",
       "target_column": "ex_freeze_code",
-      "data_type": "varchar(4)"
+      "data_type": "string",
+      "data_length": 4
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1233,7 +1335,7 @@
       "target_table": "contact_base",
       "target_column": "esign_consent_flag",
       "data_type": "bit",
-      "mapping_type": "boolean_to_bit"
+      "mapping_type": ["boolean_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1241,7 +1343,7 @@
       "target_table": "contact_base",
       "target_column": "paperless_flag",
       "data_type": "bit",
-      "mapping_type": "boolean_to_bit"
+      "mapping_type": ["boolean_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1249,7 +1351,7 @@
       "target_table": "contact_base",
       "target_column": "sms_consent_flag",
       "data_type": "bit",
-      "mapping_type": "boolean_to_bit"
+      "mapping_type": ["boolean_to_bit"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -1257,21 +1359,23 @@
       "target_table": "contact_base",
       "target_column": "fraud_type_enum",
       "data_type": "smallint",
-      "mapping_type": "enum"
+      "mapping_type": ["enum"]
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_addr_1",
       "target_table": "contact_employment",
       "target_column": "address_line_1",
-      "data_type": "varchar(100)"
+      "data_type": "string",
+      "data_length": 100
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_other_income_source_detail",
       "target_table": "contact_employment",
       "target_column": "other_income_source_detail",
-      "data_type": "varchar(50)"
+      "data_type": "string",
+      "data_length": 50
     }
   ],
   "relationships": [
@@ -1577,8 +1681,7 @@
     },
     "ssn_validation": {
       "pattern": "^[0-9]{9}$",
-      "exclude_values": [
-        "000000000",
+      "exclude_values": ["000000000",
         "111111111",
         "222222222",
         "333333333",
@@ -1587,20 +1690,15 @@
         "666666666",
         "777777777",
         "888888888",
-        "999999999"
-      ]
+        "999999999"]
     },
     "processing_rules": {
-      "abandon_application_if_missing": [
-        "app_id",
-        "con_id_primary"
-      ],
+      "abandon_application_if_missing": ["app_id",
+        "con_id_primary"],
       "skip_record_if_missing": {
-        "contact_address": [
-          "address_type_enum"
+        "contact_address": [  "address_type_enum"
         ],
-        "contact_employment": [
-          "employment_type_enum"
+        "contact_employment": [  "employment_type_enum"
         ]
       },
       "use_default_if_missing": {

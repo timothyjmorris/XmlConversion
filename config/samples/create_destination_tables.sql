@@ -114,7 +114,7 @@ CREATE TABLE app_pricing_cc (
 	card_art_code						varchar(2)		NULL,
 	card_account_setup_fee				tinyint			NULL,
 	card_additional_card_fee			tinyint			NULL,
-	card_annual_fee						smallint		NULL,
+	card_annual_fee						decimal(12,2)	NULL,
 	card_cash_advance_apr				decimal(5,2)	NULL,
 	card_cash_advance_fee				tinyint			NULL,
 	card_cash_advance_percent			decimal(5,2)	NULL,

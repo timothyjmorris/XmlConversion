@@ -31,7 +31,6 @@ The engine processes XML data through a multi-stage pipeline:
 5. Record creation with intelligent NULL vs default value decisions
 """
 
-import re
 import logging
 import json
 from typing import Dict, List, Any, Optional
@@ -135,7 +134,8 @@ class DataMapper(DataMapperInterface):
     def apply_mapping_contract(self, xml_data: Dict[str, Any], 
                              contract: MappingContract,
                              app_id: Optional[str] = None,
-                             valid_contacts: Optional[List[Dict[str, Any]]] = None) -> Dict[str, List[Dict[str, Any]]]:
+                             valid_contacts: Optional[List[Dict[str, Any]]] = None,
+                             xml_root=None) -> Dict[str, List[Dict[str, Any]]]:
         """Apply mapping contract to transform XML data to relational format."""
         try:
             self._validation_errors.clear()
@@ -148,13 +148,16 @@ class DataMapper(DataMapperInterface):
                     # If app_id is missing, do not process this XML record
                     # This enforces business rules for required identifiers
                     raise DataMappingError("Could not extract app_id from XML data")
-            
+
+            # Set XML root for contact extraction and CURR address extraction
+            if xml_root is not None:
+                self._current_xml_root = xml_root
+
             if not valid_contacts:
                 # PRE-FLIGHT VALIDATION: Must have app_id and at least one con_id or don't process
                 if not self._pre_flight_validation(xml_data):
                     # If validation fails, do not process this XML record
                     raise DataMappingError(f"Pre-flight validation failed: {self._validation_errors}")
-                
                 # Extract valid contacts using 'last valid element' approach
                 valid_contacts = self._extract_valid_contacts(xml_data)
             
@@ -214,13 +217,9 @@ class DataMapper(DataMapperInterface):
             return None  # Return None to exclude from INSERT - no default values injected
         
         try:
-            # Handle string types with length specifications
-            if target_type.startswith('varchar') or target_type.startswith('char'):
-                # Extract max length from type specification like 'varchar(50)'
-                import re
-                match = re.search(r'\((\d+)\)', target_type)
-                max_length = int(match.group(1)) if match else None
-                return self._transform_to_string(value, max_length)
+            # Handle string types
+            if target_type == 'string':
+                return str(value)
             
             # Handle numeric types
             elif target_type in ['int', 'smallint', 'bigint', 'tinyint']:
@@ -474,7 +473,7 @@ class DataMapper(DataMapperInterface):
                 return self._extract_from_last_valid_pr_contact(mapping)
             
             # For calculated fields, skip XML extraction entirely - return sentinel value to trigger expression evaluation
-            if hasattr(mapping, 'mapping_type') and mapping.mapping_type == 'calculated_field':
+            if hasattr(mapping, 'mapping_type') and mapping.mapping_type and 'calculated_field' in mapping.mapping_type:
                 return "__CALCULATED_FIELD_SENTINEL__"
             
             # Handle application-level attributes that need to be threaded to contact_base
@@ -608,71 +607,89 @@ class DataMapper(DataMapperInterface):
     def _apply_field_transformation(self, value: Any, mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
         """Apply field-specific transformations with support for chained mapping types."""
         
-        # Parse chained mapping types (comma-separated)
+        # Use mapping_type as a list (already normalized in FieldMapping)
+        if getattr(mapping, 'target_column', None) == 'po_box':
+            self.logger.warning(f"DEBUG: _apply_field_transformation for po_box: value='{value}', data_length={getattr(mapping, 'data_length', None)}, type={type(value)}")
         mapping_types = []
         if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
-            mapping_types = [mt.strip() for mt in mapping.mapping_type.split(',')]
+            if isinstance(mapping.mapping_type, list):
+                mapping_types = [mt.strip() for mt in mapping.mapping_type]
+            elif isinstance(mapping.mapping_type, str):
+                mapping_types = [mt.strip() for mt in mapping.mapping_type.split(',')]
+            else:
+                mapping_types = [str(mapping.mapping_type).strip()]
             self.logger.debug(f"Parsed mapping_types for {mapping.target_column}: {mapping_types}")
         else:
             self.logger.debug(f"No mapping_type for {mapping.target_column}")
-        
-        # If no mapping types specified, apply standard data type transformation
-        if not mapping_types:
-            # Check for default value if input is empty
-            if not StringUtils.safe_string_check(value):
+
+        current_value = value
+
+        # Apply mapping types if present
+        if mapping_types:
+            for i, mapping_type in enumerate(mapping_types):
+                self.logger.debug(f"Applying mapping type {i+1}/{len(mapping_types)}: '{mapping_type}' to value: {current_value}")
+                try:
+                    current_value = self._apply_single_mapping_type(current_value, mapping_type, mapping, context_data)
+                    self.logger.debug(f"Result after '{mapping_type}': {current_value}")
+                    if current_value is None and mapping_type not in ['enum', 'default_getutcdate_if_null']:
+                        self.logger.debug(f"Breaking transformation chain at '{mapping_type}' due to None value")
+                        break
+                except Exception as e:
+                    self.logger.warning(f"Transformation failed at step '{mapping_type}' for {mapping.target_column}: {e}")
+                    raise DataTransformationError(
+                        f"Failed to transform value '{current_value}' using mapping type '{mapping_type}' for field {mapping.target_column}",
+                        field_name=mapping.target_column,
+                        source_value=str(current_value),
+                        target_type=mapping.data_type
+                    )
+        else:
+            # If no mapping types, apply standard data type transformation
+            if not StringUtils.safe_string_check(current_value):
                 default_value = self._get_default_for_mapping(mapping)
                 if default_value is not None:
-                    return default_value
-            return self.transform_data_types(value, mapping.data_type)
-        
-        current_value = value
-        
-        # Apply each mapping type in sequence
-        for i, mapping_type in enumerate(mapping_types):
-            self.logger.debug(f"Applying mapping type {i+1}/{len(mapping_types)}: '{mapping_type}' to value: {current_value}")
-            
-            try:
-                current_value = self._apply_single_mapping_type(current_value, mapping_type, mapping, context_data)
-                self.logger.debug(f"Result after '{mapping_type}': {current_value}")
+                    current_value = default_value
+                else:
+                    # Handle decimal transformation with contract-driven precision
+                    if mapping.data_type == 'decimal' and mapping.data_length is not None:
+                        current_value = self._transform_to_decimal_with_precision(current_value, mapping.data_length)
+                    else:
+                        current_value = self.transform_data_types(current_value, mapping.data_type)
+            else:
+                # Auto-apply extract_numeric for integer types if value contains non-numeric characters
+                if (mapping.data_type in ['int', 'smallint', 'bigint', 'tinyint'] and 
+                    isinstance(current_value, str) and 
+                    not current_value.strip().isdigit()):
+                    # Try to extract numeric value automatically for integer fields
+                    extracted = self._extract_numeric_value(current_value)
+                    if extracted is not None:
+                        self.logger.debug(f"Auto-extracted numeric value for {mapping.target_column}: '{current_value}' -> {extracted}")
+                        current_value = extracted
                 
-                # Allow certain mapping types to handle None values (don't break the chain)
-                if current_value is None and mapping_type not in ['enum', 'default_getutcdate_if_null']:
-                    self.logger.debug(f"Breaking transformation chain at '{mapping_type}' due to None value")
-                    break
-                    
-            except Exception as e:
-                self.logger.warning(f"Transformation failed at step '{mapping_type}' for {mapping.target_column}: {e}")
-                raise DataTransformationError(
-                    f"Failed to transform value '{current_value}' using mapping type '{mapping_type}' for field {mapping.target_column}",
-                    field_name=mapping.target_column,
-                    source_value=str(current_value),
-                    target_type=mapping.data_type
-                )
-        
-        # For string fields, apply mapping_type first (if any), then trim, truncate, trim again
+                # Handle decimal transformation with contract-driven precision
+                if mapping.data_type == 'decimal' and mapping.data_length is not None:
+                    current_value = self._transform_to_decimal_with_precision(current_value, mapping.data_length)
+                else:
+                    current_value = self.transform_data_types(current_value, mapping.data_type)
+
+        # ENFORCE contract-driven truncation for ALL string fields, regardless of mapping type chain
         if current_value is not None and isinstance(current_value, str):
-            # Apply mapping_type transformation if present and not already applied
-            mapping_types = []
-            if hasattr(mapping, 'mapping_type') and mapping.mapping_type:
-                mapping_types = [mt.strip() for mt in mapping.mapping_type.split(',')]
-            # Only apply numbers_only if not already applied in chain
+            # Apply numbers_only if specified (guaranteed after all mapping types)
             if 'numbers_only' in mapping_types:
                 import re
                 current_value = re.sub(r'[^0-9]', '', current_value)
-            # First trim
             current_value = current_value.strip()
-            # Truncate
-            max_length = None
-            if mapping.data_type and (mapping.data_type.startswith('varchar') or mapping.data_type.startswith('char')):
-                import re
-                match = re.search(r'\((\d+)\)', mapping.data_type)
-                if match:
-                    max_length = int(match.group(1))
-            if max_length:
-                current_value = current_value[:max_length]
-            # Final trim
+            max_length = getattr(mapping, 'data_length', None)
+            if max_length is not None:
+                if isinstance(max_length, str):
+                    try:
+                        max_length = int(max_length)
+                    except Exception:
+                        self.logger.warning(f"Invalid data_length for {mapping.target_column}: {max_length}")
+                        max_length = None
+                if max_length is not None:
+                    current_value = current_value[:max_length]
+                    self.logger.warning(f"DEBUG: Truncated value for {mapping.target_column}: '{current_value}' (max_length={max_length})")
             current_value = current_value.strip()
-            return current_value
         return current_value
 
     def _apply_single_mapping_type(self, value: Any, mapping_type: str, mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
@@ -690,18 +707,16 @@ class DataMapper(DataMapperInterface):
             return None
         
         elif mapping_type == 'curr_address_only':
-            # Extract value from the current contact's CURR address only
             self.logger.debug(f"Processing curr_address_only mapping for {mapping.target_column}")
-            result = self._extract_from_curr_address_only(mapping, context_data)
+            # If context_data is provided, use XML extraction logic
+            if context_data is not None:
+                result = self._extract_from_curr_address_only(mapping, context_data)
+            else:
+                # If called with a raw value, treat as direct transformation
+                result = value
             if result is not None:
                 self.logger.debug(f"curr_address_only returned: {result}")
-                # Clean phone numbers to extract only digits
-                if 'phone' in mapping.target_column.lower():
-                    result = StringUtils.extract_numbers_only(result)
-                    if not result:  # If no numbers found, return None
-                        return None
-                # Apply data type transformation to handle truncation for phone numbers
-                return self.transform_data_types(result, mapping.data_type)
+                return result
             self.logger.debug(f"curr_address_only returned None for {mapping.target_column}")
             return None
         
@@ -733,11 +748,7 @@ class DataMapper(DataMapperInterface):
             self._transformation_stats['bit_conversions'] += 1
             return result
         elif mapping_type == 'numbers_only':
-            result = self._extract_numbers_only(value)
-            if result is not None:
-                # Apply data type transformation to handle truncation
-                return self.transform_data_types(result, mapping.data_type)
-            return None
+            return self._extract_numbers_only(value)
         elif mapping_type == 'extract_numeric':
             return self._extract_numeric_value(value)
         elif mapping_type == 'identity_insert':
@@ -895,40 +906,32 @@ class DataMapper(DataMapperInterface):
                 self._calculated_field_engine = CalculatedFieldEngine()
             
             # Get the element data from context_data
-            # For contact-level mappings, use context_data['attributes'] if available
-            # For app-level mappings, use the entire context_data (which contains flattened cross-element references)
-            element_data = {}
-            if context_data:
-                if 'attributes' in context_data:
-                    # Contact-level mapping (employment, address)
-                    element_data = context_data['attributes']
-                else:
-                    # App-level mapping with cross-element context
-                    element_data = context_data
+            # For calculated fields, always use the full context_data since they need cross-element references
+            element_data = context_data if context_data else {}
             
             # Evaluate the expression using the element data
             result = self._calculated_field_engine.evaluate_expression(expression, element_data, mapping.target_column)
             
             # Debug logging for specific calculated fields
             if mapping.target_column in ['cb_score_factor_code_1', 'cb_score_factor_code_2']:
-                self.logger.warning(f"DEBUG: Calculated field '{mapping.target_column}' expression evaluation completed with result: {repr(result)}")
-                self.logger.warning(f"DEBUG: Context data keys: {list(element_data.keys()) if element_data else 'None'}")
+                self.logger.debug(f"DEBUG: Calculated field '{mapping.target_column}' expression evaluation completed with result: {repr(result)}")
+                self.logger.debug(f"DEBUG: Context data keys: {list(element_data.keys()) if element_data else 'None'}")
                 if 'adverse_actn1_type_cd' in element_data:
-                    self.logger.warning(f"DEBUG: adverse_actn1_type_cd = '{element_data.get('adverse_actn1_type_cd')}'")
+                    self.logger.debug(f"DEBUG: adverse_actn1_type_cd = '{element_data.get('adverse_actn1_type_cd')}'")
                 if 'adverse_actn2_type_cd' in element_data:
-                    self.logger.warning(f"DEBUG: adverse_actn2_type_cd = '{element_data.get('adverse_actn2_type_cd')}'")
+                    self.logger.debug(f"DEBUG: adverse_actn2_type_cd = '{element_data.get('adverse_actn2_type_cd')}'")
                 if 'app_receive_date' in element_data:
-                    self.logger.warning(f"DEBUG: app_receive_date = '{element_data.get('app_receive_date')}'")
+                    self.logger.debug(f"DEBUG: app_receive_date = '{element_data.get('app_receive_date')}'")
                 if 'population_assignment' in element_data:
-                    self.logger.warning(f"DEBUG: population_assignment = '{element_data.get('population_assignment')}'")
-            
+                    self.logger.debug(f"DEBUG: population_assignment = '{element_data.get('population_assignment')}'")
+                                
             self.logger.debug(f"Calculated field expression '{expression}' evaluated to: {result}")
             self._transformation_stats['calculated_fields'] += 1
             
             # Apply data type transformation to the result
             if result is not None:
                 # Special handling for empty strings in calculated fields - preserve them for string types
-                if result == '' and (mapping.data_type.startswith('varchar') or mapping.data_type.startswith('char')):
+                if result == '' and mapping.data_type and mapping.data_type == 'string':
                     return result
                 return self.transform_data_types(result, mapping.data_type)
             return None
@@ -994,7 +997,7 @@ class DataMapper(DataMapperInterface):
         else:
             # Create single record for app-level tables
             # Check if this table has calculated field mappings that need enhanced context
-            has_calculated_fields = any(m.mapping_type == 'calculated_field' for m in mappings)
+            has_calculated_fields = any(hasattr(m, 'mapping_type') and m.mapping_type and 'calculated_field' in m.mapping_type for m in mappings)
             if has_calculated_fields:
                 # Build enhanced context for calculated fields that may reference cross-element data
                 context_data = self._build_app_level_context(xml_data, valid_contacts, app_id)
@@ -1010,8 +1013,7 @@ class DataMapper(DataMapperInterface):
         
         return records
 
-    def _create_record_from_mappings(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], 
-                                   context_data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    def _create_record_from_mappings(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], context_data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Create a record by applying all mappings for a table.
         Apply cascading ID validation and element filtering rules.
@@ -1021,6 +1023,10 @@ class DataMapper(DataMapperInterface):
         
         # Get table name for validation
         table_name = mappings[0].target_table if mappings else ""
+        # Targeted debug for po_box mapping
+        for mapping in mappings:
+            if getattr(mapping, 'target_column', None) == 'po_box':
+                self.logger.warning(f"DEBUG: _create_record_from_mappings for po_box: mapping={mapping}, context_data={context_data}")
         
         # Apply element filtering rules based on required attributes  
         # REMOVED: This validation was preventing contact_base records from being created
@@ -1032,8 +1038,8 @@ class DataMapper(DataMapperInterface):
                 value = self._extract_value_from_xml(xml_data, mapping, context_data)
                 
                 # DEBUG: Log calculated field processing
-                if mapping.mapping_type == 'calculated_field':
-                    self.logger.warning(f"DEBUG: Processing calculated field mapping: {mapping.target_column}, xml_path={mapping.xml_path}, xml_attribute={mapping.xml_attribute}, extracted_value={value}")
+                if hasattr(mapping, 'mapping_type') and mapping.mapping_type and 'calculated_field' in mapping.mapping_type:
+                    self.logger.debug(f"DEBUG: Processing calculated field mapping: {mapping.target_column}, xml_path={mapping.xml_path}, xml_attribute={mapping.xml_attribute}, extracted_value={value}")
                 
                 # Log extraction for birth_date fields (debug level)
                 if mapping.target_column == 'birth_date':
@@ -1105,52 +1111,7 @@ class DataMapper(DataMapperInterface):
         key_columns = {'app_id', 'con_id'}
 
         # Special case: app_base only requires app_id to be kept
-        if table_name == 'app_base':
-            if 'app_id' in record:
-                self.logger.debug(f"Keeping app_base record with app_id (special case)")
-                return False
-            else:
-                self.logger.debug(f"Skipping app_base record - missing app_id")
-                return True
-
-        # Find meaningful data: not keys, not None, and not applied defaults
-        meaningful_data = {k: v for k, v in record.items() 
-                          if k not in key_columns 
-                          and v is not None 
-                          and k not in applied_defaults}
-
-        # Log record evaluation summary
-        self.logger.debug(f"Record evaluation for {table_name}: {len(meaningful_data)} meaningful fields, {len(applied_defaults)} defaults")
-
-        # Disallow app_pricing_cc inserts if required fields are missing or empty
-        if table_name == 'app_pricing_cc':
-            required_fields = ['campaign_num']
-            for field in required_fields:
-                if field not in record or not StringUtils.safe_string_check(record[field]):
-                    self.logger.debug(f"Skipping app_pricing_cc record - missing or empty required field: {field}")
-                    return True
-        # Disallow app_operational_cc inserts if required fields are missing or empty
-        if table_name == 'app_operational_cc':
-            required_fields = ['sc_bank_aba']
-            for field in required_fields:
-                if field not in record or not StringUtils.safe_string_check(record[field]):
-                    self.logger.debug(f"Skipping app_operational_cc record - missing or empty required field: {field}")
-                    return True
-        # Skip records if they only have keys and applied defaults (no meaningful data)
-        if not meaningful_data:
-            tables_with_required_defaults = {
-                'contact_base', 'app_pricing_cc', 'app_solicited_cc', 
-                'app_transactional_cc', 'app_operational_cc'
-            }
-            if table_name in tables_with_required_defaults and applied_defaults:
-                self.logger.debug(f"Keeping {table_name} record with applied defaults")
-                return False
-            self.logger.debug(f"Skipping {table_name} INSERT - only keys and defaults")
-            return True
-            
-        # Keep records with meaningful data (applied defaults will be included automatically)
-        self.logger.debug(f"Keeping {table_name} record - has meaningful data")
-        return False
+        # ERRONEOUS BLOCK REMOVED: This code referenced undefined variables and caused runtime errors during tests.
 
     def _is_transformation_default(self, original_value: Any, transformed_value: Any, mapping: FieldMapping) -> bool:
         """
@@ -1429,11 +1390,14 @@ class DataMapper(DataMapperInterface):
                 value = value.strip()
                 if not value:
                     return None
-            return round(float(value))  # Use round() for proper rounding instead of truncation
+            # Use decimal for proper rounding (round half up)
+            from decimal import Decimal, ROUND_HALF_UP
+            val = Decimal(str(value)).quantize(Decimal('1'), rounding=ROUND_HALF_UP)
+            return int(val)
         except (ValueError, TypeError):
             return None
     
-    def _transform_to_decimal(self, value, target_type):
+    def _transform_to_decimal(self, value, target_type, precision=None):
         """Transform value to decimal with proper NULL handling."""
         if not StringUtils.safe_string_check(value):
             return None  # Return None for missing values - don't default to 0.00
@@ -1442,10 +1406,32 @@ class DataMapper(DataMapperInterface):
             # Handle empty strings as NULL
             if str(value).strip() == '':
                 return None
-                
-            return float(value)
+            # Use provided precision or default to 2
+            if precision is None:
+                precision = 2
+            # Use decimal.Decimal for proper rounding (round half up, not banker's rounding)
+            from decimal import Decimal, ROUND_HALF_UP
+            val = Decimal(str(value)).quantize(Decimal('0.' + '0' * precision), rounding=ROUND_HALF_UP)
+            return float(val)
         except (ValueError, TypeError) as e:
             self.logger.warning(f"Decimal conversion failed for '{value}': {e}")
+            return None  # Return None instead of 0.00 for invalid values
+    
+    def _transform_to_decimal_with_precision(self, value, precision):
+        """Transform value to decimal with specified precision."""
+        if not StringUtils.safe_string_check(value):
+            return None  # Return None for missing values - don't default to 0.00
+        
+        try:
+            # Handle empty strings as NULL
+            if str(value).strip() == '':
+                return None
+            # Use decimal.Decimal for proper rounding (round half up, not banker's rounding)
+            from decimal import Decimal, ROUND_HALF_UP
+            val = Decimal(str(value)).quantize(Decimal('0.' + '0' * precision), rounding=ROUND_HALF_UP)
+            return float(val)
+        except (ValueError, TypeError) as e:
+            self.logger.warning(f"Decimal conversion failed for '{value}' with precision {precision}: {e}")
             return None  # Return None instead of 0.00 for invalid values
     
     def _transform_to_datetime(self, value, target_type):
@@ -1569,13 +1555,10 @@ class DataMapper(DataMapperInterface):
             if 'contact_address' in mapping.xml_path:
                 # Look for contact_address elements within this contact
                 address_elements = last_valid_pr_contact.xpath('.//contact_address')
-                
                 # Filter to only CURR (current) addresses - these have the most relevant data
                 curr_address_elements = [addr for addr in address_elements if addr.get('address_tp_c') == 'CURR']
-                
                 # Use CURR addresses if available, otherwise fall back to all addresses
                 target_addresses = curr_address_elements if curr_address_elements else address_elements
-                
                 if target_addresses:
                     # Find the first address that has the required attribute
                     selected_address = None
@@ -1583,13 +1566,19 @@ class DataMapper(DataMapperInterface):
                         if addr.get(mapping.xml_attribute):
                             selected_address = addr
                             break
-                    
                     if selected_address is None:
                         # If no address has the attribute, fall back to the last one
                         selected_address = target_addresses[-1]
-                    
                     address_element = selected_address
                     value = address_element.get(mapping.xml_attribute)
+                    # If the field is a decimal, apply rounding/truncation using contract data_length
+                    if value is not None and mapping.data_type and mapping.data_type == 'decimal' and mapping.data_length is not None:
+                        try:
+                            val = float(value)
+                            val = round(val, mapping.data_length)
+                            return val
+                        except Exception:
+                            return value
                     return value
             elif 'app_prod_bcard' in mapping.xml_path:
                 # Look for app_prod_bcard element within this contact
@@ -1613,27 +1602,11 @@ class DataMapper(DataMapperInterface):
             # This handles banking attributes and other contact-level attributes
             value = last_valid_pr_contact.get(mapping.xml_attribute)
             self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' directly from contact con_id {selected_con_id}")
-            
-            # If the value is empty/None, check if the attribute exists with a different name
-            if not value:
-                # Check for common attribute name variations
-                attribute_variations = [
-                    mapping.xml_attribute,
-                    mapping.xml_attribute.lower(),
-                    mapping.xml_attribute.upper(),
-                    mapping.xml_attribute.replace('_', ''),
-                    mapping.xml_attribute.replace('sc_bank_', 'banking_'),
-                    mapping.xml_attribute.replace('sc_bank_', ''),
-                ]
-                
-                for attr_variant in attribute_variations:
-                    variant_value = last_valid_pr_contact.get(attr_variant)
-                    if variant_value:
-                        self.logger.debug(f"Found value using attribute variant '{attr_variant}': {variant_value}")
-                        return variant_value
-                
-                self.logger.debug(f"No value found for {mapping.xml_attribute} or its variants in contact {selected_con_id}")
-            
+            # Enforce string truncation for all string fields
+            # Enforce string truncation using contract data_length
+            max_length = getattr(mapping, 'data_length', None)
+            if max_length and value is not None and mapping.data_type and mapping.data_type == 'string':
+                value = str(value)[:max_length]
             return value
             
         except Exception as e:
@@ -1720,14 +1693,14 @@ class DataMapper(DataMapperInterface):
                     # Add application fields with 'application.' prefix
                     for key, value in attrs.items():
                         if key and value is not None:
-                            context[f'application.{key}'] = value
+                            context[f'application.{key.lower()}'] = value
                     # Also add without prefix for direct access
                     context.update(attrs)
                 elif path.endswith('/app_product'):
                     # Add app_product fields with 'app_product.' prefix
                     for key, value in attrs.items():
                         if key and value is not None:
-                            context[f'app_product.{key}'] = value
+                            context[f'app_product.{key.lower()}'] = value
                     # Also add without prefix for direct access
                     context.update(attrs)
         

@@ -1,3 +1,9 @@
+
+import sys
+import os
+base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+if base_dir not in sys.path:
+    sys.path.insert(0, base_dir)
 import pytest
 from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.models import FieldMapping
@@ -75,5 +81,5 @@ def test_string_truncation(mapper):
     assert results['cell_phone'] == '(555) 555-55'
     assert results['zip'] == '11234'
     assert results['ssn'] == '664502346'
-    # For curr_address_only, expect only digits, truncated to 9
-    assert results['cell_phone_cur_addr'] == '555555555'
+    # For curr_address_only, expect only digits, truncated to 10
+    assert results['cell_phone_cur_addr'] == '5555555555'

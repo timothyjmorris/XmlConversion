@@ -557,6 +557,7 @@ class ConfigManager(ConfigurationManagerInterface):
                     target_table=mapping_data.get('target_table', ''),
                     target_column=mapping_data.get('target_column', ''),
                     data_type=mapping_data.get('data_type', ''),
+                    data_length=mapping_data.get('data_length'),
                     xml_attribute=mapping_data.get('xml_attribute'),
                     mapping_type=mapping_data.get('mapping_type'),
                     transformation=mapping_data.get('transformation'),

@@ -263,19 +263,15 @@ class MigrationEngine(MigrationEngineInterface):
                 # Prepare data tuples in correct order, only including columns with data
                 data_tuples = []
                 for record in records:
-                    # Only include values for columns that have data
-                    # Convert empty strings to None for proper NULL handling
                     values = []
                     for col in columns:
                         val = record.get(col)
                         if val == '':
                             val = None
                         elif isinstance(val, str):
-                            # Ensure string values are properly encoded as Unicode
                             try:
                                 val = val.encode('utf-8').decode('utf-8')
                             except (UnicodeEncodeError, UnicodeDecodeError):
-                                # If encoding fails, keep original value
                                 pass
                         values.append(val)
                     data_tuples.append(tuple(values))
