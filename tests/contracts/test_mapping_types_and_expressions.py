@@ -319,5 +319,209 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
                             self.assertIsNotNone(result, f"Expression failed for mapping {mapping.target_column}: result is None")
                             break
                 # ...existing code...
+
+    def test_comprehensive_calculated_field_expressions(self):
+        """
+        Comprehensive test coverage for all calculated field expressions in the mapping contract.
+        Tests expressions with various input scenarios to ensure they produce correct results.
+        This provides unit-level validation before e2e testing.
+        """
+        def get_mapping(target_column):
+            return next(m for m in self.contract.mappings if m.target_column == target_column)
+
+        # Build context data for app-level tests
+        xml_root = self.mapper._current_xml_root
+        all_contacts = self.mapper._parse_all_contacts_from_root(xml_root)
+        valid_contacts = []
+        for contact in all_contacts:
+            con_id = contact.get('con_id', '').strip()
+            ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
+            if not con_id:
+                continue
+            if ac_role_tp_c not in ['PR', 'AUTHU']:
+                continue
+            valid_contacts.append(contact)
+
+        context_data = self.mapper._build_app_level_context(self.parsed_xml, valid_contacts, '443306')
+
+        # Test 1: Basic calculated fields (contact-level)
+        # months_at_address: months_at_residence + (years_at_residence * 12)
+        mapping = get_mapping("months_at_address")
+
+        # Test case 1: 11 months + 2 years = 11 + (2*12) = 35
+        test_context = {'months_at_residence': 11, 'years_at_residence': 2}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 35, f"months_at_address calculation failed: expected 35, got {result}")
+
+        # Test case 2: 3 months + 2 years = 3 + (2*12) = 27
+        test_context = {'months_at_residence': 3, 'years_at_residence': 2}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 27, f"months_at_address calculation failed: expected 27, got {result}")
+
+        # months_at_job: b_months_at_job + (b_years_at_job * 12)
+        mapping = get_mapping("months_at_job")
+
+        # Test case 1: 10 months + 2 years = 10 + (2*12) = 34
+        test_context = {'b_months_at_job': 10, 'b_years_at_job': 2}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 34, f"months_at_job calculation failed: expected 34, got {result}")
+
+        # Test case 2: 6 months + 1 year = 6 + (1*12) = 18
+        test_context = {'b_months_at_job': 6, 'b_years_at_job': 1}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 18, f"months_at_job calculation failed: expected 18, got {result}")
+
+        # monthly_salary: CASE WHEN b_salary_basis_tp_c = 'ANNUM' THEN b_salary / 12 WHEN b_salary_basis_tp_c = 'MONTH' THEN b_salary * 12 WHEN b_salary_basis_tp_c = 'HOURLY' THEN b_salary WHEN b_salary_basis_tp_c = '' THEN b_salary ELSE b_salary END
+        mapping = get_mapping("monthly_salary")
+
+        # Test case 1: Annual salary 120000.656 / 12 = 10000.054666... (should be 10000.05 with proper rounding)
+        test_context = {'b_salary': 120000.656, 'b_salary_basis_tp_c': 'ANNUM'}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertAlmostEqual(result, 10000.05, places=2, msg=f"monthly_salary ANNUM calculation failed: expected ~10000.05, got {result}")
+
+        # Test case 2: Monthly salary 4000 * 12 = 48000
+        test_context = {'b_salary': 4000, 'b_salary_basis_tp_c': 'MONTH'}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 48000, f"monthly_salary MONTH calculation failed: expected 48000, got {result}")
+
+        # Test case 3: Hourly salary (should return as-is)
+        test_context = {'b_salary': 25.50, 'b_salary_basis_tp_c': 'HOURLY'}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 25.50, f"monthly_salary HOURLY calculation failed: expected 25.50, got {result}")
+
+        # Test 2: CB Score Factor Types (app-level with complex CASE logic)
+        # All CB score factors use the same complex CASE expression with different adverse action codes
+
+        # Test cb_score_factor_type_1 with current test data context
+        # Expression checks: adverse_actn1_type_cd with various conditions
+        # Current test data: adverse_actn1_type_cd = "V4 ACTION 1", population_assignment = 'CM',
+        # app_receive_date > '2023-10-11', so should match: WHEN ... population_assignment = 'CM' THEN 'AJ'
+        mapping = get_mapping("cb_score_factor_type_1")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        self.assertEqual(result, 'AJ', f"cb_score_factor_type_1 failed: expected 'AJ', got '{result}'")
+
+        # Test cb_score_factor_type_2 with current test data context
+        # Expression checks: adverse_actn2_type_cd with various conditions
+        # Current test data: adverse_actn2_type_cd = "AA ACTION 2", population_assignment = 'CM',
+        # app_receive_date > '2023-10-11', but doesn't match any WHEN conditions -> should return ''
+        mapping = get_mapping("cb_score_factor_type_2")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        self.assertEqual(result, '', f"cb_score_factor_type_2 failed: expected '', got '{result}'")
+
+        # Test cb_score_factor_type_3 with current test data context
+        # Expression checks: adverse_actn3_type_cd with various conditions
+        # Current test data: adverse_actn3_type_cd = "AA ANYTHING-3" (not empty), population_assignment = 'CM',
+        # app_receive_date > '2023-10-11', so should match: WHEN ... population_assignment = 'CM' THEN 'AJ'
+        mapping = get_mapping("cb_score_factor_type_3")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        self.assertEqual(result, 'AJ', f"cb_score_factor_type_3 failed: expected 'AJ', got '{result}'")
+
+        # Test cb_score_factor_type_4 with current test data context
+        # Expression checks: adverse_actn4_type_cd with various conditions
+        # Current test data: adverse_actn4_type_cd = "BLAH" (not empty), population_assignment = 'CM',
+        # app_receive_date > '2023-10-11', so should match: WHEN ... population_assignment = 'CM' THEN 'AJ'
+        mapping = get_mapping("cb_score_factor_type_4")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        self.assertEqual(result, 'AJ', f"cb_score_factor_type_4 failed: expected 'AJ', got '{result}'")
+
+        # Test cb_score_factor_type_5 with current test data context
+        # Similar logic to type_2
+        mapping = get_mapping("cb_score_factor_type_5")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        self.assertEqual(result, '', f"cb_score_factor_type_5 failed: expected '', got '{result}'")
+
+        # Test 3: Risk Model Score Factor Types (app-level)
+        # All risk model factors use: CASE WHEN risk_model_reasonX_tp_c IS NOT EMPTY AND population_assignment = 'XX' THEN 'model_name' ELSE '' END
+
+        # Test risk_model_score_factor_type_1
+        # Current test data: risk_model_reason1_tp_c = "RISK MODEL REASON 1", population_assignment = 'CM'
+        # No matching population_assignment condition -> should return ''
+        mapping = get_mapping("risk_model_score_factor_type_1")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        self.assertEqual(result, '', f"risk_model_score_factor_type_1 failed: expected '', got '{result}'")
+
+        # Test risk_model_score_factor_type_2
+        mapping = get_mapping("risk_model_score_factor_type_2")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        self.assertEqual(result, '', f"risk_model_score_factor_type_2 failed: expected '', got '{result}'")
+
+        # Test risk_model_score_factor_type_3
+        mapping = get_mapping("risk_model_score_factor_type_3")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        self.assertEqual(result, '', f"risk_model_score_factor_type_3 failed: expected '', got '{result}'")
+
+        # Test risk_model_score_factor_type_4
+        mapping = get_mapping("risk_model_score_factor_type_4")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=context_data)
+        self.assertEqual(result, '', f"risk_model_score_factor_type_4 failed: expected '', got '{result}'")
+
+        # Test 4: Edge cases and error handling
+        # Test with missing context data
+        mapping = get_mapping("months_at_address")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={})
+        self.assertIsNone(result, "Should return None when required context data is missing")
+
+        # Test with partial context data
+        test_context = {'months_at_residence': 5}  # missing years_at_residence
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        # Expression should handle missing variables gracefully (likely return None or error)
+        # This tests the robustness of the expression engine
+
+    def test_calculated_field_expression_scenarios(self):
+        """
+        Test calculated field expressions with various realistic scenarios and edge cases.
+        This provides additional coverage beyond the basic comprehensive test.
+        """
+        def get_mapping(target_column):
+            return next(m for m in self.contract.mappings if m.target_column == target_column)
+
+        # Scenario 1: Test monthly_salary with empty salary basis (should return salary as-is)
+        mapping = get_mapping("monthly_salary")
+        test_context = {'b_salary': 50000, 'b_salary_basis_tp_c': ''}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 50000, f"monthly_salary with empty basis failed: expected 50000, got {result}")
+
+        # Scenario 2: Test months_at_address with zero values
+        mapping = get_mapping("months_at_address")
+        test_context = {'months_at_residence': 0, 'years_at_residence': 0}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 0, f"months_at_address with zeros failed: expected 0, got {result}")
+
+        # Scenario 3: Test months_at_job with large values
+        mapping = get_mapping("months_at_job")
+        test_context = {'b_months_at_job': 11, 'b_years_at_job': 10}  # 11 + (10*12) = 131
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 131, f"months_at_job with large values failed: expected 131, got {result}")
+
+        # Scenario 4: Test CB score factors with different population assignments
+        # Create mock context data with different population assignment
+        xml_root = self.mapper._current_xml_root
+        all_contacts = self.mapper._parse_all_contacts_from_root(xml_root)
+        valid_contacts = []
+        for contact in all_contacts:
+            con_id = contact.get('con_id', '').strip()
+            ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
+            if not con_id:
+                continue
+            if ac_role_tp_c not in ['PR', 'AUTHU']:
+                continue
+            valid_contacts.append(contact)
+
+        # Test with BL population assignment (should return specific values for risk model factors)
+        mock_context_bl = self.mapper._build_app_level_context(self.parsed_xml, valid_contacts, '443306')
+        # Override population_assignment for testing
+        mock_context_bl['application.population_assignment'] = 'BL'
+
+        mapping = get_mapping("risk_model_score_factor_type_1")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=mock_context_bl)
+        self.assertEqual(result, 'ben_lomond', f"risk_model_score_factor_type_1 with BL assignment failed: expected 'ben_lomond', got '{result}'")
+
+        # Test with JB population assignment
+        mock_context_jb = dict(mock_context_bl)
+        mock_context_jb['application.population_assignment'] = 'JB'
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=mock_context_jb)
+        self.assertEqual(result, 'jupiter_bowl', f"risk_model_score_factor_type_1 with JB assignment failed: expected 'jupiter_bowl', got '{result}'")
+
+
 if __name__ == '__main__':
     unittest.main()

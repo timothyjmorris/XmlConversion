@@ -286,6 +286,70 @@ class TestEndToEndIntegration(unittest.TestCase):
             # Verify housing_monthly_payment from last valid PR contact
             self.assertIsNotNone(housing_monthly_payment, "housing_monthly_payment should not be null")
             self.assertEqual(float(housing_monthly_payment), 893.55, f"housing_monthly_payment should be 893.55 but got {housing_monthly_payment}")
+            
+            # Verify calculated fields in contact_address table
+            cursor.execute("""
+                SELECT ca.con_id, ca.city, ca.months_at_address 
+                FROM contact_address ca
+                INNER JOIN contact_base cb ON ca.con_id = cb.con_id
+                WHERE cb.app_id = 443306 
+                ORDER BY ca.con_id, ca.months_at_address
+            """)
+            address_records = cursor.fetchall()
+            self.assertEqual(len(address_records), 3, "Should have 3 address records")
+            
+            # Check calculated months_at_address values
+            # Expected: months_at_residence + (years_at_residence * 12)
+            # Address 1: 11 + (2 * 12) = 35
+            # Address 2: 41 + (1 * 12) = 53  
+            # Address 3: 3 + (2 * 12) = 27
+            expected_months = [35, 53, 27]
+            actual_months = [int(record[2]) for record in address_records]
+            self.assertEqual(actual_months, expected_months, 
+                           f"months_at_address values should be {expected_months} but got {actual_months}")
+            
+            print(f"✅ contact_address calculated fields verified: {len(address_records)} records with months_at_address={actual_months}")
+            
+            # Verify calculated fields in contact_employment table
+            cursor.execute("""
+                SELECT ce.con_id, ce.business_name, ce.monthly_salary, ce.months_at_job 
+                FROM contact_employment ce
+                INNER JOIN contact_base cb ON ce.con_id = cb.con_id
+                WHERE cb.app_id = 443306 
+                ORDER BY ce.con_id
+            """)
+            employment_records = cursor.fetchall()
+            self.assertEqual(len(employment_records), 2, "Should have 2 employment records")
+            
+            # Check calculated monthly_salary and months_at_job values
+            for record in employment_records:
+                con_id, business_name, monthly_salary, months_at_job = record
+                
+                # Verify monthly_salary is not null (CASE WHEN logic based on salary_basis)
+                self.assertIsNotNone(monthly_salary, f"monthly_salary should not be null for con_id {con_id}")
+                
+                # Verify months_at_job is not null (b_months_at_job + b_years_at_job * 12)
+                self.assertIsNotNone(months_at_job, f"months_at_job should not be null for con_id {con_id}")
+                
+                # Check specific expected values based on XML data
+                if business_name == 'HOME-STYLE JIVE':
+                    # b_salary=120000.656, b_salary_basis_tp_c=ANNUM -> 120000.656 / 12 = 10000.05
+                    self.assertAlmostEqual(float(monthly_salary), 10000.05, places=2,
+                                         msg=f"monthly_salary for HOME-STYLE JIVE should be ~10000.05 but got {monthly_salary}")
+                    # b_months_at_job=6, b_years_at_job=1 -> 6 + (1 * 12) = 18
+                    self.assertEqual(int(months_at_job), 18,
+                                   f"months_at_job for HOME-STYLE JIVE should be 18 but got {months_at_job}")
+                elif business_name == 'LIL BUDDY':
+                    # b_salary=4000, b_salary_basis_tp_c=MONTH -> 4000 * 12 = 48000
+                    self.assertEqual(float(monthly_salary), 48000.0,
+                                   f"monthly_salary for LIL BUDDY should be 48000 but got {monthly_salary}")
+                    # b_months_at_job=32, b_years_at_job=1 -> 32 + (1 * 12) = 44
+                    self.assertEqual(int(months_at_job), 44,
+                                   f"months_at_job for LIL BUDDY should be 44 but got {months_at_job}")
+            
+            print(f"✅ contact_employment calculated fields verified: {len(employment_records)} records")
+            for record in employment_records:
+                print(f"   - {record[1]}: monthly_salary={record[2]}, months_at_job={record[3]}")
     
     def test_curr_address_filtering_logic(self):
         """Test that CURR address filtering works correctly for housing_monthly_payment."""

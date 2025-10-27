@@ -906,6 +906,14 @@ class DataMapper(DataMapperInterface):
             # For calculated fields, always use the full context_data since they need cross-element references
             element_data = context_data if context_data else {}
             
+            # For address/employment records, the attributes are nested under 'attributes' key
+            # Flatten them to the top level for calculated field evaluation
+            if 'attributes' in element_data:
+                # Create a flattened version with attributes at top level
+                flattened_data = dict(element_data)  # Copy the context_data
+                flattened_data.update(element_data['attributes'])  # Add attributes at top level
+                element_data = flattened_data
+            
             # Evaluate the expression using the element data
             result = self._calculated_field_engine.evaluate_expression(expression, element_data, mapping.target_column)
             
