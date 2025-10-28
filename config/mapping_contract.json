@@ -27,8 +27,8 @@
       "target_column": "app_id",
       "data_type": "int",
       "mapping_type": ["identity_insert"],
-      "nullable": true,
-      "required": false
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -37,8 +37,8 @@
       "target_column": "receive_date",
       "data_type": "datetime",
       "mapping_type": ["default_getutcdate_if_null"],
-      "nullable": true,
-      "required": false
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -177,6 +177,7 @@
       "data_type": "string",
       "data_length": 10,
       "default_value": "UNKNOWN",
+      "exclude_default_when_record_empty": true,
       "nullable": false,
       "required": true
     },
@@ -187,8 +188,9 @@
       "target_column": "population_assignment_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
-      "nullable": true,
-      "required": false
+	  "exclude_default_when_record_empty": true,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -197,8 +199,8 @@
       "target_column": "pricing_tier",
       "data_type": "string",
       "data_length": 2,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -209,7 +211,8 @@
       "data_length": 6,
       "nullable": false,
       "required": true,
-      "default_value": "BLANK"
+      "default_value": "BLANK",
+      "exclude_default_when_record_empty": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -257,8 +260,7 @@
       "xml_attribute": "allocated_credit_line",
       "target_table": "app_pricing_cc",
       "target_column": "credit_line",
-      "data_type": "decimal",
-      "data_length": 2,
+      "data_type": "smallint",
       "mapping_type": ["last_valid_pr_contact"],
       "nullable": true,
       "required": false
@@ -270,8 +272,8 @@
       "target_column": "con_id",
       "data_type": "int",
       "mapping_type": ["identity_insert"],
-      "nullable": true,
-      "required": false
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -290,8 +292,8 @@
       "target_column": "last_name",
       "data_type": "string",
       "data_length": 50,
-      "nullable": true,
-      "required": false
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -322,8 +324,8 @@
       "target_column": "contact_type_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
-      "nullable": true,
-      "required": false
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -372,8 +374,8 @@
       "target_column": "city",
       "data_type": "string",
       "data_length": 50,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",

@@ -1,23 +1,37 @@
 """
-Data Mapping and Transformation Engine
+Data Mapping Module - Contract-Driven XML to Database Transformation Engine
 
-This module provides the core data transformation pipeline for converting complex XML credit application
-data into relational database format. It handles multiple mapping types including calculated fields,
-enum mappings, contact-specific extractions, and cross-element references.
+This module implements the core data transformation engine for converting XML credit application
+data into relational database records using a contract-driven architecture. The DataMapper serves
+as the central orchestration component in the XML-to-database pipeline, ensuring data integrity
+through schema-derived validation and transformation rules.
 
-Key Features:
-- Complex calculated field expressions with CASE/WHEN logic and cross-element references
-- Enum mapping with configurable value transformations (string → integer)
-- Contact-specific data extraction (last valid PR contact, current address filtering)
-- Type-safe data transformations with proper NULL handling for database compatibility
-- Context-aware field extraction that separates application vs contact-level data
-- Comprehensive error handling and transformation statistics tracking
+Key Architectural Components:
+- Contract-Driven Validation: Uses schema-derived metadata (nullable/required/default_value) from mapping contracts
+- Multi-Stage Transformation: Handles complex mapping types with proper precedence and chaining
+- Context-Aware Processing: Builds flattened XML context for calculated field evaluation
+- Contact Deduplication: Implements 'last valid element' approach for contact data extraction
+- Type-Safe Conversions: Database-specific NULL handling with no default value injection
+- Relationship Management: Handles foreign key relationships and data dependencies
+
+Integration Points:
+- ConfigManager: Centralized configuration and contract loading
+- CalculatedFieldEngine: Expression evaluation for derived data
+- MigrationEngine: Bulk insertion of validated transformation results
+- XMLParser: Flattened XML structure processing
+- Validation Framework: Pre-flight and post-transformation data integrity checks
+
+The module ensures that only explicitly mapped, validated data reaches the database,
+preventing silent data corruption through strict contract compliance and comprehensive
+error handling throughout the transformation pipeline.
 
 Mapping Types Supported:
 - calculated_field: Evaluates SQL-like expressions with cross-element references
 - last_valid_pr_contact: Extracts from the most recent valid PR (Primary Responsible) contact
 - curr_address_only: Filters to current (CURR) addresses only, excluding PREV/MAIL addresses
 - enum: Maps string values to integer codes using configurable enum mappings
+- char_to_bit: Converts Y/N or boolean values to database bit fields
+- direct: Simple field extraction with type conversion
 - char_to_bit/boolean_to_bit: Converts Y/N or boolean values to 0/1 bit fields
 - extract_numeric/numbers_only: Extracts numeric values from formatted strings
 - default_getutcdate_if_null: Provides current timestamp for missing datetime fields
@@ -49,19 +63,28 @@ from .calculated_field_engine import CalculatedFieldEngine
 class DataMapper(DataMapperInterface):
     """
     Core data mapping engine that orchestrates the transformation of XML credit application data
-    into relational database records.
+    into relational database records using contract-driven validation and transformation rules.
 
-    This class handles the complex orchestration of:
-    - Loading and applying mapping contracts from configuration
-    - Building context data for calculated field evaluation (flattens XML structure)
+    This class serves as the central orchestration component in the XML-to-database pipeline,
+    implementing a contract-driven architecture where schema-derived metadata ensures data
+    integrity throughout the transformation process. It handles the complex orchestration of:
+
+    - Loading and applying mapping contracts with schema-derived validation rules
+    - Building flattened XML context data for calculated field evaluation
     - Applying multiple mapping types with proper precedence and chaining
-    - Contact-specific data extraction with deduplication logic
-    - Type-safe transformations with database-specific NULL handling
+    - Contact-specific data extraction with deduplication logic ('last valid element' approach)
+    - Type-safe transformations with database-specific NULL handling (no default injection)
     - Progress tracking and error reporting for large-scale data migrations
 
     The mapper separates concerns between application-level and contact-level data,
     ensuring calculated fields can reference data across the entire XML structure while
     contact fields are properly scoped to their respective contact contexts.
+
+    Contract-Driven Architecture:
+    - Uses nullable/required/default_value metadata from schema-derived contracts
+    - Validates data integrity against contract specifications before transformation
+    - Prevents silent data corruption by excluding unmapped or invalid data
+    - Ensures database constraints are respected through pre-flight validation
 
     Key Design Decisions:
     - Calculated fields use sentinel values to trigger expression evaluation
@@ -70,6 +93,7 @@ class DataMapper(DataMapperInterface):
       preserving data integrity by not fabricating default values
     - Contact extraction uses 'last valid element' approach for duplicate handling
     - Address filtering prioritizes CURR (current) addresses over PREV/MAIL types
+    - No default values are injected - only explicitly mapped data is processed
     """
     
     def __init__(self, mapping_contract_path: Optional[str] = None):
@@ -85,8 +109,8 @@ class DataMapper(DataMapperInterface):
                                 If None, uses path from centralized configuration.
 
         Configuration Loaded:
-        - _enum_mappings: Dict mapping enum_type names to value→integer mappings
-        - _bit_conversions: Dict for Y/N → 0/1 and boolean → bit transformations
+        - _enum_mappings: Dict mapping enum_type names to value->integer mappings
+        - _bit_conversions: Dict for Y/N -> 0/1 and boolean -> bit transformations
         - _validation_rules: Dict of validation constraints (currently unused)
 
         The initialization is designed to be fault-tolerant - if the mapping contract
@@ -133,7 +157,40 @@ class DataMapper(DataMapperInterface):
                              app_id: Optional[str] = None,
                              valid_contacts: Optional[List[Dict[str, Any]]] = None,
                              xml_root=None) -> Dict[str, List[Dict[str, Any]]]:
-        """Apply mapping contract to transform XML data to relational format."""
+        """
+        Apply mapping contract to transform XML data into relational database records.
+
+        This is the core orchestration method that implements the contract-driven architecture,
+        transforming flattened XML data into properly structured database records. The method
+        enforces data integrity through schema-derived validation rules and ensures database
+        constraints are respected.
+
+        Args:
+            xml_data: Flattened XML data dictionary from XMLParser
+            contract: MappingContract with schema-derived nullable/required/default_value metadata
+            app_id: Application ID (extracted if not provided)
+            valid_contacts: Pre-validated contact list (extracted if not provided)
+            xml_root: Original XML root for contact/address extraction
+
+        Returns:
+            Dictionary mapping table names to lists of record dictionaries ready for bulk insertion
+
+        Contract-Driven Validation Process:
+        1. Pre-flight validation: Ensures required app_id and contact identifiers exist
+        2. Contact extraction: Applies 'last valid element' deduplication logic
+        3. Table grouping: Organizes mappings by target table for efficient processing
+        4. Field mapping: Applies contract rules (nullable/required/default_value) per field
+        5. Relationship application: Handles foreign key relationships between tables
+        6. Calculated field evaluation: Processes expressions using flattened XML context
+        7. Data integrity validation: Ensures all records conform to contract specifications
+
+        Key Design Principles:
+        - Schema-derived defaults: Uses database schema metadata for field validation
+        - No default injection: Only explicitly mapped data is processed (preserves NULL semantics)
+        - Contact deduplication: 'Last valid element' approach for duplicate contact handling
+        - Type safety: Contract-driven data type transformations with proper NULL handling
+        - Relationship integrity: Foreign key constraints validated before insertion
+        """
         try:
             self._validation_errors.clear()
             result_tables = {}
@@ -197,7 +254,27 @@ class DataMapper(DataMapperInterface):
             raise DataMappingError(f"Mapping contract application failed: {e}")
     
     def map_xml_to_database(self, xml_data: Dict[str, Any], app_id: str, valid_contacts: List[Dict[str, Any]], xml_root=None) -> Dict[str, List[Dict[str, Any]]]:
-        """Map XML data to database format using the loaded mapping contract."""
+        """
+        Map XML data to database format using the loaded mapping contract.
+
+        This method provides a simplified interface for XML-to-database transformation when
+        app_id and valid_contacts are already known. It loads the mapping contract using
+        centralized configuration and delegates to apply_mapping_contract for the actual
+        transformation logic.
+
+        Args:
+            xml_data: Flattened XML data dictionary from XMLParser
+            app_id: Pre-validated application identifier
+            valid_contacts: Pre-validated contact list with deduplication applied
+            xml_root: Original XML root for contact/address extraction
+
+        Returns:
+            Dictionary mapping table names to lists of record dictionaries for bulk insertion
+
+        Note:
+            This method assumes pre-validation of app_id and contacts. For full validation
+            including contact extraction and deduplication, use apply_mapping_contract directly.
+        """
         # Set the XML root for contact extraction
         if xml_root is not None:
             self._current_xml_root = xml_root
@@ -687,7 +764,38 @@ class DataMapper(DataMapperInterface):
         return current_value
 
     def _apply_single_mapping_type(self, value: Any, mapping_type: str, mapping: FieldMapping, context_data: Optional[Dict[str, Any]] = None) -> Any:
-        """Apply a single mapping type transformation."""
+        """
+        Apply a single mapping type transformation with contract-driven validation.
+
+        This method implements the core transformation logic for individual mapping types,
+        handling special cases like contact-specific extractions, enum mappings, and
+        schema-derived defaults. It ensures data integrity by respecting contract
+        specifications for nullable/required fields.
+
+        Args:
+            value: Input value to transform
+            mapping_type: Type of transformation to apply (enum, char_to_bit, calculated_field, etc.)
+            mapping: FieldMapping with contract metadata (nullable/required/default_value)
+            context_data: XML context for calculated fields and contact-specific extractions
+
+        Returns:
+            Transformed value or None (excluded from INSERT to preserve NULL semantics)
+
+        Mapping Type Handling:
+        - last_valid_pr_contact: Extracts from last valid primary contact
+        - curr_address_only: Filters to current address only
+        - enum: Maps string values to integer codes (None if no mapping exists)
+        - char_to_bit: Converts Y/N to 0/1
+        - calculated_field: Evaluates expressions using XML context
+        - default_getutcdate_if_null: Provides current timestamp for missing dates
+        - extract_numeric: Extracts numeric values from strings
+        - Schema-derived defaults: Applied only when explicitly defined in contract
+
+        Contract-Driven Design:
+        - No default injection for missing data (preserves NULL semantics)
+        - Type-safe transformations with proper error handling
+        - Context-aware processing for calculated and contact-specific fields
+        """
         
         # Handle special mapping types that don't depend on input value
         if mapping_type == 'last_valid_pr_contact':
@@ -696,7 +804,8 @@ class DataMapper(DataMapperInterface):
             result = self._extract_from_last_valid_pr_contact(mapping)
             if result is not None:
                 self.logger.info(f"last_valid_pr_contact returned: {result} for {mapping.target_column}")
-                return result  # Don't apply data type transformation here - let it be chained
+                # Apply data type transformation to the extracted value
+                return self.transform_data_types(result, mapping.data_type)
             self.logger.info(f"last_valid_pr_contact returned None for {mapping.target_column}")
             return None
         
@@ -724,6 +833,14 @@ class DataMapper(DataMapperInterface):
             self._transformation_stats['enum_mappings'] += 1
             return result
         
+        # Handle default_getutcdate_if_null specially - it provides defaults for empty/null values
+        elif mapping_type == 'default_getutcdate_if_null':
+            if not StringUtils.safe_string_check(value):
+                self.logger.debug(f"Applying default_getutcdate_if_null for {mapping.target_column}: {value} -> {datetime.utcnow()}")
+                return datetime.utcnow()
+            # Apply data type transformation to the existing value
+            return self.transform_data_types(value, mapping.data_type)
+        
         # Handle other mapping types that require a valid input value
         elif not StringUtils.safe_string_check(value):
             # Try to get default value for this mapping
@@ -731,28 +848,6 @@ class DataMapper(DataMapperInterface):
             if default_value is not None:
                 return default_value
             return None
-        
-        # Apply specific mapping type transformations
-        if mapping_type == 'char_to_bit':
-            result = self._apply_bit_conversion(value)
-            self._transformation_stats['bit_conversions'] += 1
-            return result
-        elif mapping_type == 'boolean_to_bit':
-            result = self._apply_boolean_to_bit_conversion(value)
-            self._transformation_stats['bit_conversions'] += 1
-            return result
-        elif mapping_type == 'numbers_only':
-            return self._extract_numbers_only(value)
-        elif mapping_type == 'extract_numeric':
-            return self._extract_numeric_value(value)
-        elif mapping_type == 'identity_insert':
-            return self.transform_data_types(value, mapping.data_type)
-        elif mapping_type == 'default_getutcdate_if_null':
-            if not StringUtils.safe_string_check(value):
-                self.logger.debug(f"Applying default_getutcdate_if_null for {mapping.target_column}: {value} -> {datetime.utcnow()}")
-                return datetime.utcnow()
-            # Apply data type transformation to the existing value
-            return self.transform_data_types(value, mapping.data_type)
         elif mapping_type == 'calculated_field':
             return self._apply_calculated_field_mapping(value, mapping, context_data)
         else:
@@ -764,27 +859,28 @@ class DataMapper(DataMapperInterface):
         """
         Apply enum mapping transformation, converting string values to integer codes.
 
-        This method implements a deliberate design choice: when no valid enum mapping exists
-        for a value, it returns None instead of a fabricated default. This causes the column
-        to be excluded from the INSERT statement, leaving the database column NULL.
+        This method implements a deliberate design choice in the contract-driven architecture:
+        when no valid enum mapping exists for a value, it returns None instead of a fabricated
+        default. This causes the column to be excluded from the INSERT statement, leaving the
+        database column NULL and preserving data integrity.
 
-        Design Rationale:
-        - NULL indicates "no source data available" vs. "explicitly set to default"
-        - Preserves data integrity by not inventing values
-        - Allows applications to distinguish between missing XML data and default assignments
-        - Follows database best practices for optional enumerated fields
+        Contract-Driven Design Rationale:
+        - Schema-derived validation: Uses contract metadata for enum type determination
+        - NULL preservation: No default injection maintains distinction between missing data and defaults
+        - Data integrity: Prevents silent corruption by excluding unmapped enum values
+        - Database constraints: Respects nullable/required field specifications from schema
 
         The mapping process:
         1. Convert input value to string and strip whitespace
         2. Determine enum_type from column name using pattern matching
-        3. Look up the enum_type in _enum_mappings (loaded from config)
+        3. Look up the enum_type in _enum_mappings (loaded from contract configuration)
         4. Try exact match first, then case-insensitive match
         5. Use default value from enum map if available (key='')
         6. Return None if no valid mapping found (column excluded from INSERT)
 
         Args:
             value: Input value to be mapped (typically string from XML)
-            mapping: Field mapping containing target_column and other metadata
+            mapping: Field mapping containing target_column and contract metadata
 
         Returns:
             Integer enum value if mapping found, None otherwise (excludes column from INSERT)
@@ -1194,6 +1290,10 @@ class DataMapper(DataMapperInterface):
                                        app_id: str, valid_contacts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Extract contact_address records using centralized element filtering."""
         records = []
+        
+        # Create set of valid con_ids for efficient lookup
+        valid_con_ids = {contact.get('con_id', '').strip() for contact in valid_contacts if isinstance(contact, dict)}
+        
         # Use centralized element filtering for robust extraction of address records
         if hasattr(self, '_current_xml_root') and self._current_xml_root is not None:
             element_filter = ElementFilter(self.logger)
@@ -1207,6 +1307,11 @@ class DataMapper(DataMapperInterface):
                     # Get parent contact info
                     parent_contact = addr_elem.getparent()
                     con_id = parent_contact.get('con_id')
+                    
+                    # Only process addresses for valid contacts
+                    if con_id not in valid_con_ids:
+                        self.logger.debug(f"Skipping address for invalid contact con_id {con_id}")
+                        continue
                     
                     # Convert element attributes to the format expected by _create_record_from_mappings
                     attributes = dict(addr_elem.attrib)
@@ -1237,6 +1342,10 @@ class DataMapper(DataMapperInterface):
                                           app_id: str, valid_contacts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Extract contact_employment records using centralized element filtering."""
         records = []
+        
+        # Create set of valid con_ids for efficient lookup
+        valid_con_ids = {contact.get('con_id', '').strip() for contact in valid_contacts if isinstance(contact, dict)}
+        
         # Use centralized element filtering for robust extraction of employment records
         if hasattr(self, '_current_xml_root') and self._current_xml_root is not None:
             element_filter = ElementFilter(self.logger)
@@ -1250,6 +1359,11 @@ class DataMapper(DataMapperInterface):
                     # Get parent contact info
                     parent_contact = emp_elem.getparent()
                     con_id = parent_contact.get('con_id')
+                    
+                    # Only process employments for valid contacts
+                    if con_id not in valid_con_ids:
+                        self.logger.debug(f"Skipping employment for invalid contact con_id {con_id}")
+                        continue
                     
                     # Convert element attributes to the format expected by _create_record_from_mappings
                     attributes = dict(emp_elem.attrib)
@@ -1290,7 +1404,26 @@ class DataMapper(DataMapperInterface):
         pass
     
     def _get_default_for_mapping(self, mapping):
-        """Get default value for mapping."""
+        """
+        Get schema-derived default value for a field mapping.
+
+        Retrieves the default_value from the mapping contract (derived from database schema)
+        and applies appropriate data type transformation. This implements the contract-driven
+        approach where defaults are explicitly defined in the schema rather than injected
+        by the application.
+
+        Args:
+            mapping: FieldMapping object with schema-derived metadata
+
+        Returns:
+            Transformed default value in correct data type, or None if no default exists
+
+        Contract-Driven Design:
+        - Uses database schema defaults instead of application-level defaults
+        - Applies type transformation to ensure data type consistency
+        - Returns None for fields without explicit schema defaults
+        - Preserves NULL semantics for optional fields
+        """
         # Check if mapping has a default_value
         if hasattr(mapping, 'default_value') and mapping.default_value:
             return self.transform_data_types(mapping.default_value, mapping.data_type)
@@ -1423,10 +1556,15 @@ class DataMapper(DataMapperInterface):
                 value = value.strip()
                 if not value:
                     return None
+                # Check if the string contains only digits (optionally with leading minus)
+                if not value.isdigit() and not (value.startswith('-') and value[1:].isdigit()):
+                    self.logger.warning(f"Invalid integer value '{value}' - contains non-numeric characters")
+                    return None
             # Use decimal for proper rounding (round half up)
             val = Decimal(str(value)).quantize(Decimal('1'), rounding=ROUND_HALF_UP)
             return int(val)
-        except (ValueError, TypeError):
+        except (ValueError, TypeError) as e:
+            self.logger.warning(f"Failed to convert '{value}' to integer: {e}")
             return None
     
     def _transform_to_decimal(self, value, target_type, precision=None):

@@ -299,15 +299,15 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
             )
         
         # Clean up existing data -- local development only
-        """
-        # try:
-        #     with _worker_migration_engine.get_connection() as conn:
-        #         cursor = conn.cursor()
-        #         cursor.execute("DELETE FROM app_base WHERE app_id = ?", (validation_result.app_id,))
-        #         conn.commit()
-        # except Exception:
-        #     pass  # Ignore cleanup errors
-        """
+        
+        try:
+            with _worker_migration_engine.get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("DELETE FROM app_base WHERE app_id = ?", (validation_result.app_id,))
+                conn.commit()
+        except Exception:
+            pass  # Ignore cleanup errors
+        
         
         # Stage 2: Parsing
         root = _worker_parser.parse_xml_stream(work_item.xml_content)

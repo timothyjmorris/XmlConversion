@@ -208,19 +208,18 @@ class ProductionProcessor:
             self.logger.error(f"Database connection failed: {e}")
             return False
     
-    def get_xml_records(self, limit: Optional[int] = None, offset: int = 0, exclude_failed: bool = True) -> List[Tuple[int, str]]:
+    def get_xml_records(self, limit: Optional[int] = None, offset: int = 0) -> List[Tuple[int, str]]:
         """
         Extract XML records from app_xml table.
         
         Args:
             limit: Maximum number of records to retrieve (None for all)
             offset: Number of records to skip
-            exclude_failed: Whether to exclude records that have failed processing before
             
         Returns:
             List of (app_id, xml_content) tuples
         """
-        self.logger.info(f"Extracting XML records (limit={limit}, offset={offset}, exclude_failed={exclude_failed})")
+        self.logger.info(f"Extracting XML records (limit={limit}, offset={offset})")
         
         xml_records = []
         
@@ -229,30 +228,15 @@ class ProductionProcessor:
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 
-                # Build query - exclude apps that have already been processed or failed
-                base_conditions = """
-                    WHERE ax.xml IS NOT NULL 
-                    AND DATALENGTH(ax.xml) > 100
-                    AND (ab.app_id IS NULL OR NOT EXISTS (SELECT 1 FROM app_pricing_cc apc WHERE apc.app_id = ax.app_id))  -- Allow re-processing if app_pricing_cc is missing
-                """
-                
-                if exclude_failed:
-                    # processing_log table should already exist
-                    
-                    base_conditions += """
-                        AND NOT EXISTS (
-                            SELECT 1 FROM processing_log pl 
-                            WHERE pl.app_id = ax.app_id 
-                            AND pl.status = 'failed'
-                        )  -- Exclude records that failed any processing
-                    """
-                
+                # Build query - exclude apps that have already been processed
                 if limit:
                     query = f"""
                         SELECT ax.app_id, ax.xml 
                         FROM app_xml ax
                         LEFT JOIN app_base ab ON ax.app_id = ab.app_id
-                        {base_conditions}
+                        WHERE ax.xml IS NOT NULL 
+                        AND DATALENGTH(ax.xml) > 100
+                        AND ab.app_id IS NULL  -- Only get apps not already processed
                         ORDER BY ax.app_id
                         OFFSET {offset} ROWS
                         FETCH NEXT {limit} ROWS ONLY
@@ -262,7 +246,9 @@ class ProductionProcessor:
                         SELECT ax.app_id, ax.xml 
                         FROM app_xml ax
                         LEFT JOIN app_base ab ON ax.app_id = ab.app_id
-                        {base_conditions}
+                        WHERE ax.xml IS NOT NULL 
+                        AND DATALENGTH(ax.xml) > 100
+                        AND ab.app_id IS NULL  -- Only get apps not already processed
                         ORDER BY ax.app_id
                         OFFSET {offset} ROWS
                     """
@@ -283,7 +269,7 @@ class ProductionProcessor:
                         seen_app_ids.add(app_id)
                         xml_records.append((app_id, xml_content))
                 
-                self.logger.info(f"Extracted {len(xml_records)} XML records (excluding already processed and failed)")
+                self.logger.info(f"Extracted {len(xml_records)} XML records (excluding already processed)")
                 
                 # Log if we found any duplicates
                 if len(seen_app_ids) < len(rows):
@@ -295,25 +281,6 @@ class ProductionProcessor:
             raise
         
         return xml_records
-    
-
-    def _log_processing_result(self, app_id: int, success: bool, failure_reason: str = None) -> None:
-        """Log processing result to prevent re-processing of failed records."""
-        try:
-            migration_engine = MigrationEngine(self.connection_string)
-            with migration_engine.get_connection() as conn:
-                cursor = conn.cursor()
-                
-                status = 'success' if success else 'failed'
-                cursor.execute("""
-                    INSERT INTO processing_log (app_id, status, failure_reason, session_id)
-                    VALUES (?, ?, ?, ?)
-                """, (app_id, status, failure_reason, self.session_id))
-                
-                conn.commit()
-                
-        except Exception as e:
-            self.logger.warning(f"Failed to log processing result for app_id {app_id}: {e}")
     
     def process_batch(self, xml_records: List[Tuple[int, str]]) -> dict:
         """
@@ -353,19 +320,10 @@ class ProductionProcessor:
         individual_results = processing_result.performance_metrics.get('individual_results', [])
         failed_apps = []
         
-        # Log processing results to prevent re-processing of failed records
         for result in individual_results:
-            success = result.get('success', True)
-            app_id = result.get('app_id')
-            
-            if success:
-                self._log_processing_result(app_id, True)
-            else:
-                failure_reason = f"{result.get('error_stage', 'unknown')}: {result.get('error_message', 'No error message available')}"
-                self._log_processing_result(app_id, False, failure_reason)
-                
+            if not result.get('success', True):
                 failed_app = {
-                    'app_id': app_id,
+                    'app_id': result.get('app_id'),
                     'error_stage': result.get('error_stage', 'unknown'),
                     'error_message': result.get('error_message', 'No error message available'),
                     'processing_time': result.get('processing_time', 0)

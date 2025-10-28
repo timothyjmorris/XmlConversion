@@ -205,6 +205,120 @@ class MigrationEngine(MigrationEngineInterface):
             if cursor:
                 cursor.close()
     
+    def _filter_duplicate_contacts(self, records: List[Dict[str, Any]], table_name: str) -> List[Dict[str, Any]]:
+        """
+        Filter out duplicate contact records that would violate primary key constraints.
+        
+        For contact_base table, checks if con_id already exists in the database.
+        For contact_address and contact_employment tables, checks if the composite primary key
+        (con_id + type enum) already exists.
+        
+        Args:
+            records: List of records to filter
+            table_name: Target table name
+            
+        Returns:
+            Filtered list of records with duplicates removed
+        """
+        if table_name not in ['contact_base', 'contact_address', 'contact_employment'] or not records:
+            return records
+        
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                
+                if table_name == 'contact_base':
+                    # Check con_id duplicates
+                    con_ids = [record.get('con_id') for record in records if record.get('con_id')]
+                    if con_ids:
+                        placeholders = ','.join('?' for _ in con_ids)
+                        query = f"SELECT con_id FROM contact_base WHERE con_id IN ({placeholders})"
+                        cursor.execute(query, con_ids)
+                        existing_con_ids = {row[0] for row in cursor.fetchall()}
+                        
+                        filtered_records = []
+                        skipped_count = 0
+                        for record in records:
+                            con_id = record.get('con_id')
+                            if con_id in existing_con_ids:
+                                self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id}): Contact already exists in database")
+                                skipped_count += 1
+                            else:
+                                filtered_records.append(record)
+                        
+                        if skipped_count > 0:
+                            self.logger.info(f"Filtered out {skipped_count} duplicate contact_base records from batch")
+                        return filtered_records
+                
+                elif table_name == 'contact_address':
+                    # Check composite key (con_id, address_type_enum) duplicates
+                    key_pairs = [(record.get('con_id'), record.get('address_type_enum')) 
+                               for record in records 
+                               if record.get('con_id') and record.get('address_type_enum')]
+                    
+                    if key_pairs:
+                        # Build query to check existing composite keys
+                        conditions = []
+                        params = []
+                        for con_id, addr_type in key_pairs:
+                            conditions.append("(con_id = ? AND address_type_enum = ?)")
+                            params.extend([con_id, addr_type])
+                        
+                        query = f"SELECT con_id, address_type_enum FROM contact_address WHERE {' OR '.join(conditions)}"
+                        cursor.execute(query, params)
+                        existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
+                        
+                        filtered_records = []
+                        skipped_count = 0
+                        for record in records:
+                            key = (record.get('con_id'), record.get('address_type_enum'))
+                            if key in existing_keys:
+                                self.logger.warning(f"Skipping duplicate contact_address record (con_id={key[0]}, address_type_enum={key[1]}): Address already exists in database")
+                                skipped_count += 1
+                            else:
+                                filtered_records.append(record)
+                        
+                        if skipped_count > 0:
+                            self.logger.info(f"Filtered out {skipped_count} duplicate contact_address records from batch")
+                        return filtered_records
+                
+                elif table_name == 'contact_employment':
+                    # Check composite key (con_id, employment_type_enum) duplicates
+                    key_pairs = [(record.get('con_id'), record.get('employment_type_enum')) 
+                               for record in records 
+                               if record.get('con_id') and record.get('employment_type_enum')]
+                    
+                    if key_pairs:
+                        # Build query to check existing composite keys
+                        conditions = []
+                        params = []
+                        for con_id, emp_type in key_pairs:
+                            conditions.append("(con_id = ? AND employment_type_enum = ?)")
+                            params.extend([con_id, emp_type])
+                        
+                        query = f"SELECT con_id, employment_type_enum FROM contact_employment WHERE {' OR '.join(conditions)}"
+                        cursor.execute(query, params)
+                        existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
+                        
+                        filtered_records = []
+                        skipped_count = 0
+                        for record in records:
+                            key = (record.get('con_id'), record.get('employment_type_enum'))
+                            if key in existing_keys:
+                                self.logger.warning(f"Skipping duplicate contact_employment record (con_id={key[0]}, employment_type_enum={key[1]}): Employment already exists in database")
+                                skipped_count += 1
+                            else:
+                                filtered_records.append(record)
+                        
+                        if skipped_count > 0:
+                            self.logger.info(f"Filtered out {skipped_count} duplicate contact_employment records from batch")
+                        return filtered_records
+        
+        except pyodbc.Error as e:
+            self.logger.warning(f"Failed to check for duplicate contacts in {table_name}, proceeding with all records: {e}")
+        
+        return records
+    
     def execute_bulk_insert(self, records: List[Dict[str, Any]], table_name: str, enable_identity_insert: bool = False) -> int:
         """
         Execute optimized bulk insert operation for contract-compliant relational data.
@@ -261,6 +375,9 @@ class MigrationEngine(MigrationEngineInterface):
         if not records:
             self.logger.warning(f"No records provided for bulk insert into {table_name}")
             return 0
+        
+        # Filter out duplicate contact_base records before insertion
+        records = self._filter_duplicate_contacts(records, table_name)
         
         inserted_count = 0
         
@@ -320,6 +437,12 @@ class MigrationEngine(MigrationEngineInterface):
                             self.logger.warning(f"DEBUG: app_operational_cc {i}: {col} = {repr(val)} ({type(val).__name__})")
                             if col in ['cb_score_factor_code_1', 'cb_score_factor_code_2']:
                                 self.logger.warning(f"DEBUG: CALCULATED FIELD {col} = '{val}' (expected: cb_score_factor_code_1='AJ', cb_score_factor_code_2='')")
+                    
+                    # Debug app_pricing_cc records to find the 'no' value
+                    if table_name == 'app_pricing_cc':
+                        self.logger.warning(f"DEBUG: app_pricing_cc Record {len(data_tuples)}: {values}")
+                        for i, (col, val) in enumerate(zip(columns, values)):
+                            self.logger.warning(f"DEBUG: app_pricing_cc {i}: {col} = {repr(val)} ({type(val).__name__})")
                 
                 # Try executemany first for performance, fall back to individual executes if needed
                 batch_start = 0
@@ -347,8 +470,23 @@ class MigrationEngine(MigrationEngineInterface):
                             # Fall back to individual executes
                             batch_inserted = 0
                             for record_values in batch_data:
-                                cursor.execute(sql, record_values)
-                                batch_inserted += 1
+                                try:
+                                    cursor.execute(sql, record_values)
+                                    batch_inserted += 1
+                                except pyodbc.Error as record_error:
+                                    # Handle primary key violations for contact_base gracefully
+                                    if table_name == 'contact_base' and ('primary key constraint' in str(record_error).lower() or 'duplicate key' in str(record_error).lower()):
+                                        # Extract con_id from the record values for logging
+                                        con_id = None
+                                        if len(record_values) > 0:
+                                            # con_id is typically the first column in contact_base
+                                            con_id = record_values[0]
+                                        self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id}): {record_error}")
+                                        # Don't increment batch_inserted for skipped records
+                                        continue
+                                    else:
+                                        # Re-raise other errors
+                                        raise record_error
                     
                     except pyodbc.Error as e:
                         if ("cast specification" in str(e) or "converting" in str(e)) and use_executemany:
