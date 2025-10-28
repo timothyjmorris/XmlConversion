@@ -108,7 +108,7 @@ connection_string = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=server;DATABA
 
 ### Mapping Contracts
 Data transformation rules are defined in JSON mapping contracts:
-- **[Credit Card Mapping Contract](../config/credit_card_mapping_contract.json)** - Production mapping rules
+- **[Credit Card Mapping Contract](../config/mapping_contract.json)** - Production mapping rules
 - See [Mapping Principles](mapping-principles.md) for detailed explanation
 
 ### Performance Tuning

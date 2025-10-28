@@ -24,7 +24,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         self.parser = XMLParser()
         
         # Use real mapping contract for proper validation
-        mapping_contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
+        mapping_contract_path = Path(__file__).parent.parent.parent / "config" / "mapping_contract.json"
         self.mapper = DataMapper(mapping_contract_path=str(mapping_contract_path))
         
         # Load the real mapping contract for tests

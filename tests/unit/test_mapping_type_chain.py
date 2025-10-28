@@ -15,7 +15,7 @@ def load_fixture():
     sample_path = Path(__file__).parent.parent.parent / "config" / "samples" / "sample-source-xml-contact-test.xml"
     with open(sample_path, 'r', encoding='utf-8-sig') as f:
         sample_xml = f.read()
-    contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
+    contract_path = Path(__file__).parent.parent.parent / "config" / "mapping_contract.json"
     with open(contract_path, 'r', encoding='utf-8-sig') as f:
         contract_json = json.load(f)
     contract_json["mappings"] = [FieldMapping(**fm) for fm in contract_json["mappings"]]

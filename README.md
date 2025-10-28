@@ -99,7 +99,7 @@ production_processor.py                     # Main production processing script
 
 # Configuration & Samples
 config/
-├── credit_card_mapping_contract.json       # CRITICAL project contract for field mapping definitions
+├── mapping_contract.json       # CRITICAL project contract for field mapping definitions
 ├── data-model.md                           # Data model specifications
 ├── database_config.json                    # Database configuration
 └── samples/                                # Sample files and documentation
@@ -173,6 +173,15 @@ The XML Database Extraction System operates as a comprehensive pipeline that tra
 - **Gate 2**: Data integrity validation (is extracted data quality acceptable?)
 - **Gate 3**: Migration success (were records successfully loaded?)
 
+### Contract-Driven Architecture
+
+The system uses a **contract-first approach** where mapping contracts define the exact data structure and validation rules:
+
+- **Mapping Contracts**: JSON specifications defining XML-to-database transformations
+- **Schema-Derived Metadata**: Automatic addition of nullable/required/default_value fields
+- **DataMapper Validation**: Ensures only contract-compliant columns are processed
+- **MigrationEngine Optimization**: Focuses on high-performance bulk insertion of validated data
+
 ### Core Components Integration
 
 #### XMLParser (`parsing/xml_parser.py`)
@@ -182,8 +191,9 @@ The XML Database Extraction System operates as a comprehensive pipeline that tra
 
 #### DataMapper (`mapping/data_mapper.py`) 
 - **Purpose**: Core data transformation engine orchestrating XML-to-database conversion
-- **Key Features**: Complex mapping types, calculated field evaluation, enum handling
-- **Integration**: Receives flattened XML from XMLParser, supplies tables to MigrationEngine
+- **Key Features**: Contract-driven column selection, calculated field evaluation, enum handling
+- **Recent Changes**: Now handles schema-derived nullable/required/default_value validation
+- **Integration**: Receives flattened XML from XMLParser, produces contract-compliant tables for MigrationEngine
 
 #### CalculatedFieldEngine (`mapping/calculated_field_engine.py`)
 - **Purpose**: Safe evaluation of calculated field expressions with cross-element references
@@ -191,9 +201,10 @@ The XML Database Extraction System operates as a comprehensive pipeline that tra
 - **Integration**: Called by DataMapper for complex field calculations
 
 #### MigrationEngine (`database/migration_engine.py`)
-- **Purpose**: High-performance database operations with SQL Server optimizations
-- **Key Features**: Bulk insert operations, transaction management, progress tracking
-- **Integration**: Receives extracted tables from DataMapper, validates schema compatibility
+- **Purpose**: High-performance bulk insertion engine for contract-compliant relational data
+- **Key Features**: Contract-driven column handling, fast_executemany optimization, transaction safety
+- **Recent Changes**: Simplified to focus on bulk insertion; column validation now handled by DataMapper
+- **Integration**: Receives pre-validated tables from DataMapper, performs optimized SQL Server bulk inserts
 
 #### Validation System (`validation/`)
 - **Purpose**: Multi-layered validation ensuring data quality throughout the pipeline
@@ -227,7 +238,20 @@ The XML Database Extraction System operates as a comprehensive pipeline that tra
 - **Schema Flexibility**: Configurable database schema prefixes for multi-environment support
 - **Centralized Configuration**: Environment variable-based configuration management
 
-## 🛠️ Development Setup
+## � Recent Improvements
+
+### Contract-Driven Architecture Refactoring
+- **Schema-Derived Metadata**: Automatic enhancement of mapping contracts with nullable/required/default_value fields from database schema
+- **Simplified MigrationEngine**: Removed dynamic column filtering; now focuses purely on high-performance bulk insertion
+- **Consolidated Default Handling**: Migrated contract-level defaults to field-level for better maintainability
+- **Enhanced Data Validation**: Contract-compliant data processing ensures compatibility throughout the pipeline
+
+### Code Quality Enhancements
+- **Comprehensive Test Coverage**: 93 tests across unit, integration, and end-to-end scenarios (100% pass rate)
+- **Updated Documentation**: Enhanced docstrings and README to reflect architectural changes
+- **Cleaned Configuration**: Removed unused contract sections and consolidated default value handling
+
+## �🛠️ Development Setup
 
 ```bash
 # Clone repository

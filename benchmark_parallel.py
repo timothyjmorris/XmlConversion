@@ -46,7 +46,7 @@ class ParallelBenchmark:
         self.connection_string = self.db_tester.build_connection_string()
         
         # Initialize mapping contract path
-        self.mapping_contract_path = str(project_root / "config" / "credit_card_mapping_contract.json")
+        self.mapping_contract_path = str(project_root / "config" / "mapping_contract.json")
         
         # Performance monitor
         self.performance_monitor = PerformanceMonitor()

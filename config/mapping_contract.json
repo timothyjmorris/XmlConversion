@@ -26,7 +26,9 @@
       "target_table": "app_base",
       "target_column": "app_id",
       "data_type": "int",
-      "mapping_type": ["identity_insert"]
+      "mapping_type": ["identity_insert"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -34,7 +36,9 @@
       "target_table": "app_base",
       "target_column": "receive_date",
       "data_type": "datetime",
-      "mapping_type": ["default_getutcdate_if_null"]
+      "mapping_type": ["default_getutcdate_if_null"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -42,7 +46,9 @@
       "target_table": "app_base",
       "target_column": "app_source_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -50,7 +56,9 @@
       "target_table": "app_base",
       "target_column": "app_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -58,14 +66,18 @@
       "target_table": "app_base",
       "target_column": "decision_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "decision_date",
       "target_table": "app_base",
       "target_column": "decision_date",
-      "data_type": "datetime"
+      "data_type": "datetime",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -73,7 +85,10 @@
       "target_table": "app_operational_cc",
       "target_column": "signature_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": false,
+      "required": true,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request",
@@ -81,7 +96,9 @@
       "target_table": "app_operational_cc",
       "target_column": "process_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request",
@@ -89,7 +106,9 @@
       "target_table": "app_operational_cc",
       "target_column": "last_updated_by",
       "data_type": "string",
-      "data_length": 80
+      "data_length": 80,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -97,14 +116,18 @@
       "target_table": "app_operational_cc",
       "target_column": "assigned_to",
       "data_type": "string",
-      "data_length": 80
+      "data_length": 80,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "last_update_time",
       "target_table": "app_operational_cc",
       "target_column": "last_updated_date",
-      "data_type": "datetime"
+      "data_type": "datetime",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -112,7 +135,9 @@
       "target_table": "app_operational_cc",
       "target_column": "backend_fico_grade",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -120,14 +145,19 @@
       "target_table": "app_operational_cc",
       "target_column": "backend_risk_grade",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "regb_start_date",
       "target_table": "app_operational_cc",
       "target_column": "regb_start_date",
-      "data_type": "datetime"
+      "data_type": "datetime",
+      "nullable": true,
+      "required": false,
+      "default_value": "GETUTCDATE()"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -135,7 +165,9 @@
       "target_table": "app_operational_cc",
       "target_column": "ssn_match_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -144,7 +176,9 @@
       "target_column": "marketing_segment",
       "data_type": "string",
       "data_length": 10,
-      "default_value": "UNKNOWN"
+      "default_value": "UNKNOWN",
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -152,7 +186,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "population_assignment_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -160,7 +196,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "pricing_tier",
       "data_type": "string",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -168,7 +206,10 @@
       "target_table": "app_pricing_cc",
       "target_column": "campaign_num",
       "data_type": "string",
-      "data_length": 6
+      "data_length": 6,
+      "nullable": false,
+      "required": true,
+      "default_value": "BLANK"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -176,7 +217,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "solicitation_num",
       "data_type": "string",
-      "data_length": 15
+      "data_length": 15,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -184,7 +227,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_art_code",
       "data_type": "string",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -192,7 +237,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "special_flag_5",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -201,7 +248,9 @@
       "target_column": "housing_monthly_payment",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": ["last_valid_pr_contact"]
+      "mapping_type": ["last_valid_pr_contact"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
@@ -210,7 +259,9 @@
       "target_column": "credit_line",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": ["last_valid_pr_contact"]
+      "mapping_type": ["last_valid_pr_contact"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -218,7 +269,9 @@
       "target_table": "contact_base",
       "target_column": "con_id",
       "data_type": "int",
-      "mapping_type": ["identity_insert"]
+      "mapping_type": ["identity_insert"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -226,7 +279,9 @@
       "target_table": "contact_base",
       "target_column": "first_name",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -234,7 +289,9 @@
       "target_table": "contact_base",
       "target_column": "last_name",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -243,7 +300,9 @@
       "target_column": "ssn",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
-      "data_length": 9
+      "data_length": 9,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -252,7 +311,9 @@
       "target_column": "birth_date",
       "data_type": "smalldatetime",
       "default_value": "1900-01-01",
-      "exclude_default_when_record_empty": true
+      "exclude_default_when_record_empty": true,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -260,7 +321,9 @@
       "target_table": "contact_base",
       "target_column": "contact_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -268,7 +331,9 @@
       "target_table": "contact_base",
       "target_column": "middle_initial",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -276,7 +341,9 @@
       "target_table": "contact_base",
       "target_column": "mother_maiden_name",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -284,7 +351,9 @@
       "target_table": "contact_base",
       "target_column": "suffix",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -292,7 +361,9 @@
       "target_table": "contact_base",
       "target_column": "email",
       "data_type": "string",
-      "data_length": 100
+      "data_length": 100,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -300,7 +371,9 @@
       "target_table": "contact_address",
       "target_column": "city",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -308,7 +381,9 @@
       "target_table": "contact_address",
       "target_column": "state",
       "data_type": "string",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -316,7 +391,9 @@
       "target_table": "contact_address",
       "target_column": "address_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -324,7 +401,9 @@
       "target_table": "contact_address",
       "target_column": "address_line_1",
       "data_type": "string",
-      "data_length": 100
+      "data_length": 100,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -332,7 +411,9 @@
       "target_table": "contact_address",
       "target_column": "street_number",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -340,7 +421,9 @@
       "target_table": "contact_address",
       "target_column": "street_name",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -348,7 +431,9 @@
       "target_table": "contact_address",
       "target_column": "unit",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -356,7 +441,9 @@
       "target_table": "contact_address",
       "target_column": "po_box",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -364,7 +451,9 @@
       "target_table": "contact_address",
       "target_column": "rural_route",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -373,7 +462,9 @@
       "target_column": "zip",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
-      "data_length": 9
+      "data_length": 9,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -382,7 +473,9 @@
       "target_column": "months_at_address",
       "data_type": "smallint",
       "mapping_type": ["calculated_field"],
-      "expression": "months_at_residence + (years_at_residence * 12)"
+      "expression": "months_at_residence + (years_at_residence * 12)",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -390,7 +483,9 @@
       "target_table": "contact_address",
       "target_column": "ownership_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -399,7 +494,9 @@
       "target_column": "home_phone",
       "data_type": "string",
       "data_length": 10,
-      "mapping_type": ["curr_address_only", "numbers_only"]
+      "mapping_type": ["curr_address_only", "numbers_only"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -408,7 +505,9 @@
       "target_column": "cell_phone",
       "data_type": "string",
       "data_length": 10,
-      "mapping_type": ["curr_address_only", "numbers_only"]
+      "mapping_type": ["curr_address_only", "numbers_only"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -416,7 +515,9 @@
       "target_table": "contact_employment",
       "target_column": "employment_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -424,7 +525,9 @@
       "target_table": "contact_employment",
       "target_column": "business_name",
       "data_type": "string",
-      "data_length": 100
+      "data_length": 100,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -432,7 +535,9 @@
       "target_table": "contact_employment",
       "target_column": "job_title",
       "data_type": "string",
-      "data_length": 100
+      "data_length": 100,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -442,7 +547,9 @@
       "data_type": "decimal",
       "data_length": 2,
       "mapping_type": ["calculated_field"],
-      "expression": "CASE WHEN b_salary_basis_tp_c = 'ANNUM' THEN b_salary / 12 WHEN b_salary_basis_tp_c = 'MONTH' THEN b_salary * 12 WHEN b_salary_basis_tp_c = 'HOURLY' THEN b_salary WHEN b_salary_basis_tp_c = '' THEN b_salary ELSE b_salary END"
+      "expression": "CASE WHEN b_salary_basis_tp_c = 'ANNUM' THEN b_salary / 12 WHEN b_salary_basis_tp_c = 'MONTH' THEN b_salary * 12 WHEN b_salary_basis_tp_c = 'HOURLY' THEN b_salary WHEN b_salary_basis_tp_c = '' THEN b_salary ELSE b_salary END",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -451,7 +558,9 @@
       "target_column": "months_at_job",
       "data_type": "smallint",
       "mapping_type": ["calculated_field"],
-      "expression": "b_months_at_job + (b_years_at_job * 12)"
+      "expression": "b_months_at_job + (b_years_at_job * 12)",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -459,7 +568,9 @@
       "target_table": "contact_employment",
       "target_column": "other_monthly_income",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -467,7 +578,9 @@
       "target_table": "contact_employment",
       "target_column": "income_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -475,7 +588,9 @@
       "target_table": "contact_employment",
       "target_column": "other_income_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -483,7 +598,10 @@
       "target_table": "contact_employment",
       "target_column": "self_employed_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": 0
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -491,7 +609,10 @@
       "target_table": "contact_employment",
       "target_column": "income_source_nontaxable_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": 0
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -500,7 +621,9 @@
       "target_column": "phone",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -508,7 +631,9 @@
       "target_table": "contact_employment",
       "target_column": "city",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -516,7 +641,9 @@
       "target_table": "contact_employment",
       "target_column": "state",
       "data_type": "string",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -524,7 +651,9 @@
       "target_table": "contact_employment",
       "target_column": "street_name",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -532,7 +661,9 @@
       "target_table": "contact_employment",
       "target_column": "street_number",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -540,7 +671,9 @@
       "target_table": "contact_employment",
       "target_column": "unit",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -549,7 +682,9 @@
       "target_column": "zip",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
-      "data_length": 9
+      "data_length": 9,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -557,21 +692,27 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_min_interest_charge",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "account_setup_fee",
       "target_table": "app_pricing_cc",
       "target_column": "card_account_setup_fee",
-      "data_type": "tinyint"
+      "data_type": "tinyint",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "additional_card_fee",
       "target_table": "app_pricing_cc",
       "target_column": "card_additional_card_fee",
-      "data_type": "tinyint"
+      "data_type": "tinyint",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -579,21 +720,27 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_late_payment_fee",
       "data_type": "tinyint",
-      "mapping_type": ["extract_numeric"]
+      "mapping_type": ["extract_numeric"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "over_limit_fee",
       "target_table": "app_pricing_cc",
       "target_column": "card_over_limit_fee",
-      "data_type": "tinyint"
+      "data_type": "tinyint",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "returned_payment_fee",
       "target_table": "app_pricing_cc",
       "target_column": "card_returned_payment_fee",
-      "data_type": "tinyint"
+      "data_type": "tinyint",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -601,14 +748,18 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_purchase_apr",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "annual_fee",
       "target_table": "app_pricing_cc",
       "target_column": "card_annual_fee",
-      "data_type": "smallint"
+      "data_type": "smallint",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -616,7 +767,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_cash_advance_apr",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -624,7 +777,9 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_1",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -632,7 +787,9 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_2",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -640,7 +797,9 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_3",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -648,7 +807,9 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_4",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -656,7 +817,9 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_code_5",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -666,7 +829,9 @@
       "data_type": "string",
       "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn1_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
-      "data_length": 25
+      "data_length": 25,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -676,7 +841,9 @@
       "data_type": "string",
       "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn2_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
-      "data_length": 25
+      "data_length": 25,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -686,7 +853,9 @@
       "data_type": "string",
       "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn3_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
-      "data_length": 25
+      "data_length": 25,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -696,7 +865,9 @@
       "data_type": "string",
       "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn4_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
-      "data_length": 25
+      "data_length": 25,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -706,7 +877,9 @@
       "data_type": "string",
       "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn5_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
-      "data_length": 25
+      "data_length": 25,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -714,7 +887,10 @@
       "target_table": "app_transactional_cc",
       "target_column": "analyst_review_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -722,7 +898,10 @@
       "target_table": "app_transactional_cc",
       "target_column": "booking_paused_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -730,7 +909,10 @@
       "target_table": "app_transactional_cc",
       "target_column": "disclosures_read_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -738,7 +920,10 @@
       "target_table": "app_transactional_cc",
       "target_column": "duplicate_ssn_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -746,7 +931,10 @@
       "target_table": "app_transactional_cc",
       "target_column": "fraud_review_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -754,7 +942,10 @@
       "target_table": "app_transactional_cc",
       "target_column": "pending_verification_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -762,7 +953,10 @@
       "target_table": "app_transactional_cc",
       "target_column": "supervisor_review_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -770,7 +964,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "prescreen_fico_grade",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -778,7 +974,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "prescreen_risk_grade",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -787,7 +985,9 @@
       "target_column": "birth_date",
       "data_type": "smalldatetime",
       "default_value": "1900-01-01",
-      "exclude_default_when_record_empty": true
+      "exclude_default_when_record_empty": true,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -795,7 +995,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "first_name",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -803,7 +1005,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "last_name",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -811,7 +1015,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "middle_initial",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -820,7 +1026,9 @@
       "target_column": "ssn",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
-      "data_length": 9
+      "data_length": 9,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -828,7 +1036,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "suffix",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -836,7 +1046,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "city",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -844,7 +1056,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "state",
       "data_type": "string",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -853,7 +1067,9 @@
       "target_column": "zip",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
-      "data_length": 9
+      "data_length": 9,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -861,7 +1077,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "street_name",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -869,7 +1087,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "street_number",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -877,7 +1097,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "unit",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -885,7 +1107,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "po_box",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -893,7 +1117,9 @@
       "target_table": "app_solicited_cc",
       "target_column": "rural_route",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request",
@@ -901,7 +1127,9 @@
       "target_table": "app_operational_cc",
       "target_column": "status_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -909,21 +1137,27 @@
       "target_table": "app_base",
       "target_column": "ip_address",
       "data_type": "string",
-      "data_length": 39
+      "data_length": 39,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "booked_date",
       "target_table": "app_base",
       "target_column": "booked_date",
-      "data_type": "datetime"
+      "data_type": "datetime",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "multran_booked_date",
       "target_table": "app_base",
       "target_column": "sc_multran_booked_date",
-      "data_type": "datetime"
+      "data_type": "datetime",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request",
@@ -931,7 +1165,9 @@
       "target_table": "app_operational_cc",
       "target_column": "priority_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -939,7 +1175,9 @@
       "target_table": "app_operational_cc",
       "target_column": "meta_url",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -947,7 +1185,9 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_ach_amount",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -955,7 +1195,10 @@
       "target_table": "app_transactional_cc",
       "target_column": "sc_ach_sent_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -963,14 +1206,19 @@
       "target_table": "app_transactional_cc",
       "target_column": "sc_debit_refund_failed_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "swiftpay_num",
       "target_table": "app_operational_cc",
       "target_column": "sc_funding_reference",
-      "data_type": "int"
+      "data_type": "int",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -978,7 +1226,9 @@
       "target_table": "app_operational_cc",
       "target_column": "verification_source_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -986,14 +1236,18 @@
       "target_table": "app_operational_cc",
       "target_column": "payment_protection_plan",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "regb_end_date",
       "target_table": "app_operational_cc",
       "target_column": "regb_end_date",
-      "data_type": "datetime"
+      "data_type": "datetime",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1001,7 +1255,9 @@
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_code_1",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1009,7 +1265,9 @@
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_code_2",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1017,7 +1275,9 @@
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_code_3",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1025,7 +1285,9 @@
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_code_4",
       "data_type": "string",
-      "data_length": 10
+      "data_length": 10,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1035,7 +1297,9 @@
       "data_type": "string",
       "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
-      "data_length": 25
+      "data_length": 25,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1045,7 +1309,9 @@
       "data_type": "string",
       "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
-      "data_length": 25
+      "data_length": 25,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1055,7 +1321,9 @@
       "data_type": "string",
       "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
-      "data_length": 25
+      "data_length": 25,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1065,7 +1333,9 @@
       "data_type": "string",
       "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
-      "data_length": 25
+      "data_length": 25,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -1074,7 +1344,9 @@
       "target_column": "sc_bank_aba",
       "data_type": "string",
       "mapping_type": ["last_valid_pr_contact"],
-      "data_length": 9
+      "data_length": 9,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -1083,7 +1355,9 @@
       "target_column": "sc_bank_account_num",
       "data_type": "string",
       "mapping_type": ["last_valid_pr_contact"],
-      "data_length": 17
+      "data_length": 17,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -1091,7 +1365,9 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_bank_account_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["last_valid_pr_contact", "enum"]
+      "mapping_type": ["last_valid_pr_contact", "enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1099,7 +1375,9 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_funding_source_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1107,21 +1385,27 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_initial_deposit_amount",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "debit_initial_deposit_date",
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_initial_deposit_date",
-      "data_type": "datetime"
+      "data_type": "datetime",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "debit_nsf_return_date",
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_nsf_return_date",
-      "data_type": "datetime"
+      "data_type": "datetime",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1129,14 +1413,18 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_refund_amount",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "debit_refund_date",
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_refund_date",
-      "data_type": "datetime"
+      "data_type": "datetime",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1144,7 +1432,10 @@
       "target_table": "app_operational_cc",
       "target_column": "auth_user_spouse_flag",
       "data_type": "bit",
-      "mapping_type": ["char_to_bit"]
+      "mapping_type": ["char_to_bit"],
+      "nullable": false,
+      "required": true,
+      "default_value": "0"
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1152,7 +1443,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "debt_to_income_ratio",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1160,7 +1453,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "decision_model_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1168,7 +1463,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "monthly_debt",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
@@ -1176,7 +1473,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "monthly_income",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
@@ -1185,7 +1484,9 @@
       "target_column": "account_number",
       "data_type": "string",
       "mapping_type": ["last_valid_pr_contact"],
-      "data_length": 16
+      "data_length": 16,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
@@ -1193,7 +1494,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "credit_line_possible",
       "data_type": "smallint",
-      "mapping_type": ["last_valid_pr_contact"]
+      "mapping_type": ["last_valid_pr_contact"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
@@ -1201,7 +1504,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "credit_line_max",
       "data_type": "smallint",
-      "mapping_type": ["last_valid_pr_contact"]
+      "mapping_type": ["last_valid_pr_contact"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
@@ -1210,7 +1515,9 @@
       "target_column": "min_payment_due",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": ["last_valid_pr_contact"]
+      "mapping_type": ["last_valid_pr_contact"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
@@ -1219,14 +1526,18 @@
       "target_column": "sc_multran_account_num",
       "data_type": "string",
       "mapping_type": ["last_valid_pr_contact"],
-      "data_length": 16
+      "data_length": 16,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "cash_advance_fee",
       "target_table": "app_pricing_cc",
       "target_column": "card_cash_advance_fee",
-      "data_type": "tinyint"
+      "data_type": "tinyint",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1234,7 +1545,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_cash_advance_percent",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1242,7 +1555,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_cash_advance_margin_apr",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1250,7 +1565,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_foreign_percent",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1258,7 +1575,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_intro_cash_advance_apr",
       "data_type": "decimal",
-      "data_length": 5
+      "data_length": 5,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1266,14 +1585,18 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_intro_purchase_apr",
       "data_type": "decimal",
-      "data_length": 5
+      "data_length": 5,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "min_payment_fee",
       "target_table": "app_pricing_cc",
       "target_column": "card_min_payment_fee",
-      "data_type": "tinyint"
+      "data_type": "tinyint",
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1281,7 +1604,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_min_payment_percent",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1289,7 +1614,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_purchase_apr_margin",
       "data_type": "decimal",
-      "data_length": 2
+      "data_length": 2,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1297,7 +1624,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "segment_plan_version",
       "data_type": "string",
-      "data_length": 3
+      "data_length": 3,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1305,7 +1634,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "special_flag_6",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1313,7 +1644,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "special_flag_7",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1321,7 +1654,9 @@
       "target_table": "app_pricing_cc",
       "target_column": "special_flag_8",
       "data_type": "string",
-      "data_length": 1
+      "data_length": 1,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1329,7 +1664,9 @@
       "target_table": "app_transactional_cc",
       "target_column": "ex_freeze_code",
       "data_type": "string",
-      "data_length": 4
+      "data_length": 4,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1337,7 +1674,10 @@
       "target_table": "contact_base",
       "target_column": "esign_consent_flag",
       "data_type": "bit",
-      "mapping_type": ["boolean_to_bit"]
+      "mapping_type": ["boolean_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": 0
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1345,7 +1685,10 @@
       "target_table": "contact_base",
       "target_column": "paperless_flag",
       "data_type": "bit",
-      "mapping_type": ["boolean_to_bit"]
+      "mapping_type": ["boolean_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": 0
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1353,7 +1696,10 @@
       "target_table": "contact_base",
       "target_column": "sms_consent_flag",
       "data_type": "bit",
-      "mapping_type": ["boolean_to_bit"]
+      "mapping_type": ["boolean_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": 0
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -1361,7 +1707,9 @@
       "target_table": "contact_base",
       "target_column": "fraud_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["enum"]
+      "mapping_type": ["enum"],
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -1369,7 +1717,9 @@
       "target_table": "contact_employment",
       "target_column": "address_line_1",
       "data_type": "string",
-      "data_length": 100
+      "data_length": 100,
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
@@ -1377,7 +1727,9 @@
       "target_table": "contact_employment",
       "target_column": "other_income_source_detail",
       "data_type": "string",
-      "data_length": 50
+      "data_length": 50,
+      "nullable": true,
+      "required": false
     }
   ],
   "relationships": [
@@ -1657,62 +2009,6 @@
       "n": 0,
       "": 0,
       "null": 0
-    }
-  },
-  "default_values": {
-    "product_line_enum": 600,
-    "esign_consent_flag": 0,
-    "paperless_flag": 0,
-    "sms_consent_flag": 0,
-    "auth_user_spouse_flag": 0,
-    "signature_flag": 0,
-    "self_employed_flag": 0,
-    "income_source_nontaxable_flag": 0,
-    "marketing_segment": "UNKNOWN",
-    "campaign_num": "BLANK"
-  },
-  "validation_rules": {
-    "required_identifiers": [
-      "app_id",
-      "con_id_primary"
-    ],
-    "optional_identifiers": [
-      "con_id_auth"
-    ],
-    "app_id_validation": {
-      "min_value": 1,
-      "max_value": 999999999
-    },
-    "con_id_validation": {
-      "min_value": 1,
-      "max_value": 999999999,
-      "note": "Applies to both con_id_primary and con_id_auth when present"
-    },
-    "ssn_validation": {
-      "pattern": "^[0-9]{9}$",
-      "exclude_values": ["000000000",
-        "111111111",
-        "222222222",
-        "333333333",
-        "444444444",
-        "555555555",
-        "666666666",
-        "777777777",
-        "888888888",
-        "999999999"]
-    },
-    "processing_rules": {
-      "abandon_application_if_missing": ["app_id",
-        "con_id_primary"],
-      "skip_record_if_missing": {
-        "contact_address": [  "address_type_enum"
-        ],
-        "contact_employment": [  "employment_type_enum"
-        ]
-      },
-      "use_default_if_missing": {
-        "population_assignment_enum": 229
-      }
     }
   }
 }

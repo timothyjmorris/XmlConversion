@@ -143,7 +143,7 @@ class ProcessingParameters:
 class ConfigPaths:
     """Configuration file paths with environment variable support."""
     base_config_path: Path = field(default_factory=lambda: Path.cwd())
-    mapping_contract_path: str = "config/credit_card_mapping_contract.json"
+    mapping_contract_path: str = "config/mapping_contract.json"
     sql_scripts_path: str = "config/samples"
     data_model_path: str = "config/data-model.md"
     sample_xml_path: str = "config/samples"
@@ -422,23 +422,6 @@ class ConfigManager(ConfigurationManagerInterface):
         contract_data = getattr(contract, '_raw_data', {})
         return contract_data.get('bit_conversions', {})
     
-    def get_default_values(self, contract_path: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get default values from the mapping contract.
-        
-        Args:
-            contract_path: Optional path to mapping contract. If None, uses default.
-            
-        Returns:
-            Dictionary of default values
-        """
-        if contract_path is None:
-            contract_path = self.paths.mapping_contract_path
-        
-        contract = self.load_mapping_contract(contract_path)
-        contract_data = getattr(contract, '_raw_data', {})
-        return contract_data.get('default_values', {})
-    
     def validate_configuration(self) -> bool:
         """
         Validate all configuration settings.
@@ -562,7 +545,10 @@ class ConfigManager(ConfigurationManagerInterface):
                     mapping_type=mapping_data.get('mapping_type'),
                     transformation=mapping_data.get('transformation'),
                     default_value=mapping_data.get('default_value'),
-                    expression=mapping_data.get('expression')
+                    expression=mapping_data.get('expression'),
+                    description=mapping_data.get('description'),
+                    required=mapping_data.get('required'),
+                    nullable=mapping_data.get('nullable')
                 )
                 mappings.append(field_mapping)
             

@@ -87,7 +87,7 @@ class TestEndToEndIntegration(unittest.TestCase):
         self.parser = XMLParser()
         
         # Initialize DataMapper with the mapping contract path so it loads enum mappings
-        mapping_contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
+        mapping_contract_path = Path(__file__).parent.parent.parent / "config" / "mapping_contract.json"
         self.mapper = DataMapper(mapping_contract_path=str(mapping_contract_path))
         
         self.migration_engine = MigrationEngine(self.connection_string)

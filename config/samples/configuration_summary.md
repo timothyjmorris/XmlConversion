@@ -6,7 +6,7 @@ This document summarizes the configuration files and validation updates complete
 
 ## Files Updated/Created
 
-### 1. Updated JSON Mapping Contract (`config/credit_card_mapping_contract.json`)
+### 1. Updated JSON Mapping Contract (`config/mapping_contract.json`)
 
 **Enhanced Features:**
 - **54 field mappings** covering comprehensive Provenir XML structure

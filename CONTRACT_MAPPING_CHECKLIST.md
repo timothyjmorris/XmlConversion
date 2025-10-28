@@ -1,6 +1,6 @@
 # Contract-Driven Mapping & Downstream Simplification Checklist
 
-- The `credit_card_mapping_contract.json` is the authoritative source for your contract-driven mapping: it defines the intended schema, mapping types, data types, default values, and business rules for the pipeline.
+- The `mapping_contract.json` is the authoritative source for your contract-driven mapping: it defines the intended schema, mapping types, data types, default values, and business rules for the pipeline.
 - All downstream logic (validation, parsing, mapping, inserting) should use this contract as the basis for how data is processed.
 - While there are still other business rules scattered throughout the codebase (e.g., in validators, mappers, or insert logic), these should not override or contradict the contract. The contract is the first and final authority for business rules.
 

@@ -39,7 +39,7 @@ class TestConfigIntegration(unittest.TestCase):
         self.temp_path = Path(self.temp_dir)
         
         # Create test mapping contract file
-        self.mapping_contract_path = self.temp_path / "config" / "credit_card_mapping_contract.json"
+        self.mapping_contract_path = self.temp_path / "config" / "mapping_contract.json"
         self.mapping_contract_path.parent.mkdir(parents=True, exist_ok=True)
         
         test_contract = {
@@ -131,7 +131,6 @@ class TestConfigIntegration(unittest.TestCase):
         # Verify it loaded configurations from centralized manager
         self.assertIsInstance(data_mapper._enum_mappings, dict)
         self.assertIsInstance(data_mapper._bit_conversions, dict)
-        self.assertIsInstance(data_mapper._default_values, dict)
     
     def test_data_mapper_explicit_path_override(self):
         """Test that explicit mapping contract path overrides centralized configuration."""
@@ -194,7 +193,6 @@ class TestConfigIntegration(unittest.TestCase):
         # Verify DataMapper loaded configurations (even if empty due to test setup)
         self.assertIsInstance(data_mapper._enum_mappings, dict)
         self.assertIsInstance(data_mapper._bit_conversions, dict)
-        self.assertIsInstance(data_mapper._default_values, dict)
 
 
 if __name__ == '__main__':

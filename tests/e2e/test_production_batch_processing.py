@@ -58,7 +58,7 @@ class TestProductionXMLBatch(unittest.TestCase):
         cls.parser = XMLParser()
         
         # Initialize DataMapper with mapping contract (existing pattern)
-        mapping_contract_path = project_root / "config" / "credit_card_mapping_contract.json"
+        mapping_contract_path = project_root / "config" / "mapping_contract.json"
         cls.mapper = DataMapper(mapping_contract_path=str(mapping_contract_path))
         
         cls.migration_engine = MigrationEngine(cls.connection_string)

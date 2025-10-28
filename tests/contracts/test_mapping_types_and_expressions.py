@@ -21,7 +21,7 @@ from MB_XmlConversionKiro.xml_extractor.models import MappingContract
 class TestMappingTypesAndExpressions(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
+        contract_path = Path(__file__).parent.parent.parent / "config" / "mapping_contract.json"
         sample_xml_path = Path(__file__).parent.parent.parent / "config" / "samples" / "sample-source-xml-contact-test.xml"
         with open(contract_path, 'r') as f:
             contract_data = json.load(f)
@@ -128,8 +128,8 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
                         self.fail(f"Chained mapping type {mt} failed for {mapping.target_column}: {e}")
                 # Final value should be valid or None (excluded)
 
-    def test_default_values_usage(self):
-        """Ensure default values are only used where allowed and tested."""
+    def test_field_level_default_values(self):
+        """Ensure field-level default values work correctly."""
         for mapping in self.contract.mappings:
             if hasattr(mapping, 'default_value') and mapping.default_value is not None:
                 # Try to extract value, simulate missing input

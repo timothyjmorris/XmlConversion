@@ -154,8 +154,7 @@ class TestConfigManager(unittest.TestCase):
             ],
             "relationships": [],
             "enum_mappings": {},
-            "bit_conversions": {},
-            "default_values": {}
+            "bit_conversions": {}
         }
         
         import json

@@ -67,7 +67,7 @@ class CurrentStateBenchmark:
         self.parser = XMLParser()
         
         # Initialize DataMapper with mapping contract
-        mapping_contract_path = project_root / "config" / "credit_card_mapping_contract.json"
+        mapping_contract_path = project_root / "config" / "mapping_contract.json"
         self.mapper = DataMapper(mapping_contract_path=str(mapping_contract_path))
         
         self.migration_engine = MigrationEngine(self.connection_string)

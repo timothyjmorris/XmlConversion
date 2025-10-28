@@ -15,7 +15,7 @@ class TestMappingContractSchema(unittest.TestCase):
     
     def setUp(self):
         """Set up test fixtures."""
-        self.contract_path = Path(__file__).parent.parent.parent / "config" / "credit_card_mapping_contract.json"
+        self.contract_path = Path(__file__).parent.parent.parent / "config" / "mapping_contract.json"
         if not self.contract_path.exists():
             self.skipTest(f"Mapping contract file not found: {self.contract_path}")
         
@@ -152,30 +152,6 @@ class TestMappingContractSchema(unittest.TestCase):
         
         self.assertEqual(len(errors), 0, f"Relationship validation errors: {errors}")
     
-    def test_validation_rules_validation(self):
-        """Test validation rules configuration."""
-        errors = []
-        
-        validation_rules = self.contract.get('validation_rules', {})
-        
-        # Check required identifiers
-        required_ids = validation_rules.get('required_identifiers', [])
-        if 'app_id' not in required_ids:
-            errors.append("app_id should be in required_identifiers")
-        if 'con_id_primary' not in required_ids:
-            errors.append("con_id_primary should be in required_identifiers")
-        
-        # Check validation ranges
-        for id_type in ['app_id_validation', 'con_id_validation']:
-            if id_type in validation_rules:
-                validation = validation_rules[id_type]
-                if 'min_value' not in validation or 'max_value' not in validation:
-                    errors.append(f"{id_type} missing min_value or max_value")
-                elif validation['min_value'] >= validation['max_value']:
-                    errors.append(f"{id_type} min_value should be less than max_value")
-        
-        self.assertEqual(len(errors), 0, f"Validation rules errors: {errors}")
-    
     def test_contract_completeness(self):
         """Test overall contract completeness."""
         required_sections = [
@@ -191,13 +167,12 @@ class TestMappingContractSchema(unittest.TestCase):
         self.assertEqual(len(missing_sections), 0, f"Missing required sections: {missing_sections}")
         
         # Print summary for information
-        print(f"\\nContract Summary:")
+        print(f"\nContract Summary:")
         print(f"  - Key Identifiers: {len(self.contract.get('key_identifiers', {}))}")
         print(f"  - Field Mappings: {len(self.contract.get('mappings', []))}")
         print(f"  - Enum Types: {len(self.contract.get('enum_mappings', {}))}")
         print(f"  - Bit Conversion Types: {len(self.contract.get('bit_conversions', {}))}")
         print(f"  - Relationships: {len(self.contract.get('relationships', []))}")
-        print(f"  - Default Values: {len(self.contract.get('default_values', {}))}")
 
 
 if __name__ == '__main__':

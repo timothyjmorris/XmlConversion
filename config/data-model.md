@@ -4,7 +4,7 @@
 This system extracts credit card application data from Provenir XML documents stored in the `app_xml` table and transforms it into a normalized relational structure for processing and analysis. The system supports comprehensive mapping of XML attributes to database columns with enum conversions, bit transformations, and data validation.
 
 ## Configuration Files
-- **`credit_card_mapping_contract.json`**: Complete mapping contract with XML paths, target tables, enum mappings, and validation rules
+- **`mapping_contract.json`**: Complete mapping contract with XML paths, target tables, enum mappings, and validation rules
 - **`create_destination_tables.sql`**: SQL script to create the target database schema
 - **`insert_enum_values.sql`**: SQL script to populate enum lookup values
 - **`validate_mapping_contract.sql`**: SQL script to validate schema compatibility
@@ -54,7 +54,7 @@ This system extracts credit card application data from Provenir XML documents st
 ## Data Transformation Rules
 
 ### Enum Mappings
-The `credit_card_mapping_contract.json` file contains mappings for all enum fields. The `enum_mappings` section defines the mapping between XML attributes and enum values. The `enum_mappings` section also defines the default value for missing XML attributes. This contract is derived from source SQL `insert_enum_values.sql` with the mapping in `migrate_table_logic.sql`
+The `mapping_contract.json` file contains mappings for all enum fields. The `enum_mappings` section defines the mapping between XML attributes and enum values. The `enum_mappings` section also defines the default value for missing XML attributes. This contract is derived from source SQL `insert_enum_values.sql` with the mapping in `migrate_table_logic.sql`
 
 ### Type Conversions
 - **Char to Bit**: Y=1, N/empty/space=0 for signature_flag, self_employed_flag, etc.

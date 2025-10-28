@@ -115,7 +115,7 @@ class ProductionProcessor:
         self._setup_logging(log_level)
         
         # Initialize components
-        self.mapping_contract_path = str(project_root / "config" / "credit_card_mapping_contract.json")
+        self.mapping_contract_path = str(project_root / "config" / "mapping_contract.json")
         
         self.logger.info(f"ProductionProcessor initialized:")
         self.logger.info(f"  Server: {server}")

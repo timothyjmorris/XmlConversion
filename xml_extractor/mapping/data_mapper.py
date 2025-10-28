@@ -87,7 +87,6 @@ class DataMapper(DataMapperInterface):
         Configuration Loaded:
         - _enum_mappings: Dict mapping enum_type names to value→integer mappings
         - _bit_conversions: Dict for Y/N → 0/1 and boolean → bit transformations
-        - _default_values: Dict of fallback values for specific column mappings
         - _validation_rules: Dict of validation constraints (currently unused)
 
         The initialization is designed to be fault-tolerant - if the mapping contract
@@ -120,14 +119,12 @@ class DataMapper(DataMapperInterface):
         try:
             self._enum_mappings = self._config_manager.get_enum_mappings(self._mapping_contract_path)
             self._bit_conversions = self._config_manager.get_bit_conversions(self._mapping_contract_path)
-            self._default_values = self._config_manager.get_default_values(self._mapping_contract_path)
             self.logger.info(f"DataMapper initialized with mapping contract: {self._mapping_contract_path}")
             self.logger.debug(f"Loaded {len(self._enum_mappings)} enum mappings, {len(self._bit_conversions)} bit conversions")
         except Exception as e:
             self.logger.warning(f"Could not load mapping contract configurations during initialization: {e}")
             self._enum_mappings = {}
             self._bit_conversions = {}
-            self._default_values = {}
         
         self._validation_rules = {}
     
@@ -1052,8 +1049,9 @@ class DataMapper(DataMapperInterface):
                 # Check if transformation applied a default (e.g., datetime 1900-01-01 for missing birth_date)
                 is_transformation_default = self._is_transformation_default(value, transformed_value, mapping)
                 
-                # Add to record, or use default if transformed value is None
+                # ENHANCED: Use contract-driven column inclusion logic
                 if transformed_value is not None:
+                    # Value successfully extracted and transformed - include column
                     record[mapping.target_column] = transformed_value
                     if is_transformation_default:
                         applied_defaults.add(mapping.target_column)  # Track transformation default
@@ -1061,23 +1059,24 @@ class DataMapper(DataMapperInterface):
                     if mapping.target_column == 'birth_date':
                         self.logger.debug(f"Transformed birth_date: {transformed_value} (default: {is_transformation_default})")
                 else:
-                    # Try to get default value
-                    default_value = self._get_default_for_mapping(mapping)
-                    if default_value is not None:
-                        record[mapping.target_column] = default_value
-                        # Check if this is a conditional default that should be excluded when record is empty
-                        if hasattr(mapping, 'exclude_default_when_record_empty') and mapping.exclude_default_when_record_empty:
-                            conditional_defaults.add(mapping.target_column)
-                        else:
-                            applied_defaults.add(mapping.target_column)  # Track applied default
-                                # Log birth_date default (debug level)
-                        if mapping.target_column == 'birth_date':
-                            self.logger.debug(f"Using birth_date default: {default_value}")
+                    # No value available - use contract-driven logic for column inclusion
+                    if getattr(mapping, 'nullable', True):
+                        # Column is nullable - exclude it entirely (don't add to record)
+                        # This allows the database default or NULL to be used
+                        self.logger.debug(f"Excluding nullable column {mapping.target_column} from {table_name} (no value available)")
                     else:
-                        # Log missing birth_date (debug level)
-                        if mapping.target_column == 'birth_date':
-                            self.logger.debug(f"No birth_date default - will be NULL")
-                    # If no default, don't add the column (leave as NULL)
+                        # Column is NOT nullable (required) - must provide a value
+                        default_value = getattr(mapping, 'default_value', None)
+                        if default_value is not None:
+                            # Use contract default value
+                            record[mapping.target_column] = default_value
+                            applied_defaults.add(mapping.target_column)
+                            self.logger.debug(f"Using contract default for required column {mapping.target_column}: {default_value}")
+                        else:
+                            # No contract default - this is an error for required columns
+                            # For now, set to None and let database handle it, but log warning
+                            record[mapping.target_column] = None
+                            self.logger.warning(f"Required column {mapping.target_column} in {table_name} has no value and no default - will be NULL")
                 
                 self._transformation_stats['type_conversions'] += 1
                 
@@ -1295,11 +1294,6 @@ class DataMapper(DataMapperInterface):
         # Check if mapping has a default_value
         if hasattr(mapping, 'default_value') and mapping.default_value:
             return self.transform_data_types(mapping.default_value, mapping.data_type)
-        
-        # Check default_values configuration
-        if mapping.target_column in self._default_values:
-            default_val = self._default_values[mapping.target_column]
-            return self.transform_data_types(default_val, mapping.data_type)
         
         return None
     

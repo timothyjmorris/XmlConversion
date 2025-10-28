@@ -115,7 +115,6 @@ class MappingContract:
     relationships: List[RelationshipMapping] = None
     enum_mappings: Optional[Dict[str, Any]] = None
     bit_conversions: Optional[Dict[str, Any]] = None
-    default_values: Optional[Dict[str, Any]] = None
     validation_rules: Optional[Dict[str, Any]] = None
     
     def __post_init__(self):
