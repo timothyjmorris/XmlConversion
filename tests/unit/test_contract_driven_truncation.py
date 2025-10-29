@@ -101,4 +101,4 @@ def test_decimal_precision_rounding(fixture):
     for input_value, precision, expected in test_cases:
         result = mapper._transform_to_decimal_with_precision(input_value, precision)
         assert result == expected, f"Expected {expected} for {input_value} with precision {precision}, got {result}"
-        print(f"✓ {input_value} -> {result} (expected {expected})")
+        print(f"OK {input_value} -> {result} (expected {expected})")

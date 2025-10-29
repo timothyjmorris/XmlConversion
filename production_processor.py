@@ -352,18 +352,14 @@ class ProductionProcessor:
         # Extract failed app details from individual results
         individual_results = processing_result.performance_metrics.get('individual_results', [])
         failed_apps = []
-        
-        # Log processing results to prevent re-processing of failed records
         for result in individual_results:
             success = result.get('success', True)
             app_id = result.get('app_id')
-            
             if success:
                 self._log_processing_result(app_id, True)
             else:
                 failure_reason = f"{result.get('error_stage', 'unknown')}: {result.get('error_message', 'No error message available')}"
                 self._log_processing_result(app_id, False, failure_reason)
-                
                 failed_app = {
                     'app_id': app_id,
                     'error_stage': result.get('error_stage', 'unknown'),
@@ -447,7 +443,7 @@ class ProductionProcessor:
             for failed_app in metrics['failed_apps']:
                 self.logger.debug(f"  App {failed_app['app_id']}: {failed_app['error_stage']} - {failed_app['error_message']}")
         else:
-            self.logger.info("✅ All records processed successfully!")
+            self.logger.info("All records processed successfully!")
         
         # Save metrics to file
         self._save_metrics(metrics)

@@ -224,28 +224,30 @@ class DataMapper(DataMapperInterface):
                 try:
                     table_records = self._process_table_mappings(xml_data, mappings, app_id, valid_contacts)
                     if table_records:
-                        result_tables[table_name] = table_records
+                            result_tables[table_name] = table_records
                 except Exception as e:
                     # Log and continue processing other tables
                     self.logger.error(f"Failed to process table {table_name}: {e}")
                     self._validation_errors.append(f"Table processing error for {table_name}: {e}")
                     continue
             
+
             # Handle relationships and foreign keys
             result_tables = self._apply_relationships(result_tables, contract, xml_data, app_id, valid_contacts)
-            
+
+
             # NO DEFAULT VALUES APPLIED - only use data from XML mapping
             # This ensures that only explicitly mapped data is inserted, avoiding silent data corruption.
 
             # Apply calculated fields
             result_tables = self._apply_calculated_fields(result_tables, contract, xml_data)
-            
+
             # Validate final data integrity
             self._validate_data_integrity(result_tables, contract)
-            
+
             self._transformation_stats['records_processed'] += 1
             self._transformation_stats['records_successful'] += 1
-            
+
             return result_tables
             
         except Exception as e:
@@ -836,8 +838,10 @@ class DataMapper(DataMapperInterface):
         # Handle default_getutcdate_if_null specially - it provides defaults for empty/null values
         elif mapping_type == 'default_getutcdate_if_null':
             if not StringUtils.safe_string_check(value):
-                self.logger.debug(f"Applying default_getutcdate_if_null for {mapping.target_column}: {value} -> {datetime.utcnow()}")
-                return datetime.utcnow()
+                import datetime
+                utc_now = datetime.datetime.now(datetime.UTC)
+                self.logger.debug(f"Applying default_getutcdate_if_null for {mapping.target_column}: {value} -> {utc_now}")
+                return utc_now
             # Apply data type transformation to the existing value
             return self.transform_data_types(value, mapping.data_type)
         

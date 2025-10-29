@@ -55,9 +55,9 @@ class TestRealSampleXMLValidation(unittest.TestCase):
                 cursor.execute("DELETE FROM app_base WHERE app_id = 443306")
                 
                 conn.commit()
-                print("🧹 Cleaned up existing test data for app_id 443306")
+                print("INFO: Cleaned up existing test data for app_id 443306")
         except Exception as e:
-            print(f"⚠️ Cleanup warning: {e}")
+            print(f"  Cleanup warning: {e}")
     
     def test_real_sample_xml_validation(self):
         """Test validation of real sample XML with edge cases."""
@@ -125,7 +125,7 @@ class TestRealSampleXMLValidation(unittest.TestCase):
         # Should be able to process despite warnings
         self.assertTrue(result.can_process, "Should be able to process despite edge cases")
         
-        print(f"\n✅ Real sample XML validation completed successfully!")
+        print(f"\nReal sample XML validation completed successfully!")
     
     def test_expected_edge_cases_in_sample(self):
         """Test that we correctly identify expected edge cases in the sample XML."""
@@ -174,7 +174,7 @@ class TestRealSampleXMLValidation(unittest.TestCase):
         self.assertGreater(len(con_id_warnings), 0,
                           "Should have warnings about missing con_id attributes")
         
-        print(f"✅ Edge case detection working correctly!")
+        print(f"  Edge case detection working correctly!")
         print(f"   - Contact warnings: {len(contact_warnings)}")
         print(f"   - Role warnings: {len(role_warnings)}")
         print(f"   - Con_id warnings: {len(con_id_warnings)}")
@@ -207,7 +207,7 @@ class TestRealSampleXMLValidation(unittest.TestCase):
         self.assertEqual(len(critical_errors), 0,
                         "Should not have critical errors with valid app_id and contacts")
         
-        print(f"✅ Graceful degradation working correctly!")
+        print(f"   Graceful degradation working correctly!")
         print(f"   - Can process: {result.can_process}")
         print(f"   - Valid contacts: {len(result.valid_contacts)}")
         print(f"   - Warnings: {len(result.validation_warnings)}")
@@ -235,7 +235,7 @@ class TestRealSampleXMLValidation(unittest.TestCase):
         self.assertLess(validation_time, max_validation_time,
                        f"Validation should complete in under {max_validation_time}s")
         
-        print(f"✅ Performance test passed!")
+        print(f"  Performance test passed!")
         print(f"   - Validation time: {validation_time:.3f} seconds")
         print(f"   - XML size: {len(self.real_sample_xml):,} characters")
         print(f"   - Processing rate: {len(self.real_sample_xml)/validation_time:,.0f} chars/sec")
@@ -274,10 +274,10 @@ def run_real_sample_tests():
     success = len(result.failures) == 0 and len(result.errors) == 0
     
     if success:
-        print("\n🎉 All real sample XML tests passed!")
+        print("\nAll real sample XML tests passed!")
         print("System correctly handles real-world edge cases and ghost nodes.")
     else:
-        print("\n❌ Some real sample XML tests failed!")
+        print("\nSome real sample XML tests failed!")
         print("Review and fix validation logic before processing production data.")
     
     return success

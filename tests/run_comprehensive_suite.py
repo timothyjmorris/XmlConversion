@@ -16,6 +16,8 @@ import argparse
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+import os
+
 
 class TestSuiteRunner:
     """Comprehensive test suite runner with category-based execution."""
@@ -31,46 +33,50 @@ class TestSuiteRunner:
     
     def run_category(self, category: str, timeout: int = 300) -> bool:
         """Run tests for a specific category."""
-        print(f"\\n{'='*80}")
-        print(f"🧪 RUNNING {category.upper()} TESTS")
+        print(f"{'='*80}")
+        print(f"RUNNING {category.upper()} TESTS")
         print(f"{'='*80}")
         
-        test_path = Path(f"tests/{category}")
+        workspace_root = Path(__file__).resolve().parent.parent
+        test_path = workspace_root / "tests" / category
         if not test_path.exists():
-            print(f"⚠️ No tests found in {test_path}")
+            print(f"WARNING: No tests found in {test_path}")
             return True
-        
+
         test_files = list(test_path.glob("test_*.py"))
         if not test_files:
-            print(f"⚠️ No test files found in {test_path}")
-            return True
-        
-        print(f"📁 Found {len(test_files)} test file(s) in {test_path}")
-        
+            print(f"WARNING: No test files found in {test_path}")
+            # Still run pytest to capture summary (may be skipped, but summary will show zero)
+        else:
+            print(f"Found {len(test_files)} test file(s) in {test_path}")
+
         start_time = time.time()
-        
+
         try:
-            # Run pytest for the category
+            # Run pytest for the category from workspace root
             cmd = [
                 sys.executable, '-m', 'pytest',
-                str(test_path),
+                str(test_path.relative_to(workspace_root)),
                 '-v',
-                '--tb=short'
+                '--tb=short',
+                '--capture=no'
             ]
-            
-            # Add category-specific options
             if category == 'unit':
-                cmd.extend(['--maxfail=5'])  # Fail fast for unit tests
+                cmd.extend(['--maxfail=5'])
             elif category == 'e2e':
-                cmd.extend(['--maxfail=1'])  # Stop on first E2E failure
-            
-            print(f"🚀 Executing: {' '.join(cmd)}")
-            
+                cmd.extend(['--maxfail=1'])
+
+            print(f" Executing: {' '.join(cmd)}")
+
+            env = dict(os.environ)
+            env['PYTHONPATH'] = str(workspace_root) + os.pathsep + env.get('PYTHONPATH', '')
             result = subprocess.run(
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=timeout
+                timeout=timeout,
+                env=env,
+                cwd=str(workspace_root)
             )
             
             execution_time = time.time() - start_time
@@ -78,85 +84,72 @@ class TestSuiteRunner:
             
             # Parse pytest output for results
             success = result.returncode == 0
-            output_lines = result.stdout.split('\\n')
-            
-            # Extract test results from pytest output
+            output_lines = result.stdout.split('\n')
+
+            # Extract test results from pytest output (always show summary)
             passed, failed = self._parse_pytest_output(output_lines)
             self.results[category]['passed'] = passed
             self.results[category]['failed'] = failed
-            
-            if success:
-                print(f"✅ {category.upper()} TESTS PASSED")
-                print(f"   Tests: {passed} passed, {failed} failed")
-                print(f"   Time: {execution_time:.1f}s")
-            else:
-                print(f"❌ {category.upper()} TESTS FAILED")
-                print(f"   Tests: {passed} passed, {failed} failed")
-                print(f"   Time: {execution_time:.1f}s")
-                
+
+            print(f"   {category.upper()} TESTS {'PASSED' if success else 'FAILED'}")
+            print(f"   Tests: {passed} passed, {failed} failed")
+            print(f"   Time: {execution_time:.1f}s")
+
+            if not success:
                 # Show failure details
                 if result.stderr:
-                    print(f"\\n📋 Error Output:")
+                    print(f"Error Output:")
                     print(result.stderr[:1000])  # Limit error output
-                
                 # Show relevant stdout
                 failure_lines = [line for line in output_lines if 'FAILED' in line or 'ERROR' in line]
                 if failure_lines:
-                    print(f"\\n📋 Failed Tests:")
+                    print(f"Failed Tests:")
                     for line in failure_lines[:10]:  # Show first 10 failures
                         print(f"   {line}")
-            
+
             self.results[category]['details'] = {
                 'success': success,
                 'stdout': result.stdout,
                 'stderr': result.stderr,
                 'returncode': result.returncode
             }
-            
+
             return success
             
         except subprocess.TimeoutExpired:
             execution_time = time.time() - start_time
             self.results[category]['time'] = execution_time
-            print(f"⏰ {category.upper()} TESTS TIMED OUT after {timeout}s")
+            print(f"{category.upper()} TESTS TIMED OUT after {timeout}s")
             return False
             
         except Exception as e:
             execution_time = time.time() - start_time
             self.results[category]['time'] = execution_time
-            print(f"💥 {category.upper()} TESTS ERROR: {e}")
+            print(f"{category.upper()} TESTS ERROR: {e}")
             return False
     
     def _parse_pytest_output(self, output_lines: List[str]) -> Tuple[int, int]:
-        """Parse pytest output to extract pass/fail counts."""
+        """Parse pytest output to extract pass/fail counts from the pytest summary line for any category."""
+        import re
         passed = 0
         failed = 0
-        
-        for line in output_lines:
-            if ' passed' in line and ' failed' in line:
-                # Line like: "5 passed, 2 failed in 10.5s"
-                parts = line.split()
-                for i, part in enumerate(parts):
-                    if part == 'passed' and i > 0:
-                        try:
-                            passed = int(parts[i-1])
-                        except ValueError:
-                            pass
-                    elif part == 'failed' and i > 0:
-                        try:
-                            failed = int(parts[i-1])
-                        except ValueError:
-                            pass
-            elif ' passed' in line and 'failed' not in line:
-                # Line like: "5 passed in 10.5s"
-                parts = line.split()
-                for i, part in enumerate(parts):
-                    if part == 'passed' and i > 0:
-                        try:
-                            passed = int(parts[i-1])
-                        except ValueError:
-                            pass
-        
+        # Look for pytest summary line (e.g. '== 5 failed, 42 passed in 0.93s ==')
+        summary_line = None
+        for line in reversed(output_lines):
+            # Match lines like '== ... 65 passed ... ==', with or without commas
+            if re.search(r'\d+\s+passed', line) or re.search(r'\d+\s+failed', line):
+                summary_line = line
+                break
+        if summary_line:
+            # Remove ANSI color codes
+            clean_line = re.sub(r'\x1b\[[0-9;]*m', '', summary_line)
+            # Use regex to extract all 'N passed', 'N failed', etc. regardless of comma/space
+            matches = re.findall(r'(\d+)\s+passed|(\d+)\s+failed', clean_line)
+            for m in matches:
+                if m[0]:
+                    passed += int(m[0])
+                if m[1]:
+                    failed += int(m[1])
         return passed, failed
     
     def run_all_categories(self, categories: List[str] = None) -> bool:
@@ -164,7 +157,7 @@ class TestSuiteRunner:
         if categories is None:
             categories = ['contracts', 'unit', 'integration', 'e2e']
         
-        print(f"🚀 RUNNING COMPREHENSIVE TEST SUITE")
+        print(f"RUNNING COMPREHENSIVE TEST SUITE")
         print(f"Categories: {', '.join(categories)}")
         
         overall_success = True
@@ -183,15 +176,15 @@ class TestSuiteRunner:
                 
                 # For critical categories, consider stopping
                 if category in ['unit', 'contracts']:
-                    print(f"\\n🚨 CRITICAL CATEGORY {category.upper()} FAILED")
+                    print(f"CRITICAL CATEGORY {category.upper()} FAILED")
                     print(f"   Consider fixing {category} tests before proceeding")
         
         return overall_success
     
     def generate_summary_report(self) -> None:
         """Generate comprehensive summary report."""
-        print(f"\\n{'='*80}")
-        print(f"📊 COMPREHENSIVE TEST SUITE SUMMARY")
+        print(f"{'='*80}")
+        print(f"COMPREHENSIVE TEST SUITE SUMMARY")
         print(f"{'='*80}")
         
         total_passed = sum(r['passed'] for r in self.results.values())
@@ -199,25 +192,27 @@ class TestSuiteRunner:
         total_time = sum(r['time'] for r in self.results.values())
         total_tests = total_passed + total_failed
         
-        print(f"\\n📈 Overall Results:")
+        print(f"Overall Results:")
         print(f"   Total Tests: {total_tests}")
         print(f"   Passed: {total_passed}")
         print(f"   Failed: {total_failed}")
         print(f"   Success Rate: {(total_passed/total_tests*100):.1f}%" if total_tests > 0 else "   Success Rate: N/A")
         print(f"   Total Time: {total_time:.1f}s")
         
-        print(f"\\n📋 Category Breakdown:")
+        print(f"Category Breakdown:")
         for category, results in self.results.items():
             total_cat = results['passed'] + results['failed']
-            if total_cat > 0:
-                success_rate = (results['passed'] / total_cat) * 100
-                status = "✅" if results['failed'] == 0 else "❌"
+            if total_cat > 0 or (results['passed'] == 0 and results['failed'] == 0):
+                # Always show summary, even if zero
+                success_rate = (results['passed'] / total_cat) * 100 if total_cat > 0 else 0.0
+                status = "OK" if results['failed'] == 0 else "BAD"
                 print(f"   {status} {category.upper():12} {results['passed']:3}P {results['failed']:3}F {success_rate:5.1f}% {results['time']:6.1f}s")
             else:
-                print(f"   ⚪ {category.upper():12} No tests found")
+                print(f"   {category.upper():12} No tests found")
+                print(f"        WARNING: No tests were discovered for {category}. Check test file names and test function definitions.")
         
         # Performance analysis
-        print(f"\\n⚡ Performance Analysis:")
+        print(f"Performance Analysis:")
         for category, results in self.results.items():
             total_cat = results['passed'] + results['failed']
             if total_cat > 0 and results['time'] > 0:
@@ -225,7 +220,7 @@ class TestSuiteRunner:
                 print(f"   {category.upper():12} {tests_per_second:.1f} tests/second")
         
         # Quality gates
-        print(f"\\n🎯 Quality Gates:")
+        print(f"Quality Gates:")
         
         # Unit tests should be fast and reliable
         unit_results = self.results['unit']
@@ -233,7 +228,7 @@ class TestSuiteRunner:
         if unit_total > 0:
             unit_success = unit_results['failed'] == 0
             unit_fast = unit_results['time'] < 60
-            print(f"   Unit Tests:        {'✅' if unit_success else '❌'} 100% Pass Rate {'✅' if unit_fast else '❌'} <60s Execution")
+            print(f"   Unit Tests:        {'OK' if unit_success else 'BAD'} 100% Pass Rate {'OK' if unit_fast else 'BAD'} <60s Execution")
         
         # Integration tests should be reliable
         int_results = self.results['integration']
@@ -241,7 +236,7 @@ class TestSuiteRunner:
         if int_total > 0:
             int_success = int_results['failed'] == 0
             int_reasonable = int_results['time'] < 180
-            print(f"   Integration Tests: {'✅' if int_success else '❌'} 100% Pass Rate {'✅' if int_reasonable else '❌'} <180s Execution")
+            print(f"   Integration Tests: {'OK' if int_success else 'BAD'} 100% Pass Rate {'OK' if int_reasonable else 'BAD'} <180s Execution")
         
         # E2E tests can have some tolerance
         e2e_results = self.results['e2e']
@@ -250,7 +245,7 @@ class TestSuiteRunner:
             e2e_success_rate = (e2e_results['passed'] / e2e_total) * 100
             e2e_acceptable = e2e_success_rate >= 90
             e2e_reasonable = e2e_results['time'] < 600
-            print(f"   E2E Tests:         {'✅' if e2e_acceptable else '❌'} ≥90% Pass Rate {'✅' if e2e_reasonable else '❌'} <600s Execution")
+            print(f"   E2E Tests:         {'OK' if e2e_acceptable else 'BAD'} ≥90% Pass Rate {'OK' if e2e_reasonable else 'BAD'} <600s Execution")
         
         # Contract tests should be perfect
         contract_results = self.results['contracts']
@@ -258,7 +253,7 @@ class TestSuiteRunner:
         if contract_total > 0:
             contract_success = contract_results['failed'] == 0
             contract_fast = contract_results['time'] < 30
-            print(f"   Contract Tests:    {'✅' if contract_success else '❌'} 100% Pass Rate {'✅' if contract_fast else '❌'} <30s Execution")
+            print(f"   Contract Tests:    {'OK' if contract_success else 'BAD'} 100% Pass Rate {'OK' if contract_fast else 'BAD'} <30s Execution")
         
         # Overall assessment
         critical_failures = (
@@ -267,13 +262,13 @@ class TestSuiteRunner:
         )
         
         if critical_failures:
-            print(f"\\n🚨 CRITICAL ISSUES DETECTED")
+            print(f"BRO: CRITICAL ISSUES DETECTED")
             print(f"   Unit or Contract tests failed - system may not be ready for production")
         elif total_failed > 0:
-            print(f"\\n⚠️ SOME ISSUES DETECTED")
+            print(f"BRO: SOME ISSUES DETECTED")
             print(f"   Non-critical tests failed - review before production deployment")
         else:
-            print(f"\\n🎉 ALL TESTS PASSED")
+            print(f"BRO! ALL TESTS PASSED")
             print(f"   System is ready for production deployment")
 
 

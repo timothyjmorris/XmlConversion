@@ -188,7 +188,7 @@
       "target_column": "population_assignment_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
-	  "exclude_default_when_record_empty": true,
+	    "exclude_default_when_record_empty": true,
       "nullable": false,
       "required": true
     },

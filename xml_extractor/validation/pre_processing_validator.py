@@ -587,12 +587,12 @@ class PreProcessingValidator:
         
         if is_valid:
             self.logger.info(
-                f"✅ Validation PASSED{record_info}: app_id={app_id}, "
+                f"Validation PASSED{record_info}: app_id={app_id}, "
                 f"valid_contacts={len(valid_contacts)}, warnings={len(warnings)}"
             )
         else:
             self.logger.error(
-                f"❌ Validation FAILED{record_info}: {len(errors)} errors, "
+                f"Validation FAILED{record_info}: {len(errors)} errors, "
                 f"{len(warnings)} warnings"
             )
         

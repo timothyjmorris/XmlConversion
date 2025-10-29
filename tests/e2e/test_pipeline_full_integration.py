@@ -44,7 +44,7 @@ class TestEndToEndIntegration(unittest.TestCase):
     def tearDownClass(cls):
         """Clean up test database."""
         # Comment out cleanup to leave test data for inspection
-        print("🔍 Test data left in database for inspection (app_id=443306)")
+        print("Test data left in database for inspection (app_id=443306)")
         # if cls.test_db_path and cls.test_db_path.exists():
         #     try:
         #         cls.test_db_path.unlink()
@@ -59,7 +59,6 @@ class TestEndToEndIntegration(unittest.TestCase):
         from xml_extractor.config.config_manager import get_config_manager
         config_manager = get_config_manager()
         cls.connection_string = config_manager.get_database_connection_string()
-        print(f"✅ Using centralized database configuration")
         
         # Clean up any existing test data once at the beginning
         # Note: cleanup will be done in individual test methods
@@ -109,74 +108,70 @@ class TestEndToEndIntegration(unittest.TestCase):
                 cursor.execute("DELETE FROM app_base WHERE app_id = 443306")
                 
                 conn.commit()
-                print("🧹 Cleaned up existing test data for app_id 443306")
+                print("[CLEANUP] Cleaned up existing test data for app_id 443306")
         except Exception as e:
-            print(f"⚠️ Cleanup warning: {e}")
+            print(f"[WARNING] Cleanup warning: {e}")
     
     def test_end_to_end_pipeline(self):
         """Test the complete end-to-end pipeline with database insertion."""
         print("\n" + "="*80)
         print("TESTING END-TO-END PIPELINE WITH DATABASE INSERTION")
         print("="*80)
-        
+
         # Clean up any existing test data first
         self.cleanup_test_data()
-        
+
         # Step 1: Validate XML
-        print("\n📋 Step 1: Validating XML...")
+        print("\n[STEP 1] Validating XML...")
         validation_result = self.validator.validate_xml_for_processing(
-            self.sample_xml, 
+            self.sample_xml,
             "integration_test"
         )
-        
         self.assertTrue(validation_result.is_valid, "XML validation should pass")
         self.assertTrue(validation_result.can_process, "XML should be processable")
         self.assertEqual(validation_result.app_id, "443306", "Should extract correct app_id")
         self.assertEqual(len(validation_result.valid_contacts), 2, "Should find 2 valid contacts")
-        
-        print(f"✅ Validation passed: app_id={validation_result.app_id}, contacts={len(validation_result.valid_contacts)}")
-        
+        print(f"[OK] Validation passed: app_id={validation_result.app_id}, contacts={len(validation_result.valid_contacts)}")
+
         # Step 2: Parse XML
-        print("\n🔍 Step 2: Parsing XML...")
+        print("\n[STEP 2] Parsing XML...")
         root = self.parser.parse_xml_stream(self.sample_xml)
         xml_data = self.parser.extract_elements(root)
-        
         self.assertIsNotNone(root, "XML parsing should succeed")
         self.assertGreater(len(xml_data), 0, "Should extract XML elements")
-        
-        print(f"✅ Parsing completed: {len(xml_data)} elements extracted")
-        
+        print(f"[OK] Parsing completed: {len(xml_data)} elements extracted")
+
         # Step 3: Map data using real contracts
-        print("\n🗺️  Step 3: Mapping data using contracts...")
-        
-        # Use the DataMapper's built-in contract loading functionality
-        mapped_data = self.mapper.map_xml_to_database(xml_data, validation_result.app_id, validation_result.valid_contacts, root)
-        
+        print("\n[STEP 3] Mapping data using contracts...")
+        mapped_data = self.mapper.map_xml_to_database(
+            xml_data,
+            validation_result.app_id,
+            validation_result.valid_contacts,
+            root
+        )
         self.assertIn("app_base", mapped_data, "Should map app_base data")
         self.assertIn("contact_base", mapped_data, "Should map contact_base data")
-        
-        print(f"✅ Mapping completed: {len(mapped_data)} tables mapped")
+        print(f"[OK] Mapping completed: {len(mapped_data)} tables mapped")
         for table_name, records in mapped_data.items():
             print(f"   - {table_name}: {len(records)} records")
-        
+
         # Step 4: Insert into database
-        print("\n💾 Step 4: Inserting into database...")
-        
-        # Insert in dependency order: app_base first, then related tables
-        table_order = ["app_base", "app_operational_cc", "app_pricing_cc", "app_transactional_cc", "app_solicited_cc", "contact_base", "contact_address", "contact_employment"]
-        
+        print("\n[STEP 4] Inserting into database...")
+        table_order = [
+            "app_base", "app_operational_cc", "app_pricing_cc", "app_transactional_cc", "app_solicited_cc",
+            "contact_base", "contact_address", "contact_employment"
+        ]
         for table_name in table_order:
             records = mapped_data.get(table_name, [])
             if records:
-                enable_identity = table_name in ["app_base", "contact_base"]  # Tables with identity columns
+                enable_identity = table_name in ["app_base", "contact_base"]
                 result = self.migration_engine.execute_bulk_insert(records, table_name, enable_identity_insert=enable_identity)
-                print(f"✅ Inserted {result} records into {table_name}")
-        
+                print(f"[OK] Inserted {result} records into {table_name}")
+
         # Step 5: Verify database contents
-        print("\n🔍 Step 5: Verifying database contents...")
+        print("\n[STEP 5] Verifying database contents...")
         self.verify_database_contents()
-        
-        print("\n🎉 END-TO-END PIPELINE TEST COMPLETED SUCCESSFULLY!")
+        print("\n[COMPLETE] END-TO-END PIPELINE TEST COMPLETED SUCCESSFULLY!")
     
     def verify_database_contents(self):
         """Verify the data was inserted correctly using actual table names from contract."""
@@ -192,7 +187,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             app_record = cursor.fetchone()
             self.assertEqual(app_record[0], 443306, "Should have correct app_id")
             
-            print(f"✅ app_base verified: {app_count} record, app_id={app_record[0]}")
+            print(f"[OK] app_base verified: {app_count} record, app_id={app_record[0]}")
             
             # Check contact_base table (not "contact")
             cursor.execute("SELECT COUNT(*) FROM contact_base WHERE app_id = 443306")
@@ -217,7 +212,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             self.assertEqual(authu_contact[0], 738937, "AUTHU contact should have con_id 738937")
             self.assertEqual(authu_contact[2], "AUTH", "AUTHU contact should be AUTH")
             
-            print(f"✅ Contacts verified: {contact_count} records")
+            print(f"[OK] Contacts verified: {contact_count} records")
             print(f"   - PR Contact: con_id={pr_contact[0]}, name={pr_contact[2]}")
             print(f"   - AUTHU Contact: con_id={authu_contact[0]}, name={pr_contact[2]}")
             
@@ -231,7 +226,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             home_phone = phone_record[0]
             cell_phone = phone_record[1]
             
-            print(f"✅ Phone fields verified: home_phone='{home_phone}', cell_phone='{cell_phone}'")
+            print(f"[OK] Phone fields verified: home_phone='{home_phone}', cell_phone='{cell_phone}'")
             
             # Verify curr_address_only extracts from CURR address
             self.assertIsNotNone(home_phone, "home_phone should not be null")
@@ -254,7 +249,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             priority_enum = operational_record[6]
             housing_monthly_payment = operational_record[7]
             
-            print(f"✅ app_operational_cc verified: cb_score_factor_type_1='{cb_score_factor_type_1}', cb_score_factor_type_2='{cb_score_factor_type_2}'")
+            print(f"[OK] app_operational_cc verified: cb_score_factor_type_1='{cb_score_factor_type_1}', cb_score_factor_type_2='{cb_score_factor_type_2}'")
             print(f"   - assigned_to='{assigned_to}', backend_fico_grade='{backend_fico_grade}', cb_score_factor_code_1='{cb_score_factor_code_1}'")
             print(f"   - meta_url='{meta_url}', priority_enum={priority_enum}, housing_monthly_payment={housing_monthly_payment}")
             
@@ -308,7 +303,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             self.assertEqual(actual_months, expected_months, 
                            f"months_at_address values should be {expected_months} but got {actual_months}")
             
-            print(f"✅ contact_address calculated fields verified: {len(address_records)} records with months_at_address={actual_months}")
+            print(f"[OK] contact_address calculated fields verified: {len(address_records)} records with months_at_address={actual_months}")
             
             # Verify calculated fields in contact_employment table
             cursor.execute("""
@@ -347,7 +342,7 @@ class TestEndToEndIntegration(unittest.TestCase):
                     self.assertEqual(int(months_at_job), 44,
                                    f"months_at_job for LIL BUDDY should be 44 but got {months_at_job}")
             
-            print(f"✅ contact_employment calculated fields verified: {len(employment_records)} records")
+            print(f"[OK] contact_employment calculated fields verified: {len(employment_records)} records")
             for record in employment_records:
                 print(f"   - {record[1]}: monthly_salary={record[2]}, months_at_job={record[3]}")
     
@@ -384,8 +379,6 @@ class TestEndToEndIntegration(unittest.TestCase):
         self.assertIsNotNone(result, "housing_monthly_payment should be extracted")
         self.assertEqual(float(result), 893.55, f"Should extract CURR address value 893.55, got {result}")
         
-        print(f"✅ CURR address filtering working: extracted {result} from CURR address")
-        
         # Test with a field that doesn't exist in CURR addresses to verify fallback logic
         # Create a mapping for a non-existent attribute
         nonexistent_mapping = FieldMapping(
@@ -400,8 +393,6 @@ class TestEndToEndIntegration(unittest.TestCase):
         
         nonexistent_result = self.mapper._extract_from_last_valid_pr_contact(nonexistent_mapping)
         self.assertIsNone(nonexistent_result, "Non-existent attribute should return None")
-        
-        print("✅ Fallback logic working: non-existent attribute returns None")
         
         # Test that banking fields (which don't use address filtering) still work
         banking_mapping = FieldMapping(
@@ -418,7 +409,6 @@ class TestEndToEndIntegration(unittest.TestCase):
         banking_result = self.mapper._apply_field_transformation(value, banking_mapping)
         self.assertIsNotNone(banking_result, "Banking field should be extracted")
         self.assertEqual(banking_result, "192019207", f"Should extract banking ABA 192019207, got {banking_result}")
-        print(f"✅ Banking field extraction working: extracted {banking_result} (not affected by CURR filtering)")
     
     def test_last_valid_element_approach(self):
         """Test that the 'last valid element' approach works correctly."""
@@ -452,10 +442,6 @@ class TestEndToEndIntegration(unittest.TestCase):
         authu_contact = authu_contacts[0]
         self.assertEqual(authu_contact['con_id'], '738937', "AUTHU contact should have con_id 738937")
         self.assertEqual(authu_contact['first_name'], 'AUTH', "Should be AUTH")
-        
-        print(f"✅ Last valid element approach working correctly:")
-        print(f"   - PR Contact: {pr_contact['first_name']} (con_id={pr_contact['con_id']})")
-        print(f"   - AUTHU Contact: {authu_contact['first_name']} (con_id={authu_contact['con_id']})")
 
 
 def run_integration_tests():
@@ -491,10 +477,10 @@ def run_integration_tests():
     success = len(result.failures) == 0 and len(result.errors) == 0
     
     if success:
-        print("\n🎉 All integration tests passed!")
+        print("\n[OK] All integration tests passed!")
         print("End-to-end pipeline working correctly with real database insertion.")
     else:
-        print("\n❌ Some integration tests failed!")
+        print("\n[FAIL] Some integration tests failed!")
         print("Review and fix pipeline issues before production use.")
     
     return success

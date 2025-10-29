@@ -96,7 +96,7 @@ class TestProductionXMLBatch(unittest.TestCase):
         This is the ultimate litmus test to prove the complete plumbing works.
         """
         print("\n" + "="*100)
-        print("🚀 PRODUCTION XML BATCH PROCESSING TEST - COMPLETE VALIDATION")
+        print("PRODUCTION XML BATCH PROCESSING TEST - COMPLETE VALIDATION")
         print("="*100)
         print("Goal: Complete validation of all production data with latest improvements")
         print("System Status: Testing chained mapping types and phone truncation fixes")
@@ -121,10 +121,10 @@ class TestProductionXMLBatch(unittest.TestCase):
             
             if result['success']:
                 self.batch_results['successful'] += 1
-                print(f"✅ SUCCESS")
+                print(f"SUCCESS")
             else:
                 self.batch_results['failed'] += 1
-                print(f"❌ FAILED ({result['error_stage']})")
+                print(f"FAILED ({result['error_stage']})")
                 if 'error' in result:
                     print(f"    Error: {result['error'][:100]}...")  # Truncate long errors
                 
@@ -139,13 +139,13 @@ class TestProductionXMLBatch(unittest.TestCase):
                     self.batch_results['insertion_failures'] += 1
         
         # Step 3: Analyze results and generate report
-        print(f"\n📊 Step 3: Analyzing batch processing results...")
+        print(f"\nStep 3: Analyzing batch processing results...")
         self.analyze_batch_results()
         
         # Step 4: Validate overall success criteria
         self.validate_batch_success_criteria()
         
-        print(f"\n🎉 PRODUCTION XML BATCH PROCESSING COMPLETED!")
+        print(f"\nPRODUCTION XML BATCH PROCESSING COMPLETED!")
     
     def extract_production_xml_files(self) -> List[Tuple[int, str]]:
         """
@@ -185,7 +185,7 @@ class TestProductionXMLBatch(unittest.TestCase):
 
                 
         except Exception as e:
-            print(f"❌ Failed to extract XML from database: {e}")
+            print(f"Failed to extract XML from database: {e}")
             raise
         
         return xml_records
@@ -244,7 +244,7 @@ class TestProductionXMLBatch(unittest.TestCase):
             try:
                 self.cleanup_existing_data(validation_result.app_id)
             except Exception as cleanup_error:
-                print(f"    ⚠️ Cleanup failed for app_id {validation_result.app_id}: {cleanup_error}")
+                print(f"    Cleanup failed for app_id {validation_result.app_id}: {cleanup_error}")
             
             # Stage 2: Parsing
             root = self.parser.parse_xml_stream(xml_content)
@@ -393,18 +393,18 @@ class TestProductionXMLBatch(unittest.TestCase):
         results = self.batch_results
         
         print("\n" + "="*80)
-        print("📊 BATCH PROCESSING ANALYSIS")
+        print("BATCH PROCESSING ANALYSIS")
         print("="*80)
         
         # Overall statistics
-        print(f"📈 Overall Statistics:")
+        print(f"  Overall Statistics:")
         print(f"   Total XMLs Processed: {results['total_processed']}")
         print(f"   Successful: {results['successful']} ({(results['successful']/results['total_processed']*100):.1f}%)")
         print(f"   Failed: {results['failed']} ({(results['failed']/results['total_processed']*100):.1f}%)")
         
         # Failure breakdown
         if results['failed'] > 0:
-            print(f"\n❌ Failure Breakdown:")
+            print(f"  Failure Breakdown:")
             print(f"   Validation Failures: {results['validation_failures']}")
             print(f"   Parsing Failures: {results['parsing_failures']}")
             print(f"   Mapping Failures: {results['mapping_failures']}")
@@ -413,14 +413,14 @@ class TestProductionXMLBatch(unittest.TestCase):
         # Detailed failure analysis
         failed_results = [r for r in results['detailed_results'] if not r['success']]
         if failed_results:
-            print(f"\n🔍 Detailed Failure Analysis:")
+            print(f" Detailed Failure Analysis:")
             for result in failed_results[:5]:  # Show first 5 failures
                 print(f"   App ID {result['app_id']}: {result['error_stage']} - {result['error']}")
         
         # Success patterns
         successful_results = [r for r in results['detailed_results'] if r['success']]
         if successful_results:
-            print(f"\n✅ Success Patterns:")
+            print(f"Success Patterns:")
             
             # Average processing time
             avg_time = sum(r['processing_time'] for r in successful_results) / len(successful_results)
@@ -447,7 +447,7 @@ class TestProductionXMLBatch(unittest.TestCase):
         # Data quality analysis
         dq_issues = results['data_quality_issues']
         if any(dq_issues.values()):
-            print(f"\n⚠️ Data Quality Issues:")
+            print(f"Data Quality Issues:")
             if dq_issues['incomplete_applications'] > 0:
                 print(f"   Incomplete Applications: {dq_issues['incomplete_applications']} ({(dq_issues['incomplete_applications']/results['total_processed']*100):.1f}%)")
             if dq_issues['missing_contacts'] > 0:
@@ -457,35 +457,35 @@ class TestProductionXMLBatch(unittest.TestCase):
             if dq_issues['skipped_contact_tables'] > 0:
                 print(f"   Skipped Contact Tables: {dq_issues['skipped_contact_tables']} table insertions skipped due to missing contacts")
         else:
-            print(f"\n✅ Data Quality: No data quality issues detected - all applications had complete contact information")
+            print(f"Data Quality: No data quality issues detected - all applications had complete contact information")
     
     def validate_batch_success_criteria(self):
         """Validate that batch processing meets success criteria."""
         results = self.batch_results
         
-        print(f"\n🎯 Validating Success Criteria:")
+        print(f"Validating Success Criteria:")
         
         # Criterion 1: At least 90% success rate
         success_rate = (results['successful'] / results['total_processed']) * 100
         criterion_1 = success_rate >= 90.0
-        print(f"   ✅ Success Rate ≥ 90%: {success_rate:.1f}% {'✓' if criterion_1 else '✗'}")
+        print(f"    Success Rate >= 90%: {success_rate:.1f}% {'OK' if criterion_1 else 'FAIL'}")
         
         # Criterion 2: No parsing failures (indicates robust XML handling)
         criterion_2 = results['parsing_failures'] == 0
-        print(f"   ✅ Zero Parsing Failures: {results['parsing_failures']} {'✓' if criterion_2 else '✗'}")
+        print(f"    Zero Parsing Failures: {results['parsing_failures']} {'OK' if criterion_2 else 'FAIL'}")
         
         # Criterion 3: Minimal insertion failures (indicates good data mapping)
         insertion_failure_rate = (results['insertion_failures'] / results['total_processed']) * 100
         criterion_3 = insertion_failure_rate <= 10.0
-        print(f"   ✅ Insertion Failure Rate ≤ 10%: {insertion_failure_rate:.1f}% {'✓' if criterion_3 else '✗'}")
+        print(f"    Insertion Failure Rate <= 10%: {insertion_failure_rate:.1f}% {'OK' if criterion_3 else 'FAIL'}")
         
         # Overall assessment
         all_criteria_met = criterion_1 and criterion_2 and criterion_3
         
-        print(f"\n🏆 Overall Assessment: {'PASS' if all_criteria_met else 'NEEDS IMPROVEMENT'}")
+        print(f" Overall Assessment: {'PASS' if all_criteria_met else 'NEEDS IMPROVEMENT'}")
         
         if not all_criteria_met:
-            print(f"\n🔧 Recommended Actions:")
+            print(f"Recommended Actions:")
             if not criterion_1:
                 print(f"   - Investigate validation and mapping failures")
                 print(f"   - Review mapping contract for edge cases")
@@ -517,20 +517,20 @@ def run_production_batch_test():
     
     # Summary
     print("\n" + "="*100)
-    print("🎯 PRODUCTION XML BATCH TEST SUMMARY")
+    print("PRODUCTION XML BATCH TEST SUMMARY")
     print("="*100)
     print(f"Tests run: {result.testsRun}")
     print(f"Failures: {len(result.failures)}")
     print(f"Errors: {len(result.errors)}")
     
     if result.failures:
-        print("\nFailures:")
+        print("Failures:")
         for test, traceback in result.failures:
             print(f"  - {test}")
             print(f"    {traceback}")
     
     if result.errors:
-        print("\nErrors:")
+        print("Errors:")
         for test, traceback in result.errors:
             print(f"  - {test}")
             print(f"    {traceback}")
@@ -538,10 +538,10 @@ def run_production_batch_test():
     success = len(result.failures) == 0 and len(result.errors) == 0
     
     if success:
-        print("\n🎉 Production XML batch test completed successfully!")
+        print("Production XML batch test completed successfully!")
         print("The system is ready for confident batch processing of production data.")
     else:
-        print("\n⚠️ Production XML batch test revealed issues!")
+        print("Production XML batch test revealed issues!")
         print("Review and fix the identified problems before production deployment.")
     
     return success

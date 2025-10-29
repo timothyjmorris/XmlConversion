@@ -96,7 +96,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         self.assertEqual(len(result['app_base']), 1)
         self.assertEqual(len(result['contact_base']), 1)
         
-        print("✅ Valid complete XML processed successfully")
+        print("Valid complete XML processed successfully")
     
     def test_valid_xml_missing_optional_elements(self):
         """Test XML missing optional address/employment - should process with graceful degradation."""
@@ -120,7 +120,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         self.assertIn('app_base', result)
         self.assertIn('contact_base', result)
         
-        print("✅ Valid XML with missing optional elements processed successfully")
+        print("Valid XML with missing optional elements processed successfully")
     
     def test_valid_xml_multiple_contacts(self):
         """Test XML with multiple valid contacts (PR and AUTH) - should process both."""
@@ -147,7 +147,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         self.assertIn('contact_base', result)
         self.assertEqual(len(result['contact_base']), 2)
         
-        print("✅ Valid XML with multiple contacts processed successfully")
+        print("Valid XML with multiple contacts processed successfully")
     
     # ========================================
     # INVALID XML SCENARIOS (Should Reject)
@@ -177,7 +177,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
             self.mapper.apply_mapping_contract(xml_data, self.mapping_contract)
         
         self.assertIn("app_id", str(context.exception).lower())
-        print("✅ Invalid XML missing app_id rejected correctly")
+        print("Invalid XML missing app_id rejected correctly")
     
     def test_invalid_xml_missing_con_id(self):
         """Test XML with contact missing con_id - should process with graceful degradation."""
@@ -205,7 +205,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         # Should have application tables but no contact tables
         self.assertTrue(len(result) > 0, "Should have some application tables")
         self.assertNotIn('contact_base', result)
-        print("✅ Invalid XML missing con_id processed with graceful degradation")
+        print("Invalid XML missing con_id processed with graceful degradation")
     
     def test_invalid_xml_missing_ac_role_tp_c(self):
         """Test XML with contact missing ac_role_tp_c - should process with graceful degradation."""
@@ -233,7 +233,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         # Should have application tables but no contact tables
         self.assertTrue(len(result) > 0, "Should have some application tables")
         self.assertNotIn('contact_base', result)
-        print("✅ Invalid XML missing ac_role_tp_c processed with graceful degradation")
+        print("Invalid XML missing ac_role_tp_c processed with graceful degradation")
     
     def test_invalid_xml_no_valid_contacts(self):
         """Test XML with no valid contacts - should process with graceful degradation."""
@@ -269,7 +269,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         self.assertNotIn('contact_base', result)
         self.assertNotIn('contact_address', result)
         self.assertNotIn('contact_employment', result)
-        print("✅ Invalid XML with no valid contacts processed with graceful degradation")
+        print("Invalid XML with no valid contacts processed with graceful degradation")
     
     # ========================================
     # GRACEFUL DEGRADATION SCENARIOS
@@ -301,7 +301,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         self.assertIn('contact_base', result)
         # Address should be skipped, employment should be processed
         
-        print("✅ Graceful degradation: Invalid address skipped, contact processed")
+        print("Graceful degradation: Invalid address skipped, contact processed")
     
     def test_graceful_employment_missing_employment_tp_c(self):
         """Test employment missing employment_tp_c - should skip employment but process contact."""
@@ -329,7 +329,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         self.assertIn('contact_base', result)
         # Employment should be skipped, address should be processed
         
-        print("✅ Graceful degradation: Invalid employment skipped, contact processed")
+        print("Graceful degradation: Invalid employment skipped, contact processed")
     
     def test_mixed_valid_invalid_contacts(self):
         """Test mix of valid and invalid contacts - should process only valid ones."""
@@ -362,7 +362,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         self.assertIn('contact_base', result)
         self.assertEqual(len(result['contact_base']), 2)
         
-        print("✅ Mixed contacts: Only valid contacts processed")
+        print("Mixed contacts: Only valid contacts processed")
     
     # ========================================
     # MALFORMED XML SCENARIOS
@@ -392,7 +392,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
             # If an exception is raised, that's also acceptable
             pass
         
-        print("✅ Malformed XML syntax rejected during parsing")
+        print("Malformed XML syntax rejected during parsing")
     
     def test_empty_xml(self):
         """Test empty XML - should reject."""
@@ -401,7 +401,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         with self.assertRaises(Exception):
             self.parser.parse_xml_stream(xml_content)
         
-        print("✅ Empty XML rejected correctly")
+        print("Empty XML rejected correctly")
     
     def test_non_provenir_xml(self):
         """Test XML with wrong root element - should reject."""
@@ -416,7 +416,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         # Should fail validation
         self.assertFalse(self.parser.validate_xml_structure(xml_content))
         
-        print("✅ Non-Provenir XML rejected correctly")
+        print("Non-Provenir XML rejected correctly")
     
     # ========================================
     # EDGE CASE SCENARIOS
@@ -446,7 +446,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         self.assertEqual(contact['first_name'], 'JOHN')
         self.assertEqual(contact['con_id'], 277449)
         
-        print("✅ Duplicate con_ids handled correctly - PR preferred over AUTHU")
+        print("Duplicate con_ids handled correctly - PR preferred over AUTHU")
     
     def test_special_characters_in_attributes(self):
         """Test XML with special characters in attributes."""
@@ -469,7 +469,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
         # Should handle special characters correctly
         self.assertIn('contact_base', result)
         
-        print("✅ Special characters in attributes handled correctly")
+        print("Special characters in attributes handled correctly")
     
     # ========================================
     # HELPER METHODS
@@ -522,7 +522,7 @@ class TestXMLValidationScenarios(unittest.TestCase):
                 getattr(self, test_method)()
                 passed += 1
             except Exception as e:
-                print(f"❌ {test_method} FAILED: {e}")
+                print(f"{test_method} FAILED: {e}")
                 failed += 1
         
         print("\n" + "="*60)
@@ -541,6 +541,6 @@ if __name__ == '__main__':
     success = test_suite.run_all_validation_tests()
     
     if success:
-        print("\n🎉 All validation tests passed! System ready for production data.")
+        print("\nAll validation tests passed! System ready for production data.")
     else:
-        print("\n❌ Some validation tests failed. Review and fix before processing real data.")
+        print("\nSome validation tests failed. Review and fix before processing real data.")

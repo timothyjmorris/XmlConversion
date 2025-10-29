@@ -378,24 +378,27 @@ class MigrationEngine(MigrationEngineInterface):
         
         # Filter out duplicate contact_base records before insertion
         records = self._filter_duplicate_contacts(records, table_name)
-        
+        if not records:
+            self.logger.warning(f"No records remain for bulk insert into {table_name} after filtering. Skipping insert.")
+            return 0
+
         inserted_count = 0
-        
+
         try:
             with self.get_connection() as conn:
                 cursor = conn.cursor()
-                
+
                 # Get qualified table name with schema prefix
                 qualified_table_name = self.config_manager.get_qualified_table_name(table_name)
-                
+
                 # Enable IDENTITY_INSERT if needed
                 if enable_identity_insert:
                     cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} ON")
                     self.logger.debug(f"Enabled IDENTITY_INSERT for {qualified_table_name}")
-                
+
                 # Enable fast_executemany for optimal performance
                 cursor.fast_executemany = True
-                    
+
                 # Get all columns from the first record - DataMapper has already filtered appropriately
                 columns = list(records[0].keys())
                 column_list = ', '.join(f"[{col}]" for col in columns)
@@ -423,22 +426,6 @@ class MigrationEngine(MigrationEngineInterface):
                                 pass
                         values.append(val)
                     data_tuples.append(tuple(values))
-                    
-                    # Debug ALL records for contact_base
-                    if table_name == 'contact_base':
-                        self.logger.warning(f"Record {len(data_tuples)}: {values}")
-                        for i, (col, val) in enumerate(zip(columns, values)):
-                            self.logger.warning(f"  {i}: {col} = {repr(val)} ({type(val).__name__})")
-                    
-                    # Debug app_operational_cc records for calculated fields
-                    if table_name == 'app_operational_cc':
-                        self.logger.warning(f"DEBUG: app_operational_cc Record {len(data_tuples)}: {values}")
-                        for i, (col, val) in enumerate(zip(columns, values)):
-                            self.logger.warning(f"DEBUG: app_operational_cc {i}: {col} = {repr(val)} ({type(val).__name__})")
-                            if col in ['cb_score_factor_code_1', 'cb_score_factor_code_2']:
-                                self.logger.warning(f"DEBUG: CALCULATED FIELD {col} = '{val}' (expected: cb_score_factor_code_1='AJ', cb_score_factor_code_2='')")
-                    
-                    # Debug app_pricing_cc records to find the 'no' value
                     if table_name == 'app_pricing_cc':
                         self.logger.warning(f"DEBUG: app_pricing_cc Record {len(data_tuples)}: {values}")
                         for i, (col, val) in enumerate(zip(columns, values)):
