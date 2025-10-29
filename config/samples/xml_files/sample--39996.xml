@@ -1,0 +1,931 @@
+﻿<Provenir org="" ProductType="" Version="4.0.0" transactionID="DE21e7b017_16003d9ceea_07ffd16003da314f_0a19763d.190" ResponseCode="true" Org="" shred_version="1.0">
+  <Request ID="39996" LockedBy="" _LockedBy="TMORRIS@MERRICKBANK.COM" Priority="" Process="99500" Readonly="0" Status="P" Timeout="" Timestamp="" Trace="b9b6bcfb-e252-4692-86cf-4ce9c6e25e1a" Trans="WSCLOSE" UnLockOnExit="0" UserID="tmorris@MerrickBank.com" Workflow="20" Version="" transactionCounter="1" LockedAt="" LastUpdatedBy="TIMOTHY.MORRIS@MERRICKBANK.COM">
+    <CustData>
+      <application address_match_flag="" app_entry_date="05/14/2014" app_receive_date="05/14/2014" app_source_ind="I" app_type_code="SECURE" campaign_num="SC1" coupon_expiration_date="" CPS_letter_sent_flag="" credit_life_ind="" Debit_Funding_Source="Check" Debit_Initial_Deposit_date="5/21/2014" Debit_Initial_Deposit_amount="300.00" Debit_NSF_Return_date="" Debit_Refund_date="" Debit_Refund_amount="" EODRet="PROCESS" existing_card_account_num="" last_update_time="2014-5-21 14:45:21.407" mail_cell_pricing="" name_match_flag="" Partner_URL_ID="" population_assignment="T" pymnt_prot_plan_ind=" " pricing_tier="59" processing_expiration_date="" procs_date="2014-5-14 15:11:41.882" signature_ind="Y" solicitation_num="SC1000000394" special_offer="1" ssn_match_flag="" swiftpay_num="80004161" TUAccessCode="">
+        <app_product adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" analyst_rev_ind="N" backend_fico_grade="" backend_risk_grade="" booked_date="2014-6-4 16:39:31.385" csi_eligibility_ind="" debt_to_income_ratio="0.76" decision_date="2014-5-21 14:45:21.563" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" decision_tp_c="APPRV" disclosures="" duplicate_app_ind="N" experian_fico_score="0" intrnl_fraud_ssn_ind="N" intrnl_fraud_address_ind="N" monthly_debt="35" monthly_income="4583" multran_booked_date="2014-6-4 16:39:33.323" pending_verif_ind="Y" precision_score="" prescreen_fico_grade="" prescreen_fico_score="" prescreen_risk_grade="" prescreen_risk_score="" regbcloseddays_num="21" regbcloseddays2_num="" regbnewinfostartdate="" risk_model_score_JH="" risk_model_score_LP="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" Risk_Model_reason3_tp_c="" risk_model_score="260" supervisor_rev_ind="N" Vantage_Score_EX="" Vantage_Score_TU="" TU_DIE_score="999" TU_TIE_score="999" VeridQA_Result="No_QA_Pull_Needed" InstantID_Score="40" adverse_actn5_type_cd="" />
+        <comments comment="InstantID Score was not required. QA would not be pulled because application was manually processed. Appropriate verification letter sent. Manual QA is required to process." comment_seq_number="1" comment_type_code="DA" user_id="System" time_stamp="2014-5-21 14:23:46.695" />
+        <contact mother_maiden_name="SMITH" ac_role_tp_c="PR" initials="" last_name="MATTHIESSEN" suffix="" con_id="83619" title="" first_name="ANGELO" birth_date="" ssn="666624201" ssn_last_4="4201" email="HILLARY.EVANS@MERRICKBANK.COM" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" age="40">
+          <app_prod_bcard accnt_bin="41206110" accnt_seq_no="202" accnt_type_ind="" account_number="4120611001002022" agent="0100" allocated_credit_line="300" analyst_approved_line="" card_decision_tp_c="APPRV" card_id="83623" card_name="TEST,HILLARY " issue_card_ind="Y" multran_accnt_bin="41206120" multran_accnt_seq_no="202" multran_account_number="4120612001002020" pd_tp_c="SC1" recur_payment_credit_line="" requested_credit_line="" seq_check="002022" sys_prin="55491000" />
+          <contact_address address_seq_no="79927" address_tp_c="CURR" cell_phone="" city="PINEY POINT" fax_no="" home_phone="8015458155" mailing_city="" mailing_po_box="" mailing_rural_route="" mailing_state="" mailing_unit="" mailing_zip="" months_at_residence="0" ownership_tp_c="X" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" residence_monthly_pymnt="0" rural_route="" state="MD" street_name="SAINT GEORGES AVE" street_number="45278" unit="" years_at_residence="0" zip="20674" />
+          <contact_employment b_city="" b_income_source_nontaxable="N" b_job_title_tp_c="" b_months_at_job="0" b_name="" b_othr_inc_basis_tp_c="MONTH" b_other_income_amt="" b_other_income_source_tp_c="" b_phone_no="" b_phone_no_ext="" b_primary_income_source_tp_c="" b_salary="4583" b_salary_basis_tp_c="MONTH" b_state="" b_street_name="" b_street_number="" b_years_at_job="0" b_self_employed_ind="" b_unit="" b_zip="" employment_seq_no="79927" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters date_sent="05/14/2014" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="E" letter_type_cd="611" seq_no="1" />
+        <rmts_info aaa_misc_field_4="" address_match_flag="" auth_user_is_spouse="N" campaign_number="" CB_prescreen_birth_date="" merrick_appl_number="" name_match_flag="" pri_apt_number="" pri_city="" pri_cur_street_num="" pri_cur_street_name="" pri_po_box_num="" pri_rural_rt_num="" pri_state="" pri_zip_code="" primary_first_name="" primary_last_name="" primary_middle_name="" primary_ssn="" primary_suffix="" special_flag_5="D" special_flag_6="D" special_flag_7="A" special_flag_8="A" ssn_match_flag="" transmission_date="2014-5-14 15:11:41.789" upc8="" upc9="" upc10="" upc12="" />
+        <TempVariables TempOriginalWorkFlow="20" TempOriginalProcess="20000" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" />
+        <user_profile user_id="" security_lvl="110" employee_name="Candice Eborn" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="110" security_type="" credit_limit="10000" />
+        </user_profile>
+        <FDR account_number="" Cross_refrence_indicator="" Cross_refrence_number="" External_Primary_Account="" filler="" multran_account_number="" operator_code="" SubTranCode="" swiftpay_number="" terminalID="" transaction_code="" />
+        <comments comment_seq_number="2" comment="InstantID Score was not required. QA would not be pulled because application was manually processed. Appropriate verification letter sent. Manual QA is required to process." user_id="System" comment_type_code="DA" time_stamp="2014-5-21 14:24:2.398" />
+        <comments comment_seq_number="3" comment="InstantID score is required. If there is no score in any comments below, then Instant ID may have timed out. Please process the application to re-attempt. If the score is too low or missing, QA is required." user_id="System" comment_type_code="DA" time_stamp="2014-5-21 14:24:17.648" />
+        <comments comment_seq_number="4" comment="InstantID Score was 40 and QA was not needed." user_id="System" comment_type_code="DA" time_stamp="2014-5-21 14:24:18.522" />
+        <comments comment_seq_number="5" comment="InstantID Score was 40. QA would not be pulled because application was manually processed. Appropriate verification letter sent. Manual QA is required to process." user_id="System" comment_type_code="DA" time_stamp="2014-5-21 14:42:13.348" />
+        <comments comment_seq_number="6" comment="InstantID Score was 40. QA would not be pulled because application was manually processed. Appropriate verification letter sent. Manual QA is required to process." user_id="System" comment_type_code="DA" time_stamp="2014-5-21 14:42:27.910" />
+        <comments comment_seq_number="7" comment="InstantID Score was 40 and QA was not needed." user_id="System" comment_type_code="DA" time_stamp="2014-5-21 14:42:43.957" />
+        <comments comment_seq_number="8" comment="InstantID Score was 40. QA would not be pulled because application was manually processed. Appropriate verification letter sent. Manual QA is required to process." user_id="System" comment_type_code="DA" time_stamp="2014-5-21 14:44:50.345" />
+        <comments comment_seq_number="9" comment="InstantID Score was 40. QA would not be pulled because application was manually processed. Appropriate verification letter sent. Manual QA is required to process." user_id="System" comment_type_code="DA" time_stamp="2014-5-21 14:45:1.48" />
+        <comments comment_seq_number="10" comment="InstantID Score was 40 and QA was not needed." user_id="System" comment_type_code="DA" time_stamp="2014-5-21 14:45:10.673" />
+        <comments comment_seq_number="11" comment="Error:  Booked applications cannot be reprocessed" user_id="System" comment_type_code="TM" time_stamp="2016-6-24 11:52:59.381" />
+        <comments comment_seq_number="12" comment="Error: Booked applications cannot be reprocessed" user_id="System" comment_type_code="TM" time_stamp="2016-7-5 13:55:17.729" />
+        <letters seq_no="2" letter_type_cd="617" date_sent="04/04/2023" dec_reason_c_1="101" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" cb_disclosure_suppress="False" cb_score_suppress="False" letter_sent_ind="" />
+        <communications />
+      </application>
+    </CustData>
+    <Reports>
+      <TU>
+        <Raw>TU4R0620 039996                   29UTB 3882129 20140521152254PH0101207000SH01027101N00N06TRN20140521NM01070I1TEST                     HILLARY                             PI01029I666123456            AD01105I11123         MAIN STREET                         SALT LAKE CITY             UT84121     20140521AO010170650001H01ENDS010008</Raw>
+        <TU4R SegmentType="TU4R" SegmentLength="062" VersionSwitch="0" CountryCode=" " LanguageIndicator="0" UserReferenceNumber="39996                   " BureauMarket="29" BureauSubmarket="UT" IndustryCode="B " MemberCode="3882129 " TransactionDate="20140521" TransactionTime="152254" />
+        <PH01 SegmentType="PH01" SegmentLength="012" ProductCode="07000" />
+        <SubjectInfo>
+          <SH01 SegmentType="SH01" SegmentLength="027" SubjectIdentifier="1" FileNumber="01" FileHit="N" SSNMatchIndicator="00" ConsumerStatementIndicator="N" BureauMarketFileControl="06" BureauSubmarketFileControl="TR" SuppressionIndicator="N" InFileSinceDate="20140521" />
+          <NM01 SegmentType="NM01" SegmentLength="070" SourceIndicator="I" NameIndicator="1" LastName="TEST                     " FirstName="HILLARY        " MiddleName="               " Prefix="   " Suffix="   " />
+          <PI01 SegmentType="PI01" SegmentLength="029" SourceIndicator="I" SocialSecurityNumber="666123456" DateofBirth="        " Age="   " Gender=" " />
+          <AD01 SegmentType="AD01" SegmentLength="105" SourceIndicator="I" AddressQualifier="1" ParsingIndicator="1" HouseNumber="123       " Predirectional="  " StreetName="MAIN STREET                " Postdirectional="  " StreetType="  " Apartment_UnitNumber="     " City="SALT LAKE CITY             " State="UT" ZIPCode="84121     " DateReported="20140521" />
+          <AO01 SegmentType="AO01" SegmentLength="017" ProductCode="06500" ProductStatus="01" SearchStatus="H01" />
+        </SubjectInfo>
+        <ENDS SegmentType="ENDS" SegmentLength="010" TotalNumberofSegments="008" />
+      </TU>
+      <EX>
+        <Raw>1100033052114152255TUT1070539996@361004607340007 *****  NO RECORD FOUND  *****@382007299        001 C2260201140000002011400000C31219361953C4120613    @950001600400167@</Raw>
+        <EXReport>
+          <EX_110 RecordID="110" RecordLength="0033" ReportDate="052114" ReportTime="152255" Preamble="TUT1" ARFVersionNumber="07" MKeywordTextLength="05" MKeywordText="39996" />
+          <EX_361 RecordID="361" RecordLength="0046" PrimaryMessageNum="07" TextLength="34" MessageText="0007 *****  NO RECORD FOUND  *****" />
+          <EX_382 RecordID="382" RecordLength="0072" RecordType="99" SICCodes="        " LengthofText="001" TextData=" ">
+            <Sub_C2 SubsegmentIndicator="C2" SubsegmentLength="26" SocialDate="020114" SocialCount="0000" SocialErrorCode="0" AddressDate="020114" AddressCount="0000" AddressErrorCode="0" />
+            <Sub_C3 SubsegmentIndicator="C3" SubsegmentLength="12" FirstPossibleYear="1936" LastPossibleYear="1953" />
+            <Sub_C4 SubsegmentIndicator="C4" SubsegmentLength="12" Indicator1="06" Indicator2="13" Indicator3="  " Indicator4="  " />
+          </EX_382>
+          <EX_950 RecordID="950" RecordLength="0016" TotalSegments="004" TotalLength="00167" />
+        </EXReport>
+      </EX>
+      <InstantIDRequestResponse>
+        <InstantIDResponseEx>
+          <response>
+            <Header>
+              <QueryId>jdog1</QueryId>
+              <TransactionId>0</TransactionId>
+              <Status>0</Status>
+            </Header>
+            <Result>
+              <InputEcho>
+                <Name>
+                  <First>PATRICIA</First>
+                  <Last>BAGWELL</Last>
+                </Name>
+                <Address>
+                  <StreetAddress1>86-35 132ND ST</StreetAddress1>
+                  <City>SAN JOSE</City>
+                  <State>CA</State>
+                  <Zip5>95136</Zip5>
+                </Address>
+                <DOB>
+                  <Year>1961</Year>
+                  <Month>2</Month>
+                  <Day>29</Day>
+                </DOB>
+                <SSN>469770070</SSN>
+                <HomePhone>1085551212</HomePhone>
+                <WorkPhone>1095551212</WorkPhone>
+              </InputEcho>
+              <UniqueId>1466367898</UniqueId>
+              <NameAddressSSNSummary>9</NameAddressSSNSummary>
+              <AdditionalScore1>0</AdditionalScore1>
+              <AdditionalScore2>0</AdditionalScore2>
+              <PhoneOfNameAddress>8582786094</PhoneOfNameAddress>
+              <NameAddressPhone>
+                <Summary>11</Summary>
+                <Type>P</Type>
+                <Status>C</Status>
+              </NameAddressPhone>
+              <ReversePhone>
+                <Name>
+                  <First>LORRAINE</First>
+                  <Last>AGIN</Last>
+                </Name>
+                <Address>
+                  <StreetAddress1>2070 85TH ST APT 1F</StreetAddress1>
+                  <City>OCEANSIDE</City>
+                  <State>CA</State>
+                  <Zip5>92057</Zip5>
+                </Address>
+              </ReversePhone>
+              <ChronologyHistories>
+                <ChronologyHistory>
+                  <DateLastSeen>
+                    <Year>2008</Year>
+                    <Month>04</Month>
+                  </DateLastSeen>
+                  <DateFirstSeen>
+                    <Year>2007</Year>
+                    <Month>04</Month>
+                  </DateFirstSeen>
+                  <Address>
+                    <StreetAddress1>86-35 132ND ST</StreetAddress1>
+                    <City>SAN JOSE</City>
+                    <State>CA</State>
+                    <Zip5>95136</Zip5>
+                    <Zip4>9513</Zip4>
+                  </Address>
+                </ChronologyHistory>
+                <ChronologyHistory>
+                  <DateLastSeen>
+                    <Year>2007</Year>
+                    <Month>04</Month>
+                  </DateLastSeen>
+                  <DateFirstSeen>
+                    <Year>2006</Year>
+                    <Month>04</Month>
+                  </DateFirstSeen>
+                  <Address>
+                    <StreetAddress1>123 HAPPY ST</StreetAddress1>
+                    <City>SUNSHINE</City>
+                    <State>FL</State>
+                    <Zip5>30303</Zip5>
+                    <Zip4>3030</Zip4>
+                  </Address>
+                </ChronologyHistory>
+                <ChronologyHistory>
+                  <DateLastSeen>
+                    <Year>2006</Year>
+                    <Month>04</Month>
+                  </DateLastSeen>
+                  <DateFirstSeen>
+                    <Year>2003</Year>
+                    <Month>04</Month>
+                  </DateFirstSeen>
+                  <Address>
+                    <StreetAddress1>666 DOWN IN THE DUMPS DR</StreetAddress1>
+                    <City>DARK HOLE</City>
+                    <State>WY</State>
+                    <Zip5>66666</Zip5>
+                    <Zip4>6666</Zip4>
+                  </Address>
+                </ChronologyHistory>
+              </ChronologyHistories>
+              <PotentialFollowupActions>
+                <FollowupAction>
+                  <RiskCode>C</RiskCode>
+                  <Description>Verify name with Address (via DL, utility bill, Directory Assistance, paycheck stub, or other Government Issued ID)</Description>
+                </FollowupAction>
+              </PotentialFollowupActions>
+              <RiskIndicators>
+                <RiskIndicator>
+                  <RiskCode>11</RiskCode>
+                  <Description>The input address may be invalid according to postal specifications</Description>
+                </RiskIndicator>
+                <RiskIndicator>
+                  <RiskCode>09</RiskCode>
+                  <Description>The input phone number is a pager number</Description>
+                </RiskIndicator>
+              </RiskIndicators>
+              <VerifiedInput>
+                <SSN>46977xxxx</SSN>
+                <HomePhone>1085551212</HomePhone>
+                <Address>
+                  <StreetAddress1>86-35 132ND ST</StreetAddress1>
+                  <City>SAN JOSE</City>
+                  <State>CA</State>
+                  <Zip5>95136</Zip5>
+                  <County>SANTA CLARA</County>
+                  <Zip4>9513</Zip4>
+                </Address>
+                <DOB>
+                  <Year>1961</Year>
+                  <Month>02</Month>
+                </DOB>
+                <Name>
+                  <First>PATRICIA</First>
+                  <Last>BAGWELL</Last>
+                </Name>
+              </VerifiedInput>
+              <Models>
+                <Model>
+                  <Name>StudentDefender</Name>
+                  <Scores>
+                    <Score>
+                      <Value>654</Value>
+                      <Type>0 to 999</Type>
+                      <RiskIndicators>
+                        <RiskIndicator>
+                          <RiskCode>34</RiskCode>
+                          <Description>Incomplete verification</Description>
+                        </RiskIndicator>
+                        <RiskIndicator>
+                          <RiskCode>08</RiskCode>
+                          <Description>The input phone number is potentially invalid</Description>
+                        </RiskIndicator>
+                        <RiskIndicator>
+                          <RiskCode>11</RiskCode>
+                          <Description>The input address may be invalid according to postal specifications</Description>
+                        </RiskIndicator>
+                      </RiskIndicators>
+                    </Score>
+                    <Score>
+                      <Value>050</Value>
+                      <Type>10 to 50</Type>
+                      <RiskIndicators>
+                        <RiskIndicator>
+                          <RiskCode>34</RiskCode>
+                          <Description>Incomplete verification</Description>
+                        </RiskIndicator>
+                        <RiskIndicator>
+                          <RiskCode>08</RiskCode>
+                          <Description>The input phone number is potentially invalid</Description>
+                        </RiskIndicator>
+                        <RiskIndicator>
+                          <RiskCode>11</RiskCode>
+                          <Description>The input address may be invalid according to postal specifications</Description>
+                        </RiskIndicator>
+                      </RiskIndicators>
+                    </Score>
+                    <Score>
+                      <Value>060</Value>
+                      <Type>10 to 90</Type>
+                      <RiskIndicators>
+                        <RiskIndicator>
+                          <RiskCode>34</RiskCode>
+                          <Description>Incomplete verification</Description>
+                        </RiskIndicator>
+                        <RiskIndicator>
+                          <RiskCode>08</RiskCode>
+                          <Description>The input phone number is potentially invalid</Description>
+                        </RiskIndicator>
+                        <RiskIndicator>
+                          <RiskCode>11</RiskCode>
+                          <Description>The input address may be invalid according to postal specifications</Description>
+                        </RiskIndicator>
+                      </RiskIndicators>
+                    </Score>
+                  </Scores>
+                </Model>
+              </Models>
+              <SSNInfo>
+                <Valid>G</Valid>
+                <IssuedLocation>FLORIDA</IssuedLocation>
+                <IssuedStartDate>
+                  <Year>1963</Year>
+                  <Month>01</Month>
+                </IssuedStartDate>
+                <IssuedEndDate>
+                  <Year>1963</Year>
+                  <Month>12</Month>
+                </IssuedEndDate>
+              </SSNInfo>
+              <CurrentName>
+                <First>PATRICIA</First>
+                <Last>BAGWELL</Last>
+              </CurrentName>
+              <ComprehensiveVerificationIndex>40</ComprehensiveVerificationIndex>
+              <DOBVerified>1</DOBVerified>
+            </Result>
+          </response>
+        </InstantIDResponseEx>
+      </InstantIDRequestResponse>
+      <EX>
+        <Raw>1100033063017101845TMD1070539996@12500220633PD0P6G0A6M@12500220683P91ME22INQ@3220018 666624201@335003622/ANGELO//MATTHIESSEN//1975@3360088021311162001270246S        51/45278/SAINT GEORGES/AVE///PINEY POINT/MD/206743101@336007803130313100       S        41/45278/ST GOERGE/S///PINEY POINT/MD/20674@336008402130213100       S        47/45278/SAINT GEORGES/AVE///PINEY POINT/MO/70674@337006607060510219ARMY NATIONAL GUARD10LINCOLN NE01 01           @337006604060210219ARMY NATIONAL GUARD10LINCOLN NE01 01           @350009123N031010        0001 A635100110022US BKPT CT TN CHATTANOA7119910690E3050Y210031010@357021318N01130615    18REV100001382H00000960C0405170000138297  00001382CR0001 A916410608210585B2145202010418B42999-99999999---99-999999-6B520          082114B6251270246BC10CAPITALONEF213 04170317F316061597841818@357021318N04130615    18REV100001383H00000953C0405170000138397  00001383CR0001 A916517805217091B2144902010319B42999-99999999---999999999-6B520          082114B6251270246BC10CAPITALONEF213 04170317F316061597841818@357017928N07051010    12095100003500O         100210        10          CI0001 A91545969997057B2146400000000B429B-CCCCCCCC-----CC---CCC-CB6253909352EL10NELNET LNSF316101010111250@357023931N07101216111400060400011300O00003796C122116        05          CI0001 A9141258054310B2147801010040B429B999999-99-9999999-999999B520          080115B6253601160FA10ONYX ACCEPB828CAPITAL ONE AUTO FINANCEF213911161016F316121605970040@357019731N06100915    18REV100000995L00001278C092815        05          CR0001 A9141700529429B2146304040405B429B99999654321CCCC1CCCCCCCCB6313208490BC16BANK CREDIT CARDF213 08150715F316091505971840@357017731N08100911    12UNK200011255O         092811        05          CI0001 A9173770293524561B2141100000000B415BCCC----CCCB6351993670EL20SALLIE MAE SERVICINGF316091105111231@3570179  P12041110    12095100002925O         112810        05          CI0001 A91545969997056B2147200000000B429B-B-CCCCCCCC-----CC---CCCB6253909352EL10NELNET LNSF3161110051112  @3570179  P02061110    12019100001825O         112810        05          CI0001 A91545969997058B2145800000000B429B-B-CCCCCCCC-----CC---CCCB6253909352EL10NELNET LNSF3161110051112  @357019031N03140615    18REV100000991H         062715        05          CR0001 A9205407915005929772B2140100000001B4059B520          090914B6223240877BC07CAP ONEF213 0615    F3160615  051840@357018419N05101111    18REV100000099L00000292H1127110000000037          CR0001 A916544910082101B2141901010000B423BCCCCCCCCCC21CCCCCCB6222218290BC07CAP ONEF213 12101110F3161111A3371819@3570157  P04151216    500011 UNKNOWN          121616        12          CI0001 A9111035321B2140100000000B405BB6311900135VS16TN CHILD SUPPORTF3161216A21193  @3570159  P09110312    00048200013525O         032812        12          CI0001 A914KCA1717812B2140700000000B411BCCCCCCB6241631440FA09FORD CREDF3160312A21100  @3570173  P02071008    00024100004604O         102808        12          CI0001 A914DQA300AV42B2142100000000B425BCCCCCCCCCCCCCCCCCCCCB6241631440FA09FORD CREDF3161008A21100  @3570193  N07101116    00060200011300O         112816        13          CI0001 A92162062109703796556B2140100000000B405BB520          080115B6371638640FA22CAPITAL ONE AUTO FINANF3161116  A20055@3570228  N06100312021226240200033361O         0402170002846432          OI0001 A910304643B2148202000000B429CCCCCCCCCCCCCCCCCCCCCCCCCB52000000453S 030317B6343990772FM19VANDERBILT MORTGAGEF213102120112F3160312A13226  J31200000453@3570185  P12160317    02240700002425O         0328170000224511          OI0001 A91210366229B2140400000000B408CCCCB52000000107S 022717B6350110001BB20FIRST TENNESSEE BANKF3160317A11102  @3570188  P09160317    06024100000878O         0328170000065911          OI0001 A9144204965375B2140500000000B409CCCCCB52000000037S 030117B6352681655FF20AFFILIATED ACCEP CRPF3160317A11106  @3590064022417 UNKNOWN31UNKB6373144420FM22OCWEN LOAN SERVICING I@3590064021417 UNKNOWN31UNKB6371984208YC22OTHER COLLECTION AGENC@3590052081916 UNKNOWN48UNKB6253604760FA10ONYX ACCEP@3590060052216 UNKNOWN48UNKB6332995229YC18VAN RU CREDIT CORP@361009057780335 Q Q0NUMBER OF INQUIRIES WAS ALSO A FACTOR, BUT EFFECT WAS NOT SIGNIFICANT@382006099        001 C2260301170000003011700000C31219621964@950001603504243@</Raw>
+        <EXReport>
+          <EX_110 RecordID="110" RecordLength="0033" ReportDate="063017" ReportTime="101845" Preamble="TMD1" ARFVersionNumber="07" MKeywordTextLength="05" MKeywordText="39996" />
+          <EX_125 RecordID="125" RecordLength="0022" RiskScore="0633" Evaluation="P" ScoreFactorCodes="D0P6G0A6" ModelTypeIndicator="M" />
+          <EX_125 RecordID="125" RecordLength="0022" RiskScore="0683" Evaluation="P" ScoreFactorCodes="91ME22IN" ModelTypeIndicator="Q" />
+          <EX_322 RecordID="322" RecordLength="0018" SSNVariationIndicator=" " SocialSecurityNumber="666624201" />
+          <EX_335 RecordID="335" RecordLength="0036" LengthofName="22" NameText="/ANGELO//MATTHIESSEN//" FirstName="ANGELO" MiddleName="" Surname="MATTHIESSEN" SecondSurname="" GenerationCode="" YearofBirth="1975" />
+          <EX_336 RecordID="336" RecordLength="0088" FirstReportedDate="0213" LastUpdatedDate="1116" OriginationCode="2" NumberTimesReported="00" LastSubcodeReporting="1270246" DwellingType="S" HomeOwnershipCode=" " GensusGEOCode="       " LengthofAddress="51" AddressText="/45278/SAINT GEORGES/AVE///PINEY POINT/MD/206743101" StreetPrefix="45278" StreetName="SAINT GEORGES" StreetSuffix="AVE" ExclusionWord="" ExclusionNumber="" City="PINEY POINT" State="MD" ZipCode="206743101" />
+          <EX_336 RecordID="336" RecordLength="0078" FirstReportedDate="0313" LastUpdatedDate="0313" OriginationCode="1" NumberTimesReported="00" LastSubcodeReporting="       " DwellingType="S" HomeOwnershipCode=" " GensusGEOCode="       " LengthofAddress="41" AddressText="/45278/ST GOERGE/S///PINEY POINT/MD/20674" StreetPrefix="45278" StreetName="ST GOERGE" StreetSuffix="S" ExclusionWord="" ExclusionNumber="" City="PINEY POINT" State="MD" ZipCode="20674" />
+          <EX_336 RecordID="336" RecordLength="0084" FirstReportedDate="0213" LastUpdatedDate="0213" OriginationCode="1" NumberTimesReported="00" LastSubcodeReporting="       " DwellingType="S" HomeOwnershipCode=" " GensusGEOCode="       " LengthofAddress="47" AddressText="/45278/SAINT GEORGES/AVE///PINEY POINT/MO/70674" StreetPrefix="45278" StreetName="SAINT GEORGES" StreetSuffix="AVE" ExclusionWord="" ExclusionNumber="" City="PINEY POINT" State="MO" ZipCode="70674" />
+          <EX_337 RecordID="337" RecordLength="0066" FirstReportedDate="0706" LastUpdatedDate="0510" OriginationCode="2" LengthofEmployerName="19" EmployerName="ARMY NATIONAL GUARD" Lengthof1stLineAddress="10" FirstLineofAddress="LINCOLN NE" Lengthof2ndLineofAddress="01" SecondLineofAddress=" " LengthofExtraLineofAddress="01" ExtraLineofAddress=" " EmployerZIPCode="          " />
+          <EX_337 RecordID="337" RecordLength="0066" FirstReportedDate="0406" LastUpdatedDate="0210" OriginationCode="2" LengthofEmployerName="19" EmployerName="ARMY NATIONAL GUARD" Lengthof1stLineAddress="10" FirstLineofAddress="LINCOLN NE" Lengthof2ndLineofAddress="01" SecondLineofAddress=" " LengthofExtraLineofAddress="01" ExtraLineofAddress=" " EmployerZIPCode="          " />
+          <EX_350 RecordID="350" RecordLength="0091" Status="23" Evaluation="N" StatusDate="031010" Amount="        " LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A6 SubsegmentIndicator="A6" SubsegmentLength="35" CourtRegionCode="1" Constant="0" LegalDesignator="0" CourtCode="1100" LengthofCourtName="22" CourtName="US BKPT CT TN CHATTANO" />
+            <Sub_A7 SubsegmentIndicator="A7" SubsegmentLength="11" ReferenceNumber="9910690" />
+            <Sub_E3 SubsegmentIndicator="E3" SubsegmentLength="05" ECOACode="0" />
+            <Sub_Y2 SubsegmentIndicator="Y2" SubsegmentLength="10" OriginalFilingDate="031010" />
+          </EX_350>
+          <EX_357 RecordID="357" RecordLength="0213" SpecialCommentCode="18" Evaluation="N" DateOpen="0113" StatusDate="0615" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00001382" Amount1Qualifier="H" Amount2="00000960" Amount2Qualifier="C" BalanceDate="040517" BalanceAmount="00001382" Status="97" Reserved="  " AmountPastDue="00001382" OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="52" Day30Counter="02" Day60Counter="01" Day90Counter="04" DerogCounter="18" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="99-99999999---99-999999-6" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="082114" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="1270246" KOB="BC" LengthofSubName="10" SubscriberName="CAPITALONE" />
+            <Sub_F2 SubsegmentIndicator="F2" SubsegmentLength="13" MaxPaymentCode=" " FirstDelinquencyDate="0417" SecondDelinquencyDate="0317" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0615" AccountConditionCode="97" EnhancedPaymentStatus="84" EnhancedType="18" EnhancedSpecialComments="18" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0213" SpecialCommentCode="18" Evaluation="N" DateOpen="0413" StatusDate="0615" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00001383" Amount1Qualifier="H" Amount2="00000953" Amount2Qualifier="C" BalanceDate="040517" BalanceAmount="00001383" Status="97" Reserved="  " AmountPastDue="00001383" OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="49" Day30Counter="02" Day60Counter="01" Day90Counter="03" DerogCounter="19" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="99-99999999---999999999-6" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="082114" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="1270246" KOB="BC" LengthofSubName="10" SubscriberName="CAPITALONE" />
+            <Sub_F2 SubsegmentIndicator="F2" SubsegmentLength="13" MaxPaymentCode=" " FirstDelinquencyDate="0417" SecondDelinquencyDate="0317" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0615" AccountConditionCode="97" EnhancedPaymentStatus="84" EnhancedType="18" EnhancedSpecialComments="18" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0179" SpecialCommentCode="28" Evaluation="N" DateOpen="0705" StatusDate="1010" MaximumDelinquencyDate="    " TypeCode="12" Terms="095" ECOA="1" Amount1="00003500" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="100210" BalanceAmount="        " Status="10" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="15" AccountNumber="45969997057" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="64" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B-CCCCCCCC-----CC---CCC-C" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="3909352" KOB="EL" LengthofSubName="10" SubscriberName="NELNET LNS" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1010" AccountConditionCode="10" EnhancedPaymentStatus="11" EnhancedType="12" EnhancedSpecialComments="50" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0239" SpecialCommentCode="31" Evaluation="N" DateOpen="0710" StatusDate="1216" MaximumDelinquencyDate="1114" TypeCode="00" Terms="060" ECOA="4" Amount1="00011300" Amount1Qualifier="O" Amount2="00003796" Amount2Qualifier="C" BalanceDate="122116" BalanceAmount="        " Status="05" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="14" AccountNumber="1258054310" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="78" Day30Counter="01" Day60Counter="01" Day90Counter="00" DerogCounter="40" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B999999-99-9999999-999999" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="080115" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="3601160" KOB="FA" LengthofSubName="10" SubscriberName="ONYX ACCEP" />
+            <Sub_B8 SubsegmentIndicator="B8" SubsegmentLength="28" SoldToText="CAPITAL ONE AUTO FINANCE" />
+            <Sub_F2 SubsegmentIndicator="F2" SubsegmentLength="13" MaxPaymentCode="9" FirstDelinquencyDate="1116" SecondDelinquencyDate="1016" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1216" AccountConditionCode="05" EnhancedPaymentStatus="97" EnhancedType="00" EnhancedSpecialComments="40" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0197" SpecialCommentCode="31" Evaluation="N" DateOpen="0610" StatusDate="0915" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00000995" Amount1Qualifier="L" Amount2="00001278" Amount2Qualifier="C" BalanceDate="092815" BalanceAmount="        " Status="05" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="14" AccountNumber="" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="63" Day30Counter="04" Day60Counter="04" Day90Counter="04" DerogCounter="05" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B99999654321CCCC1CCCCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="31" Subcode="3208490" KOB="BC" LengthofSubName="16" SubscriberName="BANK CREDIT CARD" />
+            <Sub_F2 SubsegmentIndicator="F2" SubsegmentLength="13" MaxPaymentCode=" " FirstDelinquencyDate="0815" SecondDelinquencyDate="0715" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0915" AccountConditionCode="05" EnhancedPaymentStatus="97" EnhancedType="18" EnhancedSpecialComments="40" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0177" SpecialCommentCode="31" Evaluation="N" DateOpen="0810" StatusDate="0911" MaximumDelinquencyDate="    " TypeCode="12" Terms="UNK" ECOA="2" Amount1="00011255" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="092811" BalanceAmount="        " Status="05" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="17" AccountNumber="3770293524561" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="11" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="15" PaymentProfile="BCCC----CCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="35" Subcode="1993670" KOB="EL" LengthofSubName="20" SubscriberName="SALLIE MAE SERVICING" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0911" AccountConditionCode="05" EnhancedPaymentStatus="11" EnhancedType="12" EnhancedSpecialComments="31" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0179" SpecialCommentCode="  " Evaluation="P" DateOpen="1204" StatusDate="1110" MaximumDelinquencyDate="    " TypeCode="12" Terms="095" ECOA="1" Amount1="00002925" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="112810" BalanceAmount="        " Status="05" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="15" AccountNumber="45969997056" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="72" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B-B-CCCCCCCC-----CC---CCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="3909352" KOB="EL" LengthofSubName="10" SubscriberName="NELNET LNS" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1110" AccountConditionCode="05" EnhancedPaymentStatus="11" EnhancedType="12" EnhancedSpecialComments="  " />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0179" SpecialCommentCode="  " Evaluation="P" DateOpen="0206" StatusDate="1110" MaximumDelinquencyDate="    " TypeCode="12" Terms="019" ECOA="1" Amount1="00001825" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="112810" BalanceAmount="        " Status="05" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="15" AccountNumber="45969997058" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="58" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B-B-CCCCCCCC-----CC---CCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="3909352" KOB="EL" LengthofSubName="10" SubscriberName="NELNET LNS" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1110" AccountConditionCode="05" EnhancedPaymentStatus="11" EnhancedType="12" EnhancedSpecialComments="  " />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0190" SpecialCommentCode="31" Evaluation="N" DateOpen="0314" StatusDate="0615" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00000991" Amount1Qualifier="H" Amount2="        " Amount2Qualifier=" " BalanceDate="062715" BalanceAmount="        " Status="05" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="20" AccountNumber="" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="01" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="01" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="05" PaymentProfile="9" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="090914" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="22" Subcode="3240877" KOB="BC" LengthofSubName="07" SubscriberName="CAP ONE" />
+            <Sub_F2 SubsegmentIndicator="F2" SubsegmentLength="13" MaxPaymentCode=" " FirstDelinquencyDate="0615" SecondDelinquencyDate="    " />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0615" AccountConditionCode="  " EnhancedPaymentStatus="05" EnhancedType="18" EnhancedSpecialComments="40" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0184" SpecialCommentCode="19" Evaluation="N" DateOpen="0510" StatusDate="1111" MaximumDelinquencyDate="    " TypeCode="18" Terms="REV" ECOA="1" Amount1="00000099" Amount1Qualifier="L" Amount2="00000292" Amount2Qualifier="H" BalanceDate="112711" BalanceAmount="00000000" Status="37" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="R" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="16" AccountNumber="" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="19" Day30Counter="01" Day60Counter="01" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="23" PaymentProfile="BCCCCCCCCCC21CCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="22" Subcode="2218290" KOB="BC" LengthofSubName="07" SubscriberName="CAP ONE" />
+            <Sub_F2 SubsegmentIndicator="F2" SubsegmentLength="13" MaxPaymentCode=" " FirstDelinquencyDate="1210" SecondDelinquencyDate="1110" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1111" AccountConditionCode="A3" EnhancedPaymentStatus="37" EnhancedType="18" EnhancedSpecialComments="19" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0157" SpecialCommentCode="  " Evaluation="P" DateOpen="0415" StatusDate="1216" MaximumDelinquencyDate="    " TypeCode="50" Terms="001" ECOA="1" Amount1=" UNKNOWN" Amount1Qualifier=" " Amount2="        " Amount2Qualifier=" " BalanceDate="121616" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="11" AccountNumber="1035321" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="01" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="05" PaymentProfile="B" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="31" Subcode="1900135" KOB="VS" LengthofSubName="16" SubscriberName="TN CHILD SUPPORT" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1216" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="93" EnhancedSpecialComments="  " />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0159" SpecialCommentCode="  " Evaluation="P" DateOpen="0911" StatusDate="0312" MaximumDelinquencyDate="    " TypeCode="00" Terms="048" ECOA="2" Amount1="00013525" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="032812" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="14" AccountNumber="KCA1717812" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="07" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="11" PaymentProfile="BCCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="24" Subcode="1631440" KOB="FA" LengthofSubName="09" SubscriberName="FORD CRED" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0312" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="00" EnhancedSpecialComments="  " />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0173" SpecialCommentCode="  " Evaluation="P" DateOpen="0207" StatusDate="1008" MaximumDelinquencyDate="    " TypeCode="00" Terms="024" ECOA="1" Amount1="00004604" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="102808" BalanceAmount="        " Status="12" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="14" AccountNumber="DQA300AV42" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="21" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="25" PaymentProfile="BCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="24" Subcode="1631440" KOB="FA" LengthofSubName="09" SubscriberName="FORD CRED" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1008" AccountConditionCode="A2" EnhancedPaymentStatus="11" EnhancedType="00" EnhancedSpecialComments="  " />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0193" SpecialCommentCode="  " Evaluation="N" DateOpen="0710" StatusDate="1116" MaximumDelinquencyDate="    " TypeCode="00" Terms="060" ECOA="2" Amount1="00011300" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="112816" BalanceAmount="        " Status="13" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="21" AccountNumber="62062109703796556" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="01" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="05" PaymentProfile="B" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="        " MonthlyPaymentType=" " Frequency=" " LastPaymentDate="080115" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="1638640" KOB="FA" LengthofSubName="22" SubscriberName="CAPITAL ONE AUTO FINAN" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1116" AccountConditionCode="  " EnhancedPaymentStatus="A2" EnhancedType="00" EnhancedSpecialComments="55" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0228" SpecialCommentCode="  " Evaluation="N" DateOpen="0610" StatusDate="0312" MaximumDelinquencyDate="0212" TypeCode="26" Terms="240" ECOA="2" Amount1="00033361" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="040217" BalanceAmount="00028464" Status="32" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="10" AccountNumber="304643" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="82" Day30Counter="02" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="CCCCCCCCCCCCCCCCCCCCCCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="00000453" MonthlyPaymentType="S" Frequency=" " LastPaymentDate="030317" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="34" Subcode="3990772" KOB="FM" LengthofSubName="19" SubscriberName="VANDERBILT MORTGAGE" />
+            <Sub_F2 SubsegmentIndicator="F2" SubsegmentLength="13" MaxPaymentCode="1" FirstDelinquencyDate="0212" SecondDelinquencyDate="0112" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0312" AccountConditionCode="A1" EnhancedPaymentStatus="32" EnhancedType="26" EnhancedSpecialComments="  " />
+            <Sub_J3 SubsegmentIndicator="J3" SubsegmentLength="12" ActualPaymentAmount="00000453" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0185" SpecialCommentCode="  " Evaluation="P" DateOpen="1216" StatusDate="0317" MaximumDelinquencyDate="    " TypeCode="02" Terms="240" ECOA="7" Amount1="00002425" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="032817" BalanceAmount="00002245" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="12" AccountNumber="10366229" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="04" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="08" PaymentProfile="CCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="00000107" MonthlyPaymentType="S" Frequency=" " LastPaymentDate="022717" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="35" Subcode="0110001" KOB="BB" LengthofSubName="20" SubscriberName="FIRST TENNESSEE BANK" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0317" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="02" EnhancedSpecialComments="  " />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0188" SpecialCommentCode="  " Evaluation="P" DateOpen="0916" StatusDate="0317" MaximumDelinquencyDate="    " TypeCode="06" Terms="024" ECOA="1" Amount1="00000878" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="032817" BalanceAmount="00000659" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="14" AccountNumber="4204965375" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="05" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="09" PaymentProfile="CCCCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="00000037" MonthlyPaymentType="S" Frequency=" " LastPaymentDate="030117" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="35" Subcode="2681655" KOB="FF" LengthofSubName="20" SubscriberName="AFFILIATED ACCEP CRP" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0317" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="06" EnhancedSpecialComments="  " />
+          </EX_357>
+          <EX_359 RecordID="359" RecordLength="0064" InquiryDate="022417" Amount=" UNKNOWN" Type="31" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="3144420" KOB="FM" LengthofSubName="22" SubscriberName="OCWEN LOAN SERVICING I" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0064" InquiryDate="021417" Amount=" UNKNOWN" Type="31" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="1984208" KOB="YC" LengthofSubName="22" SubscriberName="OTHER COLLECTION AGENC" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0052" InquiryDate="081916" Amount=" UNKNOWN" Type="48" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="3604760" KOB="FA" LengthofSubName="10" SubscriberName="ONYX ACCEP" />
+          </EX_359>
+          <EX_359 RecordID="359" RecordLength="0060" InquiryDate="052216" Amount=" UNKNOWN" Type="48" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="33" Subcode="2995229" KOB="YC" LengthofSubName="18" SubscriberName="VAN RU CREDIT CORP" />
+          </EX_359>
+          <EX_361 RecordID="361" RecordLength="0090" PrimaryMessageNum="57" TextLength="78" MessageText="0335 Q Q0NUMBER OF INQUIRIES WAS ALSO A FACTOR, BUT EFFECT WAS NOT SIGNIFICANT" SecondaryMessageNum="0335" Delimeter=" " ModelID="Q " ScoreFactorCode="Q0" Text="NUMBER OF INQUIRIES WAS ALSO A FACTOR, BUT EFFECT WAS NOT SIGNIFICANT" />
+          <EX_382 RecordID="382" RecordLength="0060" RecordType="99" SICCodes="        " LengthofText="001" TextData=" ">
+            <Sub_C2 SubsegmentIndicator="C2" SubsegmentLength="26" SocialDate="030117" SocialCount="0000" SocialErrorCode="0" AddressDate="030117" AddressCount="0000" AddressErrorCode="0" />
+            <Sub_C3 SubsegmentIndicator="C3" SubsegmentLength="12" FirstPossibleYear="1962" LastPossibleYear="1964" />
+          </EX_382>
+          <EX_950 RecordID="950" RecordLength="0016" TotalSegments="035" TotalLength="04243" />
+        </EXReport>
+      </EX>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2016-6-24 11:32:3.609" Source="TransactionManager" Number="0" Description="com.provenir.engines.de.NonFatalEngineException: com.provenir.engines.de.NonFatalEngineException: No matching condition found for [&quot;LetterDeclineReasons&quot;]" />
+      <Message Timestamp="Tue Oct 25 11:13:13 MDT 2016" Source="JDBC.MSSQL.Shred_Messages.writeTo" Number="0" Description="com.provenir.ProvenirException: MSSql.writeTo error Reconnecting to the database.  Error description = com.provenir.ProvenirException: JDBC.writeTo error: MSSql.update error executing update: UPDATE dbo.app_error_messages SET Time_Stamp = ?, app_id = ? WHERE Time_Stamp='2016-6-24 11:32:3.609' and app_id=39996.  Error description = com.microsoft.sqlserver.jdbc.SQLServerException: Transaction (Process ID 68) was deadlocked on lock resources with another process and has been chosen as the deadlock victim. Rerun the transaction." />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079c6110cc68c261" ID="CBFNI" Description="CB Missing First Name or 1 Character First Name" Timestamp="2014-5-21 14:43:45.471" Severity="0" Override="1" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07a16110cc68c211" ID="CBLNI" Description="CB Missing Last Name or 1 Character Last Name" Timestamp="2014-5-21 14:43:45.487" Severity="0" Override="1" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07a11110cc68c216" ID="CBMHN" Description="Missing House Number on CB Report Address" Timestamp="2014-5-21 14:43:45.487" Severity="62" Override="1" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079e8110cc68c23f" ID="CBFRA" Description="Credit Bureau Reports Possible Fraud. Instant ID and Q&amp;A may have run for applicant.  See Comments." Timestamp="2014-5-21 14:44:50.142" Severity="0" Override="1" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079f0110cc68c237" ID="CBNOH" Description="No File Hit on Credit Bureau" Timestamp="2014-5-21 14:45:1.48" Severity="50" Override="1" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07972110cc68c2b5" ID="MMSSN" Description="Reported SSN Mismatches CB SSN or CB SSN Missing. Instant ID and Q&amp;A may have run for applicant.  See Comments." Timestamp="2014-5-21 14:45:10.657" Severity="0" Override="1" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Script" ID="ProcStart" Timestamp="2014-5-14 15:11:41.789" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="Wed May 14 15:11:41 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="00050" Timestamp="Wed May 14 15:11:42 MDT 2014" Status="Fail" />
+      <Journal Type="Script" ID="App Opened By hevans" Timestamp="2014-5-14 15:19:10.517" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By ceborn" Timestamp="2014-5-21 14:19:37.543" Status="Opened" />
+      <Journal Type="Process" ID="00050" Timestamp="Wed May 21 14:23:13 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2014-5-21 14:23:13.711" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="Wed May 21 14:23:13 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2014-5-21 14:23:13.742" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Wed May 21 14:23:13 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2014-5-21 14:23:13.836" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2014-5-21 14:23:13.867" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2014-5-21 14:23:13.883" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2014-5-21 14:23:13.899" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2014-5-21 14:23:13.914" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2014-5-21 14:23:13.930" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2014-5-21 14:23:13.945" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2014-5-21 14:23:13.961" Status="false" />
+      <Journal Type="Rule" ID="PAPMA" Timestamp="2014-5-21 14:23:13.977" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2014-5-21 14:23:13.992" Status="false" />
+      <Journal Type="Rule" ID="MAXDEP" Timestamp="2014-5-21 14:23:14.24" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2014-5-21 14:23:14.39" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2014-5-21 14:23:14.39" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Wed May 21 14:23:14 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="MIDEP" Timestamp="2014-5-21 14:23:14.70" Status="false" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2014-5-21 14:23:14.86" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2014-5-21 14:23:14.102" Status="false" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2014-5-21 14:23:14.117" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2014-5-21 14:23:14.180" Status="false" />
+      <Journal Type="Process" ID="02000" Timestamp="Wed May 21 14:23:14 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2014-5-21 14:23:14.195" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="Wed May 21 14:23:14 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="06000" Timestamp="Wed May 21 14:23:16 MDT 2014" Status="Fail" />
+      <Journal Type="Process" ID="06000" Timestamp="Wed May 21 14:23:23 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="07000" Timestamp="Wed May 21 14:23:23 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="INCSRD" Timestamp="2014-5-21 14:23:23.852" Status="false" />
+      <Journal Type="Rule" ID="CBPDC" Timestamp="2014-5-21 14:23:23.867" Status="false" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2014-5-21 14:23:23.883" Status="false" />
+      <Journal Type="Rule" ID="VFBKR" Timestamp="2014-5-21 14:23:23.898" Status="false" />
+      <Journal Type="Rule" ID="VFTXL" Timestamp="2014-5-21 14:23:23.914" Status="false" />
+      <Journal Type="Process" ID="07500" Timestamp="Wed May 21 14:23:23 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2014-5-21 14:23:23.930" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2014-5-21 14:23:23.945" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2014-5-21 14:23:23.961" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2014-5-21 14:23:23.977" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2014-5-21 14:23:23.992" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2014-5-21 14:23:24.8" Status="false" />
+      <Journal Type="Rule" ID="CBFNI" Timestamp="2014-5-21 14:23:24.23" Status="true" />
+      <Journal Type="Rule" ID="CBLNI" Timestamp="2014-5-21 14:23:24.39" Status="true" />
+      <Journal Type="Rule" ID="CBMHN" Timestamp="2014-5-21 14:23:24.55" Status="true" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2014-5-21 14:23:24.70" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2014-5-21 14:23:24.86" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Wed May 21 14:23:24 MDT 2014" Status="Fail" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2014-5-21 14:23:44.914" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2014-5-21 14:23:44.929" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2014-5-21 14:23:44.945" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2014-5-21 14:23:44.961" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2014-5-21 14:23:44.961" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2014-5-21 14:23:44.976" Status="false" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2014-5-21 14:23:45.7" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2014-5-21 14:23:45.23" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Wed May 21 14:23:45 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2014-5-21 14:23:46.367" Status="false" />
+      <Journal Type="Rule" ID="CBFRA" Timestamp="2014-5-21 14:23:46.382" Status="true" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2014-5-21 14:23:46.382" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2014-5-21 14:23:46.398" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2014-5-21 14:23:46.414" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2014-5-21 14:23:46.429" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2014-5-21 14:23:46.429" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2014-5-21 14:23:46.445" Status="false" />
+      <Journal Type="Rule" ID="HATNF" Timestamp="2014-5-21 14:23:46.461" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2014-5-21 14:23:46.523" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2014-5-21 14:23:46.664" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2014-5-21 14:23:46.695" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Wed May 21 14:23:46 MDT 2014" Status="Fail" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2014-5-21 14:24:2.132" Status="false" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2014-5-21 14:24:2.148" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2014-5-21 14:24:2.163" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2014-5-21 14:24:2.179" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2014-5-21 14:24:2.179" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2014-5-21 14:24:2.195" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2014-5-21 14:24:2.195" Status="false" />
+      <Journal Type="Rule" ID="HATNF" Timestamp="2014-5-21 14:24:2.210" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2014-5-21 14:24:2.242" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2014-5-21 14:24:2.351" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2014-5-21 14:24:2.367" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Wed May 21 14:24:02 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="CBNOH" Timestamp="2014-5-21 14:24:2.382" Status="true" />
+      <Journal Type="Process" ID="10900" Timestamp="Wed May 21 14:24:02 MDT 2014" Status="Fail" />
+      <Journal Type="Process" ID="10900" Timestamp="Wed May 21 14:24:17 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2014-5-21 14:24:17.585" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2014-5-21 14:24:17.585" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2014-5-21 14:24:17.601" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2014-5-21 14:24:17.601" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2014-5-21 14:24:17.616" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2014-5-21 14:24:17.632" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2014-5-21 14:24:17.632" Status="false" />
+      <Journal Type="Rule" ID="MMSSN" Timestamp="2014-5-21 14:24:17.648" Status="true" />
+      <Journal Type="Process" ID="11000" Timestamp="Wed May 21 14:24:18 MDT 2014" Status="Fail" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2014-5-21 14:24:32.225" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2014-5-21 14:24:32.225" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2014-5-21 14:24:32.241" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2014-5-21 14:24:32.241" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2014-5-21 14:24:32.257" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2014-5-21 14:24:32.257" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2014-5-21 14:24:32.272" Status="false" />
+      <Journal Type="Process" ID="11000" Timestamp="Wed May 21 14:24:32 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="20000" Timestamp="Wed May 21 14:24:32 MDT 2014" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By ceborn" Timestamp="2014-5-21 14:39:57.397" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By ceborn" Timestamp="2014-5-21 14:40:18.975" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By ceborn" Timestamp="2014-5-21 14:40:40.396" Status="Opened" />
+      <Journal Type="MP" ID="REPRR" Timestamp="2014-5-21 14:41:56.864" Status="" />
+      <Journal Type="Process" ID="00050" Timestamp="Wed May 21 14:41:56 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2014-5-21 14:41:56.942" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="Wed May 21 14:41:56 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2014-5-21 14:41:56.973" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Wed May 21 14:41:56 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2014-5-21 14:41:56.989" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2014-5-21 14:41:57.4" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2014-5-21 14:41:57.20" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2014-5-21 14:41:57.36" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2014-5-21 14:41:57.36" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2014-5-21 14:41:57.51" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2014-5-21 14:41:57.67" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2014-5-21 14:41:57.82" Status="false" />
+      <Journal Type="Rule" ID="PAPMA" Timestamp="2014-5-21 14:41:57.98" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2014-5-21 14:41:57.98" Status="false" />
+      <Journal Type="Rule" ID="MAXDEP" Timestamp="2014-5-21 14:41:57.129" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2014-5-21 14:41:57.129" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2014-5-21 14:41:57.145" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Wed May 21 14:41:57 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="MIDEP" Timestamp="2014-5-21 14:41:57.176" Status="false" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2014-5-21 14:41:57.192" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2014-5-21 14:41:57.207" Status="false" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2014-5-21 14:41:57.223" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2014-5-21 14:41:57.239" Status="false" />
+      <Journal Type="Process" ID="02000" Timestamp="Wed May 21 14:41:57 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2014-5-21 14:41:57.254" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="Wed May 21 14:41:57 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="06000" Timestamp="Wed May 21 14:41:57 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="07000" Timestamp="Wed May 21 14:41:57 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="INCSRD" Timestamp="2014-5-21 14:41:57.301" Status="false" />
+      <Journal Type="Rule" ID="CBPDC" Timestamp="2014-5-21 14:41:57.317" Status="false" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2014-5-21 14:41:57.332" Status="false" />
+      <Journal Type="Rule" ID="VFBKR" Timestamp="2014-5-21 14:41:57.332" Status="false" />
+      <Journal Type="Rule" ID="VFTXL" Timestamp="2014-5-21 14:41:57.348" Status="false" />
+      <Journal Type="Process" ID="07500" Timestamp="Wed May 21 14:41:57 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2014-5-21 14:41:57.364" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2014-5-21 14:41:57.364" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2014-5-21 14:41:57.379" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2014-5-21 14:41:57.395" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2014-5-21 14:41:57.395" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2014-5-21 14:41:57.411" Status="false" />
+      <Journal Type="Rule" ID="CBFNI" Timestamp="2014-5-21 14:41:57.411" Status="true" />
+      <Journal Type="Rule" ID="CBLNI" Timestamp="2014-5-21 14:41:57.426" Status="true" />
+      <Journal Type="Rule" ID="CBMHN" Timestamp="2014-5-21 14:41:57.442" Status="true" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2014-5-21 14:41:57.442" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2014-5-21 14:41:57.457" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Wed May 21 14:41:57 MDT 2014" Status="Fail" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2014-5-21 14:42:12.238" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2014-5-21 14:42:12.254" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2014-5-21 14:42:12.270" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2014-5-21 14:42:12.270" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2014-5-21 14:42:12.285" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2014-5-21 14:42:12.285" Status="false" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2014-5-21 14:42:12.317" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2014-5-21 14:42:12.317" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Wed May 21 14:42:12 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2014-5-21 14:42:13.82" Status="false" />
+      <Journal Type="Rule" ID="CBFRA" Timestamp="2014-5-21 14:42:13.82" Status="true" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2014-5-21 14:42:13.98" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2014-5-21 14:42:13.113" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2014-5-21 14:42:13.129" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2014-5-21 14:42:13.129" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2014-5-21 14:42:13.145" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2014-5-21 14:42:13.160" Status="false" />
+      <Journal Type="Rule" ID="HATNF" Timestamp="2014-5-21 14:42:13.176" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2014-5-21 14:42:13.223" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2014-5-21 14:42:13.332" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2014-5-21 14:42:13.348" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Wed May 21 14:42:13 MDT 2014" Status="Fail" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2014-5-21 14:42:27.363" Status="false" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2014-5-21 14:42:27.379" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2014-5-21 14:42:27.394" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2014-5-21 14:42:27.394" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2014-5-21 14:42:27.410" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2014-5-21 14:42:27.426" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2014-5-21 14:42:27.426" Status="false" />
+      <Journal Type="Rule" ID="HATNF" Timestamp="2014-5-21 14:42:27.441" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2014-5-21 14:42:27.473" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2014-5-21 14:42:27.879" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2014-5-21 14:42:27.894" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Wed May 21 14:42:27 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="CBNOH" Timestamp="2014-5-21 14:42:27.910" Status="true" />
+      <Journal Type="Process" ID="10900" Timestamp="Wed May 21 14:42:27 MDT 2014" Status="Fail" />
+      <Journal Type="Process" ID="10900" Timestamp="Wed May 21 14:42:43 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2014-5-21 14:42:43.894" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2014-5-21 14:42:43.894" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2014-5-21 14:42:43.910" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2014-5-21 14:42:43.910" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2014-5-21 14:42:43.925" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2014-5-21 14:42:43.925" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2014-5-21 14:42:43.941" Status="false" />
+      <Journal Type="Rule" ID="MMSSN" Timestamp="2014-5-21 14:42:43.957" Status="true" />
+      <Journal Type="Process" ID="11000" Timestamp="Wed May 21 14:42:43 MDT 2014" Status="Fail" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2014-5-21 14:42:56.378" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2014-5-21 14:42:56.378" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2014-5-21 14:42:56.394" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2014-5-21 14:42:56.394" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2014-5-21 14:42:56.410" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2014-5-21 14:42:56.410" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2014-5-21 14:42:56.425" Status="false" />
+      <Journal Type="Process" ID="11000" Timestamp="Wed May 21 14:42:56 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="20000" Timestamp="Wed May 21 14:42:56 MDT 2014" Status="Pass" />
+      <Journal Type="MP" ID="REPRR" Timestamp="2014-5-21 14:43:45.34" Status="" />
+      <Journal Type="Process" ID="00050" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2014-5-21 14:43:45.81" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2014-5-21 14:43:45.112" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2014-5-21 14:43:45.127" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2014-5-21 14:43:45.127" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2014-5-21 14:43:45.143" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2014-5-21 14:43:45.143" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2014-5-21 14:43:45.159" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2014-5-21 14:43:45.159" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2014-5-21 14:43:45.174" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2014-5-21 14:43:45.190" Status="false" />
+      <Journal Type="Rule" ID="PAPMA" Timestamp="2014-5-21 14:43:45.190" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2014-5-21 14:43:45.206" Status="false" />
+      <Journal Type="Rule" ID="MAXDEP" Timestamp="2014-5-21 14:43:45.221" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2014-5-21 14:43:45.221" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2014-5-21 14:43:45.237" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="MIDEP" Timestamp="2014-5-21 14:43:45.252" Status="false" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2014-5-21 14:43:45.252" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2014-5-21 14:43:45.268" Status="false" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2014-5-21 14:43:45.268" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2014-5-21 14:43:45.284" Status="false" />
+      <Journal Type="Process" ID="02000" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2014-5-21 14:43:45.299" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="06000" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="07000" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="INCSRD" Timestamp="2014-5-21 14:43:45.346" Status="false" />
+      <Journal Type="Rule" ID="CBPDC" Timestamp="2014-5-21 14:43:45.362" Status="false" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2014-5-21 14:43:45.377" Status="false" />
+      <Journal Type="Rule" ID="VFBKR" Timestamp="2014-5-21 14:43:45.393" Status="false" />
+      <Journal Type="Rule" ID="VFTXL" Timestamp="2014-5-21 14:43:45.409" Status="false" />
+      <Journal Type="Process" ID="07500" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2014-5-21 14:43:45.424" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2014-5-21 14:43:45.424" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2014-5-21 14:43:45.440" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2014-5-21 14:43:45.440" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2014-5-21 14:43:45.456" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2014-5-21 14:43:45.456" Status="false" />
+      <Journal Type="Rule" ID="CBFNI" Timestamp="2014-5-21 14:43:45.471" Status="true" />
+      <Journal Type="Rule" ID="CBLNI" Timestamp="2014-5-21 14:43:45.487" Status="true" />
+      <Journal Type="Rule" ID="CBMHN" Timestamp="2014-5-21 14:43:45.487" Status="true" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2014-5-21 14:43:45.502" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2014-5-21 14:43:45.518" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Wed May 21 14:43:45 MDT 2014" Status="Fail" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2014-5-21 14:44:49.361" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2014-5-21 14:44:49.376" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2014-5-21 14:44:49.392" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2014-5-21 14:44:49.392" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2014-5-21 14:44:49.408" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2014-5-21 14:44:49.408" Status="false" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2014-5-21 14:44:49.439" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2014-5-21 14:44:49.439" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Wed May 21 14:44:49 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2014-5-21 14:44:50.126" Status="false" />
+      <Journal Type="Rule" ID="CBFRA" Timestamp="2014-5-21 14:44:50.142" Status="true" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2014-5-21 14:44:50.142" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2014-5-21 14:44:50.158" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2014-5-21 14:44:50.173" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2014-5-21 14:44:50.173" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2014-5-21 14:44:50.189" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2014-5-21 14:44:50.189" Status="false" />
+      <Journal Type="Rule" ID="HATNF" Timestamp="2014-5-21 14:44:50.204" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2014-5-21 14:44:50.236" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2014-5-21 14:44:50.345" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2014-5-21 14:44:50.345" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Wed May 21 14:44:50 MDT 2014" Status="Fail" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2014-5-21 14:45:0.814" Status="false" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2014-5-21 14:45:0.829" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2014-5-21 14:45:0.845" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2014-5-21 14:45:0.845" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2014-5-21 14:45:0.861" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2014-5-21 14:45:0.861" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2014-5-21 14:45:0.876" Status="false" />
+      <Journal Type="Rule" ID="HATNF" Timestamp="2014-5-21 14:45:0.876" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2014-5-21 14:45:0.923" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2014-5-21 14:45:1.17" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2014-5-21 14:45:1.32" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Wed May 21 14:45:01 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="CBNOH" Timestamp="2014-5-21 14:45:1.48" Status="true" />
+      <Journal Type="Process" ID="10900" Timestamp="Wed May 21 14:45:01 MDT 2014" Status="Fail" />
+      <Journal Type="Process" ID="10900" Timestamp="Wed May 21 14:45:10 MDT 2014" Status="Pass" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2014-5-21 14:45:10.595" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2014-5-21 14:45:10.610" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2014-5-21 14:45:10.610" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2014-5-21 14:45:10.626" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2014-5-21 14:45:10.626" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2014-5-21 14:45:10.642" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2014-5-21 14:45:10.657" Status="false" />
+      <Journal Type="Rule" ID="MMSSN" Timestamp="2014-5-21 14:45:10.657" Status="true" />
+      <Journal Type="Process" ID="11000" Timestamp="Wed May 21 14:45:10 MDT 2014" Status="Fail" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2014-5-21 14:45:21.501" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2014-5-21 14:45:21.501" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2014-5-21 14:45:21.516" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2014-5-21 14:45:21.532" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2014-5-21 14:45:21.532" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2014-5-21 14:45:21.548" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2014-5-21 14:45:21.548" Status="false" />
+      <Journal Type="Process" ID="11000" Timestamp="Wed May 21 14:45:21 MDT 2014" Status="Pass" />
+      <Journal Type="Process" ID="20000" Timestamp="Wed May 21 14:45:21 MDT 2014" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By hevans" Timestamp="2016-5-26 12:47:36.602" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2016-5-26 14:36:35.918" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jhess" Timestamp="2016-6-24 11:31:59.364" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jhess" Timestamp="2016-6-24 11:52:18.792" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jhess" Timestamp="2016-6-24 11:52:54.645" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2016-6-30 12:47:57.463" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2016-7-5 13:54:45.791" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2016-7-5 13:55:0.979" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jhess" Timestamp="2016-7-20 14:44:55.453" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2016-9-20 13:22:34.367" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jhess" Timestamp="2016-10-26 15:41:9.346" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jhess" Timestamp="2016-10-26 15:41:49.456" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2017-4-25 9:7:43.200" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2017-6-30 9:14:55.102" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2017-6-30 9:15:25.119" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2017-6-30 9:16:33.855" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2017-6-30 9:16:48.42" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2017-6-30 9:17:20.634" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2017-6-30 9:18:36.273" Status="Opened" />
+      <Journal Type="TM" ID="PMEXC" Timestamp="2017-6-30 9:18:45.241" Status="" />
+      <Journal Type="Process" ID="00007" Timestamp="Fri Jun 30 09:18:46 MDT 2017" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2017-12-1 13:31:19.986" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By EEvans@MBC.com" Timestamp="2022-6-30 14:36:51.423" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By EEvans@MBC.com" Timestamp="2022-6-30 14:36:51.848" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By EEvans@MBC.com" Timestamp="2022-6-30 14:37:6.62" Status="Opened" />
+      <Journal UserID="DJensen@merrickbank.com" Type="Script" ID="App Opened" Timestamp="2022-10-24 15:54:11.314" Status="Opened" />
+      <Journal UserID="DJensen@merrickbank.com" Type="Script" ID="App Opened" Timestamp="2023-2-23 13:42:16.346" Status="Opened" />
+      <Journal UserID="akopischke@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-3-17 12:22:04.318" Status="Opened" />
+      <Journal UserID="tmorris@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-4-4 14:07:05.514" Status="Opened" />
+      <Journal UserID="TMORRIS@MERRICKBANK.COM" Type="API" ID="39996" Timestamp="2023-4-4 14:07:55.42" Status="Communication Created" />
+      <Journal UserID="tmorris@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-9-18 6:03:14.566" Status="Opened" />
+    </Journals>
+    <Traces />
+    <Audits>
+      <Audit Timestamp="Wed May 21 14:23:44 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[1]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:23:44 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[2]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:23:44 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[3]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:23:57 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[4]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:24:11 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[5]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:24:28 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[6]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:41:48 MDT 2014" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[2]/@first_name" UserID="ceborn" Source="Webstation" Action="U" From="" To="TESTAUTH">
+        <From />
+        <To>TESTAUTH</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:41:48 MDT 2014" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[2]/@last_name" UserID="ceborn" Source="Webstation" Action="U" From="" To="TEST">
+        <From />
+        <To>TEST</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:41:48 MDT 2014" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[2]/@ssn" UserID="ceborn" Source="Webstation" Action="U" From="" To="456123234">
+        <From />
+        <To>456123234</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:41:48 MDT 2014" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[2]/@birth_date" UserID="ceborn" Source="Webstation" Action="U" From="" To="08/02/1992">
+        <From />
+        <To>08/02/1992</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:42:09 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[1]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:42:09 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[2]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:42:09 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[3]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:42:20 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[4]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:42:37 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[5]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:42:52 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[6]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:44:20 MDT 2014" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[2]/@first_name" UserID="ceborn" Source="Webstation" Action="U" From="" To="AUTHTEST">
+        <From />
+        <To>AUTHTEST</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:44:20 MDT 2014" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[2]/@last_name" UserID="ceborn" Source="Webstation" Action="U" From="" To="TEST">
+        <From />
+        <To>TEST</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:44:20 MDT 2014" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[2]/@ssn" UserID="ceborn" Source="Webstation" Action="U" From="" To="456123859">
+        <From />
+        <To>456123859</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:44:20 MDT 2014" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[2]/@birth_date" UserID="ceborn" Source="Webstation" Action="U" From="" To="08/20/1992">
+        <From />
+        <To>08/20/1992</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:44:40 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[1]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:44:40 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[2]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:44:40 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[3]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:44:56 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[4]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:45:06 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[5]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed May 21 14:45:16 MDT 2014" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[6]/@Override" UserID="ceborn" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+    </Audits>
+  </Request>
+</Provenir>

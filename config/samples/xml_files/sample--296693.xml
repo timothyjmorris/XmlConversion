@@ -1,0 +1,58 @@
+﻿<Provenir Org="" fileRecordNum="2" transactionID="DE07bb2cad9_164f25446ab_07ffd164f25483bd_0a147650.52" ResponseCode="true">
+  <Request Trans="WSCLOSE" ID="296693" Process="01000" LockedBy="" Priority="" Readonly="0" Status="" Timeout="" Timestamp="" Trace="" UserID="" Version="" Workflow="1" _LockedBy="" transactionCounter="3">
+    <CustData>
+      <application solicitation_num="08185T19603T" app_type_code="PRODB" campaign_num="S3H" name_match_flag="Y" ssn_match_flag="Y" address_match_flag="Y" pymnt_prot_plan_ind="" mail_cell_pricing="SHHDJ3H123" app_source_ind="M" special_offer="1" Partner_URL_ID="" swiftpay_num="" signature_ind="Y" existing_card_account_num="" app_receive_date="08/02/2018" coupon_expiration_date="09/21/2018" app_entry_date="08/02/2018" population_assignment="HD" EODRet="IMPORT" procs_date="2018-8-2 9:48:15.424" processing_expiration_date="09/26/2018" pricing_tier="59">
+        <contact con_id="460590" ac_role_tp_c="PR" title="" first_name="JEFFREY" initials="" last_name="MEADE" suffix="" ssn="666012707" email="LINDSAY.BRUNT@MERRICKBANK.COM" birth_date="05/10/1978" mother_maiden_name="CAMP" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="2707" age="" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="">
+          <app_prod_bcard card_id="" pd_tp_c="S3H" card_name="" requested_credit_line="" allocated_credit_line="600" accnt_type_ind="" card_decision_tp_c="NODEC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="1200" />
+          <contact_address address_seq_no="" address_tp_c="CURR" fax_no="" home_phone="8012221333" street_name="" street_number="174" unit="" po_box="" rural_route="1" city="CRAWFORDSVILLE" state="IN" zip="47933" Patriot_Act_street_number="" Patriot_Act_street_name="" Patriot_Act_unit="" Patriot_Act_city="" Patriot_Act_state="" Patriot_Act_zip="" ownership_tp_c="" residence_monthly_pymnt="1150.0" years_at_residence="0" months_at_residence="0.0" cell_phone="8014441555" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_rural_route="" />
+          <contact_employment employment_seq_no="" employment_tp_c="CURR" b_name="" b_job_title_tp_c="" b_years_at_job="0" b_months_at_job="0.0" b_self_employed_ind="N" b_street_number="" b_street_name="" b_unit="" b_city="" b_state="" b_zip="" b_phone_no="8013331444" b_salary="70000.0" b_salary_basis_tp_c="ANNUM" b_other_income_amt="" b_other_income_source_tp_c="" b_othr_inc_basis_tp_c="ANNUM" b_phone_no_ext="" b_primary_income_source_tp_c="" b_income_source_nontaxable="N" />
+        </contact>
+        <contact con_id="460591" ac_role_tp_c="AUTHU" title="" first_name="JUSTINE" initials="" last_name="MEADE" suffix="" ssn="666554444" email="" birth_date="01/01/1977" mother_maiden_name="" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="4444" age="41" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="" accnt_type_ind="" card_decision_tp_c="NODEC" issue_card_ind="Y" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="" />
+        </contact>
+        <rmts_info merrick_appl_number="08185T19603T" transmission_date="" campaign_number="S3H" name_match_flag="" ssn_match_flag="" address_match_flag="Y" primary_first_name="JEFFREY" primary_middle_name="" primary_last_name="MEADE" primary_suffix="" primary_ssn="66012707" pri_cur_street_num="174" pri_cur_street_name="RR1" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="CRAWFORDSVILLE" pri_state="IN" pri_zip_code="479330000" special_flag_5="J" special_flag_6="G" special_flag_7="A" special_flag_8="A" aaa_misc_field_4="" misc_field_6="08185T19603T" upc8="909" upc9="" upc10="817" upc12="" CB_prescreen_birth_date="05/10/1978" auth_user_is_spouse="Y" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" />
+        <demographics employment_status="NA" employer_name="" checking_savings_account="NA" housing_type="NA" cash_advances="NA" />
+        <app_product decision_tp_c="NONE" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="N" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="Y" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="817" prescreen_risk_score="306" risk_model_score="" prescreen_risk_grade="H" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <comments comment_seq_number="1" comment="Application not decisioned within 15 days.  Referred to Supervisor." user_id="System" time_stamp="2018-8-29 10:11:18.109" />
+      </application>
+    </CustData>
+    <Reports />
+    <Audits />
+    <Journals>
+      <Journal Type="Process" ID="PSHRD" Timestamp="Thu Aug 02 09:48:15 MDT 2018" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2018-8-2 9:48:15.554" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="Thu Aug 02 09:48:15 MDT 2018" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2018-8-2 9:48:15.571" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="Thu Aug 02 09:48:15 MDT 2018" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2018-8-2 9:48:15.597" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Thu Aug 02 09:48:15 MDT 2018" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2018-8-2 9:48:15.602" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="Thu Aug 02 09:48:15 MDT 2018" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2018-8-2 9:48:15.605" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2018-8-2 9:48:15.617" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2018-8-2 9:48:15.618" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2018-8-2 9:48:15.625" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2018-8-2 9:48:15.627" Status="true" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2018-8-2 9:48:15.629" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2018-8-2 9:48:15.631" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2018-8-2 9:48:15.633" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2018-8-2 9:48:15.635" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2018-8-2 9:48:15.638" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2018-8-2 9:48:15.641" Status="true" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2018-8-2 9:48:15.643" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2018-8-2 9:48:15.688" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2018-8-2 9:48:15.689" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Thu Aug 02 09:48:15 MDT 2018" Status="Fail" />
+      <Journal Type="Script" ID="App Opened By jramsey" Timestamp="2018-8-2 9:49:4.889" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By lbrunt" Timestamp="2018-8-2 11:39:16.354" Status="Opened" />
+    </Journals>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079ad110cc68c27a" ID="PAMAI" Description="Primary applicants address missing street number and PO Box." Timestamp="2018-8-2 9:48:15.627" Severity="0" Override="0" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079e0110cc68c247" ID="PARRO" Description="Primary applicants address information contains only rural route." Timestamp="2018-8-2 9:48:15.641" Severity="0" Override="0" AllowOverride="1" />
+    </Rules>
+  </Request>
+</Provenir>

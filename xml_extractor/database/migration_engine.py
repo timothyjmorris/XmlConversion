@@ -372,9 +372,6 @@ class MigrationEngine(MigrationEngineInterface):
             columns specified in the mapping contract. Schema compatibility is guaranteed
             by the contract-driven architecture.
         """
-        if not records:
-            self.logger.warning(f"No records provided for bulk insert into {table_name}")
-            return 0
         
         # Filter out duplicate contact_base records before insertion
         records = self._filter_duplicate_contacts(records, table_name)
@@ -426,11 +423,7 @@ class MigrationEngine(MigrationEngineInterface):
                                 pass
                         values.append(val)
                     data_tuples.append(tuple(values))
-                    if table_name == 'app_pricing_cc':
-                        self.logger.warning(f"DEBUG: app_pricing_cc Record {len(data_tuples)}: {values}")
-                        for i, (col, val) in enumerate(zip(columns, values)):
-                            self.logger.warning(f"DEBUG: app_pricing_cc {i}: {col} = {repr(val)} ({type(val).__name__})")
-                
+                    
                 # Try executemany first for performance, fall back to individual executes if needed
                 batch_start = 0
                 use_executemany = True

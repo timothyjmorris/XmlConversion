@@ -1,0 +1,864 @@
+﻿<Provenir org="" ProductType="" Version="4.0.0" transactionID="DE1c045cf2_157fcad8657_07ffd157fcada599_0a19763d.165" ResponseCode="Pass" Org="">
+  <Request ID="150963" LockedBy="" _LockedBy="" Priority="" Process="99000" Readonly="" Status="" Timeout="" Timestamp="" Trace="cfac5d57-9326-4b4b-99ea-b46587715eba" Trans="SendAns" UnLockOnExit="" UserID="" Workflow="1" Version="" transactionCounter="0">
+    <CustData>
+      <application address_match_flag="" app_entry_date="4/6/2016" app_receive_date="4/6/2016" app_source_ind="I" app_type_code="PRODB" campaign_num="P2DO" coupon_expiration_date="05/26/2016" CPS_letter_sent_flag="" credit_life_ind="" Debit_Funding_Source="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_date="" Debit_Refund_amount="" EODRet="WEBPROCESS" existing_card_account_num="" last_update_time="" mail_cell_pricing="PDBB21A14D" name_match_flag="Y" Partner_URL_ID="TU6256729453" population_assignment="JB" pymnt_prot_plan_ind="" pricing_tier="59" processing_expiration_date="06/01/2016" procs_date="2016-4-6 19:59:8.649" secure_ach_amount="0" signature_ind="Y" solicitation_locked="" solicitation_num="0416AAAAAEQT" special_offer="2" ssn_match_flag="Y" swiftpay_num="" TUAccessCode="" verification_source="LNQ">
+        <app_product aba_number="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" aggregate_balance="" aggregate_balance5="" analyst_rev_ind="N" annual_fee_tp_c="" autopay_ind="" backend_fico_grade="P" backend_risk_grade="D" bankruptcy_score="" booked_date="2016-4-26 9:50:6.457" bus_card_name="" cash_advance_ind="" cendant_add_date="" collections_remark_codes_num="" control_accnt_desired_ind="" control_accnt_number="" control_accnt_seq_no="" csi_eligibility_ind="" csi_sent_date="" debt_to_income_ratio="10.18" decision_date="2016-4-6 19:59:20.931" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" decision_tp_c="APPRV" delphi_score="" discharged_bankruptcy_ind="" disclosures="R" dismissed_bankruptcy_ind="" duplicate_app_ind="N" empirica_score="" existing_cardholder_ind="" experian_fico_score="" FICO_BKR3_EX="" FICO_BKR3_TU="" FICO_NextGen3_EX="" FICO_NextGen3_TU="" filed_bankruptcy_ind="" horizon_score="" ics_sent_date="" intrnl_fraud_ssn_ind="N" intrnl_fraud_address_ind="N" letter_requested_ind="" lscampaign_num="" mars_model_score="" merrick_tradelines_num="" monthly_debt="636" monthly_income="6250" multran_booked_date="" neuristics_edge_score="" ninety_day_delinq_num="" one_twenty_day_delinq_num="" overdraft_ind="" override_tp_c="" pd_seq_no="" pd_tp_c="" pending_verif_ind="N" pinnacle_score="" policy_override_employee_code="" prev_merrick_inq_num="" precision_score="798" prescreen_bkr_score="" prescreen_fico_grade="B" prescreen_fico_score="663" prescreen_risk_grade="P" prescreen_risk_score="654" prmy_pd_ind="" pubrec_bankruptcies_num="" regbcloseddays_num="20" regbcloseddays_num_counter_offer="" regbcloseddays2_num="" regbnewinfostartdate="" req_plastics_qt="1" req_prod_tp_c="VCRDU" risk_model_score_JH="" risk_model_score_LP="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" Risk_Model_reason3_tp_c="" risk_model_score="349" sixty_day_delinq_num="" sixty_ninety_day_delinq_num="" score="" scorecard="" supervisor_rev_ind="N" thirty_day_delinq_num="" trades_BKR_filings_num="" trades_remark_codes_num="" Vantage_Score_EX="" Vantage_Score_TU="" TU_DIE_score="19" TU_TIE_score="40" risk_model_score_JB="595" VeridQA_Result="QA_Passed" classic_08_score="779" />
+        <comments comment="InstantID Score was not required. QA was pulled. Session completed if pass or fail appears below. Otherwise, manual QA is required to process." comment_seq_number="1" comment_type_code="DA" user_id="System" time_stamp="2016-4-6 19:59:10.87" />
+        <contact mother_maiden_name="DAVIS" ac_role_tp_c="PR" initials="" last_name="BERRY" suffix="" con_id="273891" title="" first_name="JAMES" birth_date="05/04/1970" ssn="666470975" ssn_last_4="0975" email="LANE.DELANO@MERRICKBANK.COM" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" age="45">
+          <app_prod_bcard accnt_bin="41206140" accnt_seq_no="201" accnt_type_ind="" account_number="4120614011002016" agent="1100" allocated_credit_line="700" analyst_approved_line="" card_decision_tp_c="APPRV" card_id="261481" card_name="BERRY,JAMES " issue_card_ind="Y" multran_accnt_bin="" multran_accnt_seq_no="" multran_account_number="" pd_tp_c="P2DO" recur_payment_credit_line="" requested_credit_line="" seq_check="002016" sys_prin="55494000" />
+          <contact_address address_seq_no="248078" address_tp_c="CURR" cell_phone="" city="HOLYOKE" fax_no="" home_phone="8012223333" mailing_city="HOLYOKE" mailing_po_box="" mailing_rural_route="" mailing_state="MA" mailing_unit="" mailing_zip="01040" months_at_residence="" ownership_tp_c="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" residence_monthly_pymnt="500" rural_route="" state="MA" street_name="BRAY" street_number="35" unit="" years_at_residence="" zip="01040" />
+          <contact_employment b_city="" b_income_source_nontaxable="" b_job_title_tp_c="" b_months_at_job="" b_name="" b_othr_inc_basis_tp_c="" b_other_income_amt="" b_other_income_source_tp_c="" b_phone_no="" b_phone_no_ext="" b_primary_income_source_tp_c="" b_salary="75000" b_salary_basis_tp_c="ANNUM" b_state="" b_street_name="" b_street_number="" b_years_at_job="" b_self_employed_ind="" b_unit="" b_zip="" banking_aba="" banking_account_number="" banking_accounts_held="" banking_account_type="" employment_seq_no="248077" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters cb_disclosure_suppress="" cb_score_suppress="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" letter_type_cd="" seq_no="" />
+        <rmts_info aaa_misc_field_4="QA" address_match_flag="" auth_user_is_spouse="" campaign_number="P2DO" CB_prescreen_birth_date="05/04/1970" merrick_appl_number="" name_match_flag="" pri_apt_number="" pri_city="HOLYOKE" pri_cur_street_num="35" pri_cur_street_name="BRAY" pri_po_box_num="" pri_rural_rt_num="" pri_state="MA" pri_zip_code="01040" primary_first_name="JAMES" primary_last_name="BERRY" primary_middle_name="" primary_ssn="66470975" primary_suffix="" special_flag_5="K" special_flag_6="A" special_flag_7="A" special_flag_8="A" ssn_match_flag="" transmission_date="2016-4-6 19:59:8.602" upc8="" upc9="" upc10="663" upc12="798" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <FDR account_number="" Cross_refrence_indicator="" Cross_refrence_number="" External_Primary_Account="" filler="" multran_account_number="" operator_code="" SubTranCode="" swiftpay_number="" terminalID="" transaction_code="" />
+        <comments comment_seq_number="2" comment="InstantID Score was not required. Applicant passed QA." user_id="System" comment_type_code="DA" time_stamp="2016-4-6 19:59:19.743" />
+      </application>
+    </CustData>
+    <Reports>
+      <VeridMaint>
+        <PrimaryQuestionSet QuestionSetID="11020782622666" transaction-number="11020859512723" ProcessedTS="2016-04-06T19:59:18.517">
+          <Question QuestionID="11021750594964" ChoiceID="11026861694562" />
+          <Question QuestionID="11021750594965" ChoiceID="11026861694565" />
+          <Question QuestionID="11021750594966" ChoiceID="11026861694571" />
+          <Question QuestionID="11021750594967" ChoiceID="11026861694579" />
+        </PrimaryQuestionSet>
+      </VeridMaint>
+      <TU>
+        <Raw>TU4R0620 0150963                  29UTB 3321721 20160406205909PH0101207000SH01027101Y05N06TRN19950314NM01070F1BERRY                    JAMES          S                    PI01029F66647097519691101    AD01105F1135          BRAY PARK                    DR     HOLYOKE                    MA01040     20160301EM01100TEST A                             FA TESTER              20110401        20160310V          EM01100FAKE EMPLOYER INC                  FVWECON                                20160310V          AD01105F21                                                DALLAS                     TX          20160301SM010411000000000000000009008000001000002SD01056R000013979000018800000004731000000000000000094075SD01056M000060000000000000000056276000000000000000540   SD01056T000073979000018800000061007000000000000000634   TR01288D 01KXG001MACYS/FDSB              R11111439                C2014090320160122A20150808C                011000000000000000000                                                          CH   000000000                     2015122211111XXXXXXXXXX1                                160000002TR01288D 01KXG001MACYS/FDSB              R11111439                C2014073120160121A20150807C        20141114011000000000000001635000001800                                                 CH   000000000                     2015122111111XXXXXXXX11111                              180000002TR01288D 01KXG001MACYS/FDSB              R11111439                C2014013120160120A20150806C                011000000000000000000000001000                                                 CH   000000000                     2015122011111XXXXXXXXXXXXXXXXXX1                        240000002TR01288D 01KXG001MACYS/FDSB              R11111439                C1995062620160119A         2015120620151213011000000000000001508000002000                                                 CH   000000000                     2015121911XXX11111111111X1111111111111111111111111111111480000002TR01288Q 043TV001BANK AMERICA            M1111140841669           C2010081720160118A                         011000056276000060000         360M000000540FRD633632996                        CV   000000000                     2015121811111111111111111111111XXXXXXXXX111111111111111 470000002TR01288D 06256374CBUSASEARS              R111116485               A1996022920160117A                 20030630011000000000000001371000005300                                                 CH   000000000                     20151217111111111111111111111111111111111111111111111111480000002TR01288B 0402D017CHASE NA                R111111084000            C1995032220151209A                         011000004731000008600000008600MIN 000000094                                    CC   000000000                     20151109111111111111111111111111111111111111111111111111480000002TR01288B 0328Q024SYNCB/PCRICH            R111115207               I2009120920140430A         20101205        011000000000000002500000002500                                                   CLO000000000                     20140330111111111111                                    130000002TR01288D 0912Q001MACYS/FDSB              R1111                    I2007090220101117A                         011000000000000000000000000400                                                      000000000                     20101017111111111111111111                              180000002IN0106529UTB 03321721MERRICK BK              I           20160406IN0106540LOB 02382255HSBC                    I           20160226AO010170650001H01AO0101700N0304   SC0103400N03+40                   CH0103000N03LOW END 0000030000CH0103000N03HIGH END0000049999CH0103000N03SCORE   040 B     AO0101700N0504   CH0103000N05AT01    0000000009CH0103000N05AT03    0000000005CH0103000N05AT05    0000000000CH0103000N05AT06    0000000000CH0103000N05AT07    0000000000CH0103000N05AT08    0000000000CH0103000N05AT09    0000000002CH0103000N05AT10    0000000003CH0103000N05AT11    0000000004CH0103000N05AT12    0000000004CH0103000N05AT13    0000000004CH0103000N05AT14    0000000004CH0103000N05AT20    0000000253CH0103000N05AT21    0000000019CH0103000N05AT23    0000000005CH0103000N05AT24    0000000005CH0103000N05AT25    0000000005CH0103000N05AT26    0000000005CH0103000N05AT27    0000000005CH0103000N05AT28    0000075900CH0103000N05AT29    0000000002CH0103000N05AT33    0000061007CH0103000N05AT34    00000029.8CH0103000N05AT35    0000015252CH0103000N05AT36              CH0103000N05AT99    0000004731CH0103000N05BR03    0000000001CH0103000N05BR20    0000000253CH0103000N05BR28    0000008600CH0103000N05BR33    0000004731CH0103000N05FR03    0000000000CH0103000N05FR33    0000000000CH0103000N05FR35              CH0103000N05RE03    0000000004CH0103000N05RE10    0000000002CH0103000N05RE11    0000000003CH0103000N05RE12    0000000003CH0103000N05RE13    0000000003CH0103000N05RE14    0000000003CH0103000N05RE20    0000000253CH0103000N05RE28    0000015900CH0103000N05RE32    0000004731CH0103000N05RE33    0000004731CH0103000N05RE34    00000029.8CH0103000N05RE35    0000001577CH0103000N05BI01    0000000000CH0103000N05BI03    0000000000CH0103000N05BI05    0000000000CH0103000N05BI06    0000000000CH0103000N05BI07    0000000000CH0103000N05BI08    0000000000CH0103000N05BI09    0000000000CH0103000N05BI20              CH0103000N05BI28    0000000000CH0103000N05FI01    0000000000CH0103000N05FI03    0000000000CH0103000N05FI05    0000000000CH0103000N05FI06    0000000000CH0103000N05FI07    0000000000CH0103000N05FI08    0000000000CH0103000N05FI09    0000000000CH0103000N05IN03    0000000000CH0103000N05IN05    0000000000CH0103000N05IN06    0000000000CH0103000N05IN07    0000000000CH0103000N05IN08    0000000000CH0103000N05IN09    0000000000CH0103000N05IN10    0000000000CH0103000N05IN11    0000000000CH0103000N05IN12    0000000000CH0103000N05IN13    0000000000CH0103000N05IN14    0000000000CH0103000N05IN21              CH0103000N05IN28    0000000000CH0103000N05IN33    0000000000CH0103000N05IN34              CH0103000N05MT01    0000000001CH0103000N05MT02    0000000000CH0103000N05MT03    0000000001CH0103000N05MT04    0000000000CH0103000N05MT20    0000000068CH0103000N05MT21    0000000068CH0103000N05MT22    0000000003CH0103000N05MT28    0000060000CH0103000N05MT29    0000000001CH0103000N05MT32    0000056276CH0103000N05MT33    0000056276CH0103000N05MT34    00000093.8CH0103000N05MT35    0000056276CH0103000N05MT36              CH0103000N05MT41    0000000000CH0103000N05MT42    0000000000CH0103000N05MT43    0000000000CH0103000N05MT44    0000000000CH0103000N05MT45    0000000000CH0103000N05MT46    0000000000CH0103000N05MT47    0000000000CH0103000N05MT48    0000000000CH0103000N05MT49    0000000000CH0103000N05MT50    0000000000CH0103000N05MT51    0000000000CH0103000N05MT52    0000000000CH0103000N05MT53    0000000000CH0103000N05MT54    0000000000CH0103000N05MT55              CH0103000N05MT56    0000000000CH0103000N05MT57    0000000000CH0103000N05PF02    0000000000CH0103000N05PF03    0000000000CH0103000N05PF05    0000000000CH0103000N05PF06    0000000000CH0103000N05PF07    0000000000CH0103000N05PF08    0000000000CH0103000N05PF09    0000000000CH0103000N05PF33    0000000000CH0103000N05PF34              CH0103000N05OF01    0000000001CH0103000N05OF03    0000000001CH0103000N05OF20    0000000068CH0103000N05OF28    0000060000CH0103000N05OF29    0000000001CH0103000N05OF33    0000056276CH0103000N05OF36              CH0103000N05ON01    0000000000CH0103000N05ON03    0000000000CH0103000N05ON20              CH0103000N05ON33    0000000000CH0103000N05ON34              CH0103000N05BC01    0000000002CH0103000N05BC02    0000000000CH0103000N05BC03    0000000001CH0103000N05BC05    0000000000CH0103000N05BC06    0000000000CH0103000N05BC07    0000000000CH0103000N05BC08    0000000000CH0103000N05BC09    0000000000CH0103000N05BC10    0000000000CH0103000N05BC11    0000000001CH0103000N05BC12    0000000001CH0103000N05BC13    0000000001CH0103000N05BC14    0000000001CH0103000N05BC21    0000000253CH0103000N05BC29    0000000001CH0103000N05BC30    00000100.0CH0103000N05BC31    00000000.0CH0103000N05BC34    00000055.0CH0103000N05BC35    0000004731CH0103000N05BC36              CH0103000N05BC98    0000003869CH0103000N05PB05    0000000000CH0103000N05PB03    0000000001CH0103000N05PB06    0000000000CH0103000N05PB07    0000000000CH0103000N05PB08    0000000000CH0103000N05PB09    0000000000CH0103000N05PB10    0000000000CH0103000N05PB11    0000000001CH0103000N05PB12    0000000001CH0103000N05PB13    0000000001CH0103000N05PB14    0000000001CH0103000N05PB20    0000000253CH0103000N05PB21    0000000253CH0103000N05PB33    0000004731CH0103000N05PB35    0000004731CH0103000N05RT01    0000000006CH0103000N05RT03    0000000003CH0103000N05RT05    0000000000CH0103000N05RT06    0000000000CH0103000N05RT07    0000000000CH0103000N05RT08    0000000000CH0103000N05RT09    0000000002CH0103000N05RT10    0000000002CH0103000N05RT11    0000000002CH0103000N05RT12    0000000002CH0103000N05RT13    0000000002CH0103000N05RT14    0000000002CH0103000N05RT20    0000000250CH0103000N05RT21    0000000019CH0103000N05RT28    0000007300CH0103000N05RT29    0000000000CH0103000N05RT33    0000000000CH0103000N05RT34    00000000.0CH0103000N05RT35    0000000000CH0103000N05RT36              CH0103000N05UR03    0000000000CH0103000N05UR05    0000000000CH0103000N05UR06    0000000000CH0103000N05UR07    0000000000CH0103000N05UR08    0000000000CH0103000N05UR09    0000000000CH0103000N05UR10    0000000000CH0103000N05UR11    0000000000CH0103000N05UR12    0000000000CH0103000N05UR13    0000000000CH0103000N05UR14    0000000000CH0103000N05UR20              CH0103000N05UR21              CH0103000N05UR28    0000000000CH0103000N05UR33    0000000000CH0103000N05UR35              CH0103000N05DS02    0000000000CH0103000N05DS03    0000000003CH0103000N05DS04    0000000000CH0103000N05DS05    0000000000CH0103000N05DS06    0000000000CH0103000N05DS07    0000000000CH0103000N05DS08    0000000000CH0103000N05DS09    0000000002CH0103000N05DS10    0000000002CH0103000N05DS11    0000000002CH0103000N05DS12    0000000002CH0103000N05DS13    0000000002CH0103000N05DS14    0000000002CH0103000N05DS21    0000000019CH0103000N05DS33    0000000000CH0103000N05DS35    0000000000CH0103000N05G001    0000000000CH0103000N05G002    0000000000CH0103000N05G003    0000000000CH0103000N05G004    0000000000CH0103000N05G005    0000000000CH0103000N05G006    0000000000CH0103000N05G007    0000000000CH0103000N05G008    0000000000CH0103000N05G009    0000000000CH0103000N05G016    0000000000CH0103000N05G017    0000000000CH0103000N05G018    0000000000CH0103000N05G019    0000000000CH0103000N05G020    0000000000CH0103000N05G021    0000000000CH0103000N05G022    0000000000CH0103000N05G023    0000000000CH0103000N05G024    0000000000CH0103000N05G025    0000000000CH0103000N05G026    0000000000CH0103000N05G027    0000000000CH0103000N05G028    0000000000CH0103000N05G029    0000000000CH0103000N05G030    0000000000CH0103000N05G041    0000000000CH0103000N05G042    0000000000CH0103000N05G043    0000000000CH0103000N05G044    0000000000CH0103000N05G045    0000000000CH0103000N05G046    0000000009CH0103000N05G047    0000000009CH0103000N05G048    0000000009CH0103000N05G049    0000000009CH0103000N05G050    0000000009CH0103000N05G051    00000100.0CH0103000N05G057    0000000000CH0103000N05G058    0000000000CH0103000N05G059    0000000000CH0103000N05G060    0000000000CH0103000N05G061    0000000000CH0103000N05G062    0000000000CH0103000N05G063    0000000000CH0103000N05G064    0000000000CH0103000N05G065    0000000000CH0103000N05G066    0000000000CH0103000N05G067    0000000000CH0103000N05G068    0000000000CH0103000N05G069    0000000000CH0103000N05G070    0000000000CH0103000N05G071    0000000000CH0103000N05G082    0000000000CH0103000N05G083    0000000000CH0103000N05G084    0000000000CH0103000N05G085    0000000000CH0103000N05G086    0000000000CH0103000N05G087    0000000000CH0103000N05G088    0000000000CH0103000N05G089              CH0103000N05G091    0000000000CH0103000N05G093    0000000000CH0103000N05G094    0000000000CH0103000N05G095              CH0103000N05G096    0000000001CH0103000N05G098    0000000001CH0103000N05G102    0000000002CH0103000N05G103    0000000003CH0103000N05G104    0000000253CH0103000N05S002    0000006911CH0103000N05S004    0000000118CH0103000N05S008    0000000001CH0103000N05S009    0000000002CH0103000N05S010    0000000001CH0103000N05S011    0000000005CH0103000N05S012    0000000004CH0103000N05S014    0000000000CH0103000N05S015    0000000001CH0103000N05S018    0000000000CH0103000N05S019    0000000000CH0103000N05S020    0000000000CH0103000N05S027    0000000068CH0103000N05S040    0000005300CH0103000N05S043    0000000001CH0103000N05S046    00000050.0CH0103000N05S054    0000000006CH0103000N05S055    0000000009CH0103000N05S059    0000000000CH0103000N05S060    0000000000CH0103000N05S061              CH0103000N05S062              CH0103000N05S063    0000000000CH0103000N05S064    0000000000CH0103000N05S065    0000000000CH0103000N05S066    0000000000CH0103000N05S078              CH0103000N05S079    00000000.0CH0103000N05S114    0000000001CH0103000N05S115    0000000000CH0103000N05S0Y2    0000196911AO0101700N2104   SC0103400N21+779    010003005008  AO0101700N7104   CH0103000N71DEBT    0000000634CH0103000N71MTHINCOM0000003333AO0101700W0304   CH0103000W03AT01MB1 0000000008CH0103000W03AT03MB1 0000000004CH0103000W03AT06MB1 0000000000CH0103000W03AT20MB1 0000000253CH0103000W03AT24MB1 0000000004CH0103000W03AT29MB1 0000000001CH0103000W03AT99MB1 0000004731CH0103000W03BC01MB1 0000000002CH0103000W03BC06MB1 0000000000CH0103000W03BC21MB1 0000000253CH0103000W03BC29MB1 0000000001CH0103000W03BC34MB1 00000055.0CH0103000W03BC98MB1 0000003869CH0103000W03MT02B57 0000000000CH0103000W03RE28MB1 0000010600CH0103000W03RE35MB1 0000002366CH0103000W03S004MB1 0000000102CH0103000W03S043MB1 0000000001CH0103000W03S046MB1 0000000067CH0103000W03AH07    0000000000CH0103000W03AH08    0000000000CH0103000W03AH09    0000000000CH0103000W03AH11    0000000001CH0103000W03AH24    0000000001CH0103000W03AH29    0000000000CH0103000W03AH33    0000000000CH0103000W03AH35    0000000000CH0103000W03AH36              CH0103000W03AH95    0000000000CH0103000W03AH96    0000000001CH0103000W03AH99    0000000000CH0103000W03VAR10             CH0103000W03VAR11             CH0103000W03VAR12             CH0103000W03VAR13             CH0103000W03VAR14             CH0103000W03VAR15             CH0103000W03VAR16             CH0103000W03VAR17             CH0103000W03VAR18             CH0103000W03VAR19             CH0103000W03VAR20             CH0103000W03VAR21             CH0103000W03VAR22             CH0103000W03VAR23             CH0103000W03VAR30   0000000000CH0103000W03VAR31   0000000000CH0103000W03VAR32   0000000000CH0103000W03VAR33   0000000000CH0103000W03VAR34   0000004731CH0103000W03VAR36   0000000000CH0103000W03VAR37   0000000000CH0103000W03VAR38   0000000000CH0103000W03VAR39   0000000000CH0103000W03VAR40   0000000000CH0103000W03VAR41   0000000000CH0103000W03VAR42   0000000000CH0103000W03VAR45             CH0103000W03VAR46             CH0103000W03VAR52   0000004731CH0103000W03VAR53   0000000000CH0103000W03VAR54   0000004731CH0103000W03VAR55   0000000000CH0103000W03VAR56   0000000253CH0103000W03VAR57   0000000253CH0103000W03VAR24             CH0103000W03VAR25   0000000999CH0103000W03VAR26   0000000999CH0103000W03ATTR01  0000000000CH0103000W03ATTR02  0000000000CH0103000W03ATTR03  0000000000CH0103000W03ATTR04  0000000000CH0103000W03ATTR05  0000000000CH0103000W03ATTR06  0000000540CH0103000W03ATTR07  0000000000CH0103000W03ATTR08  0000000540CH0103000W03ATTR09  0000000000CH0103000W03ATTR10  0000000094CH0103000W03ATTR11  0000000000CH0103000W03ATTR12  0000000094CH0103000W03ATTR13  0000000000CH0103000W03ATTR14  0000000634CH0103000W03ATTR15  0000000000CH0103000W03ATTR16  0000000634CH0103000W03ATTR17  0000000000CH0103000W03CC01    0000000000CH0103000W03CC02    0000000000CH0103000W03CC04    0000000000CH0103000W03CC05    0000000000CH0103000W03CC08    0000000000CH0103000W03CC09    0000000999CH0103000W03CC10    0000000999CH0103000W03CC11    0000000999CH0103000W03CC12    0000000000CH0103000W03CC13    0000000000CH0103000W03CC14    0000000000CH0103000W03CC16    0000000000CH0103000W03CC17    0000000000CH0103000W03CC18    0000000000CH0103000W03CC19    0000000000CH0103000W03CC20    0000000634CH0103000W03CC27    0000000000CH0103000W03SD01    0000000000CH0103000W03SD03    -000000001CH0103000W03SD06    -000000001CH0103000W03SD07    -000000001CH0103000W03SD08    -000000001CH0103000W03SD35    -000000001CH0103000W03SD37    -000000001CH0103000W03SD38    -000000001CH0103000W03SD39    -000000001CH0103000W03SD42    -000000001CH0103000W03SD67    -000000001CH0103000W03SD68    -000000001CH0103000W03SD69    -000000001CH0103000W03SD85    -000000001CH0103000W03SG01    0000000000CH0103000W03SG02    -000000001CH0103000W03SG04    -000000001CH0103000W03SG28    -000000001CH0103000W03SG35    -000000001CH0103000W03SG43    -000000001CH0103000W03SG47    -000000001CH0103000W03SG53    -000000001CH0103000W03SG55    -000000001CH0103000W03SG65    -000000001CH0103000W03SG66    -000000001CH0103000W03SG69    -000000001CH0103000W03SG71    -000000001CH0103000W03SG75    -000000001CH0103000W03SG76    -000000001CH0103000W03SG77    -000000001CH0103000W03SG79    -000000001CH0103000W03SG81    -000000001CH0103000W03SG85    -000000001CH0103000W03SP01    0000000000CH0103000W03SP02    -000000001CH0103000W03SP04    -000000001CH0103000W03SP24    -000000001CH0103000W03SP25    -000000001CH0103000W03SP26    -000000001CH0103000W03SP27    -000000001CH0103000W03SP28    -000000001CH0103000W03SP29    -000000001CH0103000W03SP35    -000000001CH0103000W03SP36    -000000001CH0103000W03SP37    -000000001CH0103000W03SP43    -000000001CH0103000W03SP50    -000000001CH0103000W03SP54    -000000001CH0103000W03SP69    -000000001CH0103000W03SP79    -000000001CH0103000W03SP85    -000000001CH0103000W03SR01    0000000000CH0103000W03SR02    -000000001CH0103000W03SR35    -000000001CH0103000W03SR55    -000000001CH0103000W03SR61    -000000001CH0103000W03SR69    -000000001CH0103000W03SR85    -000000001CH0103000W03ST01    0000000000CH0103000W03ST20    -000000001CH0103000W03ST40    -000000001CH0103000W03ST42    -000000001CH0103000W03ST45    -000000001CH0103000W03ST46    -000000001CH0103000W03ST47    -000000001CH0103000W03ST50    -000000001CH0103000W03ST85    -000000001CH0103000W03ST99    -000000002CH0103000W03MANULAKA0000000000CH0103000W03UTAXLIEN0000000000CH0103000W03ABNKRTCY0000000000CH0103000W03VAR58   0000000540CH0103000W03VAR59   0000000094CH0103000W03VAR60   0000000000CH0103000W03VAR61   0000000000CH0103000W03VAR62   0000000000CH0103000W03VAR63   0000000000CH0103000W03VAR64   0000000000AO0101700X9904   SC0103400X99+19                   CH0103000X99DBINCOME0000000019AO010170022704   SC0103400227+798   I B5 P6 R2 F9  ENDS010537</Raw>
+        <TU4R SegmentType="TU4R" SegmentLength="062" VersionSwitch="0" CountryCode=" " LanguageIndicator="0" UserReferenceNumber="150963                  " BureauMarket="29" BureauSubmarket="UT" IndustryCode="B " MemberCode="3321721 " TransactionDate="20160406" TransactionTime="205909" />
+        <PH01 SegmentType="PH01" SegmentLength="012" ProductCode="07000" />
+        <SubjectInfo>
+          <SH01 SegmentType="SH01" SegmentLength="027" SubjectIdentifier="1" FileNumber="01" FileHit="Y" SSNMatchIndicator="05" ConsumerStatementIndicator="N" BureauMarketFileControl="06" BureauSubmarketFileControl="TR" SuppressionIndicator="N" InFileSinceDate="19950314" />
+          <NM01 SegmentType="NM01" SegmentLength="070" SourceIndicator="F" NameIndicator="1" LastName="BERRY                    " FirstName="JAMES          " MiddleName="S              " Prefix="   " Suffix="   " />
+          <PI01 SegmentType="PI01" SegmentLength="029" SourceIndicator="F" SocialSecurityNumber="666470975" DateofBirth="19691101" Age="   " Gender=" " />
+          <AD01 SegmentType="AD01" SegmentLength="105" SourceIndicator="F" AddressQualifier="1" ParsingIndicator="1" HouseNumber="35        " Predirectional="  " StreetName="BRAY PARK                  " Postdirectional="  " StreetType="DR" Apartment_UnitNumber="     " City="HOLYOKE                    " State="MA" ZIPCode="01040     " DateReported="20160301" />
+          <EM01 SegmentType="EM01" SegmentLength="100" EmployerName="TEST A                             " SourceIndicator="F" Occupation="A TESTER              " DateHired="20110401" DateSeparated="        " DateVerified_Reported="20160310" DateVerified_ReportedCode="V" Income="         " PayBasis=" " />
+          <EM01 SegmentType="EM01" SegmentLength="100" EmployerName="FAKE EMPLOYER INC                  " SourceIndicator="F" Occupation="VWECON                " DateHired="        " DateSeparated="        " DateVerified_Reported="20160310" DateVerified_ReportedCode="V" Income="         " PayBasis=" " />
+          <AD01 SegmentType="AD01" SegmentLength="105" SourceIndicator="F" AddressQualifier="2" ParsingIndicator="1" HouseNumber="          " Predirectional="  " StreetName="                           " Postdirectional="  " StreetType="  " Apartment_UnitNumber="     " City="DALLAS                     " State="TX" ZIPCode="          " DateReported="20160301" />
+          <SM01 SegmentType="SM01" SegmentLength="041" CreditSummaryReportingPeriod="1" NumberofPublicRecords="000" NumberofCollections="000" NumberofNegativeTrades="000" TradeswithanyHistoricalNegative="000" OccurrenceofHistoricalNegatives="000" NumberofTrades="009" NumberofRevolvingandCheckCreditTrades="008" NumberofInstallmentTrades="000" NumberofMortgageTrades="001" NumberofOpenTradeAccounts="000" NumberofInquiries="002" />
+          <SD01 SegmentType="SD01" SegmentLength="056" SummaryType="R" HighCredit="000013979" CreditLimit="000018800" Balance="000004731" AmountPastDue="000000000" MonthlyPayment="000000094" PercentofCreditAvailable="075" />
+          <SD01 SegmentType="SD01" SegmentLength="056" SummaryType="M" HighCredit="000060000" CreditLimit="000000000" Balance="000056276" AmountPastDue="000000000" MonthlyPayment="000000540" PercentofCreditAvailable="   " />
+          <SD01 SegmentType="SD01" SegmentLength="056" SummaryType="T" HighCredit="000073979" CreditLimit="000018800" Balance="000061007" AmountPastDue="000000000" MonthlyPayment="000000634" PercentofCreditAvailable="   " />
+          <TR01 SegmentType="TR01" SegmentLength="288" IndustryCode="D " MemberCode="01KXG001" SubscriberName="MACYS/FDSB              " AccountType="R" AccountNumber="" AccountDesignator="C" DateOpened="20140903" DateVerified="20160122" TradeVerificationIndicator="A" DateClosed="20150808" DateClosedIndicator="C" DatePaidOut="        " DateofLastActivity="        " CurrentMannerofPayment="01" Currency="1" Balance="000000000" HighCredit="000000000" CreditLimit="         " TermsDuration="   " TermsFrequencyofPayment=" " TermsAmountofPayment="         " Collateral="                                    " LoanType="CH" RemarksCode="   " AmountPastDue="000000000" NumberofPaymentsPastDue="  " MaximumDelinquencyAmount="         " MaximumDelinquencyDate="        " MaximumDelinquencyMOP="  " PaymentPatternStartDate="20151222" PaymentPattern="11111XXXXXXXXXX1                                " NumberofMonthsReviewed="16" Times30DaysLate="00" Times60DaysLate="00" Times90DaysLate="00" HistoricalCountersVerificationIndicator="2" />
+          <TR01 SegmentType="TR01" SegmentLength="288" IndustryCode="D " MemberCode="01KXG001" SubscriberName="MACYS/FDSB              " AccountType="R" AccountNumber="" AccountDesignator="C" DateOpened="20140731" DateVerified="20160121" TradeVerificationIndicator="A" DateClosed="20150807" DateClosedIndicator="C" DatePaidOut="        " DateofLastActivity="20141114" CurrentMannerofPayment="01" Currency="1" Balance="000000000" HighCredit="000001635" CreditLimit="000001800" TermsDuration="   " TermsFrequencyofPayment=" " TermsAmountofPayment="         " Collateral="                                    " LoanType="CH" RemarksCode="   " AmountPastDue="000000000" NumberofPaymentsPastDue="  " MaximumDelinquencyAmount="         " MaximumDelinquencyDate="        " MaximumDelinquencyMOP="  " PaymentPatternStartDate="20151221" PaymentPattern="11111XXXXXXXX11111                              " NumberofMonthsReviewed="18" Times30DaysLate="00" Times60DaysLate="00" Times90DaysLate="00" HistoricalCountersVerificationIndicator="2" />
+          <TR01 SegmentType="TR01" SegmentLength="288" IndustryCode="D " MemberCode="01KXG001" SubscriberName="MACYS/FDSB              " AccountType="R" AccountNumber="" AccountDesignator="C" DateOpened="20140131" DateVerified="20160120" TradeVerificationIndicator="A" DateClosed="20150806" DateClosedIndicator="C" DatePaidOut="        " DateofLastActivity="        " CurrentMannerofPayment="01" Currency="1" Balance="000000000" HighCredit="000000000" CreditLimit="000001000" TermsDuration="   " TermsFrequencyofPayment=" " TermsAmountofPayment="         " Collateral="                                    " LoanType="CH" RemarksCode="   " AmountPastDue="000000000" NumberofPaymentsPastDue="  " MaximumDelinquencyAmount="         " MaximumDelinquencyDate="        " MaximumDelinquencyMOP="  " PaymentPatternStartDate="20151220" PaymentPattern="11111XXXXXXXXXXXXXXXXXX1                        " NumberofMonthsReviewed="24" Times30DaysLate="00" Times60DaysLate="00" Times90DaysLate="00" HistoricalCountersVerificationIndicator="2" />
+          <TR01 SegmentType="TR01" SegmentLength="288" IndustryCode="D " MemberCode="01KXG001" SubscriberName="MACYS/FDSB              " AccountType="R" AccountNumber="" AccountDesignator="C" DateOpened="19950626" DateVerified="20160119" TradeVerificationIndicator="A" DateClosed="        " DateClosedIndicator=" " DatePaidOut="20151206" DateofLastActivity="20151213" CurrentMannerofPayment="01" Currency="1" Balance="000000000" HighCredit="000001508" CreditLimit="000002000" TermsDuration="   " TermsFrequencyofPayment=" " TermsAmountofPayment="         " Collateral="                                    " LoanType="CH" RemarksCode="   " AmountPastDue="000000000" NumberofPaymentsPastDue="  " MaximumDelinquencyAmount="         " MaximumDelinquencyDate="        " MaximumDelinquencyMOP="  " PaymentPatternStartDate="20151219" PaymentPattern="11XXX11111111111X1111111111111111111111111111111" NumberofMonthsReviewed="48" Times30DaysLate="00" Times60DaysLate="00" Times90DaysLate="00" HistoricalCountersVerificationIndicator="2" />
+          <TR01 SegmentType="TR01" SegmentLength="288" IndustryCode="Q " MemberCode="043TV001" SubscriberName="BANK AMERICA            " AccountType="M" AccountNumber="1111140841669           " AccountDesignator="C" DateOpened="20100817" DateVerified="20160118" TradeVerificationIndicator="A" DateClosed="        " DateClosedIndicator=" " DatePaidOut="        " DateofLastActivity="        " CurrentMannerofPayment="01" Currency="1" Balance="000056276" HighCredit="000060000" CreditLimit="         " TermsDuration="360" TermsFrequencyofPayment="M" TermsAmountofPayment="000000540" Collateral="FRD633632996                        " LoanType="CV" RemarksCode="   " AmountPastDue="000000000" NumberofPaymentsPastDue="  " MaximumDelinquencyAmount="         " MaximumDelinquencyDate="        " MaximumDelinquencyMOP="  " PaymentPatternStartDate="20151218" PaymentPattern="11111111111111111111111XXXXXXXXX111111111111111 " NumberofMonthsReviewed="47" Times30DaysLate="00" Times60DaysLate="00" Times90DaysLate="00" HistoricalCountersVerificationIndicator="2" />
+          <TR01 SegmentType="TR01" SegmentLength="288" IndustryCode="D " MemberCode="06256374" SubscriberName="CBUSASEARS              " AccountType="R" AccountNumber="" AccountDesignator="A" DateOpened="19960229" DateVerified="20160117" TradeVerificationIndicator="A" DateClosed="        " DateClosedIndicator=" " DatePaidOut="        " DateofLastActivity="20030630" CurrentMannerofPayment="01" Currency="1" Balance="000000000" HighCredit="000001371" CreditLimit="000005300" TermsDuration="   " TermsFrequencyofPayment=" " TermsAmountofPayment="         " Collateral="                                    " LoanType="CH" RemarksCode="   " AmountPastDue="000000000" NumberofPaymentsPastDue="  " MaximumDelinquencyAmount="         " MaximumDelinquencyDate="        " MaximumDelinquencyMOP="  " PaymentPatternStartDate="20151217" PaymentPattern="111111111111111111111111111111111111111111111111" NumberofMonthsReviewed="48" Times30DaysLate="00" Times60DaysLate="00" Times90DaysLate="00" HistoricalCountersVerificationIndicator="2" />
+          <TR01 SegmentType="TR01" SegmentLength="288" IndustryCode="B " MemberCode="0402D017" SubscriberName="CHASE NA                " AccountType="R" AccountNumber="" AccountDesignator="C" DateOpened="19950322" DateVerified="20151209" TradeVerificationIndicator="A" DateClosed="        " DateClosedIndicator=" " DatePaidOut="        " DateofLastActivity="        " CurrentMannerofPayment="01" Currency="1" Balance="000004731" HighCredit="000008600" CreditLimit="000008600" TermsDuration="MIN" TermsFrequencyofPayment=" " TermsAmountofPayment="000000094" Collateral="                                    " LoanType="CC" RemarksCode="   " AmountPastDue="000000000" NumberofPaymentsPastDue="  " MaximumDelinquencyAmount="         " MaximumDelinquencyDate="        " MaximumDelinquencyMOP="  " PaymentPatternStartDate="20151109" PaymentPattern="111111111111111111111111111111111111111111111111" NumberofMonthsReviewed="48" Times30DaysLate="00" Times60DaysLate="00" Times90DaysLate="00" HistoricalCountersVerificationIndicator="2" />
+          <TR01 SegmentType="TR01" SegmentLength="288" IndustryCode="B " MemberCode="0328Q024" SubscriberName="SYNCB/PCRICH            " AccountType="R" AccountNumber="" AccountDesignator="I" DateOpened="20091209" DateVerified="20140430" TradeVerificationIndicator="A" DateClosed="        " DateClosedIndicator=" " DatePaidOut="20101205" DateofLastActivity="        " CurrentMannerofPayment="01" Currency="1" Balance="000000000" HighCredit="000002500" CreditLimit="000002500" TermsDuration="   " TermsFrequencyofPayment=" " TermsAmountofPayment="         " Collateral="                                    " LoanType="  " RemarksCode="CLO" AmountPastDue="000000000" NumberofPaymentsPastDue="  " MaximumDelinquencyAmount="         " MaximumDelinquencyDate="        " MaximumDelinquencyMOP="  " PaymentPatternStartDate="20140330" PaymentPattern="111111111111                                    " NumberofMonthsReviewed="13" Times30DaysLate="00" Times60DaysLate="00" Times90DaysLate="00" HistoricalCountersVerificationIndicator="2" />
+          <TR01 SegmentType="TR01" SegmentLength="288" IndustryCode="D " MemberCode="0912Q001" SubscriberName="MACYS/FDSB              " AccountType="R" AccountNumber="" AccountDesignator="I" DateOpened="20070902" DateVerified="20101117" TradeVerificationIndicator="A" DateClosed="        " DateClosedIndicator=" " DatePaidOut="        " DateofLastActivity="        " CurrentMannerofPayment="01" Currency="1" Balance="000000000" HighCredit="000000000" CreditLimit="000000400" TermsDuration="   " TermsFrequencyofPayment=" " TermsAmountofPayment="         " Collateral="                                    " LoanType="  " RemarksCode="   " AmountPastDue="000000000" NumberofPaymentsPastDue="  " MaximumDelinquencyAmount="         " MaximumDelinquencyDate="        " MaximumDelinquencyMOP="  " PaymentPatternStartDate="20101017" PaymentPattern="111111111111111111                              " NumberofMonthsReviewed="18" Times30DaysLate="00" Times60DaysLate="00" Times90DaysLate="00" HistoricalCountersVerificationIndicator="2" />
+          <IN01 SegmentType="IN01" SegmentLength="065" BureauMarket="29" BureauSubmarket="UT" IndustryCode="B " MemberCode="03321721" SubscriberName="MERRICK BK              " InquiryType="I" LoanType="  " LoanAmount="         " DateofInquiry="20160406" />
+          <IN01 SegmentType="IN01" SegmentLength="065" BureauMarket="40" BureauSubmarket="LO" IndustryCode="B " MemberCode="02382255" SubscriberName="HSBC                    " InquiryType="I" LoanType="  " LoanAmount="         " DateofInquiry="20160226" />
+          <AO01 SegmentType="AO01" SegmentLength="017" ProductCode="06500" ProductStatus="01" SearchStatus="H01" />
+          <AO01 SegmentType="AO01" SegmentLength="017" ProductCode="00N03" ProductStatus="04" SearchStatus="   " />
+          <SC01 SegmentType="SC01" SegmentLength="034" ProductCode="00N03" Sign="+" Score="40   " ScoringIndicatorFlag=" " ScoreDerogatoryAlertFlag=" " FirstFactor="   " SecondFactor="   " ThirdFactor="   " FourthFactor="   " ScoreCardIndicator="  " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N03" CharacteristicID="LOW END " CharacteristicValue="0000030000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N03" CharacteristicID="HIGH END" CharacteristicValue="0000049999" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N03" CharacteristicID="SCORE   " CharacteristicValue="040 B     " />
+          <AO01 SegmentType="AO01" SegmentLength="017" ProductCode="00N05" ProductStatus="04" SearchStatus="   " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT01    " CharacteristicValue="0000000009" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT03    " CharacteristicValue="0000000005" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT09    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT10    " CharacteristicValue="0000000003" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT11    " CharacteristicValue="0000000004" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT12    " CharacteristicValue="0000000004" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT13    " CharacteristicValue="0000000004" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT14    " CharacteristicValue="0000000004" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT20    " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT21    " CharacteristicValue="0000000019" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT23    " CharacteristicValue="0000000005" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT24    " CharacteristicValue="0000000005" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT25    " CharacteristicValue="0000000005" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT26    " CharacteristicValue="0000000005" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT27    " CharacteristicValue="0000000005" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT28    " CharacteristicValue="0000075900" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT29    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT33    " CharacteristicValue="0000061007" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT34    " CharacteristicValue="00000029.8" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT35    " CharacteristicValue="0000015252" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT36    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="AT99    " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BR03    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BR20    " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BR28    " CharacteristicValue="0000008600" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BR33    " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FR03    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FR33    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FR35    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE03    " CharacteristicValue="0000000004" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE10    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE11    " CharacteristicValue="0000000003" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE12    " CharacteristicValue="0000000003" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE13    " CharacteristicValue="0000000003" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE14    " CharacteristicValue="0000000003" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE20    " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE28    " CharacteristicValue="0000015900" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE32    " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE33    " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE34    " CharacteristicValue="00000029.8" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RE35    " CharacteristicValue="0000001577" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BI01    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BI03    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BI05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BI06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BI07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BI08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BI09    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BI20    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BI28    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FI01    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FI03    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FI05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FI06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FI07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FI08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="FI09    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN03    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN09    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN10    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN11    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN12    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN13    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN14    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN21    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN28    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN33    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="IN34    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT01    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT02    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT03    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT04    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT20    " CharacteristicValue="0000000068" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT21    " CharacteristicValue="0000000068" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT22    " CharacteristicValue="0000000003" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT28    " CharacteristicValue="0000060000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT29    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT32    " CharacteristicValue="0000056276" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT33    " CharacteristicValue="0000056276" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT34    " CharacteristicValue="00000093.8" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT35    " CharacteristicValue="0000056276" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT36    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT41    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT42    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT43    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT44    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT45    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT46    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT47    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT48    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT49    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT50    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT51    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT52    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT53    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT54    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT55    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT56    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="MT57    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PF02    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PF03    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PF05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PF06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PF07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PF08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PF09    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PF33    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PF34    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="OF01    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="OF03    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="OF20    " CharacteristicValue="0000000068" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="OF28    " CharacteristicValue="0000060000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="OF29    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="OF33    " CharacteristicValue="0000056276" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="OF36    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="ON01    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="ON03    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="ON20    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="ON33    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="ON34    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC01    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC02    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC03    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC09    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC10    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC11    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC12    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC13    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC14    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC21    " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC29    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC30    " CharacteristicValue="00000100.0" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC31    " CharacteristicValue="00000000.0" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC34    " CharacteristicValue="00000055.0" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC35    " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC36    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="BC98    " CharacteristicValue="0000003869" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB03    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB09    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB10    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB11    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB12    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB13    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB14    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB20    " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB21    " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB33    " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="PB35    " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT01    " CharacteristicValue="0000000006" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT03    " CharacteristicValue="0000000003" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT09    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT10    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT11    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT12    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT13    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT14    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT20    " CharacteristicValue="0000000250" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT21    " CharacteristicValue="0000000019" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT28    " CharacteristicValue="0000007300" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT29    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT33    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT34    " CharacteristicValue="00000000.0" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT35    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="RT36    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR03    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR09    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR10    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR11    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR12    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR13    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR14    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR20    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR21    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR28    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR33    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="UR35    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS02    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS03    " CharacteristicValue="0000000003" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS04    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS06    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS09    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS10    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS11    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS12    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS13    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS14    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS21    " CharacteristicValue="0000000019" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS33    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="DS35    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G001    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G002    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G003    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G004    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G005    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G006    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G007    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G008    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G009    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G016    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G017    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G018    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G019    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G020    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G021    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G022    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G023    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G024    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G025    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G026    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G027    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G028    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G029    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G030    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G041    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G042    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G043    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G044    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G045    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G046    " CharacteristicValue="0000000009" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G047    " CharacteristicValue="0000000009" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G048    " CharacteristicValue="0000000009" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G049    " CharacteristicValue="0000000009" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G050    " CharacteristicValue="0000000009" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G051    " CharacteristicValue="00000100.0" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G057    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G058    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G059    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G060    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G061    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G062    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G063    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G064    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G065    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G066    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G067    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G068    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G069    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G070    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G071    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G082    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G083    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G084    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G085    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G086    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G087    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G088    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G089    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G091    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G093    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G094    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G095    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G096    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G098    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G102    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G103    " CharacteristicValue="0000000003" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="G104    " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S002    " CharacteristicValue="0000006911" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S004    " CharacteristicValue="0000000118" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S008    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S009    " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S010    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S011    " CharacteristicValue="0000000005" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S012    " CharacteristicValue="0000000004" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S014    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S015    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S018    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S019    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S020    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S027    " CharacteristicValue="0000000068" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S040    " CharacteristicValue="0000005300" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S043    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S046    " CharacteristicValue="00000050.0" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S054    " CharacteristicValue="0000000006" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S055    " CharacteristicValue="0000000009" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S059    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S060    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S061    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S062    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S063    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S064    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S065    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S066    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S078    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S079    " CharacteristicValue="00000000.0" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S114    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S115    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N05" CharacteristicID="S0Y2    " CharacteristicValue="0000196911" />
+          <AO01 SegmentType="AO01" SegmentLength="017" ProductCode="00N21" ProductStatus="04" SearchStatus="   " />
+          <SC01 SegmentType="SC01" SegmentLength="034" ProductCode="00N21" Sign="+" Score="779  " ScoringIndicatorFlag=" " ScoreDerogatoryAlertFlag=" " FirstFactor="010" SecondFactor="003" ThirdFactor="005" FourthFactor="008" ScoreCardIndicator="  " />
+          <AO01 SegmentType="AO01" SegmentLength="017" ProductCode="00N71" ProductStatus="04" SearchStatus="   " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N71" CharacteristicID="DEBT    " CharacteristicValue="0000000634" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00N71" CharacteristicID="MTHINCOM" CharacteristicValue="0000003333" />
+          <AO01 SegmentType="AO01" SegmentLength="017" ProductCode="00W03" ProductStatus="04" SearchStatus="   " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AT01MB1 " CharacteristicValue="0000000008" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AT03MB1 " CharacteristicValue="0000000004" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AT06MB1 " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AT20MB1 " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AT24MB1 " CharacteristicValue="0000000004" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AT29MB1 " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AT99MB1 " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="BC01MB1 " CharacteristicValue="0000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="BC06MB1 " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="BC21MB1 " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="BC29MB1 " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="BC34MB1 " CharacteristicValue="00000055.0" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="BC98MB1 " CharacteristicValue="0000003869" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="MT02B57 " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="RE28MB1 " CharacteristicValue="0000010600" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="RE35MB1 " CharacteristicValue="0000002366" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="S004MB1 " CharacteristicValue="0000000102" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="S043MB1 " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="S046MB1 " CharacteristicValue="0000000067" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH07    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH09    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH11    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH24    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH29    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH33    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH35    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH36    " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH95    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH96    " CharacteristicValue="0000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="AH99    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR10   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR11   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR12   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR13   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR14   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR15   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR16   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR17   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR18   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR19   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR20   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR21   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR22   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR23   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR30   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR31   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR32   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR33   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR34   " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR36   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR37   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR38   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR39   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR40   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR41   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR42   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR45   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR46   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR52   " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR53   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR54   " CharacteristicValue="0000004731" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR55   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR56   " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR57   " CharacteristicValue="0000000253" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR24   " CharacteristicValue="          " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR25   " CharacteristicValue="0000000999" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR26   " CharacteristicValue="0000000999" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR01  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR02  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR03  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR04  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR05  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR06  " CharacteristicValue="0000000540" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR07  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR08  " CharacteristicValue="0000000540" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR09  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR10  " CharacteristicValue="0000000094" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR11  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR12  " CharacteristicValue="0000000094" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR13  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR14  " CharacteristicValue="0000000634" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR15  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR16  " CharacteristicValue="0000000634" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ATTR17  " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC01    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC02    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC04    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC05    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC08    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC09    " CharacteristicValue="0000000999" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC10    " CharacteristicValue="0000000999" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC11    " CharacteristicValue="0000000999" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC12    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC13    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC14    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC16    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC17    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC18    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC19    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC20    " CharacteristicValue="0000000634" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="CC27    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD01    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD03    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD06    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD07    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD08    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD35    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD37    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD38    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD39    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD42    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD67    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD68    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD69    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SD85    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG01    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG02    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG04    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG28    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG35    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG43    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG47    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG53    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG55    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG65    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG66    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG69    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG71    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG75    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG76    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG77    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG79    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG81    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SG85    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP01    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP02    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP04    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP24    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP25    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP26    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP27    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP28    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP29    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP35    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP36    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP37    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP43    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP50    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP54    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP69    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP79    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SP85    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SR01    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SR02    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SR35    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SR55    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SR61    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SR69    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="SR85    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST01    " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST20    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST40    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST42    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST45    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST46    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST47    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST50    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST85    " CharacteristicValue="-000000001" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ST99    " CharacteristicValue="-000000002" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="MANULAKA" CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="UTAXLIEN" CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="ABNKRTCY" CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR58   " CharacteristicValue="0000000540" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR59   " CharacteristicValue="0000000094" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR60   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR61   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR62   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR63   " CharacteristicValue="0000000000" />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00W03" CharacteristicID="VAR64   " CharacteristicValue="0000000000" />
+          <AO01 SegmentType="AO01" SegmentLength="017" ProductCode="00X99" ProductStatus="04" SearchStatus="   " />
+          <SC01 SegmentType="SC01" SegmentLength="034" ProductCode="00X99" Sign="+" Score="19   " ScoringIndicatorFlag=" " ScoreDerogatoryAlertFlag=" " FirstFactor="   " SecondFactor="   " ThirdFactor="   " FourthFactor="   " ScoreCardIndicator="  " />
+          <CH01 SegmentType="CH01" SegmentLength="030" ProductCode="00X99" CharacteristicID="DBINCOME" CharacteristicValue="0000000019" />
+          <AO01 SegmentType="AO01" SegmentLength="017" ProductCode="00227" ProductStatus="04" SearchStatus="   " />
+          <SC01 SegmentType="SC01" SegmentLength="034" ProductCode="00227" Sign="+" Score="798  " ScoringIndicatorFlag=" " ScoreDerogatoryAlertFlag="I" FirstFactor=" B5" SecondFactor=" P6" ThirdFactor=" R2" FourthFactor=" F9" ScoreCardIndicator="  " />
+        </SubjectInfo>
+        <ENDS SegmentType="ENDS" SegmentLength="010" TotalNumberofSegments="537" />
+      </TU>
+      <VeridAuthentication>
+        <authenticationTransactionResponse>
+          <transaction-response>
+            <transaction-response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+              <result>questions</result>
+              <transaction-number>11020859512723</transaction-number>
+              <accounts-transaction-id>434343434</accounts-transaction-id>
+              <verbose-details>
+                <information xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="information-type[0]" />
+                <error xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="error-information-type[0]" />
+                <failed xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="failed-information-type[0]" />
+                <passed xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="passed-information-type[0]" />
+                <questions-detail xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="questions-detail-information-type[1]">
+                  <questions-detail-information-type>
+                    <code>iauth.questions.set1</code>
+                    <simple-detail soapenc:arrayType="simple-detail-type[1]">
+                      <simple-detail-type>
+                        <text>Initial set of authentication questions</text>
+                      </simple-detail-type>
+                    </simple-detail>
+                    <complex-detail soapenc:arrayType="complex-detail-type[0]" />
+                  </questions-detail-information-type>
+                </questions-detail>
+              </verbose-details>
+              <questions>
+                <question-set-id>11020782622666</question-set-id>
+                <question xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="question-type[4]">
+                  <question-type>
+                    <id>11021750594964</id>
+                    <answer-type href="#ID_22">single</answer-type>
+                    <text>Which of the following addresses have you ever been associated with?</text>
+                    <choice soapenc:arrayType="choice-type[5]">
+                      <choice-type>
+                        <id>11026861694560</id>
+                        <text>1026 West 100 North</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694561</id>
+                        <text>13025 South 5200 West</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694562</id>
+                        <text>617 East 2700 South</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694563</id>
+                        <text>640 North Woods Drive</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694564</id>
+                        <text>I have never been associated with any of these addresses</text>
+                      </choice-type>
+                    </choice>
+                    <help-text>The addresses listed may be partial, misspelled or contain minor numbering variations from your actual address</help-text>
+                  </question-type>
+                  <question-type>
+                    <id>11021750594965</id>
+                    <answer-type href="#ID_22">single</answer-type>
+                    <text>What month was 'Stephanie Hess' born in?</text>
+                    <choice soapenc:arrayType="choice-type[5]">
+                      <choice-type>
+                        <id>11026861694565</id>
+                        <text>February</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694566</id>
+                        <text>July</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694567</id>
+                        <text>October</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694568</id>
+                        <text>December</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694569</id>
+                        <text>None of the above or I am not familiar with this person</text>
+                      </choice-type>
+                    </choice>
+                    <help-text>The name of the person in question may contain some typographical errors</help-text>
+                  </question-type>
+                  <question-type>
+                    <id>11021750594966</id>
+                    <answer-type href="#ID_22">single</answer-type>
+                    <text>Which team nickname is associated with a college you attended?</text>
+                    <choice soapenc:arrayType="choice-type[5]">
+                      <choice-type>
+                        <id>11026861694570</id>
+                        <text>Thunderbirds</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694571</id>
+                        <text>Utes</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694572</id>
+                        <text>Wildcats</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694573</id>
+                        <text>Wolverines</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694574</id>
+                        <text>None of the above</text>
+                      </choice-type>
+                    </choice>
+                    <help-text>Select the athletic team name on the college you have attended.</help-text>
+                  </question-type>
+                  <question-type>
+                    <id>11021750594967</id>
+                    <answer-type href="#ID_22">single</answer-type>
+                    <text>Which of the following corporations have you ever been associated with?</text>
+                    <choice soapenc:arrayType="choice-type[5]">
+                      <choice-type>
+                        <id>11026861694575</id>
+                        <text>575 Union Street Llc</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694576</id>
+                        <text>Big Win Inc</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694577</id>
+                        <text>Cubby Enterprises Inc</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694578</id>
+                        <text>Leader North</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>11026861694579</id>
+                        <text>None of the above</text>
+                      </choice-type>
+                    </choice>
+                    <help-text>Corporation Names may contain slight misspellings.</help-text>
+                  </question-type>
+                </question>
+              </questions>
+            </transaction-response>
+          </transaction-response>
+        </authenticationTransactionResponse>
+      </VeridAuthentication>
+      <VeridAuthentication>
+        <continueTransactionResponse>
+          <transaction-response>
+            <transaction-response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+              <result>passed</result>
+              <transaction-number>11020859512723</transaction-number>
+              <accounts-transaction-id>434343434</accounts-transaction-id>
+              <verbose-details>
+                <information xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="information-type[0]" />
+                <error xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="error-information-type[0]" />
+                <failed xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="failed-information-type[0]" />
+                <passed xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="passed-information-type[1]">
+                  <passed-information-type>
+                    <code>passed</code>
+                    <simple-detail soapenc:arrayType="simple-detail-type[1]">
+                      <simple-detail-type>
+                        <text>The individual has passed the requested verification process.</text>
+                      </simple-detail-type>
+                    </simple-detail>
+                    <complex-detail soapenc:arrayType="complex-detail-type[0]" />
+                  </passed-information-type>
+                </passed>
+                <questions-detail xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="questions-detail-information-type[0]" />
+              </verbose-details>
+              <questions />
+            </transaction-response>
+          </transaction-response>
+        </continueTransactionResponse>
+      </VeridAuthentication>
+    </Reports>
+    <Messages />
+    <Rules>
+      <Rule guid="repoObj_154a13df_114dc01cd8d_07f1511506c6cf3e" ID="MMDOB" Description="Reported date of birth mismatches credit bureau date of birth. Instant ID and Q&amp;A may have run for applicant. See comments." Timestamp="2016-4-6 19:59:19.618" Severity="0" Override="1" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Script" ID="ProcStart" Timestamp="2016-4-6 19:59:8.602" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="Wed Apr 06 19:59:08 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2016-4-6 19:59:8.696" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="Wed Apr 06 19:59:08 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2016-4-6 19:59:8.727" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="Wed Apr 06 19:59:08 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2016-4-6 19:59:8.805" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Wed Apr 06 19:59:08 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2016-4-6 19:59:8.821" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="Wed Apr 06 19:59:08 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2016-4-6 19:59:8.821" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2016-4-6 19:59:8.837" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2016-4-6 19:59:8.837" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2016-4-6 19:59:8.852" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2016-4-6 19:59:8.852" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2016-4-6 19:59:8.868" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2016-4-6 19:59:8.868" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2016-4-6 19:59:8.883" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2016-4-6 19:59:8.883" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2016-4-6 19:59:8.899" Status="false" />
+      <Journal Type="Rule" ID="PAPMA" Timestamp="2016-4-6 19:59:8.899" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2016-4-6 19:59:8.915" Status="false" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2016-4-6 19:59:8.915" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2016-4-6 19:59:8.930" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2016-4-6 19:59:8.930" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Wed Apr 06 19:59:08 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2016-4-6 19:59:8.946" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2016-4-6 19:59:8.946" Status="false" />
+      <Journal Type="Rule" ID="SSNMM" Timestamp="2016-4-6 19:59:8.962" Status="false" />
+      <Journal Type="Rule" ID="PMACI" Timestamp="2016-4-6 19:59:8.977" Status="false" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2016-4-6 19:59:8.993" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2016-4-6 19:59:8.993" Status="false" />
+      <Journal Type="Process" ID="02000" Timestamp="Wed Apr 06 19:59:09 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2016-4-6 19:59:9.24" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="Wed Apr 06 19:59:09 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="CBRER" Timestamp="2016-4-6 19:59:9.696" Status="false" />
+      <Journal Type="Rule" ID="CBFRZ" Timestamp="2016-4-6 19:59:9.696" Status="false" />
+      <Journal Type="Process" ID="06000" Timestamp="Wed Apr 06 19:59:09 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="NXBLK" Timestamp="2016-4-6 19:59:9.727" Status="false" />
+      <Journal Type="Rule" ID="CBMNA" Timestamp="2016-4-6 19:59:9.727" Status="false" />
+      <Journal Type="Process" ID="07000" Timestamp="Wed Apr 06 19:59:09 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="BKFIL" Timestamp="2016-4-6 19:59:9.852" Status="false" />
+      <Journal Type="Rule" ID="CBPDC" Timestamp="2016-4-6 19:59:9.868" Status="false" />
+      <Journal Type="Rule" ID="NXGEN" Timestamp="2016-4-6 19:59:9.883" Status="false" />
+      <Journal Type="Rule" ID="CB30D" Timestamp="2016-4-6 19:59:9.883" Status="false" />
+      <Journal Type="Rule" ID="90120" Timestamp="2016-4-6 19:59:9.899" Status="false" />
+      <Journal Type="Rule" ID="CBMNT" Timestamp="2016-4-6 19:59:9.915" Status="false" />
+      <Journal Type="Rule" ID="INCSRD" Timestamp="2016-4-6 19:59:9.930" Status="false" />
+      <Journal Type="Rule" ID="CBHAB" Timestamp="2016-4-6 19:59:9.946" Status="false" />
+      <Journal Type="Rule" ID="DFICO" Timestamp="2016-4-6 19:59:9.946" Status="false" />
+      <Journal Type="Rule" ID="CB60D" Timestamp="2016-4-6 19:59:9.962" Status="false" />
+      <Journal Type="Process" ID="07500" Timestamp="Wed Apr 06 19:59:09 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2016-4-6 19:59:9.977" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2016-4-6 19:59:9.993" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2016-4-6 19:59:9.993" Status="true" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2016-4-6 19:59:10.8" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2016-4-6 19:59:10.8" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2016-4-6 19:59:10.24" Status="false" />
+      <Journal Type="Rule" ID="CBFNI" Timestamp="2016-4-6 19:59:10.24" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2016-4-6 19:59:10.40" Status="false" />
+      <Journal Type="Rule" ID="CBLNI" Timestamp="2016-4-6 19:59:10.40" Status="false" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2016-4-6 19:59:10.55" Status="false" />
+      <Journal Type="Rule" ID="CBRDC" Timestamp="2016-4-6 19:59:10.87" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Wed Apr 06 19:59:13 MDT 2016" Status="Fail" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2016-4-6 19:59:19.603" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2016-4-6 19:59:19.618" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2016-4-6 19:59:19.618" Status="true" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2016-4-6 19:59:19.634" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2016-4-6 19:59:19.649" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2016-4-6 19:59:19.649" Status="false" />
+      <Journal Type="Rule" ID="CBFNI" Timestamp="2016-4-6 19:59:19.665" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2016-4-6 19:59:19.665" Status="false" />
+      <Journal Type="Rule" ID="CBLNI" Timestamp="2016-4-6 19:59:19.681" Status="false" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2016-4-6 19:59:19.696" Status="false" />
+      <Journal Type="Rule" ID="CBRDC" Timestamp="2016-4-6 19:59:19.728" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Wed Apr 06 19:59:19 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2016-4-6 19:59:20.399" Status="false" />
+      <Journal Type="Rule" ID="CBFRA" Timestamp="2016-4-6 19:59:20.415" Status="false" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2016-4-6 19:59:20.431" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2016-4-6 19:59:20.431" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2016-4-6 19:59:20.446" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2016-4-6 19:59:20.462" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2016-4-6 19:59:20.478" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2016-4-6 19:59:20.493" Status="false" />
+      <Journal Type="Rule" ID="HATNF" Timestamp="2016-4-6 19:59:20.509" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2016-4-6 19:59:20.556" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2016-4-6 19:59:20.743" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2016-4-6 19:59:20.759" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Wed Apr 06 19:59:20 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="MM3AD" Timestamp="2016-4-6 19:59:20.774" Status="false" />
+      <Journal Type="Rule" ID="MM3NM" Timestamp="2016-4-6 19:59:20.790" Status="false" />
+      <Journal Type="Rule" ID="MMSSN" Timestamp="2016-4-6 19:59:20.790" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2016-4-6 19:59:20.806" Status="false" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2016-4-6 19:59:20.821" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2016-4-6 19:59:20.837" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2016-4-6 19:59:20.837" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2016-4-6 19:59:20.853" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2016-4-6 19:59:20.868" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2016-4-6 19:59:20.868" Status="false" />
+      <Journal Type="Rule" ID="INCMISS" Timestamp="2016-4-6 19:59:20.884" Status="false" />
+      <Journal Type="Rule" ID="PAMPH" Timestamp="2016-4-6 19:59:20.884" Status="false" />
+      <Journal Type="Rule" ID="VFPAA" Timestamp="2016-4-6 19:59:20.899" Status="false" />
+      <Journal Type="Process" ID="11000" Timestamp="Wed Apr 06 19:59:20 MDT 2016" Status="Pass" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2016-4-6 19:59:20.931" Status="false" />
+      <Journal Type="Process" ID="12000" Timestamp="Wed Apr 06 19:59:20 MDT 2016" Status="Pass" />
+      <Journal Type="Process" ID="20000" Timestamp="Wed Apr 06 19:59:20 MDT 2016" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits />
+  </Request>
+</Provenir>

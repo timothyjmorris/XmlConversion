@@ -1,0 +1,241 @@
+﻿<Provenir Org="" sessionID="" stack="" Version="" ProductType="" error="" x-trace-id="a28d8eaa-bf35-4a9e-bb4d-75f82d0a78bf" action="" app_source="API" transactionID="35001" errorCode="0" status="pass validation" appType="CC" shred_version="1.0">
+  <Request ID="448036" UserID="" Workflow="1" Timestamp="" Status="P" Trans="WEBAPP" Readonly="" Process="03000" Version="" Priority="" Timeout="" Trace="" LockedBy="" iovation_sessionid="8d2444a5-877d-430d-82bf-b15a07082ad2" iovation_blackbox="" triggerFinicity="N" triggerNova="N" triggerQA="N" btcardtoken="" btresponsecode="" useAlloyService="0">
+    <CustData>
+      <application app_type_code="PRODB" procs_date="2025-10-23 04:00:45.506" app_receive_date="2025-10-23 04:00:45.445" last_update_time="" signature_ind="Y" coupon_expiration_date="12/12/2025" name_match_flag="Y" address_match_flag="" ssn_match_flag="Y" pricing_tier="59" solicitation_num="11255T13456T" pymnt_prot_plan_ind="" credit_life_ind="0" campaign_num="Z4K" app_entry_date="10/23/2025" swiftpay_num="" mail_cell_pricing="ZKAX6GN120" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" app_channel="" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="1" CPS_letter_sent_flag="" population_assignment="DN" verification_source="" EODRet="WEBAPP" processing_expiration_date="12/17/2025" solicitation_locked="Y" secure_ach_amount="" IP_address="::1" EXPinNumber="" assignedTo="" updatedBy="" priority="" paperless_flag="true" sms_consent_flag="" esign_consent_flag="true">
+        <app_product decision_tp_c="NONE" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="N" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="634" prescreen_risk_score="319" risk_model_score="" prescreen_risk_grade="A" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="QA_Questions" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="Y" bank_debt_to_income_ratio="" regb_start_date="2025-10-23 4:0:45.0" regb_end_date="" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" decision_score="" decision_model="" />
+        <contact con_id="753726" ac_role_tp_c="PR" title="" first_name="EULA" initials="E" last_name="BENNETT" suffix="" ssn="666021143" email="swyness@gmail.com" birth_date="05/10/1978" mother_maiden_name="test" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="" age="47" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="1250" accnt_type_ind="" card_decision_tp_c="NODEC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="2500" />
+          <contact_address residence_monthly_pymnt="800.00" address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_unit="" po_box="" city="PITTSBURGH" rural_route="" state="UT" street_name="WILKINS" street_number="5636" unit="null" home_phone="" cell_phone="8019069464" address_line_1="" zip="15217" Patriot_Act_zip="" />
+          <contact_employment b_phone_no="" b_unit="" b_zip="" b_state="" b_street_name="" b_street_number="" b_salary="80000.0" b_city="" b_other_income_amt="0" b_name="" b_job_title_tp_c="" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="0" b_years_at_job="0" b_primary_income_source_tp_c="EMPLOY" b_salary_basis_tp_c="ANNUM" b_othr_inc_basis_tp_c="ANNUM" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="2025-10-23 04:00:45.589" campaign_number="Z4K" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="EULA" primary_middle_name="E" primary_last_name="BENNETT" primary_suffix="" primary_ssn="66021143" pri_cur_street_num="5636" pri_cur_street_name="WILKINS" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="PITTSBURGH" pri_state="PA" pri_zip_code="15217" special_flag_5="R" special_flag_6="A" special_flag_7="A" special_flag_8="A" aaa_misc_field_4="" misc_field_6="" upc8="744" upc9="" upc10="634" upc12="" CB_prescreen_birth_date="05/10/1978" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" minimum_interest_charge="0" account_setup_fee="0" additional_card_fee="0" late_payment_fee="40" over_limit_fee="0" returned_payment_fee="0" apr="34.45" annual_fee="0" cash_advance_apr="35.00" cash_advance_fee="10" cash_advance_percent="4" cash_apr_margin="32.20" foreign_percent="0" intro_cash_advance_apr="0.09589" intro_purchase_apr="0.09438" min_payment_fee="35" min_payment_percent="1.00" purchase_apr_margin="27.20" seg_plan_version="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" IovationCaseId="" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="CreditBureauPulled" value="0" />
+          <Indicator ID="InternetResponsesOn" value="Y" />
+        </Indicators>
+        <scores>
+          <score score="3" score_identifier="email_risk" />
+        </scores>
+        <analytics />
+        <communications />
+        <comments comment_seq_number="1" comment="QA was pulled. Session completed if pass or fail appears below. Otherwise, manual QA is required to process. " user_id="System" comment_type_code="DA" related_to="undefined" time_stamp="2025-10-23 04:00:46.245" isPinned="false" />
+      </application>
+    </CustData>
+    <Reports>
+      <IovationCase>
+        <JSON>
+          <HTTPHeaders Status-Code="401" Status-Message="Web Service Returned non-OK status 401" CF-Ray="992e53b9ec26d6b7-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Thu, 23 Oct 2025 04:00:22 GMT" Access-Control-Expose-Headers="Request-Context" CF-Cache-Status="DYNAMIC" Cache-Control="no-cache" Set-Cookie="__cf_bm=d4CJHq1y5yRlVHkTV7c0Mm4vlphauNlCduxWxfEEokc-1761192022-1.0.1.1-gZD8cvJx98.zBY0K_YUdy6x2zvGbiiYENAIwISBBIre06fZqZ99eA754FFMOZd4e.j5KsNMNwSuCrKh3Ly7Y7Vf.qlmWncQ_F2MwjaQWQ.o; path=/; expires=Thu, 23-Oct-25 04:30:22 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="-1" Content-Length="90" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationCase>
+      <IovationCase>
+        <JSON>
+          <HTTPHeaders Status-Code="401" Status-Message="Web Service Returned non-OK status 401" CF-Ray="992e53b9ec26d6b7-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Thu, 23 Oct 2025 04:00:22 GMT" Access-Control-Expose-Headers="Request-Context" CF-Cache-Status="DYNAMIC" Cache-Control="no-cache" Set-Cookie="__cf_bm=d4CJHq1y5yRlVHkTV7c0Mm4vlphauNlCduxWxfEEokc-1761192022-1.0.1.1-gZD8cvJx98.zBY0K_YUdy6x2zvGbiiYENAIwISBBIre06fZqZ99eA754FFMOZd4e.j5KsNMNwSuCrKh3Ly7Y7Vf.qlmWncQ_F2MwjaQWQ.o; path=/; expires=Thu, 23-Oct-25 04:30:22 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="-1" Content-Length="90" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationCase>
+      <LNEmailage report_time="2025-10-23 04:00:46.225">
+        <query firstname="EULA" created="2025-10-23T04:00:22Z" count="1" responseCount="1" billaddress="5636 WILKINS" billregion="UT" billpostal="15217" queryType="EmailIPRisk" lastname="BENNETT" billcountry="US" phone="8019069464" lang="en-US" email="swyness@gmail.com+::1" transactionTypeDescription="Banking" billcity="PITTSBURGH">
+          <results>
+            <ArrayElementObject citypostalmatch="" shipcitypostalmatch="" phoneToLastNameConfidence="50" ip_postalcode="" ipshipdistancemil="" phone_status="Valid" ip_riskreasonid="301" smfriends="" eName="" totalhits="4" ip_riskreason="Moderate Risk" EAReasonID="28" ipToFullNameConfidence="50" billAddressToLastNameConfidence="50" dob="" first_seen_days="1" emailToBillAddressConfidence="50" ipToShipAddressConfidence="" status="Verified" ipriskcountry="" ip_region="" gender="" domaincorporate="No" ip_netSpeedCell="" fraudRisk="499 Moderate" domainrelevantinfo="Valid Webmail Domain from United States" phoneToFullNameConfidence="50" emailToIpConfidence="50" transCurrency="" ip_org="" namematch="U" lastflaggedon="" ipasnum="" EAAdviceID="4" correlationId="a88a44ae-6b3c-4a48-93df-5788b59cf2fe" domain_creation_days="11028" email="swyness@gmail.com" billAddressToFullNameConfidence="50" overallDigitalIdentityScore="50" fraud_type="" EARiskBandID="3" emailExists="Yes" shipAddressToBillAddressConfidence="" iptimezone="" ip_city="" ipshipcountrymatch="" custphoneInbillingloc="" ipToBillAddressConfidence="50" lastVerificationDate="2025-10-21T20:21:32Z" EAAdvice="Moderate Fraud Risk" domainrelevantinfoID="508" domainAge="1995-08-13T07:00:00Z" country="US" domaincountrymatch="Yes" domaincategory="Webmail" firstVerificationDate="2025-10-21T19:09:31Z" ip_regionconf="" ip_cityconf="" emailToPhoneConfidence="50" ip_riskscore="" emailToLastNameConfidence="50" ip_continentCode="" ipdistancekm="" billriskcountry="No" ip_countryconf="" EARiskBand="Fraud Score 301 to 600" emailAge="" source_industry="" domainrisklevel="Moderate" trackingId="" ipshipdistancekm="" ipdomain="" ip_countryCode="" domainname="gmail.com" emailToFullNameConfidence="50" domainriskcountry="No" transAmount="" domainrisklevelID="3" shipAddressToFullNameConfidence="" ip_metroCode="" ip_corporateProxy="" ipcountrymatch="No" ipaddress="::1" shipforward="No" phoneToBillAddressConfidence="50" ip_postalconf="" ip_map="" ip_country="" uniquehits="1" ip_longitude="" title="" ipToPhoneConfidence="50" ip_callingcode="" ip_userType="" EAReason="Valid Email from a  US Webmail  Domain" domainExists="Yes" ip_reputation="Good" EAStatusID="2" ip_risklevel="Moderate" custom3="" custom4="" company="" domaincompany="Google" ip_anonymousdetected="" custom1="" custom2="" custom7="" custom5="" email_creation_days="" custom6="" phoneToShipAddressConfidence="" emailToShipAddressConfidence="" ipaccuracyradius="" ip_risklevelid="3" ip_isp="" EAScore="499" ipdistancemil="" userdefinedrecordid="" domaincountryname="United States" imageurl="" ipToLastNameConfidence="50" location="" ip_latitude="" shipAddressToLastNameConfidence="">
+              <smlinks />
+            </ArrayElementObject>
+          </results>
+        </query>
+        <responseStatus errorCode="0" description="" status="success" />
+        <HTTPHeaders Status-Code="200" Status-Message="HTTP/1.1 200 OK" Strict-Transport-Security="max-age=86400; includeSubDomains; preload" Cache-Control="private" X-Content-Type-Options="nosniff" Content-Security-Policy="default-src 'none'; frame-ancestors 'none';" Connection="keep-alive" X-XSS-Protection="1; mode=block" Content-Length="3370" Date="Thu, 23 Oct 2025 04:00:22 GMT" Content-Type="application/json" />
+      </LNEmailage>
+      <VeridAuthentication>
+        <authenticationTransactionResponse time="2025-10-23 04:00:47.366">
+          <JSON>
+            <Status ConversationId="50000910648365" ActionType="answers" RequestId="3219811195" Reference="448036" TransactionStatus="pending" />
+            <Products>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_velocity_preid" ProductType="Velocity" ProductStatus="pass" ExecutedStepName="pre_id_velocity">
+                <Items>
+                  <ArrayElementObject ItemStatus="pass" ItemName="TASK_SPOOFING" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="FUTILITY" />
+                </Items>
+              </ArrayElementObject>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_discovery" ProductType="Discovery" ProductStatus="pass" ExecutedStepName="discovery" />
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_velocity_postid" ProductType="Velocity" ProductStatus="pass" ExecutedStepName="post_id_velocity">
+                <Items>
+                  <ArrayElementObject ItemStatus="pass" ItemName="FREQUENCY" />
+                </Items>
+              </ArrayElementObject>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_verification" ProductType="Verification" ProductStatus="pass" ExecutedStepName="verification">
+                <Items>
+                  <ArrayElementObject ItemStatus="pass" ItemName="TaskAgeUnder18WillNotBeFoundCheck" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="TaskSsnDobCheck" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="LexIDDeathMatch" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="IpFlaggingCheck" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="BlackListCheck" />
+                </Items>
+              </ArrayElementObject>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_identity_events" ProductType="IdentityEvent" ProductStatus="pass" ExecutedStepName="identity_events" />
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_authentication" ProductType="IIDQA" ProductStatus="pending" ExecutedStepName="authentication">
+                <QuestionSet QuestionSetId="2693717127">
+                  <Questions>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4260137927" Key="30071">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12231590867">
+                          <Text Statement="Antique" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590877">
+                          <Text Statement="Handicapped" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590887">
+                          <Text Statement="Taxi" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590897">
+                          <Text Statement="Vanity" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590907">
+                          <Text Statement="I have never been associated with this vehicle" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="May include vehicles which you recently sold or vehicles for which you co-signed. May also include a previous kind of license plate." />
+                      <Text Statement="What kind of MD license plate has been on your 2005 BMW 5 series?" />
+                    </ArrayElementObject>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4260137937" Key="1061">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12231590917">
+                          <Text Statement="Brooklyn Park" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590927">
+                          <Text Statement="Ellicott City" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590937">
+                          <Text Statement="Village Kings Contrivance" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590947">
+                          <Text Statement="Westview Park" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590957">
+                          <Text Statement="I have never been associated with any of these communities" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="The address in the statement and the subdivision (housing development) may be partial or contain minor errors" />
+                      <Text Statement="In which of the following housing complexes or communities have you ever lived or owned property?" />
+                    </ArrayElementObject>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4260137947" Key="10801">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12231590967">
+                          <Text Statement="Com Global Sys" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590977">
+                          <Text Statement="Saddlebag Lake Resorts" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590987">
+                          <Text Statement="Universal Polymer" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231590997">
+                          <Text Statement="Viola" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231591007">
+                          <Text Statement="None of the above" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="Corporation Names may contain slight misspellings." />
+                      <Text Statement="Which of the following corporations have you ever been associated with?" />
+                    </ArrayElementObject>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4260137957" Key="5551">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12231591017">
+                          <Text Statement="Blountville" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231591027">
+                          <Text Statement="Boaz" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231591037">
+                          <Text Statement="Cheney" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231591047">
+                          <Text Statement="Lodi" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12231591057">
+                          <Text Statement="None of the above" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="Select the city of the college you have attended." />
+                      <Text Statement="In which of the following cities have you attended college?" />
+                    </ArrayElementObject>
+                  </Questions>
+                </QuestionSet>
+              </ArrayElementObject>
+            </Products>
+            <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" expires="0" Access-Control-Allow-Origin="*" X-Request-Id="643a05a63f1d9d08a8dc4f407220238a" Access-Control-Allow-Methods="GET, PUT, POST, DELETE, PATCH, OPTIONS" x-frame-options="DENY" Connection="keep-alive" Access-Control-Allow-Headers="DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization" strict-transport-security="max-age=31536000; includeSubDomains" pragma="no-cache" Date="Thu, 23 Oct 2025 04:00:23 GMT" x-content-type-options="nosniff" x-xss-protection="0" Access-Control-Allow-Credentials="true" Access-Control-Max-Age="1728000" cache-control="no-cache, no-store, max-age=0, must-revalidate" Content-Type="application/json" />
+          </JSON>
+        </authenticationTransactionResponse>
+      </VeridAuthentication>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2025-10-23 04:00:45.750" Source="WebService.TransUnionCase.POST Case Iovation.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 401" />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_0cc0cdc99_164472593f8_07fe8164472593f8" ID="EMAILAGE" Description="Emailage Fraud" Timestamp="2025-10-23 04:00:46.234" Severity="90" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2025-10-23 04:00:45.445" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2025-10-23 04:00:45.506" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-10-23 04:00:45.550" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-10-23 04:00:45.550" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2025-10-23 04:00:45.555" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="2025-10-23 04:00:45.555" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2025-10-23 04:00:45.599" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="2025-10-23 04:00:45.599" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2025-10-23 04:00:45.601" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="2025-10-23 04:00:45.601" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2025-10-23 04:00:45.602" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2025-10-23 04:00:45.602" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2025-10-23 04:00:45.602" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2025-10-23 04:00:45.603" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2025-10-23 04:00:45.603" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2025-10-23 04:00:45.604" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2025-10-23 04:00:45.605" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2025-10-23 04:00:45.605" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2025-10-23 04:00:45.605" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2025-10-23 04:00:45.606" Status="false" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2025-10-23 04:00:45.606" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2025-10-23 04:00:45.606" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2025-10-23 04:00:45.607" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2025-10-23 04:00:45.607" Status="false" />
+      <Journal Type="Rule" ID="APPGENDEL" Timestamp="2025-10-23 04:00:45.609" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="2025-10-23 04:00:45.609" Status="Pass" />
+      <Journal Type="Process" ID="ID Vision" Timestamp="2025-10-23 04:00:45.752" Status="Fail" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2025-10-23 04:00:45.753" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2025-10-23 04:00:45.753" Status="false" />
+      <Journal Type="Rule" ID="SSNMM" Timestamp="2025-10-23 04:00:45.754" Status="false" />
+      <Journal Type="Rule" ID="PMACI" Timestamp="2025-10-23 04:00:45.754" Status="bypassed" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2025-10-23 04:00:45.755" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2025-10-23 04:00:45.760" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2025-10-23 04:00:45.768" Status="false" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2025-10-23 04:00:45.768" Status="bypassed" />
+      <Journal Type="Process" ID="02000" Timestamp="2025-10-23 04:00:45.768" Status="Pass" />
+      <Journal Type="Process" ID="Alloy Journey Service" Timestamp="2025-10-23 04:00:46.232" Status="bypassed" />
+      <Journal Type="Rule" ID="SL_ID_Theft_Score" Timestamp="2025-10-23 04:00:46.233" Status="false" />
+      <Journal Type="Rule" ID="SL_Synthetic" Timestamp="2025-10-23 04:00:46.233" Status="false" />
+      <Journal Type="Rule" ID="EMAILAGE" Timestamp="2025-10-23 04:00:46.234" Status="true" />
+      <Journal Type="Rule" ID="EAIPDIST" Timestamp="2025-10-23 04:00:46.236" Status="bypassed" />
+      <Journal Type="Rule" ID="DUPDID" Timestamp="2025-10-23 04:00:46.236" Status="bypassed" />
+      <Journal Type="Rule" ID="EAHIGH" Timestamp="2025-10-23 04:00:46.237" Status="false" />
+      <Journal Type="Rule" ID="VRFYAU" Timestamp="2025-10-23 04:00:46.238" Status="false" />
+      <Journal Type="Process" ID="IIDQA" Timestamp="2025-10-23 04:00:47.367" Status="Fail" />
+      <Journal Type="Process" ID="03000" Timestamp="2025-10-23 04:00:47.371" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-10-23 04:00:47.374" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits />
+    <Documents />
+    <temp_app_variables />
+    <TriggeredRules />
+  </Request>
+  <queues>
+    <queue name="Review" id="71" type="av" />
+    <queue name="F Fraud" id="18" />
+    <queue name="T All Applications" id="17" />
+  </queues>
+</Provenir>

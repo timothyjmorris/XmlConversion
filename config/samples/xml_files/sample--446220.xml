@@ -1,0 +1,381 @@
+﻿<Provenir Org="" sessionID="" stack="" Version="" ProductType="" error="" x-trace-id="aa2f2e34-ac4f-4b82-a193-5417e115e0a5" action="" app_source="API" transactionID="25825" errorCode="0" status="pass validation" shred_version="13.0" manualRule="" resetRegB="" appType="SC">
+  <Request ID="446220" UserID="" Workflow="20" Timestamp="" Status="" Trans="" Readonly="0" Process="06000" Version="" Priority="" Timeout="" Trace="" LockedBy="" iovation_sessionid="e815c5dd-f880-47c3-85a9-d3509a3c1b2c" triggerFinicity="N" triggerNova="N" triggerQA="" btcardtoken="" btresponsecode="" _LockedBy="BETHANY.GREER@MERRICKBANK.COM" LockedAt="" LastUpdatedBy="BETHANY.GREER@MERRICKBANK.COM">
+    <CustData>
+      <application app_type_code="SECURE" procs_date="2025-02-25 21:48:48.553" app_receive_date="2025-02-25 21:48:48.484" last_update_time="2025-03-10 21:08:21.117" signature_ind="Y" coupon_expiration_date="" name_match_flag="" address_match_flag="" ssn_match_flag="" pricing_tier="59" solicitation_num="SC3000010548" pymnt_prot_plan_ind="" credit_life_ind="" campaign_num="SC3" app_entry_date="02/25/2025" swiftpay_num="80115546" mail_cell_pricing="" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" app_channel="" TUAccessCode="" Debit_Initial_Deposit_date="2/20/2025" Debit_Initial_Deposit_amount="500.00" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="Check" special_offer="2" CPS_letter_sent_flag="" population_assignment="" verification_source="" EODRet="" processing_expiration_date="" solicitation_locked="" secure_ach_amount="" IP_address="10.20.135.22" EXPinNumber="" assignedTo="" updatedBy="" priority="" paperless_flag="true" sms_consent_flag="true">
+        <app_product decision_tp_c="NONE" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="N" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="Y" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="N" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="0" experian_fico_score="0" prescreen_fico_score="" prescreen_risk_score="" risk_model_score="" prescreen_risk_grade="" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="P" EX_FICO_08_score="" EX_EVS_score="0" EX_TIE_score="0" EX_DIE_score="0" TU_L2C_score="0" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="N" bank_debt_to_income_ratio="" regb_start_date="2025-2-25 21:48:48.0" regb_end_date="2025-02-25" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" decision_score="" decision_model="" adverse_type_code="V4" />
+        <contact con_id="751864" ac_role_tp_c="PR" title="" first_name="TEST" initials="T" last_name="TESTERTON" suffix="" ssn="666666664" email="BETHANY.GREER@MERRICKBANK.COM" birth_date="07/10/1958" mother_maiden_name="MOTHER" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="" age="66" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="500" accnt_type_ind="" card_decision_tp_c="NODEC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="" />
+          <contact_address residence_monthly_pymnt="1500.00" address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_unit="" city="MOODY" rural_route="" state="TX" po_box="" street_name="E RIDGE" street_number="333" unit="" home_phone="" cell_phone="8018018018" address_line_1="" zip="76557" Patriot_Act_zip="" />
+          <contact_employment b_phone_no="" b_unit="" b_zip="" b_state="" b_street_name="" b_street_number="" b_salary="150000.0" b_city="" b_other_income_amt="0" b_name="" b_job_title_tp_c="" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="0" b_years_at_job="0" b_primary_income_source_tp_c="" b_salary_basis_tp_c="ANNUM" b_othr_inc_basis_tp_c="ANNUM" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="2025-02-25 21:48:48.484" campaign_number="" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="" primary_middle_name="" primary_last_name="" primary_suffix="" primary_ssn="" pri_cur_street_num="" pri_cur_street_name="" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="" pri_state="" pri_zip_code="" special_flag_5="E" special_flag_6="D" special_flag_7="A" special_flag_8="A" aaa_misc_field_4="" misc_field_6="" upc8="" upc9="" upc10="" upc12="0" CB_prescreen_birth_date="" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" minimum_interest_charge="1" account_setup_fee="0" additional_card_fee="0" late_payment_fee="40" over_limit_fee="0" returned_payment_fee="40" apr="22.70" annual_fee="36" cash_advance_apr="27.70" cash_advance_fee="10" cash_advance_percent="4" cash_apr_margin="20.20" foreign_percent="2" intro_cash_advance_apr="0.07589" intro_purchase_apr="0.06219" min_payment_fee="35" min_payment_percent="1.00" purchase_apr_margin="15.20" seg_plan_version="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" IovationCaseId="e815c5dd-f880-47c3-85a9-d3509a3c1b2c|6ab40216-8f0a-417f-8e2d-ad4c7fd907c3" />
+        <user_profile user_id="" security_lvl="" employee_name="Bethany Greer" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="10000" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="CreditBureauPulled" value="0" />
+          <Indicator ID="reprocess_counter" value="1.0" />
+          <Indicator ID="MLA" value="N" />
+          <Indicator ID="ValidCreditScore" value="0" />
+        </Indicators>
+        <scores>
+          <score score_identifier="FRAUDFORCE" score="3.0" />
+        </scores>
+        <analytics />
+        <communications>
+          <communication comm_id="13890" bureau_id="3" bureau_score="" bureau_score_date="2025-03-10" letter_type_code="640" reason_type_1="" reason_type_2="" reason_type_3="" reason_type_4="" reason_code_1="" reason_code_2="" reason_code_3="" reason_code_4="" reason_text_1="" reason_text_2="" reason_text_3="" reason_text_4="" score_factor_code_1="" score_factor_code_2="" score_factor_code_3="" score_factor_code_4="" score_factor_code_5="" score_factor_text_1="" score_factor_text_2="" score_factor_text_3="" score_factor_text_4="" score_factor_text_5="" bureau_no_disclosure_flag="true" bureau_no_score_flag="true" temp_hold_flag="false">
+            <deliveries>
+              <delivery delivery_id="13730" delivery_method="letter" sent_date="2025-03-19 16:24:35.001" response_date="" response_detail="" />
+            </deliveries>
+          </communication>
+        </communications>
+        <comments comment_seq_number="1" comment="Application not decisioned within 15 days.  Referred to Supervisor." user_id="System" time_stamp="2025-03-10 21:11:43.010" />
+      </application>
+    </CustData>
+    <Reports>
+      <IovationCase>
+        <JSON IdentityConsentId="null" TransactionProcessingTime="19" Timestamp="2025-03-10T21:08:01.8597252Z" Transaction="null" CaseType="0" CaseNumber="Merrick_Bank_TestSite_CC446220" Id="e815c5dd-f880-47c3-85a9-d3509a3c1b2c|6ab40216-8f0a-417f-8e2d-ad4c7fd907c3" LocationConsentId="null" SessionId="e815c5dd-f880-47c3-85a9-d3509a3c1b2c" MarketType="0">
+          <Customer DateOfBirth="1958-07-10T00:00:00Z" SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" Id="6342da22-4d3b-4e09-8b98-9b4b7e7128f1" LastName="TESTB" AccountNumber="null">
+            <Addresses>
+              <ArrayElementObject IsDefault="true" FirstName="BOB" Address2="null" Address3="null" PostalCode="30326" Address1="200 BALLPARK ST" City="ATLANTA" Timestamp="0001-01-01T00:00:00Z" Type="0" State="GA" Id="30c60015-5f8c-4214-ac16-8a13f528683c" LastName="TESTB" CountryCode="US" />
+            </Addresses>
+            <SocialAccounts />
+            <Emails />
+          </Customer>
+          <Payments />
+          <Statuses>
+            <ArrayElementObject Status="8" Comment="Status added by Trustev to set current status to placed" Id="6a0abe6a-ee6e-4487-8e99-55569a8c4aad" Timestamp="2025-03-10T21:08:02.2304597Z" />
+          </Statuses>
+          <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" CF-RAY="91e5c8f75bf6d64f-IAD" Server="cloudflare" Connection="keep-alive" cf-cache-status="DYNAMIC" Pragma="no-cache" Date="Mon, 10 Mar 2025 21:08:02 GMT" Access-Control-Expose-Headers="Request-Context" Cache-Control="no-cache" Set-Cookie="__cf_bm=Ae75lkQByJrJnLwpw9DfYCKE.JZ4IQyPY3QtKX8O5N0-1741640882-1.0.1.1-vrq.m.CcqRVl8FKe8iHA5ppasAczgPyFXFQnEcmhvNxOpxPunZeLTNP9ARfcnl2Sy3UFoAnhkjNH_os6bpb1iu8aJ3mr52y5txTh15KiDAQ; path=/; expires=Mon, 10-Mar-25 21:38:02 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None, ARRAffinitySameSite=36da0e643e19b219e9cc242244bbb17606f2f9cdc98871c377756b22cded58cb;Path=/;HttpOnly;SameSite=None;Secure;Domain=idv-api-prod-eus2.azurewebsites.net, ARRAffinity=36da0e643e19b219e9cc242244bbb17606f2f9cdc98871c377756b22cded58cb;Path=/;HttpOnly;Secure;Domain=idv-api-prod-eus2.azurewebsites.net" Vary="Accept-Encoding" Expires="-1" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationCase>
+      <IovationDecision report_time="2025-03-10 21:08:24.679">
+        <JSON Comment="Decision for Default" TransactionProcessingTime="232" AuthenticatedDataRequest="null" CaseId="e815c5dd-f880-47c3-85a9-d3509a3c1b2c|6ab40216-8f0a-417f-8e2d-ad4c7fd907c3" TruValidateConsumerId="null" Timestamp="2025-03-10T21:08:02.956914Z" Result="1" IdentityVerificationPayloadUrl="null" Score="3" Type="0" ExtendedDeviceInformation="null" Confidence="2" Version="103" CaseNumber="Merrick_Bank_TestSite_CC446220" Id="d0689c01-50a6-4564-81a6-200f6307a2f2" SessionId="e815c5dd-f880-47c3-85a9-d3509a3c1b2c">
+          <RawData OS="null" NavigatorLanguage="null" ScreenHeight="null" BINInformation="null" NavigatorPlugins="null" ScreenColorDepth="null" TrustevCustomerId="6342da22-4d3b-4e09-8b98-9b4b7e7128f1" Transaction="null" CaseType="0" DeviceTag="null" ScreenWidth="null" NavigatorOscpu="null" Browser="null" Location="null">
+            <Customer SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" LastName="TESTB">
+              <Emails />
+            </Customer>
+            <IPAddresses />
+          </RawData>
+          <ComputedData CaseType="0">
+            <Transaction>
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Transaction>
+            <ExtendedDevice IsRegistrationRisky="null" PredictiveMlRisk="null" Risk="null" />
+            <Customer IsNameAddressCombinationValid="false" HasGoodHistory="true" IsIDVerificationMessageRiskMedium="null" IsIDMVMatchingSummaryRiskMedium="null" IsIDMVMatchingSummaryRiskLow="null" HasSuspiciousHistory="false" IsIDMVMatchingSummaryRiskHigh="null" CaseType="0" IsIDVerificationMessageRiskLow="null" HasBadHistory="false" IsIDVerificationMessageRiskHigh="null" IsReturningToPlatform="true">
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Customer>
+            <Device IsFlashEnabled="null" IsJSEnabled="false" IsJavaEnabled="null" />
+            <Phone IsPhoneRisky="null" />
+            <WhiteList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <BlackList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <GreyList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <Velocity IsConsumerIdPostCodeVelocityHigh="null" IsConsumerIdEmailVelocityHigh="null" IsConsumerIdVelocityHigh="null" IsConsumerIdIPVelocityHigh="null" IsEmailVelocityHigh="null" IsConsumerIdSsnVelocityHigh="null" IsConsumerIdPhoneNumberVelocityHigh="null" DecisionsWithin30Days="39" IsAccountNumberVelocityHigh="null" DecisionsWithin1Hour="0" DecisionsWithin24Hours="0" IsConsumerIdAccountNumberVelocityHigh="null" CaseType="0" IsDeviceIdVelocityHigh="null" IsPhoneNumberVelocityHigh="null" IsPostCodeVelocityHigh="null" IsAddressLine1VelocityHigh="null" DecisionsWithin7Days="6" IsIPVelocityHigh="null" IsSsnVelocityHigh="null" IsConsumerIdAddressLine1VelocityHigh="null" IsConsumerIdDeviceIdVelocityHigh="null" />
+            <Location CaseType="0" BIN="null" IsIPCountryDomestic="null" />
+          </ComputedData>
+          <Authentication Id="e815c5dd-f880-47c3-85a9-d3509a3c1b2c|6ab40216-8f0a-417f-8e2d-ad4c7fd907c3" Timestamp="0001-01-01T00:00:00Z">
+            <DocumentAuthentication Status="4" DeviceClassification="null" OCRDataStatus="0" OCRData="null" Url="null">
+              <FailedAlgorithms />
+              <FailureReasons />
+            </DocumentAuthentication>
+            <OTP Status="7" Language="0" Passcode="null" AuthURL="null" Timestamp="0001-01-01T00:00:00Z" DeliveryType="0" />
+            <KBA Status="-1" AnswerUrl="n/a" MultiPassStatus="0" Timestamp="2025-03-10T21:08:03.019239Z">
+              <MultiPassQuestions />
+              <Questions />
+            </KBA>
+          </Authentication>
+          <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" CF-RAY="91e5c8fd9e733b17-IAD" Server="cloudflare" Connection="keep-alive" cf-cache-status="DYNAMIC" Pragma="no-cache" Date="Mon, 10 Mar 2025 21:08:03 GMT" Access-Control-Expose-Headers="Request-Context" Cache-Control="no-cache" Set-Cookie="__cf_bm=Yyd63oYSgJC72eO34MotZD7TpxR1xoLcRnRMEIn3mug-1741640883-1.0.1.1-a1ujxcjBAB.atliL6BXCiUWScymgO4NLTn0bHZak7_LqfPbGP6rlHNtLyVe4tyO3QtqBEALVr89ZiiUjLjeu8kNH9cdoUPHSmkcrzLNBgjM; path=/; expires=Mon, 10-Mar-25 21:38:03 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None, ARRAffinitySameSite=36da0e643e19b219e9cc242244bbb17606f2f9cdc98871c377756b22cded58cb;Path=/;HttpOnly;SameSite=None;Secure;Domain=idv-api-prod-eus2.azurewebsites.net, ARRAffinity=36da0e643e19b219e9cc242244bbb17606f2f9cdc98871c377756b22cded58cb;Path=/;HttpOnly;Secure;Domain=idv-api-prod-eus2.azurewebsites.net" Vary="Accept-Encoding" Expires="-1" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationDecision>
+      <TU report_time="2025-03-10 21:08:25.810">
+        <creditBureau schemaLocation="http://www.transunion.com/namespace">
+          <document>response</document>
+          <version>2.39</version>
+          <transactionControl>
+            <userRefNumber>446220</userRefNumber>
+            <subscriber>
+              <industryCode>B</industryCode>
+              <memberCode>1705913</memberCode>
+              <inquirySubscriberPrefixCode>0622</inquirySubscriberPrefixCode>
+            </subscriber>
+            <options>
+              <country>us</country>
+              <language>en</language>
+              <productVersion>creditVision</productVersion>
+            </options>
+            <tracking>
+              <transactionTimeStamp>2025-03-10T16:08:04.240-05:00</transactionTimeStamp>
+            </tracking>
+          </transactionControl>
+          <product>
+            <code>07000</code>
+            <subject>
+              <number>1</number>
+              <subjectRecord>
+                <fileNumber>01</fileNumber>
+                <fileSummary>
+                  <fileHitIndicator>regularNoHit</fileHitIndicator>
+                  <ssnMatchIndicator>noHit</ssnMatchIndicator>
+                  <consumerStatementIndicator>false</consumerStatementIndicator>
+                  <market>06</market>
+                  <submarket>TR</submarket>
+                  <creditDataStatus>
+                    <suppressed>false</suppressed>
+                    <doNotPromote>
+                      <indicator>false</indicator>
+                    </doNotPromote>
+                    <freeze>
+                      <indicator>false</indicator>
+                    </freeze>
+                    <minor>false</minor>
+                    <disputed>false</disputed>
+                  </creditDataStatus>
+                  <inFileSinceDate estimatedDay="false" estimatedMonth="false" estimatedCentury="false" estimatedYear="false">2025-03-10</inFileSinceDate>
+                </fileSummary>
+                <indicative>
+                  <name source="input">
+                    <person>
+                      <first>TEST</first>
+                      <last>TESTERTON</last>
+                    </person>
+                  </name>
+                  <address source="input">
+                    <status>current</status>
+                    <qualifier>personal</qualifier>
+                    <street>
+                      <number>333</number>
+                      <name>RIDGE</name>
+                      <preDirectional>E</preDirectional>
+                    </street>
+                    <location>
+                      <city>MOODY</city>
+                      <state>TX</state>
+                      <zipCode>76557</zipCode>
+                    </location>
+                    <dateReported estimatedDay="false" estimatedMonth="false" estimatedCentury="false" estimatedYear="false">2025-03-10</dateReported>
+                  </address>
+                  <socialSecurity source="input">
+                    <number>666666664</number>
+                  </socialSecurity>
+                  <dateOfBirth estimatedDay="false" estimatedMonth="false" estimatedCentury="false" estimatedYear="false" source="input">1958-07-10</dateOfBirth>
+                </indicative>
+                <addOnProduct>
+                  <code>06500</code>
+                  <status>delivered</status>
+                  <highRiskFraudAlert>
+                    <message source="input">
+                      <code>5502</code>
+                    </message>
+                    <message source="input">
+                      <code>3005</code>
+                    </message>
+                  </highRiskFraudAlert>
+                </addOnProduct>
+                <addOnProduct>
+                  <code>00WB1</code>
+                  <status>defaultDelivered</status>
+                  <scoreModel>
+                    <score>
+                      <results>+10</results>
+                      <derogatoryAlert>false</derogatoryAlert>
+                      <fileInquiriesImpactedScore>false</fileInquiriesImpactedScore>
+                    </score>
+                  </scoreModel>
+                </addOnProduct>
+                <addOnProduct>
+                  <code>00Z6D</code>
+                  <status>defaultDelivered</status>
+                  <scoreModel>
+                    <score>
+                      <results>+0010</results>
+                      <derogatoryAlert>false</derogatoryAlert>
+                      <fileInquiriesImpactedScore>false</fileInquiriesImpactedScore>
+                    </score>
+                  </scoreModel>
+                </addOnProduct>
+                <addOnProduct>
+                  <code>00Z74</code>
+                  <status>defaultDelivered</status>
+                  <scoreModel>
+                    <characteristic>
+                      <algorithmID>00Z74</algorithmID>
+                      <id>IADDR001</id>
+                      <value>-00010.000</value>
+                    </characteristic>
+                    <characteristic>
+                      <algorithmID>00Z74</algorithmID>
+                      <id>IADDR003</id>
+                      <value>-00010.000</value>
+                    </characteristic>
+                    <characteristic>
+                      <algorithmID>00Z74</algorithmID>
+                      <id>IADDR011</id>
+                      <value>-000000010</value>
+                    </characteristic>
+                    <characteristic>
+                      <algorithmID>00Z74</algorithmID>
+                      <id>IADDR013</id>
+                      <value>-00010.000</value>
+                    </characteristic>
+                    <characteristic>
+                      <algorithmID>00Z74</algorithmID>
+                      <id>IADDR022</id>
+                      <value>-000000010</value>
+                    </characteristic>
+                    <characteristic>
+                      <algorithmID>00Z74</algorithmID>
+                      <id>ISSN004</id>
+                      <value>-000000010</value>
+                    </characteristic>
+                    <characteristic>
+                      <algorithmID>00Z74</algorithmID>
+                      <id>ISSN011</id>
+                      <value>-000000010</value>
+                    </characteristic>
+                    <characteristic>
+                      <algorithmID>00Z74</algorithmID>
+                      <id>DATE001</id>
+                      <value>-000000010</value>
+                    </characteristic>
+                    <characteristic>
+                      <algorithmID>00Z74</algorithmID>
+                      <id>DATE002</id>
+                      <value>-000000010</value>
+                    </characteristic>
+                  </scoreModel>
+                </addOnProduct>
+                <addOnProduct>
+                  <code>07051</code>
+                  <status>delivered</status>
+                  <militaryLendingActSearch searchStatus="noMatch" />
+                </addOnProduct>
+                <addOnProduct>
+                  <code>07014</code>
+                  <status>delivered</status>
+                  <authUserAlert searchStatus="clear" />
+                </addOnProduct>
+                <addOnProduct>
+                  <code>07226</code>
+                  <status>delivered</status>
+                  <CVCreditSummary searchStatus="noHit" />
+                </addOnProduct>
+              </subjectRecord>
+            </subject>
+          </product>
+          <HTTPHeaders Status-Code="200" Buffer="false" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" Server="cloudflare" RateLimit-Reset="1" CF-Ray="91e5c9047c6720a8-IAD" X-Correlation-ID="70236dcc-d671-4723-a660-b7679303bc2f" X-Content-Type-Options="nosniff" Connection="keep-alive" Pragma="no-cache" RateLimit-Limit="800" Date="Mon, 10 Mar 2025 21:08:04 GMT" X-Frame-Options="DENY" RateLimit-Remaining="799" Strict-Transport-Security="max-age=31536000; includeSubDomains; preload" CF-Cache-Status="DYNAMIC" Cache-Control="no-store, no-cache" Vary="Accept-Encoding" Expires="0" X-XSS-Protection="1; mode=block" X-RateLimit-Remaining-second="799" X-RateLimit-Limit-second="800" Content-Type="text/html; charset=UTF-8" />
+        </creditBureau>
+      </TU>
+      <EX report_time="2025-03-10 21:08:27.424">
+        <creditProfile>
+          <ArrayElementObject>
+            <headerRecord>
+              <ArrayElementObject preamble="TTXE" reportDate="031025" versionNo="07" mKeywordLength="00" y2kReportedDate="03102025" reportTime="160805" />
+            </headerRecord>
+            <mla messageText="MLA NO RECORD FOUND" messageNumber="1204" />
+            <endTotals>
+              <ArrayElementObject totalSegments="005" totalLength="00206" />
+            </endTotals>
+            <fraudShield>
+              <ArrayElementObject socialCount="0000" addressDate="12012024" addressErrorCode="0" type="99" socialErrorCode="0" addressCount="0000" socialDate="12012024" />
+            </fraudShield>
+            <informationalMessage>
+              <ArrayElementObject messageText="*****  NO RECORD FOUND  *****" messageNumberDetailed="0007" messageNumber="07" />
+            </informationalMessage>
+          </ArrayElementObject>
+        </creditProfile>
+        <HTTPHeaders Status-Code="200" experianTransactionId="rrt-058a54a6019747dcd-d-ea-54284-3649578-1" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" Access-Control-Allow-Origin="*" X-Iinfo="18-33441262-33441268 NNNN CT(23 24 0) RT(1741640884636 36) q(0 0 1 -1) r(4 4) U6" Access-Control-Allow-Methods="GET, POST" X-Content-Type-Options="nosniff" Connection="keep-alive" Access-Control-Allow-Headers="origin, x-requested-with, accept, content-type, authorization, clientReferenceId" Date="Mon, 10 Mar 2025 21:08:05 GMT" X-Frame-Options="deny" Strict-Transport-Security="max-age=31536000; includeSubDomains" Cache-Control="no-store,no-cache" X-CDN="Imperva" Content-Security-Policy="default-src 'none'; img-src 'self';script-src 'self';style-src 'self'" ascendTransactionId="03102025210805UGSEGMVYP" Set-Cookie="incap_ses_329_1329591=U67rPW7manXZKU/zCdiQBLVUz2cAAAAAAS/MjzlNxx5DSpgUeEeBdQ==; path=/; Secure; SameSite=None, nlbi_1329591=fMvfKLe+sVopTA4zvKr5XQAAAAB9It8x9fASLrqAi3ZGw0Io; HttpOnly; path=/; Secure; SameSite=None, visid_incap_1329591=sGeUMxq6RnKIj7vV0nfiWLVUz2cAAAAAQUIPAAAAAAClJeNj2MqzvqVWWqccV+6Z; expires=Tue, 10 Mar 2026 07:50:05 GMT; HttpOnly; path=/; Secure; SameSite=None" Vary="Accept-Encoding" Access-Control-Max-Age="3628800" X-XSS-Protection="1; mode=block" Content-Type="application/json" />
+      </EX>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2025-02-25 21:49:37.261" Source="System" Description="Error: Decision Apps Cannot Be Processed" />
+      <Message Timestamp="Thu Mar 20 15:06:43 UTC 2025" Source="SetValue" Number="199" Description="Parent XPATH not found:/Provenir/Request/CustData/application/communications/communication[@comm_id='13890']/deliveries/delivery[@delivery_id='']" />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07a0f110cc68c218" ID="CBRER" Description="Credit bureau report error. Please check credit bureau error code." Timestamp="2025-03-10 21:08:27.516" Severity="94" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2025-02-25 21:48:48.484" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2025-02-25 21:48:48.553" Status="Pass" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2025-02-25 21:48:48.573" Status="false" />
+      <Journal Type="Process" ID="00025" Timestamp="2025-02-25 21:48:48.574" Status="Pass" />
+      <Journal Type="Process" ID="EDQAddressVerification" Timestamp="2025-02-25 21:48:48.575" Status="true" />
+      <Journal Type="Process" ID="00050" Timestamp="2025-02-25 21:48:48.582" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-02-25 21:48:48.582" Status="Pass" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-02-25 21:49:09.499" Status="Opened" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="TM" ID="Withdrawn" Timestamp="2025-02-25 21:49:33.856" Status="P" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="TM" ID="Duplicate Application (do not send letter)" Timestamp="2025-02-25 21:49:33.857" Status="" />
+      <Journal Type="Process" ID="40000" Timestamp="2025-02-25 21:49:33.870" Status="Pass" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="MP" ID="Reprocess" Timestamp="2025-02-25 21:49:40.564" Status="Request" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2025-02-25 21:49:40.713" Status="false" />
+      <Journal Type="Process" ID="00025" Timestamp="2025-02-25 21:49:40.714" Status="Pass" />
+      <Journal Type="Process" ID="EDQAddressVerification" Timestamp="2025-02-25 21:49:40.726" Status="true" />
+      <Journal Type="Process" ID="00050" Timestamp="2025-02-25 21:49:40.739" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-02-25 21:49:40.743" Status="Pass" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="API" ID="Create Security Deposit" Timestamp="2025-02-25 21:50:09.260" Status="Success" />
+      <Journal Type="Process" ID="EDQAddressVerification" Timestamp="2025-03-10 21:08:21.183" Status="true" />
+      <Journal Type="Process" ID="00050" Timestamp="2025-03-10 21:08:21.241" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-03-10 21:08:21.340" Status="false" />
+      <Journal Type="Rule" ID="SCAPPPD" Timestamp="2025-03-10 21:08:21.368" Status="false" />
+      <Journal Type="Rule" ID="SCNODEC" Timestamp="2025-03-10 21:08:21.403" Status="false" />
+      <Journal Type="Rule" ID="MIDEP" Timestamp="2025-03-10 21:08:21.420" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-03-10 21:08:21.426" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2025-03-10 21:08:21.906" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="2025-03-10 21:08:21.910" Status="Pass" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2025-03-10 21:08:21.959" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2025-03-10 21:08:21.969" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2025-03-10 21:08:21.979" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2025-03-10 21:08:21.987" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2025-03-10 21:08:21.997" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2025-03-10 21:08:22.045" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2025-03-10 21:08:22.065" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2025-03-10 21:08:22.076" Status="false" />
+      <Journal Type="Rule" ID="MAXDEP" Timestamp="2025-03-10 21:08:22.109" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2025-03-10 21:08:22.118" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2025-03-10 21:08:22.126" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2025-03-10 21:08:22.136" Status="false" />
+      <Journal Type="Rule" ID="APPGENDEL" Timestamp="2025-03-10 21:08:22.165" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="2025-03-10 21:08:22.167" Status="Pass" />
+      <Journal Type="Process" ID="ID Vision" Timestamp="2025-03-10 21:08:24.785" Status="Pass" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2025-03-10 21:08:24.805" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2025-03-10 21:08:24.812" Status="false" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2025-03-10 21:08:24.819" Status="false" />
+      <Journal Type="Rule" ID="SCDECLN" Timestamp="2025-03-10 21:08:24.911" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2025-03-10 21:08:24.936" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2025-03-10 21:08:24.966" Status="false" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2025-03-10 21:08:25.201" Status="bypassed" />
+      <Journal Type="Rule" ID="DUPACH" Timestamp="2025-03-10 21:08:25.210" Status="false" />
+      <Journal Type="Process" ID="02000" Timestamp="2025-03-10 21:08:25.211" Status="Pass" />
+      <Journal Type="Rule" ID="SL_ID_Theft_Score" Timestamp="2025-03-10 21:08:25.241" Status="false" />
+      <Journal Type="Rule" ID="SL_Synthetic" Timestamp="2025-03-10 21:08:25.247" Status="false" />
+      <Journal Type="Rule" ID="EMAILAGE" Timestamp="2025-03-10 21:08:25.256" Status="false" />
+      <Journal Type="Rule" ID="EAIPDIST" Timestamp="2025-03-10 21:08:25.265" Status="false" />
+      <Journal Type="Rule" ID="DUPDID" Timestamp="2025-03-10 21:08:25.273" Status="bypassed" />
+      <Journal Type="Rule" ID="EAHIGH" Timestamp="2025-03-10 21:08:25.281" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="2025-03-10 21:08:25.282" Status="Pass" />
+      <Journal Type="Process" ID="Pull EX Credit Report Secured" Timestamp="2025-03-10 21:08:27.428" Status="Pass" />
+      <Journal Type="Rule" ID="CBFRZ" Timestamp="2025-03-10 21:08:27.505" Status="false" />
+      <Journal Type="Rule" ID="CBRER" Timestamp="2025-03-10 21:08:27.517" Status="true" />
+      <Journal Type="Process" ID="Bureau Parsing CC" Timestamp="2025-03-10 21:08:27.876" Status="Pass" />
+      <Journal Type="Process" ID="06000" Timestamp="2025-03-10 21:08:27.905" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-03-10 21:08:27.936" Status="Pass" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-03-11 15:21:06.223" Status="Opened" />
+      <Journal Type="Process" ID="72000" Timestamp="2025-03-19 16:24:35.002" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2025-03-20 15:06:43.812" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits>
+      <Audit UserID="BETHANY.GREER@MERRICKBANK.COM" XPATH="Pending Verification" To="true" From="false" Timestamp="2025-02-25 21:49:25.689" Source="API" />
+    </Audits>
+    <Documents />
+    <temp_app_variables />
+    <TriggeredRules />
+  </Request>
+  <queues>
+    <queue name="Manager" id="65" type="cc" />
+    <queue name="J Supervisor" id="9" />
+    <queue name="T All Applications" id="17" />
+  </queues>
+</Provenir>

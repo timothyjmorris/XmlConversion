@@ -1,0 +1,46 @@
+﻿<Provenir Org="" sessionID="" stack="" Version="" ProductType="" error="" x-trace-id="20f42f70-a03f-4052-b803-3c33c548b2be" action="" app_source="API" transactionID="34678" errorCode="0" status="pass validation" shred_version="1.0">
+  <Request ID="447942" UserID="" Workflow="20" Timestamp="" Status="P" Trans="WEBAPP" Readonly="" Process="00050" Version="" Priority="" Timeout="" Trace="" LockedBy="" iovation_sessionid="a8fbfd44-90c5-499f-8e13-63d7b61de84d" iovation_blackbox="" triggerFinicity="N" triggerNova="N" triggerQA="N" btcardtoken="" btresponsecode="Validation">
+    <CustData>
+      <application app_type_code="SECURE" procs_date="2025-10-15 20:17:37.817" app_receive_date="2025-10-15 20:17:37.751" last_update_time="" signature_ind="Y" coupon_expiration_date="" name_match_flag="" address_match_flag="" ssn_match_flag="" pricing_tier="" solicitation_num="SC3000010599" pymnt_prot_plan_ind="" credit_life_ind="0" campaign_num="SC3" app_entry_date="10/15/2025" swiftpay_num="80116056" mail_cell_pricing="" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" app_channel="" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="2" CPS_letter_sent_flag="" population_assignment="" verification_source="" EODRet="WEBAPP" processing_expiration_date="" solicitation_locked="" secure_ach_amount="2000" IP_address="10.20.135.20" EXPinNumber="" assignedTo="" updatedBy="" priority="" paperless_flag="true" sms_consent_flag="true" esign_consent_flag="true">
+        <app_product decision_tp_c="PDEP" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="" prescreen_risk_score="" risk_model_score="" prescreen_risk_grade="" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="" bank_debt_to_income_ratio="" regb_start_date="2025-10-15 20:17:37.0" regb_end_date="" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" decision_score="" decision_model="" />
+        <contact con_id="753640" ac_role_tp_c="PR" title="" first_name="TEST" initials="" last_name="USER" suffix="" ssn="666646848" email="ADAM.HAUERT@MERRICKBANK.COM" birth_date="10/21/1985" mother_maiden_name="TEST" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="" age="" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="" accnt_type_ind="" card_decision_tp_c="NODEC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="" />
+          <contact_address residence_monthly_pymnt="450.00" address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_unit="" po_box="" city="AMAWALK" rural_route="" state="NY" street_name="MEADOW LN" street_number="1" unit="" home_phone="" cell_phone="8014545454" address_line_1="" zip="10501" Patriot_Act_zip="" />
+          <contact_employment b_phone_no="" b_unit="" b_zip="" b_state="" b_street_name="" b_street_number="" b_salary="180000.0" b_city="" b_other_income_amt="0" b_name="" b_job_title_tp_c="" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="0" b_years_at_job="0" b_primary_income_source_tp_c="" b_salary_basis_tp_c="ANNUM" b_othr_inc_basis_tp_c="ANNUM" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="2025-10-15 20:17:37.751" campaign_number="" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="" primary_middle_name="" primary_last_name="" primary_suffix="" primary_ssn="" pri_cur_street_num="" pri_cur_street_name="" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="" pri_state="" pri_zip_code="" special_flag_5="" special_flag_6="" special_flag_7="" special_flag_8="" aaa_misc_field_4="" misc_field_6="" upc8="" upc9="" upc10="" upc12="" CB_prescreen_birth_date="" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" minimum_interest_charge="" account_setup_fee="" additional_card_fee="" late_payment_fee="" over_limit_fee="" returned_payment_fee="" apr="" annual_fee="" cash_advance_apr="" cash_advance_fee="" cash_advance_percent="" cash_apr_margin="" foreign_percent="" intro_cash_advance_apr="" intro_purchase_apr="" min_payment_fee="" min_payment_percent="" purchase_apr_margin="" seg_plan_version="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="CreditBureauPulled" value="0" />
+        </Indicators>
+        <scores />
+        <analytics />
+        <communications />
+      </application>
+    </CustData>
+    <Reports />
+    <Messages />
+    <Rules />
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2025-10-15 20:17:37.751" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2025-10-15 20:17:37.817" Status="Pass" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2025-10-15 20:17:37.834" Status="false" />
+      <Journal Type="Process" ID="00025" Timestamp="2025-10-15 20:17:37.834" Status="Pass" />
+      <Journal Type="Process" ID="EDQAddressVerification" Timestamp="2025-10-15 20:17:37.835" Status="true" />
+      <Journal Type="Process" ID="00050" Timestamp="2025-10-15 20:17:37.842" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-10-15 20:17:37.842" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits />
+    <Documents />
+    <temp_app_variables />
+  </Request>
+  <queues>
+    <queue name="T All Applications" id="17" />
+  </queues>
+</Provenir>

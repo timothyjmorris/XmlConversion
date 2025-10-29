@@ -1,0 +1,577 @@
+﻿<Provenir org="" ProductType="" Version="4.0.0" transactionID="DE1c045cf2_157fcad8657_07ffd157fcada599_0a19763d.3061" Org="" shred_version="29.0" manualRule="" resetRegB="" result="inprogress" responseCode="200" x-trace-id="d8a7ed24-0847-4678-bfcd-368a20cfde62">
+  <Request ID="154196" LockedBy="" _LockedBy="" Priority="" Process="" Readonly="0" Status="" Timeout="" Timestamp="" Trace="" Trans="REPROCESS" UnLockOnExit="" UserID="" Workflow="" Version="" transactionCounter="0" LockedAt="" LastUpdatedBy="TIMOTHY.MORRIS@MERRICKBANK.COM">
+    <CustData>
+      <application address_match_flag="" app_entry_date="5/2/2016" app_receive_date="5/2/2016" app_source_ind="I" app_type_code="" campaign_num="" coupon_expiration_date="" CPS_letter_sent_flag="" credit_life_ind="" Debit_Funding_Source="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_date="" Debit_Refund_amount="" EODRet="REPROCESS" existing_card_account_num="" last_update_time="2025-02-25 00:45:33.142" mail_cell_pricing="" name_match_flag="" Partner_URL_ID="" population_assignment="" pymnt_prot_plan_ind="" pricing_tier="" processing_expiration_date="" procs_date="2016-5-2 13:41:31.994" secure_ach_amount="500" signature_ind="Y" solicitation_locked="" solicitation_num="SC1000000439" special_offer="3" ssn_match_flag="" swiftpay_num="80004609" TUAccessCode="" assignedTo="timothy.morris@merrickbank.com">
+        <app_product aba_number="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" aggregate_balance="" aggregate_balance5="" analyst_rev_ind="" annual_fee_tp_c="" autopay_ind="" backend_fico_grade="" backend_risk_grade="" bankruptcy_score="" booked_date="" bus_card_name="" cash_advance_ind="" cendant_add_date="" collections_remark_codes_num="" control_accnt_desired_ind="" control_accnt_number="" control_accnt_seq_no="" csi_eligibility_ind="" csi_sent_date="" debt_to_income_ratio="" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" decision_tp_c="NONE" delphi_score="" discharged_bankruptcy_ind="" disclosures="P" dismissed_bankruptcy_ind="" duplicate_app_ind="" empirica_score="" existing_cardholder_ind="" experian_fico_score="" FICO_BKR3_EX="" FICO_BKR3_TU="" FICO_NextGen3_EX="" FICO_NextGen3_TU="" filed_bankruptcy_ind="" horizon_score="" ics_sent_date="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" letter_requested_ind="" lscampaign_num="" mars_model_score="" merrick_tradelines_num="" monthly_debt="" monthly_income="" multran_booked_date="" neuristics_edge_score="" ninety_day_delinq_num="" one_twenty_day_delinq_num="" overdraft_ind="" override_tp_c="" pd_seq_no="" pd_tp_c="" pending_verif_ind="N" pinnacle_score="" policy_override_employee_code="" prev_merrick_inq_num="" precision_score="" prescreen_bkr_score="" prescreen_fico_grade="" prescreen_fico_score="" prescreen_risk_grade="" prescreen_risk_score="" prmy_pd_ind="" pubrec_bankruptcies_num="" regbcloseddays_num="" regbcloseddays_num_counter_offer="" regbcloseddays2_num="" regbnewinfostartdate="" req_plastics_qt="1" req_prod_tp_c="VCRDU" risk_model_score_JH="" risk_model_score_LP="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" Risk_Model_reason3_tp_c="" risk_model_score="" sixty_day_delinq_num="" sixty_ninety_day_delinq_num="" score="" scorecard="" supervisor_rev_ind="Y" thirty_day_delinq_num="" trades_BKR_filings_num="" trades_remark_codes_num="" Vantage_Score_EX="" Vantage_Score_TU="" Risk_Model_reason4_tp_c="" adverse_actn5_type_cd="" fraud_rev_ind="N" booking_paused="N" />
+        <comments comment="Application not decisioned within 15 days.  Referred to Supervisor." comment_seq_number="1" comment_type_code="" user_id="System" time_stamp="2016-11-2 10:2:43.778" />
+        <contact mother_maiden_name="O&amp;amp;39;REILLY" ac_role_tp_c="PR" initials="N" last_name="SMITH" suffix="" con_id="277385" title="" first_name="JOHN" birth_date="4/1/1930" ssn="528619343" ssn_last_4="9343" email="" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" fraud_ind="">
+          <app_prod_bcard accnt_bin="" accnt_seq_no="" accnt_type_ind="" account_number="" agent="" allocated_credit_line="" analyst_approved_line="" card_decision_tp_c="" card_id="286728" card_name="" issue_card_ind="" multran_accnt_bin="" multran_accnt_seq_no="" multran_account_number="" pd_tp_c="" recur_payment_credit_line="" requested_credit_line="" seq_check="" sys_prin="" />
+          <contact_address address_seq_no="271236" address_tp_c="CURR" cell_phone="8014441111" city="SANDY" fax_no="" home_phone="8019430080" mailing_city="SANDY" mailing_po_box="" mailing_rural_route="" mailing_state="UT" mailing_unit="204" mailing_zip="84020" months_at_residence="6" ownership_tp_c="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" residence_monthly_pymnt="502.00" rural_route="" state="UT" street_name="S 2460 E" street_number="1024" unit="204" years_at_residence="1" zip="84020" />
+          <contact_employment b_city="" b_income_source_nontaxable="" b_job_title_tp_c="" b_months_at_job="" b_name="" b_othr_inc_basis_tp_c="" b_other_income_amt="" b_other_income_source_tp_c="" b_phone_no="8015452431" b_phone_no_ext="" b_primary_income_source_tp_c="" b_salary="30001.00" b_salary_basis_tp_c="ANNUM" b_state="" b_street_name="" b_street_number="" b_years_at_job="" b_self_employed_ind="" b_unit="" b_zip="" banking_aba="324377516" banking_account_number="8181932" banking_accounts_held="B" banking_account_type="C" employment_seq_no="271235" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <contact mother_maiden_name="" ac_role_tp_c="AUTHU" initials="L" last_name="SMITH" suffix="" con_id="277386" title="" first_name="MARY" birth_date="5/23/1934" ssn="539343923" ssn_last_4="3923" age="" email="">
+          <app_prod_bcard card_id="286729" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="" accnt_type_ind="" card_decision_tp_c="" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" />
+        </contact>
+        <letters cb_disclosure_suppress="" cb_score_suppress="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" letter_type_cd="" seq_no="" />
+        <rmts_info aaa_misc_field_4="" address_match_flag="" auth_user_is_spouse="Y" campaign_number="" CB_prescreen_birth_date="" merrick_appl_number="" name_match_flag="" pri_apt_number="" pri_city="" pri_cur_street_num="" pri_cur_street_name="" pri_po_box_num="" pri_rural_rt_num="" pri_state="" pri_zip_code="" primary_first_name="" primary_last_name="" primary_middle_name="" primary_ssn="" primary_suffix="" special_flag_5="" special_flag_6="" special_flag_7="" special_flag_8="" ssn_match_flag="" transmission_date="2016-5-2 13:41:31.776" upc8="" upc9="" upc10="" upc12="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" DocVerifySessionID="ca86dddb-8b54-46d8-8864-6ec2cdd5ae9b" DocVerifyCaseId="ca86dddb-8b54-46d8-8864-6ec2cdd5ae9b|0e9af1cb-7741-43d3-8cd9-990ce157e387" IovationSessionID="f5ea7872-42e4-4458-82ea-d671a8db2df4" IovationOTPCaseId="f5ea7872-42e4-4458-82ea-d671a8db2df4|d85fcb57-d617-41a7-99f2-3b73094872d4" otp_status="0" otp_authurl="https://app.trustev.com/api/v2.0/case/f5ea7872-42e4-4458-82ea-d671a8db2df4|d85fcb57-d617-41a7-99f2-3b73094872d4/authentication/otp" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <FDR account_number="" Cross_refrence_indicator="" Cross_refrence_number="" External_Primary_Account="" filler="" multran_account_number="" operator_code="" SubTranCode="" swiftpay_number="" terminalID="" transaction_code="" />
+        <Indicators>
+          <Indicator ID="reprocess_counter" value="2.0" />
+          <Indicator ID="TU_Doc_Verification" value="P" />
+        </Indicators>
+        <communications />
+        <comments comment_seq_number="2" comment="Testing 123..." user_id="TERREN.CLARK@MERRICKBANK.COM" comment_type_code="API" related_to="" time_stamp="2024-09-10 21:47:31.776" isPinned="false" />
+        <comments comment_seq_number="3" comment="Application not decisioned within 15 days.  Referred to Supervisor." user_id="System" time_stamp="2025-03-19 16:25:45.679" />
+        <comments comment_seq_number="4" comment="Application not decisioned within 15 days.  Referred to Supervisor." user_id="System" time_stamp="2025-03-20 15:07:00.604" />
+      </application>
+    </CustData>
+    <Reports>
+      <VeridAuthentication>
+        <authenticationTransactionResponse encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <transaction-response>
+            <transaction-response type="ns2:transaction-response-type">
+              <result type="ns2:result-type">questions</result>
+              <transaction-number type="xsd:long">50000423226046</transaction-number>
+              <accounts-transaction-id type="xsd:string">434343434</accounts-transaction-id>
+              <verbose-details type="ns2:verbose-details-type">
+                <information arrayType="ns2:information-type[0]" type="soapenc:Array" />
+                <error arrayType="ns2:error-information-type[0]" type="soapenc:Array" />
+                <failed arrayType="ns2:failed-information-type[0]" type="soapenc:Array" />
+                <passed arrayType="ns2:passed-information-type[0]" type="soapenc:Array" />
+                <questions-detail arrayType="ns2:questions-detail-information-type[1]" type="soapenc:Array">
+                  <questions-detail type="ns2:questions-detail-information-type">
+                    <code type="ns2:questions-detail-type">iauth.questions.set1</code>
+                    <simple-detail arrayType="ns2:simple-detail-type[1]" type="soapenc:Array">
+                      <simple-detail type="ns2:simple-detail-type">
+                        <text type="xsd:string">Initial set of authentication questions</text>
+                      </simple-detail>
+                    </simple-detail>
+                    <complex-detail arrayType="ns2:complex-detail-type[0]" type="soapenc:Array" />
+                  </questions-detail>
+                </questions-detail>
+              </verbose-details>
+              <questions type="ns2:questions-type">
+                <question-set-id type="xsd:long">2639493527</question-set-id>
+                <question arrayType="ns2:question-type[4]" type="soapenc:Array">
+                  <question type="ns2:question-type">
+                    <id type="xsd:long">4070869647</id>
+                    <answer-type type="ns2:answer-type-type">single</answer-type>
+                    <text type="xsd:string">In which of the following cities does 'Taylor Hess' currently live or own property?</text>
+                    <choice arrayType="ns2:choice-type[5]" type="soapenc:Array">
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347137</id>
+                        <text type="xsd:string">Centerville, Utah</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347147</id>
+                        <text type="xsd:string">Lehi, Utah</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347157</id>
+                        <text type="xsd:string">Lindon, Utah</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347167</id>
+                        <text type="xsd:string">West Jordan, Utah</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347177</id>
+                        <text type="xsd:string">None of the above or I am not familiar with this person</text>
+                      </choice>
+                    </choice>
+                    <help-text type="xsd:string">Names may be listed as last-name first-name, include maiden names or contain slight misspellings.</help-text>
+                  </question>
+                  <question type="ns2:question-type">
+                    <id type="xsd:long">4070869657</id>
+                    <answer-type type="ns2:answer-type-type">single</answer-type>
+                    <text type="xsd:string">According to your driver's license, approximately how tall are you?</text>
+                    <choice arrayType="ns2:choice-type[5]" type="soapenc:Array">
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347187</id>
+                        <text type="xsd:string">5 feet and 6 inches</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347197</id>
+                        <text type="xsd:string">5 feet and 10 inches</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347207</id>
+                        <text type="xsd:string">6 feet and 3 inches</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347217</id>
+                        <text type="xsd:string">6 feet and 6 inches</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347227</id>
+                        <text type="xsd:string">My height is not reported as any of these values</text>
+                      </choice>
+                    </choice>
+                    <help-text type="xsd:string">The height of the individual as reported on their driver's license should be selected here or none of the above</help-text>
+                  </question>
+                  <question type="ns2:question-type">
+                    <id type="xsd:long">4070869667</id>
+                    <answer-type type="ns2:answer-type-type">single</answer-type>
+                    <text type="xsd:string">Which of the following street addresses in Belen have you ever lived at or been associated with?</text>
+                    <choice arrayType="ns2:choice-type[5]" type="soapenc:Array">
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347237</id>
+                        <text type="xsd:string">111 Edward Drive</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347247</id>
+                        <text type="xsd:string">1613 Capps Place</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347257</id>
+                        <text type="xsd:string">3 Tiara Lane</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347267</id>
+                        <text type="xsd:string">8 La Plata Road</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347277</id>
+                        <text type="xsd:string">None of the above or I am not familiar with this property</text>
+                      </choice>
+                    </choice>
+                    <help-text type="xsd:string">The addresses listed may be partial, misspelled or contain minor numbering variations from your actual address</help-text>
+                  </question>
+                  <question type="ns2:question-type">
+                    <id type="xsd:long">4070869677</id>
+                    <answer-type type="ns2:answer-type-type">single</answer-type>
+                    <text type="xsd:string">Which of the following corporations have you ever been associated with?</text>
+                    <choice arrayType="ns2:choice-type[5]" type="soapenc:Array">
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347287</id>
+                        <text type="xsd:string">A Bs Glass World</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347297</id>
+                        <text type="xsd:string">Best Medicine Inc The</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347307</id>
+                        <text type="xsd:string">Kwicket Food Store</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347317</id>
+                        <text type="xsd:string">Utah Rocket Club</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347327</id>
+                        <text type="xsd:string">None of the above</text>
+                      </choice>
+                    </choice>
+                    <help-text type="xsd:string">Corporation Names may contain slight misspellings.</help-text>
+                  </question>
+                </question>
+              </questions>
+              <time>2024-09-10 21:48:24.271</time>
+            </transaction-response>
+          </transaction-response>
+        </authenticationTransactionResponse>
+      </VeridAuthentication>
+      <VeridMaint>
+        <PrimaryQuestionSet QuestionSetID="2639493527" transaction-number="50000423226046">
+          <Question ChoiceID="11256347167" QuestionID="4070869647" />
+          <Question ChoiceID="11256347227" QuestionID="4070869657" />
+          <Question ChoiceID="11256347267" QuestionID="4070869667" />
+          <Question ChoiceID="11256347317" QuestionID="4070869677" />
+        </PrimaryQuestionSet>
+      </VeridMaint>
+      <VeridAuthentication>
+        <continueTransactionResponse encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <transaction-response>
+            <transaction-response type="ns2:transaction-response-type">
+              <result type="ns2:result-type">questions</result>
+              <transaction-number type="xsd:long">50000423226046</transaction-number>
+              <accounts-transaction-id type="xsd:string">434343434</accounts-transaction-id>
+              <verbose-details type="ns2:verbose-details-type">
+                <information arrayType="ns2:information-type[0]" type="soapenc:Array" />
+                <error arrayType="ns2:error-information-type[0]" type="soapenc:Array" />
+                <failed arrayType="ns2:failed-information-type[0]" type="soapenc:Array" />
+                <passed arrayType="ns2:passed-information-type[0]" type="soapenc:Array" />
+                <questions-detail arrayType="ns2:questions-detail-information-type[1]" type="soapenc:Array">
+                  <questions-detail type="ns2:questions-detail-information-type">
+                    <code type="ns2:questions-detail-type">iauth.questions.set2</code>
+                    <simple-detail arrayType="ns2:simple-detail-type[1]" type="soapenc:Array">
+                      <simple-detail type="ns2:simple-detail-type">
+                        <text type="xsd:string">Additional authentication questions as the grade on first set of questions was not sufficient.</text>
+                      </simple-detail>
+                    </simple-detail>
+                    <complex-detail arrayType="ns2:complex-detail-type[0]" type="soapenc:Array" />
+                  </questions-detail>
+                </questions-detail>
+              </verbose-details>
+              <questions type="ns2:questions-type">
+                <question-set-id type="xsd:long">2639493557</question-set-id>
+                <question arrayType="ns2:question-type[3]" type="soapenc:Array">
+                  <question type="ns2:question-type">
+                    <id type="xsd:long">4070869747</id>
+                    <answer-type type="ns2:answer-type-type">single</answer-type>
+                    <text type="xsd:string">Which of the following vehicles have you ever owned or leased?</text>
+                    <choice arrayType="ns2:choice-type[5]" type="soapenc:Array">
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347637</id>
+                        <text type="xsd:string">2002 Mazda Protege</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347647</id>
+                        <text type="xsd:string">2003 Suzuki Aerio</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347657</id>
+                        <text type="xsd:string">2004 Bmw 5 Series</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347667</id>
+                        <text type="xsd:string">2005 Buick Rainier</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347677</id>
+                        <text type="xsd:string">I have never been associated with any of these vehicles</text>
+                      </choice>
+                    </choice>
+                    <help-text type="xsd:string">May include vehicles which you recently sold or vehicles for which you co-signed</help-text>
+                  </question>
+                  <question type="ns2:question-type">
+                    <id type="xsd:long">4070869757</id>
+                    <answer-type type="ns2:answer-type-type">single</answer-type>
+                    <text type="xsd:string">When did you purchase the property at 6842 Herrington Avenue?</text>
+                    <choice arrayType="ns2:choice-type[5]" type="soapenc:Array">
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347687</id>
+                        <text type="xsd:string">January 2000</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347697</id>
+                        <text type="xsd:string">November 2005</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347707</id>
+                        <text type="xsd:string">December 2017</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347717</id>
+                        <text type="xsd:string">June 2020</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347727</id>
+                        <text type="xsd:string">I have never been associated with this property</text>
+                      </choice>
+                    </choice>
+                    <help-text type="xsd:string">The addresses listed may be partial, misspelled or contain minor numbering variations from your actual address</help-text>
+                  </question>
+                  <question type="ns2:question-type">
+                    <id type="xsd:long">4070869767</id>
+                    <answer-type type="ns2:answer-type-type">single</answer-type>
+                    <text type="xsd:string">What month was 'Kathleen Hess' born in?</text>
+                    <choice arrayType="ns2:choice-type[5]" type="soapenc:Array">
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347737</id>
+                        <text type="xsd:string">March</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347747</id>
+                        <text type="xsd:string">July</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347757</id>
+                        <text type="xsd:string">September</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347767</id>
+                        <text type="xsd:string">December</text>
+                      </choice>
+                      <choice type="ns2:choice-type">
+                        <id type="xsd:long">11256347777</id>
+                        <text type="xsd:string">None of the above or I am not familiar with this person</text>
+                      </choice>
+                    </choice>
+                    <help-text type="xsd:string">The name of the person in question may contain some typographical errors</help-text>
+                  </question>
+                </question>
+              </questions>
+            </transaction-response>
+          </transaction-response>
+        </continueTransactionResponse>
+      </VeridAuthentication>
+      <DocVerifyCase>
+        <JSON IdentityConsentId="null" TransactionProcessingTime="32" Timestamp="2024-09-10T21:51:13.8429793Z" Transaction="null" CaseType="0" CaseNumber="DocVerify154196-151991" Id="ca86dddb-8b54-46d8-8864-6ec2cdd5ae9b|0e9af1cb-7741-43d3-8cd9-990ce157e387" LocationConsentId="null" SessionId="ca86dddb-8b54-46d8-8864-6ec2cdd5ae9b" MarketType="0">
+          <Customer DateOfBirth="0001-01-01T00:00:00Z" SocialSecurityNumber="null" FirstName="null" PhoneNumber="8014441111" Id="8ea6eaab-774a-4a27-bb69-80e1e2948793" LastName="null" AccountNumber="null">
+            <Addresses />
+            <SocialAccounts />
+            <Emails />
+          </Customer>
+          <Payments />
+          <Statuses>
+            <ArrayElementObject Status="8" Comment="Status added by Trustev to set current status to placed" Id="69e2fc25-1a4a-451a-9605-a1a398531008" Timestamp="2024-09-10T21:51:14.0134613Z" />
+          </Statuses>
+          <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" CF-RAY="8c12a35f1f6dc56a-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Tue, 10 Sep 2024 21:51:14 GMT" CF-Cache-Status="DYNAMIC" Access-Control-Expose-Headers="Request-Context" Cache-Control="no-cache" Set-Cookie="__cf_bm=fZLESm40SjSgpEH.tiLL2BPwO7kKi939ANOyIA.xywk-1726005074-1.0.1.1-p7uSRRfiexOJhcdOWALi9JLrJyRYUkbqrFJ1zjwcIJeFfdTaB9ZGDHX8FKwOY0_V6N09qaD4ooAHY55nRFtVbA; path=/; expires=Tue, 10-Sep-24 22:21:14 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None, ARRAffinitySameSite=6a8cba016a3b32f0a7b2e388a35eebe8934c1bf3f8d1f99a11d7b30184b196db;Path=/;HttpOnly;SameSite=None;Secure;Domain=idv-api-prod-eus2.azurewebsites.net, ARRAffinity=6a8cba016a3b32f0a7b2e388a35eebe8934c1bf3f8d1f99a11d7b30184b196db;Path=/;HttpOnly;Secure;Domain=idv-api-prod-eus2.azurewebsites.net" Vary="Accept-Encoding" Expires="-1" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </DocVerifyCase>
+      <DocVerifyDecision>
+        <JSON Comment="Decision for Default" TransactionProcessingTime="591" AuthenticatedDataRequest="null" CaseId="ca86dddb-8b54-46d8-8864-6ec2cdd5ae9b|0e9af1cb-7741-43d3-8cd9-990ce157e387" TruValidateConsumerId="null" Timestamp="2024-09-10T21:51:14.4068857Z" Result="1" IdentityVerificationPayloadUrl="null" Score="0" Type="0" ExtendedDeviceInformation="null" Confidence="2" Version="302" CaseNumber="DocVerify154196-151991" Id="3f89e645-3b6f-4dca-a90f-83833afffcca" SessionId="ca86dddb-8b54-46d8-8864-6ec2cdd5ae9b">
+          <RawData OS="null" NavigatorLanguage="null" ScreenHeight="null" BINInformation="null" NavigatorPlugins="null" ScreenColorDepth="null" TrustevCustomerId="8ea6eaab-774a-4a27-bb69-80e1e2948793" Transaction="null" CaseType="0" DeviceTag="null" ScreenWidth="null" NavigatorOscpu="null" Browser="null" Location="null">
+            <Customer SocialSecurityNumber="null" FirstName="null" PhoneNumber="8014441111" LastName="null">
+              <Emails />
+            </Customer>
+            <IPAddresses />
+          </RawData>
+          <ComputedData CaseType="0">
+            <Transaction>
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Transaction>
+            <ExtendedDevice IsRegistrationRisky="null" PredictiveMlRisk="null" Risk="null" />
+            <Customer IsNameAddressCombinationValid="null" HasGoodHistory="false" IsIDVerificationMessageRiskMedium="null" IsIDMVMatchingSummaryRiskMedium="null" IsIDMVMatchingSummaryRiskLow="null" IsIDMVGLBAScoreLow="null" IsIDMVGLBAScoreHigh="null" HasSuspiciousHistory="false" IsIDMVMatchingSummaryRiskHigh="null" CaseType="0" IsIDVerificationMessageRiskLow="null" HasBadHistory="false" IsIDMVGLBAScoreMedium="null" IsIDVerificationMessageRiskHigh="null" IsReturningToPlatform="false">
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Customer>
+            <Device IsFlashEnabled="null" IsJSEnabled="false" IsJavaEnabled="null" />
+            <Phone IsPhoneRisky="null" />
+            <WhiteList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <BlackList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <GreyList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <Velocity IsConsumerIdPostCodeVelocityHigh="null" IsConsumerIdEmailVelocityHigh="null" IsConsumerIdVelocityHigh="null" IsConsumerIdIPVelocityHigh="null" IsEmailVelocityHigh="null" IsConsumerIdSsnVelocityHigh="null" IsConsumerIdPhoneNumberVelocityHigh="null" DecisionsWithin30Days="0" IsAccountNumberVelocityHigh="null" DecisionsWithin1Hour="0" DecisionsWithin24Hours="0" IsConsumerIdAccountNumberVelocityHigh="null" CaseType="0" IsDeviceIdVelocityHigh="null" IsPhoneNumberVelocityHigh="null" IsPostCodeVelocityHigh="null" IsAddressLine1VelocityHigh="null" DecisionsWithin7Days="0" IsIPVelocityHigh="null" IsSsnVelocityHigh="null" IsConsumerIdAddressLine1VelocityHigh="null" IsConsumerIdDeviceIdVelocityHigh="null" />
+            <Location CaseType="0" BIN="null" IsIPCountryDomestic="null" />
+          </ComputedData>
+          <Authentication Id="ca86dddb-8b54-46d8-8864-6ec2cdd5ae9b|0e9af1cb-7741-43d3-8cd9-990ce157e387" Timestamp="0001-01-01T00:00:00Z">
+            <DocumentAuthentication Status="7" DeviceClassification="null" OCRDataStatus="0" OCRData="null" Url="null">
+              <FailedAlgorithms />
+              <FailureReasons />
+            </DocumentAuthentication>
+            <OTP Status="7" Language="0" Passcode="null" AuthURL="null" Timestamp="0001-01-01T00:00:00Z" DeliveryType="0" />
+            <KBA Status="-1" AnswerUrl="n/a" MultiPassStatus="0" Timestamp="2024-09-10T21:51:14.4410695Z">
+              <MultiPassQuestions />
+              <Questions />
+            </KBA>
+          </Authentication>
+          <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" CF-RAY="8c12a3616d02c93b-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Tue, 10 Sep 2024 21:51:14 GMT" CF-Cache-Status="DYNAMIC" Access-Control-Expose-Headers="Request-Context" Cache-Control="no-cache" Set-Cookie="__cf_bm=ZYv2Nmyws7eDnCxkF7xFPsv0GXHvpBRqK7.BYM6l6I8-1726005074-1.0.1.1-MBLpqtTaccw9_DbBPAROUPpyTzXmPtNzHc27jKiYC1YQ9cLEarSq.zrm37Ux792Zp.nmeFEKOpERYJeOaEFX6Q; path=/; expires=Tue, 10-Sep-24 22:21:14 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None, ARRAffinitySameSite=56f650a0c6811218b11a70c3a6d06db28f2a35a1bc4fce40c733280d37c97fab;Path=/;HttpOnly;SameSite=None;Secure;Domain=idv-api-prod-eus2.azurewebsites.net, ARRAffinity=56f650a0c6811218b11a70c3a6d06db28f2a35a1bc4fce40c733280d37c97fab;Path=/;HttpOnly;Secure;Domain=idv-api-prod-eus2.azurewebsites.net" Vary="Accept-Encoding" Expires="-1" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </DocVerifyDecision>
+      <IovationOTPCase>
+        <JSON IdentityConsentId="null" TransactionProcessingTime="20" Timestamp="2024-09-10T21:51:30.9759471Z" Transaction="null" CaseType="0" CaseNumber="Merrick_Bank_TestSite154196" Id="f5ea7872-42e4-4458-82ea-d671a8db2df4|d85fcb57-d617-41a7-99f2-3b73094872d4" LocationConsentId="null" SessionId="f5ea7872-42e4-4458-82ea-d671a8db2df4" MarketType="0">
+          <Customer DateOfBirth="1930-04-01T00:00:00Z" SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" Id="339cbd18-84b0-4520-8b0d-330196ab9ae4" LastName="TESTB" AccountNumber="null">
+            <Addresses>
+              <ArrayElementObject IsDefault="true" FirstName="BOB" Address2="null" Address3="null" PostalCode="30326" Address1="200 BALLPARK ST" City="ATLANTA" Timestamp="0001-01-01T00:00:00Z" Type="0" State="GA" Id="6bf3fcf3-7c4e-4b39-9990-353dfb381f35" LastName="TESTB" CountryCode="US" />
+            </Addresses>
+            <SocialAccounts />
+            <Emails />
+          </Customer>
+          <Payments />
+          <Statuses>
+            <ArrayElementObject Status="8" Comment="Status added by Trustev to set current status to placed" Id="32c38192-0b27-4cc1-99da-c1958bad5816" Timestamp="2024-09-10T21:51:31.8053676Z" />
+          </Statuses>
+          <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" CF-RAY="8c12a3ca5d5929b2-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Tue, 10 Sep 2024 21:51:31 GMT" CF-Cache-Status="DYNAMIC" Access-Control-Expose-Headers="Request-Context" Cache-Control="no-cache" Set-Cookie="__cf_bm=Mq_v9DyU_btaaqsxVYYvAlCxnRbYmEXLi3iH4nrRIiE-1726005091-1.0.1.1-1q67fRU9tFJlOe1LVcr5GMPYRfAYuA5IX9Bm9EuGL384jebyOUOHOB0opRkDHkx4q7Po3XdKHQ88L0CJQGRqvQ; path=/; expires=Tue, 10-Sep-24 22:21:31 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None, ARRAffinitySameSite=6a8cba016a3b32f0a7b2e388a35eebe8934c1bf3f8d1f99a11d7b30184b196db;Path=/;HttpOnly;SameSite=None;Secure;Domain=idv-api-prod-eus2.azurewebsites.net, ARRAffinity=6a8cba016a3b32f0a7b2e388a35eebe8934c1bf3f8d1f99a11d7b30184b196db;Path=/;HttpOnly;Secure;Domain=idv-api-prod-eus2.azurewebsites.net" Vary="Accept-Encoding" Expires="-1" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationOTPCase>
+      <IovationOTPDecision>
+        <JSON Comment="Decision for Default" TransactionProcessingTime="708" AuthenticatedDataRequest="null" CaseId="f5ea7872-42e4-4458-82ea-d671a8db2df4|d85fcb57-d617-41a7-99f2-3b73094872d4" TruValidateConsumerId="null" Timestamp="2024-09-10T21:51:32.5105154Z" Result="1" IdentityVerificationPayloadUrl="null" Score="1" Type="0" ExtendedDeviceInformation="null" Confidence="33" Version="101" CaseNumber="Merrick_Bank_TestSite154196" Id="6d2cbc44-413b-4e33-a6db-9af2b2f678fa" SessionId="f5ea7872-42e4-4458-82ea-d671a8db2df4">
+          <RawData OS="null" NavigatorLanguage="null" ScreenHeight="null" BINInformation="null" NavigatorPlugins="null" ScreenColorDepth="null" TrustevCustomerId="339cbd18-84b0-4520-8b0d-330196ab9ae4" Transaction="null" CaseType="0" DeviceTag="null" ScreenWidth="null" NavigatorOscpu="null" Browser="null" Location="null">
+            <Customer SocialSecurityNumber="666-01-0002" FirstName="BOB" PhoneNumber="14045049007" LastName="TESTB">
+              <Emails />
+            </Customer>
+            <IPAddresses />
+          </RawData>
+          <ComputedData CaseType="0">
+            <Transaction>
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Transaction>
+            <ExtendedDevice IsRegistrationRisky="null" PredictiveMlRisk="null" Risk="null" />
+            <Customer IsNameAddressCombinationValid="false" HasGoodHistory="true" IsIDVerificationMessageRiskMedium="null" IsIDMVMatchingSummaryRiskMedium="null" IsIDMVMatchingSummaryRiskLow="null" IsIDMVGLBAScoreLow="null" IsIDMVGLBAScoreHigh="null" HasSuspiciousHistory="false" IsIDMVMatchingSummaryRiskHigh="null" CaseType="0" IsIDVerificationMessageRiskLow="null" HasBadHistory="false" IsIDMVGLBAScoreMedium="null" IsIDVerificationMessageRiskHigh="null" IsReturningToPlatform="true">
+              <Email IsPopularityHigh="null" IsAgeHigh="null" IsVelocityHigh="null" IsVelocityLow="null" IsAgeMedium="null" ContainsMailboxIssue="null" IsDisposable="null" IsVelocityMedium="null" IsUserNameNotAllowed="null" ContainsDomainIssue="null" IsAgeLow="null" IsDomainNotAllowed="null" ContainsSyntaxIssue="null" IsPopularityLow="null" IsPopularityMedium="null" />
+            </Customer>
+            <Device IsFlashEnabled="null" IsJSEnabled="false" IsJavaEnabled="null" />
+            <Phone IsPhoneRisky="false" />
+            <WhiteList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <BlackList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <GreyList WasCustomerIdHit="null" WasFullEmailAddressHit="null" CaseType="0" WasIPHit="null" WasPostCodeHit="null" WasAccountNumberHit="null" WasEmailDomainHit="null" WasBinHit="null" />
+            <Velocity IsConsumerIdPostCodeVelocityHigh="null" IsConsumerIdEmailVelocityHigh="null" IsConsumerIdVelocityHigh="null" IsConsumerIdIPVelocityHigh="null" IsEmailVelocityHigh="null" IsConsumerIdSsnVelocityHigh="null" IsConsumerIdPhoneNumberVelocityHigh="null" DecisionsWithin30Days="17" IsAccountNumberVelocityHigh="null" DecisionsWithin1Hour="0" DecisionsWithin24Hours="0" IsConsumerIdAccountNumberVelocityHigh="null" CaseType="0" IsDeviceIdVelocityHigh="null" IsPhoneNumberVelocityHigh="null" IsPostCodeVelocityHigh="null" IsAddressLine1VelocityHigh="null" DecisionsWithin7Days="0" IsIPVelocityHigh="null" IsSsnVelocityHigh="null" IsConsumerIdAddressLine1VelocityHigh="null" IsConsumerIdDeviceIdVelocityHigh="null" />
+            <Location CaseType="0" BIN="null" IsIPCountryDomestic="null" />
+          </ComputedData>
+          <Authentication Id="f5ea7872-42e4-4458-82ea-d671a8db2df4|d85fcb57-d617-41a7-99f2-3b73094872d4" Timestamp="0001-01-01T00:00:00Z">
+            <DocumentAuthentication Status="4" DeviceClassification="null" OCRDataStatus="0" OCRData="null" Url="null">
+              <FailedAlgorithms />
+              <FailureReasons />
+            </DocumentAuthentication>
+            <OTP Status="0" Language="0" Passcode="null" AuthURL="https://app.trustev.com/api/v2.0/case/f5ea7872-42e4-4458-82ea-d671a8db2df4|d85fcb57-d617-41a7-99f2-3b73094872d4/authentication/otp" Timestamp="0001-01-01T00:00:00Z" DeliveryType="0" />
+            <KBA Status="-1" AnswerUrl="n/a" MultiPassStatus="0" Timestamp="2024-09-10T21:51:32.5536689Z">
+              <MultiPassQuestions />
+              <Questions />
+            </KBA>
+          </Authentication>
+          <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" CF-RAY="8c12a3d04a9f0813-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Tue, 10 Sep 2024 21:51:32 GMT" CF-Cache-Status="DYNAMIC" Access-Control-Expose-Headers="Request-Context" Cache-Control="no-cache" Set-Cookie="__cf_bm=sE0P1EgxeWArRy7YYhQsvSdMv0wWVaqKuAmxPuwWLec-1726005092-1.0.1.1-OJtEJbozRzVIU1mIqmWc9Etgz3hxMoPvIyz1VlLvrhJ9jjllPmq_I2dAotdRxQLNc4SKo3qb.J9uW59UZMWsCA; path=/; expires=Tue, 10-Sep-24 22:21:32 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None, ARRAffinitySameSite=da8e969327b21417923a577db2d7576a0ce664bdbd56e1463e1c348552969df2;Path=/;HttpOnly;SameSite=None;Secure;Domain=idv-api-prod-eus2.azurewebsites.net, ARRAffinity=da8e969327b21417923a577db2d7576a0ce664bdbd56e1463e1c348552969df2;Path=/;HttpOnly;Secure;Domain=idv-api-prod-eus2.azurewebsites.net" Vary="Accept-Encoding" Expires="-1" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationOTPDecision>
+      <IovationOTPRequest>
+        <JSON Status="4" Language="0" Passcode="null" AuthURL="https://app.trustev.com/api/v2.0/case/f5ea7872-42e4-4458-82ea-d671a8db2df4|d85fcb57-d617-41a7-99f2-3b73094872d4/authentication/otp" Timestamp="0001-01-01T00:00:00Z" DeliveryType="0" TimeRequested="2024-09-10 21:51:30.872">
+          <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" CF-RAY="8c12a3d539d9c9b8-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Tue, 10 Sep 2024 21:51:32 GMT" CF-Cache-Status="DYNAMIC" Access-Control-Expose-Headers="Request-Context" Cache-Control="no-cache" Set-Cookie="__cf_bm=y9D4D3rTrwNOfa1pz3jYFpvAaaO0PKp_j3v7HIUYx0Y-1726005092-1.0.1.1-o4xqYgf0UPzBsemykitKKVEC7HVb8xFFqFpkDCcRXxc_S6DkL_iBMhkmr2plfH.F44JgbtOL1tVzz8gh_84Zjw; path=/; expires=Tue, 10-Sep-24 22:21:32 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None, ARRAffinitySameSite=da8e969327b21417923a577db2d7576a0ce664bdbd56e1463e1c348552969df2;Path=/;HttpOnly;SameSite=None;Secure;Domain=idv-api-prod-eus2.azurewebsites.net, ARRAffinity=da8e969327b21417923a577db2d7576a0ce664bdbd56e1463e1c348552969df2;Path=/;HttpOnly;Secure;Domain=idv-api-prod-eus2.azurewebsites.net" Vary="Accept-Encoding" Expires="-1" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationOTPRequest>
+      <Experian>
+        <HTTPHeaders Status-Code="401" Status-Message="Web Service Returned non-OK status 401" X-Backside-Transport="FAIL FAIL" WWW-Authenticate="default" Connection="close" Content-Type="text/xml" />
+      </Experian>
+      <Experian>
+        <FraudSolutions>
+          <Response>
+            <Products>
+              <PreciseIDServer>
+                <PIDXMLVersion>06.00</PIDXMLVersion>
+                <SessionID>3POSZAUYLE4XIE0T90B3ZAKL.pidf1v-2412311250061488073809</SessionID>
+                <Header>
+                  <ReportDate>12312024</ReportDate>
+                  <ReportTime>125007</ReportTime>
+                  <ProductOption>18</ProductOption>
+                  <Subcode>1951428</Subcode>
+                </Header>
+                <Messages>
+                  <Message>
+                    <Number>57</Number>
+                    <Text>Cannot formulate questions for this consumer.</Text>
+                    <AddrMismatch>N</AddrMismatch>
+                  </Message>
+                </Messages>
+                <Summary>
+                  <TransactionID>2306257736</TransactionID>
+                  <InitialDecision>R10</InitialDecision>
+                  <FinalDecision>R10</FinalDecision>
+                </Summary>
+                <KBAScore>
+                  <General>
+                    <KBAResultCode>9</KBAResultCode>
+                    <KBAResultCodeDescription>No questions returned due to consumer not found</KBAResultCodeDescription>
+                  </General>
+                </KBAScore>
+              </PreciseIDServer>
+            </Products>
+          </Response>
+        </FraudSolutions>
+        <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" X-Content-Type-Options="nosniff,nosniff" X-Backside-Transport="OK OK,OK OK" Connection="Keep-Alive" X-Global-Transaction-ID="6eda261667743a3b02be1a64" Pragma="no-cache" Date="Tue, 31 Dec 2024 18:50:07 GMT" Strict-Transport-Security="max-age=31622400; includeSubDomains ; preload" Cache-Control="no-cache,no-store" Set-Cookie="JSESSIONID=3POSZAUYLE4XIE0T90B3ZAKL.preciseIdperf1v; path=/esolutions; secure; HttpOnly" Expires="Thu, 01 Jan 1970 00:00:00 GMT" X-XSS-Protection="1;mode=block" Content-Type="application/octet-stream" />
+      </Experian>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2016-5-2 13:41:32.88" Source="WorkflowManager" Number="0" Description="com.provenir.engines.de.NonFatalEngineException: com.provenir.engines.de.NonFatalEngineException: No matching condition found for [&quot;&quot;]" />
+      <Message Timestamp="2016-5-2 13:41:32.88" Source="TransactionManager" Number="0" Description="java.lang.Exception: WorkflowManager. repoObj_59fd5c55_110cc68ba48_07907110cc68c320:java.lang.Exception: com.provenir.engines.de.NonFatalEngineException: com.provenir.engines.de.NonFatalEngineException: No matching condition found for [&quot;&quot;] " />
+      <Message Timestamp="2022-10-31 20:32:18.483" Source="WorkflowManager" Number="0" Description="No matching condition found for [&quot;&quot;]" />
+      <Message Timestamp="2022-10-31 20:32:18.483" Source="TransactionManager" Number="0" Description="java.lang.Exception: WorkflowManager. repoObj_59fd5c55_110cc68ba48_07907110cc68c320:java.lang.Exception: No matching condition found for [&quot;&quot;] " />
+      <Message Timestamp="Wed Jun 05 22:17:40 UTC 2024" Source="TransactionManager" Number="0" Description="java.lang.NullPointerException" />
+      <Message Timestamp="2024-09-10 21:51:38.941" Source="WebService.KIQ.KIQGetQuestions.readFrom" Number="0" Description="Failed to run XMLHTTP profile: Error making web service call: Web Service Returned non-OK status 401" />
+    </Messages>
+    <Rules />
+    <Journals>
+      <Journal Type="Script" ID="ProcStart" Timestamp="2016-5-2 13:41:31.776" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="Mon May 02 13:41:31 MDT 2016" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By twuser" Timestamp="2017-4-7 2:22:19.675" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By twuser" Timestamp="2017-4-7 2:24:42.632" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By twuser" Timestamp="2017-4-7 2:28:3.372" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By twuser" Timestamp="2017-4-7 2:29:20.93" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By twuser" Timestamp="2017-4-7 2:30:26.767" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By twuser" Timestamp="2017-4-7 2:38:49.968" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By twuser" Timestamp="2017-4-7 3:59:1.382" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By twuser" Timestamp="2017-4-7 3:59:29.508" Status="Opened" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-05-28 16:01:28.746" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-06-13 21:09:39.819" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-06-17 16:33:23.735" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-06-17 16:37:00.004" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-06-17 16:48:53.746" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-06-18 15:04:09.603" Status="Opened" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-06-24 20:52:34.780" Status="Opened" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-07-03 18:31:35.528" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-07-25 18:15:17.754" Status="Opened" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-08-09 17:05:50.895" Status="Opened" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-08-29 19:42:46.967" Status="Opened" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-08-30 14:21:31.359" Status="Opened" />
+      <Journal UserID="ADAM.HAUERT@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-09-03 16:31:10.068" Status="Opened" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-09-09 16:04:30.153" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-09-09 22:33:41.250" Status="Opened" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-09-10 21:37:13.799" Status="Opened" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="MP" ID="Reprocess" Timestamp="2024-09-10 21:37:30.505" Status="Request" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="API" ID="Letter Type (611)" Timestamp="2024-09-10 21:45:25.992" Status="Communication Created" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="API" ID="Get QA Questions" Timestamp="2024-09-10 21:48:24.286" Status="Success" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="API" ID="Post QA Answers" Timestamp="2024-09-10 21:49:44.741" Status="Success" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="API" ID="Send TU Doc Link" Timestamp="2024-09-10 21:51:12.173" Status="Success" />
+      <Journal Type="Process" ID="Request OTP" Timestamp="2024-09-10 21:51:30.886" Status="Pass" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="API" ID="OTP Request" Timestamp="2024-09-10 21:51:30.888" Status="inprogress" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="API" ID="Get KIQ Questions" Timestamp="2024-09-10 21:51:38.944" Status="Error" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="MP" ID="Reprocess" Timestamp="2024-09-10 21:52:12.888" Status="Request" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-10-09 15:07:38.998" Status="Opened" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-10-23 22:47:47.270" Status="Opened" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-12-03 22:11:15.141" Status="Opened" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-12-10 20:03:23.498" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-12-11 16:36:48.269" Status="Opened" />
+      <Journal UserID="JASEN.HASLUND@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-12-11 20:53:04.554" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-12-23 17:39:07.171" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-12-23 18:08:08.893" Status="Opened" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2024-12-31 18:35:57.142" Status="Opened" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Get KIQ Questions" Timestamp="2024-12-31 18:50:17.270" Status="Success" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-01-06 22:38:46.638" Status="Opened" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-01-13 16:33:07.985" Status="Opened" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-01-13 19:36:42.642" Status="Opened" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-01-13 19:41:26.805" Status="Opened" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-01-13 20:49:23.507" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-01-13 22:13:49.388" Status="Opened" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-01-13 22:25:11.505" Status="Opened" />
+      <Journal UserID="TERREN.CLARK@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-01-13 22:25:51.641" Status="Opened" />
+      <Journal UserID="ADAM.HAUERT@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-02-03 21:04:49.199" Status="Opened" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-02-05 16:24:57.641" Status="Opened" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-02-12 22:27:12.949" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-02-15 02:10:34.688" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-02-24 17:21:13.972" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-02-24 17:56:31.806" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-02-24 21:54:46.750" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-02-25 00:45:15.989" Status="Opened" />
+      <Journal UserID="ADAM.HAUERT@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-02 21:43:10.946" Status="Opened" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-20 20:20:25.337" Status="Opened" />
+    </Journals>
+    <Traces />
+    <Audits>
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Middle Initial (primary)" To="N" From="M" Timestamp="2024-09-10 21:39:35.821" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Annual Income (primary)" To="30001.00" From="30000" Timestamp="2024-09-10 21:39:35.822" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Housing Payment" To="502.00" From="500" Timestamp="2024-09-10 21:39:35.822" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Months At Residence" To="6" From="" Timestamp="2024-09-10 21:39:35.823" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Phone (Work)" To="8015452431" From="8015452432" Timestamp="2024-09-10 21:39:35.823" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Years At Residence" To="1" From="" Timestamp="2024-09-10 21:39:59.029" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Middle Initial (authorized)" To="L" From="" Timestamp="2024-09-10 21:40:21.024" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Fraud Review" To="" From="false" Timestamp="2024-09-10 21:41:28.492" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Pending Verification" To="" From="false" Timestamp="2024-09-10 21:41:28.493" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Supervisor Review" To="" From="false" Timestamp="2024-09-10 21:41:28.493" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Fraud Indicator" To="S" From="" Timestamp="2024-09-10 21:41:28.493" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Booking Paused" To="true" From="false" Timestamp="2024-09-10 21:41:28.493" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Fraud Review" To="" From="false" Timestamp="2024-09-10 21:42:00.481" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Pending Verification" To="" From="false" Timestamp="2024-09-10 21:42:00.482" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Supervisor Review" To="" From="false" Timestamp="2024-09-10 21:42:00.482" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Fraud Review" To="" From="false" Timestamp="2024-09-10 21:42:24.577" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Pending Verification" To="" From="false" Timestamp="2024-09-10 21:42:24.578" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Supervisor Review" To="" From="false" Timestamp="2024-09-10 21:42:24.578" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Fraud Indicator" To="" From="S" Timestamp="2024-09-10 21:42:24.578" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Fraud Review" To="" From="false" Timestamp="2024-09-10 21:42:36.175" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Pending Verification" To="" From="false" Timestamp="2024-09-10 21:42:36.176" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Supervisor Review" To="" From="false" Timestamp="2024-09-10 21:42:36.176" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="New Document" To="154196_63314.pdf" From="" Timestamp="2024-09-10 21:46:29.280" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="New Comment" To="Testing 123..." From="" Timestamp="2024-09-10 21:47:31.786" Source="API" />
+      <Audit UserID="TERREN.CLARK@MERRICKBANK.COM" XPATH="Phone (Mobile)" To="8014441111" From="" Timestamp="2024-09-10 21:51:05.610" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="App Assigned" To="timothy.morris@merrickbank.com" From="" Timestamp="2025-02-24 17:25:27.087" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Booking Paused" To="false" From="true" Timestamp="2025-02-24 17:25:27.088" Source="API" />
+    </Audits>
+    <Documents>
+      <Document FileFormat="pdf" Type="verification" Name="Test" FileName="154196_63314.pdf" Created="2024-09-10 21:46:28.189" ID="197" />
+    </Documents>
+  </Request>
+  <queues>
+    <queue name="TU Doc Verify" id="20" />
+    <queue name="T All Applications" id="17" />
+    <queue id="17" type="cc" name="T All Applications" />
+    <queue id="20" type="cc" name="TU Doc Verify" />
+    <queue name="J Supervisor" id="9" />
+    <queue id="17" type="cc" name="T All Applications" />
+    <queue id="20" type="cc" name="TU Doc Verify" />
+    <queue id="9" type="cc" name="J Supervisor" />
+    <queue id="17" type="cc" name="T All Applications" />
+    <queue id="20" type="cc" name="TU Doc Verify" />
+  </queues>
+</Provenir>

@@ -1,0 +1,865 @@
+﻿<Provenir Org="" sessionID="" stack="" Version="" ProductType="" error="" x-trace-id="9edf8bcb-6a42-47af-a148-964fa7d2a386" action="" app_source="API" transactionID="34501" errorCode="0" status="pass validation" appType="CC" APIToken="" shred_version="2.0" result="error">
+  <Request ID="447903" UserID="" Workflow="1" Timestamp="" Status="P" Trans="" Readonly="0" Process="03000" Version="" Priority="" Timeout="" Trace="" LockedBy="" iovation_sessionid="92864e1e-53fd-42e0-a5ec-b25991ec7fc0" iovation_blackbox="0400tyDoXSFjKeoNf94lis1ztlwfE8BGvmzq0Hfp5ie720wRKUDDi7P6l9gHJesWeSz7L//EZWcaUmxaKlTeJ0//iValrYc3sqh0I2E0o8g3ugsmINsJ9VlMYGTX23I2zuDzsxz+GXZaQWpKo942MDeNCumH9P6UyVFMdn2fVVu9XUAMnSoJziAyl6uB5xKjTqLNXOp4yYEIf+L1yYqstDFzEDk4TYqQ5l7/SNfOTvsgtn95SxDtE2suujWRMoizXj3piSkiHcDvTuWbZ7blJBujU0MBxnppXVdqBiwzOH2ZEvh4VShbY+EVBLmyMxkb/fiIYiLHseu8Vrt8nTs/3e3TI3A+k9XRlIy/sDfV5PrSr0FCPxykbFiAwtXcvcdcODsFs7q678awLEotSIEAk6dltLChkMHiDLvuxA9x3qRKbjObZRutTbZvc93pZ/WuuaUQkm4ZxFADkU6jYmLrUKTmt2IexFSsDpBLXIoZJ6/4T4oLPa1X8SpoWilCz8QbOZkvJPbrjGojuyfAPMOjoKalFU7zZigMHBGa/pr71oD561pfdKC3X7Wp0FQApQNEKjskNTk1rX63PJSEKJ5sETroggSVcPSEQy29CXaiWs2BQ09pdz3VINvgAsYiesGzkq2uOe0RxWZbWQxXeqF/xZU7dZKetslI3IixuQGzU+n3CAsChAehx/Gln6yNzGkmK4M7ISKiq4yvoHcgBVMDdOYV83MnEYUvBMAKTEVdGJlxBwCc8acbcKqAuWf7gouzBPJaEMCy0s3hRLlX3uHnT/mMqxLKep0gAiQmslrd+CPCLLW7rzbxH0ZCbsrq/J8C1JgaU8CkaJTMdbDUHhsAngeC3iT/riUqiozfAOitx40UDzaLaxNWMM2S8UTjbKzZpUNBxKb7FG+fia+fFCEvMT9cc6XakoCa7XCW5+Cltm6/m0VPMQF00uJew0LT2BH9Dx8Z6yFodg/w6rqT5xVcmJXbIkYBKknoROYtTyG+LDSAWhVF5SrVKPKRP+RMSZbBA8lnmcIY8YqHbWKwLY4MxzBgJC0y5BDeC+xHyPCOzkJrb/AF2GKb28r9SxDlc5ibQ6opsC2ODMcwYCQtMuQQ3gvsR8jwjs5Ca2/wBdhim9vK/UsQ5XOYm0OqKbAtjgzHMGAkppIBae7UiPSJ1D3KVsetdAE6DpqE8vp9bH1J6HSHA0/+rhZmqsUSmIENxfa02fcjnl0NszPGyXmzenEu/4OkP1HyHeKeTrVBa0Yy5JnHYpO4UzkIwaRhCu4AH3stTkNRfta5YP+jTFUlIy0w322FixRwKEapX/q9UqH5FoAyQ90=" triggerFinicity="N" triggerNova="N" triggerQA="N" btcardtoken="" btresponsecode="" useAlloyService="0" _LockedBy="" LockedAt="" LastUpdatedBy="DAVID.JENSEN@MERRICKBANK.COM">
+    <CustData>
+      <application app_type_code="PRODB" procs_date="2025-10-09 21:51:08.095" app_receive_date="2025-10-09 21:51:08.027" last_update_time="2025-10-21 17:49:51.339" signature_ind="Y" coupon_expiration_date="12/12/2025" name_match_flag="Y" address_match_flag="" ssn_match_flag="Y" pricing_tier="59" solicitation_num="11255T11627T" pymnt_prot_plan_ind="" credit_life_ind="0" campaign_num="Z4K" app_entry_date="10/09/2025" swiftpay_num="" mail_cell_pricing="ZKAABX1203" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" app_channel="" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="1" CPS_letter_sent_flag="" population_assignment="SB" verification_source="KIQ" EODRet="WEBAPP" processing_expiration_date="12/17/2025" solicitation_locked="Y" secure_ach_amount="" IP_address="" EXPinNumber="" assignedTo="" updatedBy="" priority="" paperless_flag="true" sms_consent_flag="true" esign_consent_flag="true">
+        <app_product decision_tp_c="NONE" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="N" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="Y" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="827" prescreen_risk_score="324" risk_model_score="" prescreen_risk_grade="A" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="QA_Questions" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="Y" bank_debt_to_income_ratio="" regb_start_date="2025-10-9 21:51:8.0" regb_end_date="" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" decision_score="" decision_model="" KIQ_Result="KIQ_Failed" />
+        <contact con_id="753604" ac_role_tp_c="PR" title="" first_name="DORA" initials="J" last_name="CAROL" suffix="" ssn="666455262" email="TEST@TEST.COM" birth_date="05/10/1978" mother_maiden_name="TEST" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="" age="47" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="3000" accnt_type_ind="" card_decision_tp_c="NODEC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="3000" max_line="3000" />
+          <contact_address residence_monthly_pymnt="800.00" address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_unit="" po_box="" city="NORTH PLATTE" rural_route="" state="NE" street_name="MIRIAM RD" street_number="11003" unit="" home_phone="" cell_phone="8015146546" address_line_1="" zip="69101" Patriot_Act_zip="" />
+          <contact_employment b_phone_no="" b_unit="" b_zip="" b_state="" b_street_name="" b_street_number="" b_salary="80000.0" b_city="" b_other_income_amt="0" b_name="" b_job_title_tp_c="" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="0" b_years_at_job="0" b_primary_income_source_tp_c="" b_salary_basis_tp_c="ANNUM" b_othr_inc_basis_tp_c="ANNUM" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="2025-10-09 21:51:08.182" campaign_number="Z4K" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="DORA" primary_middle_name="J" primary_last_name="CAROL" primary_suffix="" primary_ssn="66455262" pri_cur_street_num="11003" pri_cur_street_name="MIRIAM RD" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="NORTH PLATTE" pri_state="NE" pri_zip_code="69101" special_flag_5="R" special_flag_6="A" special_flag_7="A" special_flag_8="A" aaa_misc_field_4="IQ" misc_field_6="" upc8="821" upc9="" upc10="827" upc12="" CB_prescreen_birth_date="05/10/1978" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" minimum_interest_charge="0" account_setup_fee="0" additional_card_fee="0" late_payment_fee="40" over_limit_fee="0" returned_payment_fee="0" apr="34.45" annual_fee="0" cash_advance_apr="35.00" cash_advance_fee="10" cash_advance_percent="4" cash_apr_margin="32.20" foreign_percent="0" intro_cash_advance_apr="0.09589" intro_purchase_apr="0.09438" min_payment_fee="35" min_payment_percent="1.00" purchase_apr_margin="27.20" seg_plan_version="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" IovationCaseId="" IovationSessionID="d80e8a73-2616-499d-bd3f-2d367adaaf7c" IovationOTPCaseId="" IovationOTPCode="012345678" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="CreditBureauPulled" value="0" />
+          <Indicator ID="InternetResponsesOn" value="Y" />
+          <Indicator ID="AppStageLine" value="1" />
+        </Indicators>
+        <scores>
+          <score score="6" score_identifier="email_risk" />
+        </scores>
+        <analytics />
+        <communications>
+          <communication comm_id="16386" bureau_id="" bureau_score="" bureau_score_date="" letter_type_code="945" reason_type_1="CC" reason_type_2="CC" reason_type_3="CC" reason_type_4="CC" reason_code_1="140" reason_code_2="121" reason_code_3="756" reason_code_4="999" reason_text_1="WE ARE UNABLE TO VERIFY THE APPLICANT'S CURRENT RESIDENCE" reason_text_2="WE ARE UNABLE TO VERIFY THE APPLICANT'S SOCIAL SECURITY NUMBER" reason_text_3="SEND COPY OF UTILITY BILL,BANK STMT,DRIVER'S LICENSE &amp; DOCUMENTATION OF YOUR SSN" reason_text_4="-" score_factor_code_1="" score_factor_code_2="" score_factor_code_3="" score_factor_code_4="" score_factor_code_5="" score_factor_text_1="" score_factor_text_2="" score_factor_text_3="" score_factor_text_4="" score_factor_text_5="" bureau_no_disclosure_flag="true" bureau_no_score_flag="true" temp_hold_flag="false">
+            <deliveries>
+              <delivery delivery_id="16243" delivery_method="letter" sent_date="2025-10-21 20:35:21.236" response_date="" response_detail="" />
+            </deliveries>
+          </communication>
+        </communications>
+        <comments comment_seq_number="1" comment="QA was pulled. Session completed if pass or fail appears below. Otherwise, manual QA is required to process. " user_id="System" comment_type_code="DA" related_to="undefined" time_stamp="2025-10-09 21:51:09.103" isPinned="false" />
+        <comments comment_seq_number="2" comment="Applicant failed KIQ. Transaction ID: 2329267606" user_id="System" comment_type_code="DA" related_to="undefined" time_stamp="2025-10-21 17:37:17.220" isPinned="false" />
+        <comments comment_seq_number="3" comment="Applicant failed KIQ. Transaction ID: 2329267676" user_id="System" comment_type_code="DA" related_to="undefined" time_stamp="2025-10-21 17:38:04.027" isPinned="false" />
+      </application>
+    </CustData>
+    <Reports>
+      <IovationCase>
+        <JSON>
+          <HTTPHeaders Status-Code="401" Status-Message="Web Service Returned non-OK status 401" Server="cloudflare" CF-Ray="98c1188788c350e2-IAD" Connection="keep-alive" Pragma="no-cache" Date="Thu, 09 Oct 2025 21:50:49 GMT" Access-Control-Expose-Headers="Request-Context" CF-Cache-Status="DYNAMIC" Cache-Control="no-cache" Vary="accept-encoding" Expires="-1" Content-Length="90" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationCase>
+      <IovationCase>
+        <JSON>
+          <HTTPHeaders Status-Code="401" Status-Message="Web Service Returned non-OK status 401" Server="cloudflare" CF-Ray="98c1188788c350e2-IAD" Connection="keep-alive" Pragma="no-cache" Date="Thu, 09 Oct 2025 21:50:49 GMT" Access-Control-Expose-Headers="Request-Context" CF-Cache-Status="DYNAMIC" Cache-Control="no-cache" Vary="accept-encoding" Expires="-1" Content-Length="90" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationCase>
+      <LNEmailage report_time="2025-10-09 21:51:09.081">
+        <query firstname="DORA" created="2025-10-09T21:50:50Z" count="1" responseCount="1" billaddress="11003 MIRIAM RD" billregion="NE" billpostal="69101" queryType="EmailAgeVerification" lastname="CAROL" billcountry="US" phone="8015146546" lang="en-US" email="TEST@TEST.COM" transactionTypeDescription="Banking" billcity="NORTH PLATTE">
+          <results>
+            <ArrayElementObject country="US" domaincountrymatch="Yes" domaincategory="" firstVerificationDate="2025-10-09T20:51:41Z" emailToPhoneConfidence="50" phoneToLastNameConfidence="50" phone_status="Valid" emailToLastNameConfidence="50" billriskcountry="No" EARiskBand="Fraud Score 900 to 999" emailAge="" source_industry="Other" domainrisklevel="Moderate" trackingId="" smfriends="" eName="" totalhits="1618" domainname="test.com" EAReasonID="1" emailToFullNameConfidence="50" domainriskcountry="No" ipToFullNameConfidence="" transAmount="" domainrisklevelID="3" shipAddressToFullNameConfidence="" billAddressToLastNameConfidence="50" dob="" first_seen_days="0" emailToBillAddressConfidence="50" ipToShipAddressConfidence="" status="ValidDomain" shipforward="No" gender="" domaincorporate="" phoneToBillAddressConfidence="50" fraudRisk="975 Very High" domainrelevantinfo="Valid  Domain from United States" phoneToFullNameConfidence="50" uniquehits="36" emailToIpConfidence="" title="" ipToPhoneConfidence="" transCurrency="" EAReason="Fraud Level 18" namematch="U" lastflaggedon="2022-07-19T19:40:51Z" domainExists="Yes" EAStatusID="4" EAAdviceID="1" custom3="" custom4="" company="" domaincompany="" correlationId="088b13c2-0441-4013-9427-90755f31b7b6" custom1="" custom2="" custom7="" domain_creation_days="10340" email="test@test.com" custom5="" email_creation_days="" custom6="" phoneToShipAddressConfidence="" emailToShipAddressConfidence="" billAddressToFullNameConfidence="50" overallDigitalIdentityScore="50" fraud_type="Card Not Present Fraud" EARiskBandID="6" emailExists="Not Sure" shipAddressToBillAddressConfidence="" EAScore="975" userdefinedrecordid="" domaincountryname="United States" imageurl="" ipToBillAddressConfidence="" ipToLastNameConfidence="" location="" lastVerificationDate="2025-10-09T20:52:14Z" EAAdvice="Fraud Review" domainrelevantinfoID="508" shipAddressToLastNameConfidence="" domainAge="1997-06-18T04:00:00Z">
+              <smlinks />
+            </ArrayElementObject>
+          </results>
+        </query>
+        <responseStatus errorCode="0" description="" status="success" />
+        <HTTPHeaders Status-Code="200" Status-Message="HTTP/1.1 200 OK" Strict-Transport-Security="max-age=86400; includeSubDomains; preload" Cache-Control="private" X-Content-Type-Options="nosniff" Content-Security-Policy="default-src 'none'; frame-ancestors 'none';" Connection="keep-alive" X-XSS-Protection="1; mode=block" Content-Length="2542" Date="Thu, 09 Oct 2025 21:50:50 GMT" Content-Type="application/json" />
+      </LNEmailage>
+      <VeridAuthentication>
+        <authenticationTransactionResponse time="2025-10-09 21:51:10.846">
+          <JSON>
+            <Status ConversationId="50000844692465" ActionType="answers" RequestId="3146423385" Reference="447903" TransactionStatus="pending" />
+            <Products>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_velocity_preid" ProductType="Velocity" ProductStatus="pass" ExecutedStepName="pre_id_velocity">
+                <Items>
+                  <ArrayElementObject ItemStatus="pass" ItemName="TASK_SPOOFING" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="FUTILITY" />
+                </Items>
+              </ArrayElementObject>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_discovery" ProductType="Discovery" ProductStatus="pass" ExecutedStepName="discovery" />
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_velocity_postid" ProductType="Velocity" ProductStatus="pass" ExecutedStepName="post_id_velocity">
+                <Items>
+                  <ArrayElementObject ItemStatus="pass" ItemName="FREQUENCY" />
+                </Items>
+              </ArrayElementObject>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_verification" ProductType="Verification" ProductStatus="pass" ExecutedStepName="verification">
+                <Items>
+                  <ArrayElementObject ItemStatus="pass" ItemName="TaskAgeUnder18WillNotBeFoundCheck" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="TaskSsnDobCheck" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="LexIDDeathMatch" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="IpFlaggingCheck" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="BlackListCheck" />
+                </Items>
+              </ArrayElementObject>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_identity_events" ProductType="IdentityEvent" ProductStatus="pass" ExecutedStepName="identity_events" />
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_authentication" ProductType="IIDQA" ProductStatus="pending" ExecutedStepName="authentication">
+                <QuestionSet QuestionSetId="2686323077">
+                  <Questions>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4231270807" Key="30121">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12086822777">
+                          <Text Statement="Hawaii" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822787">
+                          <Text Statement="New Hampshire" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822797">
+                          <Text Statement="North Dakota" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822807">
+                          <Text Statement="Ohio" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822817">
+                          <Text Statement="None of the above or I am not familiar with this person" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="Names may be listed as last-name first-name, include maiden names or contain slight misspellings." />
+                      <Text Statement="In which of the following states does 'Hobart Boniface' currently live or own property?" />
+                    </ArrayElementObject>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4231270817" Key="5651">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12086822827">
+                          <Text Statement="Architecture" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822837">
+                          <Text Statement="Biology" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822847">
+                          <Text Statement="Humanities" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822857">
+                          <Text Statement="Medicine" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822867">
+                          <Text Statement="None of the above" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="Select the college majors you have pursued." />
+                      <Text Statement="Which of the following college majors have you pursued?" />
+                    </ArrayElementObject>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4231270827" Key="10801">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12086822877">
+                          <Text Statement="A &amp; M Wireless" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822887">
+                          <Text Statement="Home &amp; Property Settlements" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822897">
+                          <Text Statement="Legacy Towncar" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822907">
+                          <Text Statement="Powerhouse Packing" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822917">
+                          <Text Statement="None of the above" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="Corporation Names may contain slight misspellings." />
+                      <Text Statement="Which of the following corporations have you ever been associated with?" />
+                    </ArrayElementObject>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4231270837" Key="5001">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12086822927">
+                          <Text Statement="Black" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822937">
+                          <Text Statement="Brown" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822947">
+                          <Text Statement="Dark Blue" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822957">
+                          <Text Statement="Silver" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12086822967">
+                          <Text Statement="I have never been associated with this vehicle" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="May include vehicles which you recently sold or vehicles for which you co-signed" />
+                      <Text Statement="What color is your 2000 Oldsmobile Alero?" />
+                    </ArrayElementObject>
+                  </Questions>
+                </QuestionSet>
+              </ArrayElementObject>
+            </Products>
+            <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" expires="0" Access-Control-Allow-Origin="*" X-Request-Id="fb7ce47c966ab8d77ab6ec0deb549a4e" Access-Control-Allow-Methods="GET, PUT, POST, DELETE, PATCH, OPTIONS" x-frame-options="DENY" Connection="keep-alive" Access-Control-Allow-Headers="DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization" strict-transport-security="max-age=31536000; includeSubDomains" pragma="no-cache" Date="Thu, 09 Oct 2025 21:50:51 GMT" x-content-type-options="nosniff" x-xss-protection="0" Access-Control-Allow-Credentials="true" Access-Control-Max-Age="1728000" cache-control="no-cache, no-store, max-age=0, must-revalidate" Content-Type="application/json" />
+          </JSON>
+        </authenticationTransactionResponse>
+      </VeridAuthentication>
+      <Experian>
+        <FraudSolutions>
+          <Response>
+            <Products>
+              <PreciseIDServer>
+                <PIDXMLVersion>06.00</PIDXMLVersion>
+                <SessionID>TZHDECASTSUZDPTFAU6BTFJK.pidd1v-2510211236282525248928</SessionID>
+                <Header>
+                  <ReportDate>10212025</ReportDate>
+                  <ReportTime>123629</ReportTime>
+                  <ProductOption>18</ProductOption>
+                  <Subcode>1951428</Subcode>
+                </Header>
+                <Messages>
+                  <Message>
+                    <Number>57</Number>
+                    <Text>0150</Text>
+                    <AddrMismatch>N</AddrMismatch>
+                  </Message>
+                </Messages>
+                <Summary>
+                  <TransactionID>2329267606</TransactionID>
+                  <InitialDecision>R10</InitialDecision>
+                  <FinalDecision>R10</FinalDecision>
+                </Summary>
+                <KBA>
+                  <General>
+                    <SessionID>TZHDECASTSUZDPTFAU6BTFJK.pidd1v-2510211236282525248928</SessionID>
+                    <KBAResultCode>00</KBAResultCode>
+                    <KBAResultCodeDescription>KBA processing successful questions returned</KBAResultCodeDescription>
+                    <NumberOfQuestions>5</NumberOfQuestions>
+                  </General>
+                  <QuestionSet>
+                    <QuestionType>40</QuestionType>
+                    <QuestionText>Select the term of your auto loan (in months) from the following choices:</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>24</QuestionChoice>
+                      <QuestionChoice>36</QuestionChoice>
+                      <QuestionChoice>48</QuestionChoice>
+                      <QuestionChoice>60</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>32</QuestionType>
+                    <QuestionText>Based on our records, you opened a mortgage around January 2022. To whom do you make your mortgage payments?</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>CALIFORNIA FEDERAL</QuestionChoice>
+                      <QuestionChoice>MID AMERICA MORTGAGE</QuestionChoice>
+                      <QuestionChoice>NORWEST BANK</QuestionChoice>
+                      <QuestionChoice>SUN WEST MTG</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>49</QuestionType>
+                    <QuestionText>Based on our records, you graduated from which of the following High Schools?</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>ROMULUS CENTRAL SCHOOL</QuestionChoice>
+                      <QuestionChoice>ELMIRA FREE ACADEMY</QuestionChoice>
+                      <QuestionChoice>ROCK CREEK HIGH SCHOOL</QuestionChoice>
+                      <QuestionChoice>BARKER HIGH SCHOOL</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>13</QuestionType>
+                    <QuestionText>Please select the county for the address you provided.</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>MERRICK</QuestionChoice>
+                      <QuestionChoice>WASHINGTON</QuestionChoice>
+                      <QuestionChoice>LANCASTER</QuestionChoice>
+                      <QuestionChoice>LINCOLN</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>48</QuestionType>
+                    <QuestionText>In which year did you open the (AMEX) credit card?</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>2019</QuestionChoice>
+                      <QuestionChoice>2021</QuestionChoice>
+                      <QuestionChoice>2023</QuestionChoice>
+                      <QuestionChoice>2025</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                </KBA>
+              </PreciseIDServer>
+            </Products>
+          </Response>
+        </FraudSolutions>
+        <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" X-Content-Type-Options="nosniff" X-Backside-Transport="OK OK,OK OK" Connection="Keep-Alive" X-Global-Transaction-ID="0ba1a59168f7c49c85089774" Pragma="no-cache" Date="Tue, 21 Oct 2025 17:36:29 GMT" Strict-Transport-Security="max-age=31622400; includeSubDomains ; preload" Cache-Control="no-cache,no-store" Set-Cookie="JSESSIONID=TZHDECASTSUZDPTFAU6BTFJK.preciseIddemo1v; path=/esolutions; secure; HttpOnly" Expires="Thu, 01 Jan 1970 00:00:00 GMT" X-XSS-Protection="1;mode=block" Content-Type="application/octet-stream" />
+      </Experian>
+      <KIQMaint>
+        <QuestionSet session-id="HAIFIED3OTWMDBVCL2I858N6.pidd1v-2510211237251824549779">
+          <Question ChoiceID="2" />
+          <Question ChoiceID="3" />
+          <Question ChoiceID="4" />
+          <Question ChoiceID="1" />
+          <Question ChoiceID="5" />
+        </QuestionSet>
+      </KIQMaint>
+      <Experian>
+        <FraudSolutions>
+          <Response>
+            <Products>
+              <PreciseIDServer>
+                <PIDXMLVersion>06.00</PIDXMLVersion>
+                <SessionID>TZHDECASTSUZDPTFAU6BTFJK.pidd1v-2510211236282525248928</SessionID>
+                <Header>
+                  <ReportDate>10212025</ReportDate>
+                  <ReportTime>123629</ReportTime>
+                  <ProductOption>18</ProductOption>
+                  <Subcode>1951428</Subcode>
+                </Header>
+                <Messages>
+                  <Message>
+                    <Number>57</Number>
+                    <Text>0150</Text>
+                    <AddrMismatch>N</AddrMismatch>
+                  </Message>
+                </Messages>
+                <Summary>
+                  <TransactionID>2329267606</TransactionID>
+                  <InitialDecision>R10</InitialDecision>
+                  <FinalDecision>R10</FinalDecision>
+                </Summary>
+                <KBAScore>
+                  <General>
+                    <KBAResultCode>0</KBAResultCode>
+                    <KBAResultCodeDescription>KBA processing successful questions returned</KBAResultCodeDescription>
+                    <PriorUsage>
+                      <ExceededUseLimitCode>N</ExceededUseLimitCode>
+                      <ClientUseLimitPeriod>720</ClientUseLimitPeriod>
+                      <ClientUseLimitCount>0</ClientUseLimitCount>
+                      <TotalUseLimitPeriod>720</TotalUseLimitPeriod>
+                      <TotalUseLimitCount>0</TotalUseLimitCount>
+                      <ConsumerSSNTotal>0</ConsumerSSNTotal>
+                      <ClientSSNUseLimitPeriod>0</ClientSSNUseLimitPeriod>
+                      <ClientSSNUseLimitCount>0</ClientSSNUseLimitCount>
+                      <TotalSSNUseLimitPeriod>0</TotalSSNUseLimitPeriod>
+                      <TotalSSNUseLimitCount>0</TotalSSNUseLimitCount>
+                      <ConcurrentPINTotal>0</ConcurrentPINTotal>
+                      <ClientConcurrentPINLimitCount>0</ClientConcurrentPINLimitCount>
+                      <CompanyConcurrentPINLimitCount>0</CompanyConcurrentPINLimitCount>
+                      <GlobalConcurrentPINLimitCount>0</GlobalConcurrentPINLimitCount>
+                    </PriorUsage>
+                  </General>
+                  <ScoreSummary>
+                    <AcceptReferCode>REF</AcceptReferCode>
+                    <DecisionOverrideIndicator>N</DecisionOverrideIndicator>
+                    <PreciseIDScore>467</PreciseIDScore>
+                    <OutWalletScore>49</OutWalletScore>
+                    <OutWalletFormula>(186/381)*100</OutWalletFormula>
+                    <ProgressiveQuestionAchieved>N</ProgressiveQuestionAchieved>
+                    <ChampionChallengerIndicator>N</ChampionChallengerIndicator>
+                    <RiskStrategyNum>1</RiskStrategyNum>
+                    <RiskStrategyDescription>Default Risk Strategy</RiskStrategyDescription>
+                    <QuestionConfigNum>1</QuestionConfigNum>
+                    <QuestionConfigDescription>Default Question Configuration</QuestionConfigDescription>
+                    <DecisionMatrixNum>1</DecisionMatrixNum>
+                    <DecisionMatrixDescription>Default Decision Matrix</DecisionMatrixDescription>
+                  </ScoreSummary>
+                  <GradedAnswer>
+                    <AnswerSet>
+                      <QuestionType>40</QuestionType>
+                      <QuestionTypeDescription>TERM OF AUTO LOAN</QuestionTypeDescription>
+                      <CreditType>C</CreditType>
+                      <AnswerResult>W</AnswerResult>
+                      <QuestionWeight>95</QuestionWeight>
+                    </AnswerSet>
+                    <AnswerSet>
+                      <QuestionType>32</QuestionType>
+                      <QuestionTypeDescription>MORTGAGE LENDER - DIV MIRROR</QuestionTypeDescription>
+                      <CreditType>C</CreditType>
+                      <AnswerResult>R</AnswerResult>
+                      <QuestionWeight>87</QuestionWeight>
+                    </AnswerSet>
+                    <AnswerSet>
+                      <QuestionType>49</QuestionType>
+                      <QuestionTypeDescription>HIGH SCHOOL - DIV</QuestionTypeDescription>
+                      <CreditType>N</CreditType>
+                      <AnswerResult>R</AnswerResult>
+                      <QuestionWeight>99</QuestionWeight>
+                    </AnswerSet>
+                    <AnswerSet>
+                      <QuestionType>13</QuestionType>
+                      <QuestionTypeDescription>COUNTY OF RESIDENCE</QuestionTypeDescription>
+                      <CreditType>N</CreditType>
+                      <AnswerResult>W</AnswerResult>
+                      <QuestionWeight>50</QuestionWeight>
+                    </AnswerSet>
+                    <AnswerSet>
+                      <QuestionType>48</QuestionType>
+                      <QuestionTypeDescription>CREDIT CARD OPEN DATE</QuestionTypeDescription>
+                      <CreditType>C</CreditType>
+                      <AnswerResult>W</AnswerResult>
+                      <QuestionWeight>50</QuestionWeight>
+                    </AnswerSet>
+                  </GradedAnswer>
+                </KBAScore>
+              </PreciseIDServer>
+            </Products>
+          </Response>
+        </FraudSolutions>
+        <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" X-Content-Type-Options="nosniff,nosniff" X-Backside-Transport="OK OK,OK OK" Connection="Keep-Alive" X-Global-Transaction-ID="6eda261668f7c09d04005a12" Pragma="no-cache" Date="Tue, 21 Oct 2025 17:36:54 GMT" Strict-Transport-Security="max-age=31622400; includeSubDomains ; preload" Cache-Control="no-cache,no-store" Expires="Thu, 01 Jan 1970 00:00:00 GMT" X-XSS-Protection="1;mode=block" Content-Type="application/octet-stream" />
+      </Experian>
+      <Experian>
+        <FraudSolutions>
+          <Response>
+            <Products>
+              <PreciseIDServer>
+                <PIDXMLVersion>06.00</PIDXMLVersion>
+                <SessionID>HAIFIED3OTWMDBVCL2I858N6.pidd1v-2510211237251824549779</SessionID>
+                <Header>
+                  <ReportDate>10212025</ReportDate>
+                  <ReportTime>123726</ReportTime>
+                  <ProductOption>18</ProductOption>
+                  <Subcode>1951428</Subcode>
+                </Header>
+                <Messages>
+                  <Message>
+                    <Number>57</Number>
+                    <Text>0150</Text>
+                    <AddrMismatch>N</AddrMismatch>
+                  </Message>
+                </Messages>
+                <Summary>
+                  <TransactionID>2329267676</TransactionID>
+                  <InitialDecision>R10</InitialDecision>
+                  <FinalDecision>R10</FinalDecision>
+                </Summary>
+                <KBA>
+                  <General>
+                    <SessionID>HAIFIED3OTWMDBVCL2I858N6.pidd1v-2510211237251824549779</SessionID>
+                    <KBAResultCode>00</KBAResultCode>
+                    <KBAResultCodeDescription>KBA processing successful questions returned</KBAResultCodeDescription>
+                    <NumberOfQuestions>5</NumberOfQuestions>
+                  </General>
+                  <QuestionSet>
+                    <QuestionType>40</QuestionType>
+                    <QuestionText>Select the term of your auto loan (in months) from the following choices:</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>24</QuestionChoice>
+                      <QuestionChoice>36</QuestionChoice>
+                      <QuestionChoice>48</QuestionChoice>
+                      <QuestionChoice>60</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>32</QuestionType>
+                    <QuestionText>Based on our records, you opened a mortgage around December 2023. To whom do you make your mortgage payments?</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>MID AMERICA MORTGAGE</QuestionChoice>
+                      <QuestionChoice>SUN WEST MTG</QuestionChoice>
+                      <QuestionChoice>CHAMPION MORT</QuestionChoice>
+                      <QuestionChoice>NORWEST BANK</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>44</QuestionType>
+                    <QuestionText>Which of the following is the last four digits of your cellular phone number?</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>7553</QuestionChoice>
+                      <QuestionChoice>4954</QuestionChoice>
+                      <QuestionChoice>3240</QuestionChoice>
+                      <QuestionChoice>3672</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>7</QuestionType>
+                    <QuestionText>You currently or previously resided on which of the following streets?</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>TUTTLE</QuestionChoice>
+                      <QuestionChoice>ROMAN</QuestionChoice>
+                      <QuestionChoice>3RD</QuestionChoice>
+                      <QuestionChoice>CANDLESTICK</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>48</QuestionType>
+                    <QuestionText>In which year did you open the (AMEX) credit card?</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>2017</QuestionChoice>
+                      <QuestionChoice>2019</QuestionChoice>
+                      <QuestionChoice>2021</QuestionChoice>
+                      <QuestionChoice>2023</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                </KBA>
+              </PreciseIDServer>
+            </Products>
+          </Response>
+        </FraudSolutions>
+        <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" X-Content-Type-Options="nosniff" X-Backside-Transport="OK OK,OK OK" Connection="Keep-Alive" X-Global-Transaction-ID="6eda261668f7c0bc01e73cd3" Pragma="no-cache" Date="Tue, 21 Oct 2025 17:37:26 GMT" Strict-Transport-Security="max-age=31622400; includeSubDomains ; preload" Cache-Control="no-cache,no-store" Set-Cookie="JSESSIONID=HAIFIED3OTWMDBVCL2I858N6.preciseIddemo1v; path=/esolutions; secure; HttpOnly" Expires="Thu, 01 Jan 1970 00:00:00 GMT" X-XSS-Protection="1;mode=block" Content-Type="application/octet-stream" />
+      </Experian>
+      <Experian>
+        <FraudSolutions>
+          <Response>
+            <Products>
+              <PreciseIDServer>
+                <PIDXMLVersion>06.00</PIDXMLVersion>
+                <SessionID>HAIFIED3OTWMDBVCL2I858N6.pidd1v-2510211237251824549779</SessionID>
+                <Header>
+                  <ReportDate>10212025</ReportDate>
+                  <ReportTime>123726</ReportTime>
+                  <ProductOption>18</ProductOption>
+                  <Subcode>1951428</Subcode>
+                </Header>
+                <Messages>
+                  <Message>
+                    <Number>57</Number>
+                    <Text>0150</Text>
+                    <AddrMismatch>N</AddrMismatch>
+                  </Message>
+                </Messages>
+                <Summary>
+                  <TransactionID>2329267676</TransactionID>
+                  <InitialDecision>R10</InitialDecision>
+                  <FinalDecision>R10</FinalDecision>
+                </Summary>
+                <KBAScore>
+                  <General>
+                    <KBAResultCode>0</KBAResultCode>
+                    <KBAResultCodeDescription>KBA processing successful questions returned</KBAResultCodeDescription>
+                    <PriorUsage>
+                      <ExceededUseLimitCode>N</ExceededUseLimitCode>
+                      <ClientUseLimitPeriod>720</ClientUseLimitPeriod>
+                      <ClientUseLimitCount>0</ClientUseLimitCount>
+                      <TotalUseLimitPeriod>720</TotalUseLimitPeriod>
+                      <TotalUseLimitCount>0</TotalUseLimitCount>
+                      <ConsumerSSNTotal>0</ConsumerSSNTotal>
+                      <ClientSSNUseLimitPeriod>0</ClientSSNUseLimitPeriod>
+                      <ClientSSNUseLimitCount>0</ClientSSNUseLimitCount>
+                      <TotalSSNUseLimitPeriod>0</TotalSSNUseLimitPeriod>
+                      <TotalSSNUseLimitCount>0</TotalSSNUseLimitCount>
+                      <ConcurrentPINTotal>0</ConcurrentPINTotal>
+                      <ClientConcurrentPINLimitCount>0</ClientConcurrentPINLimitCount>
+                      <CompanyConcurrentPINLimitCount>0</CompanyConcurrentPINLimitCount>
+                      <GlobalConcurrentPINLimitCount>0</GlobalConcurrentPINLimitCount>
+                    </PriorUsage>
+                  </General>
+                  <ScoreSummary>
+                    <AcceptReferCode>REF</AcceptReferCode>
+                    <DecisionOverrideIndicator>N</DecisionOverrideIndicator>
+                    <PreciseIDScore>467</PreciseIDScore>
+                    <OutWalletScore>0</OutWalletScore>
+                    <OutWalletFormula>(0/401)*100</OutWalletFormula>
+                    <ProgressiveQuestionAchieved>N</ProgressiveQuestionAchieved>
+                    <ChampionChallengerIndicator>N</ChampionChallengerIndicator>
+                    <RiskStrategyNum>1</RiskStrategyNum>
+                    <RiskStrategyDescription>Default Risk Strategy</RiskStrategyDescription>
+                    <QuestionConfigNum>1</QuestionConfigNum>
+                    <QuestionConfigDescription>Default Question Configuration</QuestionConfigDescription>
+                    <DecisionMatrixNum>1</DecisionMatrixNum>
+                    <DecisionMatrixDescription>Default Decision Matrix</DecisionMatrixDescription>
+                  </ScoreSummary>
+                  <GradedAnswer>
+                    <AnswerSet>
+                      <QuestionType>40</QuestionType>
+                      <QuestionTypeDescription>TERM OF AUTO LOAN</QuestionTypeDescription>
+                      <CreditType>C</CreditType>
+                      <AnswerResult>W</AnswerResult>
+                      <QuestionWeight>95</QuestionWeight>
+                    </AnswerSet>
+                    <AnswerSet>
+                      <QuestionType>32</QuestionType>
+                      <QuestionTypeDescription>MORTGAGE LENDER - DIV MIRROR</QuestionTypeDescription>
+                      <CreditType>C</CreditType>
+                      <AnswerResult>W</AnswerResult>
+                      <QuestionWeight>87</QuestionWeight>
+                    </AnswerSet>
+                    <AnswerSet>
+                      <QuestionType>44</QuestionType>
+                      <QuestionTypeDescription>LAST 4 DIGITS OF CELL PHONE NUMBER - DIV</QuestionTypeDescription>
+                      <CreditType>N</CreditType>
+                      <AnswerResult>W</AnswerResult>
+                      <QuestionWeight>99</QuestionWeight>
+                    </AnswerSet>
+                    <AnswerSet>
+                      <QuestionType>7</QuestionType>
+                      <QuestionTypeDescription>PREVIOUS STREET OF RESIDENCE</QuestionTypeDescription>
+                      <CreditType>N</CreditType>
+                      <AnswerResult>W</AnswerResult>
+                      <QuestionWeight>70</QuestionWeight>
+                    </AnswerSet>
+                    <AnswerSet>
+                      <QuestionType>48</QuestionType>
+                      <QuestionTypeDescription>CREDIT CARD OPEN DATE</QuestionTypeDescription>
+                      <CreditType>C</CreditType>
+                      <AnswerResult>W</AnswerResult>
+                      <QuestionWeight>50</QuestionWeight>
+                    </AnswerSet>
+                  </GradedAnswer>
+                </KBAScore>
+              </PreciseIDServer>
+            </Products>
+          </Response>
+        </FraudSolutions>
+        <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" X-Content-Type-Options="nosniff,nosniff" X-Backside-Transport="OK OK,OK OK" Connection="Keep-Alive" X-Global-Transaction-ID="6eda261668f7c0cb04005c12" Pragma="no-cache" Date="Tue, 21 Oct 2025 17:37:40 GMT" Strict-Transport-Security="max-age=31622400; includeSubDomains ; preload" Cache-Control="no-cache,no-store" Expires="Thu, 01 Jan 1970 00:00:00 GMT" X-XSS-Protection="1;mode=block" Content-Type="application/octet-stream" />
+      </Experian>
+      <IovationOTPCase>
+        <JSON>
+          <HTTPHeaders Status-Code="401" Status-Message="Web Service Returned non-OK status 401" CF-Ray="99229501a8aa8e53-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Tue, 21 Oct 2025 17:47:46 GMT" Access-Control-Expose-Headers="Request-Context" CF-Cache-Status="DYNAMIC" Cache-Control="no-cache" Set-Cookie="__cf_bm=CgAzHagbGL4aVNMBi0PHQNuAGfKoDlVu9H5e_0jynAI-1761068866-1.0.1.1-nJ6PwIxgLj93Zmzt2ntNq6DypFrL6bJSOXnCSzggu0EG_KKVtuZbiJZ99fXC86O5Lw02aUtNOBsCtxcchu4mAi_P1T7I.LARCcJZMjJr_yU; path=/; expires=Tue, 21-Oct-25 18:17:46 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="-1" Content-Length="90" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationOTPCase>
+      <IovationOTPCase>
+        <JSON>
+          <HTTPHeaders Status-Code="401" Status-Message="Web Service Returned non-OK status 401" CF-Ray="99229501a8aa8e53-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Tue, 21 Oct 2025 17:47:46 GMT" Access-Control-Expose-Headers="Request-Context" CF-Cache-Status="DYNAMIC" Cache-Control="no-cache" Set-Cookie="__cf_bm=CgAzHagbGL4aVNMBi0PHQNuAGfKoDlVu9H5e_0jynAI-1761068866-1.0.1.1-nJ6PwIxgLj93Zmzt2ntNq6DypFrL6bJSOXnCSzggu0EG_KKVtuZbiJZ99fXC86O5Lw02aUtNOBsCtxcchu4mAi_P1T7I.LARCcJZMjJr_yU; path=/; expires=Tue, 21-Oct-25 18:17:46 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="-1" Content-Length="90" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationOTPCase>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992295680a84e645-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=6hwfookoXaGu6_7J.1apkAYHN_2UfaRygNF9DYfAVvQ-1761068883-1.0.1.1-cbiHjNqJW.6wCtNjO9QCKyxlCix9DJzo7dC5WX_gKp_YDsg_Gb.cYqn6Xg_IbPnAYsToUFJrNvLJqMIArUINsL01qAQXp2XMUmbRM9WTbII; path=/; expires=Tue, 21-Oct-25 18:18:03 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:03 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992295680a84e645-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=6hwfookoXaGu6_7J.1apkAYHN_2UfaRygNF9DYfAVvQ-1761068883-1.0.1.1-cbiHjNqJW.6wCtNjO9QCKyxlCix9DJzo7dC5WX_gKp_YDsg_Gb.cYqn6Xg_IbPnAYsToUFJrNvLJqMIArUINsL01qAQXp2XMUmbRM9WTbII; path=/; expires=Tue, 21-Oct-25 18:18:03 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:03 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="9922957a0a183389-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=5qkTf7vgrcVadJaB82SZTprS2ZgxRsv02S9bxUfy1rw-1761068886-1.0.1.1-XX1etj5_WDWoOVnkEtuC0noxjCzvgFkb8FCQdOB.Lo4jI8nlnDZUR.4wCQ0HgcgVFtYPPM2vlYcbynAbUiqMyNx0DotJgtt6C8ITiOOcUBY; path=/; expires=Tue, 21-Oct-25 18:18:06 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:06 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="9922957a0a183389-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=5qkTf7vgrcVadJaB82SZTprS2ZgxRsv02S9bxUfy1rw-1761068886-1.0.1.1-XX1etj5_WDWoOVnkEtuC0noxjCzvgFkb8FCQdOB.Lo4jI8nlnDZUR.4wCQ0HgcgVFtYPPM2vlYcbynAbUiqMyNx0DotJgtt6C8ITiOOcUBY; path=/; expires=Tue, 21-Oct-25 18:18:06 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:06 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992295894a0f825d-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=zbE0ZEBHX7uDZW85SAKR7YHwJnRpx6BYfna.ykGzn0Y-1761068888-1.0.1.1-BZIL7E39v2esO5LvdTZ_OikwQQqsr3gCQZvsmNw0Oa4trJL9dfi5r9vauRQOBNN.ry3eTweUtoY9IFJBr.csIhgiGlwgHyqvWRAIp9l9Qcg; path=/; expires=Tue, 21-Oct-25 18:18:08 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:08 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992295894a0f825d-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=zbE0ZEBHX7uDZW85SAKR7YHwJnRpx6BYfna.ykGzn0Y-1761068888-1.0.1.1-BZIL7E39v2esO5LvdTZ_OikwQQqsr3gCQZvsmNw0Oa4trJL9dfi5r9vauRQOBNN.ry3eTweUtoY9IFJBr.csIhgiGlwgHyqvWRAIp9l9Qcg; path=/; expires=Tue, 21-Oct-25 18:18:08 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:08 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="99229626bbe9d46e-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=rirvHaMBEtnmPgE3TLA_6VODD98n0Qrj5FkRdkZj0b4-1761068913-1.0.1.1-cxYoTzwpMOB.GSDKh5DEDiAb8.ifUpHsq9trsKsa9QHwtKionkkYHJSH0a1mTGnlhq4wRGMFScfGiUMgEZ4o1v0BI50h0rObq75lBLgvt50; path=/; expires=Tue, 21-Oct-25 18:18:33 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:33 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="99229626bbe9d46e-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=rirvHaMBEtnmPgE3TLA_6VODD98n0Qrj5FkRdkZj0b4-1761068913-1.0.1.1-cxYoTzwpMOB.GSDKh5DEDiAb8.ifUpHsq9trsKsa9QHwtKionkkYHJSH0a1mTGnlhq4wRGMFScfGiUMgEZ4o1v0BI50h0rObq75lBLgvt50; path=/; expires=Tue, 21-Oct-25 18:18:33 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:33 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="99229630ebec7fed-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=1wk4BTOo8vgnh3eNmWM3ETAXf8FXjuQO1TqqAekSu5o-1761068915-1.0.1.1-HKEoyJ0Quy4yIMQ4kMM8hyeH1f9MFzWCPcYe1b_Verpl6hOVGLmMIHjzL6aM4KuFvLg4dn0UKZW2BNJmw3jANhC9.yMHYEdm3..pDAiKzUs; path=/; expires=Tue, 21-Oct-25 18:18:35 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:35 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="99229630ebec7fed-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=1wk4BTOo8vgnh3eNmWM3ETAXf8FXjuQO1TqqAekSu5o-1761068915-1.0.1.1-HKEoyJ0Quy4yIMQ4kMM8hyeH1f9MFzWCPcYe1b_Verpl6hOVGLmMIHjzL6aM4KuFvLg4dn0UKZW2BNJmw3jANhC9.yMHYEdm3..pDAiKzUs; path=/; expires=Tue, 21-Oct-25 18:18:35 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:48:35 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992296cde9cfc5e9-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=3KFyNYsmq6GRw9lpthV7dwZDFSvZ205lw0OHlxdtUiw-1761068940-1.0.1.1-PkzH3A2deeITdE4xwPU1LQGbkE2ExvB2bkPYbtv60_hEJC17PnHo65rAlyT1IYcGGuLtWczH0LN42u8Fz.MHwTVfwUncCYfwiaZ3A8lN40c; path=/; expires=Tue, 21-Oct-25 18:19:00 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:00 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992296cde9cfc5e9-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=3KFyNYsmq6GRw9lpthV7dwZDFSvZ205lw0OHlxdtUiw-1761068940-1.0.1.1-PkzH3A2deeITdE4xwPU1LQGbkE2ExvB2bkPYbtv60_hEJC17PnHo65rAlyT1IYcGGuLtWczH0LN42u8Fz.MHwTVfwUncCYfwiaZ3A8lN40c; path=/; expires=Tue, 21-Oct-25 18:19:00 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:00 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992296e44d2c81a9-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=LBt1vxje8x_IH3dxeJ7p8ZtUvtYZnDCM6KcgOVtnbiU-1761068944-1.0.1.1-lLcdZpKf1XLUM98OW0Dg6P4k_B.xLjtvbPPxDtM2.cd99KWQgL8n3g2.Ug7aZtXrfaA0990G3moa9bK3RiU88s0L0ZOQkWSoIzGOChhBJ.U; path=/; expires=Tue, 21-Oct-25 18:19:04 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:04 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992296e44d2c81a9-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=LBt1vxje8x_IH3dxeJ7p8ZtUvtYZnDCM6KcgOVtnbiU-1761068944-1.0.1.1-lLcdZpKf1XLUM98OW0Dg6P4k_B.xLjtvbPPxDtM2.cd99KWQgL8n3g2.Ug7aZtXrfaA0990G3moa9bK3RiU88s0L0ZOQkWSoIzGOChhBJ.U; path=/; expires=Tue, 21-Oct-25 18:19:04 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:04 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992296f3ec6a68f3-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=kNiRSjD56xK_vVLG6X965DzyDmGBS_o7MYDz7IOAPAs-1761068946-1.0.1.1-.59qH6JX6gxydtc6LO4B9jXAcmOYCJNMMkjEFh9ezCmNE2yFVOyUVrFq74fhzzhhmsnYJaaI5UoOQdH.nvyc5n74r3egVULWmH6PFPPPBWM; path=/; expires=Tue, 21-Oct-25 18:19:06 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:06 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992296f3ec6a68f3-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=kNiRSjD56xK_vVLG6X965DzyDmGBS_o7MYDz7IOAPAs-1761068946-1.0.1.1-.59qH6JX6gxydtc6LO4B9jXAcmOYCJNMMkjEFh9ezCmNE2yFVOyUVrFq74fhzzhhmsnYJaaI5UoOQdH.nvyc5n74r3egVULWmH6PFPPPBWM; path=/; expires=Tue, 21-Oct-25 18:19:06 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:06 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="99229718fedc9c46-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=PoVTODrFIfqKhN5epDxY_01qobYwDgi5uvhj0JB5mqQ-1761068952-1.0.1.1-e2gjtnm1nYTpcnJvU4T_ROYeYjYA5pGZF6nfzIJ_JUa0ycZ8Ll2apHd1iqjCsjLzVuV5uCeYiz1Ekh1CSyYJemooL1l73ml04tFxU_8k2N8; path=/; expires=Tue, 21-Oct-25 18:19:12 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:12 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="99229718fedc9c46-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=PoVTODrFIfqKhN5epDxY_01qobYwDgi5uvhj0JB5mqQ-1761068952-1.0.1.1-e2gjtnm1nYTpcnJvU4T_ROYeYjYA5pGZF6nfzIJ_JUa0ycZ8Ll2apHd1iqjCsjLzVuV5uCeYiz1Ekh1CSyYJemooL1l73ml04tFxU_8k2N8; path=/; expires=Tue, 21-Oct-25 18:19:12 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:12 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="99229732bc80d143-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=hKuP6a0Ooq6jvlo2F5ZpKbTk3WexGuFzs.FaQwBok1s-1761068956-1.0.1.1-Ul72Uyr.LHQBzdthwMeUwmNtteIIahgTyzzM2cfJAV4Lu0qpn80Co2IS7quPlFildiDbyJ1qRbb8w_kUTgPwuZIQcnxbXaR.ch0uz048QFw; path=/; expires=Tue, 21-Oct-25 18:19:16 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:16 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="99229732bc80d143-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=hKuP6a0Ooq6jvlo2F5ZpKbTk3WexGuFzs.FaQwBok1s-1761068956-1.0.1.1-Ul72Uyr.LHQBzdthwMeUwmNtteIIahgTyzzM2cfJAV4Lu0qpn80Co2IS7quPlFildiDbyJ1qRbb8w_kUTgPwuZIQcnxbXaR.ch0uz048QFw; path=/; expires=Tue, 21-Oct-25 18:19:16 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:16 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="9922974dad3c5668-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=tSTtOxard24RON32xQGtCzyc6cZuhg60ySe5x97PqWM-1761068960-1.0.1.1-XbaAMqIjlyxC6_nzmZhE2Oj2073vnID3EI3vkl9N58LNop.n37HWc2w7jRjsH5Koac8fhEkEiVBqEHmrARb7kr.Nk7oZnxXR1yFwN6hrMIc; path=/; expires=Tue, 21-Oct-25 18:19:20 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:20 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="9922974dad3c5668-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=tSTtOxard24RON32xQGtCzyc6cZuhg60ySe5x97PqWM-1761068960-1.0.1.1-XbaAMqIjlyxC6_nzmZhE2Oj2073vnID3EI3vkl9N58LNop.n37HWc2w7jRjsH5Koac8fhEkEiVBqEHmrARb7kr.Nk7oZnxXR1yFwN6hrMIc; path=/; expires=Tue, 21-Oct-25 18:19:20 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:20 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="9922975ebc15c5b7-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=udfaNi3sr2VZ8HeOVRufc5e.GPMvDEBkyFKkNehM9Wg-1761068963-1.0.1.1-INiSAVaQQfgHnmN4S8KFsktYQvuqxu6OyLUT1VIktiOaDlQRSYeENjQyNbCAaeOzDxz7zO1VRXqbTLT4AhgT2Z4dZ7gM6slmwN.CrPTJ7V8; path=/; expires=Tue, 21-Oct-25 18:19:23 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:23 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="9922975ebc15c5b7-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=udfaNi3sr2VZ8HeOVRufc5e.GPMvDEBkyFKkNehM9Wg-1761068963-1.0.1.1-INiSAVaQQfgHnmN4S8KFsktYQvuqxu6OyLUT1VIktiOaDlQRSYeENjQyNbCAaeOzDxz7zO1VRXqbTLT4AhgT2Z4dZ7gM6slmwN.CrPTJ7V8; path=/; expires=Tue, 21-Oct-25 18:19:23 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:23 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992297709b2357da-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=7gAciYeZVjwpmaouSrpiIWc.MReKU0qmJ84T89_2GI0-1761068966-1.0.1.1-W_U4dbDKz.oUIgxY9WxYZs4Ewu4fBza_oSkFm_.QrAIUVkSZi1JnKinOayWvo7F6iicsfSUC_L2sOiuxFxKn3x4CFXCT8XqDtafgwomjRfA; path=/; expires=Tue, 21-Oct-25 18:19:26 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:26 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="992297709b2357da-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=7gAciYeZVjwpmaouSrpiIWc.MReKU0qmJ84T89_2GI0-1761068966-1.0.1.1-W_U4dbDKz.oUIgxY9WxYZs4Ewu4fBza_oSkFm_.QrAIUVkSZi1JnKinOayWvo7F6iicsfSUC_L2sOiuxFxKn3x4CFXCT8XqDtafgwomjRfA; path=/; expires=Tue, 21-Oct-25 18:19:26 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:26 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="9922977bcbe6290e-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=jDPwXnacLQmQk26ralOlRLQCz4.Ri8j2bJkk2EwvCz8-1761068968-1.0.1.1-YMEu3KVh5SKb_dgdpLFSaz3txDulHMe6pVpAya1oFyPxkJynou7ia6rA2KfsmAGiHfdcLv9pga_qWefFClahBOTe5EsalhbnqJ7TJPgFQnI; path=/; expires=Tue, 21-Oct-25 18:19:28 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:28 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+      <IovationOTPResponse>
+        <JSON>
+          <HTTPHeaders Status-Code="403" Referrer-Policy="same-origin" X-Frame-Options="SAMEORIGIN" Status-Message="Web Service Returned non-OK status 403" CF-RAY="9922977bcbe6290e-IAD" Server="cloudflare" Cache-Control="private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0" Connection="keep-alive" Set-Cookie="__cf_bm=jDPwXnacLQmQk26ralOlRLQCz4.Ri8j2bJkk2EwvCz8-1761068968-1.0.1.1-YMEu3KVh5SKb_dgdpLFSaz3txDulHMe6pVpAya1oFyPxkJynou7ia6rA2KfsmAGiHfdcLv9pga_qWefFClahBOTe5EsalhbnqJ7TJPgFQnI; path=/; expires=Tue, 21-Oct-25 18:19:28 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="Thu, 01 Jan 1970 00:00:01 GMT" Content-Length="4516" Date="Tue, 21 Oct 2025 17:49:28 GMT" Content-Type="text/html; charset=UTF-8" />
+        </JSON>
+      </IovationOTPResponse>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2025-10-09 21:51:08.464" Source="WebService.TransUnionToken.Iovation Token Request.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+      <Message Timestamp="2025-10-09 21:51:08.578" Source="WebService.TransUnionCase.POST Case Iovation.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 401" />
+      <Message Timestamp="2025-10-21 17:48:09.864" Source="WebService.TransUnionToken.OTP Token Request.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+      <Message Timestamp="2025-10-21 17:48:09.988" Source="WebService.TransUnionCase.POST Case OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 401" />
+      <Message Timestamp="2025-10-21 17:48:26.315" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:48:29.193" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:48:31.640" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:48:56.813" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:48:58.438" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:49:23.570" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:49:27.203" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:49:29.659" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:49:35.583" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:49:39.702" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:49:44.010" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:49:46.734" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:49:49.622" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+      <Message Timestamp="2025-10-21 17:49:51.389" Source="WebService.TransUnionDetailedDecision.Send OTP.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 403" />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_14fffdb8_18e0bc0745c_07fc218e0bc0745c" ID="EAHIGH" Description="Emailage Risk Band 5/6" Timestamp="2025-10-09 21:51:09.093" Severity="92" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2025-10-09 21:51:08.027" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2025-10-09 21:51:08.095" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-10-09 21:51:08.140" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-10-09 21:51:08.140" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2025-10-09 21:51:08.147" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="2025-10-09 21:51:08.147" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2025-10-09 21:51:08.240" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="2025-10-09 21:51:08.240" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2025-10-09 21:51:08.242" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="2025-10-09 21:51:08.242" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2025-10-09 21:51:08.243" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2025-10-09 21:51:08.243" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2025-10-09 21:51:08.244" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2025-10-09 21:51:08.244" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2025-10-09 21:51:08.245" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2025-10-09 21:51:08.245" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2025-10-09 21:51:08.246" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2025-10-09 21:51:08.246" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2025-10-09 21:51:08.247" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2025-10-09 21:51:08.247" Status="false" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2025-10-09 21:51:08.248" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2025-10-09 21:51:08.248" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2025-10-09 21:51:08.249" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2025-10-09 21:51:08.249" Status="false" />
+      <Journal Type="Rule" ID="APPGENDEL" Timestamp="2025-10-09 21:51:08.250" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="2025-10-09 21:51:08.250" Status="Pass" />
+      <Journal Type="Process" ID="ID Vision" Timestamp="2025-10-09 21:51:08.579" Status="Fail" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2025-10-09 21:51:08.580" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2025-10-09 21:51:08.580" Status="false" />
+      <Journal Type="Rule" ID="SSNMM" Timestamp="2025-10-09 21:51:08.581" Status="false" />
+      <Journal Type="Rule" ID="PMACI" Timestamp="2025-10-09 21:51:08.581" Status="bypassed" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2025-10-09 21:51:08.582" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2025-10-09 21:51:08.587" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2025-10-09 21:51:08.597" Status="false" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2025-10-09 21:51:08.598" Status="bypassed" />
+      <Journal Type="Process" ID="02000" Timestamp="2025-10-09 21:51:08.598" Status="Pass" />
+      <Journal Type="Process" ID="Alloy Journey Service" Timestamp="2025-10-09 21:51:09.088" Status="bypassed" />
+      <Journal Type="Rule" ID="SL_ID_Theft_Score" Timestamp="2025-10-09 21:51:09.089" Status="false" />
+      <Journal Type="Rule" ID="SL_Synthetic" Timestamp="2025-10-09 21:51:09.089" Status="false" />
+      <Journal Type="Rule" ID="EMAILAGE" Timestamp="2025-10-09 21:51:09.090" Status="false" />
+      <Journal Type="Rule" ID="EAIPDIST" Timestamp="2025-10-09 21:51:09.091" Status="bypassed" />
+      <Journal Type="Rule" ID="DUPDID" Timestamp="2025-10-09 21:51:09.092" Status="bypassed" />
+      <Journal Type="Rule" ID="EAHIGH" Timestamp="2025-10-09 21:51:09.093" Status="true" />
+      <Journal Type="Rule" ID="VRFYAU" Timestamp="2025-10-09 21:51:09.094" Status="false" />
+      <Journal Type="Process" ID="IIDQA" Timestamp="2025-10-09 21:51:10.848" Status="Fail" />
+      <Journal Type="Process" ID="03000" Timestamp="2025-10-09 21:51:10.906" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-10-09 21:51:10.909" Status="Pass" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-10 15:13:42.769" Status="Opened" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-10 15:18:56.077" Status="Opened" />
+      <Journal UserID="BETHANY.GREER@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-10 17:37:49.074" Status="Opened" />
+      <Journal UserID="JOSHUA.HAROLDSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-10 19:51:29.630" Status="Opened" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-21 17:36:38.954" Status="Opened" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Get KIQ Questions" Timestamp="2025-10-21 17:36:52.706" Status="Success" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Send KIQ Answers" Timestamp="2025-10-21 17:37:17.221" Status="P" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-21 17:37:43.780" Status="Opened" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Get KIQ Questions" Timestamp="2025-10-21 17:37:49.976" Status="Success" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Send KIQ Answers" Timestamp="2025-10-21 17:38:04.027" Status="P" />
+      <Journal Type="Process" ID="Request OTP" Timestamp="2025-10-21 17:48:09.989" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="OTP Session" Timestamp="2025-10-21 17:48:09.990" Status="Fail" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:48:26.317" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:48:26.318" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:48:29.194" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:48:29.195" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:48:31.642" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:48:31.643" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:48:56.815" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:48:56.815" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:48:58.440" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:48:58.440" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:49:23.572" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:49:23.572" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:49:27.205" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:49:27.205" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:49:29.661" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:49:29.661" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:49:35.585" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:49:35.585" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:49:39.703" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:49:39.704" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:49:44.011" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:49:44.012" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:49:46.736" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:49:46.737" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:49:49.623" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:49:49.624" Status="Error" />
+      <Journal Type="Process" ID="Submit OTP" Timestamp="2025-10-21 17:49:51.391" Status="Fail" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="API" ID="Start OTP" Timestamp="2025-10-21 17:49:51.391" Status="Error" />
+      <Journal Type="Process" ID="72000" Timestamp="2025-10-21 20:35:21.237" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits />
+    <Documents />
+    <temp_app_variables />
+    <TriggeredRules />
+  </Request>
+  <queues>
+    <queue name="Pending" id="70" type="av" />
+    <queue name="R Fraud Team" id="16" />
+    <queue name="T All Applications" id="17" />
+  </queues>
+</Provenir>

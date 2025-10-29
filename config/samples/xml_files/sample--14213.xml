@@ -1,0 +1,662 @@
+﻿<Provenir org="" ProductType="" Version="4.0.0" transactionID="DE1c045cf2_157fcad8657_07ffc157fcae8f83_0a19763d.83" Org="">
+  <Request ID="142317" LockedBy="" _LockedBy="" Priority="" Process="99000" Readonly="" Status="" Timeout="" Timestamp="" Trace="" Trans="WEBAPP" UnLockOnExit="" UserID="" Workflow="1" Version="" transactionCounter="0">
+    <CustData>
+      <application address_match_flag="" app_entry_date="01/25/2016" app_receive_date="01/25/2016" app_source_ind="I" app_type_code="PRODB" campaign_num="P1B" coupon_expiration_date="03/24/2016" CPS_letter_sent_flag="" credit_life_ind="" Debit_Funding_Source="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_date="" Debit_Refund_amount="" EODRet="WEBAPP" existing_card_account_num="" last_update_time="" mail_cell_pricing="PBVEILF166" name_match_flag="Y" Partner_URL_ID="" population_assignment="EV" pymnt_prot_plan_ind=" " pricing_tier="59" processing_expiration_date="03/29/2016" procs_date="2016-1-25 11:21:33.570" signature_ind="Y" solicitation_locked="" solicitation_num="02165091774T" special_offer="5" ssn_match_flag="Y" swiftpay_num="" TUAccessCode="" verification_source="LNA">
+        <app_product aba_number="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" aggregate_balance="" aggregate_balance5="" analyst_rev_ind="N" annual_fee_tp_c="" autopay_ind="" backend_fico_grade="F" backend_risk_grade="U" bankruptcy_score="" booked_date="2016-2-9 14:18:28.381" bus_card_name="" cash_advance_ind="" cendant_add_date="" collections_remark_codes_num="" control_accnt_desired_ind="" control_accnt_number="" control_accnt_seq_no="" csi_eligibility_ind="" csi_sent_date="" debt_to_income_ratio="13.6" decision_date="2016-1-25 11:21:37.976" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" decision_tp_c="APPRV" delphi_score="" discharged_bankruptcy_ind="" disclosures="R" dismissed_bankruptcy_ind="" duplicate_app_ind="N" empirica_score="" existing_cardholder_ind="" experian_fico_score="" FICO_BKR3_EX="" FICO_BKR3_TU="" FICO_NextGen3_EX="" FICO_NextGen3_TU="" filed_bankruptcy_ind="" horizon_score="" ics_sent_date="" intrnl_fraud_ssn_ind="N" intrnl_fraud_address_ind="N" letter_requested_ind="" lscampaign_num="" mars_model_score="" merrick_tradelines_num="" monthly_debt="850" monthly_income="6250" multran_booked_date="" neuristics_edge_score="" ninety_day_delinq_num="" one_twenty_day_delinq_num="" overdraft_ind="" override_tp_c="" pd_seq_no="" pd_tp_c="" pending_verif_ind="N" pinnacle_score="" policy_override_employee_code="" prev_merrick_inq_num="" precision_score="" prescreen_bkr_score="" prescreen_fico_grade="F" prescreen_fico_score="" prescreen_risk_grade="V" prescreen_risk_score="301" prmy_pd_ind="" pubrec_bankruptcies_num="" regbcloseddays_num="15" regbcloseddays_num_counter_offer="" regbcloseddays2_num="" regbnewinfostartdate="" req_plastics_qt="1" req_prod_tp_c="VCRDU" risk_model_score_JH="" risk_model_score_LP="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" Risk_Model_reason3_tp_c="" risk_model_score="260" sixty_day_delinq_num="" sixty_ninety_day_delinq_num="" score="" scorecard="" supervisor_rev_ind="N" thirty_day_delinq_num="" trades_BKR_filings_num="" trades_remark_codes_num="" Vantage_Score_EX="" Vantage_Score_TU="" EX_DIE_score="24" EX_TIE_score="35" experian_evs_score="0" EX_EVS_score="728" EX_FICO_08_score="669" />
+        <comments comment="Correction to previous comment: Addresses and/or DOB Verified Offline by Accurint via Batch Processing" comment_seq_number="1" comment_type_code="DA" user_id="System" time_stamp="2016-2-9 12:11:50.610" />
+        <contact mother_maiden_name="DAVIS" ac_role_tp_c="PR" initials="W" last_name="HERRINGTON" suffix="" con_id="244450" title="" first_name="DARREN" birth_date="1/5/1967" ssn="666228327" ssn_last_4="8327" email="" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" age="49">
+          <app_prod_bcard accnt_bin="45291210" accnt_seq_no="212" accnt_type_ind="" account_number="4529121010002127" agent="1000" allocated_credit_line="300" analyst_approved_line="" card_decision_tp_c="APPRV" card_id="232038" card_name="HERRINGTON,DARREN W" issue_card_ind="Y" multran_accnt_bin="" multran_accnt_seq_no="" multran_account_number="" pd_tp_c="P1B" recur_payment_credit_line="" requested_credit_line="" seq_check="002127" sys_prin="34821000" />
+          <contact_address address_seq_no="219461" address_tp_c="CURR" cell_phone="" city="LAPEER" fax_no="" home_phone="8012223333" mailing_city="" mailing_po_box="" mailing_rural_route="" mailing_state="" mailing_unit="" mailing_zip="" months_at_residence="0" ownership_tp_c="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" residence_monthly_pymnt="500" rural_route="" state="MI" street_name="ROODS LAKE RD" street_number="2410" unit="" years_at_residence="0" zip="48446" />
+          <contact_employment b_city="" b_income_source_nontaxable="N" b_job_title_tp_c="" b_months_at_job="0" b_name="" b_othr_inc_basis_tp_c="" b_other_income_amt="" b_other_income_source_tp_c="" b_phone_no="" b_phone_no_ext="" b_primary_income_source_tp_c="" b_salary="75000" b_salary_basis_tp_c="ANNUM" b_state="" b_street_name="" b_street_number="" b_years_at_job="0" b_self_employed_ind="" b_unit="" b_zip="" employment_seq_no="219460" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="NA" employer_name="" checking_savings_account="NA" housing_type="NA" cash_advances="NA" />
+        <letters cb_disclosure_suppress="" cb_score_suppress="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" letter_type_cd="" seq_no="" />
+        <rmts_info aaa_misc_field_4="" address_match_flag="" auth_user_is_spouse="N" campaign_number="P1B" CB_prescreen_birth_date="01/05/1967" merrick_appl_number="" name_match_flag="" pri_apt_number="" pri_city="LAPEER" pri_cur_street_num="2410" pri_cur_street_name="ROODS LAKE RD" pri_po_box_num="" pri_rural_rt_num="" pri_state="MI" pri_zip_code="484460000" primary_first_name="DARREN" primary_last_name="HERRINGTON" primary_middle_name="W" primary_ssn="66228327" primary_suffix="" special_flag_5="P" special_flag_6="G" special_flag_7="A" special_flag_8="A" ssn_match_flag="" transmission_date="2016-1-25 11:21:33.523" upc8="" upc9="" upc10="" upc12="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <FDR account_number="" Cross_refrence_indicator="" Cross_refrence_number="" External_Primary_Account="" filler="" multran_account_number="" operator_code="" SubTranCode="" swiftpay_number="" terminalID="" transaction_code="" />
+      </application>
+    </CustData>
+    <Reports>
+      <EX>
+        <Raw>1100046012516122134TMI20706142317K11201252016@13000230669P16151905AJ@13000230035P        IW@13000230024P        D4@13000230680P12145549V3@13000230728P14921591EV@3220018 666228327@335004822/DARREN/W/HERRINGTON//1967E61201051967@3360098060509152002740116S        41/2410/ROODS LAKE/RD///LAPEER/MI/484468363K2200617200509092015@336010606130315100       S        49/9688/KINGSTON POINTE/DR///CLARKSTON/MI/483484194K2200609201303092015@336010303130313100       S        46/9017/BAVARIAN WAY/DR///CLARKSTON/MI/483484280K2200307201303072013@337006202010201204IBIS01 01 01           K2200205200102052001@3570267  N05050511    02060200019003O         050111        56          CI0001 A919750000228905556B2147210010000B429B-2111111111CCCCCC1CCCCCCB6281161534BB13RENASANT BANKF213 03110211F3160511A27802  K4680509200505012011        05012011        030120110201201105012011@3570282  N11040214111219360100036853O         1105150003177336          OI0001 A9171731104367444B2149915000000B429CCCCCCCCCCCCCCCCCCCCCC11CB52000000374S 101015B6251880275BM10BK OF AMERF213101141213F3160214A13619  K4681119200402012014110120121105201510102015010120141201201302012014@3570264  P04111015    00060100018920O         1028150000221611          OI0001 A913900275556B2144200000000B429CCCCCCCCCCCCCCCCCCCCC-CCCB52000000315S 092815B6241574640FP09CITI AUTOF3161015A11100  K4680411201110012015        1028201509282015                10012015@3590076011814 UNKNOWN31UNKB6371224620BC22DISCOVER FINANCIAL SERK51201182014@361006337510037 INPUT YOB NOT USED CONSUMER YOB LENGTH INVALID@361009457820335 V384THE NUMBER OF INQUIRIES WAS ALSO A FACTOR, BUT EFFECT WAS NOT SIGNIFICANT@361011157990335 EV805th factor code Number of Inquiries                                                       @836161001ALJ5030999999997ALJ5320999999997ALJ5730999999997ALL0100000000003ALL0135000000000ALL0136000000000ALL0200000000003ALL0216000000002ALL0300000000003ALL0317000000002ALL0318000000002ALL0400000000002ALL0416000000002ALL0439000000000ALL0446000000002ALL0448000000002ALL0700000000001ALL1300000000001ALL1360000000002ALL1370000000002ALL1380000000001ALL2000000000002ALL2001000000002ALL2002000000001ALL2005000000002ALL2009000000000ALL2206000000000ALL2328000000001ALL2380000000000ALL2480000000000ALL2720000000000ALL2800000000000ALL2870000000000ALL2900000000001ALL3510000000002ALL4980000000001ALL5020000033989ALL5030000033989ALL5320000055773ALL5360000000000ALL5460000000000ALL5820000000689ALL5825000000689ALL5830000000689ALL5835000000689ALL6120000000997ALL6160000000001ALL6220000000994ALL6230000000994ALL6250000000001ALL6270000000001ALL6310000000001ALL6320000000003ALL7110000000061ALL7116000000994ALL7140000000995ALL7310000000067ALL7320000000067ALL7330000000033ALL7331000000033ALL7336000000067ALL7337000000067ALL7338000000033ALL7340000000067ALL7350000000033ALL7360000000000ALL7370000000000ALL7936000000100ALL7937000000100ALL7938000000050ALL8020000000319ALL8026000999994ALL8120000000057ALL8150000000024ALL8151000000024ALL8152000000024ALL8153000000058ALL8157000009996ALL8160000009996ALL8164000009996ALL8167000009996ALL8170000000057ALL8220000000134ALL8221000000057ALL8225000009994ALL8270000000134ALL8320000000106ALL8321000000057ALL8325000009994ALL8352000000047ALL8355000000058ALL8358000009996ALL8370000000088ALL9120000000000ALL9121000000000ALL9122000000000ALL9123000000000ALL9130000000000ALL9141000000000ALL9210000009999@836161001ALL9211000009999ALL9220000009999ALL9221000009999ALL9951000000000ALX3510000000002ALX5020000033989ALX5030000033989ALX5039000033989ALX5830000000689ALX5839000000689ALX8220000000134AUA0438000000000AUA1380000000001AUA2350000000000AUA5020000002216AUA5320000018920AUA5400000018920AUA5420000018920AUA5520000018920AUA8120000000057AUT5020000002216AUT5620000016704BAX0416000000098BAX3510000000098BAX5020999999998BAX5030999999998BCA0300000000000BCA0416000000098BCA1300000000098BCA2350000000098BCA2380000000098BCA3510000000098BCA3511000000098BCA5020999999998BCA5030999999998BCA5121999999998BCA6210000000998BCA8110000009998BCA8120000009998BCA8150000009998BCA8151000009998BCA8153000009998BCA8157000009998BCA8160000009998BCA8220000009998BCA8320000009998BCC0300000000000BCC0400000000098BCC0416000000098BCC0446000000098BCC1300000000098BCC1360000000098BCC1370000000098BCC1380000000098BCC2328000000098BCC2350000000098BCC2380000000098BCC2800000000098BCC3341000000098BCC3342000000098BCC3343000000098BCC3344000000098BCC3345000000098BCC3346000000098BCC3421000000098BCC3423000000098BCC3510000000098BCC3511000000098BCC3515000000098BCC5020999999998BCC5030999999998BCC5120999999998BCC5320999999998BCC5400999999998BCC5420999999998BCC5421999999998BCC5422999999998BCC5520999999998BCC5620999999998BCC5627999999998BCC5830999999998BCC7110000000998BCC7117000000998BCC7120000000998BCC7130000000998BCC7140000000998BCC8120000009998BCC8220000009998BCC8320000009998BCC8337000000098BCC8338000000098BCX0416000000098BCX1300000000098BCX3422000000098BCX3423000000098BCX3510000000098BCX5020999999998BCX5030999999998BCX5320999999998BCX5420999999998@836161001BCX5830999999998BCX7110000000998BRC0300000000000BRC0400000000098BRC0416000000098BRC1300000000098BRC2800000000098BRC3425000000098BRC3510000000098BRC5020999999998BRC5030999999998BRC5320999999998BRC5620999999998BRC5830999999998BRC7140000000998BRC8151000009998BRC8220000009998BRC8320000009998COL2750000000000COL2758000000000COL3200000000000COL5060000000000COL8165000009998CRU1300000000098FIP1300000000098FIP1380000000098ILJ5030999999997ILJ5320999999997ILN0438000000000ILN1300000000001ILN1360000000001ILN1380000000001ILN2800000000000ILN5020000002216ILN5320000018920ILN5400000019003ILN5420000018920ILN5520000018920ILN6220000000994ILN7430000000050ILN7436000000050ILN7438000000050ILN7440000000050ILN8120000000057ILN8150000000059ILN8151000000058ILN8153000000058ILN8157000009996ILN8220000000128ILN8320000000093IQA9417000000000IQB9410000000001IQB9415000000000IQB9510000000024IQR9416000000000IQT9420000000001IQT9422000000000IQT9425000000000IQT9846000000994MFX5029000031773MTA5020000031773MTA5030000031773MTA5320000036853MTA5400000036853MTA5421000036853MTF0300000000001MTF5020000031773MTF5100000031773MTF5620000005080MTX5039000031773PIL1300000000000REV0300000000000REV0316000000098REV0416000000098REV1300000000098REV1360000000098REV1370000000098REV1380000000098REV2320000000098REV2380000000098REV2800000000098REV2841000000098REV3421000000098REV3422000000098REV3423000000098REV3510000000098REV5020999999998REV5030999999998REV5320999999998REV5420999999998REV5620999999998REV5627999999998REV5830999999998REV6160000000998REV7110000000998REV7140000000998REV7410000000998REV7420000000998REV7430000000998REV7436000000998@836077801REV7437000000998REV7460000000998REV8120000009998REV8150000009998REV8151000009998REV8153000009998REV8157000009998REV8220000009998REV8320000009998RTA0300000000000RTA1300000000098RTA5030999999998RTA5320999999998RTA5830999999998RTA8151000009998RTR0300000000000RTR0437000000098RTR1300000000098RTR1380000000098RTR3422000000098RTR5030999999998RTR5320999999998RTR5420999999998RTR5520999999998RTR5620999999998RTR5627999999998RTR5830999999998RTR8120000009998STU0300000000000STU1100000000098STU2558000000098STU5031999999998USE0300000000000MERTRD 000000000MERINQ 000000000AGGBAL 000000000BK4COLL000000000MERTRD2000000000DEL30  000000000DEL60  000000000DEL90  000000000DEL120 000000000GOODPAY000000999BADPAY 000000999THICK  000000134THICK2 000000134BKTYPE 000000000BKTYPE2000000000@838158501ALL2320                       000000000000002ALL2390                       000000000000000ALL2700                       000000000000000ALL6220                       000000000000994ALL6280                       000000000000030ALL7116                       000000000000994ALL8160                       000000000009996ALL8225                       000000000009994ALL9110                       000000000000000ALL9120                       000000000000000ALL9210                       000000000009999ALL9211                       000000000009999ALL9340                       000000000000000AUA2320                       000000000000000AUA8151                       000000000009996AUT5620                       000000000016704BCA8220                       000000000009998BCC6200                       000000000000998BCC8220                       000000000009998COL2750                       000000000000000COL5060                       000000000000000COL8165                       000000000009998ILN0438                       000000000000000MTA6200                       000000000000030REV5420                       000000999999998REV5770                       000000999999998REV8220                       000000000009998RTA1300                       000000000000098RTR0416                       000000000000098STU2558                       000000000000098STU5020                       000000999999998STU8320                       000000000009998UTI6200                       000000000000998UTI8320                       000000000009998IQB9410                       000000000000001@838343002AddrChangeCount03             0              AddrChangeCount12             0              AddrChangeCount60             0              AddrStability                 .              AgeNewestRecord               .              AgeOldestRecord               .              BestReportedAge               .              CurrAddrAgeLastSale           .              CurrAddrAgeNewestRecord       .              CurrAddrAVMConfidence         0              CurrAddrAVMTax                0              CurrAddrAVMValue              0              CurrAddrCountyIndex           0              CurrAddrFamilyOwned           .              CurrAddrLenOfRes              .              CurrAddrTaxValue              .              CurrAddrTaxYr                 .              CurrAddrTractIndex            0              CurrPrevAddrTaxDiff           .              DerogAge                      .              DerogCount                    0              EducationAttendedCollege      .              EducationInstitutionRating    .              EducationProgram4Yr           .              IDTheftFlag                   0              InputAddrActivePhoneList      .              InputAddrAgeLastSale          .              InputAddrAgeNewestRecord      .              InputAddrAgeOldestRecord      .              InputAddrAVMConfidence        0              InputAddrAVMValue             0              InputAddrBlockIndex           0              InputAddrCountyIndex          0              InputAddrFamilyOwned          .              InputAddrLastSalesPrice       .              InputAddrPhoneCount           0              InputAddrPhoneRecentCount     0              InputAddrTaxValue             .              InputAddrTractIndex           0              InputCurrAddrMatch            .              InputCurrEconTrajectory       .              InvalidSSN                    .              LienFiledCount24              0              LienFiledCount60              0              NonDerogCount12               0              PhoneEDAAgeNewestRecord       .              PhoneOtherAgeOldestRecord     .              PrevAddrAgeOldestRecord       .              PrevAddrAVMTax                0              PrevAddrBlockIndex            0              PrevAddrCountyIndex           0              PrevAddrDwellType             .              PrevAddrFamilyOwned           .              PrevAddrTaxYr                 .              PrevCurrEconTrajectory        .              PropNewestSalePurchaseIndex   0              PropOwnedCount                0              PropOwnedHistoricalCount      0              SecurityAlert                 0              SecurityFreeze                0              SSN3Years                     .              SSNAddrCount                  0              SSNDeceased                   .              SSNHighIssueDate              .              SSNLowIssueDate               .              SSNRecent                     .              SubjectAddrCount              0              SubjectPhoneRecentCount       0              SubPrimeSolicitedCount        0              SubPrimeSolicitedCount12      0              VerificationFailure           0              VerifiedDOB                   0              WealthIndex                   .              PredictedAnnualIncome         .              ProfLicType                   .              ProfLicTypeCategory           .              @950001602612392@</Raw>
+        <EXReport>
+          <EX_110 RecordID="110" RecordLength="0046" ReportDate="012516" ReportTime="122134" Preamble="TMI2" ARFVersionNumber="07" MKeywordTextLength="06" MKeywordText="142317">
+            <Sub_K1 SubsegmentIndicator="K1" SubsegmentLength="12" Y2KReportDate="01252016" />
+          </EX_110>
+          <EX_130 RecordID="130" RecordLength="0023" RiskScore="0669" Evaluation="P" ScoreFactorCodes="16151905" ModelTypeIndicator="AJ" />
+          <EX_130 RecordID="130" RecordLength="0023" RiskScore="0035" Evaluation="P" ScoreFactorCodes="        " ModelTypeIndicator="IW" />
+          <EX_130 RecordID="130" RecordLength="0023" RiskScore="0024" Evaluation="P" ScoreFactorCodes="        " ModelTypeIndicator="D4" />
+          <EX_130 RecordID="130" RecordLength="0023" RiskScore="0680" Evaluation="P" ScoreFactorCodes="12145549" ModelTypeIndicator="V3" />
+          <EX_130 RecordID="130" RecordLength="0023" RiskScore="0728" Evaluation="P" ScoreFactorCodes="14921591" ModelTypeIndicator="EV" />
+          <EX_322 RecordID="322" RecordLength="0018" SSNVariationIndicator=" " SocialSecurityNumber="666228327" />
+          <EX_335 RecordID="335" RecordLength="0048" LengthofName="22" NameText="/DARREN/W/HERRINGTON//" FirstName="DARREN" MiddleName="W" Surname="HERRINGTON" SecondSurname="" GenerationCode="" YearofBirth="1967">
+            <Sub_E6 SubsegmentIndicator="E6" SubsegmentLength="12" DateOfBirth="01051967" />
+          </EX_335>
+          <EX_336 RecordID="336" RecordLength="0098" FirstReportedDate="0605" LastUpdatedDate="0915" OriginationCode="2" NumberTimesReported="00" LastSubcodeReporting="2740116" DwellingType="S" HomeOwnershipCode=" " GensusGEOCode="       " LengthofAddress="41" AddressText="/2410/ROODS LAKE/RD///LAPEER/MI/484468363" StreetPrefix="2410" StreetName="ROODS LAKE" StreetSuffix="RD" ExclusionWord="" ExclusionNumber="" City="LAPEER" State="MI" ZipCode="484468363">
+            <Sub_K2 SubsegmentIndicator="K2" SubsegmentLength="20" Y2KFirstReportedDate="06172005" Y2KLastUpdatedDate="09092015" />
+          </EX_336>
+          <EX_336 RecordID="336" RecordLength="0106" FirstReportedDate="0613" LastUpdatedDate="0315" OriginationCode="1" NumberTimesReported="00" LastSubcodeReporting="       " DwellingType="S" HomeOwnershipCode=" " GensusGEOCode="       " LengthofAddress="49" AddressText="/9688/KINGSTON POINTE/DR///CLARKSTON/MI/483484194" StreetPrefix="9688" StreetName="KINGSTON POINTE" StreetSuffix="DR" ExclusionWord="" ExclusionNumber="" City="CLARKSTON" State="MI" ZipCode="483484194">
+            <Sub_K2 SubsegmentIndicator="K2" SubsegmentLength="20" Y2KFirstReportedDate="06092013" Y2KLastUpdatedDate="03092015" />
+          </EX_336>
+          <EX_336 RecordID="336" RecordLength="0103" FirstReportedDate="0313" LastUpdatedDate="0313" OriginationCode="1" NumberTimesReported="00" LastSubcodeReporting="       " DwellingType="S" HomeOwnershipCode=" " GensusGEOCode="       " LengthofAddress="46" AddressText="/9017/BAVARIAN WAY/DR///CLARKSTON/MI/483484280" StreetPrefix="9017" StreetName="BAVARIAN WAY" StreetSuffix="DR" ExclusionWord="" ExclusionNumber="" City="CLARKSTON" State="MI" ZipCode="483484280">
+            <Sub_K2 SubsegmentIndicator="K2" SubsegmentLength="20" Y2KFirstReportedDate="03072013" Y2KLastUpdatedDate="03072013" />
+          </EX_336>
+          <EX_337 RecordID="337" RecordLength="0062" FirstReportedDate="0201" LastUpdatedDate="0201" OriginationCode="2" LengthofEmployerName="04" EmployerName="IBIS" Lengthof1stLineAddress="01" FirstLineofAddress=" " Lengthof2ndLineofAddress="01" SecondLineofAddress=" " LengthofExtraLineofAddress="01" ExtraLineofAddress=" " EmployerZIPCode="          ">
+            <Sub_K2 SubsegmentIndicator="K2" SubsegmentLength="20" Y2KFirstReportedDate="02052001" Y2KLastUpdatedDate="02052001" />
+          </EX_337>
+          <EX_357 RecordID="357" RecordLength="0267" SpecialCommentCode="  " Evaluation="N" DateOpen="0505" StatusDate="0511" MaximumDelinquencyDate="    " TypeCode="02" Terms="060" ECOA="2" Amount1="00019003" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="050111" BalanceAmount="        " Status="56" Reserved="  " AmountPastDue="        " OpenClosed="C" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="19" AccountNumber="750000228905556" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="72" Day30Counter="10" Day60Counter="01" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="B-2111111111CCCCCC1CCCCCC" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="28" Subcode="1161534" KOB="BB" LengthofSubName="13" SubscriberName="RENASANT BANK" />
+            <Sub_F2 SubsegmentIndicator="F2" SubsegmentLength="13" MaxPaymentCode=" " FirstDelinquencyDate="0311" SecondDelinquencyDate="0211" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0511" AccountConditionCode="A2" EnhancedPaymentStatus="78" EnhancedType="02" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="05092005" Y2KStatusDate="05012011" Y2KMaxDelinqDate="        " Y2KBalanceDate="05012011" Y2KLastPaymentDate="        " Y2KFirstDelinqDate="03012011" Y2KSecondDelinqDate="02012011" Y2KInitPayDate="05012011" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0282" SpecialCommentCode="  " Evaluation="N" DateOpen="1104" StatusDate="0214" MaximumDelinquencyDate="1112" TypeCode="19" Terms="360" ECOA="1" Amount1="00036853" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="110515" BalanceAmount="00031773" Status="36" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="17" AccountNumber="1731104367444" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="99" Day30Counter="15" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="CCCCCCCCCCCCCCCCCCCCCC11C" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="00000374" MonthlyPaymentType="S" Frequency=" " LastPaymentDate="101015" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="25" Subcode="1880275" KOB="BM" LengthofSubName="10" SubscriberName="BK OF AMER" />
+            <Sub_F2 SubsegmentIndicator="F2" SubsegmentLength="13" MaxPaymentCode="1" FirstDelinquencyDate="0114" SecondDelinquencyDate="1213" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="0214" AccountConditionCode="A1" EnhancedPaymentStatus="36" EnhancedType="19" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="11192004" Y2KStatusDate="02012014" Y2KMaxDelinqDate="11012012" Y2KBalanceDate="11052015" Y2KLastPaymentDate="10102015" Y2KFirstDelinqDate="01012014" Y2KSecondDelinqDate="12012013" Y2KInitPayDate="02012014" />
+          </EX_357>
+          <EX_357 RecordID="357" RecordLength="0264" SpecialCommentCode="  " Evaluation="P" DateOpen="0411" StatusDate="1015" MaximumDelinquencyDate="    " TypeCode="00" Terms="060" ECOA="1" Amount1="00018920" Amount1Qualifier="O" Amount2="        " Amount2Qualifier=" " BalanceDate="102815" BalanceAmount="00002216" Status="11" Reserved="  " AmountPastDue="        " OpenClosed="O" RevolvingInstallment="I" LengthofConsumerComment="0001" ConsumerComment=" ">
+            <Sub_A9 SubsegmentIndicator="A9" SubsegmentLength="13" AccountNumber="900275556" />
+            <Sub_B2 SubsegmentIndicator="B2" SubsegmentLength="14" MonthsHistory="42" Day30Counter="00" Day60Counter="00" Day90Counter="00" DerogCounter="00" />
+            <Sub_B4 SubsegmentIndicator="B4" SubsegmentLength="29" PaymentProfile="CCCCCCCCCCCCCCCCCCCCC-CCC" />
+            <Sub_B5 SubsegmentIndicator="B5" SubsegmentLength="20" MonthlyPaymentAmount="00000315" MonthlyPaymentType="S" Frequency=" " LastPaymentDate="092815" />
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="24" Subcode="1574640" KOB="FP" LengthofSubName="09" SubscriberName="CITI AUTO" />
+            <Sub_F3 SubsegmentIndicator="F3" SubsegmentLength="16" InitialPaymentLevelDate="1015" AccountConditionCode="A1" EnhancedPaymentStatus="11" EnhancedType="00" EnhancedSpecialComments="  " />
+            <Sub_K4 SubsegmentIndicator="K4" SubsegmentLength="68" Y2KDateOpen="04112011" Y2KStatusDate="10012015" Y2KMaxDelinqDate="        " Y2KBalanceDate="10282015" Y2KLastPaymentDate="09282015" Y2KFirstDelinqDate="        " Y2KSecondDelinqDate="        " Y2KInitPayDate="10012015" />
+          </EX_357>
+          <EX_359 RecordID="359" RecordLength="0076" InquiryDate="011814" Amount=" UNKNOWN" Type="31" Terms="UNK">
+            <Sub_B6 SubsegmentIndicator="B6" SubsegmentLength="37" Subcode="1224620" KOB="BC" LengthofSubName="22" SubscriberName="DISCOVER FINANCIAL SER" />
+            <Sub_K5 SubsegmentIndicator="K5" SubsegmentLength="12" Y2KInquiryDate="01182014" />
+          </EX_359>
+          <EX_361 RecordID="361" RecordLength="0063" PrimaryMessageNum="37" TextLength="51" MessageText="0037 INPUT YOB NOT USED CONSUMER YOB LENGTH INVALID" />
+          <EX_361 RecordID="361" RecordLength="0094" PrimaryMessageNum="57" TextLength="82" MessageText="0335 V384THE NUMBER OF INQUIRIES WAS ALSO A FACTOR, BUT EFFECT WAS NOT SIGNIFICANT" SecondaryMessageNum="0335" Delimeter=" " ModelID="V3" ScoreFactorCode="84" Text="THE NUMBER OF INQUIRIES WAS ALSO A FACTOR, BUT EFFECT WAS NOT SIGNIFICANT" />
+          <EX_361 RecordID="361" RecordLength="0111" PrimaryMessageNum="57" TextLength="99" MessageText="0335 EV805th factor code Number of Inquiries                                                       " SecondaryMessageNum="0335" Delimeter=" " ModelID="EV" ScoreFactorCode="80" Text="5th factor code Number of Inquiries                                                       " />
+          <EX_836 RecordID="836" RecordLength="1610" MessageCode="01">
+            <Attributes AttributeID="ALJ5030" AttributeValue="999999997" />
+            <Attributes AttributeID="ALJ5320" AttributeValue="999999997" />
+            <Attributes AttributeID="ALJ5730" AttributeValue="999999997" />
+            <Attributes AttributeID="ALL0100" AttributeValue="000000003" />
+            <Attributes AttributeID="ALL0135" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL0136" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL0200" AttributeValue="000000003" />
+            <Attributes AttributeID="ALL0216" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL0300" AttributeValue="000000003" />
+            <Attributes AttributeID="ALL0317" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL0318" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL0400" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL0416" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL0439" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL0446" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL0448" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL0700" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL1300" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL1360" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL1370" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL1380" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL2000" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL2001" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL2002" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL2005" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL2009" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2206" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2328" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL2380" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2480" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2720" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2800" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2870" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL2900" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL3510" AttributeValue="000000002" />
+            <Attributes AttributeID="ALL4980" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL5020" AttributeValue="000033989" />
+            <Attributes AttributeID="ALL5030" AttributeValue="000033989" />
+            <Attributes AttributeID="ALL5320" AttributeValue="000055773" />
+            <Attributes AttributeID="ALL5360" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL5460" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL5820" AttributeValue="000000689" />
+            <Attributes AttributeID="ALL5825" AttributeValue="000000689" />
+            <Attributes AttributeID="ALL5830" AttributeValue="000000689" />
+            <Attributes AttributeID="ALL5835" AttributeValue="000000689" />
+            <Attributes AttributeID="ALL6120" AttributeValue="000000997" />
+            <Attributes AttributeID="ALL6160" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6220" AttributeValue="000000994" />
+            <Attributes AttributeID="ALL6230" AttributeValue="000000994" />
+            <Attributes AttributeID="ALL6250" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6270" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6310" AttributeValue="000000001" />
+            <Attributes AttributeID="ALL6320" AttributeValue="000000003" />
+            <Attributes AttributeID="ALL7110" AttributeValue="000000061" />
+            <Attributes AttributeID="ALL7116" AttributeValue="000000994" />
+            <Attributes AttributeID="ALL7140" AttributeValue="000000995" />
+            <Attributes AttributeID="ALL7310" AttributeValue="000000067" />
+            <Attributes AttributeID="ALL7320" AttributeValue="000000067" />
+            <Attributes AttributeID="ALL7330" AttributeValue="000000033" />
+            <Attributes AttributeID="ALL7331" AttributeValue="000000033" />
+            <Attributes AttributeID="ALL7336" AttributeValue="000000067" />
+            <Attributes AttributeID="ALL7337" AttributeValue="000000067" />
+            <Attributes AttributeID="ALL7338" AttributeValue="000000033" />
+            <Attributes AttributeID="ALL7340" AttributeValue="000000067" />
+            <Attributes AttributeID="ALL7350" AttributeValue="000000033" />
+            <Attributes AttributeID="ALL7360" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL7370" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL7936" AttributeValue="000000100" />
+            <Attributes AttributeID="ALL7937" AttributeValue="000000100" />
+            <Attributes AttributeID="ALL7938" AttributeValue="000000050" />
+            <Attributes AttributeID="ALL8020" AttributeValue="000000319" />
+            <Attributes AttributeID="ALL8026" AttributeValue="000999994" />
+            <Attributes AttributeID="ALL8120" AttributeValue="000000057" />
+            <Attributes AttributeID="ALL8150" AttributeValue="000000024" />
+            <Attributes AttributeID="ALL8151" AttributeValue="000000024" />
+            <Attributes AttributeID="ALL8152" AttributeValue="000000024" />
+            <Attributes AttributeID="ALL8153" AttributeValue="000000058" />
+            <Attributes AttributeID="ALL8157" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8160" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8164" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8167" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8170" AttributeValue="000000057" />
+            <Attributes AttributeID="ALL8220" AttributeValue="000000134" />
+            <Attributes AttributeID="ALL8221" AttributeValue="000000057" />
+            <Attributes AttributeID="ALL8225" AttributeValue="000009994" />
+            <Attributes AttributeID="ALL8270" AttributeValue="000000134" />
+            <Attributes AttributeID="ALL8320" AttributeValue="000000106" />
+            <Attributes AttributeID="ALL8321" AttributeValue="000000057" />
+            <Attributes AttributeID="ALL8325" AttributeValue="000009994" />
+            <Attributes AttributeID="ALL8352" AttributeValue="000000047" />
+            <Attributes AttributeID="ALL8355" AttributeValue="000000058" />
+            <Attributes AttributeID="ALL8358" AttributeValue="000009996" />
+            <Attributes AttributeID="ALL8370" AttributeValue="000000088" />
+            <Attributes AttributeID="ALL9120" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9121" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9122" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9123" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9130" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9141" AttributeValue="000000000" />
+            <Attributes AttributeID="ALL9210" AttributeValue="000009999" />
+          </EX_836>
+          <EX_836 RecordID="836" RecordLength="1610" MessageCode="01">
+            <Attributes AttributeID="ALL9211" AttributeValue="000009999" />
+            <Attributes AttributeID="ALL9220" AttributeValue="000009999" />
+            <Attributes AttributeID="ALL9221" AttributeValue="000009999" />
+            <Attributes AttributeID="ALL9951" AttributeValue="000000000" />
+            <Attributes AttributeID="ALX3510" AttributeValue="000000002" />
+            <Attributes AttributeID="ALX5020" AttributeValue="000033989" />
+            <Attributes AttributeID="ALX5030" AttributeValue="000033989" />
+            <Attributes AttributeID="ALX5039" AttributeValue="000033989" />
+            <Attributes AttributeID="ALX5830" AttributeValue="000000689" />
+            <Attributes AttributeID="ALX5839" AttributeValue="000000689" />
+            <Attributes AttributeID="ALX8220" AttributeValue="000000134" />
+            <Attributes AttributeID="AUA0438" AttributeValue="000000000" />
+            <Attributes AttributeID="AUA1380" AttributeValue="000000001" />
+            <Attributes AttributeID="AUA2350" AttributeValue="000000000" />
+            <Attributes AttributeID="AUA5020" AttributeValue="000002216" />
+            <Attributes AttributeID="AUA5320" AttributeValue="000018920" />
+            <Attributes AttributeID="AUA5400" AttributeValue="000018920" />
+            <Attributes AttributeID="AUA5420" AttributeValue="000018920" />
+            <Attributes AttributeID="AUA5520" AttributeValue="000018920" />
+            <Attributes AttributeID="AUA8120" AttributeValue="000000057" />
+            <Attributes AttributeID="AUT5020" AttributeValue="000002216" />
+            <Attributes AttributeID="AUT5620" AttributeValue="000016704" />
+            <Attributes AttributeID="BAX0416" AttributeValue="000000098" />
+            <Attributes AttributeID="BAX3510" AttributeValue="000000098" />
+            <Attributes AttributeID="BAX5020" AttributeValue="999999998" />
+            <Attributes AttributeID="BAX5030" AttributeValue="999999998" />
+            <Attributes AttributeID="BCA0300" AttributeValue="000000000" />
+            <Attributes AttributeID="BCA0416" AttributeValue="000000098" />
+            <Attributes AttributeID="BCA1300" AttributeValue="000000098" />
+            <Attributes AttributeID="BCA2350" AttributeValue="000000098" />
+            <Attributes AttributeID="BCA2380" AttributeValue="000000098" />
+            <Attributes AttributeID="BCA3510" AttributeValue="000000098" />
+            <Attributes AttributeID="BCA3511" AttributeValue="000000098" />
+            <Attributes AttributeID="BCA5020" AttributeValue="999999998" />
+            <Attributes AttributeID="BCA5030" AttributeValue="999999998" />
+            <Attributes AttributeID="BCA5121" AttributeValue="999999998" />
+            <Attributes AttributeID="BCA6210" AttributeValue="000000998" />
+            <Attributes AttributeID="BCA8110" AttributeValue="000009998" />
+            <Attributes AttributeID="BCA8120" AttributeValue="000009998" />
+            <Attributes AttributeID="BCA8150" AttributeValue="000009998" />
+            <Attributes AttributeID="BCA8151" AttributeValue="000009998" />
+            <Attributes AttributeID="BCA8153" AttributeValue="000009998" />
+            <Attributes AttributeID="BCA8157" AttributeValue="000009998" />
+            <Attributes AttributeID="BCA8160" AttributeValue="000009998" />
+            <Attributes AttributeID="BCA8220" AttributeValue="000009998" />
+            <Attributes AttributeID="BCA8320" AttributeValue="000009998" />
+            <Attributes AttributeID="BCC0300" AttributeValue="000000000" />
+            <Attributes AttributeID="BCC0400" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC0416" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC0446" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC1300" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC1360" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC1370" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC1380" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC2328" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC2350" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC2380" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC2800" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3341" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3342" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3343" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3344" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3345" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3346" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3421" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3423" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3510" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3511" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC3515" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC5020" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5030" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5120" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5320" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5400" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5420" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5421" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5422" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5520" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5620" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5627" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC5830" AttributeValue="999999998" />
+            <Attributes AttributeID="BCC7110" AttributeValue="000000998" />
+            <Attributes AttributeID="BCC7117" AttributeValue="000000998" />
+            <Attributes AttributeID="BCC7120" AttributeValue="000000998" />
+            <Attributes AttributeID="BCC7130" AttributeValue="000000998" />
+            <Attributes AttributeID="BCC7140" AttributeValue="000000998" />
+            <Attributes AttributeID="BCC8120" AttributeValue="000009998" />
+            <Attributes AttributeID="BCC8220" AttributeValue="000009998" />
+            <Attributes AttributeID="BCC8320" AttributeValue="000009998" />
+            <Attributes AttributeID="BCC8337" AttributeValue="000000098" />
+            <Attributes AttributeID="BCC8338" AttributeValue="000000098" />
+            <Attributes AttributeID="BCX0416" AttributeValue="000000098" />
+            <Attributes AttributeID="BCX1300" AttributeValue="000000098" />
+            <Attributes AttributeID="BCX3422" AttributeValue="000000098" />
+            <Attributes AttributeID="BCX3423" AttributeValue="000000098" />
+            <Attributes AttributeID="BCX3510" AttributeValue="000000098" />
+            <Attributes AttributeID="BCX5020" AttributeValue="999999998" />
+            <Attributes AttributeID="BCX5030" AttributeValue="999999998" />
+            <Attributes AttributeID="BCX5320" AttributeValue="999999998" />
+            <Attributes AttributeID="BCX5420" AttributeValue="999999998" />
+          </EX_836>
+          <EX_836 RecordID="836" RecordLength="1610" MessageCode="01">
+            <Attributes AttributeID="BCX5830" AttributeValue="999999998" />
+            <Attributes AttributeID="BCX7110" AttributeValue="000000998" />
+            <Attributes AttributeID="BRC0300" AttributeValue="000000000" />
+            <Attributes AttributeID="BRC0400" AttributeValue="000000098" />
+            <Attributes AttributeID="BRC0416" AttributeValue="000000098" />
+            <Attributes AttributeID="BRC1300" AttributeValue="000000098" />
+            <Attributes AttributeID="BRC2800" AttributeValue="000000098" />
+            <Attributes AttributeID="BRC3425" AttributeValue="000000098" />
+            <Attributes AttributeID="BRC3510" AttributeValue="000000098" />
+            <Attributes AttributeID="BRC5020" AttributeValue="999999998" />
+            <Attributes AttributeID="BRC5030" AttributeValue="999999998" />
+            <Attributes AttributeID="BRC5320" AttributeValue="999999998" />
+            <Attributes AttributeID="BRC5620" AttributeValue="999999998" />
+            <Attributes AttributeID="BRC5830" AttributeValue="999999998" />
+            <Attributes AttributeID="BRC7140" AttributeValue="000000998" />
+            <Attributes AttributeID="BRC8151" AttributeValue="000009998" />
+            <Attributes AttributeID="BRC8220" AttributeValue="000009998" />
+            <Attributes AttributeID="BRC8320" AttributeValue="000009998" />
+            <Attributes AttributeID="COL2750" AttributeValue="000000000" />
+            <Attributes AttributeID="COL2758" AttributeValue="000000000" />
+            <Attributes AttributeID="COL3200" AttributeValue="000000000" />
+            <Attributes AttributeID="COL5060" AttributeValue="000000000" />
+            <Attributes AttributeID="COL8165" AttributeValue="000009998" />
+            <Attributes AttributeID="CRU1300" AttributeValue="000000098" />
+            <Attributes AttributeID="FIP1300" AttributeValue="000000098" />
+            <Attributes AttributeID="FIP1380" AttributeValue="000000098" />
+            <Attributes AttributeID="ILJ5030" AttributeValue="999999997" />
+            <Attributes AttributeID="ILJ5320" AttributeValue="999999997" />
+            <Attributes AttributeID="ILN0438" AttributeValue="000000000" />
+            <Attributes AttributeID="ILN1300" AttributeValue="000000001" />
+            <Attributes AttributeID="ILN1360" AttributeValue="000000001" />
+            <Attributes AttributeID="ILN1380" AttributeValue="000000001" />
+            <Attributes AttributeID="ILN2800" AttributeValue="000000000" />
+            <Attributes AttributeID="ILN5020" AttributeValue="000002216" />
+            <Attributes AttributeID="ILN5320" AttributeValue="000018920" />
+            <Attributes AttributeID="ILN5400" AttributeValue="000019003" />
+            <Attributes AttributeID="ILN5420" AttributeValue="000018920" />
+            <Attributes AttributeID="ILN5520" AttributeValue="000018920" />
+            <Attributes AttributeID="ILN6220" AttributeValue="000000994" />
+            <Attributes AttributeID="ILN7430" AttributeValue="000000050" />
+            <Attributes AttributeID="ILN7436" AttributeValue="000000050" />
+            <Attributes AttributeID="ILN7438" AttributeValue="000000050" />
+            <Attributes AttributeID="ILN7440" AttributeValue="000000050" />
+            <Attributes AttributeID="ILN8120" AttributeValue="000000057" />
+            <Attributes AttributeID="ILN8150" AttributeValue="000000059" />
+            <Attributes AttributeID="ILN8151" AttributeValue="000000058" />
+            <Attributes AttributeID="ILN8153" AttributeValue="000000058" />
+            <Attributes AttributeID="ILN8157" AttributeValue="000009996" />
+            <Attributes AttributeID="ILN8220" AttributeValue="000000128" />
+            <Attributes AttributeID="ILN8320" AttributeValue="000000093" />
+            <Attributes AttributeID="IQA9417" AttributeValue="000000000" />
+            <Attributes AttributeID="IQB9410" AttributeValue="000000001" />
+            <Attributes AttributeID="IQB9415" AttributeValue="000000000" />
+            <Attributes AttributeID="IQB9510" AttributeValue="000000024" />
+            <Attributes AttributeID="IQR9416" AttributeValue="000000000" />
+            <Attributes AttributeID="IQT9420" AttributeValue="000000001" />
+            <Attributes AttributeID="IQT9422" AttributeValue="000000000" />
+            <Attributes AttributeID="IQT9425" AttributeValue="000000000" />
+            <Attributes AttributeID="IQT9846" AttributeValue="000000994" />
+            <Attributes AttributeID="MFX5029" AttributeValue="000031773" />
+            <Attributes AttributeID="MTA5020" AttributeValue="000031773" />
+            <Attributes AttributeID="MTA5030" AttributeValue="000031773" />
+            <Attributes AttributeID="MTA5320" AttributeValue="000036853" />
+            <Attributes AttributeID="MTA5400" AttributeValue="000036853" />
+            <Attributes AttributeID="MTA5421" AttributeValue="000036853" />
+            <Attributes AttributeID="MTF0300" AttributeValue="000000001" />
+            <Attributes AttributeID="MTF5020" AttributeValue="000031773" />
+            <Attributes AttributeID="MTF5100" AttributeValue="000031773" />
+            <Attributes AttributeID="MTF5620" AttributeValue="000005080" />
+            <Attributes AttributeID="MTX5039" AttributeValue="000031773" />
+            <Attributes AttributeID="PIL1300" AttributeValue="000000000" />
+            <Attributes AttributeID="REV0300" AttributeValue="000000000" />
+            <Attributes AttributeID="REV0316" AttributeValue="000000098" />
+            <Attributes AttributeID="REV0416" AttributeValue="000000098" />
+            <Attributes AttributeID="REV1300" AttributeValue="000000098" />
+            <Attributes AttributeID="REV1360" AttributeValue="000000098" />
+            <Attributes AttributeID="REV1370" AttributeValue="000000098" />
+            <Attributes AttributeID="REV1380" AttributeValue="000000098" />
+            <Attributes AttributeID="REV2320" AttributeValue="000000098" />
+            <Attributes AttributeID="REV2380" AttributeValue="000000098" />
+            <Attributes AttributeID="REV2800" AttributeValue="000000098" />
+            <Attributes AttributeID="REV2841" AttributeValue="000000098" />
+            <Attributes AttributeID="REV3421" AttributeValue="000000098" />
+            <Attributes AttributeID="REV3422" AttributeValue="000000098" />
+            <Attributes AttributeID="REV3423" AttributeValue="000000098" />
+            <Attributes AttributeID="REV3510" AttributeValue="000000098" />
+            <Attributes AttributeID="REV5020" AttributeValue="999999998" />
+            <Attributes AttributeID="REV5030" AttributeValue="999999998" />
+            <Attributes AttributeID="REV5320" AttributeValue="999999998" />
+            <Attributes AttributeID="REV5420" AttributeValue="999999998" />
+            <Attributes AttributeID="REV5620" AttributeValue="999999998" />
+            <Attributes AttributeID="REV5627" AttributeValue="999999998" />
+            <Attributes AttributeID="REV5830" AttributeValue="999999998" />
+            <Attributes AttributeID="REV6160" AttributeValue="000000998" />
+            <Attributes AttributeID="REV7110" AttributeValue="000000998" />
+            <Attributes AttributeID="REV7140" AttributeValue="000000998" />
+            <Attributes AttributeID="REV7410" AttributeValue="000000998" />
+            <Attributes AttributeID="REV7420" AttributeValue="000000998" />
+            <Attributes AttributeID="REV7430" AttributeValue="000000998" />
+            <Attributes AttributeID="REV7436" AttributeValue="000000998" />
+          </EX_836>
+          <EX_836 RecordID="836" RecordLength="778" MessageCode="01">
+            <Attributes AttributeID="REV7437" AttributeValue="000000998" />
+            <Attributes AttributeID="REV7460" AttributeValue="000000998" />
+            <Attributes AttributeID="REV8120" AttributeValue="000009998" />
+            <Attributes AttributeID="REV8150" AttributeValue="000009998" />
+            <Attributes AttributeID="REV8151" AttributeValue="000009998" />
+            <Attributes AttributeID="REV8153" AttributeValue="000009998" />
+            <Attributes AttributeID="REV8157" AttributeValue="000009998" />
+            <Attributes AttributeID="REV8220" AttributeValue="000009998" />
+            <Attributes AttributeID="REV8320" AttributeValue="000009998" />
+            <Attributes AttributeID="RTA0300" AttributeValue="000000000" />
+            <Attributes AttributeID="RTA1300" AttributeValue="000000098" />
+            <Attributes AttributeID="RTA5030" AttributeValue="999999998" />
+            <Attributes AttributeID="RTA5320" AttributeValue="999999998" />
+            <Attributes AttributeID="RTA5830" AttributeValue="999999998" />
+            <Attributes AttributeID="RTA8151" AttributeValue="000009998" />
+            <Attributes AttributeID="RTR0300" AttributeValue="000000000" />
+            <Attributes AttributeID="RTR0437" AttributeValue="000000098" />
+            <Attributes AttributeID="RTR1300" AttributeValue="000000098" />
+            <Attributes AttributeID="RTR1380" AttributeValue="000000098" />
+            <Attributes AttributeID="RTR3422" AttributeValue="000000098" />
+            <Attributes AttributeID="RTR5030" AttributeValue="999999998" />
+            <Attributes AttributeID="RTR5320" AttributeValue="999999998" />
+            <Attributes AttributeID="RTR5420" AttributeValue="999999998" />
+            <Attributes AttributeID="RTR5520" AttributeValue="999999998" />
+            <Attributes AttributeID="RTR5620" AttributeValue="999999998" />
+            <Attributes AttributeID="RTR5627" AttributeValue="999999998" />
+            <Attributes AttributeID="RTR5830" AttributeValue="999999998" />
+            <Attributes AttributeID="RTR8120" AttributeValue="000009998" />
+            <Attributes AttributeID="STU0300" AttributeValue="000000000" />
+            <Attributes AttributeID="STU1100" AttributeValue="000000098" />
+            <Attributes AttributeID="STU2558" AttributeValue="000000098" />
+            <Attributes AttributeID="STU5031" AttributeValue="999999998" />
+            <Attributes AttributeID="USE0300" AttributeValue="000000000" />
+            <Attributes AttributeID="MERTRD " AttributeValue="000000000" />
+            <Attributes AttributeID="MERINQ " AttributeValue="000000000" />
+            <Attributes AttributeID="AGGBAL " AttributeValue="000000000" />
+            <Attributes AttributeID="BK4COLL" AttributeValue="000000000" />
+            <Attributes AttributeID="MERTRD2" AttributeValue="000000000" />
+            <Attributes AttributeID="DEL30  " AttributeValue="000000000" />
+            <Attributes AttributeID="DEL60  " AttributeValue="000000000" />
+            <Attributes AttributeID="DEL90  " AttributeValue="000000000" />
+            <Attributes AttributeID="DEL120 " AttributeValue="000000000" />
+            <Attributes AttributeID="GOODPAY" AttributeValue="000000999" />
+            <Attributes AttributeID="BADPAY " AttributeValue="000000999" />
+            <Attributes AttributeID="THICK  " AttributeValue="000000134" />
+            <Attributes AttributeID="THICK2 " AttributeValue="000000134" />
+            <Attributes AttributeID="BKTYPE " AttributeValue="000000000" />
+            <Attributes AttributeID="BKTYPE2" AttributeValue="000000000" />
+          </EX_836>
+          <EX_838 RecordID="838" RecordLength="1585" MessageCode="01">
+            <Attributes AttributeID="ALL2320                       " AttributeValue="000000000000002" />
+            <Attributes AttributeID="ALL2390                       " AttributeValue="000000000000000" />
+            <Attributes AttributeID="ALL2700                       " AttributeValue="000000000000000" />
+            <Attributes AttributeID="ALL6220                       " AttributeValue="000000000000994" />
+            <Attributes AttributeID="ALL6280                       " AttributeValue="000000000000030" />
+            <Attributes AttributeID="ALL7116                       " AttributeValue="000000000000994" />
+            <Attributes AttributeID="ALL8160                       " AttributeValue="000000000009996" />
+            <Attributes AttributeID="ALL8225                       " AttributeValue="000000000009994" />
+            <Attributes AttributeID="ALL9110                       " AttributeValue="000000000000000" />
+            <Attributes AttributeID="ALL9120                       " AttributeValue="000000000000000" />
+            <Attributes AttributeID="ALL9210                       " AttributeValue="000000000009999" />
+            <Attributes AttributeID="ALL9211                       " AttributeValue="000000000009999" />
+            <Attributes AttributeID="ALL9340                       " AttributeValue="000000000000000" />
+            <Attributes AttributeID="AUA2320                       " AttributeValue="000000000000000" />
+            <Attributes AttributeID="AUA8151                       " AttributeValue="000000000009996" />
+            <Attributes AttributeID="AUT5620                       " AttributeValue="000000000016704" />
+            <Attributes AttributeID="BCA8220                       " AttributeValue="000000000009998" />
+            <Attributes AttributeID="BCC6200                       " AttributeValue="000000000000998" />
+            <Attributes AttributeID="BCC8220                       " AttributeValue="000000000009998" />
+            <Attributes AttributeID="COL2750                       " AttributeValue="000000000000000" />
+            <Attributes AttributeID="COL5060                       " AttributeValue="000000000000000" />
+            <Attributes AttributeID="COL8165                       " AttributeValue="000000000009998" />
+            <Attributes AttributeID="ILN0438                       " AttributeValue="000000000000000" />
+            <Attributes AttributeID="MTA6200                       " AttributeValue="000000000000030" />
+            <Attributes AttributeID="REV5420                       " AttributeValue="000000999999998" />
+            <Attributes AttributeID="REV5770                       " AttributeValue="000000999999998" />
+            <Attributes AttributeID="REV8220                       " AttributeValue="000000000009998" />
+            <Attributes AttributeID="RTA1300                       " AttributeValue="000000000000098" />
+            <Attributes AttributeID="RTR0416                       " AttributeValue="000000000000098" />
+            <Attributes AttributeID="STU2558                       " AttributeValue="000000000000098" />
+            <Attributes AttributeID="STU5020                       " AttributeValue="000000999999998" />
+            <Attributes AttributeID="STU8320                       " AttributeValue="000000000009998" />
+            <Attributes AttributeID="UTI6200                       " AttributeValue="000000000000998" />
+            <Attributes AttributeID="UTI8320                       " AttributeValue="000000000009998" />
+            <Attributes AttributeID="IQB9410                       " AttributeValue="000000000000001" />
+          </EX_838>
+          <EX_838 RecordID="838" RecordLength="3430" MessageCode="02">
+            <Attributes AttributeID="AddrChangeCount03             " AttributeValue="0              " />
+            <Attributes AttributeID="AddrChangeCount12             " AttributeValue="0              " />
+            <Attributes AttributeID="AddrChangeCount60             " AttributeValue="0              " />
+            <Attributes AttributeID="AddrStability                 " AttributeValue=".              " />
+            <Attributes AttributeID="AgeNewestRecord               " AttributeValue=".              " />
+            <Attributes AttributeID="AgeOldestRecord               " AttributeValue=".              " />
+            <Attributes AttributeID="BestReportedAge               " AttributeValue=".              " />
+            <Attributes AttributeID="CurrAddrAgeLastSale           " AttributeValue=".              " />
+            <Attributes AttributeID="CurrAddrAgeNewestRecord       " AttributeValue=".              " />
+            <Attributes AttributeID="CurrAddrAVMConfidence         " AttributeValue="0              " />
+            <Attributes AttributeID="CurrAddrAVMTax                " AttributeValue="0              " />
+            <Attributes AttributeID="CurrAddrAVMValue              " AttributeValue="0              " />
+            <Attributes AttributeID="CurrAddrCountyIndex           " AttributeValue="0              " />
+            <Attributes AttributeID="CurrAddrFamilyOwned           " AttributeValue=".              " />
+            <Attributes AttributeID="CurrAddrLenOfRes              " AttributeValue=".              " />
+            <Attributes AttributeID="CurrAddrTaxValue              " AttributeValue=".              " />
+            <Attributes AttributeID="CurrAddrTaxYr                 " AttributeValue=".              " />
+            <Attributes AttributeID="CurrAddrTractIndex            " AttributeValue="0              " />
+            <Attributes AttributeID="CurrPrevAddrTaxDiff           " AttributeValue=".              " />
+            <Attributes AttributeID="DerogAge                      " AttributeValue=".              " />
+            <Attributes AttributeID="DerogCount                    " AttributeValue="0              " />
+            <Attributes AttributeID="EducationAttendedCollege      " AttributeValue=".              " />
+            <Attributes AttributeID="EducationInstitutionRating    " AttributeValue=".              " />
+            <Attributes AttributeID="EducationProgram4Yr           " AttributeValue=".              " />
+            <Attributes AttributeID="IDTheftFlag                   " AttributeValue="0              " />
+            <Attributes AttributeID="InputAddrActivePhoneList      " AttributeValue=".              " />
+            <Attributes AttributeID="InputAddrAgeLastSale          " AttributeValue=".              " />
+            <Attributes AttributeID="InputAddrAgeNewestRecord      " AttributeValue=".              " />
+            <Attributes AttributeID="InputAddrAgeOldestRecord      " AttributeValue=".              " />
+            <Attributes AttributeID="InputAddrAVMConfidence        " AttributeValue="0              " />
+            <Attributes AttributeID="InputAddrAVMValue             " AttributeValue="0              " />
+            <Attributes AttributeID="InputAddrBlockIndex           " AttributeValue="0              " />
+            <Attributes AttributeID="InputAddrCountyIndex          " AttributeValue="0              " />
+            <Attributes AttributeID="InputAddrFamilyOwned          " AttributeValue=".              " />
+            <Attributes AttributeID="InputAddrLastSalesPrice       " AttributeValue=".              " />
+            <Attributes AttributeID="InputAddrPhoneCount           " AttributeValue="0              " />
+            <Attributes AttributeID="InputAddrPhoneRecentCount     " AttributeValue="0              " />
+            <Attributes AttributeID="InputAddrTaxValue             " AttributeValue=".              " />
+            <Attributes AttributeID="InputAddrTractIndex           " AttributeValue="0              " />
+            <Attributes AttributeID="InputCurrAddrMatch            " AttributeValue=".              " />
+            <Attributes AttributeID="InputCurrEconTrajectory       " AttributeValue=".              " />
+            <Attributes AttributeID="InvalidSSN                    " AttributeValue=".              " />
+            <Attributes AttributeID="LienFiledCount24              " AttributeValue="0              " />
+            <Attributes AttributeID="LienFiledCount60              " AttributeValue="0              " />
+            <Attributes AttributeID="NonDerogCount12               " AttributeValue="0              " />
+            <Attributes AttributeID="PhoneEDAAgeNewestRecord       " AttributeValue=".              " />
+            <Attributes AttributeID="PhoneOtherAgeOldestRecord     " AttributeValue=".              " />
+            <Attributes AttributeID="PrevAddrAgeOldestRecord       " AttributeValue=".              " />
+            <Attributes AttributeID="PrevAddrAVMTax                " AttributeValue="0              " />
+            <Attributes AttributeID="PrevAddrBlockIndex            " AttributeValue="0              " />
+            <Attributes AttributeID="PrevAddrCountyIndex           " AttributeValue="0              " />
+            <Attributes AttributeID="PrevAddrDwellType             " AttributeValue=".              " />
+            <Attributes AttributeID="PrevAddrFamilyOwned           " AttributeValue=".              " />
+            <Attributes AttributeID="PrevAddrTaxYr                 " AttributeValue=".              " />
+            <Attributes AttributeID="PrevCurrEconTrajectory        " AttributeValue=".              " />
+            <Attributes AttributeID="PropNewestSalePurchaseIndex   " AttributeValue="0              " />
+            <Attributes AttributeID="PropOwnedCount                " AttributeValue="0              " />
+            <Attributes AttributeID="PropOwnedHistoricalCount      " AttributeValue="0              " />
+            <Attributes AttributeID="SecurityAlert                 " AttributeValue="0              " />
+            <Attributes AttributeID="SecurityFreeze                " AttributeValue="0              " />
+            <Attributes AttributeID="SSN3Years                     " AttributeValue=".              " />
+            <Attributes AttributeID="SSNAddrCount                  " AttributeValue="0              " />
+            <Attributes AttributeID="SSNDeceased                   " AttributeValue=".              " />
+            <Attributes AttributeID="SSNHighIssueDate              " AttributeValue=".              " />
+            <Attributes AttributeID="SSNLowIssueDate               " AttributeValue=".              " />
+            <Attributes AttributeID="SSNRecent                     " AttributeValue=".              " />
+            <Attributes AttributeID="SubjectAddrCount              " AttributeValue="0              " />
+            <Attributes AttributeID="SubjectPhoneRecentCount       " AttributeValue="0              " />
+            <Attributes AttributeID="SubPrimeSolicitedCount        " AttributeValue="0              " />
+            <Attributes AttributeID="SubPrimeSolicitedCount12      " AttributeValue="0              " />
+            <Attributes AttributeID="VerificationFailure           " AttributeValue="0              " />
+            <Attributes AttributeID="VerifiedDOB                   " AttributeValue="0              " />
+            <Attributes AttributeID="WealthIndex                   " AttributeValue=".              " />
+            <Attributes AttributeID="PredictedAnnualIncome         " AttributeValue=".              " />
+            <Attributes AttributeID="ProfLicType                   " AttributeValue=".              " />
+            <Attributes AttributeID="ProfLicTypeCategory           " AttributeValue=".              " />
+          </EX_838>
+          <EX_950 RecordID="950" RecordLength="0016" TotalSegments="026" TotalLength="12392" />
+        </EXReport>
+      </EX>
+    </Reports>
+    <Messages>
+      <Message Timestamp="Fri Feb 05 15:38:23 MST 2016" Source="CardAccountNumber" Number="0" Description="org.mozilla.javascript.EcmaError: TypeError: Cannot call method &quot;selectSingleNode&quot; of null" />
+      <Message Timestamp="Fri Feb 05 15:38:23 MST 2016" Source="FDR_CardHolder_Record" Number="0" Description="org.mozilla.javascript.EcmaError: TypeError: Cannot call method &quot;selectSingleNode&quot; of null" />
+      <Message Timestamp="Fri Feb 05 15:38:23 MST 2016" Source="EOD_FDR_Output_Run" Number="0" Description="org.mozilla.javascript.EcmaError: TypeError: Cannot call method &quot;selectSingleNode&quot; of null" />
+      <Message Timestamp="Fri Feb 05 15:38:23 MST 2016" Source="EOD_BankCard" Number="0" Description="org.mozilla.javascript.EcmaError: TypeError: Cannot call method &quot;selectSingleNode&quot; of null" />
+      <Message Timestamp="Fri Feb 05 15:38:23 MST 2016" Source="WorkflowManager" Number="0" Description="org.mozilla.javascript.EcmaError: TypeError: Cannot call method &quot;selectSingleNode&quot; of null" />
+      <Message Timestamp="Fri Feb 05 15:38:23 MST 2016" Source="TransactionManager" Number="0" Description="org.mozilla.javascript.EcmaError: TypeError: Cannot call method &quot;selectSingleNode&quot; of null" />
+    </Messages>
+    <Rules />
+    <Journals>
+      <Journal Type="Script" ID="ProcStart" Timestamp="2016-1-25 11:21:33.523" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="Mon Jan 25 11:21:33 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2016-1-25 11:21:33.633" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="Mon Jan 25 11:21:33 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2016-1-25 11:21:33.648" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="Mon Jan 25 11:21:33 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2016-1-25 11:21:33.680" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Mon Jan 25 11:21:33 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2016-1-25 11:21:33.695" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="Mon Jan 25 11:21:33 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2016-1-25 11:21:33.695" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2016-1-25 11:21:33.711" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2016-1-25 11:21:33.711" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2016-1-25 11:21:33.726" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2016-1-25 11:21:33.726" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2016-1-25 11:21:33.742" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2016-1-25 11:21:33.742" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2016-1-25 11:21:33.758" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2016-1-25 11:21:33.758" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2016-1-25 11:21:33.773" Status="false" />
+      <Journal Type="Rule" ID="PAPMA" Timestamp="2016-1-25 11:21:33.773" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2016-1-25 11:21:33.789" Status="false" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2016-1-25 11:21:33.789" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2016-1-25 11:21:33.805" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2016-1-25 11:21:33.805" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Mon Jan 25 11:21:33 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2016-1-25 11:21:33.820" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2016-1-25 11:21:33.820" Status="false" />
+      <Journal Type="Rule" ID="SSNMM" Timestamp="2016-1-25 11:21:33.836" Status="false" />
+      <Journal Type="Rule" ID="PMACI" Timestamp="2016-1-25 11:21:33.867" Status="false" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2016-1-25 11:21:33.867" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2016-1-25 11:21:33.883" Status="false" />
+      <Journal Type="Process" ID="02000" Timestamp="Mon Jan 25 11:21:33 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2016-1-25 11:21:33.898" Status="false" />
+      <Journal Type="Process" ID="03000" Timestamp="Mon Jan 25 11:21:33 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="CBRER" Timestamp="2016-1-25 11:21:36.976" Status="false" />
+      <Journal Type="Rule" ID="CBFRZ" Timestamp="2016-1-25 11:21:36.992" Status="false" />
+      <Journal Type="Process" ID="06000" Timestamp="Mon Jan 25 11:21:36 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="CBMNA" Timestamp="2016-1-25 11:21:37.8" Status="false" />
+      <Journal Type="Rule" ID="EXEVSBLK" Timestamp="2016-1-25 11:21:37.8" Status="false" />
+      <Journal Type="Process" ID="07000" Timestamp="Mon Jan 25 11:21:37 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="BKFIL" Timestamp="2016-1-25 11:21:37.39" Status="false" />
+      <Journal Type="Rule" ID="INCSRD" Timestamp="2016-1-25 11:21:37.55" Status="false" />
+      <Journal Type="Rule" ID="EXEVS" Timestamp="2016-1-25 11:21:37.55" Status="false" />
+      <Journal Type="Rule" ID="CBPDC" Timestamp="2016-1-25 11:21:37.70" Status="false" />
+      <Journal Type="Process" ID="07500" Timestamp="Mon Jan 25 11:21:37 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="CBPCS" Timestamp="2016-1-25 11:21:37.70" Status="false" />
+      <Journal Type="Rule" ID="CBSSN" Timestamp="2016-1-25 11:21:37.86" Status="false" />
+      <Journal Type="Rule" ID="MMDOB" Timestamp="2016-1-25 11:21:37.86" Status="false" />
+      <Journal Type="Rule" ID="HAIEA" Timestamp="2016-1-25 11:21:37.101" Status="false" />
+      <Journal Type="Rule" ID="EXIEA" Timestamp="2016-1-25 11:21:37.117" Status="false" />
+      <Journal Type="Rule" ID="MMTGP" Timestamp="2016-1-25 11:21:37.117" Status="false" />
+      <Journal Type="Rule" ID="CBFNI" Timestamp="2016-1-25 11:21:37.117" Status="false" />
+      <Journal Type="Rule" ID="CBGDA" Timestamp="2016-1-25 11:21:37.133" Status="false" />
+      <Journal Type="Rule" ID="CBLNI" Timestamp="2016-1-25 11:21:37.133" Status="false" />
+      <Journal Type="Rule" ID="CBPMT" Timestamp="2016-1-25 11:21:37.164" Status="false" />
+      <Journal Type="Rule" ID="CBRDC" Timestamp="2016-1-25 11:21:37.211" Status="false" />
+      <Journal Type="Process" ID="08000" Timestamp="Mon Jan 25 11:21:37 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="ADRFR" Timestamp="2016-1-25 11:21:37.601" Status="false" />
+      <Journal Type="Rule" ID="CBFRA" Timestamp="2016-1-25 11:21:37.601" Status="false" />
+      <Journal Type="Rule" ID="HAADD" Timestamp="2016-1-25 11:21:37.617" Status="false" />
+      <Journal Type="Rule" ID="HAADS" Timestamp="2016-1-25 11:21:37.617" Status="false" />
+      <Journal Type="Rule" ID="HAASP" Timestamp="2016-1-25 11:21:37.633" Status="false" />
+      <Journal Type="Rule" ID="HAPHN" Timestamp="2016-1-25 11:21:37.633" Status="false" />
+      <Journal Type="Rule" ID="HASSN" Timestamp="2016-1-25 11:21:37.648" Status="false" />
+      <Journal Type="Rule" ID="HASYS" Timestamp="2016-1-25 11:21:37.648" Status="false" />
+      <Journal Type="Rule" ID="HATNF" Timestamp="2016-1-25 11:21:37.664" Status="false" />
+      <Journal Type="Rule" ID="NAMFR" Timestamp="2016-1-25 11:21:37.711" Status="false" />
+      <Journal Type="Rule" ID="SSNFR" Timestamp="2016-1-25 11:21:37.851" Status="false" />
+      <Journal Type="Rule" ID="MMAUN" Timestamp="2016-1-25 11:21:37.867" Status="false" />
+      <Journal Type="Process" ID="09000" Timestamp="Mon Jan 25 11:21:37 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="MM3AD" Timestamp="2016-1-25 11:21:37.883" Status="false" />
+      <Journal Type="Rule" ID="MM3NM" Timestamp="2016-1-25 11:21:37.883" Status="false" />
+      <Journal Type="Rule" ID="MMSSN" Timestamp="2016-1-25 11:21:37.898" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2016-1-25 11:21:37.898" Status="false" />
+      <Journal Type="Rule" ID="CNLTL" Timestamp="2016-1-25 11:21:37.914" Status="false" />
+      <Journal Type="Rule" ID="MLPCL" Timestamp="2016-1-25 11:21:37.914" Status="false" />
+      <Journal Type="Rule" ID="PADOB" Timestamp="2016-1-25 11:21:37.914" Status="false" />
+      <Journal Type="Rule" ID="PAPBO" Timestamp="2016-1-25 11:21:37.930" Status="false" />
+      <Journal Type="Rule" ID="POBSN" Timestamp="2016-1-25 11:21:37.930" Status="false" />
+      <Journal Type="Rule" ID="INCSRV" Timestamp="2016-1-25 11:21:37.945" Status="false" />
+      <Journal Type="Rule" ID="INCMISS" Timestamp="2016-1-25 11:21:37.945" Status="false" />
+      <Journal Type="Rule" ID="PAMPH" Timestamp="2016-1-25 11:21:37.961" Status="false" />
+      <Journal Type="Rule" ID="VFPAA" Timestamp="2016-1-25 11:21:37.961" Status="false" />
+      <Journal Type="Process" ID="11000" Timestamp="Mon Jan 25 11:21:37 MST 2016" Status="Pass" />
+      <Journal Type="Rule" ID="DTIRH" Timestamp="2016-1-25 11:21:37.976" Status="false" />
+      <Journal Type="Process" ID="12000" Timestamp="Mon Jan 25 11:21:37 MST 2016" Status="Pass" />
+      <Journal Type="Process" ID="20000" Timestamp="Mon Jan 25 11:21:37 MST 2016" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits />
+  </Request>
+</Provenir>

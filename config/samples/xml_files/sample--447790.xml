@@ -1,0 +1,106 @@
+﻿<Provenir Org="" sessionID="" stack="" Version="" ProductType="" error="" x-trace-id="5124b3b5-72c0-4be5-b9e0-db1069a92041" action="" app_source="API" transactionID="33966" errorCode="0" status="pass validation" appType="CC" shred_version="16.0">
+  <Request ID="447790" UserID="" Workflow="1" Timestamp="" Status="P" Trans="" Readonly="0" Process="01000" Version="" Priority="" Timeout="" Trace="" LockedBy="ADAM.STARR@MERRICKBANK.COM" iovation_sessionid="8d2444a5-877d-430d-82bf-b15a07082ad2" iovation_blackbox="" triggerFinicity="N" triggerNova="N" triggerQA="N" btcardtoken="" btresponsecode="" useAlloyService="0" _LockedBy="ADAM.STARR@MERRICKBANK.COM" LockedAt="2025-10-07 20:44:34.226" LastUpdatedBy="ADAM.STARR@MERRICKBANK.COM">
+    <CustData>
+      <application app_type_code="PRODB" procs_date="2025-09-10 20:49:54.196" app_receive_date="2025-09-10 20:49:54.126" last_update_time="2025-10-07 20:45:17.377" signature_ind="Y" coupon_expiration_date="10/17/2025" name_match_flag="Y" address_match_flag="" ssn_match_flag="N" pricing_tier="59" solicitation_num="09255T24255T" pymnt_prot_plan_ind="" credit_life_ind="" campaign_num="Z3I" app_entry_date="09/10/2025" swiftpay_num="" mail_cell_pricing="ZIAYBX1225" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" app_channel="" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="3" CPS_letter_sent_flag="" population_assignment="SB" verification_source="" EODRet="WEBAPP" processing_expiration_date="10/22/2025" solicitation_locked="" secure_ach_amount="" IP_address="::1" EXPinNumber="" assignedTo="" updatedBy="" priority="" paperless_flag="false" sms_consent_flag="" esign_consent_flag="false">
+        <app_product decision_tp_c="NONE" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="N" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="Y" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="Y" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="796" prescreen_risk_score="346" risk_model_score="" prescreen_risk_grade="A" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="N" bank_debt_to_income_ratio="" regb_start_date="2025-9-10 20:49:54.0" regb_end_date="" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" decision_score="" decision_model="" />
+        <contact con_id="753517" ac_role_tp_c="PR" title="" first_name="KENNETH" initials="" last_name="HAUXWELL" suffix="" ssn="660356616" email="null" birth_date="07/21/1987" mother_maiden_name="Hi" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="" age="" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="3000" accnt_type_ind="" card_decision_tp_c="NODEC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="3000" max_line="3000" />
+          <contact_address residence_monthly_pymnt="567.00" address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_unit="" po_box="" city="City" rural_route="6" state="AZ" street_name="" street_number="" unit="" home_phone="5646575675" cell_phone="" address_line_1="" zip="65455" Patriot_Act_zip="" />
+          <contact_employment b_phone_no="" b_unit="" b_zip="" b_state="" b_street_name="" b_street_number="" b_salary="676554.0" b_city="" b_other_income_amt="0" b_name="" b_job_title_tp_c="" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="0" b_years_at_job="0" b_primary_income_source_tp_c="EMPLOY" b_salary_basis_tp_c="ANNUM" b_othr_inc_basis_tp_c="ANNUM" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="2025-09-10 20:49:54.280" campaign_number="Z3I" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="KENNETH" primary_middle_name="" primary_last_name="HAUXWELL" primary_suffix="" primary_ssn="66035661" pri_cur_street_num="915" pri_cur_street_name="S RANGE AVE" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="COLBY" pri_state="KS" pri_zip_code="67701" special_flag_5="R" special_flag_6="A" special_flag_7="A" special_flag_8="A" aaa_misc_field_4="" misc_field_6="" upc8="763" upc9="" upc10="796" upc12="" CB_prescreen_birth_date="05/10/1978" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" minimum_interest_charge="0" account_setup_fee="0" additional_card_fee="0" late_payment_fee="40" over_limit_fee="0" returned_payment_fee="0" apr="34.70" annual_fee="0" cash_advance_apr="35.00" cash_advance_fee="10" cash_advance_percent="4" cash_apr_margin="32.20" foreign_percent="0" intro_cash_advance_apr="0.09589" intro_purchase_apr="0.09506" min_payment_fee="35" min_payment_percent="1.00" purchase_apr_margin="27.20" seg_plan_version="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="CreditBureauPulled" value="0" />
+          <Indicator ID="InternetResponsesOn" value="Y" />
+          <Indicator ID="AppStageLine" value="1" />
+        </Indicators>
+        <scores />
+        <analytics />
+        <communications>
+          <communication comm_id="16206" bureau_id="" bureau_score="" bureau_score_date="" letter_type_code="940" reason_type_1="" reason_type_2="" reason_type_3="" reason_type_4="" reason_code_1="" reason_code_2="" reason_code_3="" reason_code_4="" reason_text_1="" reason_text_2="" reason_text_3="" reason_text_4="" score_factor_code_1="" score_factor_code_2="" score_factor_code_3="" score_factor_code_4="" score_factor_code_5="" score_factor_text_1="" score_factor_text_2="" score_factor_text_3="" score_factor_text_4="" score_factor_text_5="" bureau_no_disclosure_flag="true" bureau_no_score_flag="true" temp_hold_flag="false">
+            <deliveries>
+              <delivery delivery_id="16063" delivery_method="letter" sent_date="2025-10-01 20:58:08.461" response_date="" response_detail="" />
+            </deliveries>
+          </communication>
+          <communication comm_id="16319" bureau_id="" bureau_score="" bureau_score_date="" letter_type_code="946" reason_type_1="CC" reason_type_2="CC" reason_type_3="CC" reason_type_4="CC" reason_code_1="140" reason_code_2="750" reason_code_3="998" reason_code_4="999" reason_text_1="WE ARE UNABLE TO VERIFY THE APPLICANT'S CURRENT RESIDENCE" reason_text_2="PLEASE PROVIDE A COPY OF CURRENT UTILITY BILL,BANK STATEMENT OR DRIVER'S LICENSE" reason_text_3="-" reason_text_4="-" score_factor_code_1="" score_factor_code_2="" score_factor_code_3="" score_factor_code_4="" score_factor_code_5="" score_factor_text_1="" score_factor_text_2="" score_factor_text_3="" score_factor_text_4="" score_factor_text_5="" bureau_no_disclosure_flag="true" bureau_no_score_flag="true" temp_hold_flag="false">
+            <deliveries>
+              <delivery delivery_id="16176" delivery_method="letter" sent_date="2025-10-21 20:35:16.807" response_date="" response_detail="" />
+            </deliveries>
+          </communication>
+        </communications>
+        <comments comment_seq_number="1" comment="Application not decisioned within 15 days.  Referred to Supervisor." user_id="System" time_stamp="2025-10-01 20:58:15.969" />
+      </application>
+    </CustData>
+    <Reports />
+    <Messages>
+      <Message Timestamp="2025-10-07 20:20:40.867" Source="ShredRulesToDatabase" Number="1" Description="Error executing RunDMLSQL ERROR: MSSql.writeDirect error executing writeDirect sql: INSERT INTO rules (app_id, rule_id, description, time_stamp, override) SELECT '447790', 'PAMAI', 'Primary applicants address missing street number and PO Box.', '2025-09-10 20:49:54.294', '0' WHERE 'PAMAI' NOT IN (SELECT rule_id FROM rules WHERE app_id = '447790').  Error = com.microsoft.sqlserver.jdbc.SQLServerException: SQL Server did not return a response. The connection has been closed." />
+      <Message Timestamp="2025-10-07 20:20:40.868" Source="ShredRulesToDatabase" Number="1" Description="Error executing RunDMLSQL ERROR: MSSql.writeDirect error writeDirect: Commencing writeDirect.  Error = com.microsoft.sqlserver.jdbc.SQLServerException: The connection is closed." />
+      <Message Timestamp="2025-10-07 20:20:40.870" Source="ShredRulesToDatabase" Number="1" Description="Error executing RunDMLSQL ERROR: MSSql.writeDirect error writeDirect: Commencing writeDirect.  Error = com.microsoft.sqlserver.jdbc.SQLServerException: The connection is closed." />
+      <Message Timestamp="2025-10-07 20:20:40.870" Source="ShredRulesToDatabase" Number="1" Description="Error executing RunDMLSQL ERROR: MSSql.writeDirect error writeDirect: Commencing writeDirect.  Error = com.microsoft.sqlserver.jdbc.SQLServerException: The connection is closed." />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079ad110cc68c27a" ID="PAMAI" Description="Primary applicants address missing street number and PO Box." Timestamp="2025-09-10 20:49:54.294" Severity="68" Override="0" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079e0110cc68c247" ID="PARRO" Description="Primary applicants address information contains only rural route." Timestamp="2025-09-10 20:49:54.296" Severity="43" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2025-09-10 20:49:54.127" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2025-09-10 20:49:54.196" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-09-10 20:49:54.239" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-09-10 20:49:54.239" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2025-09-10 20:49:54.244" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="2025-09-10 20:49:54.244" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2025-09-10 20:49:54.290" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="2025-09-10 20:49:54.290" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2025-09-10 20:49:54.292" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="2025-09-10 20:49:54.292" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2025-09-10 20:49:54.292" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2025-09-10 20:49:54.293" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2025-09-10 20:49:54.293" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2025-09-10 20:49:54.294" Status="true" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2025-09-10 20:49:54.294" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2025-09-10 20:49:54.295" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2025-09-10 20:49:54.295" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2025-09-10 20:49:54.295" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2025-09-10 20:49:54.296" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2025-09-10 20:49:54.296" Status="true" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2025-09-10 20:49:54.297" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2025-09-10 20:49:54.298" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2025-09-10 20:49:54.298" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2025-09-10 20:49:54.299" Status="false" />
+      <Journal Type="Rule" ID="APPGENDEL" Timestamp="2025-09-10 20:49:54.300" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="2025-09-10 20:49:54.306" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-09-10 20:49:54.309" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2025-10-01 20:58:08.462" Status="Pass" />
+      <Journal UserID="ADAM.STARR@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-07 20:20:16.859" Status="Opened" />
+      <Journal UserID="ADAM.STARR@MERRICKBANK.COM" Type="TM" ID="LETTR" Timestamp="2025-10-07 20:20:40.862" Status="P" />
+      <Journal UserID="ADAM.STARR@MERRICKBANK.COM" Type="TM" ID="LETTR" Timestamp="2025-10-07 20:20:49.606" Status="P" />
+      <Journal UserID="ADAM.STARR@MERRICKBANK.COM" Type="TM" ID="LetterCallUs" Timestamp="2025-10-07 20:21:23.033" Status="P" />
+      <Journal UserID="ADAM.STARR@MERRICKBANK.COM" Type="API" ID="Letter Type (940)" Timestamp="2025-10-07 20:21:58.991" Status="Communication Created" />
+      <Journal UserID="ADAM.STARR@MERRICKBANK.COM" Type="API" ID="Letter Type (940)" Timestamp="2025-10-07 20:22:43.927" Status="Communication Created" />
+      <Journal UserID="ADAM.STARR@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-07 20:44:34.215" Status="Opened" />
+      <Journal UserID="ADAM.STARR@MERRICKBANK.COM" Type="TM" ID="LETTR" Timestamp="2025-10-07 20:45:17.378" Status="P" />
+      <Journal Type="Process" ID="72000" Timestamp="2025-10-21 20:35:16.808" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits>
+      <Audit UserID="ADAM.STARR@MERRICKBANK.COM" XPATH="Delete Letter" To="" From="" Timestamp="2025-10-07 20:44:46.225" Source="API" />
+      <Audit UserID="ADAM.STARR@MERRICKBANK.COM" XPATH="Delete Letter" To="" From="" Timestamp="2025-10-07 20:44:49.560" Source="API" />
+      <Audit UserID="ADAM.STARR@MERRICKBANK.COM" XPATH="Delete Letter" To="" From="" Timestamp="2025-10-07 20:44:52.901" Source="API" />
+      <Audit UserID="ADAM.STARR@MERRICKBANK.COM" XPATH="Delete Letter" To="" From="" Timestamp="2025-10-07 20:44:55.979" Source="API" />
+      <Audit UserID="ADAM.STARR@MERRICKBANK.COM" XPATH="Delete Letter" To="" From="" Timestamp="2025-10-07 20:44:58.868" Source="API" />
+    </Audits>
+    <Documents />
+    <temp_app_variables />
+    <TriggeredRules />
+  </Request>
+  <queues>
+    <queue name="Manager" id="65" type="cc" />
+    <queue name="T All Applications" id="17" />
+  </queues>
+</Provenir>

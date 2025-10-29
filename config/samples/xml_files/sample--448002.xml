@@ -1,0 +1,104 @@
+﻿<Provenir Org="" sessionID="" stack="" Version="" ProductType="" error="" x-trace-id="76ba98b9-9d15-474a-b4c0-9bc5d85d946a" action="" app_source="API" transactionID="34865" errorCode="0" status="pass validation" appType="CC" shred_version="2.0">
+  <Request ID="448002" UserID="" Workflow="1" Timestamp="" Status="D" Trans="" Readonly="0" Process="30000" Version="" Priority="" Timeout="" Trace="" LockedBy="" iovation_sessionid="8d2444a5-877d-430d-82bf-b15a07082ad2" iovation_blackbox="0400tyDoXSFjKeoNf94lis1ztu5Divh068bwll6QxaM7ld7Ai2chOeecHUpzA6s0Tl6wNSGgr1SZ5u+FSxlH7irrmded+trm4ecPHI1bKbfTyUEwirLZnDqLzknbtw2dg9JBTIBnmyVMxon8yLARWLRMgWNOfSphCaL9jwZOoEVFPaYRTfzsuPzNXIK4mjKAMqULsj69LfM7VRYrI1FeHSbDspvXHhwykQoiuMSNUUyGAvKLg+9aginJmamvnOVDH3SzV6i8/tb5alAK/XRNo3H5dMIK6EAX6criCbBQdLGgCisA5cNpT+Vu2lSAFu7g0I1z9QmIvkwaq94ewkJFe4qUGUsCMbhs0EdPMCORl9P1OroBzwOg+2qZU1svc1perOFmNP5h88LbLq3IruX1vy35FzzmHvOZVxQkTdpKytzIitWiLZVX2oRcAEJI4/wX97IAaVmZqTD7tyd0W8+tYgTFPpz32+8+HjOq6jB+ZmMavO7St0oGtrebhgIKKmMtCMnsRAOyQM8JTA/M7vwYqnMrAMe8mnFiPj0i+4nZG7NP9N5jJ3pU7mvaxUqHJTGWCLCrosTzKoxVC6fSPFFgCaMpvU/h6EFXXmXE6tt7i85ONY5NndGuUrVWxEBHbtl2L6+OonKBFCAZfXSVwAGEd3H4L1p1B4VyJESbGifks1HP/ExDgm50c6V/UpKetslI3IixYH1H5YVrp93GJ/KtOFGi8RKePA1UZdKAZDwic+y5/r+SkyAbziDM7k8xAXTS4l7D1erHMnjL6ri69/6OW8z8/Qh155kuFG+4TMj6Y82LrlflYU9iUMb03QtuHmc6Pe7cNepEKIoJSuwSQy3zP1/E72kssZVBQohhHbBPDncKJYr3oU6k968Na0fZdHRCR853TYPvefzXHqEQwLLSzeFEufTxOH0WU0cMwkGouP5PPyvQ78T0AGn/1yw+Jld00Kp8m775S7tm95CTQKA1/WzgaQalR6tq92sLbXR7w4autUYHyf83JPkBAkRaH4lVulA8gRgN+Z8HAFhGFzd/m6snVgtcnU5pFekiB8n/NyT5AQJEWh+JVbpQPIEYDfmfBwBYRhc3f5urJ1YLXJ1OaRXpIgfJ/zck+QECqJOz7YCWoR9VJUiLP0GDKk5nEZ91TP4wCa9nqd/bL3eujD2V/77k/XvGj1EZXUd9ecXnZWpwghuQPUPx6jdb2cy+CcP6wiXjcD6T1dGUjL++ba+3HXIkUN2xKdqGM55ztFirAFOPxQRzCh5TZDSDN6iN3HZlh6OVA0u2TXF5zCw=" triggerFinicity="N" triggerNova="N" triggerQA="N" btcardtoken="" btresponsecode="" useAlloyService="0" _LockedBy="" LockedAt="">
+    <CustData>
+      <application app_type_code="PRODB" procs_date="2025-10-21 19:04:38.926" app_receive_date="2025-10-21 19:04:38.869" last_update_time="" signature_ind="Y" coupon_expiration_date="12/12/2025" name_match_flag="Y" address_match_flag="" ssn_match_flag="N" pricing_tier="59" solicitation_num="11255T38011T" pymnt_prot_plan_ind="" credit_life_ind="0" campaign_num="Z4K" app_entry_date="10/21/2025" swiftpay_num="" mail_cell_pricing="ZKAA6OV413" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" app_channel="" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="3" CPS_letter_sent_flag="" population_assignment="DN" verification_source="" EODRet="WEBAPP" processing_expiration_date="12/17/2025" solicitation_locked="" secure_ach_amount="" IP_address="::1" EXPinNumber="" assignedTo="" updatedBy="" priority="" paperless_flag="false" sms_consent_flag="" esign_consent_flag="false">
+        <app_product decision_tp_c="DECNC" decision_date="2025-10-21 19:04:39.136" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="N" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="N" analyst_rev_ind="N" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="N" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="808" prescreen_risk_score="354" risk_model_score="" prescreen_risk_grade="A" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="" bank_debt_to_income_ratio="" regb_start_date="2025-10-21 19:4:38.0" regb_end_date="2025-10-21" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" decision_score="" decision_model="" />
+        <contact con_id="753695" ac_role_tp_c="PR" title="" first_name="RUDOLPH" initials="" last_name="ACREE" suffix="II" ssn="660491376" email="null" birth_date="04/05/2001" mother_maiden_name="Hi" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="" age="24" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="1250" accnt_type_ind="" card_decision_tp_c="DECNC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="2500" />
+          <contact_address residence_monthly_pymnt="765.00" address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_unit="" po_box="1012" city="City" rural_route="3" state="AK" street_name="" street_number="" unit="" home_phone="5456456576" cell_phone="" address_line_1="" zip="67655" Patriot_Act_zip="" />
+          <contact_employment b_phone_no="" b_unit="" b_zip="" b_state="" b_street_name="" b_street_number="" b_salary="654556.0" b_city="" b_other_income_amt="0" b_name="" b_job_title_tp_c="" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="0" b_years_at_job="0" b_primary_income_source_tp_c="EMPLOY" b_salary_basis_tp_c="ANNUM" b_othr_inc_basis_tp_c="ANNUM" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="2025-10-21 19:04:39.004" campaign_number="Z4K" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="RUDOLPH" primary_middle_name="" primary_last_name="ACREE" primary_suffix="II" primary_ssn="66049137" pri_cur_street_num="" pri_cur_street_name="" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="1012" pri_city="BALDWIN PARK" pri_state="CA" pri_zip_code="91706" special_flag_5="R" special_flag_6="A" special_flag_7="A" special_flag_8="A" aaa_misc_field_4="" misc_field_6="" upc8="868" upc9="" upc10="808" upc12="" CB_prescreen_birth_date="05/10/1978" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" minimum_interest_charge="0" account_setup_fee="0" additional_card_fee="0" late_payment_fee="40" over_limit_fee="0" returned_payment_fee="0" apr="34.45" annual_fee="0" cash_advance_apr="35.00" cash_advance_fee="10" cash_advance_percent="4" cash_apr_margin="32.20" foreign_percent="0" intro_cash_advance_apr="0.09589" intro_purchase_apr="0.09438" min_payment_fee="35" min_payment_percent="1.00" purchase_apr_margin="27.20" seg_plan_version="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" IovationCaseId="" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="CreditBureauPulled" value="0" />
+          <Indicator ID="InternetResponsesOn" value="Y" />
+        </Indicators>
+        <scores />
+        <analytics />
+        <communications>
+          <communication comm_id="16479" bureau_id="" bureau_score="" bureau_score_date="" letter_type_code="980" reason_type_1="CC" reason_type_2="" reason_type_3="" reason_type_4="" reason_code_1="102" reason_code_2="" reason_code_3="" reason_code_4="" reason_text_1="THIS OFFER WAS MADE TO A SELECTED INDIVIDUAL AND IS NON-TRANSFERABLE" reason_text_2="" reason_text_3="" reason_text_4="" score_factor_code_1="" score_factor_code_2="" score_factor_code_3="" score_factor_code_4="" score_factor_code_5="" score_factor_text_1="" score_factor_text_2="" score_factor_text_3="" score_factor_text_4="" score_factor_text_5="" bureau_no_disclosure_flag="true" bureau_no_score_flag="true" temp_hold_flag="false">
+            <deliveries>
+              <delivery delivery_id="16336" delivery_method="letter" sent_date="2025-10-21 20:35:29.406" response_date="" response_detail="" />
+            </deliveries>
+          </communication>
+        </communications>
+      </application>
+    </CustData>
+    <Reports>
+      <IovationCase>
+        <JSON>
+          <HTTPHeaders Status-Code="401" Status-Message="Web Service Returned non-OK status 401" CF-Ray="9923050bbc7357da-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Tue, 21 Oct 2025 19:04:16 GMT" Access-Control-Expose-Headers="Request-Context" CF-Cache-Status="DYNAMIC" Cache-Control="no-cache" Set-Cookie="__cf_bm=iR.e2bOFR.ORy.RSIozep5VzOe.WNv1FmOw6pTbY3SY-1761073456-1.0.1.1-CrrUudRGXpH8aKesg.bbVth1mm.UZ8z9p.4XSyQ.w7lTMVeGJ7cPn_OvI4ezdhQ8lSHGxL6H96VrrzKKj7d13UMjPO6sPFZIuY18gIeTnO0; path=/; expires=Tue, 21-Oct-25 19:34:16 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="-1" Content-Length="90" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationCase>
+      <IovationCase>
+        <JSON>
+          <HTTPHeaders Status-Code="401" Status-Message="Web Service Returned non-OK status 401" CF-Ray="9923050bbc7357da-IAD" Server="cloudflare" Connection="keep-alive" Pragma="no-cache" Date="Tue, 21 Oct 2025 19:04:16 GMT" Access-Control-Expose-Headers="Request-Context" CF-Cache-Status="DYNAMIC" Cache-Control="no-cache" Set-Cookie="__cf_bm=iR.e2bOFR.ORy.RSIozep5VzOe.WNv1FmOw6pTbY3SY-1761073456-1.0.1.1-CrrUudRGXpH8aKesg.bbVth1mm.UZ8z9p.4XSyQ.w7lTMVeGJ7cPn_OvI4ezdhQ8lSHGxL6H96VrrzKKj7d13UMjPO6sPFZIuY18gIeTnO0; path=/; expires=Tue, 21-Oct-25 19:34:16 GMT; domain=.app.trustev.com; HttpOnly; Secure; SameSite=None" Expires="-1" Content-Length="90" Request-Context="appId=cid-v1:d65921b2-8e68-4ce4-bca8-e9340c0ca8cc" Content-Type="application/json; charset=utf-8" />
+        </JSON>
+      </IovationCase>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2025-10-21 19:04:39.109" Source="WebService.TransUnionCase.POST Case Iovation.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 401" />
+      <Message Timestamp="2025-10-21 19:04:39.331" Source="WebService.TransUnionCase.Update Case Status.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 401" />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079c5110cc68c262" ID="SSNMM" Description="SSN reported versus solicited SSN mismatch indicator." Timestamp="2025-10-21 19:04:39.113" Severity="78" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal UserID="MAC" Type="Script" ID="ProcStart" Timestamp="2025-10-21 19:04:38.869" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="2025-10-21 19:04:38.926" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-10-21 19:04:38.973" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-10-21 19:04:38.973" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2025-10-21 19:04:38.978" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="2025-10-21 19:04:38.978" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2025-10-21 19:04:39.015" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="2025-10-21 19:04:39.015" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2025-10-21 19:04:39.017" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="2025-10-21 19:04:39.017" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2025-10-21 19:04:39.018" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2025-10-21 19:04:39.018" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2025-10-21 19:04:39.019" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2025-10-21 19:04:39.020" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2025-10-21 19:04:39.020" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2025-10-21 19:04:39.021" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2025-10-21 19:04:39.021" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2025-10-21 19:04:39.022" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2025-10-21 19:04:39.022" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2025-10-21 19:04:39.023" Status="false" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2025-10-21 19:04:39.023" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2025-10-21 19:04:39.023" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2025-10-21 19:04:39.024" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2025-10-21 19:04:39.024" Status="false" />
+      <Journal Type="Rule" ID="APPGENDEL" Timestamp="2025-10-21 19:04:39.026" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="2025-10-21 19:04:39.026" Status="Pass" />
+      <Journal Type="Process" ID="ID Vision" Timestamp="2025-10-21 19:04:39.110" Status="Fail" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2025-10-21 19:04:39.112" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2025-10-21 19:04:39.113" Status="false" />
+      <Journal Type="Rule" ID="SSNMM" Timestamp="2025-10-21 19:04:39.113" Status="true" />
+      <Journal Type="Rule" ID="PMACI" Timestamp="2025-10-21 19:04:39.115" Status="bypassed" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2025-10-21 19:04:39.116" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2025-10-21 19:04:39.120" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2025-10-21 19:04:39.127" Status="false" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2025-10-21 19:04:39.127" Status="bypassed" />
+      <Journal Type="Process" ID="02000" Timestamp="2025-10-21 19:04:39.132" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-10-21 19:04:39.135" Status="Pass" />
+      <Journal Type="Process" ID="Update Case Status" Timestamp="2025-10-21 19:04:39.332" Status="Fail" />
+      <Journal Type="Process" ID="30000" Timestamp="2025-10-21 19:04:39.333" Status="Pass" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-21 20:11:00.072" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-21 20:11:33.519" Status="Opened" />
+      <Journal UserID="ADAM.HAUERT@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-21 20:14:30.214" Status="Opened" />
+      <Journal UserID="ADAM.HAUERT@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-10-21 20:14:37.372" Status="Opened" />
+      <Journal Type="Process" ID="72000" Timestamp="2025-10-21 20:35:29.407" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits />
+    <Documents />
+    <temp_app_variables />
+    <TriggeredRules />
+  </Request>
+</Provenir>

@@ -1,0 +1,647 @@
+﻿<Provenir org="" ProductType="" Version="4.0.0" transactionID="DE805f634_165e05c49f3_07ffd165e05c8a22_0a14763e.3" ResponseCode="true" Org="">
+  <Request ID="38910" LockedBy="JHAROLDSEN" _LockedBy="JHAROLDSEN" Priority="" Process="30000" Readonly="0" Status="" Timeout="" Timestamp="" Trace="e25cb69a-459b-450d-947b-b6f170a80ede" Trans="" UnLockOnExit="0" UserID="" Workflow="20" Version="" UserId="jharoldsen" transactionCounter="3">
+    <CustData>
+      <application address_match_flag="" app_entry_date="04/30/2014" app_receive_date="04/30/2014" app_source_ind="I" app_type_code="SECURE" campaign_num="SC1" coupon_expiration_date="" CPS_letter_sent_flag="" credit_life_ind="" Debit_Funding_Source="Check" Debit_Initial_Deposit_date="9/13/2013" Debit_Initial_Deposit_amount="100.00" Debit_NSF_Return_date="" Debit_Refund_date="2016-12-6 11:16:6.450" Debit_Refund_amount="100.00" EODRet="AUTOPROCESS" existing_card_account_num="" last_update_time="2014-5-9 16:26:4.701" mail_cell_pricing="" name_match_flag="" Partner_URL_ID="123456TEST" population_assignment="" pymnt_prot_plan_ind=" " pricing_tier="59" processing_expiration_date="" procs_date="2014-4-30 11:23:38.330" signature_ind="Y" solicitation_num="SC1000000382" special_offer="1" ssn_match_flag="" swiftpay_num="80004047" TUAccessCode="" verification_source="LNQ">
+        <app_product adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" analyst_rev_ind="N" backend_fico_grade="" backend_risk_grade="" booked_date="" csi_eligibility_ind="" debt_to_income_ratio="" decision_date="2022-11-2 14:46:08.614" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" decision_tp_c="DECLN" disclosures="" duplicate_app_ind="N" experian_fico_score="0" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" monthly_debt="" monthly_income="" multran_booked_date="2014-5-9 16:40:29.849" pending_verif_ind="N" precision_score="" prescreen_fico_grade="" prescreen_fico_score="" prescreen_risk_grade="" prescreen_risk_score="" regbcloseddays_num="3108" regbcloseddays2_num="" regbnewinfostartdate="" risk_model_score_JH="" risk_model_score_LP="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" Risk_Model_reason3_tp_c="" risk_model_score="260" supervisor_rev_ind="N" Vantage_Score_EX="" Vantage_Score_TU="" TU_DIE_score="999" TU_TIE_score="999" VeridQA_Result="QA_Passed" adverse_actn5_type_cd="" regb_end_date="2022-11-02" />
+        <comments comment="InstantIDScorewasnotrequired.QAwouldnotbepulledbecauseapplicationwasmanuallyprocessed.Appropriateverificationlettersent.ManualQAisrequiredtoprocess." comment_seq_number="1" comment_type_code="DA" user_id="System" time_stamp="2014-5-9 16:25:45.904" />
+        <contact mother_maiden_name="" ac_role_tp_c="PR" initials="" last_name="BURTON" suffix="" con_id="82430" title="" first_name="LARRY" birth_date="12/09/1937" ssn="666389430" ssn_last_4="9430" email="LANEDELANO@GMAIL.COM" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" age="50" fraud_ind="S">
+          <app_prod_bcard accnt_bin="" accnt_seq_no="" accnt_type_ind="" account_number="" agent="" allocated_credit_line="100" analyst_approved_line="" card_decision_tp_c="DECLN" card_id="82434" card_name="TEST2,LANE " issue_card_ind="Y" multran_accnt_bin="" multran_accnt_seq_no="" multran_account_number="" pd_tp_c="SC1" recur_payment_credit_line="" requested_credit_line="" seq_check="" sys_prin="" />
+          <contact_address address_seq_no="78843" address_tp_c="CURR" cell_phone="" city="NEW HAVEN" fax_no="" home_phone="" mailing_city="" mailing_po_box="" mailing_rural_route="" mailing_state="" mailing_unit="" mailing_zip="" months_at_residence="0" ownership_tp_c="X" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" residence_monthly_pymnt="0.00" rural_route="" state="CT" street_name="DAVIS ST" street_number="101 1-2" unit="" years_at_residence="0" zip="06515" />
+          <contact_employment b_city="" b_income_source_nontaxable="N" b_job_title_tp_c="" b_months_at_job="0" b_name="" b_othr_inc_basis_tp_c="MONTH" b_other_income_amt="" b_other_income_source_tp_c="" b_phone_no="" b_phone_no_ext="" b_primary_income_source_tp_c="" b_salary="2083" b_salary_basis_tp_c="MONTH" b_state="" b_street_name="" b_street_number="" b_years_at_job="0" b_self_employed_ind="" b_unit="" b_zip="" employment_seq_no="78843" employment_tp_c="CURR" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters date_sent="04/30/2014" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="E" letter_type_cd="611" seq_no="1" />
+        <rmts_info aaa_misc_field_4="QA" address_match_flag="" auth_user_is_spouse="N" campaign_number="" CB_prescreen_birth_date="" merrick_appl_number="" name_match_flag="" pri_apt_number="" pri_city="" pri_cur_street_num="" pri_cur_street_name="" pri_po_box_num="" pri_rural_rt_num="" pri_state="" pri_zip_code="" primary_first_name="" primary_last_name="" primary_middle_name="" primary_ssn="" primary_suffix="" special_flag_5="D" special_flag_6="D" special_flag_7="A" special_flag_8="A" ssn_match_flag="" transmission_date="2014-4-30 11:23:37.845" upc8="" upc9="" upc10="" upc12="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="0" LettersFileName="D:\MAC_DATA_FILES\MAC_OUT\ICG\ICGOut.txt" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" unused="" />
+        <user_profile user_id="" security_lvl="110" employee_name="Candice Eborn" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="110" security_type="" credit_limit="10000" />
+        </user_profile>
+        <FDR account_number="" Cross_refrence_indicator="" Cross_refrence_number="" External_Primary_Account="" filler="" multran_account_number="" operator_code="" SubTranCode="" swiftpay_number="" terminalID="" transaction_code="" />
+        <letters seq_no="2" letter_type_cd="640" date_sent="06/24/2016" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" cb_disclosure_suppress="" cb_score_suppress="" letter_sent_ind="Y" />
+        <comments comment_seq_number="2" user_id="jharoldsen" time_stamp="2016-7-18 15:54:15.362" comment="" />
+        <comments comment_seq_number="3" comment="ReportedAddressMatchesaPreviousApplicantsAddress:123MAINST,HAPPYVALLEY,UT84003,PreviousApplicantName:LANETEST3,ApplicationID:38911,CampaignNumber:SC1,Decision:APPRV." user_id="System" comment_type_code="DA" time_stamp="2016-7-18 16:6:58.508" />
+        <letters seq_no="3" letter_type_cd="618" date_sent="07/18/2016" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" cb_disclosure_suppress="" cb_score_suppress="" letter_sent_ind="Y" />
+        <letters seq_no="4" letter_type_cd="616" date_sent="07/18/2016" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="Y" />
+        <letters seq_no="5" letter_type_cd="678" date_sent="12/06/2016" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" cb_disclosure_suppress="" cb_score_suppress="" letter_sent_ind="Y" />
+        <comments comment_seq_number="4" comment="ApplicantfailedKIQ.TransactionID:16939996" user_id="System" comment_type_code="DA" time_stamp="2017-1-30 15:27:7.740" />
+        <letters seq_no="6" letter_type_cd="616" date_sent="02/28/2017" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" cb_disclosure_suppress="" cb_score_suppress="" letter_sent_ind="Y" />
+        <comments comment_seq_number="5" comment="Testcomment" user_id="jharoldsen" comment_type_code="" time_stamp="2017-4-13 8:45:55.198" />
+        <comments comment_seq_number="6" comment="ApplicantfailedKIQ.TransactionID:18385370" user_id="System" comment_type_code="DA" time_stamp="2017-5-1 9:17:17.98" />
+        <comments comment_seq_number="7" comment="Applicationnotdecisionedwithin15days.ReferredtoSupervisor." user_id="System" time_stamp="2017-5-1 10:20:51.576" />
+        <comments comment_seq_number="8" comment="ApplicantfailedQA.TransactionID:23020910944788" user_id="System" comment_type_code="DA" time_stamp="2018-1-16 15:57:58.995" />
+        <comments comment_seq_number="9" comment="ApplicantfailedKIQ.TransactionID:25395851" user_id="System" comment_type_code="DA" time_stamp="2018-1-31 17:23:52.539" />
+        <comments comment_seq_number="10" comment="ApplicantfailedKIQ.TransactionID:31915560" user_id="System" comment_type_code="DA" time_stamp="2018-7-3 10:53:20.728" />
+        <comments comment_seq_number="11" comment="ApplicantfailedQA.TransactionID:23020929555294" user_id="System" comment_type_code="DA" time_stamp="2018-7-3 11:27:1.849" />
+        <Indicators>
+          <Indicator ID="ManualQA" value="jharoldsen" />
+        </Indicators>
+        <comments comment_seq_number="12" comment="Application was Declined. Letter confirming Declined status will be sent if applicable 20 days after initial deposit has been received." user_id="System" comment_type_code="SA" related_to="undefined" time_stamp="2022-11-2 14:46:08.614" />
+        <letters seq_no="7" letter_type_cd="619" date_sent="11/02/2022" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" cb_disclosure_suppress="Y" cb_score_suppress="Y" letter_sent_ind="Y" />
+        <comments comment_seq_number="13" comment="Security Deposit not received within 30 days. Application declined" user_id="System" comment_type_code="SA" related_to="" time_stamp="2022-11-2 14:46:08.676" />
+      </application>
+    </CustData>
+    <Reports>
+      <VeridAuthentication>
+        <authenticationTransactionResponse>
+          <transaction-response>
+            <transaction-response>
+              <result>questions</result>
+              <transaction-number>23020929555294</transaction-number>
+              <accounts-transaction-id>434343434</accounts-transaction-id>
+              <verbose-details>
+                <information arrayType="n1:information-type[0]" />
+                <error arrayType="n1:error-information-type[0]" />
+                <failed arrayType="n1:failed-information-type[0]" />
+                <passed arrayType="n1:passed-information-type[0]" />
+                <questions-detail arrayType="n1:questions-detail-information-type[1]">
+                  <questions-detail-information-type>
+                    <code>iauth.questions.set1</code>
+                    <simple-detail arrayType="n1:simple-detail-type[1]">
+                      <simple-detail-type>
+                        <text>Initial set of authentication questions</text>
+                      </simple-detail-type>
+                    </simple-detail>
+                    <complex-detail arrayType="n1:complex-detail-type[0]" />
+                  </questions-detail-information-type>
+                </questions-detail>
+              </verbose-details>
+              <questions>
+                <question-set-id>23020862175951</question-set-id>
+                <question arrayType="n1:question-type[4]">
+                  <question-type>
+                    <id>23022887614855</id>
+                    <answer-type href="#ID_22">single</answer-type>
+                    <text>Which of the following corporations have you ever been associated with?</text>
+                    <choice arrayType="n1:choice-type[5]">
+                      <choice-type>
+                        <id>23030814922699</id>
+                        <text>Bascom Balloons Etc</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922700</id>
+                        <text>Design Firm Llc The</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922701</id>
+                        <text>Metro Aerial Surveys Inc</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922702</id>
+                        <text>Omega Heater Co</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922703</id>
+                        <text>None of the above</text>
+                      </choice-type>
+                    </choice>
+                    <help-text>Corporation Names may contain slight misspellings.</help-text>
+                  </question-type>
+                  <question-type>
+                    <id>23022887614856</id>
+                    <answer-type href="#ID_22">single</answer-type>
+                    <text>Which of the following street addresses in 'Belen' have you ever lived at or been associated with?</text>
+                    <choice arrayType="n1:choice-type[5]">
+                      <choice-type>
+                        <id>23030814922704</id>
+                        <text>1037 Harrison Drive Northeast</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922705</id>
+                        <text>111 Edward Drive</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922706</id>
+                        <text>1808 Bryn Mawr Drive Northeast</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922707</id>
+                        <text>4909 Laurene Court Northwest</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922708</id>
+                        <text href="#ID_59">None of the above or I am not familiar with this property</text>
+                      </choice-type>
+                    </choice>
+                    <help-text href="#ID_60">The addresses listed may be partial, misspelled or contain minor numbering variations from your actual address</help-text>
+                  </question-type>
+                  <question-type>
+                    <id>23022887614857</id>
+                    <answer-type href="#ID_22">single</answer-type>
+                    <text>Which of the following addresses have you ever been associated with?</text>
+                    <choice arrayType="n1:choice-type[5]">
+                      <choice-type>
+                        <id>23030814922709</id>
+                        <text>2944 Cannon Court</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922710</id>
+                        <text>4119 Ridge Road</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922711</id>
+                        <text>592 East 2nd Avenue</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922712</id>
+                        <text>8079 Nighthawk Lane</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922713</id>
+                        <text>I have never been associated with any of these addresses</text>
+                      </choice-type>
+                    </choice>
+                    <help-text>The addresses listed may be partial, misspelled or contain minor numbering variations from your actual address</help-text>
+                  </question-type>
+                  <question-type>
+                    <id>23022887614858</id>
+                    <answer-type href="#ID_22">single</answer-type>
+                    <text>Which of the following street addresses in 'Farmington' have you ever lived at or been associated with?</text>
+                    <choice arrayType="n1:choice-type[5]">
+                      <choice-type>
+                        <id>23030814922714</id>
+                        <text>1611 East 22nd Street</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922715</id>
+                        <text>310 Pacific Avenue Southwest</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922716</id>
+                        <text>652 Galisteo Street</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922717</id>
+                        <text>8619 Casa Linda Court Northwest</text>
+                      </choice-type>
+                      <choice-type>
+                        <id>23030814922718</id>
+                        <text href="#ID_59">None of the above or I am not familiar with this property</text>
+                      </choice-type>
+                    </choice>
+                    <help-text href="#ID_60">The addresses listed may be partial, misspelled or contain minor numbering variations from your actual address</help-text>
+                  </question-type>
+                </question>
+              </questions>
+              <time>2018-7-3 11:26:56.145</time>
+            </transaction-response>
+          </transaction-response>
+        </authenticationTransactionResponse>
+      </VeridAuthentication>
+      <VeridMaint>
+        <PrimaryQuestionSet QuestionSetID="23020862175951" transaction-number="23020929555294">
+          <Question ChoiceID="23030814922701" QuestionID="23022887614855" />
+          <Question ChoiceID="23030814922705" QuestionID="23022887614856" />
+          <Question ChoiceID="23030814922710" QuestionID="23022887614857" />
+          <Question ChoiceID="23030814922716" QuestionID="23022887614858" />
+        </PrimaryQuestionSet>
+      </VeridMaint>
+      <VeridAuthentication>
+        <continueTransactionResponse>
+          <transaction-response>
+            <transaction-response>
+              <result>failed</result>
+              <transaction-number>23020929555294</transaction-number>
+              <accounts-transaction-id>434343434</accounts-transaction-id>
+              <verbose-details>
+                <information arrayType="n1:information-type[0]" />
+                <error arrayType="n1:error-information-type[0]" />
+                <failed arrayType="n1:failed-information-type[1]">
+                  <failed-information-type>
+                    <code>failed_iauth_questions</code>
+                    <simple-detail arrayType="n1:simple-detail-type[1]">
+                      <simple-detail-type>
+                        <text>The individual failed to correctly answer enough of the presented questions.</text>
+                      </simple-detail-type>
+                    </simple-detail>
+                    <complex-detail arrayType="n1:complex-detail-type[0]" />
+                  </failed-information-type>
+                </failed>
+                <passed arrayType="n1:passed-information-type[0]" />
+                <questions-detail arrayType="n1:questions-detail-information-type[0]" />
+              </verbose-details>
+              <questions />
+            </transaction-response>
+          </transaction-response>
+        </continueTransactionResponse>
+      </VeridAuthentication>
+      <CrossCore>
+        <JSON>
+          <clientResponsePayload>
+            <decisionElements>
+              <ArrayElementObject score="9013" decision="REF" decisionText="Refer" appReference="1383523795" serviceName="PreciseId" applicantId="APPLICANT_CONTACT_ID_1">
+                <scores>
+                  <ArrayElementObject score="9013" name="preciseIDScore" type="score" />
+                  <ArrayElementObject score="9013" name="validationScore" type="score" />
+                  <ArrayElementObject score="9013" name="verificationScore" type="score" />
+                  <ArrayElementObject score="9013" name="fpdScore" type="score" />
+                </scores>
+                <otherData>
+                  <json>
+                    <fraudSolutions>
+                      <response>
+                        <products>
+                          <preciseIDServer pidxmlversion="06.00" sessionID="A7YANZSE5XEHQDLG3UZFFJMI.preciseId9-1807311659210180372134743">
+                            <summary finalDecision="REF" transactionID="1383523795">
+                              <scores preciseIDScore="9013" fpdscore="9013" verificationScore="9013" validationScore="9013" complianceDescription="No Compliance Code">
+                                <reasons>
+                                  <reason>
+                                    <ArrayElementObject code="    " value="Not Supplied" />
+                                    <ArrayElementObject code="    " value="Not Supplied" />
+                                    <ArrayElementObject code="    " value="Not Supplied" />
+                                    <ArrayElementObject code="    " value="Not Supplied" />
+                                    <ArrayElementObject code="" value="" />
+                                  </reason>
+                                </reasons>
+                                <mostLikelyFraudType code="   " value="No Classification" />
+                              </scores>
+                            </summary>
+                            <fcraDetail>
+                              <fraudShield>
+                                <indicator>
+                                  <ArrayElementObject code="07" value="" />
+                                  <ArrayElementObject code="08" value="" />
+                                  <ArrayElementObject code="09" value="" />
+                                  <ArrayElementObject code="19" value="" />
+                                  <ArrayElementObject code="20" value="" />
+                                  <ArrayElementObject code="22" value="" />
+                                  <ArrayElementObject code="27" value="" />
+                                </indicator>
+                              </fraudShield>
+                            </fcraDetail>
+                            <glbDetail>
+                              <fraudShield>
+                                <indicator>
+                                  <ArrayElementObject code="01" value="" />
+                                  <ArrayElementObject code="02" value="" />
+                                  <ArrayElementObject code="03" value="" />
+                                  <ArrayElementObject code="04" value="" />
+                                  <ArrayElementObject code="05" value="" />
+                                  <ArrayElementObject code="06" value="" />
+                                  <ArrayElementObject code="10" value="" />
+                                  <ArrayElementObject code="11" value="" />
+                                  <ArrayElementObject code="13" value="" />
+                                  <ArrayElementObject code="14" value="" />
+                                  <ArrayElementObject code="15" value="" />
+                                  <ArrayElementObject code="16" value="" />
+                                  <ArrayElementObject code="17" value="" />
+                                  <ArrayElementObject code="18" value="" />
+                                  <ArrayElementObject code="21" value="" />
+                                  <ArrayElementObject code="25" value="" />
+                                  <ArrayElementObject code="26" value="" />
+                                </indicator>
+                              </fraudShield>
+                            </glbDetail>
+                            <header productOption="06" reportDate="07312018" referenceNumber="8451411-2018-7-31-15-59-21-150" subcode="1951428" reportTime="165922" />
+                          </preciseIDServer>
+                        </products>
+                      </response>
+                    </fraudSolutions>
+                  </json>
+                </otherData>
+                <decisions>
+                  <ArrayElementObject value="REF" element="finalDecision" />
+                  <ArrayElementObject value="N" element="kbaStatus" />
+                </decisions>
+              </ArrayElementObject>
+            </decisionElements>
+            <orchestrationDecisions />
+          </clientResponsePayload>
+          <responseHeader messageTime="2018-07-31T21:59:21Z" responseType="INFO" requestType="PreciseIdOnly" expRequestId="RB000257828640" tenantID="Y39NZM87" clientReferenceId="8451411-2018-7-31-15-59-21-150" responseMessage="Workflow Complete." responseCode="R0201">
+            <overallResponse>
+              <spareObjects />
+              <recommendedNextActions />
+              <decisionReasons />
+            </overallResponse>
+          </responseHeader>
+          <originalRequestData>
+            <application>
+              <applicants>
+                <ArrayElementObject applicantType="APPLICANT" contactId="APPLICANT_CONTACT_ID_1" />
+              </applicants>
+            </application>
+            <control>
+              <ArrayElementObject value="06.00" option="PIDXML_VERSION" />
+              <ArrayElementObject value="TNA1" option="SUBSCRIBER_PREAMBLE" />
+              <ArrayElementObject value="MB" option="SUBSCRIBER_OPERATOR_INITIAL" />
+              <ArrayElementObject value="1951428" option="SUBSCRIBER_SUB_CODE" />
+              <ArrayElementObject value="macprod" option="PID_USERNAME" />
+              <ArrayElementObject value="YWUyMTYxNDU4ZTExUw==" option="PID_PASSWORD" />
+              <ArrayElementObject value="Y" option="VERBOSE" />
+              <ArrayElementObject value="06" option="PRODUCT_OPTION" />
+              <ArrayElementObject value="D" option="DETAIL_REQUEST" />
+              <ArrayElementObject option="FREEZE_KEY_PIN" />
+            </control>
+            <contacts>
+              <ArrayElementObject id="APPLICANT_CONTACT_ID_1">
+                <emails>
+                  <ArrayElementObject id="MAIN_EMAIL_0" type="UNKNOWN" email="GEDEONE_GOODBOY@HOTMAIL.COM" />
+                </emails>
+                <addresses>
+                  <ArrayElementObject poBoxNumber="PO Box 1680" addressType="CURRENT" street="" buildingNumber="" id="Main_Contact_Address_0" postal="02539" postTown="EDGARTOWN" stateProvinceCode="MA" />
+                </addresses>
+                <person>
+                  <personDetails dateOfBirth="1984-05-12" />
+                  <names>
+                    <ArrayElementObject middleNames="A" firstName="GEDEONE" surName="DEOLIVEIRA" nameSuffix="" />
+                  </names>
+                </person>
+                <telephones>
+                  <ArrayElementObject number="" phoneIdentifier="HOME" id="Main_Phone_0" type="UNKNOWN" />
+                </telephones>
+                <identityDocuments>
+                  <ArrayElementObject documentType="SSN" documentNumber="783290872" />
+                </identityDocuments>
+              </ArrayElementObject>
+            </contacts>
+          </originalRequestData>
+        </JSON>
+      </CrossCore>
+      <CrossCore>
+        <JSON>
+          <clientResponsePayload>
+            <decisionElements>
+              <ArrayElementObject serviceName="Emailage" applicantId="1">
+                <dataCounts>
+                  <ArrayElementObject name="email.count" value="1" />
+                  <ArrayElementObject name="responseCount" value="1" />
+                  <ArrayElementObject name="totalhits" value="1" />
+                  <ArrayElementObject name="uniquehits" value="1" />
+                </dataCounts>
+                <scores>
+                  <ArrayElementObject score="92" name="EAScore" />
+                </scores>
+                <otherData>
+                  <response>
+                    <query firstname="LARRY" shipcountry="US" created="2018-08-08T16:23:52Z" shipaddress="101 1-2 DAVIS ST" count="1" responseCount="1" billaddress="101 1-2 DAVIS ST" billregion="CT" billpostal="06515" queryType="EmailAgeVerification" billcountry="US" lastname="BURTON" shipcity="NEW HAVEN" devicesource="experian" phone="" shippostal="06515" shipregion="CT" lang="en-US" email="LANEDELANO@GMAIL.COM" billcity="NEW HAVEN">
+                      <results>
+                        <ArrayElementObject country="" domaincountrymatch="No" domaincategory="Webmail" firstVerificationDate="2013-01-11T07:00:00Z" phone_status="" billriskcountry="No" EARiskBand="Fraud Score 1 to 100" emailAge="" source_industry="" domainrisklevel="Moderate" smfriends="" eName="" totalhits="1" domainname="gmail.com" EAReasonID="14" domainriskcountry="No" domainrisklevelID="3" dob="" first_seen_days="2034" status="Verified" shipforward="" gender="" domaincorporate="No" fraudRisk="092 Very Low" domainrelevantinfo="Valid Domain" uniquehits="1" title="" EAReason="Email Created at least  5.6  Years Ago" namematch="U" lastflaggedon="" domainExists="Yes" EAStatusID="2" EAAdviceID="3" company="" domaincompany="Google" domain_creation_days="" email="lanedelano@gmail.com" email_creation_days="" fraud_type="" EARiskBandID="1" emailExists="Yes" EAScore="92" userdefinedrecordid="38910-2018-8-8-10-23-50-194" domaincountryname="" imageurl="" location="" lastVerificationDate="2018-07-26T06:07:34Z" EAAdvice="Lower Fraud Risk" domainrelevantinfoID="509" domainAge="">
+                          <smlinks />
+                        </ArrayElementObject>
+                      </results>
+                    </query>
+                    <responseStatus errorCode="0" description="" status="success" />
+                  </response>
+                </otherData>
+                <decisions>
+                  <ArrayElementObject value="2" element="EAStatusID" />
+                  <ArrayElementObject reason="Email Created at least  5.6  Years Ago" value="14" element="EAReasonID" />
+                  <ArrayElementObject reason="Lower Fraud Risk" value="3" element="EAAdviceID" />
+                  <ArrayElementObject reason="Fraud Score 1 to 100" value="1" element="EARiskBand" />
+                  <ArrayElementObject value="No" element="domaincorporate" />
+                  <ArrayElementObject reason="Moderate" value="3" element="domainrisklevel" />
+                  <ArrayElementObject reason="Valid Domain" value="509" element="domainrelevantinfoID" />
+                  <ArrayElementObject value="" element="shipforward" />
+                  <ArrayElementObject value="" element="fraud_type" />
+                  <ArrayElementObject value="Yes" element="emailExists" />
+                  <ArrayElementObject value="Yes" element="domainExists" />
+                </decisions>
+                <matches>
+                  <ArrayElementObject name="fraudRisk" value="092 Very Low" />
+                </matches>
+              </ArrayElementObject>
+            </decisionElements>
+            <orchestrationDecisions>
+              <ArrayElementObject score="92" decision="CONTINUE" decisionText="CONTINUE" decisionTime="2018-08-08T16:23:53Z" nextAction="Continue" sequenceId="1" decisionSource="Emailage">
+                <decisionReasons>
+                  <ArrayElementString>CONTINUE - Emailage</ArrayElementString>
+                </decisionReasons>
+              </ArrayElementObject>
+            </orchestrationDecisions>
+          </clientResponsePayload>
+          <responseHeader messageTime="2018-08-08T16:23:50Z" responseType="INFO" requestType="EmailageOnly" expRequestId="RB000009980134" tenantID="Y39NZM87" clientReferenceId="38910-2018-8-8-10-23-50-194" responseMessage="Workflow Complete." responseCode="R0201">
+            <overallResponse decision="ACCEPT" decisionText="CONTINUE">
+              <spareObjects />
+              <recommendedNextActions />
+              <decisionReasons>
+                <ArrayElementString>CONTINUE - Emailage</ArrayElementString>
+              </decisionReasons>
+            </overallResponse>
+          </responseHeader>
+          <originalRequestData>
+            <application>
+              <applicants>
+                <ArrayElementObject applicantType="APPLICANT" contactId="MAINCONTACT_1" id="1" />
+              </applicants>
+            </application>
+            <device ipAddress="" />
+            <contacts>
+              <ArrayElementObject id="MAINCONTACT_1">
+                <emails>
+                  <ArrayElementObject email="LANEDELANO@GMAIL.COM" />
+                </emails>
+                <addresses>
+                  <ArrayElementObject addressType="CURRENT" countryCode="USA" street="DAVIS ST" buildingNumber="101 1-2" postal="06515" postTown="NEW HAVEN" stateProvinceCode="CT" />
+                </addresses>
+                <person personIdentifier="P1" typeOfPerson="APPLICANT">
+                  <names>
+                    <ArrayElementObject middleNames="" firstName="LARRY" surName="BURTON" />
+                  </names>
+                </person>
+                <telephones>
+                  <ArrayElementObject number="" />
+                </telephones>
+              </ArrayElementObject>
+            </contacts>
+          </originalRequestData>
+        </JSON>
+      </CrossCore>
+      <Experian>
+        <FraudSolutions>
+          <Response>
+            <Products>
+              <PreciseIDServer>
+                <PIDXMLVersion>06.00</PIDXMLVersion>
+                <SessionID>M4AZMDZN8F86NRLB2QQMDVEA.pidd2v-1809152212210210001621520</SessionID>
+                <Header>
+                  <ReportDate>09152018</ReportDate>
+                  <ReportTime>221221</ReportTime>
+                  <ProductOption>18</ProductOption>
+                  <Subcode>1951428</Subcode>
+                </Header>
+                <Messages>
+                  <Message>
+                    <Number>57</Number>
+                    <Text>0150</Text>
+                    <AddrMismatch>N</AddrMismatch>
+                  </Message>
+                </Messages>
+                <Summary>
+                  <TransactionID>34612978</TransactionID>
+                  <InitialDecision>R10</InitialDecision>
+                  <FinalDecision>R10</FinalDecision>
+                </Summary>
+                <KBA>
+                  <General>
+                    <SessionID>M4AZMDZN8F86NRLB2QQMDVEA.pidd2v-1809152212210210001621520</SessionID>
+                    <KBAResultCode>00</KBAResultCode>
+                    <KBAResultCodeDescription>KBA processing successful questions returned</KBAResultCodeDescription>
+                    <NumberOfQuestions>5</NumberOfQuestions>
+                  </General>
+                  <QuestionSet>
+                    <QuestionType>33</QuestionType>
+                    <QuestionText>Based on our records, you opened a mortgage around May 2016. Please select the dollar range of your total monthly mortgage payment.</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>$1000 - $1299</QuestionChoice>
+                      <QuestionChoice>$1300 - $1599</QuestionChoice>
+                      <QuestionChoice>$1600 - $1899</QuestionChoice>
+                      <QuestionChoice>$1900 - $2199</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>45</QuestionType>
+                    <QuestionText>Which of the following is the last four digits of your primary checking account number?</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>1785</QuestionChoice>
+                      <QuestionChoice>1794</QuestionChoice>
+                      <QuestionChoice>1803</QuestionChoice>
+                      <QuestionChoice>1812</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>9</QuestionType>
+                    <QuestionText>Based on our records, you previously lived on (CANTON). Please choose the city where this street is located.</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>BRIDGEPORT</QuestionChoice>
+                      <QuestionChoice>EASTON</QuestionChoice>
+                      <QuestionChoice>WEST HAVEN</QuestionChoice>
+                      <QuestionChoice>BETHANY</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>11</QuestionType>
+                    <QuestionText>Please select the state that issued your Social Security Number.</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>MO</QuestionChoice>
+                      <QuestionChoice>AL</QuestionChoice>
+                      <QuestionChoice>AR</QuestionChoice>
+                      <QuestionChoice>MN</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                  <QuestionSet>
+                    <QuestionType>7</QuestionType>
+                    <QuestionText>You currently or previously resided on which of the following streets?</QuestionText>
+                    <QuestionSelect>
+                      <QuestionChoice>MALLARD</QuestionChoice>
+                      <QuestionChoice>WOODCHUCK</QuestionChoice>
+                      <QuestionChoice>NAVAHO</QuestionChoice>
+                      <QuestionChoice>LL ANDERSON</QuestionChoice>
+                      <QuestionChoice>NONE OF THE ABOVE/DOES NOT APPLY</QuestionChoice>
+                    </QuestionSelect>
+                  </QuestionSet>
+                </KBA>
+              </PreciseIDServer>
+            </Products>
+          </Response>
+        </FraudSolutions>
+      </Experian>
+    </Reports>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079bb110cc68c26c" ID="MIDEP" Description="Applicants minimum initial deposit is insufficient." Timestamp="2016-7-18 16:8:22.759" Severity="93" Override="0" AllowOverride="0" />
+      <Rule guid="repoObj_0fc34edea_15f0da5b211_07ff215f0da5b211" ID="NODEP" Description="No Security Deposit Received On Application" Timestamp="2022-11-2 14:46:08.614" Severity="120" Override="0" AllowOverride="" />
+    </Rules>
+    <Traces />
+    <Messages />
+    <Audits>
+      <Audit Timestamp="Wed Feb 15 15:24:13 MST 2017" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/@fraud_ind" UserID="jharoldsen" Source="Webstation" Action="U" From="" To="S">
+        <From />
+        <To>S</To>
+      </Audit>
+      <Audit Timestamp="Wed Feb 15 15:24:28 MST 2017" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/app_product[1]/@pending_verif_ind" UserID="jharoldsen" Source="Webstation" Action="U" From="N" To="Y">
+        <From>N</From>
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Wed Feb 15 15:24:59 MST 2017" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/@fraud_ind" UserID="jharoldsen" Source="Webstation" Action="U" From="S" To="V">
+        <From>S</From>
+        <To>V</To>
+      </Audit>
+      <Audit Timestamp="Wed Feb 15 15:25:39 MST 2017" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/@fraud_ind" UserID="jharoldsen" Source="Webstation" Action="U" From="V" To="">
+        <From>V</From>
+        <To />
+      </Audit>
+      <Audit Timestamp="Wed Feb 15 15:30:43 MST 2017" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/@fraud_ind" UserID="jharoldsen" Source="Webstation" Action="U" From="" To="S">
+        <From />
+        <To>S</To>
+      </Audit>
+      <Audit Timestamp="Thu Apr 13 08:46:11 MDT 2017" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/comments[5]/@comment" UserID="jharoldsen" Source="Webstation" Action="U" From="" To="Test comment">
+        <From />
+        <To>Test comment</To>
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/@first_name" UserID="jharoldsen" Source="Webstation" Action="U" From="ROGER" To="LARRY">
+        <From>ROGER</From>
+        <To>LARRY</To>
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/@initials" UserID="jharoldsen" Source="Webstation" Action="U" From="D" To="">
+        <From>D</From>
+        <To />
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/@last_name" UserID="jharoldsen" Source="Webstation" Action="U" From="STANLEY" To="BURTON">
+        <From>STANLEY</From>
+        <To>BURTON</To>
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/@ssn" UserID="jharoldsen" Source="Webstation" Action="U" From="666542396" To="666389430">
+        <From>666542396</From>
+        <To>666389430</To>
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/contact_address[1]/@street_number" UserID="jharoldsen" Source="Webstation" Action="U" From="100" To="101 1-2">
+        <From>100</From>
+        <To>101 1-2</To>
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/contact_address[1]/@street_name" UserID="jharoldsen" Source="Webstation" Action="U" From="50TH ST SW" To="DAVIS ST">
+        <From>50TH ST SW</From>
+        <To>DAVIS ST</To>
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/contact_address[1]/@unit" UserID="jharoldsen" Source="Webstation" Action="U" From="125" To="">
+        <From>125</From>
+        <To />
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/contact_address[1]/@city" UserID="jharoldsen" Source="Webstation" Action="U" From="GRAND RAPIDS" To="NEW HAVEN">
+        <From>GRAND RAPIDS</From>
+        <To>NEW HAVEN</To>
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/contact_address[1]/@state" UserID="jharoldsen" Source="Webstation" Action="U" From="MI" To="CT">
+        <From>MI</From>
+        <To>CT</To>
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/contact_address[1]/@zip" UserID="jharoldsen" Source="Webstation" Action="U" From="49548" To="06515">
+        <From>49548</From>
+        <To>06515</To>
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/contact_address[1]/@home_phone" UserID="jharoldsen" Source="Webstation" Action="U" From="8152271188" To="">
+        <From>8152271188</From>
+        <To />
+      </Audit>
+      <Audit Timestamp="Wed Jul 25 23:42:37 MDT 2018" XPATH="Provenir[1]/Request[1]/CustData[1]/application[1]/contact[1]/@birth_date" UserID="jharoldsen" Source="Webstation" Action="U" From="12/09/1949" To="12/09/1937">
+        <From>12/09/1949</From>
+        <To>12/09/1937</To>
+      </Audit>
+    </Audits>
+    <Journals>
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-7-30 15:55:32.935" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-7-30 15:56:14.92" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-7-30 16:53:24.292" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-7-31 0:12:15.812" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-8-1 14:38:31.615" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-8-1 14:39:21.412" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-8-1 15:40:58.424" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-8-2 14:38:38.294" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-8-7 16:59:31.686" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-8-8 10:23:15.850" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-8-8 10:25:47.300" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-9-15 21:11:56.313" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-9-19 9:1:42.862" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jharoldsen" Timestamp="2018-9-19 9:7:4.827" Status="Opened" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2022-10-31 20:32:18.14" Status="false" />
+      <Journal Type="Process" ID="00025" Timestamp="2022-10-31 20:32:18.14" Status="Pass" />
+      <Journal Type="Process" ID="EDQAddressVerification" Timestamp="2022-10-31 20:32:18.14" Status="true" />
+      <Journal Type="Process" ID="00050" Timestamp="2022-10-31 20:32:18.30" Status="Fail" />
+      <Journal UserID="MAC" Type="DECLN" ID="38910" Timestamp="2022-11-2 14:46:08.614" Status="Fail" />
+      <Journal Type="Rule" ID="NODEP" Timestamp="2022-11-2 14:46:08.614" Status="true" />
+      <Journal Type="Process" ID="30000" Timestamp="2022-11-2 14:46:08.676" Status="Pass" />
+      <Journal Type="Process" ID="72000" Timestamp="2023-3-13 13:21:13.397" Status="Pass" />
+    </Journals>
+  </Request>
+</Provenir>

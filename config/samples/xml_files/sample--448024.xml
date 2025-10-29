@@ -1,0 +1,156 @@
+﻿<Provenir Org="" sessionID="" stack="" Version="" ProductType="" error="" x-trace-id="a813dbbe-e540-4e3b-8225-8101a92b731c" action="" app_source="API" transactionID="34931" errorCode="0" status="pass validation">
+  <Request ID="448024" UserID="" Workflow="" Timestamp="" Status="P" Trans="WEBAPP" Readonly="" Process="" Version="" Priority="" Timeout="" Trace="" LockedBy="" iovation_sessionid="8d2444a5-877d-430d-82bf-b15a07082ad2" iovation_blackbox="" triggerFinicity="N" triggerNova="N" triggerQA="Y" btcardtoken="" btresponsecode="">
+    <CustData>
+      <application app_type_code="PRODB" procs_date="" app_receive_date="2025-10-21 21:25:45.0" last_update_time="" signature_ind="Y" coupon_expiration_date="" name_match_flag="" address_match_flag="" ssn_match_flag="" pricing_tier="" solicitation_num="11255T24040T" pymnt_prot_plan_ind="" credit_life_ind="0" campaign_num="Z4K" app_entry_date="10/21/2025" swiftpay_num="" mail_cell_pricing="" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" app_channel="" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="3" CPS_letter_sent_flag="" population_assignment="" verification_source="" EODRet="" processing_expiration_date="" solicitation_locked="" secure_ach_amount="" IP_address="::1" EXPinNumber="" assignedTo="" updatedBy="" priority="" paperless_flag="false" sms_consent_flag="" esign_consent_flag="true">
+        <app_product decision_tp_c="" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="" prescreen_risk_score="" risk_model_score="" prescreen_risk_grade="" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="" bank_debt_to_income_ratio="" regb_start_date="" regb_end_date="" Risk_Model_reason4_tp_c="" complex_rev_ind="" booking_paused="" decision_score="" decision_model="" />
+        <contact con_id="753716" ac_role_tp_c="PR" title="" first_name="KEITH" initials="W" last_name="MCCLELLAN" suffix="" ssn="663462606" email="null" birth_date="08/18/1992" mother_maiden_name="Hi" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="" age="" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="" finicity_customer="" finicity_consumer="">
+          <app_prod_bcard card_id="" pd_tp_c="" card_name="" requested_credit_line="" allocated_credit_line="" accnt_type_ind="" card_decision_tp_c="" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="" />
+          <contact_address residence_monthly_pymnt="65.00" address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_unit="" po_box="" city="SUTHERLIN" rural_route="" state="OR" street_name="SW MILLER ST" street_number="135" unit="null" home_phone="4536456476" cell_phone="" address_line_1="" zip="97479" Patriot_Act_zip="" />
+          <contact_employment b_phone_no="" b_unit="" b_zip="" b_state="" b_street_name="" b_street_number="" b_salary="545665.0" b_city="" b_other_income_amt="0" b_name="" b_job_title_tp_c="" b_income_source_nontaxable="N" b_self_employed_ind="N" b_months_at_job="0" b_years_at_job="0" b_primary_income_source_tp_c="EMPLOY" b_salary_basis_tp_c="ANNUM" b_othr_inc_basis_tp_c="ANNUM" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="" campaign_number="" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="" primary_middle_name="" primary_last_name="" primary_suffix="" primary_ssn="" pri_cur_street_num="" pri_cur_street_name="" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="" pri_state="" pri_zip_code="" special_flag_5="" special_flag_6="" special_flag_7="" special_flag_8="" aaa_misc_field_4="" misc_field_6="" upc8="" upc9="" upc10="" upc12="" CB_prescreen_birth_date="" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" minimum_interest_charge="" account_setup_fee="" additional_card_fee="" late_payment_fee="" over_limit_fee="" returned_payment_fee="" apr="" annual_fee="" cash_advance_apr="" cash_advance_fee="" cash_advance_percent="" cash_apr_margin="" foreign_percent="" intro_cash_advance_apr="" intro_purchase_apr="" min_payment_fee="" min_payment_percent="" purchase_apr_margin="" seg_plan_version="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators />
+        <scores />
+        <analytics />
+        <communications />
+      </application>
+    </CustData>
+    <Reports>
+      <VeridAuthentication>
+        <authenticationTransactionResponse time="2025-10-21 21:26:11.619">
+          <JSON>
+            <Status ConversationId="50000902534375" ActionType="answers" RequestId="3211604775" Reference="448024" TransactionStatus="pending" />
+            <Products>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_velocity_preid" ProductType="Velocity" ProductStatus="pass" ExecutedStepName="pre_id_velocity">
+                <Items>
+                  <ArrayElementObject ItemStatus="pass" ItemName="TASK_SPOOFING" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="FUTILITY" />
+                </Items>
+              </ArrayElementObject>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_discovery" ProductType="Discovery" ProductStatus="pass" ExecutedStepName="discovery" />
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_velocity_postid" ProductType="Velocity" ProductStatus="pass" ExecutedStepName="post_id_velocity">
+                <Items>
+                  <ArrayElementObject ItemStatus="pass" ItemName="FREQUENCY" />
+                </Items>
+              </ArrayElementObject>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_verification" ProductType="Verification" ProductStatus="pass" ExecutedStepName="verification">
+                <Items>
+                  <ArrayElementObject ItemStatus="pass" ItemName="TaskAgeUnder18WillNotBeFoundCheck" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="TaskSsnDobCheck" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="LexIDDeathMatch" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="IpFlaggingCheck" />
+                  <ArrayElementObject ItemStatus="pass" ItemName="BlackListCheck" />
+                </Items>
+              </ArrayElementObject>
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_identity_events" ProductType="IdentityEvent" ProductStatus="pass" ExecutedStepName="identity_events" />
+              <ArrayElementObject ProductConfigurationName="customers.merrickbank.onlineapps_authentication" ProductType="IIDQA" ProductStatus="pending" ExecutedStepName="authentication">
+                <QuestionSet QuestionSetId="2693660517">
+                  <Questions>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4259968327" Key="5001">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12230699017">
+                          <Text Statement="Black" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699027">
+                          <Text Statement="Blue" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699037">
+                          <Text Statement="Brown" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699047">
+                          <Text Statement="Cream" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699057">
+                          <Text Statement="I have never been associated with this vehicle" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="May include vehicles which you recently sold or vehicles for which you co-signed" />
+                      <Text Statement="What color is your 2001 BMW 3 series?" />
+                    </ArrayElementObject>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4259968337" Key="30131">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12230699067">
+                          <Text Statement="Carle Place, New York" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699077">
+                          <Text Statement="Hollis, New York" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699087">
+                          <Text Statement="Jamaica, New York" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699097">
+                          <Text Statement="Prattsburgh, New York" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699107">
+                          <Text Statement="None of the above or I am not familiar with this person" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="Names may be listed as last-name first-name, include maiden names or contain slight misspellings." />
+                      <Text Statement="In which of the following cities does 'Gary Boniface' currently live or own property?" />
+                    </ArrayElementObject>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4259968347" Key="1031">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12230699117">
+                          <Text Statement="Garrett, Maryland" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699127">
+                          <Text Statement="Queen Anne's, Maryland" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699137">
+                          <Text Statement="St. Mary's, Maryland" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699147">
+                          <Text Statement="Washington, Maryland" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699157">
+                          <Text Statement="I have never lived in any of these counties" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="Valid answers may include a county of a property for which you are associated (i.e. a relative's home) at which you did not necessarily live or own the property" />
+                      <Text Statement="In which of the following counties have you ever lived or owned property?" />
+                    </ArrayElementObject>
+                    <ArrayElementObject Type="singlechoice" QuestionId="4259968357" Key="6015">
+                      <Choices>
+                        <ArrayElementObject ChoiceId="12230699167">
+                          <Text Statement="10 ft. Kevcon Corp 2085 Custom Fish" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699177">
+                          <Text Statement="10 ft. Leisure Properties Llc 255ss" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699187">
+                          <Text Statement="10 ft. Lund Boats Z16 Fxs" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699197">
+                          <Text Statement="10 ft. Tracker Marine Group L.p. Targa V20" />
+                        </ArrayElementObject>
+                        <ArrayElementObject ChoiceId="12230699207">
+                          <Text Statement="None of the above" />
+                        </ArrayElementObject>
+                      </Choices>
+                      <HelpText Statement="Select the watercraft you have been associated with." />
+                      <Text Statement="Which of the following boats or watercrafts have you owned?" />
+                    </ArrayElementObject>
+                  </Questions>
+                </QuestionSet>
+              </ArrayElementObject>
+            </Products>
+            <HTTPHeaders Status-Code="200" Transfer-Encoding="chunked" Status-Message="HTTP/1.1 200 OK" expires="0" Access-Control-Allow-Origin="*" X-Request-Id="986be6cc87a7e2a43a3c6781f2a4e3e6" Access-Control-Allow-Methods="GET, PUT, POST, DELETE, PATCH, OPTIONS" x-frame-options="DENY" Connection="keep-alive" Access-Control-Allow-Headers="DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization" strict-transport-security="max-age=31536000; includeSubDomains" pragma="no-cache" Date="Tue, 21 Oct 2025 21:25:48 GMT" x-content-type-options="nosniff" x-xss-protection="0" Access-Control-Allow-Credentials="true" Access-Control-Max-Age="1728000" cache-control="no-cache, no-store, max-age=0, must-revalidate" Content-Type="application/json" />
+          </JSON>
+        </authenticationTransactionResponse>
+      </VeridAuthentication>
+    </Reports>
+    <Messages />
+    <Rules />
+    <Journals />
+    <Traces />
+    <Audits />
+    <Documents />
+    <temp_app_variables />
+  </Request>
+</Provenir>

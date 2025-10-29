@@ -1,0 +1,419 @@
+﻿<Provenir Org="" sessionID="" stack="" Version="" ProductType="" message="eyAiYWdyZWVtZW50cyI6IHsgImNoZWNrYm94X3NlbmRfY2FyZF90b19wb19ib3giOiAiU2VuZCBteSBjYXJkIHRvIGEgUC5PLiBib3giLCAicGhvbmVfdHlwZSI6ICJQaG9uZSBudW1iZXIgdHlwZSIsICJjaGVja2JveF9ub25fdGF4YWJsZV9pbmNvbWUiOiAiQ2hlY2sgaWYgaW5jb21lIGlzIG5vbi10YXhhYmxlIiwgImNoZWNrYm94X2VzaWduIjogIkJ5IHN1Ym1pdHRpbmcgdGhpcyBhcHBsaWNhdGlvbiwgSSBjb25maXJtIHRoYXQgSSBoYXZlIHJlYWQgYW5kIGFncmVlIHRvIHRoZSB0ZXJtcyBzZXQgZm9ydGggaW4gdGhlIEUtU2lnbiBEaXNjbG9zdXJlLCBteSBjb21wdXRlciBzYXRpc2ZpZXMgdGhlIGhhcmR3YXJlIGFuZCBzb2Z0d2FyZSByZXF1aXJlbWVudHMgd2l0aGluIHRoZSBkaXNjbG9zdXJlLCBhbmQgSSBjYW4gYWNjZXNzIHRoaXMgU2FtcGxlIFBERi4gSW4gYWRkaXRpb24sIEkgZ2l2ZSBteSBhZmZpcm1hdGl2ZSBjb25zZW50IGZvciBNZXJyaWNrIEJhbmsgdG8gcHJvdmlkZSBtZSB3aXRoIHRoZSBlbGVjdHJvbmljIGNvbW11bmljYXRpb25zIGFzIGRlc2NyaWJlZCB3aXRoaW4gdGhlIGRpc2Nsb3N1cmUuIiwgInBhZ2VfMF9idXR0b25fTmV4dF9kaXNjbG9zdXJlIjogIiAiLCAicGFnZV8xX2J1dHRvbl9TdWJtaXQgYXBwbGljYXRpb25fZGlzY2xvc3VyZSI6ICIgIiwgImRpc3BsYXlfVGVybXNBbmRDb25kaXRpb25zTGluayI6ICJbRG93bmxvYWQgb3IgcHJpbnQgdGhlIFRlcm1zICYgQ29uZGl0aW9uc10oaHR0cHM6Ly93d3cubWVycmlja2JhbmsuY29tLy0vbWVkaWEvRmlsZXMvT25saW5lLVByaWNpbmcvU2NodW1lcl9Cb3hfQUEpIiwgIndlYnZpZXdfVGVybXNBbmRDb25kaXRpb25zIjogImh0dHBzOi8vd3d3Lm1lcnJpY2tiYW5rLmNvbS8tL21lZGlhL0ZpbGVzL09ubGluZS1QcmljaW5nL1NjaHVtZXJfQm94X0FBIiwgIndlYnZpZXdfRVNpZ25EaXNjbG9zdXJlIjogImh0dHBzOi8vd3d3Lm1lcnJpY2tiYW5rLmNvbS8tL21lZGlhL0ZpbGVzL0VzaWduIiwgImRpc3BsYXlfcGxlYXNlX25vdGUiOiAiUExFQVNFIE5PVEU6IENvbnNlbnRpbmcgdG8gcmVjZWl2ZSBDb21tdW5pY2F0aW9ucyB1bmRlciB0aGlzIEUtU2lnbiBEaXNjbG9zdXJlIHdpbGwgbm90IGF1dG9tYXRpY2FsbHkgZW5yb2xsIHlvdSBpbiBvdXIgUGFwZXJsZXNzIFN0YXRlbWVudHMgcHJvZ3JhbS4gWW91IG11c3QgY29tcGxldGUgYSBzZXBhcmF0ZSBvbmxpbmUgZW5yb2xsbWVudCB0byBzdG9wIHJlY2VpdmluZyBieSBVUyBNYWlsIHBhcGVyIGFjY291bnQgc3RhdGVtZW50cy4iLCAiZGlzcGxheV9zdWJtaXRfY29uc2VudCI6ICJCeSBjbGlja2luZyBTdWJtaXQsIHlvdSBjb25zZW50IHRvIE1lcnJpY2sgQmFuayBzaGFyaW5nIGluZm9ybWF0aW9uIHJlZ2FyZGluZyB0aGlzIGFwcGxpY2F0aW9uIGFuZCBpdHMgY3JlZGl0IGRlY2lzaW9uIHdpdGggQ3JlZGl0IEthcm1hLiBUaGUgaW5mbyB3aWxsIGJlIHVzZWQgdG8gZW5oYW5jZSBDcmVkaXQgS2FybWHDouKCrOKEonMgc2VydmljZXMsIGluc2lnaHRzIGFuZCByZWNvbW1lbmRhdGlvbnMgZm9yIHlvdS4iLCAiY2FyZERldGFpbHMiOiAiIyMjIyBfX0NhcmQgZGV0YWlsc19fLSBFYXN5IEFwcGx5IEJ1bGxldCAjMS0gRWFzeSBBcHBseSBCdWxsZXQgIzJbVGVybXMgJiBDb25kaXRpb25zXShodHRwczovL2NrLmFwcGx5LmNyZWRpdGthcm1hLmNvbS90ZXJtcykiIH0sICJhcHBsaWNhbnQiOiB7ICJtaWRkbGVfaW5pdGlhbCI6ICIiLCAiYWRkcmVzc19saW5lMiI6ICJBZGQgTGluZSAyIiwgImRhdGVfb2ZfYmlydGgiOiAiMTk4MC0xMi0zMSIsICJjYXJkX2FydCI6ICIxIiwgInNlbmRfY2FyZF90b19wb19ib3giOiAiIiwgIm5vbl90YXhhYmxlX2luY29tZSI6ICJ0cnVlIiwgImZpcnN0X25hbWUiOiAiRnJhbmNlcyIsICJsYXN0X25hbWUiOiAiQ2FzYWJvbmEiLCAiYWRkcmVzc19saW5lMSI6ICJQTyBCb3ggNDExIiwgImNpdHkiOiAiQWxwaW5lIiwgInN0YXRlIjogIlVUIiwgInBvc3RhbF9jb2RlIjogIjg0MDA0IiwgImVtYWlsIjogImVhLWZyYW5jZXNAY3JlZGl0a2FybWEuY29tIiwgInBob25lX251bWJlciI6ICIrMTYxMjcwMTExMTEiLCAicGhvbmVfdHlwZSI6ICJNT0JJTEUiLCAibW90aGVyX21haWRlbl9uYW1lIjogIk1vbSIsICJncm9zc19hbm51YWxfaW5jb21lIjogIjEwNzAwMCIsICJpbmNvbWVfdHlwZSI6ICJTQUxBUlkiLCAibW9udGhseV9tb3J0Z2FnZV9vcl9yZW50IjogIjIwMDAiLCAiZXNpZ24iOiAiWSIsICJzc24iOiAiNjY2MzIxMDEzIiB9LCAiZGlzcGxheSI6IHsgInN0YXRlIjogIk1pbm5lc290YSIsICJwaG9uZV9udW1iZXIiOiAiKDYxMik3MDEtMTExMSIsICJwaG9uZV90eXBlIjogIk1vYmlsZSIsICJub25fdGF4YWJsZV9pbmNvbWUiOiAiQ2hlY2sgaWYgaW5jb21lIGlzIG5vbi10YXhhYmxlIiwgImluY29tZV90eXBlIjogIkVtcGxveW1lbnQgd2FnZXMvc2FsYXJ5IiwgImVzaWduIjogIkJ5IHN1Ym1pdHRpbmcgdGhpcyBhcHBsaWNhdGlvbiwgSSBjb25maXJtIHRoYXQgSSBoYXZlIHJlYWQgYW5kIGFncmVlIHRvIHRoZSB0ZXJtcyBzZXQgZm9ydGggaW4gdGhlIEUtU2lnbiBEaXNjbG9zdXJlLCBteSBjb21wdXRlciBzYXRpc2ZpZXMgdGhlIGhhcmR3YXJlIGFuZCBzb2Z0d2FyZSByZXF1aXJlbWVudHMgd2l0aGluIHRoZSBkaXNjbG9zdXJlLCBhbmQgSSBjYW4gYWNjZXNzIHRoaXMgU2FtcGxlIFBERi4gSW4gYWRkaXRpb24sIEkgZ2l2ZSBteSBhZmZpcm1hdGl2ZSBjb25zZW50IGZvciBNZXJyaWNrIEJhbmsgdG8gcHJvdmlkZSBtZSB3aXRoIHRoZSBlbGVjdHJvbmljIGNvbW11bmljYXRpb25zIGFzIGRlc2NyaWJlZCB3aXRoaW4gdGhlIGRpc2Nsb3N1cmUuIiB9LCAiZm9ybWF0dGVkIjogeyAiZGF0ZV9vZl9iaXJ0aCI6ICIxMjMxMTk4MCIsICJwaG9uZV9udW1iZXIiOiAiNjEyNzAxMTExMSIsICJzc24iOiAiNjY2LTMyLTEwMTMiLCAiYWRkcmVzcyI6ICIxNDYwMCAzNHRoIFNUIiB9LCAibWV0YWRhdGEiOiB7ICJjb250ZW50SWQiOiAiQ0NNZXJyaWNrQmFuazEzMDIiLCAiYXBwbGllZF9kYXRlIjogIjIwMjAtMDYtMTYiLCAiYXBwbGllZF90aW1lc3RhbXAiOiAiMTU5MjM0MDIwNjAwMCIsICJpcF9hZGRyZXNzIjogIjEyNy4wLjAuMSIsICJ1c2VyX2FnZW50IjogIk1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE0XzYpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS84My4wLjQxMDMuNjEgU2FmYXJpLzUzNy4zNiIsICJyZXZlbnVlX2lkIjogIjEyMzQ1Njc4OSIsICJzdXJldHkiOiAiTEJfUEEiIH0sICJwcm9kdWN0IjogeyJQcm9kdWN0Q29kZSIgOiAiVUZEWTI2TjEyTCJ9LCAiTGlua0lEIjogIlVOU0VDVVJFRF9VREFBTDZOMTFMX0xCX0VBX1BBIiwgImFwcGxpY2F0aW9uX2lkIjogIjFjYWIxYjk0LTE5NTctNDYwNy05ZTdkLWFjYjRkYThlODVmNiJ9fQ==" transactionID="DE0778c7e0_17911c43232_07ff117911e5e40b_0a147650.26">
+  <Request ID="351785" UserID="" Workflow="1" Timestamp="" Status="" Trans="CKAPP" Readonly="" Process="01000" Version="" Priority="" Timeout="" Trace="" LockedBy="" transactionCounter="2">
+    <CustData>
+      <application app_type_code="PRODB" procs_date="2020-6-17 10:47:13.288" app_receive_date="4/2/2020 5:53:20 AM" last_update_time="" signature_ind="" coupon_expiration_date="" name_match_flag="" address_match_flag="" ssn_match_flag="" pricing_tier="59" solicitation_num="" pymnt_prot_plan_ind="" credit_life_ind="" campaign_num="U2FL" app_entry_date="" swiftpay_num="" mail_cell_pricing="UFDY26N12L" existing_card_account_num="" Partner_URL_ID="" app_source_ind="I" TUAccessCode="" Debit_Initial_Deposit_date="" Debit_Initial_Deposit_amount="" Debit_NSF_Return_date="" Debit_Refund_amount="" Debit_Refund_date="" Debit_Funding_Source="" special_offer="1" CPS_letter_sent_flag="" population_assignment="" verification_source="" EODRet="WEBAPP" processing_expiration_date="" solicitation_locked="" secure_ach_amount="" IP_address="127.0.0.1" EXPinNumber="" signiture_ind="N">
+        <app_product decision_tp_c="NONE" decision_date="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" Risk_Model_reason1_tp_c="" Risk_Model_reason2_tp_c="" adverse_actn1_type_cd="" adverse_actn2_type_cd="" adverse_actn3_type_cd="" adverse_actn4_type_cd="" intrnl_fraud_ssn_ind="" intrnl_fraud_address_ind="" duplicate_app_ind="" debt_to_income_ratio="" booked_date="" multran_booked_date="" supervisor_rev_ind="Y" analyst_rev_ind="" regbcloseddays_num="" regbcloseddays2_num="" regbnewinfostartdate="" pending_verif_ind="" csi_eligibility_ind="" monthly_debt="" monthly_income="" precision_score="" experian_fico_score="" prescreen_fico_score="" prescreen_risk_score="" risk_model_score="" prescreen_risk_grade="" prescreen_fico_grade="" backend_risk_grade="" backend_fico_grade="" Vantage_Score_TU="" Vantage_Score_EX="" risk_model_score_JH="" Risk_Model_reason3_tp_c="" risk_model_score_LP="" TU_DIE_score="" TU_TIE_score="" classic_08_score="" adverse_actn5_type_cd="" risk_model_score_JB="" VeridQA_Result="" InstantID_Score="" disclosures="" EX_FICO_08_score="" EX_EVS_score="" EX_TIE_score="" EX_DIE_score="" TU_L2C_score="" GIACT_Response="" TU_FICO_09_Score="" fraud_rev_ind="" />
+        <contact con_id="519070" ac_role_tp_c="PR" title="" first_name="Frances" initials="" last_name="Casabona" suffix="" ssn="666321013" email="ea-frances@creditkarma.com" birth_date="12/31/1980" mother_maiden_name="Mom" CPS_Spouse_Name="" CPS_Spouse_Address1="" CPS_Spouse_City="" CPS_Spouse_State="" CPS_Spouse_Zipcode="" ssn_last_4="1013" age="" fraud_ind="" banking_accounts_held="" banking_aba="" banking_account_number="" banking_account_type="">
+          <app_prod_bcard card_id="" pd_tp_c="U2FL" card_name="" requested_credit_line="" allocated_credit_line="700" accnt_type_ind="" card_decision_tp_c="NODEC" issue_card_ind="" account_number="" multran_account_number="" accnt_seq_no="" multran_accnt_seq_no="" sys_prin="" agent="" accnt_bin="" multran_accnt_bin="" seq_check="" analyst_approved_line="" min_pay_due="" credit_line2="700" />
+          <contact_address address_tp_c="CURR" Patriot_Act_address_line_1="" Patriot_Act_city="" Patriot_Act_rural_route="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_street_suffix="" Patriot_Act_street_tp_c="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" residence_monthly_pymnt="2000" rural_route="" state="" street_name="" street_number="" unit="" home_phone="" months_at_residence="" address_line_1="PO Box 411 #Add Line 2 Alpine, UT 84004" cell_phone="16127011111" city="" zip="" years_at_residence="" />
+          <contact_employment employment_tp_c="CURR" b_salary="107000" b_salary_basis_tp_c="ANNUM" b_income_source_nontaxable="Y" />
+        </contact>
+        <demographics employment_status="" employer_name="" checking_savings_account="" housing_type="" cash_advances="" />
+        <letters seq_no="" letter_type_cd="" date_sent="" dec_reason_c_1="" dec_reason_c_2="" dec_reason_c_3="" dec_reason_c_4="" letter_sent_ind="" cb_score_suppress="" cb_disclosure_suppress="" />
+        <rmts_info merrick_appl_number="" transmission_date="2020-6-17 10:47:12.812" campaign_number="" name_match_flag="" ssn_match_flag="" address_match_flag="" primary_first_name="" primary_middle_name="" primary_last_name="" primary_suffix="" primary_ssn="" pri_cur_street_num="" pri_cur_street_name="" pri_apt_number="" pri_rural_rt_num="" pri_po_box_num="" pri_city="" pri_state="" pri_zip_code="" special_flag_5="K" special_flag_6="E" special_flag_7="A" special_flag_8="A" aaa_misc_field_4="" misc_field_6="" upc8="" upc9="" upc10="" upc12="" CB_prescreen_birth_date="" auth_user_is_spouse="" medical_dental_expenses="" childcare_support_expenses="" other_expenses="" fin_problem_reasons="" existing_balance="" />
+        <TempVariables TempOriginalWorkFlow="" TempOriginalProcess="" TempOriginalStatus="" gnCreditLimit="" gnLettersCount="" gsCSIFile="" lnLetterCount="" LettersFileName="" gsSystemNumber="" gsPrinNumber="" SysPrinAccountCount="" Benifit_id="" gsCardholderFile="" TempOriginalAppTypeCode="" Env_c="1" />
+        <user_profile user_id="" security_lvl="" employee_name="" tree_determinate="" queue_determinate="" search_determinate="" credit_determinate="">
+          <user_security security_lvl="" security_type="" credit_limit="" />
+        </user_profile>
+        <Indicators>
+          <Indicator ID="LB_Prescreen" value="DY" />
+        </Indicators>
+        <scores />
+        <analytics>
+          <analytic analytic_id="surety" value="LB_PA" />
+          <analytic analytic_id="revenue_id" value="123456789" />
+          <analytic analytic_id="application_id" value="1cab1b94-1957-4607-9e7d-acb4da8e85f6" />
+        </analytics>
+        <comments comment_seq_number="1" comment="Application not decisioned within 15 days.  Referred to Supervisor." user_id="System" time_stamp="2023-2-15 15:00:43.793" />
+      </application>
+    </CustData>
+    <Reports>
+      <EDQ>
+        <output>
+          <QASearchResult VerifyLevel="InteractionRequired">
+            <QAAddress DPVStatus="DPVNotConfirmed">
+              <AddressLine>
+                <Label>Building/Firm Name</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Urbanization</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole Street Name</Label>
+                <Line>S Alpine Blvd</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole Submitted Street Name</Label>
+                <Line>S Alpine Blvd</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Primary Number</Label>
+                <Line>2</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Street (Pre-directional)</Label>
+                <Line>S</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Street (Name)</Label>
+                <Line>Alpine</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Street (Descriptor)</Label>
+                <Line>Blvd</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Street (Post-directional)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole RR/HC</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>RR/HC (Type)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>RR/HC (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole Box Number</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Box Number (Text)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Box Number (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole Secondary Number</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Secondary Number (Type)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Secondary Number (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PO Box</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PO Box (Text)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PO Box (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>General Delivery</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Whole PMB</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PMB (Text)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>PMB (Number)</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>City Name</Label>
+                <Line>Alpine</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Submitted City Name</Label>
+                <Line>Alpine</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>State Code</Label>
+                <Line>UT</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>State Name</Label>
+                <Line>Utah</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Zip+4 Code</Label>
+                <Line>84004-1221</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>ZIP Code</Label>
+                <Line>84004</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>+4 Code</Label>
+                <Line>1221</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>County Name</Label>
+                <Line>Utah</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Country</Label>
+                <Line>United States of America</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Two Character ISO Country Code</Label>
+                <Line>US</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Three character ISO country code</Label>
+                <Line>USA</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Retained Sub-premise</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Retained 'Care of' Form</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine>
+                <Label>Retained Pre-street Info</Label>
+                <Line>PO Box 411 #Add Line</Line>
+              </AddressLine>
+              <AddressLine>
+                <Label>Retained Post-street Info</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>TIGER Latitude</Label>
+                <Line>40.453419</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>TIGER Longitude</Label>
+                <Line>-111.763837</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>TIGER Match Level</Label>
+                <Line>Four</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>County Code</Label>
+                <Line>049</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Record Type</Label>
+                <Line>S</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Carrier Route</Label>
+                <Line>R005</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Census Tract</Label>
+                <Line>0102</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Congressional District No</Label>
+                <Line>03</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>CMRA Confirmation Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV Seed Ind</Label>
+                <Line>N</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV Confirmation Ind</Label>
+                <Line>N</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV Footnotes</Label>
+                <Line>AAM3</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV Vacant Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPV No-Stat Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>PBSA Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>EWS Ind</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Delivery Point Barcode (DPBC)</Label>
+                <Line>/840041221026/</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>DPC</Label>
+                <Line>02</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Check Digit</Label>
+                <Line>6</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Building/Firm Name Added or Changed</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Primary Number Added or Changed</Label>
+                <Line>1</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Urbanization Added or Changed</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Street Non-trivially Corrected</Label>
+                <Line>1</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Rural Route/Highway Contract Matched</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>City Name Added or Changed</Label>
+                <Line>1</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>City Name Alias Matched</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>State Added or Changed</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>5-digit ZIP Code Added or Corrected</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>+4 Code Added to ZIP or Corrected</Label>
+                <Line>1</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Secondary Number Retained</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Identifiable Pre-Street Information Retained</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>General Pre-Street Information Retained</Label>
+                <Line>1</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>Post-Street Information Retained</Label>
+                <Line>0</Line>
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>LACS Link Indicator</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>LACS Link Return Code</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>SuiteLink Indicator</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>SuiteLink Return Code</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA New Address</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA Move Status</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA Move Type</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA Move Date</Label>
+                <Line />
+              </AddressLine>
+              <AddressLine LineContent="DataPlus">
+                <Label>NCOA Match Code</Label>
+                <Line />
+              </AddressLine>
+            </QAAddress>
+            <VerificationFlags>
+              <PrimaryNumberChanged>true</PrimaryNumberChanged>
+              <StreetCorrected>true</StreetCorrected>
+              <CityNameChanged>true</CityNameChanged>
+              <PostCodeCorrected>true</PostCodeCorrected>
+              <GenPreStInfoRetained>true</GenPreStInfoRetained>
+            </VerificationFlags>
+          </QASearchResult>
+        </output>
+      </EDQ>
+    </Reports>
+    <Messages>
+      <Message Timestamp="2021-4-27 0:41:37.127" Source="WebService.Outsystems.BankCard POST Application.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+      <Message Timestamp="2021-4-27 0:41:37.134" Source="WebService.Outsystems.BankCard POST Application" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+      <Message Timestamp="2021-4-27 0:41:37.140" Source="Batch Load Outsystems" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+      <Message Timestamp="2021-4-27 0:41:37.141" Source="TransactionManager" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_0eae199ad_1646bf093e4_07fda1646bf093e4" ID="NMADD" Description="Applicant-entered address does not return EDQ match and cannot be parsed" Timestamp="2020-6-17 10:47:12.794" Severity="100" Override="0" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079ad110cc68c27a" ID="PAMAI" Description="Primary applicants address missing street number and PO Box." Timestamp="2020-6-17 10:47:13.505" Severity="0" Override="0" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079f1110cc68c236" ID="PAMCT" Description="Primary applicant is missing city." Timestamp="2020-6-17 10:47:13.526" Severity="0" Override="0" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07a31110cc68c1f6" ID="PAMST" Description="Primary applicant is missing state." Timestamp="2020-6-17 10:47:13.561" Severity="0" Override="0" AllowOverride="1" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079d3110cc68c254" ID="PAMZP" Description="Primary applicant is missing zip code." Timestamp="2020-6-17 10:47:13.566" Severity="0" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="NMADD" Timestamp="2020-6-17 10:47:12.794" Status="true" />
+      <Journal Type="Script" ID="ProcStart" Timestamp="2020-6-17 10:47:12.814" Status="Start" />
+      <Journal Type="Process" ID="PSHRD" Timestamp="Wed Jun 17 10:47:13 MDT 2020" Status="Pass" />
+      <Journal Type="Process" ID="00095" Timestamp="Wed Jun 17 10:47:13 MDT 2020" Status="Pass" />
+      <Journal Type="Process" ID="00098" Timestamp="Wed Jun 17 10:47:13 MDT 2020" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2020-6-17 10:47:13.476" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="Wed Jun 17 10:47:13 MDT 2020" Status="Pass" />
+      <Journal Type="Process" ID="00500" Timestamp="Wed Jun 17 10:47:13 MDT 2020" Status="Pass" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2020-6-17 10:47:13.499" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2020-6-17 10:47:13.505" Status="true" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2020-6-17 10:47:13.526" Status="true" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2020-6-17 10:47:13.558" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2020-6-17 10:47:13.561" Status="true" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2020-6-17 10:47:13.566" Status="true" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2020-6-17 10:47:13.572" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2020-6-17 10:47:13.697" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2020-6-17 10:47:13.702" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2020-6-17 10:47:13.705" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2020-6-17 10:47:13.710" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2020-6-17 10:47:13.868" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2020-6-17 10:47:13.896" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2020-6-17 10:47:13.912" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="Wed Jun 17 10:47:13 MDT 2020" Status="Fail" />
+    </Journals>
+    <Traces />
+    <Audits />
+  </Request>
+  <Provenir tid="DE0778c7e0_17911c43232_07ff117911e5e40b_0a147650.25" ts="Tue Apr 27 00:42:17 MDT 2021" version="8.5" mem="303197336" jmx="provenir/de:server=uatmacapp01(7677),group=VTS,instance=MAC_UAT.Merrick.jharoldsen" outsize="21825" totalelapsed="125.824862" aid="354169">
+    <Trace ID="JDBC.MSSQL.LoadApp" guid="repoObj_358e0826_15d3c6dce88_07fe815d3c6dce88" nodeType="load" type="onExit" thread="102" value="true" elapsed="93.227998" />
+  </Provenir>
+</Provenir>

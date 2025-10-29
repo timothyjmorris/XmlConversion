@@ -1,0 +1,81 @@
+﻿<Provenir transactionID="DE02db51c3_1982e0a0ab3_07ffd1982e0c4451_0a5b0f0c.5" Org="" appType="CC" shred_version="1.0">
+  <Request Trans="IMPORT" ID="447605" LockedBy="" Priority="" Process="30000" Readonly="0" Status="D" Timeout="" Timestamp="" Trace="" UserID="" Version="" Workflow="1" useAlloyService="1" _LockedBy="" LockedAt="">
+    <CustData>
+      <application address_match_flag="Y" app_entry_date="07/22/2025" app_receive_date="2025-07-22 21:01:34.762" app_source_ind="M" app_type_code="PRODB" campaign_num="Z3G" coupon_expiration_date="08/20/2025" existing_card_account_num="" mail_cell_pricing="ZHAABX1203" name_match_flag="Y" Partner_URL_ID="" population_assignment="SB" pymnt_prot_plan_ind="" signature_ind="Y" solicitation_num="08255T37235T" special_offer="1" ssn_match_flag="N" swiftpay_num="" coupon_exp_date="" existing_card_account_number="" EODRet="IMPORT" procs_date="2025-07-22 21:01:34.907" processing_expiration_date="08/25/2025" pricing_tier="59">
+        <user_profile credit_determinate="" />
+        <TempVariables Benifit_id="" Env_c="1" />
+        <rmts_info address_match_flag="Y" auth_user_is_spouse="" campaign_number="Z3H" CB_prescreen_birth_date="05/10/1978" merrick_appl_number="08255T37235T" misc_field_6="08255T37235T" name_match_flag="" pri_apt_number="303" pri_city="WASHINGTON" pri_cur_street_name="GEORGIA AVE NW" ssn_match_flag="" special_flag_8="A" special_flag_7="A" special_flag_6="A" special_flag_5="R" primary_suffix="" primary_ssn="66655827" primary_middle_name="" primary_last_name="JONES" primary_first_name="ROGER" pri_zip_code="20012" pri_state="DC" pri_rural_rt_num="" pri_po_box_num="" pri_cur_street_num="6632" pri_apt_num="" pri_rural_route_number="" pri_po_box_number="" upc10="685" upc8="703" transmission_date="2025-07-22 21:01:35.093" annual_fee="0" account_setup_fee="0" additional_card_fee="0" minimum_interest_charge="0" over_limit_fee="0" returned_payment_fee="0" foreign_percent="0" cash_advance_apr="35.00" late_payment_fee="40" apr="34.70" purchase_apr_margin="27.20" intro_purchase_apr="0.09506" intro_cash_advance_apr="0.09589" cash_apr_margin="32.20" cash_advance_percent="4" cash_advance_fee="10" min_payment_fee="35" min_payment_percent="1.00" />
+        <demographics cash_advances="" checking_savings_account="" employer_name="" employment_status="" housing_type="" />
+        <app_product adverse_actn1_type_cd="" regb_start_date="2025-7-22 21:1:34.0" regb_end_date="2025-07-22" duplicate_app_ind="N" prescreen_fico_score="685" prescreen_risk_grade="A" prescreen_risk_score="384" decision_tp_c="DECNC" VeridQA_Result="" decision_date="2025-07-22 21:01:35.740" pending_verif_ind="N" supervisor_rev_ind="N" analyst_rev_ind="N" />
+        <contact ac_role_tp_c="PR" email="JORDAN.GAGE@MERRICKBANK.COM" first_name="ROGER" initials="" last_name="JONES" ssn="666352899" suffix="" title="" birth_date="02/10/1978" mother_maiden_name="TEST" con_id="753371" age="47">
+          <app_prod_bcard pd_tp_c="Z3G" requested_credit_line="" allocated_credit_line="3000" credit_line2="3000" max_line="3000" card_decision_tp_c="DECNC" />
+          <contact_address address_tp_c="CURR" cell_phone="8014545454" city="FULTON" home_phone="" months_at_residence="0" ownership_tp_c="" Patriot_Act_city="" Patriot_Act_state="" Patriot_Act_street_name="" Patriot_Act_street_number="" Patriot_Act_unit="" Patriot_Act_zip="" po_box="" residence_monthly_pymnt="450" rural_route="" state="MO" street_name="E SAINT EUNICE RD" street_number="408" unit="" zip="65251" years_at_residence="0" />
+          <contact_employment b_city="" b_income_source_nontaxable="" b_job_title_tp_c="" b_months_at_job="0" b_name="" b_other_income_amt="" b_other_income_source_tp_c="" b_othr_inc_basis_tp_c="ANNUM" b_phone_no="" b_phone_no_ext="" b_salary="180000" b_salary_basis_tp_c="ANNUM" b_self_employed_ind="N" b_state="" b_street_name="" b_street_number="" b_zip="" employment_tp_c="CURR" b_phone_ext="" b_years_at_job="0" b_primary_income_source_tp_c="" />
+        </contact>
+        <Indicators>
+          <Indicator ID="CreditBureauPulled" value="0" />
+          <Indicator ID="InternetResponsesOn" value="Y" />
+          <Indicator ID="AppStageLine" value="1" />
+        </Indicators>
+        <communications>
+          <communication comm_id="14990" bureau_id="" bureau_score="" bureau_score_date="" letter_type_code="980" reason_type_1="CC" reason_type_2="" reason_type_3="" reason_type_4="" reason_code_1="102" reason_code_2="" reason_code_3="" reason_code_4="" reason_text_1="THIS OFFER WAS MADE TO A SELECTED INDIVIDUAL AND IS NON-TRANSFERABLE" reason_text_2="" reason_text_3="" reason_text_4="" score_factor_code_1="" score_factor_code_2="" score_factor_code_3="" score_factor_code_4="" score_factor_code_5="" score_factor_text_1="" score_factor_text_2="" score_factor_text_3="" score_factor_text_4="" score_factor_text_5="" bureau_no_disclosure_flag="true" bureau_no_score_flag="true" temp_hold_flag="false">
+            <deliveries>
+              <delivery delivery_id="14842" delivery_method="letter" sent_date="" response_date="" response_detail="" />
+            </deliveries>
+          </communication>
+        </communications>
+      </application>
+    </CustData>
+    <Reports />
+    <Audits />
+    <Journals>
+      <Journal Type="Process" ID="PSHRD" Timestamp="2025-07-22 21:01:34.907" Status="Pass" />
+      <Journal Type="Rule" ID="DUPSN" Timestamp="2025-07-22 21:01:35.003" Status="false" />
+      <Journal Type="Process" ID="00095" Timestamp="2025-07-22 21:01:35.003" Status="Pass" />
+      <Journal Type="Rule" ID="APEXP" Timestamp="2025-07-22 21:01:35.018" Status="false" />
+      <Journal Type="Process" ID="00098" Timestamp="2025-07-22 21:01:35.019" Status="Pass" />
+      <Journal Type="Rule" ID="ZIPIN" Timestamp="2025-07-22 21:01:35.336" Status="false" />
+      <Journal Type="Process" ID="00100" Timestamp="2025-07-22 21:01:35.337" Status="Pass" />
+      <Journal Type="Rule" ID="MMPINFO" Timestamp="2025-07-22 21:01:35.347" Status="false" />
+      <Journal Type="Process" ID="00500" Timestamp="2025-07-22 21:01:35.348" Status="Pass" />
+      <Journal Type="Rule" ID="APNMS" Timestamp="2025-07-22 21:01:35.364" Status="false" />
+      <Journal Type="Rule" ID="NMEMM" Timestamp="2025-07-22 21:01:35.369" Status="false" />
+      <Journal Type="Rule" ID="SSNIN" Timestamp="2025-07-22 21:01:35.374" Status="false" />
+      <Journal Type="Rule" ID="PAMAI" Timestamp="2025-07-22 21:01:35.379" Status="false" />
+      <Journal Type="Rule" ID="PAMCT" Timestamp="2025-07-22 21:01:35.385" Status="false" />
+      <Journal Type="Rule" ID="PAMHN" Timestamp="2025-07-22 21:01:35.390" Status="false" />
+      <Journal Type="Rule" ID="PAMST" Timestamp="2025-07-22 21:01:35.395" Status="false" />
+      <Journal Type="Rule" ID="PAMZP" Timestamp="2025-07-22 21:01:35.400" Status="false" />
+      <Journal Type="Rule" ID="PAPBN" Timestamp="2025-07-22 21:01:35.405" Status="false" />
+      <Journal Type="Rule" ID="PARRO" Timestamp="2025-07-22 21:01:35.410" Status="false" />
+      <Journal Type="Rule" ID="SSNRV" Timestamp="2025-07-22 21:01:35.415" Status="false" />
+      <Journal Type="Rule" ID="PAILN" Timestamp="2025-07-22 21:01:35.419" Status="false" />
+      <Journal Type="Rule" ID="PAIFN" Timestamp="2025-07-22 21:01:35.426" Status="false" />
+      <Journal Type="Rule" ID="PANBY" Timestamp="2025-07-22 21:01:35.433" Status="false" />
+      <Journal Type="Rule" ID="APPGENDEL" Timestamp="2025-07-22 21:01:35.439" Status="false" />
+      <Journal Type="Process" ID="01000" Timestamp="2025-07-22 21:01:35.440" Status="Pass" />
+      <Journal Type="Process" ID="ID Vision" Timestamp="2025-07-22 21:01:35.450" Status="bypassed" />
+      <Journal Type="Rule" ID="PAMNA" Timestamp="2025-07-22 21:01:35.461" Status="false" />
+      <Journal Type="Rule" ID="PAOMA" Timestamp="2025-07-22 21:01:35.466" Status="false" />
+      <Journal Type="Rule" ID="SSNMM" Timestamp="2025-07-22 21:01:35.470" Status="true" />
+      <Journal Type="Rule" ID="PMACI" Timestamp="2025-07-22 21:01:35.656" Status="bypassed" />
+      <Journal Type="Rule" ID="INCZERO" Timestamp="2025-07-22 21:01:35.661" Status="false" />
+      <Journal Type="Rule" ID="MBPCO" Timestamp="2025-07-22 21:01:35.671" Status="false" />
+      <Journal Type="Rule" ID="EMPCW" Timestamp="2025-07-22 21:01:35.691" Status="false" />
+      <Journal Type="Rule" ID="DUPSS" Timestamp="2025-07-22 21:01:35.696" Status="bypassed" />
+      <Journal Type="Process" ID="02000" Timestamp="2025-07-22 21:01:35.719" Status="Fail" />
+      <Journal Type="Process" ID="QA Decline Review" Timestamp="2025-07-22 21:01:35.728" Status="Pass" />
+      <Journal Type="Process" ID="30000" Timestamp="2025-07-22 21:01:35.874" Status="Pass" />
+      <Journal UserID="DAVID.JENSEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-07-22 21:03:12.933" Status="Opened" />
+    </Journals>
+    <Messages>
+      <Message Timestamp="Tue Jul 22 21:01:34 UTC 2025" Source="SetValue" Number="199" Description="XPATH not found:/Provenir/Request/CustData/application/esign_consent_flag" />
+      <Message Timestamp="Tue Jul 22 21:01:34 UTC 2025" Source="SetValue" Number="199" Description="XPATH not found:/Provenir/Request/CustData/application/sms_consent_flag" />
+      <Message Timestamp="Tue Jul 22 21:01:34 UTC 2025" Source="SetValue" Number="199" Description="XPATH not found:/Provenir/Request/CustData/application/paperless_flag" />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079c5110cc68c262" ID="SSNMM" Description="SSN reported versus solicited SSN mismatch indicator." Timestamp="2025-07-22 21:01:35.470" Severity="78" Override="0" AllowOverride="1" />
+    </Rules>
+    <TriggeredRules />
+  </Request>
+</Provenir>
