@@ -1,0 +1,11 @@
+{
+  "median_rec_per_min": 0.0,
+  "mean_rec_per_min": 0.0,
+  "stdev_rec_per_min": 0.0,
+  "min_rec_per_min": 0.0,
+  "max_rec_per_min": 0.0,
+  "median_time_seconds": 0.4095052480697632,
+  "stdev_time_seconds": 0.09878252750210663,
+  "num_runs": 10,
+  "confidence": "Low"
+}
