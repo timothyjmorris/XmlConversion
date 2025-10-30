@@ -49,17 +49,17 @@ def main(args: Optional[list] = None) -> int:
         # Validate configuration
         print("\n=== Configuration Validation ===")
         is_valid = config_manager.validate_configuration()
-        print(f"Configuration Status: {'✅ VALID' if is_valid else '❌ INVALID'}")
+        print(f"Configuration Status: {'VALID' if is_valid else 'INVALID'}")
         
         print("\n=== Available Components ===")
-        print("- ✅ Centralized Configuration Management")
-        print("- ✅ Database Connection Management")
-        print("- ✅ Environment Variable Support")
-        print("- ✅ XML parsing engine") 
-        print("- ✅ Data mapping system")
-        print("- ✅ Migration engine")
-        print("- ✅ Performance monitoring")
-        
+        print("- OK Centralized Configuration Management")
+        print("- OK Database Connection Management")
+        print("- OK Variable Support")
+        print("- OK XML parsing engine") 
+        print("- OK Data mapping system")
+        print("- OK Migration engine")
+        print("- OK Performance monitoring")
+
         print("\n=== Environment Variables ===")
         print("Set these environment variables to customize configuration:")
         print("- XML_EXTRACTOR_CONNECTION_STRING: Database connection string")
@@ -75,7 +75,7 @@ def main(args: Optional[list] = None) -> int:
         
     except Exception as e:
         logger.error(f"Configuration initialization failed: {e}")
-        print(f"❌ Error: {e}")
+        print(f"ERROR: {e}")
         return 1
 
 

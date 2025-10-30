@@ -36,7 +36,8 @@
       "target_table": "app_base",
       "target_column": "receive_date",
       "data_type": "datetime",
-      "mapping_type": ["default_getutcdate_if_null"],
+      "default_value": "1900-01-01",
+      "exclude_default_when_record_empty": true,
       "nullable": false,
       "required": true
     },
@@ -374,8 +375,10 @@
       "target_column": "city",
       "data_type": "string",
       "data_length": 50,
-      "nullable": true,
-      "required": false
+      "default_value": "MISSING",
+      "exclude_default_when_record_empty": true,
+      "nullable": false,
+      "required": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
@@ -384,6 +387,8 @@
       "target_column": "state",
       "data_type": "string",
       "data_length": 2,
+      "default_value": "MISSING",
+      "exclude_default_when_record_empty": true,
       "nullable": false,
       "required": true
     },
@@ -465,6 +470,8 @@
       "data_type": "string",
       "mapping_type": ["numbers_only"],
       "data_length": 9,
+      "default_value": "00000",
+      "exclude_default_when_record_empty": true,
       "nullable": false,
       "required": true
     },

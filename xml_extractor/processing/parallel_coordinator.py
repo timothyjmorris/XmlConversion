@@ -44,13 +44,19 @@ class WorkResult:
 class ParallelCoordinator:
     """
     Coordinates parallel processing of XML records across multiple worker processes.
-    
-    Uses multiprocessing.Pool for CPU-bound XML processing tasks with
-    process-safe work distribution and shared progress tracking.
+
+    PERFORMANCE TUNING DOC:
+    For production, comment out or revert the following:
+    - Pass log_level and log_file to ParallelCoordinator for worker logging (see process_xml_batch)
+    - Enable detailed timing/logging in parallel_coordinator.py (_init_worker)
+    - Any timing/logging added to mapping or database insert logic
+    - Any debug-level logging or extra diagnostics
+    - Set worker logging to WARNING or CRITICAL and remove file handler for best performance
     """
     
-    def __init__(self, connection_string: str, mapping_contract_path: str, 
-                 num_workers: Optional[int] = None, batch_size: int = 1000):
+    # PRODUCTION: uncomment this in exchange for the other signature
+    # def __init__(self, connection_string: str, mapping_contract_path: str, num_workers: Optional[int] = None, batch_size: int = 1000):
+    def __init__(self, connection_string: str, mapping_contract_path: str, num_workers: Optional[int] = None, batch_size: int = 1000, log_level: str = "INFO", log_file: str = None):
         """
         Initialize the parallel coordinator.
         
@@ -65,6 +71,11 @@ class ParallelCoordinator:
         self.mapping_contract_path = mapping_contract_path
         self.num_workers = num_workers or mp.cpu_count()
         self.batch_size = batch_size
+        
+        # PRODUCTION: comment this out to remove performance logging
+        self.log_level = log_level
+        self.log_file = log_file
+        # -----------------------------------------------------------
         
         # Shared progress tracking
         self.manager = mp.Manager()
@@ -100,6 +111,7 @@ class ParallelCoordinator:
         self.progress_dict['start_time'] = start_time
         
         self.logger.info(f"Starting parallel processing of {len(xml_records)} XML records with {self.num_workers} workers")
+        
         
         # Create work items
         work_items = [
@@ -248,12 +260,18 @@ _worker_progress_dict = None
 
 
 def _init_worker(connection_string: str, mapping_contract_path: str, progress_dict):
-    """Initialize worker process with required components."""
+    """
+    Initialize worker process with required components.
+    PERFORMANCE TUNING: Worker logging disabled for maximum performance.
+    Only ERROR+ level logging is active in workers.
+    """
     global _worker_validator, _worker_parser, _worker_mapper, _worker_migration_engine, _worker_progress_dict
     
-    # Set up minimal logging for workers - CRITICAL level only for maximum performance
-    logging.basicConfig(level=logging.CRITICAL)
-    
+    # PERFORMANCE: Disable all DEBUG/INFO logging in worker processes
+    # Workers should only log critical errors, not debug/trace information
+    import logging
+    logging.basicConfig(level=logging.ERROR)
+        
     try:
         _worker_validator = PreProcessingValidator()
         _worker_parser = XMLParser()
@@ -324,13 +342,17 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
             )
         
         # Stage 3: Mapping
+        mapping_start = time.time()
         mapped_data = _worker_mapper.map_xml_to_database(
             xml_data,
             validation_result.app_id,
             validation_result.valid_contacts,
             root
         )
-        
+        mapping_end = time.time()
+        mapping_duration = mapping_end - mapping_start
+        _worker_mapper.logger.info(f"PERF Timing: Mapping logic for app_id {work_item.app_id} took {mapping_duration:.4f} seconds")
+
         if not mapped_data:
             return WorkResult(
                 sequence=work_item.sequence,
@@ -340,9 +362,13 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
                 error_message="No data mapped from XML",
                 processing_time=time.time() - start_time
             )
-        
+
         # Stage 4: Database Insertion
+        db_insert_start = time.time()
         insertion_results = _insert_mapped_data(mapped_data)
+        db_insert_end = time.time()
+        db_insert_duration = db_insert_end - db_insert_start
+        _worker_mapper.logger.info(f"PERF Timing: DB insert for app_id {work_item.app_id} took {db_insert_duration:.4f} seconds")
         total_inserted = sum(insertion_results.values())
         
         if total_inserted == 0:
