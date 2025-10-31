@@ -78,13 +78,16 @@ sys.path.insert(0, str(project_root))
 
 from xml_extractor.processing.parallel_coordinator import ParallelCoordinator
 from xml_extractor.database.migration_engine import MigrationEngine
+from xml_extractor.config.config_manager import get_config_manager
 
 
 class ProductionProcessor:
     """Production-optimized XML processor with monitoring and performance tracking."""
     
     def __init__(self, server: str, database: str, username: str = None, password: str = None,
-                 workers: int = 4, batch_size: int = 100, log_level: str = "INFO"):
+                 workers: int = 4, batch_size: int = 100, log_level: str = "INFO",
+                 enable_pooling: bool = False, min_pool_size: int = 4, max_pool_size: int = 20,
+                 enable_mars: bool = True, connection_timeout: int = 30):
         """
         Initialize production processor.
         
@@ -96,6 +99,11 @@ class ProductionProcessor:
             workers: Number of parallel workers
             batch_size: Records to process per batch
             log_level: Logging level (CRITICAL, ERROR, WARNING, INFO, DEBUG)
+            enable_pooling: Enable connection pooling (default: False for SQLExpress, True for SQL Server/Prod)
+            min_pool_size: Minimum connection pool size (default: 4, only used if enable_pooling=True)
+            max_pool_size: Maximum connection pool size (default: 20, only used if enable_pooling=True)
+            enable_mars: Enable Multiple Active Result Sets (default: True)
+            connection_timeout: Connection timeout in seconds (default: 30)
         """
         self.server = server
         self.database = database
@@ -103,9 +111,14 @@ class ProductionProcessor:
         self.password = password
         self.workers = workers
         self.batch_size = batch_size
+        self.enable_pooling = enable_pooling
+        self.min_pool_size = min_pool_size
+        self.max_pool_size = max_pool_size
+        self.enable_mars = enable_mars
+        self.connection_timeout = connection_timeout
         
-        # Build connection string
-        self.connection_string = self._build_connection_string()
+        # Build connection string with performance optimizations
+        self.connection_string = self._build_connection_string_with_pooling()
         
         # Performance tracking (must be before logging setup)
         self.session_start = datetime.now()
@@ -122,29 +135,66 @@ class ProductionProcessor:
         self.logger.info(f"  Database: {database}")
         self.logger.info(f"  Workers: {workers}")
         self.logger.info(f"  Processing Batch Size: {batch_size}")
+        if self.enable_pooling:
+            self.logger.info(f"  Connection Pooling: ENABLED ({min_pool_size}-{max_pool_size})")
+        else:
+            self.logger.info(f"  Connection Pooling: DISABLED")
+        self.logger.info(f"  MARS Enabled: {enable_mars}")
         self.logger.info(f"  Session ID: {self.session_id}")
         self.logger.debug(f"  Connection String: {self.connection_string}")
     
-    def _build_connection_string(self) -> str:
-        """Build SQL Server connection string."""
+    def _build_connection_string_with_pooling(self) -> str:
+        """
+        Build SQL Server connection string with optional connection pooling.
+        
+        Includes:
+        - Connection pooling (optional, controlled by enable_pooling parameter)
+        - Multiple Active Result Sets (MARS)
+        - Connection timeouts
+        - UTF-8 encoding
+        
+        Note on Connection Pooling:
+        - SQLExpress (local): Pooling disabled by default (adds I/O overhead)
+        - SQL Server/Dev: Enable pooling (network latency makes it valuable)
+        - Production: Enable pooling with larger pool sizes
+        """
         # Handle server name formatting (replace double backslash with single)
         server_name = self.server.replace('\\\\', '\\')
         
+        # Base connection string
         if self.username and self.password:
             # SQL Server authentication
-            return (f"DRIVER={{ODBC Driver 17 for SQL Server}};"
-                   f"SERVER={server_name};"
-                   f"DATABASE={self.database};"
-                   f"UID={self.username};"
-                   f"PWD={self.password};"
-                   f"TrustServerCertificate=yes;")
+            conn_string = (f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+                          f"SERVER={server_name};"
+                          f"DATABASE={self.database};"
+                          f"UID={self.username};"
+                          f"PWD={self.password};"
+                          f"Connection Timeout={self.connection_timeout};"
+                          f"TrustServerCertificate=yes;"
+                          f"Encrypt=no;")
         else:
             # Windows authentication
-            return (f"DRIVER={{ODBC Driver 17 for SQL Server}};"
-                   f"SERVER={server_name};"
-                   f"DATABASE={self.database};"
-                   f"Trusted_Connection=yes;"
-                   f"TrustServerCertificate=yes;")
+            conn_string = (f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+                          f"SERVER={server_name};"
+                          f"DATABASE={self.database};"
+                          f"Connection Timeout={self.connection_timeout};"
+                          f"Trusted_Connection=yes;"
+                          f"TrustServerCertificate=yes;"
+                          f"Encrypt=no;")
+        
+        # Add MARS if enabled
+        if self.enable_mars:
+            conn_string += "MultipleActiveResultSets=True;"
+        
+        # Add connection pooling only if enabled
+        if self.enable_pooling:
+            conn_string += (f"Pooling=True;"
+                           f"Min Pool Size={self.min_pool_size};"
+                           f"Max Pool Size={self.max_pool_size};")
+        else:
+            conn_string += "Pooling=False;"
+        
+        return conn_string
     
     def _setup_logging(self, log_level: str):
         """Set up production-optimized logging."""
@@ -612,10 +662,22 @@ def main():
     parser.add_argument("--log-level", default="INFO", choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
                        help="Logging level (default: INFO)")
     
+    # Connection pooling optimization arguments
+    parser.add_argument("--enable-pooling", action="store_true", default=False,
+                       help="Enable connection pooling (recommended for SQL Server/Prod, disabled by default for SQLExpress)")
+    parser.add_argument("--min-pool-size", type=int, default=4, 
+                       help="Minimum connection pool size (default: 4, match number of workers)")
+    parser.add_argument("--max-pool-size", type=int, default=20, 
+                       help="Maximum connection pool size (default: 20, allows burst capacity)")
+    parser.add_argument("--enable-mars", type=bool, default=True,
+                       help="Enable Multiple Active Result Sets for concurrent queries (default: True)")
+    parser.add_argument("--connection-timeout", type=int, default=30,
+                       help="Connection timeout in seconds (default: 30)")
+    
     args = parser.parse_args()
     
     try:
-        # Create processor
+        # Create processor with connection pooling optimizations
         processor = ProductionProcessor(
             server=args.server,
             database=args.database,
@@ -623,7 +685,12 @@ def main():
             password=args.password,
             workers=args.workers,
             batch_size=args.batch_size,
-            log_level=args.log_level
+            log_level=args.log_level,
+            enable_pooling=args.enable_pooling,
+            min_pool_size=args.min_pool_size,
+            max_pool_size=args.max_pool_size,
+            enable_mars=args.enable_mars,
+            connection_timeout=args.connection_timeout
         )
         
         # Run processing

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Phase II Baseline Establishment - Production Processor Performance
 
@@ -18,9 +19,15 @@ import sys
 import time
 import logging
 import subprocess
+from datetime import datetime
 import statistics
 from pathlib import Path
 from typing import List, Tuple
+import io
+
+# Set UTF-8 encoding for stdout/stderr (fixes PowerShell emoji issues)
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # Add project root to path
 project_root = Path(__file__).parent
@@ -52,7 +59,7 @@ class BaselineEstablisher:
     
     def clear_app_base(self) -> None:
         """
-        Clear app_base table to start fresh.
+        Clear app_base table and processing_log to start fresh.
         
         Note: Cascade delete will automatically delete from dependent tables:
         - app_operational_cc
@@ -60,10 +67,15 @@ class BaselineEstablisher:
         - app_transactional_cc
         - app_solicited_cc
         - contact_base (and its children contact_address, contact_employment)
+        
+        Also clears processing_log so XMLs can be re-processed.
         """
         try:
             with self.migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
+                
+                # Clear processing log first (no FK constraints)
+                cursor.execute("DELETE FROM processing_log")
                 
                 # Truncate or delete based on production requirements
                 # Using DELETE to respect constraints; TRUNCATE would fail without turning off FK
@@ -76,14 +88,14 @@ class BaselineEstablisher:
                 conn.commit()
                 
                 if count == 0:
-                    print("✅ Database cleared (app_base and dependent tables)")
+                    print("Database cleared (app_base, dependent tables, and processing_log)")
                     return True
                 else:
-                    print(f"⚠️  Database may not be fully cleared ({count} records remain)")
+                    print(f"Database may not be fully cleared ({count} records remain)")
                     return False
                     
         except Exception as e:
-            print(f"❌ Failed to clear database: {e}")
+            print(f"Failed to clear database: {e}")
             return False
     
     def count_app_xml_records(self) -> int:
@@ -95,7 +107,7 @@ class BaselineEstablisher:
                 count = cursor.fetchone()[0]
                 return count
         except Exception as e:
-            print(f"❌ Failed to count app_xml records: {e}")
+            print(f"Failed to count app_xml records: {e}")
             return 0
     
     def run_baseline_benchmark(self, num_runs: int = 10) -> dict:
@@ -109,19 +121,19 @@ class BaselineEstablisher:
             Dictionary with baseline metrics
         """
         print("\n" + "="*80)
-        print("🎯 PHASE II BASELINE ESTABLISHMENT")
+        print("PHASE II BASELINE ESTABLISHMENT")
         print("="*80)
         
         # Check available data
         app_xml_count = self.count_app_xml_records()
-        print(f"\n📊 Available app_xml records: {app_xml_count}")
+        print(f"\nAvailable app_xml records: {app_xml_count}")
         
         if app_xml_count == 0:
-            print("❌ No app_xml records found for benchmarking!")
+            print("No app_xml records found for benchmarking!")
             print("   Please load test data first.")
             return {}
         
-        print(f"📈 Running {num_runs} production_processor.py iterations...")
+        print(f"Running {num_runs} production_processor.py iterations...")
         print(f"   - Each run will clear app_base and re-process data")
         print(f"   - Measuring actual production throughput")
         print()
@@ -135,7 +147,7 @@ class BaselineEstablisher:
             
             # Clear database before each run
             if not self.clear_app_base():
-                print(f"❌ Failed to clear database, aborting run {run_num}")
+                print(f"Failed to clear database, aborting run {run_num}")
                 continue
             
             # Run production_processor.py and capture metrics
@@ -149,17 +161,17 @@ class BaselineEstablisher:
                     throughputs.append(throughput)
                     times_taken.append(time_taken)
                     
-                    print(f"✅ {throughput:.1f} rec/min ({time_taken:.1f}s)")
+                    print(f"{throughput:.1f} rec/min ({time_taken:.1f}s)")
                 else:
-                    print("❌ Failed to parse results")
+                    print("Failed to parse results")
                     
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f"Error: {e}")
                 continue
         
         # Calculate statistics
         if not throughputs:
-            print("\n❌ No successful runs completed!")
+            print("\nNo successful runs completed!")
             return {}
         
         median_throughput = statistics.median(throughputs)
@@ -169,7 +181,7 @@ class BaselineEstablisher:
         max_throughput = max(throughputs)
         
         print("\n" + "="*80)
-        print("📊 BASELINE RESULTS")
+        print("BASELINE RESULTS")
         print("="*80)
         print(f"\nThroughput Statistics (records/minute):")
         print(f"  Median:     {median_throughput:.1f}")
@@ -190,16 +202,16 @@ class BaselineEstablisher:
         # Confidence assessment
         confidence = self._assess_confidence(stdev_throughput, mean_throughput)
         
-        print(f"\n🎯 Baseline Measurement Confidence: {confidence}")
+        print(f"\nBaseline Measurement Confidence: {confidence}")
         if confidence == "High":
-            print(f"   ✅ Measurements are stable (std dev < 5%)")
+            print(f"   Measurements are stable (std dev < 5%)")
         elif confidence == "Medium":
-            print(f"   ⚠️  Measurements show moderate variance (5-10%)")
+            print(f"   Measurements show moderate variance (5-10%)")
         else:
-            print(f"   ⚠️  Measurements show high variance (> 10%)")
+            print(f"   Measurements show high variance (> 10%)")
         
         # Recommendations
-        print(f"\n💡 Recommendations for Phase II:")
+        print(f"\nRecommendations for Phase II:")
         if median_throughput < 300:
             print(f"   • Current baseline is LOW ({median_throughput:.1f} rec/min)")
             print(f"   • Significant optimization opportunities exist")
@@ -235,6 +247,7 @@ class BaselineEstablisher:
         Returns:
             Dictionary with 'throughput' and 'time_seconds', or None if failed
         """
+        print(f"     [DEBUG] Starting _run_production_processor", flush=True)
         try:
             # Run production_processor.py
             # Adjust script name/path as needed for your setup
@@ -246,9 +259,11 @@ class BaselineEstablisher:
                 str(script_path),
                 "--server", "localhost\\SQLEXPRESS",
                 "--database", "XmlConversionDB",
-                "--workers", "2",
+                "--workers", "4",
                 "--batch-size", "1000",
                 "--log-level", "INFO"
+                # Note: Connection pooling disabled by default for SQLExpress
+                # To enable: add "--enable-pooling"
             ]
             
             start_time = time.time()
@@ -258,16 +273,22 @@ class BaselineEstablisher:
             # Parse output for metrics
             # Looking for pattern like "Processed X records in Y seconds"
             output = result.stdout + result.stderr
+            print(f"     [DEBUG] Output captured - length: {len(output)} chars, return code: {result.returncode}", flush=True)
             
             # Try to extract throughput from output
             # Adjust parsing based on actual production_processor.py output format
             throughput = self._parse_throughput_from_output(output, elapsed_time)
             
             if throughput is None:
-                print(f"⚠️  Could not parse metrics from output")
+                print(f"  Could not parse metrics from output")
                 print(f"\n--- DEBUG: Raw Output (last 500 chars) ---")
                 print(output[-500:] if len(output) > 500 else output)
                 print(f"--- END DEBUG ---\n")
+                # Save full output to file for inspection
+                with open("baseline_output_debug.txt", "a") as f:
+                    f.write(f"\n{'='*80}\nRun at {datetime.now()}\n{'='*80}\n")
+                    f.write(output)
+                    f.write(f"\n{'='*80}\n")
                 return None
             
             return {
@@ -277,10 +298,10 @@ class BaselineEstablisher:
             }
             
         except subprocess.TimeoutExpired:
-            print("❌ Timeout (5 min limit exceeded)")
+            print("Timeout (5 min limit exceeded)")
             return None
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
             return None
     
     def _parse_throughput_from_output(self, output: str, elapsed_time: float) -> float:
@@ -359,16 +380,16 @@ def main():
                                if k not in ['throughputs', 'times']}
                 json.dump(save_metrics, f, indent=2)
             
-            print(f"\n💾 Metrics saved to: {metrics_file}")
-            print("\n✅ Baseline establishment complete!")
+            print(f"\nMetrics saved to: {metrics_file}")
+            print("\nBaseline establishment complete!")
             print("   Ready to begin Phase II.1 (Batch Size Optimization)")
             return 0
         else:
-            print("\n❌ Baseline establishment failed!")
+            print("\nBaseline establishment failed!")
             return 1
             
     except Exception as e:
-        print(f"\n❌ Fatal error: {e}")
+        print(f"\nFatal error: {e}")
         import traceback
         traceback.print_exc()
         return 1

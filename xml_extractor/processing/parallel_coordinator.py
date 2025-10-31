@@ -3,6 +3,130 @@ Parallel Processing Coordinator for XML extraction system.
 
 This module provides multiprocessing capabilities to process XML records
 in parallel across multiple CPU cores for improved throughput.
+
+ARCHITECTURE & RESPONSIBILITIES
+================================
+
+The ParallelCoordinator is a WORKER POOL MANAGER, not a connection manager. Its job is:
+
+1. MULTIPROCESSING ORCHESTRATION
+   - Creates N independent worker processes (one per CPU core)
+   - Each worker is COMPLETELY ISOLATED (separate Python interpreter, separate memory space)
+   - Coordinates work distribution: assigns XML records to workers
+
+2. NOT CONNECTION MANAGEMENT (important!)
+   - Does NOT manage database connections directly
+   - Each worker INDEPENDENTLY creates its own connections via MigrationEngine
+   - Each worker has its own connection(s) to the database
+   - Multiple workers = multiple independent connections to SQL Server
+
+3. DATA FLOW
+   
+   ProductionProcessor (main process)
+   ├─ Loads XML records from app_xml table
+   ├─ Creates ParallelCoordinator (with connection string passed to workers)
+   └─ Calls process_xml_batch(xml_records)
+      └─ ParallelCoordinator.process_xml_batch()
+         ├─ Creates mp.Pool(num_workers=4)  ← Spawns 4 independent worker processes
+         ├─ For each XML record:
+         │  └─ Worker process (independent interpreter):
+         │     ├─ _init_worker() [runs once per worker]
+         │     │  └─ Creates its own MigrationEngine(connection_string)
+         │     │     └─ Each worker gets ONE connection to SQL Server
+         │     │
+         │     └─ _process_work_item() [runs for each assigned XML]
+         │        ├─ Parse XML (in-memory)
+         │        ├─ Map to database schema (in-memory)
+         │        └─ Insert via own MigrationEngine connection
+         │
+         └─ Results aggregated back to main process
+
+4. CONNECTION POOLING RELATIONSHIP
+   
+   How it works with connection pooling:
+   
+   WITHOUT pooling (old code):
+   - Worker 1 creates connection → uses it → closes it
+   - Worker 2 creates connection → uses it → closes it
+   - Worker 3 creates connection → uses it → closes it
+   - Worker 4 creates connection → uses it → closes it
+   
+   WITH pooling (new code):
+   - Worker 1 creates connection from pool (or opens new if min pool not met)
+   - Worker 2 requests connection → gets from pool OR creates new (up to max)
+   - Worker 3 requests connection → gets from pool OR creates new (up to max)
+   - Worker 4 requests connection → gets from pool OR creates new (up to max)
+   
+   KEY INSIGHT: Pooling is PROCESS-LEVEL, not WORKER-LEVEL
+   - The ODBC driver manages the pool at the OS level
+   - Separate Python processes DON'T share the same pool!
+   - Each Python process (worker) gets its own independent pool
+   - So with 4 workers: potentially 4 independent pools × 4 min connections = 16 min connections!
+
+5. WHY POOLING MIGHT HURT (the regression we're seeing)
+   
+   a) Overhead of maintaining multiple pools
+   b) ODBC connection state reset between reuses (expensive)
+   c) Lock contention with multiple workers querying simultaneously
+   d) SQLExpress disk I/O can't handle 4 parallel queries
+   e) Pool management itself is slower than creating fresh connections for short-lived ops
+
+6. BOTTLENECK ANALYSIS
+   
+   ParallelCoordinator is trying to maximize:
+   - CPU utilization (by running 4 Python processes in parallel)
+   - Data processing throughput (parsing + mapping happens in parallel)
+   
+   But ParallelCoordinator CANNOT improve:
+   - SQL Server I/O performance (disk speed, query optimization, indexes)
+   - Network latency (local, so not an issue)
+   - Database query execution (connection pooling helps minimally)
+   
+   If SQL Server CPU < 10%, then:
+   - SQL Server is NOT the bottleneck
+   - Likely bottleneck: Disk I/O, Query execution time, Table locks
+   - Solution: Query optimization, better indexes, or CHANGE THE APPROACH
+   
+   If Python CPU < 20% (XML parsing/mapping), then:
+   - Parsing and mapping are NOT the bottleneck
+   - Likely bottleneck: Database operations (inserts, queries)
+   - Solution: Connection pooling (minimal help), query optimization, batch sizes
+
+WHEN TO USE PARALLELIZATION vs OPTIMIZATION
+==============================================
+
+ParallelCoordinator is good at:
+✅ Processing multiple XMLs simultaneously (parsing, mapping) while I/O waits
+✅ Utilizing multiple CPU cores for CPU-intensive work
+✅ Scaling on multi-core machines
+
+ParallelCoordinator is BAD at:
+❌ Making disk I/O faster
+❌ Making queries execute faster
+❌ Reducing lock contention (can actually increase it!)
+❌ Helping if bottleneck is SQL Server CPU/disk
+
+WHAT TO DO IF BOTTLENECK IS DATABASE
+=====================================
+
+When ParallelCoordinator hits database I/O wall:
+1. Add indices to WHERE clause columns (SELECT WHERE app_id IN (...))
+2. Partition tables for faster queries
+3. Reduce query complexity
+4. Batch inserts more efficiently (use BULK INSERT, not individual INSERTs)
+5. Tune SQL Server settings
+6. Use ASYNC queries (query while processing next XML)
+
+Connection pooling is NOT a silver bullet - it helps with connection creation overhead
+(usually < 5% of total time), not with actual query execution.
+
+PERFORMANCE TUNING DOC:
+For production, comment out or revert the following:
+- Pass log_level and log_file to ParallelCoordinator for worker logging (see process_xml_batch)
+- Enable detailed timing/logging in parallel_coordinator.py (_init_worker)
+- Any timing/logging added to mapping or database insert logic
+- Any debug-level logging or extra diagnostics
+- Set worker logging to WARNING or CRITICAL and remove file handler for best performance
 """
 
 import logging
@@ -43,15 +167,46 @@ class WorkResult:
 
 class ParallelCoordinator:
     """
-    Coordinates parallel processing of XML records across multiple worker processes.
-
-    PERFORMANCE TUNING DOC:
-    For production, comment out or revert the following:
-    - Pass log_level and log_file to ParallelCoordinator for worker logging (see process_xml_batch)
-    - Enable detailed timing/logging in parallel_coordinator.py (_init_worker)
-    - Any timing/logging added to mapping or database insert logic
-    - Any debug-level logging or extra diagnostics
-    - Set worker logging to WARNING or CRITICAL and remove file handler for best performance
+    Multiprocessing Pool Manager for parallel XML record processing.
+    
+    CRITICAL: This is a WORKER POOL, NOT a CONNECTION POOL.
+    
+    Responsibilities:
+    - Creates N independent worker processes (one per CPU core)
+    - Distributes XML records to workers for parallel processing
+    - Each worker independently manages its own database connections
+    - Coordinates results aggregation and progress tracking
+    
+    Worker Lifecycle:
+    1. ParallelCoordinator creates mp.Pool(num_workers=4)
+    2. Each worker process runs _init_worker() once
+       - Loads mapping contract
+       - Creates its own MigrationEngine with connection string
+       - Each worker gets its own database connection(s)
+    3. For each XML record, a worker runs _process_work_item()
+       - Parses XML (in-memory, fast)
+       - Maps to database schema (in-memory, fast)
+       - Inserts via its own MigrationEngine connection
+    4. Workers complete, results returned to main process
+    
+    Connection Management (IMPORTANT):
+    - ParallelCoordinator does NOT manage connections
+    - Each worker independently creates connections via MigrationEngine
+    - With N workers: N independent connections to SQL Server
+    - If connection string includes "Pooling=True":
+      - Each worker's ODBC driver manages its own pool
+      - Potentially N pools, not 1 shared pool!
+      - This can INCREASE overhead instead of reducing it
+    
+    Performance Characteristics:
+    - Best when: CPU-intensive processing (XML parsing/mapping) overlaps with I/O waits
+    - Worst when: Database I/O is bottleneck (< 10% SQL Server CPU suggests this)
+    - Scaling: Improves up to CPU core count, then plateaus or regresses
+    
+    Diagnostic:
+    - If SQL Server CPU < 10%: Database I/O is bottleneck (not a parallelization problem)
+    - If Python process CPU < 20%: Parsing/mapping not bottleneck (database is)
+    - If high I/O wait: Adding more workers makes it WORSE due to lock contention
     """
     
     # PRODUCTION: uncomment this in exchange for the other signature
