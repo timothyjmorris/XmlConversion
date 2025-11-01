@@ -68,6 +68,7 @@ import sys
 import time
 import json
 import logging
+import statistics
 from pathlib import Path
 from datetime import datetime
 from typing import List, Tuple, Optional
@@ -85,9 +86,9 @@ class ProductionProcessor:
     """Production-optimized XML processor with monitoring and performance tracking."""
     
     def __init__(self, server: str, database: str, username: str = None, password: str = None,
-                 workers: int = 4, batch_size: int = 100, log_level: str = "INFO",
+                 workers: int = 4, batch_size: int = 1000, log_level: str = "INFO",
                  enable_pooling: bool = False, min_pool_size: int = 4, max_pool_size: int = 20,
-                 enable_mars: bool = True, connection_timeout: int = 30):
+                 enable_mars: bool = True, connection_timeout: int = 30, disable_metrics: bool = False):
         """
         Initialize production processor.
         
@@ -104,6 +105,7 @@ class ProductionProcessor:
             max_pool_size: Maximum connection pool size (default: 20, only used if enable_pooling=True)
             enable_mars: Enable Multiple Active Result Sets (default: True)
             connection_timeout: Connection timeout in seconds (default: 30)
+            disable_metrics: Disable metrics JSON file output (default: False, use for PROD)
         """
         self.server = server
         self.database = database
@@ -111,6 +113,7 @@ class ProductionProcessor:
         self.password = password
         self.workers = workers
         self.batch_size = batch_size
+        self.disable_metrics = disable_metrics
         self.enable_pooling = enable_pooling
         self.min_pool_size = min_pool_size
         self.max_pool_size = max_pool_size
@@ -130,9 +133,13 @@ class ProductionProcessor:
         # Initialize components
         self.mapping_contract_path = str(project_root / "config" / "mapping_contract.json")
         
+        # Load target schema from mapping contract (with dbo default)
+        self.target_schema = self._load_target_schema()
+        
         self.logger.info(f"ProductionProcessor initialized:")
         self.logger.info(f"  Server: {server}")
         self.logger.info(f"  Database: {database}")
+        self.logger.info(f"  Target Schema: {self.target_schema}")
         self.logger.info(f"  Workers: {workers}")
         self.logger.info(f"  Processing Batch Size: {batch_size}")
         if self.enable_pooling:
@@ -258,6 +265,22 @@ class ProductionProcessor:
             self.logger.error(f"Database connection failed: {e}")
             return False
     
+    def _load_target_schema(self) -> str:
+        """
+        Load target schema from mapping contract.
+        
+        Returns:
+            Target schema name (default: 'dbo' if not specified in contract)
+        """
+        try:
+            with open(self.mapping_contract_path, 'r', encoding='utf-8') as f:
+                contract = json.load(f)
+                schema = contract.get('target_schema', 'dbo')
+                return schema
+        except Exception as e:
+            self.logger.warning(f"Failed to load target_schema from mapping contract: {e}, using default 'dbo'")
+            return 'dbo'
+    
     def get_xml_records(self, limit: Optional[int] = None, offset: int = 0, exclude_failed: bool = True) -> List[Tuple[int, str]]:
         """
         Extract XML records from app_xml table.
@@ -281,9 +304,9 @@ class ProductionProcessor:
                 
                 # Build query - exclude apps that have already been processed or failed
                 base_conditions = """
-                    WHERE ax.xml IS NOT NULL 
-                    AND DATALENGTH(ax.xml) > 100
-                    AND (ab.app_id IS NULL OR NOT EXISTS (SELECT 1 FROM app_pricing_cc apc WHERE apc.app_id = ax.app_id))  -- Allow re-processing if app_pricing_cc is missing
+                    WHERE 
+                        ax.xml IS NOT NULL 
+                        AND DATALENGTH(ax.xml) > 100
                 """
                 
                 if exclude_failed:
@@ -291,17 +314,19 @@ class ProductionProcessor:
                     
                     base_conditions += """
                         AND NOT EXISTS (
-                            SELECT 1 FROM processing_log pl 
-                            WHERE pl.app_id = ax.app_id 
-                            AND pl.status = 'failed'
+                            SELECT 1 
+                            FROM processing_log pl 
+                            WHERE 
+                                pl.app_id = ax.app_id 
+                                AND pl.status = 'failed'
                         )  -- Exclude records that failed any processing
                     """
                 
                 if limit:
                     query = f"""
                         SELECT ax.app_id, ax.xml 
-                        FROM app_xml ax
-                        LEFT JOIN app_base ab ON ax.app_id = ab.app_id
+                        FROM app_xml AS ax
+                        LEFT JOIN app_base AS ab ON ax.app_id = ab.app_id
                         {base_conditions}
                         ORDER BY ax.app_id
                         OFFSET {offset} ROWS
@@ -310,8 +335,8 @@ class ProductionProcessor:
                 else:
                     query = f"""
                         SELECT ax.app_id, ax.xml 
-                        FROM app_xml ax
-                        LEFT JOIN app_base ab ON ax.app_id = ab.app_id
+                        FROM app_xml AS ax
+                        LEFT JOIN app_base AS ab ON ax.app_id = ab.app_id
                         {base_conditions}
                         ORDER BY ax.app_id
                         OFFSET {offset} ROWS
@@ -386,12 +411,12 @@ class ProductionProcessor:
         self.logger.info(f"Starting batch processing of {len(xml_records)} records")
         
         # Create parallel coordinator
-        # Note: batch_size here is for database operations, not processing batches
+        # Note: batch_size here is for database bulk insert operations
         coordinator = ParallelCoordinator(
             connection_string=self.connection_string,
             mapping_contract_path=self.mapping_contract_path,
             num_workers=self.workers,
-            batch_size=1000  # Database batch size (keep at 1000 for performance)
+            batch_size=self.batch_size  # Respect processor's batch_size setting
         )
         
         # Process batch
@@ -420,6 +445,7 @@ class ProductionProcessor:
         
         # Categorize failures by stage
         failure_summary = {
+            'validation_failures': len([f for f in failed_apps if f['error_stage'] == 'validation']),
             'parsing_failures': len([f for f in failed_apps if f['error_stage'] == 'parsing']),
             'mapping_failures': len([f for f in failed_apps if f['error_stage'] == 'mapping']),
             'insertion_failures': len([f for f in failed_apps if f['error_stage'] == 'insertion']),
@@ -467,6 +493,8 @@ class ProductionProcessor:
             
             # Log failure breakdown
             failure_summary = metrics['failure_summary']
+            if failure_summary.get('validation_failures', 0) > 0:
+                self.logger.warning(f"  Validation Failures: {failure_summary['validation_failures']} (XML validation issues)")
             if failure_summary['parsing_failures'] > 0:
                 self.logger.warning(f"  Parsing Failures: {failure_summary['parsing_failures']} (XML structure/format issues)")
             if failure_summary['mapping_failures'] > 0:
@@ -495,21 +523,55 @@ class ProductionProcessor:
         else:
             self.logger.info("All records processed successfully!")
         
-        # Save metrics to file
-        self._save_metrics(metrics)
-        
         return metrics
     
     def _save_metrics(self, metrics: dict):
-        """Save performance metrics to JSON file."""
+        """
+        Save consolidated performance metrics to JSON file.
+        
+        Includes:
+        - Connection/processing configuration
+        - Overall run statistics
+        - Failure analysis
+        - Per-batch detailed breakdown
+        
+        Skipped if disable_metrics=True (production use)
+        """
+        if self.disable_metrics:
+            self.logger.debug("Metrics output disabled (--disable-metrics), skipping metrics file")
+            return
+        
         metrics_dir = Path("metrics")
         metrics_dir.mkdir(exist_ok=True)
         
         metrics_file = metrics_dir / f"metrics_{self.session_id}.json"
         
         try:
+            # Build consolidated metrics structure
+            consolidated_metrics = {
+                'run_timestamp': datetime.now().isoformat(),
+                'server': self.server,
+                'database': self.database,
+                'target_schema': self.target_schema,
+                'pooling': self.enable_pooling,
+                'workers': self.workers,
+                'batch_size': self.batch_size,
+                'limit': metrics.get('limit'),
+                'total_applications_processed': metrics.get('total_processed', 0),
+                'total_applications_successful': metrics.get('total_successful', 0),
+                'total_applications_failed': metrics.get('total_failed', 0),
+                'success_rate': metrics.get('overall_success_rate', 0),
+                'total_duration_seconds': metrics.get('overall_time_minutes', 0) * 60,
+                'applications_per_minute': metrics.get('overall_rate_per_minute', 0),
+                'total_database_inserts': metrics.get('total_database_inserts', 0),
+                'parallel_efficiency': metrics.get('parallel_efficiency', 0),
+                'failure_summary': metrics.get('failure_summary', {}),
+                'failed_apps': metrics.get('failed_apps', []),
+                'batch_details': metrics.get('batch_details', [])
+            }
+            
             with open(metrics_file, 'w') as f:
-                json.dump(metrics, f, indent=2)
+                json.dump(consolidated_metrics, f, indent=2)
             self.logger.info(f"Metrics saved to: {metrics_file}")
         except Exception as e:
             self.logger.error(f"Failed to save metrics: {e}")
@@ -544,7 +606,9 @@ class ProductionProcessor:
         total_successful = 0
         total_failed = 0
         all_failed_apps = []
+        batch_details = []  # Collect per-batch metrics
         overall_failure_summary = {
+            'validation_failures': 0,
             'parsing_failures': 0,
             'mapping_failures': 0,
             'insertion_failures': 0,
@@ -567,8 +631,22 @@ class ProductionProcessor:
                 batch_records = batch_records[:limit - total_processed]
             
             # Process batch
-            self.logger.info(f"Processing batch {offset//self.batch_size + 1}: records {offset+1}-{offset+len(batch_records)}")
+            batch_number = len(batch_details) + 1
+            self.logger.info(f"Processing batch {batch_number}: records {offset+1}-{offset+len(batch_records)}")
+            batch_start_time = time.time()
             metrics = self.process_batch(batch_records)
+            batch_duration = time.time() - batch_start_time
+            
+            # Collect batch metrics for later reporting
+            batch_detail = {
+                'batch_number': batch_number,
+                'total_applications_processed': metrics.get('records_processed', 0),
+                'duration_seconds': batch_duration,
+                'applications_per_minute': (metrics.get('records_processed', 0) / batch_duration * 60) if batch_duration > 0 else 0,
+                'database_inserts': metrics.get('total_records_inserted', 0),
+                'application_failures': metrics.get('records_failed', 0)
+            }
+            batch_details.append(batch_detail)
             
             # Update totals
             total_processed += metrics.get('records_processed', 0)
@@ -601,6 +679,7 @@ class ProductionProcessor:
         self.logger.info(f"Overall Success Rate: {overall_success_rate:.1f}%")
         self.logger.info(f"Overall Time: {overall_time/60:.1f} minutes")
         self.logger.info(f"Overall Rate: {overall_rate:.1f} applications/minute")
+        self.logger.info(f"Total Database Records Inserted: {sum(b.get('database_inserts', 0) for b in batch_details)}")
         
         # Log overall failure summary if there were failures
         if total_failed > 0:
@@ -608,6 +687,8 @@ class ProductionProcessor:
             self.logger.warning("FAILURE ANALYSIS")
             self.logger.warning("="*60)
             
+            if overall_failure_summary.get('validation_failures', 0) > 0:
+                self.logger.warning(f"Validation Failures: {overall_failure_summary['validation_failures']} (XML validation issues)")
             if overall_failure_summary['parsing_failures'] > 0:
                 self.logger.warning(f"Parsing Failures: {overall_failure_summary['parsing_failures']} (XML structure/format issues)")
             if overall_failure_summary['mapping_failures'] > 0:
@@ -633,7 +714,7 @@ class ProductionProcessor:
                 self.logger.warning(f"Failed App IDs (first 20): {', '.join(unique_failed_ids[:20])}")
                 self.logger.warning(f"Total unique failed apps: {len(unique_failed_ids)}")
         
-        return {
+        final_metrics = {
             'total_processed': total_processed,
             'total_successful': total_successful,
             'total_failed': total_failed,
@@ -641,8 +722,17 @@ class ProductionProcessor:
             'overall_time_minutes': overall_time / 60,
             'overall_rate_per_minute': overall_rate,
             'failed_apps': all_failed_apps,
-            'failure_summary': overall_failure_summary
+            'failure_summary': overall_failure_summary,
+            'batch_details': batch_details,
+            'limit': limit,
+            'total_database_inserts': sum(b.get('database_inserts', 0) for b in batch_details),
+            'parallel_efficiency': statistics.mean([b.get('applications_per_minute', 0) / overall_rate for b in batch_details]) if batch_details and overall_rate > 0 else 0
         }
+        
+        # Save consolidated metrics file once at end of run
+        self._save_metrics(final_metrics)
+        
+        return final_metrics
 
 
 def main():
@@ -657,10 +747,12 @@ def main():
     parser.add_argument("--username", help="SQL Server username (uses Windows auth if not provided)")
     parser.add_argument("--password", help="SQL Server password")
     parser.add_argument("--workers", type=int, default=4, help="Number of parallel workers (default: 4)")
-    parser.add_argument("--batch-size", type=int, default=100, help="Records per batch (default: 100)")
+    parser.add_argument("--batch-size", type=int, default=1000, help="Records per batch (default: 1000)")
     parser.add_argument("--limit", type=int, help="Maximum records to process (default: all)")
     parser.add_argument("--log-level", default="INFO", choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
                        help="Logging level (default: INFO)")
+    parser.add_argument("--disable-metrics", action="store_true", default=False,
+                       help="Disable metrics JSON output (recommended for PROD)")
     
     # Connection pooling optimization arguments
     parser.add_argument("--enable-pooling", action="store_true", default=False,
@@ -686,6 +778,7 @@ def main():
             workers=args.workers,
             batch_size=args.batch_size,
             log_level=args.log_level,
+            disable_metrics=args.disable_metrics,
             enable_pooling=args.enable_pooling,
             min_pool_size=args.min_pool_size,
             max_pool_size=args.max_pool_size,

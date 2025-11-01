@@ -29,8 +29,8 @@ import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
-# Add project root to path
-project_root = Path(__file__).parent
+# Add project root to path (establish_baseline.py is in env_prep/, parent is project root)
+project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from xml_extractor.database.migration_engine import MigrationEngine

@@ -96,15 +96,15 @@ WHEN TO USE PARALLELIZATION vs OPTIMIZATION
 ==============================================
 
 ParallelCoordinator is good at:
-✅ Processing multiple XMLs simultaneously (parsing, mapping) while I/O waits
-✅ Utilizing multiple CPU cores for CPU-intensive work
-✅ Scaling on multi-core machines
+- Processing multiple XMLs simultaneously (parsing, mapping) while I/O waits
+- Utilizing multiple CPU cores for CPU-intensive work
+- Scaling on multi-core machines
 
 ParallelCoordinator is BAD at:
-❌ Making disk I/O faster
-❌ Making queries execute faster
-❌ Reducing lock contention (can actually increase it!)
-❌ Helping if bottleneck is SQL Server CPU/disk
+- Making disk I/O faster
+- Making queries execute faster
+- Reducing lock contention (can actually increase it!)
+- Helping if bottleneck is SQL Server CPU/disk
 
 WHAT TO DO IF BOTTLENECK IS DATABASE
 =====================================
@@ -131,10 +131,12 @@ For production, comment out or revert the following:
 
 import logging
 import multiprocessing as mp
+import queue
 import time
 from typing import List, Tuple, Dict, Any, Optional
 from dataclasses import dataclass
 from queue import Empty
+from datetime import datetime
 
 from ..validation.pre_processing_validator import PreProcessingValidator
 from ..parsing.xml_parser import XMLParser
@@ -209,8 +211,6 @@ class ParallelCoordinator:
     - If high I/O wait: Adding more workers makes it WORSE due to lock contention
     """
     
-    # PRODUCTION: uncomment this in exchange for the other signature
-    # def __init__(self, connection_string: str, mapping_contract_path: str, num_workers: Optional[int] = None, batch_size: int = 1000):
     def __init__(self, connection_string: str, mapping_contract_path: str, num_workers: Optional[int] = None, batch_size: int = 1000, log_level: str = "INFO", log_file: str = None):
         """
         Initialize the parallel coordinator.
@@ -227,10 +227,9 @@ class ParallelCoordinator:
         self.num_workers = num_workers or mp.cpu_count()
         self.batch_size = batch_size
         
-        # PRODUCTION: comment this out to remove performance logging
+        # Performance logging configuration
         self.log_level = log_level
         self.log_file = log_file
-        # -----------------------------------------------------------
         
         # Shared progress tracking
         self.manager = mp.Manager()
@@ -247,7 +246,19 @@ class ParallelCoordinator:
     
     def process_xml_batch(self, xml_records: List[Tuple[int, str]]) -> ProcessingResult:
         """
-        Process a batch of XML records in parallel.
+        Process a batch of XML records in parallel using multiprocessing.Pool.
+        
+        Architecture:
+        1. Spawns N worker processes (one per CPU core)
+        2. Each worker independently processes assigned XML records
+        3. Workers perform parsing, mapping, and database insertion
+        4. Results aggregated and returned to main process
+        
+        Each worker:
+        - Creates its own MigrationEngine with database connection
+        - Validates, parses, maps, and inserts XML data
+        - Respects FK dependency ordering to prevent constraint violations
+        - Returns result with success/failure status and record count
         
         Args:
             xml_records: List of (app_id, xml_content) tuples
@@ -266,7 +277,6 @@ class ParallelCoordinator:
         self.progress_dict['start_time'] = start_time
         
         self.logger.info(f"Starting parallel processing of {len(xml_records)} XML records with {self.num_workers} workers")
-        
         
         # Create work items
         work_items = [
@@ -417,6 +427,15 @@ _worker_progress_dict = None
 def _init_worker(connection_string: str, mapping_contract_path: str, progress_dict):
     """
     Initialize worker process with required components.
+    
+    This function runs ONCE per worker process at startup. Each worker process gets its own
+    isolated Python interpreter, memory space, and database connection.
+    
+    Args:
+        connection_string: Database connection string
+        mapping_contract_path: Path to mapping contract JSON
+        progress_dict: Shared dict for progress tracking
+    
     PERFORMANCE TUNING: Worker logging disabled for maximum performance.
     Only ERROR+ level logging is active in workers.
     """
@@ -519,11 +538,11 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
             )
 
         # Stage 4: Database Insertion
+        # Direct blocking inserts with FK dependency ordering to prevent constraint violations
         db_insert_start = time.time()
-        insertion_results = _insert_mapped_data(mapped_data)
-        db_insert_end = time.time()
-        db_insert_duration = db_insert_end - db_insert_start
-        _worker_mapper.logger.info(f"PERF Timing: DB insert for app_id {work_item.app_id} took {db_insert_duration:.4f} seconds")
+        insertion_results = _insert_mapped_data_with_fk_order(mapped_data)
+        db_insert_duration = time.time() - db_insert_start
+        
         total_inserted = sum(insertion_results.values())
         
         if total_inserted == 0:
@@ -576,16 +595,39 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
         )
 
 
-def _insert_mapped_data(mapped_data: Dict[str, List[Dict[str, Any]]]) -> Dict[str, int]:
-    """Insert mapped data using proven table order."""
+def _insert_mapped_data_with_fk_order(mapped_data: Dict[str, List[Dict[str, Any]]]) -> Dict[str, int]:
+    """
+    Insert mapped data respecting FK dependency order.
+    
+    CRITICAL: This order prevents FK constraint violations by ensuring parent records
+    are inserted before child records:
+    - app_base must exist before app_solicited_cc (FK reference)
+    - contact_base must exist before contact_address (FK reference)
+    
+    Args:
+        mapped_data: Dict of {table_name: [records]} from mapper
+        
+    Returns:
+        Dict of {table_name: inserted_count} for each table processed
+    """
     global _worker_migration_engine
     
     insertion_results = {}
     
-    # Use proven table order from benchmarks
-    table_order = ["app_base", "app_operational_cc", "app_pricing_cc", 
-                  "app_transactional_cc", "app_solicited_cc", 
-                  "contact_base", "contact_address", "contact_employment"]
+    # FK DEPENDENCY ORDER (CRITICAL):
+    # 1. Insert parent tables first
+    # 2. Then insert child tables that reference parents
+    # This prevents "referenced key not found" FK violations
+    table_order = [
+        "app_base",              # Parent: all app_*_cc tables FK to this
+        "contact_base",          # Parent: contact_address/employment FK to this + FK to app_base
+        "app_operational_cc",    # Child of app_base
+        "app_pricing_cc",        # Child of app_base
+        "app_transactional_cc",  # Child of app_base
+        "app_solicited_cc",      # Child of app_base
+        "contact_address",       # Child of contact_base
+        "contact_employment",    # Child of contact_base
+    ]
     
     for table_name in table_order:
         records = mapped_data.get(table_name, [])

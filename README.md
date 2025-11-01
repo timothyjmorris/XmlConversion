@@ -1,6 +1,16 @@
 # XML Database Extraction System
 
-A high-performance, configurable data migration tool that processes XML content stored in database text columns and transforms it into normalized relational structures.
+A high-performance, configurable data migration tool that processes XML content using a "contract-driven" approach using mapping rules that define the ETL into normalized relational structures.
+
+## Tech Stack Summary
+- OS: Windows
+- SHELL: powershell
+- DB: MS SQL Server
+- LANGUAGE: Python
+- CONNECTIVITY: pyodbc
+- TESTING: pytest
+- XML: lxml
+
 
 ## 🚀 Quick Start
 

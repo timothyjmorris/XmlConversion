@@ -1,0 +1,119 @@
+================================================================================
+                 PERFORMANCE TUNING PROJECT - QUICK START
+================================================================================
+
+STATUS: Phase II.3a ✅ COMPLETE | Phase II.3b 🔄 READY
+CURRENT: 914 rec/min | TARGET: 1000+ rec/min
+
+================================================================================
+                            3 MASTER DOCUMENTS
+================================================================================
+
+Use these (ignore the scattered old docs):
+
+1. PHASE_I_BASELINE.md
+   └─ Phase I results: 280 → 553.8 rec/min (+97%)
+
+2. PHASE_II.md ← START HERE FOR EVERYTHING
+   ├─ Phase II context (II.1-2 complete)
+   ├─ Phase II.3 profiling results
+   ├─ Implementation tasks for II.3b
+   ├─ Current status tracker
+   └─ ALL COMMANDS TO RUN
+
+3. PHASE_II_IMPLEMENTATION_CODE.md
+   ├─ Complete code (copy/paste ready)
+   ├─ 3 files to create/modify
+   ├─ Testing steps
+   └─ Troubleshooting
+
+Location: performance_tuning/ directory
+
+================================================================================
+                         QUICK REFERENCE COMMANDS
+================================================================================
+
+# Check current baseline (official measurement)
+python env_prep/establish_baseline.py
+
+# Run production processor (standard config)
+python production_processor.py --workers 4 --batch-size 1000 --log-level INFO
+
+# Quick test with limit
+python production_processor.py --workers 4 --batch-size 1000 --limit 100 --log-level INFO
+
+# Run tests
+python -m pytest tests/ -v
+
+================================================================================
+                         BASELINE MEASUREMENT
+================================================================================
+
+Official Baseline (env_prep/establish_baseline.py):
+  • Runs production_processor multiple times
+  • Clears database between runs for clean measurements
+  • Reports median throughput + std dev
+  • Use for official measurements
+
+Direct Execution (production_processor.py):
+  • Main execution engine
+  • Use directly for testing/profiling
+  • Outputs metrics to metrics/metrics_TIMESTAMP.json
+  • Add --log-level INFO to see worker details
+
+NOTE: The old profiling scripts (profile_phase2_3*.py) are not needed - 
+      just use production_processor.py directly
+
+================================================================================
+                        WHAT'S CONSOLIDATED
+================================================================================
+
+BEFORE: 15+ scattered documents (PHASE2_3_DECISION.md, PHASE2_3_STATUS.md,
+        ACTION_CARD_PHASE2_3b.md, README_PHASE2_3.md, etc.)
+
+AFTER:  3 focused documents + supporting scripts
+        - Easier to navigate
+        - All information in one place
+        - 80% less documentation
+
+See: performance_tuning/CONSOLIDATION_GUIDE.md for complete mapping
+
+================================================================================
+                         TO BEGIN PHASE II.3b
+================================================================================
+
+1. Read: performance_tuning/PHASE_II.md (15 min)
+   → Understand context and what's been done
+
+2. Copy Code: From performance_tuning/PHASE_II_IMPLEMENTATION_CODE.md
+   → Into 3 files (instructions included)
+
+3. Test & Validate:
+   → Run tests (see PHASE_II_IMPLEMENTATION_CODE.md)
+   → Check throughput: 914 → 950-1050 rec/min
+
+Time: 2-3 hours to implement and validate
+
+================================================================================
+                         CURRENT STATUS
+================================================================================
+
+Phase I:     280 → 553.8 rec/min (+97%)        ✅ COMPLETE
+Phase II.1:  553.8 → 959.5 rec/min (+73%)      ✅ COMPLETE
+Phase II.2:  959.5 → 914 rec/min (verified)    ✅ COMPLETE
+Phase II.3a: Profiling & analysis               ✅ COMPLETE
+Phase II.3b: Queue implementation (ready)       🔄 READY
+Phase II.3c: Parameter tuning (optional)        📋 PLANNED
+
+Final Goal: 280 → 1200-1400 rec/min (+250-300%)
+
+================================================================================
+                    NEXT ACTION: BEGIN PHASE II.3b
+================================================================================
+
+Start: performance_tuning/PHASE_II.md
+Code:  performance_tuning/PHASE_II_IMPLEMENTATION_CODE.md
+
+Questions? See CONSOLIDATION_GUIDE.md for documentation map.
+
+================================================================================

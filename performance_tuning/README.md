@@ -1,25 +1,65 @@
-# Performance Tuning Documentation & Test Modules
+## PERFORMANCE TUNING: MASTER DOCUMENTATION
 
-This folder contains all optimization documentation, test modules, and setup guides for the XML Database Extraction System.
+**Status**: Phase II.3a ✅ COMPLETE | Phase II.3b � READY  
+**Current**: 914 rec/min | **Target**: 1000+ rec/min
 
-## 📋 Quick Reference
+---
 
-| Phase | Status | Location | Key Result |
-|-------|--------|----------|-----------|
-| Phase I | ✅ COMPLETE | `phase_1_optimization/` | 553.8 rec/min baseline (4 optimizations, 97/97 tests) |
-| Phase II.1 | ✅ COMPLETE | `phase_2_investigation/` | 959.5 rec/min (batch size 1000 optimal, +73%) |
-| Phase II.2 | ✅ COMPLETE | `PHASE2_2_COMPLETION_SUMMARY.md` | Pooling disabled by default (see `ACTION_CARD_PHASE2_2_COMPLETE.md`) |
-| Phase II.3 | 🔄 READY | TBD | Parallel batch prep (goal: +15-25%) |
+## 📚 3 CORE DOCUMENTS (START HERE)
 
-## 📁 Folder Structure
+### 1. **PHASE_I_BASELINE.md**
+Phase I results: 280 → 553.8 rec/min (+97%)
+- How to run baseline establishment
+- What optimizations were applied
 
-### `phase_1_optimization/`
-Phase I optimization results and documentation. Contains enum caching, pre-parsed types, O(1) XML lookups, and regex caching.
+### 2. **PHASE_II.md** ← READ THIS FIRST
+Complete Phase II context (II.1-2 complete, II.3 ready)
+- All commands to run profiling/benchmarking
+- Current status tracker
+- Phase II.3b implementation path
+- How to validate
 
-**When to use:**
-- Understanding the Phase I baseline optimizations
-- Reference for what was already optimized
-- Replicating setup on new environments
+### 3. **PHASE_II_IMPLEMENTATION_CODE.md**
+Complete code for Phase II.3b (copy/paste ready)
+- 3 files to create/modify
+- Testing steps included
+- Troubleshooting section
+
+---
+
+## ⚡ QUICK COMMANDS
+
+```bash
+# Check current baseline (official measurement)
+python env_prep/establish_baseline.py
+
+# Run production processor with standard config
+python production_processor.py --workers 4 --batch-size 1000
+
+# Run quick test with limit
+python production_processor.py --workers 4 --batch-size 1000 --limit 100 --log-level INFO
+
+# Run tests
+python -m pytest tests/ -v
+```
+
+---
+
+## 📋 BASELINE MEASUREMENT
+
+**Official Baseline**: `env_prep/establish_baseline.py`
+- Runs production_processor multiple times
+- Clears database between runs for clean measurements
+- Reports median throughput + std dev
+- Use for official measurements
+
+**Direct Execution**: `production_processor.py`
+- Main execution engine
+- Use directly for testing/profiling
+- Outputs metrics to `metrics/metrics_TIMESTAMP.json`
+- Add `--log-level INFO` to see worker details
+
+**Note**: The old profiling scripts (`profile_phase2_3*.py`) are not needed - just use `production_processor.py` directly
 
 **Contents:**
 - Phase I completion status
