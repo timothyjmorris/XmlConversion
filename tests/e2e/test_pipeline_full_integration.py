@@ -19,6 +19,7 @@ from pathlib import Path
 import sys
 import pyodbc
 from datetime import datetime
+import json
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -38,6 +39,24 @@ class TestEndToEndIntegration(unittest.TestCase):
         """Set up test database and tables."""
         cls.test_db_path = None
         cls.connection_string = None
+        # Load mapping contract to get the target schema for qualified table names
+        root = Path(__file__).parent.parent.parent
+        mapping_contract_path = root / "config" / "mapping_contract.json"
+        try:
+            with open(mapping_contract_path, 'r', encoding='utf-8') as f:
+                contract = json.load(f)
+                cls.target_schema = contract.get('target_schema', 'dbo') or 'dbo'
+        except Exception:
+            # Fallback to dbo if contract cannot be read
+            cls.target_schema = 'dbo'
+
+        @classmethod
+        def _qualify_table(inner_cls, table_name: str) -> str:
+            return f"[{inner_cls.target_schema}].[{table_name}]"
+
+        # Attach helper to class so instance methods can call self._qualify_table(...)
+        cls._qualify_table = _qualify_table
+
         cls.setup_test_database()
     
     @classmethod
@@ -97,15 +116,8 @@ class TestEndToEndIntegration(unittest.TestCase):
             with pyodbc.connect(self.connection_string) as conn:
                 cursor = conn.cursor()
                 
-                # Clean up in reverse dependency order to avoid FK constraint issues
-                cursor.execute("DELETE FROM contact_employment WHERE con_id IN (738936, 738937)")
-                cursor.execute("DELETE FROM contact_address WHERE con_id IN (738936, 738937)")
-                cursor.execute("DELETE FROM contact_base WHERE con_id IN (738936, 738937)")
-                cursor.execute("DELETE FROM app_solicited_cc WHERE app_id = 443306")
-                cursor.execute("DELETE FROM app_transactional_cc WHERE app_id = 443306")
-                cursor.execute("DELETE FROM app_pricing_cc WHERE app_id = 443306")
-                cursor.execute("DELETE FROM app_operational_cc WHERE app_id = 443306")
-                cursor.execute("DELETE FROM app_base WHERE app_id = 443306")
+                # Clean up test app (FK cascade delete)
+                cursor.execute(f"DELETE FROM {self._qualify_table('app_base')} WHERE app_id = 443306")
                 
                 conn.commit()
                 print("[CLEANUP] Cleaned up existing test data for app_id 443306")
@@ -179,24 +191,24 @@ class TestEndToEndIntegration(unittest.TestCase):
             cursor = conn.cursor()
             
             # Check app_base table (not "application")
-            cursor.execute("SELECT COUNT(*) FROM app_base WHERE app_id = 443306")
+            cursor.execute(f"SELECT COUNT(*) FROM {self._qualify_table('app_base')} WHERE app_id = 443306")
             app_count = cursor.fetchone()[0]
             self.assertEqual(app_count, 1, "Should have 1 app_base record")
             
-            cursor.execute("SELECT app_id, receive_date FROM app_base WHERE app_id = 443306")
+            cursor.execute(f"SELECT app_id, receive_date FROM {self._qualify_table('app_base')} WHERE app_id = 443306")
             app_record = cursor.fetchone()
             self.assertEqual(app_record[0], 443306, "Should have correct app_id")
             
             print(f"[OK] app_base verified: {app_count} record, app_id={app_record[0]}")
             
             # Check contact_base table (not "contact")
-            cursor.execute("SELECT COUNT(*) FROM contact_base WHERE app_id = 443306")
+            cursor.execute(f"SELECT COUNT(*) FROM {self._qualify_table('contact_base')} WHERE app_id = 443306")
             contact_count = cursor.fetchone()[0]
             self.assertEqual(contact_count, 2, "Should have 2 contact records")
             
-            cursor.execute("""
+            cursor.execute(f"""
                 SELECT con_id, contact_type_enum, first_name 
-                FROM contact_base 
+                FROM {self._qualify_table('contact_base')} 
                 WHERE app_id = 443306
                 ORDER BY con_id
             """)
@@ -217,9 +229,9 @@ class TestEndToEndIntegration(unittest.TestCase):
             print(f"   - AUTHU Contact: con_id={authu_contact[0]}, name={pr_contact[2]}")
             
             # Verify curr_address_only mapping for home_phone and cell_phone on PR contact
-            cursor.execute("""
+            cursor.execute(f"""
                 SELECT home_phone, cell_phone 
-                FROM contact_base 
+                FROM {self._qualify_table('contact_base')} 
                 WHERE con_id = 738936
             """)
             phone_record = cursor.fetchone()
@@ -236,7 +248,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             self.assertEqual(cell_phone.strip(), '5555555555', f"cell_phone should be '5555555555' but got '{cell_phone}'")
             
             # Check app_operational_cc table for calculated fields
-            cursor.execute("SELECT cb_score_factor_type_1, cb_score_factor_type_2, assigned_to, backend_fico_grade, cb_score_factor_code_1, meta_url, priority_enum, housing_monthly_payment FROM app_operational_cc WHERE app_id = 443306")
+            cursor.execute(f"SELECT cb_score_factor_type_1, cb_score_factor_type_2, assigned_to, backend_fico_grade, cb_score_factor_code_1, meta_url, priority_enum, housing_monthly_payment FROM {self._qualify_table('app_operational_cc')} WHERE app_id = 443306")
             operational_record = cursor.fetchone()
             self.assertIsNotNone(operational_record, "Should have app_operational_cc record")
             
@@ -283,10 +295,10 @@ class TestEndToEndIntegration(unittest.TestCase):
             self.assertEqual(float(housing_monthly_payment), 893.55, f"housing_monthly_payment should be 893.55 but got {housing_monthly_payment}")
             
             # Verify calculated fields in contact_address table
-            cursor.execute("""
+            cursor.execute(f"""
                 SELECT ca.con_id, ca.city, ca.months_at_address 
-                FROM contact_address ca
-                INNER JOIN contact_base cb ON ca.con_id = cb.con_id
+                FROM {self._qualify_table('contact_address')} ca
+                INNER JOIN {self._qualify_table('contact_base')} cb ON ca.con_id = cb.con_id
                 WHERE cb.app_id = 443306 
                 ORDER BY ca.con_id, ca.months_at_address
             """)
@@ -306,10 +318,10 @@ class TestEndToEndIntegration(unittest.TestCase):
             print(f"[OK] contact_address calculated fields verified: {len(address_records)} records with months_at_address={actual_months}")
             
             # Verify calculated fields in contact_employment table
-            cursor.execute("""
+            cursor.execute(f"""
                 SELECT ce.con_id, ce.business_name, ce.monthly_salary, ce.months_at_job 
-                FROM contact_employment ce
-                INNER JOIN contact_base cb ON ce.con_id = cb.con_id
+                FROM {self._qualify_table('contact_employment')} ce
+                INNER JOIN {self._qualify_table('contact_base')} cb ON ce.con_id = cb.con_id
                 WHERE cb.app_id = 443306 
                 ORDER BY ce.con_id
             """)

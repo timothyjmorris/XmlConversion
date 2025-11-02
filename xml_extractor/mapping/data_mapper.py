@@ -6,8 +6,17 @@ data into relational database records using a contract-driven architecture. The 
 as the central orchestration component in the XML-to-database pipeline, ensuring data integrity
 through schema-derived validation and transformation rules.
 
+SCHEMA ISOLATION (Contract-Driven):
+    The MappingContract specifies target_schema (e.g., "sandbox" or "dbo"), which drives
+    all downstream database operations in MigrationEngine:
+    - The DataMapper extracts and provides target_schema to MigrationEngine
+    - MigrationEngine uses target_schema for all SQL operations: INSERT, SELECT, DELETE
+    - Exception: Source table (app_xml) always remains in [dbo] schema
+    - This enables safe isolation between development, testing, and production environments
+
 Key Architectural Components:
 - Contract-Driven Validation: Uses schema-derived metadata (nullable/required/default_value) from mapping contracts
+- Schema-Aware Output: Provides target_schema from contract to MigrationEngine for qualified table names
 - Multi-Stage Transformation: Handles complex mapping types with proper precedence and chaining
 - Context-Aware Processing: Builds flattened XML context for calculated field evaluation
 - Contact Deduplication: Implements 'last valid element' approach for contact data extraction
@@ -16,8 +25,9 @@ Key Architectural Components:
 
 Integration Points:
 - ConfigManager: Centralized configuration and contract loading
+- MappingContract: Source of target_schema and all data mapping rules
 - CalculatedFieldEngine: Expression evaluation for derived data
-- MigrationEngine: Bulk insertion of validated transformation results
+- MigrationEngine: Receives transformed data with target_schema for bulk insertion
 - XMLParser: Flattened XML structure processing
 - Validation Framework: Pre-flight and post-transformation data integrity checks
 
@@ -39,10 +49,12 @@ Mapping Types Supported:
 
 The engine processes XML data through a multi-stage pipeline:
 1. Pre-flight validation (app_id and contact requirements)
-2. Contact extraction and deduplication (last valid element approach)
-3. Field mapping application with context building for calculated fields
-4. Data type transformation with database-specific handling
-5. Record creation with intelligent NULL vs default value decisions
+2. Contract loading with target_schema extraction
+3. Contact extraction and deduplication (last valid element approach)
+4. Field mapping application with context building for calculated fields
+5. Data type transformation with database-specific handling
+6. Record creation with intelligent NULL vs default value decisions
+7. Prepared output for MigrationEngine with target_schema forwarding
 """
 
 import logging
@@ -70,7 +82,22 @@ class DataMapper(DataMapperInterface):
     implementing a contract-driven architecture where schema-derived metadata ensures data
     integrity throughout the transformation process. It handles the complex orchestration of:
 
+    SCHEMA ISOLATION & TARGET_SCHEMA:
+        Each MappingContract specifies target_schema (e.g., "sandbox" or "dbo"):
+        - Loaded during initialization from mapping_contract.json
+        - Provided to MigrationEngine for all SQL operations
+        - Enables complete schema isolation between environments
+        - Source table (app_xml) always queries from [dbo]
+        - Target tables use [{target_schema}].[table_name] format downstream
+        
+        This contract-driven approach means:
+        - No environment variable pollution
+        - Each pipeline is self-contained
+        - Testing, staging, and production can coexist safely
+
+    Core Responsibilities:
     - Loading and applying mapping contracts with schema-derived validation rules
+    - Extracting target_schema from contract and passing to MigrationEngine
     - Building flattened XML context data for calculated field evaluation
     - Applying multiple mapping types with proper precedence and chaining
     - Contact-specific data extraction with deduplication logic ('last valid element' approach)

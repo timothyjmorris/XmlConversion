@@ -6,6 +6,18 @@ Optimized for running on production SQL Server with comprehensive monitoring
 and performance optimization. Designed to be run from command line with
 minimal overhead and maximum throughput.
 
+SCHEMA ISOLATION (Contract-Driven):
+    The target database schema is determined by MappingContract.target_schema:
+    - Loads mapping_contract.json which specifies target_schema (e.g., "sandbox" or "dbo")
+    - All processing output (target tables, processing_log) goes to target_schema
+    - Source table (app_xml) always remains in dbo schema (read-only access)
+    - This enables safe, isolated processing pipelines for development/staging/production
+    
+    Example:
+    - target_schema="sandbox" → All inserts go to [sandbox].[app_base], [sandbox].[contact_base], etc.
+    - target_schema="dbo" → All inserts go to [dbo].[app_base], [dbo].[contact_base], etc.
+    - processing_log also uses target_schema: [sandbox].[processing_log]
+
 Usage:
     Windows Auth:
         python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 50 --limit 50 --log-level WARNING
@@ -56,6 +68,7 @@ Usage:
 
 Features:
 - Command line configuration
+- Contract-driven schema isolation
 - Production-optimized logging
 - Real-time progress monitoring
 - Performance metrics export
@@ -80,10 +93,58 @@ sys.path.insert(0, str(project_root))
 from xml_extractor.processing.parallel_coordinator import ParallelCoordinator
 from xml_extractor.database.migration_engine import MigrationEngine
 from xml_extractor.config.config_manager import get_config_manager
+from xml_extractor.interfaces import MappingContract
 
 
 class ProductionProcessor:
-    """Production-optimized XML processor with monitoring and performance tracking."""
+    """
+    Production-optimized XML processor with contract-driven schema isolation.
+    
+    ARCHITECTURE - Contract-Driven Schema Isolation:
+    
+        The ProductionProcessor implements a contract-driven schema isolation pattern where
+        all database operations respect the target_schema specified in MappingContract:
+        
+        1. Source Access (Read-Only - Always [dbo]):
+           - app_xml table (source XML data): [dbo].[app_xml] (hardcoded schema)
+           - Used to extract XML documents for processing
+           - Never written to by processor; read-only access
+        
+        2. Target Output (Schema-Isolated - Uses target_schema):
+           - All output tables (app_base, contact_base, etc.): [{target_schema}].[table_name]
+           - Example: target_schema="sandbox" → [sandbox].[app_base], [sandbox].[contact_base]
+           - Example: target_schema="dbo" → [dbo].[app_base], [dbo].[contact_base]
+           - Controlled by MappingContract.target_schema from mapping_contract.json
+        
+        3. Metadata Logging (Schema-Isolated - Uses target_schema):
+           - Processing log: [{target_schema}].[processing_log]
+           - Tracks success/failure of each application processed
+           - Enables resume capability and duplicate prevention
+           - Schema matches target tables for consistency
+        
+    Benefits of Contract-Driven Design:
+        - Multiple processing pipelines can coexist (dev, staging, production)
+        - Each pipeline can isolate data in separate schemas
+        - No environment variables or configuration pollution
+        - Clear, auditable data lineage through schema and processing_log
+        - Supports blue/green deployments and schema versioning
+    
+    Key Responsibilities:
+        1. Load MappingContract (via ConfigManager) at initialization
+        2. Extract XML from [dbo].[app_xml] (hardcoded source schema)
+        3. Coordinate parallel processing via ParallelCoordinator
+        4. Log results to [{target_schema}].[processing_log]
+        5. Report metrics and performance tracking
+        6. Support resume capability via processing_log queries
+    
+    Integration with MigrationEngine:
+        The MigrationEngine (final insertion stage) also implements contract-driven
+        schema isolation:
+        - Receives target_schema from same MappingContract
+        - All INSERT operations qualified with [{target_schema}].[table_name]
+        - Ensures data consistency across components
+        - See: xml_extractor.database.migration_engine.MigrationEngine
+    """
     
     def __init__(self, server: str, database: str, username: str = None, password: str = None,
                  workers: int = 4, batch_size: int = 1000, log_level: str = "INFO",
@@ -133,8 +194,12 @@ class ProductionProcessor:
         # Initialize components
         self.mapping_contract_path = str(project_root / "config" / "mapping_contract.json")
         
-        # Load target schema from mapping contract (with dbo default)
-        self.target_schema = self._load_target_schema()
+        # Load mapping contract using config_manager (contract-driven schema isolation)
+        self.config_manager = get_config_manager()
+        self.mapping_contract = self.config_manager.load_mapping_contract()
+        
+        # Extract target schema from contract (with dbo default)
+        self.target_schema = self.mapping_contract.target_schema if self.mapping_contract else 'dbo'
         
         self.logger.info(f"ProductionProcessor initialized:")
         self.logger.info(f"  Server: {server}")
@@ -265,22 +330,6 @@ class ProductionProcessor:
             self.logger.error(f"Database connection failed: {e}")
             return False
     
-    def _load_target_schema(self) -> str:
-        """
-        Load target schema from mapping contract.
-        
-        Returns:
-            Target schema name (default: 'dbo' if not specified in contract)
-        """
-        try:
-            with open(self.mapping_contract_path, 'r', encoding='utf-8') as f:
-                contract = json.load(f)
-                schema = contract.get('target_schema', 'dbo')
-                return schema
-        except Exception as e:
-            self.logger.warning(f"Failed to load target_schema from mapping contract: {e}, using default 'dbo'")
-            return 'dbo'
-    
     def get_xml_records(self, limit: Optional[int] = None, last_app_id: int = 0, exclude_failed: bool = True) -> List[Tuple[int, str]]:
         """
         Extract XML records from app_xml table.
@@ -311,12 +360,13 @@ class ProductionProcessor:
                 """.format(last_app_id=last_app_id)
                 
                 if exclude_failed:
-                    # processing_log table should already exist
+                    # processing_log table uses target_schema from MappingContract
+                    # Like all target tables, it's schema-isolated (e.g., [sandbox].[processing_log])
                     
-                    base_conditions += """
+                    base_conditions += f"""
                         AND NOT EXISTS (
                             SELECT 1 
-                            FROM processing_log pl 
+                            FROM [{self.target_schema}].[processing_log] pl 
                             WHERE 
                                 pl.app_id = ax.app_id 
                                 AND pl.status IN ('success', 'failed')
@@ -326,8 +376,8 @@ class ProductionProcessor:
                 if limit:
                     query = f"""
                         SELECT ax.app_id, ax.xml 
-                        FROM app_xml AS ax
-                        LEFT JOIN app_base AS ab ON ax.app_id = ab.app_id
+                        FROM [dbo].[app_xml] AS ax
+                        LEFT JOIN [{self.target_schema}].[app_base] AS ab ON ax.app_id = ab.app_id
                         {base_conditions}
                         ORDER BY ax.app_id
                         OFFSET 0 ROWS
@@ -336,8 +386,8 @@ class ProductionProcessor:
                 else:
                     query = f"""
                         SELECT ax.app_id, ax.xml 
-                        FROM app_xml AS ax
-                        LEFT JOIN app_base AS ab ON ax.app_id = ab.app_id
+                        FROM [dbo].[app_xml] AS ax
+                        LEFT JOIN [{self.target_schema}].[app_base] AS ab ON ax.app_id = ab.app_id
                         {base_conditions}
                         ORDER BY ax.app_id
                     """
@@ -373,15 +423,21 @@ class ProductionProcessor:
     
 
     def _log_processing_result(self, app_id: int, success: bool, failure_reason: str = None) -> None:
-        """Log processing result to prevent re-processing of failed records."""
+        """
+        Log processing result to prevent re-processing of failed records.
+        
+        Inserts into [{target_schema}].[processing_log] as determined by MappingContract.
+        """
         try:
             migration_engine = MigrationEngine(self.connection_string)
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 
                 status = 'success' if success else 'failed'
-                cursor.execute("""
-                    INSERT INTO processing_log (app_id, status, failure_reason, session_id)
+                # Use target_schema for processing_log (schema-isolated like all target tables)
+                qualified_log_table = f"[{self.target_schema}].[processing_log]"
+                cursor.execute(f"""
+                    INSERT INTO {qualified_log_table} (app_id, status, failure_reason, session_id)
                     VALUES (?, ?, ?, ?)
                 """, (app_id, status, failure_reason, self.session_id))
                 
@@ -589,7 +645,8 @@ class ProductionProcessor:
             migration_engine = MigrationEngine(self.connection_string)
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
-                cursor.execute("SELECT COUNT(*) FROM app_xml WHERE xml IS NOT NULL AND DATALENGTH(xml) > 100")
+                # Source table (app_xml) always in [dbo] schema (read-only access)
+                cursor.execute("SELECT COUNT(*) FROM [dbo].[app_xml] WHERE xml IS NOT NULL AND DATALENGTH(xml) > 100")
                 total_records = cursor.fetchone()[0]
                 
                 if limit:

@@ -1,7 +1,7 @@
 {
   "source_table": "app_xml",
   "source_column": "xml",
-  "target_schema": "dbo",
+  "target_schema": "sandbox",
   "xml_root_element": "Provenir",
   "key_identifiers": {
     "app_id": {

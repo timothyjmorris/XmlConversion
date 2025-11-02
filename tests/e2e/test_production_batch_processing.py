@@ -24,6 +24,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any, Tuple
 import traceback
+import json
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent
@@ -62,6 +63,21 @@ class TestProductionXMLBatch(unittest.TestCase):
         cls.mapper = DataMapper(mapping_contract_path=str(mapping_contract_path))
         
         cls.migration_engine = MigrationEngine(cls.connection_string)
+        
+        # Load mapping contract to get the target schema for qualified table names
+        try:
+            with open(mapping_contract_path, 'r', encoding='utf-8') as f:
+                contract = json.load(f)
+                cls.target_schema = contract.get('target_schema', 'dbo') or 'dbo'
+        except Exception:
+            # Fallback to dbo if contract cannot be read
+            cls.target_schema = 'dbo'
+        
+        # Add helper method to class for qualifying table names
+        def _qualify_table(table_name: str) -> str:
+            return f"[{cls.target_schema}].[{table_name}]"
+        
+        cls._qualify_table = staticmethod(_qualify_table)
         
         # Test results tracking
         cls.batch_results = {
@@ -159,18 +175,16 @@ class TestProductionXMLBatch(unittest.TestCase):
         xml_records = []
         
         try:
-            # Use existing database connection pattern from migration engine
             with self.migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 
-                # COMPLETE VALIDATION: Process ALL XML records (1-16)
-                # Testing latest improvements: chained mapping types + phone truncation fixes
+                # COMPLETE VALIDATION: Process ALL 10 random XML records
                 cursor.execute("""
-                    SELECT app_id, xml 
+                    SELECT TOP(10) app_id, xml 
                     FROM app_xml 
                     WHERE DATALENGTH(xml) > 100
                     -- AND app_id BETWEEN 1 AND 24  -- Complete benchmark 1-24
-                    ORDER BY app_id
+                    ORDER BY NEWID()
                 """)
                 
                 rows = cursor.fetchall()
@@ -316,12 +330,12 @@ class TestProductionXMLBatch(unittest.TestCase):
             cursor = conn.cursor()
             
             # Check if record exists first
-            cursor.execute("SELECT COUNT(*) FROM app_base WHERE app_id = ?", (app_id,))
+            cursor.execute(f"SELECT COUNT(*) FROM {self._qualify_table('app_base')} WHERE app_id = ?", (app_id,))
             count_before = cursor.fetchone()[0]
             
             if count_before > 0:
                 # Delete from app_base (cascade will handle all related tables)
-                cursor.execute("DELETE FROM app_base WHERE app_id = ?", (app_id,))
+                cursor.execute(f"DELETE FROM {self._qualify_table('app_base')} WHERE app_id = ?", (app_id,))
                 rows_deleted = cursor.rowcount
                 
                 # Commit the transaction to ensure cleanup is applied

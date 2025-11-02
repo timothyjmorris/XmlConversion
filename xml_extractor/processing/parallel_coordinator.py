@@ -4,6 +4,17 @@ Parallel Processing Coordinator for XML extraction system.
 This module provides multiprocessing capabilities to process XML records
 in parallel across multiple CPU cores for improved throughput.
 
+SCHEMA ISOLATION (Contract-Driven):
+    The target_schema from MappingContract flows through the entire pipeline:
+    - Loaded from mapping_contract.json by each worker process
+    - Passed to DataMapper for transformation
+    - Used by MigrationEngine for schema-qualified SQL operations
+    - All worker processes respect the same contract's target_schema
+    - Results: All inserts go to [{target_schema}].[table_name] consistently
+    
+    This ensures every worker process, regardless of parallelism, writes to
+    the same schema as defined by the contract (e.g., "sandbox" or "dbo").
+
 ARCHITECTURE & RESPONSIBILITIES
 ================================
 
@@ -13,31 +24,35 @@ The ParallelCoordinator is a WORKER POOL MANAGER, not a connection manager. Its 
    - Creates N independent worker processes (one per CPU core)
    - Each worker is COMPLETELY ISOLATED (separate Python interpreter, separate memory space)
    - Coordinates work distribution: assigns XML records to workers
+   - Each worker loads the same MappingContract (with target_schema) independently
 
 2. NOT CONNECTION MANAGEMENT (important!)
    - Does NOT manage database connections directly
    - Each worker INDEPENDENTLY creates its own connections via MigrationEngine
    - Each worker has its own connection(s) to the database
    - Multiple workers = multiple independent connections to SQL Server
+   - All workers write to the same target_schema (from contract, not environment variables)
 
 3. DATA FLOW
    
    ProductionProcessor (main process)
-   ├─ Loads XML records from app_xml table
-   ├─ Creates ParallelCoordinator (with connection string passed to workers)
+   ├─ Loads XML records from [dbo].[app_xml] table
+   ├─ Creates ParallelCoordinator (passes mapping_contract_path to workers)
    └─ Calls process_xml_batch(xml_records)
       └─ ParallelCoordinator.process_xml_batch()
          ├─ Creates mp.Pool(num_workers=4)  ← Spawns 4 independent worker processes
          ├─ For each XML record:
          │  └─ Worker process (independent interpreter):
          │     ├─ _init_worker() [runs once per worker]
-         │     │  └─ Creates its own MigrationEngine(connection_string)
+         │     │  ├─ Loads MappingContract from mapping_contract.json
+         │     │  ├─ Extracts target_schema (e.g., "sandbox")
+         │     │  └─ Creates its own MigrationEngine(connection_string, target_schema)
          │     │     └─ Each worker gets ONE connection to SQL Server
          │     │
          │     └─ _process_work_item() [runs for each assigned XML]
          │        ├─ Parse XML (in-memory)
-         │        ├─ Map to database schema (in-memory)
-         │        └─ Insert via own MigrationEngine connection
+         │        ├─ Map to database schema using target_schema
+         │        └─ Insert via own MigrationEngine with [{target_schema}].[table_name]
          │
          └─ Results aggregated back to main process
 

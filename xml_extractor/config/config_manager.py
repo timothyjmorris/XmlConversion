@@ -53,7 +53,10 @@ class DatabaseConfig:
         command_timeout = int(os.environ.get('XML_EXTRACTOR_DB_COMMAND_TIMEOUT', cls.command_timeout))
         mars_connection = os.environ.get('XML_EXTRACTOR_DB_MARS_CONNECTION', 'true').lower() == 'true'
         charset = os.environ.get('XML_EXTRACTOR_DB_CHARSET', cls.charset)
-        schema_prefix = os.environ.get('XML_EXTRACTOR_DB_SCHEMA_PREFIX', cls.schema_prefix)
+        # NOTE: Schema prefix is now CONTRACT-DRIVEN via MappingContract.target_schema
+        # Each mapping contract specifies its target schema (e.g., "sandbox" or "dbo")
+        # Do NOT use XML_EXTRACTOR_DB_SCHEMA_PREFIX environment variable - it's deprecated
+        schema_prefix = ""  # Kept empty; use MappingContract.target_schema instead
         connection_pooling = os.environ.get('XML_EXTRACTOR_DB_CONNECTION_POOLING', 'true').lower() == 'true'
         packet_size = int(os.environ.get('XML_EXTRACTOR_DB_PACKET_SIZE', cls.packet_size))
         
@@ -531,6 +534,7 @@ class ConfigManager(ConfigurationManagerInterface):
             source_table = contract_data.get('source_table', '')
             source_column = contract_data.get('source_column', '')
             xml_root_element = contract_data.get('xml_root_element', '')
+            target_schema = contract_data.get('target_schema', 'dbo')  # Contract-driven schema isolation
             
             # Parse field mappings
             mappings = []
@@ -568,6 +572,7 @@ class ConfigManager(ConfigurationManagerInterface):
                 source_table=source_table,
                 source_column=source_column,
                 xml_root_element=xml_root_element,
+                target_schema=target_schema,  # Contract-driven schema from JSON
                 mappings=mappings,
                 relationships=relationships
             )

@@ -6,23 +6,33 @@ XML Database Extraction System's contract-driven data pipeline. The MigrationEng
 as the final stage of the extraction pipeline, receiving pre-validated, contract-compliant
 relational data from the DataMapper and performing optimized bulk insert operations.
 
+SCHEMA ISOLATION (Contract-Driven):
+    The target database schema is determined by MappingContract.target_schema, allowing
+    different processing pipelines to isolate their target tables:
+    - Example: target_schema="sandbox" → all inserts go to [sandbox].[table_name]
+    - Example: target_schema="dbo" → all inserts go to [dbo].[table_name]
+    - Source table (app_xml) always remains in dbo schema regardless of target_schema
+    - This enables safe schema-isolated testing and production separation
+
 Architecture Integration:
 - Receives processed record sets from DataMapper.apply_mapping_contract()
 - Performs bulk insertion using SQL Server-specific optimizations
 - Provides transaction safety and progress tracking for large-scale operations
 - Reports metrics and errors back to CLI tools and batch processors
+- Uses target_schema from MappingContract for schema-qualified table names
 
 Key Responsibilities:
 1. Contract-Compliant Bulk Insertion: Inserts only columns specified by mapping contracts
 2. Performance Optimization: Uses fast_executemany with intelligent fallbacks
 3. Transaction Management: Ensures data consistency with automatic rollback on failures
 4. Progress Reporting: Real-time metrics for CLI monitoring and batch processing
-5. Schema Compatibility: Validates table existence (columns pre-validated by DataMapper)
+5. Schema-Qualified Operations: All SQL uses [{target_schema}].[table_name] format
 
 Recent Architecture Changes:
 - Simplified column handling: DataMapper now provides exact column sets per contract rules
 - Removed dynamic column filtering: Contract-driven approach ensures data compatibility
 - Enhanced error recovery: Intelligent fallback from fast_executemany to individual executes
+- Schema Isolation: Target schema driven by MappingContract, not environment variables
 - Streamlined validation: Focus on table existence rather than column compatibility
 """
 
@@ -46,15 +56,30 @@ class MigrationEngine(MigrationEngineInterface):
     insert operations into SQL Server. This engine embodies the "contract-first" architecture
     where data compatibility is guaranteed by upstream components.
 
+    SCHEMA ISOLATION & TARGET_SCHEMA:
+        All database operations use the target_schema from MappingContract:
+        - Inserts: INSERT INTO [{target_schema}].[table_name] (...)
+        - Queries: SELECT FROM [{target_schema}].[table_name] WHERE ...
+        - Deletes: DELETE FROM [{target_schema}].[table_name]
+        - Exception: Source table (app_xml) always queries from [dbo].[app_xml]
+        
+        This contract-driven approach allows:
+        - Sandbox schema for testing/staging
+        - Production schema for live data
+        - Complete isolation between environments
+        - No environment variable pollution
+
     Pipeline Position:
     1. Receives contract-compliant record sets from DataMapper.apply_mapping_contract()
-    2. Performs bulk insertion with SQL Server optimizations
-    3. Reports progress and metrics to CLI/batch processors
-    4. Ensures transaction safety and error recovery
+    2. Extracts target_schema from MappingContract (e.g., "sandbox" or "dbo")
+    3. Performs bulk insertion with SQL Server optimizations using schema-qualified names
+    4. Reports progress and metrics to CLI/batch processors
+    5. Ensures transaction safety and error recovery
 
     Key Architectural Principles:
-    - Contract-Driven: Relies on DataMapper for column selection and data validation
+    - Contract-Driven: Schema, columns, and validation all from MappingContract
     - Performance-Focused: Optimized for high-throughput bulk operations
+    - Schema-Isolated: Each contract controls its target schema independently
     - Transaction-Safe: Comprehensive error handling with automatic rollback
     - Progress-Aware: Real-time metrics for monitoring and batch processing
 
@@ -62,6 +87,7 @@ class MigrationEngine(MigrationEngineInterface):
     - Simplified column handling: DataMapper provides exact column sets per contract rules
     - Removed dynamic filtering: Contract-driven approach eliminates need for runtime column validation
     - Enhanced bulk insertion: Intelligent fast_executemany with automatic fallback strategies
+    - Schema Isolation Implementation: All operations now use target_schema from contract
     - Streamlined schema validation: Focus on table existence (columns pre-validated upstream)
 
     Performance Optimizations:
@@ -73,6 +99,7 @@ class MigrationEngine(MigrationEngineInterface):
 
     Integration Points:
     - DataMapper: Receives processed tables with contract-compliant column sets
+    - MappingContract: Source of truth for target_schema and data mappings
     - CLI Tools: Provides progress tracking and error reporting
     - Batch Processors: Supports high-volume production processing
     - Configuration System: Uses centralized database and processing configuration
@@ -109,6 +136,9 @@ class MigrationEngine(MigrationEngineInterface):
         self.connection_string = connection_string or self.config_manager.get_database_connection_string()
         self.batch_size = batch_size or processing_config.batch_size
         
+        # Load target_schema from MappingContract (contract-driven schema isolation)
+        self.target_schema = self._load_target_schema_from_contract()
+        
         self._connection = None
         self._transaction_active = False
         
@@ -119,8 +149,49 @@ class MigrationEngine(MigrationEngineInterface):
         
         self.logger.info(f"MigrationEngine initialized with batch_size={self.batch_size}")
         self.logger.debug(f"Using database server: {self.config_manager.database_config.server}")
-        if self.config_manager.database_config.schema_prefix:
-            self.logger.info(f"Using schema prefix: {self.config_manager.database_config.schema_prefix}")
+        self.logger.info(f"Contract-driven target_schema: {self.target_schema}")
+    
+    def _load_target_schema_from_contract(self) -> str:
+        """
+        Load target schema from MappingContract.
+        
+        Contract-Driven Architecture:
+        - Reads target_schema from mapping_contract.json via ConfigManager
+        - Falls back to 'dbo' if contract cannot be loaded
+        - Enables schema isolation for different processing environments
+        
+        Returns:
+            Target schema name (e.g., "sandbox", "dbo")
+        """
+        try:
+            mapping_contract = self.config_manager.load_mapping_contract()
+            target_schema = mapping_contract.target_schema if mapping_contract else None
+            return target_schema or 'dbo'
+        except Exception as e:
+            self.logger.warning(f"Failed to load target_schema from contract, defaulting to 'dbo': {e}")
+            return 'dbo'
+    
+    def _get_qualified_table_name(self, table_name: str) -> str:
+        """
+        Get schema-qualified table name for contract-driven SQL operations.
+        
+        Contract-Driven Schema Isolation:
+        - All target table names are qualified with target_schema from MappingContract
+        - Format: [target_schema].[table_name]
+        - Example: [sandbox].[app_base] or [dbo].[contact_base]
+        - Source table (app_xml) always remains in [dbo].[app_xml]
+        
+        Args:
+            table_name: Unqualified table name (e.g., "app_base")
+            
+        Returns:
+            Schema-qualified table name (e.g., "[sandbox].[app_base]")
+        """
+        # Source table always stays in dbo regardless of target_schema
+        if table_name == 'app_xml':
+            return '[dbo].[app_xml]'
+        
+        return f'[{self.target_schema}].[{table_name}]'
         
     @contextmanager
     def get_connection(self):
@@ -232,7 +303,8 @@ class MigrationEngine(MigrationEngineInterface):
                     con_ids = [record.get('con_id') for record in records if record.get('con_id')]
                     if con_ids:
                         placeholders = ','.join('?' for _ in con_ids)
-                        query = f"SELECT con_id FROM contact_base WITH (NOLOCK) WHERE con_id IN ({placeholders})"
+                        qualified_table = self._get_qualified_table_name('contact_base')
+                        query = f"SELECT con_id FROM {qualified_table} WITH (NOLOCK) WHERE con_id IN ({placeholders})"
                         cursor.execute(query, con_ids)
                         existing_con_ids = {row[0] for row in cursor.fetchall()}
                         
@@ -264,7 +336,8 @@ class MigrationEngine(MigrationEngineInterface):
                             conditions.append("(con_id = ? AND address_type_enum = ?)")
                             params.extend([con_id, addr_type])
                         
-                        query = f"SELECT con_id, address_type_enum FROM contact_address WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
+                        qualified_table = self._get_qualified_table_name('contact_address')
+                        query = f"SELECT con_id, address_type_enum FROM {qualified_table} WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
                         cursor.execute(query, params)
                         existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
                         
@@ -296,7 +369,8 @@ class MigrationEngine(MigrationEngineInterface):
                             conditions.append("(con_id = ? AND employment_type_enum = ?)")
                             params.extend([con_id, emp_type])
                         
-                        query = f"SELECT con_id, employment_type_enum FROM contact_employment WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
+                        qualified_table = self._get_qualified_table_name('contact_employment')
+                        query = f"SELECT con_id, employment_type_enum FROM {qualified_table} WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
                         cursor.execute(query, params)
                         existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
                         
@@ -385,8 +459,8 @@ class MigrationEngine(MigrationEngineInterface):
             with self.get_connection() as conn:
                 cursor = conn.cursor()
 
-                # Get qualified table name with schema prefix
-                qualified_table_name = self.config_manager.get_qualified_table_name(table_name)
+                # Get schema-qualified table name using contract-driven target_schema
+                qualified_table_name = self._get_qualified_table_name(table_name)
 
                 # Enable IDENTITY_INSERT if needed
                 if enable_identity_insert:
@@ -499,7 +573,7 @@ class MigrationEngine(MigrationEngineInterface):
                 try:
                     with self.get_connection() as conn:
                         cursor = conn.cursor()
-                        qualified_table_name = self.config_manager.get_qualified_table_name(table_name)
+                        qualified_table_name = self._get_qualified_table_name(table_name)
                         cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
                         self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
                 except:
@@ -533,7 +607,7 @@ class MigrationEngine(MigrationEngineInterface):
                 try:
                     with self.get_connection() as conn:
                         cursor = conn.cursor()
-                        qualified_table_name = self.config_manager.get_qualified_table_name(table_name)
+                        qualified_table_name = self._get_qualified_table_name(table_name)
                         cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
                         self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
                 except:

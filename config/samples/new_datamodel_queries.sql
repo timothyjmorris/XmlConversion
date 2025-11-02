@@ -2,17 +2,17 @@
 select top 10 app_id, cast(xml as xml) from app_xml order by app_id desc
 
 
-select top 10 * from app_base              order by app_id desc
-select top 10 * from app_operational_cc    order by app_id desc
-select top 10 * from app_pricing_cc        order by app_id desc
-select top 10 * from app_solicited_cc      order by app_id desc
-select top 10 * from app_transactional_cc  order by app_id desc
-select top 10 * from contact_base          order by app_id desc
-select top 10 * from contact_address       order by con_id desc
-select top 10 * from contact_employment    order by con_id desc 
+select top 10 * from  sandbox.app_base              order by app_id desc
+select top 10 * from  sandbox.app_operational_cc    order by app_id desc
+select top 10 * from  sandbox.app_pricing_cc        order by app_id desc
+select top 10 * from  sandbox.app_solicited_cc      order by app_id desc
+select top 10 * from  sandbox.app_transactional_cc  order by app_id desc
+select top 10 * from  sandbox.contact_base          order by app_id desc
+select top 10 * from  sandbox.contact_address       order by con_id desc
+select top 10 * from  sandbox.contact_employment    order by con_id desc 
 
 select top 100 * from app_xml
-select * from app_base
+select * from  sandbox.app_base
 
 
 
@@ -20,51 +20,51 @@ select * from app_base
 
 select count(*) from app_xml;
 
-select count(*) from app_base;
-select count(*) from app_operational_cc;
-select count(*) from app_pricing_cc;
-select count(*) from app_solicited_cc;
-select count(*) from app_transactional_cc;
-select count(*) from contact_base;
-select count(*) from contact_address;
-select count(*) from contact_employment;
+select count(*) from  sandbox.app_base;
+select count(*) from  sandbox.app_operational_cc;
+select count(*) from  sandbox.app_pricing_cc;
+select count(*) from  sandbox.app_solicited_cc;
+select count(*) from  sandbox.app_transactional_cc;
+select count(*) from  sandbox.contact_base;
+select count(*) from  sandbox.contact_address;
+select count(*) from  sandbox.contact_employment;
 
-select count(*) from processing_log where [status] = 'failed'
-select * from processing_log
+select count(*) from  sandbox.processing_log where [status] = 'failed'
+select * from  sandbox.processing_log
 
-select * from app_enums
+select * from  sandbox.app_enums
 
 /*
-ALTER TABLE app_solicited_cc
+ALTER TABLE  sandbox.app_solicited_cc
 ALTER COLUMN birth_date smalldatetime NULL;
 
-ALTER TABLE app_transactional_cc
+ALTER TABLE sandbox. sandbox.app_transactional_cc
 ADD ex_freeze_code varchar(4) NULL;
 */
 
 /* RESET ----------------------------------------------------------------------------------------------------------------------------------------
 
-    DELETE FROM app_base; -- should cascade
-    DBCC CHECKIDENT ('app_base', RESEED, 0);
-    DBCC CHECKIDENT ('contact_base', RESEED, 0);
+    DELETE FROM  sandbox.app_base; -- should cascade
+    DBCC CHECKIDENT ('sandbox.app_base', RESEED, 0);
+    DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
 
-    delete from processing_log
+    delete from  sandbox.processing_log
 
     -- DELETE FROM app_xml
 
 
     EXEC sp_updatestats;
-	ALTER INDEX ALL ON app_base REBUILD;
-	ALTER INDEX ALL ON app_enums REBUILD;
-	ALTER INDEX ALL ON app_operational_cc REBUILD;
-	ALTER INDEX ALL ON app_pricing_cc REBUILD;
-	ALTER INDEX ALL ON app_solicited_cc REBUILD;
-	ALTER INDEX ALL ON app_transactional_cc REBUILD;
+	ALTER INDEX ALL ON  sandbox.app_base REBUILD;
+	ALTER INDEX ALL ON  sandbox.app_enums REBUILD;
+	ALTER INDEX ALL ON  sandbox.app_operational_cc REBUILD;
+	ALTER INDEX ALL ON  sandbox.app_pricing_cc REBUILD;
+	ALTER INDEX ALL ON  sandbox.app_solicited_cc REBUILD;
+	ALTER INDEX ALL ON  sandbox.app_transactional_cc REBUILD;
 	ALTER INDEX ALL ON app_xml REBUILD;
-	ALTER INDEX ALL ON contact_base REBUILD;
-	ALTER INDEX ALL ON contact_employment REBUILD;
-	ALTER INDEX ALL ON contact_address REBUILD;
-	ALTER INDEX ALL ON processing_log REBUILD;
+	ALTER INDEX ALL ON  sandbox.contact_base REBUILD;
+	ALTER INDEX ALL ON  sandbox.contact_employment REBUILD;
+	ALTER INDEX ALL ON  sandbox.contact_address REBUILD;
+	ALTER INDEX ALL ON  sandbox.processing_log REBUILD;
 
 ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -107,13 +107,13 @@ ADD ex_freeze_code varchar(4) NULL;
 -- Query to get next processing batch
 	SELECT ax.app_id, ax.xml 
 	FROM app_xml ax
-	LEFT JOIN app_base ab ON ax.app_id = ab.app_id
+	LEFT JOIN  sandbox.app_base ab ON ax.app_id = ab.app_id
 	WHERE 
 		ax.xml IS NOT NULL 
 		AND DATALENGTH(ax.xml) > 100
-		-- BAD -> AND (ab.app_id IS NULL OR NOT EXISTS (SELECT 1 FROM app_pricing_cc apc WHERE apc.app_id = ax.app_id))                
+		-- BAD -> AND (ab.app_id IS NULL OR NOT EXISTS (SELECT 1 FROM  sandbox.app_pricing_cc apc WHERE apc.app_id = ax.app_id))                
 		AND NOT EXISTS (
-			SELECT 1 FROM processing_log pl 
+			SELECT 1 FROM  sandbox.processing_log pl 
 			WHERE pl.app_id = ax.app_id AND pl.status IN ('failed', 'success')
 		)
 	ORDER BY ax.app_id
@@ -124,14 +124,14 @@ ADD ex_freeze_code varchar(4) NULL;
 
 -- Quick check all tables
 	SELECT TOP(10) *
-	FROM app_base AS a                                               
-	LEFT JOIN app_operational_cc AS o ON o.app_id = a.app_id
-	LEFT JOIN app_pricing_cc AS p ON p.app_id = a.app_id
-	LEFT JOIN app_solicited_cc AS s ON s.app_id = a.app_id
-	LEFT JOIN app_transactional_cc AS t ON t.app_id = a.app_id
-	LEFT JOIN contact_base AS c ON a.app_id = c.app_id
-	LEFT JOIN contact_address AS ca ON ca.con_id = c.con_id
-	LEFT JOIN contact_employment AS ce ON ce.con_id = c.con_id
+	FROM  sandbox.app_base AS a                                               
+	LEFT JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
+	LEFT JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
+	LEFT JOIN  sandbox.app_solicited_cc AS s ON s.app_id = a.app_id
+	LEFT JOIN  sandbox.app_transactional_cc AS t ON t.app_id = a.app_id
+	LEFT JOIN  sandbox.contact_base AS c ON a.app_id = c.app_id
+	LEFT JOIN  sandbox.contact_address AS ca ON ca.con_id = c.con_id
+	LEFT JOIN  sandbox.contact_employment AS ce ON ce.con_id = c.con_id
 	ORDER BY a.app_id DESC
     
 
@@ -162,33 +162,33 @@ SET STATISTICS TIME ON
 		ce.con_id, ce.city, ce.business_name, ce.employment_type_enum, e16.[value] AS employment_type, ce.income_source_nontaxable_flag, ce.income_type_enum, 
 		e17.[value] AS income_type, ce.job_title, ce.monthly_salary, ce.months_at_job, ce.other_monthly_income, ce.other_income_type_enum, e15.[value] AS other_income_type,
 		ce.other_income_source_detail, ce.phone, ce.self_employed_flag, ce.[state], UPPER(ce.street_name) AS street_name, ce.street_number, ce.unit, ce.zip
-	FROM app_base AS a
-	LEFT JOIN app_enums AS e1 ON e1.enum_id = a.app_source_enum
-	LEFT JOIN app_enums AS e2 ON e2.enum_id = a.app_type_enum
-	LEFT JOIN app_enums AS e3 ON e3.enum_id = a.decision_enum
-	LEFT JOIN app_operational_cc AS o ON o.app_id = a.app_id
-	LEFT JOIN app_enums AS e4 ON e4.enum_id = o.sc_bank_account_type_enum
-	LEFT JOIN app_enums AS e5 ON e5.enum_id = o.priority_enum
-	LEFT JOIN app_enums AS e6 ON e6.enum_id = o.process_enum
-	LEFT JOIN app_enums AS e7 ON e7.enum_id = o.sc_debit_funding_source_enum
-	LEFT JOIN app_enums AS e8 ON e8.enum_id = o.ssn_match_type_enum
-	LEFT JOIN app_enums AS e9 ON e9.enum_id = o.status_enum
-	LEFT JOIN app_enums AS e10 ON e10.enum_id = o.verification_source_enum
-	LEFT JOIN app_pricing_cc AS p ON p.app_id = a.app_id
-	LEFT JOIN app_enums AS e11 ON e11.enum_id = p.decision_model_enum
-	LEFT JOIN app_enums AS e12 ON e12.enum_id = p.population_assignment_enum
-	LEFT JOIN app_transactional_cc AS t ON t.app_id = a.app_id
-	INNER JOIN contact_base AS c ON c.app_id = a.app_id
-	LEFT JOIN app_enums AS e13 ON e13.enum_id = c.contact_type_enum
-	LEFT JOIN app_enums AS e14 ON e14.enum_id = c.fraud_type_enum
-	LEFT JOIN contact_address AS ca ON ca.con_id = c.con_id AND ca.address_type_enum = 320			-- PRIMARY address
-	LEFT JOIN app_enums AS e15 ON e15.enum_id = ca.address_type_enum
-	LEFT JOIN contact_employment AS ce ON ce.con_id = c.con_id AND ce.employment_type_enum = 350	-- CURRENT employment
-	LEFT JOIN app_enums AS e16 ON e16.enum_id = ce.employment_type_enum
-	LEFT JOIN app_enums AS e17 ON e17.enum_id = ce.income_type_enum
-	LEFT JOIN app_enums AS e18 ON e18.enum_id = ce.other_income_type_enum
+	FROM  sandbox.app_base AS a
+	LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = a.app_source_enum
+	LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = a.app_type_enum
+	LEFT JOIN  sandbox.app_enums AS e3 ON e3.enum_id = a.decision_enum
+	LEFT JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
+	LEFT JOIN  sandbox.app_enums AS e4 ON e4.enum_id = o.sc_bank_account_type_enum
+	LEFT JOIN  sandbox.app_enums AS e5 ON e5.enum_id = o.priority_enum
+	LEFT JOIN  sandbox.app_enums AS e6 ON e6.enum_id = o.process_enum
+	LEFT JOIN  sandbox.app_enums AS e7 ON e7.enum_id = o.sc_debit_funding_source_enum
+	LEFT JOIN  sandbox.app_enums AS e8 ON e8.enum_id = o.ssn_match_type_enum
+	LEFT JOIN  sandbox.app_enums AS e9 ON e9.enum_id = o.status_enum
+	LEFT JOIN  sandbox.app_enums AS e10 ON e10.enum_id = o.verification_source_enum
+	LEFT JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
+	LEFT JOIN  sandbox.app_enums AS e11 ON e11.enum_id = p.decision_model_enum
+	LEFT JOIN  sandbox.app_enums AS e12 ON e12.enum_id = p.population_assignment_enum
+	LEFT JOIN  sandbox.app_transactional_cc AS t ON t.app_id = a.app_id
+	INNER JOIN  sandbox.contact_base AS c ON c.app_id = a.app_id
+	LEFT JOIN  sandbox.app_enums AS e13 ON e13.enum_id = c.contact_type_enum
+	LEFT JOIN  sandbox.app_enums AS e14 ON e14.enum_id = c.fraud_type_enum
+	LEFT JOIN  sandbox.contact_address AS ca ON ca.con_id = c.con_id AND ca.address_type_enum = 320			-- PRIMARY address
+	LEFT JOIN  sandbox.app_enums AS e15 ON e15.enum_id = ca.address_type_enum
+	LEFT JOIN  sandbox.contact_employment AS ce ON ce.con_id = c.con_id AND ce.employment_type_enum = 350	-- CURRENT employment
+	LEFT JOIN  sandbox.app_enums AS e16 ON e16.enum_id = ce.employment_type_enum
+	LEFT JOIN  sandbox.app_enums AS e17 ON e17.enum_id = ce.income_type_enum
+	LEFT JOIN  sandbox.app_enums AS e18 ON e18.enum_id = ce.other_income_type_enum
 
-	-- USE _enum ID in WHERE clause, not app_enums.value -- otherwise we need all kinds of indexes I think
+	-- USE _enum ID in WHERE clause, not  sandbox.app_enums.value -- otherwise we need all kinds of indexes I think
 	-- e.g. use: "WHERE a.decision_enum = 50" vs. "WHERE e3.value = 'APPROVED'"
 	WHERE 
 		a.product_line_enum = 600 AND -- CC
@@ -238,14 +238,14 @@ SET STATISTICS TIME ON
 		END AS sla,
 		CAST(DATEDIFF(day, a.receive_date, GETUTCDATE()) AS int) AS slaDays,
 		COUNT(a.app_id) OVER() AS total_count
-	FROM app_base AS a                                               
-	INNER JOIN app_operational_cc AS o ON o.app_id = a.app_id
-	INNER JOIN app_pricing_cc AS p ON p.app_id = a.app_id
+	FROM  sandbox.app_base AS a                                               
+	INNER JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
+	INNER JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
 	INNER JOIN campaign AS cam ON cam.campaign_num = p.campaign_num
-	LEFT JOIN contact_base AS c ON a.app_id = c.app_id 
+	LEFT JOIN  sandbox.contact_base AS c ON a.app_id = c.app_id 
 	LEFT JOIN Indicators AS i ON a.app_id = i.app_id
-	LEFT JOIN app_enums AS e1 ON e1.enum_id = o.priority_enum
-	LEFT JOIN app_enums AS e2 ON e2.enum_id = o.process_enum
+	LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = o.priority_enum
+	LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = o.process_enum
 	WHERE (c.contact_type_enum = 281 OR c.contact_type_enum IS NULL)	-- contact type no longer nullable... problem?
 		AND p.campaign_num <> 'ORL'
 		AND product_line_enum = 600		-- CC
@@ -333,19 +333,19 @@ GO
 			END AS regBDays,
 			-- Calculate slaDays once
 			DATEDIFF(day, a.receive_date, GETUTCDATE()) AS slaDays
-		FROM app_base AS a
-		INNER JOIN app_operational_cc AS o ON o.app_id = a.app_id
-		INNER JOIN app_pricing_cc AS p ON p.app_id = a.app_id
+		FROM  sandbox.app_base AS a
+		INNER JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
+		INNER JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
 		INNER JOIN campaign AS cam ON cam.campaign_num = p.campaign_num
-		LEFT JOIN app_enums AS e1 ON e1.enum_id = o.priority_enum
-		LEFT JOIN app_enums AS e2 ON e2.enum_id = o.process_enum
+		LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = o.priority_enum
+		LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = o.process_enum
 		
 		-- Uncomment for Queue filtering
 		--INNER JOIN application_queues aq ON aq.app_id = a.app_id
 		--INNER JOIN queue_definitions qd ON qd.id = aq.queue_id AND qd.[name] = 'Review' AND qd.product = 'cc'
 		
 		-- Uncomment for Quick-Search filtering
-		--LEFT JOIN contact_base AS c_search ON c_search.app_id = a.app_id
+		--LEFT JOIN  sandbox.contact_base AS c_search ON c_search.app_id = a.app_id
 
 		WHERE a.product_line_enum = 600
 			AND p.campaign_num <> 'ORL'
@@ -407,11 +407,11 @@ GO
 		base.slaDays,
 		COUNT(base.app_id) OVER() AS total_count
 	FROM BaseApps AS base
-	LEFT JOIN contact_base AS c ON base.app_id = c.app_id AND c.contact_type_enum = 281
+	LEFT JOIN  sandbox.contact_base AS c ON base.app_id = c.app_id AND c.contact_type_enum = 281
 	LEFT JOIN TUDocApps AS tu ON tu.app_id = base.app_id
 	LEFT JOIN PinnedComments pc ON pc.app_id = base.app_id
-	LEFT JOIN app_enums AS e1 ON e1.enum_id = base.priority_enum
-	LEFT JOIN app_enums AS e2 ON e2.enum_id = base.process_enum
+	LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = base.priority_enum
+	LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = base.process_enum
 	ORDER BY 
 		base.regBDays DESC, base.receive_date
 		--updatedBy DESC, base.app_id	--base.receive_date DESC, base.app_id	--applicantName DESC, base.app_id
@@ -431,12 +431,12 @@ SET STATISTICS TIME ON
 		e1.[value] AS process, e2.[value] AS [status],  p.campaign_num AS campaign,
 		(SELECT TOP (1) isPinned FROM comments WHERE isPinned = 1 AND comments.app_id = a.app_id) AS hasPinnedComments,
 		COUNT(a.app_id) OVER() AS total_count
-	FROM app_base AS a
-	INNER JOIN app_operational_cc AS o ON o.app_id = a.app_id
-	INNER JOIN app_pricing_cc AS p ON p.app_id = a.app_id
-	INNER JOIN contact_base AS c ON c.app_id = a.app_id
-	LEFT JOIN app_enums AS e1 ON e1.enum_id = o.process_enum
-	LEFT JOIN app_enums AS e2 ON e2.enum_id = o.status_enum
+	FROM  sandbox.app_base AS a
+	INNER JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
+	INNER JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
+	INNER JOIN  sandbox.contact_base AS c ON c.app_id = a.app_id
+	LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = o.process_enum
+	LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = o.status_enum
 	
 	WHERE 
 		(c.contact_type_enum = 281 OR c.contact_type_enum IS NULL)	-- contact type no longer nullable... problem?
@@ -456,8 +456,8 @@ SET STATISTICS TIME ON
 	OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY
 
 	OPTION (USE HINT('QUERY_OPTIMIZER_COMPATIBILITY_LEVEL_150'))	
-	--select * from contact_base where app_id = 3791848
-	--update contact_base set first_name='KIRNAN', last_name='MCGUIRE' where con_id = 4238138
+	--select * from  sandbox.contact_base where app_id = 3791848
+	--update  sandbox.contact_base set first_name='KIRNAN', last_name='MCGUIRE' where con_id = 4238138
 SET STATISTICS TIME OFF
 
 -----------------------------------------------------------------------------------------------------------------------------------
@@ -483,9 +483,9 @@ GO
 -- FORCE Filter to matching apps FIRST, then get display data (better than correlated subquery in WHERE clause where SQL joins first and creates massive intermediate result sets)
 WITH MatchingApps AS (
     SELECT DISTINCT a.app_id, a.receive_date, a.decision_enum, p.campaign_num
-    FROM app_base AS a
-    INNER JOIN contact_base AS c ON c.app_id = a.app_id 
-	INNER JOIN app_pricing_cc AS p ON p.app_id = a.app_id
+    FROM  sandbox.app_base AS a
+    INNER JOIN  sandbox.contact_base AS c ON c.app_id = a.app_id 
+	INNER JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
 	WHERE 
 		(c.contact_type_enum = 281 OR c.contact_type_enum IS NULL)	-- contact type no longer nullable... problem?
 		AND product_line_enum = 600		-- CC
@@ -511,16 +511,16 @@ SELECT
 	(SELECT TOP (1) isPinned FROM comments WHERE isPinned = 1 AND comments.app_id = cte.app_id) AS hasPinnedComments,
 	COUNT(cte.app_id) OVER() AS total_count
 FROM MatchingApps AS cte
-INNER JOIN app_operational_cc AS o ON o.app_id = cte.app_id
---INNER JOIN contact_base AS pc ON pc.app_id = cte.app_id AND pc.contact_type_enum = 281
+INNER JOIN  sandbox.app_operational_cc AS o ON o.app_id = cte.app_id
+--INNER JOIN  sandbox.contact_base AS pc ON pc.app_id = cte.app_id AND pc.contact_type_enum = 281
 -- Essentially a correlated subquery (executes once per row), works with smaller result-sets only, otherwise use a JOIN for larger expected results
 OUTER APPLY (
         SELECT TOP 1 first_name, last_name
-        FROM contact_base
+        FROM  sandbox.contact_base
         WHERE app_id = cte.app_id AND contact_type_enum = 281
     ) AS pc
-LEFT JOIN app_enums AS e1 ON e1.enum_id = o.process_enum
-LEFT JOIN app_enums AS e2 ON e2.enum_id = o.status_enum
+LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = o.process_enum
+LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = o.status_enum
 ORDER BY cte.receive_date DESC
 OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY
 OPTION (USE HINT('QUERY_OPTIMIZER_COMPATIBILITY_LEVEL_150'));
