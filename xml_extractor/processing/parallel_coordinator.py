@@ -146,12 +146,9 @@ For production, comment out or revert the following:
 
 import logging
 import multiprocessing as mp
-import queue
 import time
 from typing import List, Tuple, Dict, Any, Optional
 from dataclasses import dataclass
-from queue import Empty
-from datetime import datetime
 
 from ..validation.pre_processing_validator import PreProcessingValidator
 from ..parsing.xml_parser import XMLParser
@@ -392,6 +389,10 @@ class ParallelCoordinator:
         )
         
         self.logger.info(f"Parallel processing completed: {len(successful_results)}/{len(results)} successful "
+                        f"in {processing_time:.2f}s ({processing_result.performance_metrics['records_per_minute']:.1f} rec/min)")
+        
+        # OUTPUT to console
+        print(f"   - Batch completed: {len(successful_results)}/{len(results)} successful "
                         f"in {processing_time:.2f}s ({processing_result.performance_metrics['records_per_minute']:.1f} rec/min)")
         
         return processing_result

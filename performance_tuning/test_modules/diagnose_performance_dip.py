@@ -208,7 +208,7 @@ def main():
     # Configuration
     server = "localhost\\SQLEXPRESS"
     database = "XmlConversionDB"
-    connection_string = f"Driver={{ODBC Driver 17 for SQL Server}};Server={server};Database={database};Trusted_Connection=yes;"
+    connection_string = f"Driver={{ODBC Driver 17 for SQL Server}};Server={server};Database={database};Application Name=MAC XML Migration App;Trusted_Connection=yes;"
     mapping_contract_path = str(project_root / "config" / "mapping_contract.json")
     sample_xml = str(project_root / "config" / "samples" / "sample-source-xml-1.xml")
     

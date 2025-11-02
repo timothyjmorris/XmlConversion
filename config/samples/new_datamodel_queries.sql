@@ -60,7 +60,7 @@ ADD ex_freeze_code varchar(4) NULL;
 	ALTER INDEX ALL ON  sandbox.app_pricing_cc REBUILD;
 	ALTER INDEX ALL ON  sandbox.app_solicited_cc REBUILD;
 	ALTER INDEX ALL ON  sandbox.app_transactional_cc REBUILD;
-	ALTER INDEX ALL ON app_xml REBUILD;
+	ALTER INDEX ALL ON  app_xml REBUILD;
 	ALTER INDEX ALL ON  sandbox.contact_base REBUILD;
 	ALTER INDEX ALL ON  sandbox.contact_employment REBUILD;
 	ALTER INDEX ALL ON  sandbox.contact_address REBUILD;
@@ -98,7 +98,7 @@ ADD ex_freeze_code varchar(4) NULL;
 	INNER JOIN sys.partitions AS p ON l.resource_associated_entity_id = p.hobt_id
 	INNER JOIN sys.index_columns AS ic ON p.object_id = ic.object_id AND p.index_id = ic.index_id
 	INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id
-	WHERE
+	WHERE request_mode IN ('X')
 		--l.resource_type IN ('KEY', 'PAGE', 'TABLE', 'DATABASE') 
 		--AND request_mode IN ('IX', 'X')
 		l.resource_database_id = DB_ID('XmlConversionDB');

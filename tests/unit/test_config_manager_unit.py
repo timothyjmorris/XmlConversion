@@ -56,6 +56,7 @@ class TestDatabaseConfig(unittest.TestCase):
         self.assertTrue(config.mars_connection)
         self.assertIn("DRIVER={ODBC Driver 17 for SQL Server}", config.connection_string)
         self.assertIn("Trusted_Connection=yes", config.connection_string)
+        self.assertIn("Application Name=MAC XML Migration App", config.connection_string)
     
     def test_environment_variable_override(self):
         """Test database configuration from environment variables."""

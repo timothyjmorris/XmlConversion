@@ -20,7 +20,9 @@ SCHEMA ISOLATION (Contract-Driven):
 
 Usage:
     Windows Auth:
-        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 50 --limit 50 --log-level WARNING
+        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --limit 1000 --instance-id 0 --instance-count 3 --log-level WARNING
+        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --limit 1000 --instance-id 1 --instance-count 3 --log-level WARNING
+        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --limit 1000 --instance-id 2 --instance-count 3 --log-level WARNING
     SQL Server Auth:
         python production_processor.py --server "your-sql-server" --database "YourDatabase" --username "your-user" --password "your-pass" --workers 4 --log-level INFO
     Performance Testing
@@ -149,7 +151,8 @@ class ProductionProcessor:
     def __init__(self, server: str, database: str, username: str = None, password: str = None,
                  workers: int = 4, batch_size: int = 1000, log_level: str = "INFO",
                  enable_pooling: bool = False, min_pool_size: int = 4, max_pool_size: int = 20,
-                 enable_mars: bool = True, connection_timeout: int = 30, disable_metrics: bool = False):
+                 enable_mars: bool = True, connection_timeout: int = 30, disable_metrics: bool = False,
+                 instance_id: int = 0, instance_count: int = 1):
         """
         Initialize production processor.
         
@@ -167,6 +170,8 @@ class ProductionProcessor:
             enable_mars: Enable Multiple Active Result Sets (default: True)
             connection_timeout: Connection timeout in seconds (default: 30)
             disable_metrics: Disable metrics JSON file output (default: False, use for PROD)
+            instance_id: Instance ID for partitioned processing (0-based, default: 0)
+            instance_count: Total number of concurrent instances (default: 1)
         """
         self.server = server
         self.database = database
@@ -180,6 +185,14 @@ class ProductionProcessor:
         self.max_pool_size = max_pool_size
         self.enable_mars = enable_mars
         self.connection_timeout = connection_timeout
+        self.instance_id = instance_id
+        self.instance_count = instance_count
+        
+        # Validate instance configuration
+        if instance_id >= instance_count or instance_id < 0:
+            raise ValueError(f"Invalid instance configuration: instance_id={instance_id} must be < instance_count={instance_count} and >= 0")
+        if instance_count < 1:
+            raise ValueError(f"instance_count must be >= 1, got {instance_count}")
         
         # Build connection string with performance optimizations
         self.connection_string = self._build_connection_string_with_pooling()
@@ -207,6 +220,9 @@ class ProductionProcessor:
         self.logger.info(f"  Target Schema: {self.target_schema}")
         self.logger.info(f"  Workers: {workers}")
         self.logger.info(f"  Processing Batch Size: {batch_size}")
+        if instance_count > 1:
+            self.logger.info(f"  Concurrent Instances: Instance {instance_id}/{instance_count-1} (0-based, partition-based)")
+            self.logger.info(f"  Instance Partition Filter: app_id % {instance_count} == {instance_id}")
         if self.enable_pooling:
             self.logger.info(f"  Connection Pooling: ENABLED ({min_pool_size}-{max_pool_size})")
         else:
@@ -214,7 +230,10 @@ class ProductionProcessor:
         self.logger.info(f"  MARS Enabled: {enable_mars}")
         self.logger.info(f"  Session ID: {self.session_id}")
         self.logger.debug(f"  Connection String: {self.connection_string}")
-    
+        
+        # OUTPUT to console    
+        print(f"Initialized Batch Processor for instance_id={self.instance_id}, instance_count={self.instance_count}..........")
+
     def _build_connection_string_with_pooling(self) -> str:
         """
         Build SQL Server connection string with optional connection pooling.
@@ -242,6 +261,7 @@ class ProductionProcessor:
                           f"UID={self.username};"
                           f"PWD={self.password};"
                           f"Connection Timeout={self.connection_timeout};"
+                          f"Application Name=MAC XML Migration App;"
                           f"TrustServerCertificate=yes;"
                           f"Encrypt=no;")
         else:
@@ -250,6 +270,7 @@ class ProductionProcessor:
                           f"SERVER={server_name};"
                           f"DATABASE={self.database};"
                           f"Connection Timeout={self.connection_timeout};"
+                          f"Application Name=MAC XML Migration App;"
                           f"Trusted_Connection=yes;"
                           f"TrustServerCertificate=yes;"
                           f"Encrypt=no;")
@@ -332,7 +353,16 @@ class ProductionProcessor:
     
     def get_xml_records(self, limit: Optional[int] = None, last_app_id: int = 0, exclude_failed: bool = True) -> List[Tuple[int, str]]:
         """
-        Extract XML records from app_xml table.
+        Extract XML records from app_xml table with instance-based partitioning.
+        
+        Partitioning Strategy:
+            When instance_count > 1, records are partitioned by app_id modulo:
+            - Instance 0 gets: app_id % instance_count == 0
+            - Instance 1 gets: app_id % instance_count == 1
+            - Instance N gets: app_id % instance_count == N
+            
+            This ensures zero collision and load balancing across instances.
+            Each instance processes only its assigned partition of records.
         
         Args:
             limit: Maximum number of records to retrieve (None for all)
@@ -343,6 +373,8 @@ class ProductionProcessor:
             List of (app_id, xml_content) tuples, ordered by app_id
         """
         self.logger.info(f"Extracting XML records (limit={limit}, last_app_id={last_app_id}, exclude_failed={exclude_failed})")
+        if self.instance_count > 1:
+            self.logger.info(f"  Partition: app_id % {self.instance_count} == {self.instance_id}")
         
         xml_records = []
         
@@ -358,6 +390,12 @@ class ProductionProcessor:
                         AND ax.xml IS NOT NULL 
                         AND DATALENGTH(ax.xml) > 100
                 """.format(last_app_id=last_app_id)
+                
+                # Add instance-based partitioning if running concurrently
+                if self.instance_count > 1 and self.instance_id is not None:
+                    base_conditions += f"""
+                        AND (ax.app_id % {self.instance_count}) = {self.instance_id}
+                    """
                 
                 if exclude_failed:
                     # processing_log table uses target_schema from MappingContract
@@ -427,6 +465,7 @@ class ProductionProcessor:
         Log processing result to prevent re-processing of failed records.
         
         Inserts into [{target_schema}].[processing_log] as determined by MappingContract.
+        Logs instance_id and instance_count for concurrent instance tracking.
         """
         try:
             migration_engine = MigrationEngine(self.connection_string)
@@ -437,9 +476,9 @@ class ProductionProcessor:
                 # Use target_schema for processing_log (schema-isolated like all target tables)
                 qualified_log_table = f"[{self.target_schema}].[processing_log]"
                 cursor.execute(f"""
-                    INSERT INTO {qualified_log_table} (app_id, status, failure_reason, session_id)
-                    VALUES (?, ?, ?, ?)
-                """, (app_id, status, failure_reason, self.session_id))
+                    INSERT INTO {qualified_log_table} (app_id, status, failure_reason, session_id, instance_id, instance_count)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                """, (app_id, status, failure_reason, self.session_id, self.instance_id, self.instance_count))
                 
                 conn.commit()
                 
@@ -486,15 +525,26 @@ class ProductionProcessor:
         for result in individual_results:
             success = result.get('success', True)
             app_id = result.get('app_id')
+            error_stage = result.get('error_stage', 'unknown')
+            error_message = result.get('error_message', 'No error message available')
+            
+            # Special case: PK violations on app_base are NOT failures
+            # They mean the data already exists in the database, which is the desired end state
+            # Treat as success to prevent re-processing the same record
+            if not success and error_stage == 'constraint_violation' and 'PK_app_base' in str(error_message):
+                self.logger.info(f"App {app_id}: PK violation on app_base (data already exists) - treating as success")
+                self._log_processing_result(app_id, True)  # Log as success, not failure
+                success = True
+            
             if success:
                 self._log_processing_result(app_id, True)
             else:
-                failure_reason = f"{result.get('error_stage', 'unknown')}: {result.get('error_message', 'No error message available')}"
+                failure_reason = f"{error_stage}: {error_message}"
                 self._log_processing_result(app_id, False, failure_reason)
                 failed_app = {
                     'app_id': app_id,
-                    'error_stage': result.get('error_stage', 'unknown'),
-                    'error_message': result.get('error_message', 'No error message available'),
+                    'error_stage': error_stage,
+                    'error_message': error_message,
                     'processing_time': result.get('processing_time', 0)
                 }
                 failed_apps.append(failed_app)
@@ -606,6 +656,8 @@ class ProductionProcessor:
             # Build consolidated metrics structure
             consolidated_metrics = {
                 'run_timestamp': datetime.now().isoformat(),
+                'instance_id': metrics.get('instance_id'),
+                'instance_count': metrics.get('instance_count'),
                 'server': self.server,
                 'database': self.database,
                 'target_schema': self.target_schema,
@@ -677,15 +729,23 @@ class ProductionProcessor:
         overall_start = time.time()
         
         while True:
+            # Calculate remaining records to fetch based on total limit
+            remaining_limit = None
+            if limit:
+                remaining_limit = limit - total_processed
+                if remaining_limit <= 0:
+                    break
+            
             # Get next batch using cursor-based pagination (app_id > last_app_id)
-            batch_records = self.get_xml_records(limit=self.batch_size, last_app_id=last_app_id)
+            # Fetch min(batch_size, remaining_limit) records
+            fetch_limit = self.batch_size
+            if remaining_limit:
+                fetch_limit = min(self.batch_size, remaining_limit)
+            
+            batch_records = self.get_xml_records(limit=fetch_limit, last_app_id=last_app_id)
             
             if not batch_records:
                 break
-            
-            if limit and total_processed + len(batch_records) > limit:
-                # Trim batch to respect limit
-                batch_records = batch_records[:limit - total_processed]
             
             # Process batch
             batch_number = len(batch_details) + 1
@@ -775,6 +835,8 @@ class ProductionProcessor:
                 self.logger.warning(f"Total unique failed apps: {len(unique_failed_ids)}")
         
         final_metrics = {
+            'instance_id': self.instance_id,
+            'instance_count': self.instance_count,
             'total_processed': total_processed,
             'total_successful': total_successful,
             'total_failed': total_failed,
@@ -814,6 +876,12 @@ def main():
     parser.add_argument("--disable-metrics", action="store_true", default=False,
                        help="Disable metrics JSON output (recommended for PROD)")
     
+    # Concurrent processing arguments
+    parser.add_argument("--instance-id", type=int, default=0,
+                       help="Instance ID for partitioned concurrent processing (0-based, default: 0)")
+    parser.add_argument("--instance-count", type=int, default=1,
+                       help="Total number of concurrent instances (default: 1, set to 3+ for concurrent processing)")
+    
     # Connection pooling optimization arguments
     parser.add_argument("--enable-pooling", action="store_true", default=False,
                        help="Enable connection pooling (recommended for SQL Server/Prod, disabled by default for SQLExpress)")
@@ -839,6 +907,8 @@ def main():
             batch_size=args.batch_size,
             log_level=args.log_level,
             disable_metrics=args.disable_metrics,
+            instance_id=args.instance_id,
+            instance_count=args.instance_count,
             enable_pooling=args.enable_pooling,
             min_pool_size=args.min_pool_size,
             max_pool_size=args.max_pool_size,

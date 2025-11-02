@@ -68,6 +68,7 @@ class DatabaseConfig:
                 f"DATABASE={database};"
                 f"Trusted_Connection=yes;"
                 f"Connection Timeout={connection_timeout};"
+                f"Application Name=MAC XML Migration App;"
                 f"TrustServerCertificate=yes;"
                 f"Encrypt=no;"
             )
@@ -89,6 +90,7 @@ class DatabaseConfig:
                 f"UID={username};"
                 f"PWD={password};"
                 f"Connection Timeout={connection_timeout};"
+                f"Application Name=MAC XML Migration App;"
                 f"TrustServerCertificate=yes;"
                 f"Encrypt=no;"
             )
