@@ -765,21 +765,26 @@ class DataMapper(DataMapperInterface):
         mapping_types = mapping.mapping_type if mapping.mapping_type else []
         
         if mapping_types:
-            self.logger.debug(f"Applying {len(mapping_types)} mapping type(s) for {mapping.target_column}: {mapping_types}")
+            if self.logger.isEnabledFor(logging.DEBUG):
+                self.logger.debug(f"Applying {len(mapping_types)} mapping type(s) for {mapping.target_column}: {mapping_types}")
         else:
-            self.logger.debug(f"No mapping_type for {mapping.target_column}")
+            if self.logger.isEnabledFor(logging.DEBUG):
+                self.logger.debug(f"No mapping_type for {mapping.target_column}")
 
         current_value = value
 
         # Apply mapping types if present
         if mapping_types:
             for i, mapping_type in enumerate(mapping_types):
-                self.logger.debug(f"Applying mapping type {i+1}/{len(mapping_types)}: '{mapping_type}' to value: {current_value}")
+                if self.logger.isEnabledFor(logging.DEBUG):
+                    self.logger.debug(f"Applying mapping type {i+1}/{len(mapping_types)}: '{mapping_type}' to value: {current_value}")
                 try:
                     current_value = self._apply_single_mapping_type(current_value, mapping_type, mapping, context_data)
-                    self.logger.debug(f"Result after '{mapping_type}': {current_value}")
+                    if self.logger.isEnabledFor(logging.DEBUG):
+                        self.logger.debug(f"Result after '{mapping_type}': {current_value}")
                     if current_value is None and mapping_type not in ['enum', 'default_getutcdate_if_null']:
-                        self.logger.debug(f"Breaking transformation chain at '{mapping_type}' due to None value")
+                        if self.logger.isEnabledFor(logging.DEBUG):
+                            self.logger.debug(f"Breaking transformation chain at '{mapping_type}' due to None value")
                         break
                 except Exception as e:
                     self.logger.warning(f"Transformation failed at step '{mapping_type}' for {mapping.target_column}: {e}")
@@ -807,7 +812,8 @@ class DataMapper(DataMapperInterface):
                     isinstance(current_value, str) and 
                     not current_value.strip().isdigit()):
                     # Try to extract numeric value automatically for integer fields
-                    extracted = self._extract_numeric_value(current_value)
+                    # Use decimal-preserving extraction so "36.50" stays as 36.5 (then rounds to 36)
+                    extracted = self._extract_numeric_value_preserving_decimals(current_value)
                     if extracted is not None:
                         self.logger.debug(f"Auto-extracted numeric value for {mapping.target_column}: '{current_value}' -> {extracted}")
                         current_value = extracted
@@ -920,6 +926,13 @@ class DataMapper(DataMapperInterface):
             # Apply data type transformation to the existing value
             return self.transform_data_types(value, mapping.data_type)
         
+        # CRITICAL FIX: Handle char_to_bit and boolean_to_bit BEFORE the empty value check
+        # These need to process empty/null values using the bit conversion mappings
+        elif mapping_type == 'char_to_bit':
+            return self._apply_bit_conversion(value)
+        elif mapping_type == 'boolean_to_bit':
+            return self._apply_boolean_to_bit_conversion(value)
+        
         # Handle other mapping types that require a valid input value
         elif not StringUtils.safe_string_check(value):
             # Try to get default value for this mapping
@@ -929,10 +942,10 @@ class DataMapper(DataMapperInterface):
             return None
         elif mapping_type == 'calculated_field':
             return self._apply_calculated_field_mapping(value, mapping, context_data)
-        # Known string transformation mapping types (processed in _apply_field_transformation)
-        elif mapping_type in ['char_to_bit', 'boolean_to_bit', 'extract_numeric', 'numbers_only']:
-            # These are processed in _apply_field_transformation, return as-is
-            return self.transform_data_types(value, mapping.data_type)
+        elif mapping_type in ['extract_numeric', 'numbers_only']:
+            # Extract numeric values from strings BEFORE type transformation
+            extracted_value = self._extract_numeric_value(value)
+            return self.transform_data_types(extracted_value, mapping.data_type)
         else:
             # Unknown mapping type - apply standard data type transformation
             self.logger.debug(f"Unknown mapping type '{mapping_type}' for {mapping.target_column}, applying standard data type transformation")
@@ -1581,10 +1594,24 @@ class DataMapper(DataMapperInterface):
         # Use char_to_bit conversion from loaded configuration
         if 'char_to_bit' in self._bit_conversions:
             bit_map = self._bit_conversions['char_to_bit']
+            
+            # Try exact match first
             if str_value in bit_map:
                 result = bit_map[str_value]
                 self.logger.debug(f"Bit conversion: '{str_value}' -> {result}")
                 return result
+            
+            # Try case-insensitive match (uppercase)
+            upper_value = str_value.upper()
+            if upper_value in bit_map:
+                result = bit_map[upper_value]
+                self.logger.debug(f"Bit conversion (case-insensitive): '{str_value}' -> {result}")
+                return result
+        
+        # If no match and empty/null value, return the mapped default (which is 0 in char_to_bit)
+        if str_value in ['', 'null', 'None']:
+            self.logger.debug(f"Bit conversion: '{str_value}' (empty/null) -> 0 (default)")
+            return 0
         
         # Default fallback
         self.logger.warning(f"No bit conversion found for value '{str_value}' - using default 0")
@@ -1598,11 +1625,18 @@ class DataMapper(DataMapperInterface):
         if 'boolean_to_bit' in self._bit_conversions:
             bit_map = self._bit_conversions['boolean_to_bit']
             if str_value in bit_map:
-                return bit_map[str_value]
+                result = bit_map[str_value]
+                self.logger.debug(f"Boolean-to-bit conversion: '{value}' -> {result}")
+                return result
+            
+            # If empty/null value, return the mapped default (which is 0 in boolean_to_bit)
+            if str_value in ['', 'null', 'none']:
+                self.logger.debug(f"Boolean-to-bit conversion: '{value}' (empty/null) -> 0 (default)")
+                return 0
         
-        # No fallback - if not in contract, return None to exclude from INSERT
-        self.logger.warning(f"No boolean_to_bit conversion found for value '{str_value}' - excluding from INSERT")
-        return None
+        # Default fallback
+        self.logger.warning(f"No boolean_to_bit conversion found for value '{str_value}' - using default 0")
+        return 0
     
     def _apply_bit_conversion_with_default_tracking(self, value):
         """Apply bit conversion with tracking of applied defaults."""
@@ -1642,6 +1676,17 @@ class DataMapper(DataMapperInterface):
             return None
             
         return StringUtils.extract_numeric_value(value)
+    
+    def _extract_numeric_value_preserving_decimals(self, value):
+        """
+        Extract numeric value from text while preserving decimal structure.
+        Used for auto-extraction when no mapping_type is specified.
+        Converts to float first (preserves decimals), then transform_data_types handles the final type conversion.
+        """
+        if not StringUtils.safe_string_check(value):
+            return None
+            
+        return StringUtils.extract_numeric_value_preserving_decimals(value)
     
     def _transform_to_string(self, value, max_length):
         """Transform value to string with length limit."""

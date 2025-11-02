@@ -490,17 +490,6 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
                 processing_time=time.time() - start_time
             )
         
-        # Clean up existing data -- local development only
-        
-        try:
-            with _worker_migration_engine.get_connection() as conn:
-                cursor = conn.cursor()
-                cursor.execute("DELETE FROM app_base WHERE app_id = ?", (validation_result.app_id,))
-                conn.commit()
-        except Exception:
-            pass  # Ignore cleanup errors
-        
-        
         # Stage 2: Parsing
         root = _worker_parser.parse_xml_stream(work_item.xml_content)
         xml_data = _worker_parser.extract_elements(root)
@@ -525,7 +514,8 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
         )
         mapping_end = time.time()
         mapping_duration = mapping_end - mapping_start
-        _worker_mapper.logger.info(f"PERF Timing: Mapping logic for app_id {work_item.app_id} took {mapping_duration:.4f} seconds")
+        if _worker_mapper.logger.isEnabledFor(logging.DEBUG):
+            _worker_mapper.logger.debug(f"PERF Timing: Mapping logic for app_id {work_item.app_id} took {mapping_duration:.4f} seconds")
 
         if not mapped_data:
             return WorkResult(

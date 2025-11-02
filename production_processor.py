@@ -281,19 +281,19 @@ class ProductionProcessor:
             self.logger.warning(f"Failed to load target_schema from mapping contract: {e}, using default 'dbo'")
             return 'dbo'
     
-    def get_xml_records(self, limit: Optional[int] = None, offset: int = 0, exclude_failed: bool = True) -> List[Tuple[int, str]]:
+    def get_xml_records(self, limit: Optional[int] = None, last_app_id: int = 0, exclude_failed: bool = True) -> List[Tuple[int, str]]:
         """
         Extract XML records from app_xml table.
         
         Args:
             limit: Maximum number of records to retrieve (None for all)
-            offset: Number of records to skip
+            last_app_id: Only fetch records with app_id > last_app_id (cursor-based pagination)
             exclude_failed: Whether to exclude records that have failed processing before
             
         Returns:
-            List of (app_id, xml_content) tuples
+            List of (app_id, xml_content) tuples, ordered by app_id
         """
-        self.logger.info(f"Extracting XML records (limit={limit}, offset={offset}, exclude_failed={exclude_failed})")
+        self.logger.info(f"Extracting XML records (limit={limit}, last_app_id={last_app_id}, exclude_failed={exclude_failed})")
         
         xml_records = []
         
@@ -305,9 +305,10 @@ class ProductionProcessor:
                 # Build query - exclude apps that have already been processed or failed
                 base_conditions = """
                     WHERE 
-                        ax.xml IS NOT NULL 
+                        ax.app_id > {last_app_id}
+                        AND ax.xml IS NOT NULL 
                         AND DATALENGTH(ax.xml) > 100
-                """
+                """.format(last_app_id=last_app_id)
                 
                 if exclude_failed:
                     # processing_log table should already exist
@@ -318,8 +319,8 @@ class ProductionProcessor:
                             FROM processing_log pl 
                             WHERE 
                                 pl.app_id = ax.app_id 
-                                AND pl.status = 'failed'
-                        )  -- Exclude records that failed any processing
+                                AND pl.status IN ('success', 'failed')
+                        )  -- Exclude records that were already processed (success or failed)
                     """
                 
                 if limit:
@@ -329,7 +330,7 @@ class ProductionProcessor:
                         LEFT JOIN app_base AS ab ON ax.app_id = ab.app_id
                         {base_conditions}
                         ORDER BY ax.app_id
-                        OFFSET {offset} ROWS
+                        OFFSET 0 ROWS
                         FETCH NEXT {limit} ROWS ONLY
                     """
                 else:
@@ -339,7 +340,6 @@ class ProductionProcessor:
                         LEFT JOIN app_base AS ab ON ax.app_id = ab.app_id
                         {base_conditions}
                         ORDER BY ax.app_id
-                        OFFSET {offset} ROWS
                     """
                 
                 cursor.execute(query)
@@ -601,7 +601,7 @@ class ProductionProcessor:
             total_records = 0
         
         # Process in batches
-        offset = 0
+        last_app_id = 0  # Cursor-based pagination: track last app_id processed
         total_processed = 0
         total_successful = 0
         total_failed = 0
@@ -620,8 +620,8 @@ class ProductionProcessor:
         overall_start = time.time()
         
         while True:
-            # Get next batch
-            batch_records = self.get_xml_records(limit=self.batch_size, offset=offset)
+            # Get next batch using cursor-based pagination (app_id > last_app_id)
+            batch_records = self.get_xml_records(limit=self.batch_size, last_app_id=last_app_id)
             
             if not batch_records:
                 break
@@ -632,7 +632,8 @@ class ProductionProcessor:
             
             # Process batch
             batch_number = len(batch_details) + 1
-            self.logger.info(f"Processing batch {batch_number}: records {offset+1}-{offset+len(batch_records)}")
+            app_ids = [rec[0] for rec in batch_records]
+            self.logger.info(f"Processing batch {batch_number}: app_ids {min(app_ids)}-{max(app_ids)}" if app_ids else f"Processing batch {batch_number}: empty batch")
             batch_start_time = time.time()
             metrics = self.process_batch(batch_records)
             batch_duration = time.time() - batch_start_time
@@ -659,7 +660,9 @@ class ProductionProcessor:
             for key in overall_failure_summary:
                 overall_failure_summary[key] += batch_failure_summary.get(key, 0)
             
-            offset += len(batch_records)
+            # Update cursor to last app_id in batch for next iteration
+            if batch_records:
+                last_app_id = max(rec[0] for rec in batch_records)
             
             # Check if we've reached the limit
             if limit and total_processed >= limit:

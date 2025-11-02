@@ -103,6 +103,7 @@ class MappingContract:
         source_table: Name of the source table containing XML data
         source_column: Column name containing the XML content
         xml_root_element: Root element name in the XML structure
+        target_schema: Target database schema (e.g., 'dbo')
         key_identifiers: Optional dictionary of key identifiers
         mappings: List of field mappings for individual elements/attributes
         relationships: List of relationship mappings for nested structures
@@ -110,6 +111,7 @@ class MappingContract:
     source_table: str
     source_column: str
     xml_root_element: str
+    target_schema: Optional[str] = "dbo"
     key_identifiers: Optional[Dict[str, Any]] = None
     mappings: List[FieldMapping] = None
     relationships: List[RelationshipMapping] = None

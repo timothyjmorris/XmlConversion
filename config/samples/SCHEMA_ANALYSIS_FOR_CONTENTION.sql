@@ -1,0 +1,184 @@
+-- SCHEMA ANALYSIS FOR CONTENTION DIAGNOSIS
+-- ========================================================================
+
+-- Schema Summary from create_destination_tables.sql:
+-- 
+-- PRIMARY TABLES (receive inserts during batch):
+-- 1. app_base                    [PK: IDENTITY(app_id)]
+-- 2. app_operational_cc          [PK: app_id (FK to app_base, CASCADE DELETE)]
+-- 3. app_transactional_cc        [PK: app_id (FK to app_base, CASCADE DELETE)]
+-- 4. app_pricing_cc              [PK: app_id (FK to app_base, CASCADE DELETE)]
+-- 5. app_solicited_cc            [PK: app_id (FK to app_base, CASCADE DELETE)]
+-- 6. contact_base                [PK: IDENTITY(con_id), FK: app_id -> app_base]
+-- 7. contact_address             [PK: CLUSTERED (con_id, address_type_enum), FK: con_id -> contact_base]
+-- 8. contact_employment          [PK: CLUSTERED (con_id, employment_type_enum), FK: con_id -> contact_base]
+-- 
+-- REFERENCE TABLES (unchanged during batch):
+-- - app_enums                    [PK: enum_id] - FK target for all enum fields
+-- - app_xml                      [PK: IDENTITY(app_id)] - raw XML storage
+-- - report_results_lookup        [PK: CLUSTERED (app_id, name), FK: app_id -> app_base]
+-- - historical_lookup            [PK: CLUSTERED (app_id, name), FK: app_id -> app_base]
+--
+-- ========================================================================
+
+-- KEY OBSERVATIONS:
+-- 
+-- 1. PRIMARY KEYS & INDEXES:
+--    - app_base, contact_base use IDENTITY (auto-increment)
+--    - Most other tables use PK on app_id or (con_id, enum_type)
+--    - Clustered indexes on PK for all insert tables
+--    - At most 2 indexes per table = LOW INDEX OVERHEAD (good!)
+--    - NO non-clustered indexes on FK columns = FK lookup won't use index
+--
+-- 2. IDENTITY (AUTO-INCREMENT) TABLES:
+--    - app_base.app_id = IDENTITY (auto-increment)
+--    - contact_base.con_id = IDENTITY (auto-increment)
+--    - These are single-point-of-contention tables!
+--    - Every worker inserting into app_base or contact_base must allocate next ID
+--    - SQL Server uses IDENTITY lock to serialize ID allocation
+--    - Potential bottleneck if all 4 workers inserting into same table simultaneously
+--
+-- 3. FOREIGN KEY RELATIONSHIPS:
+--    - app_base is parent to: app_operational_cc, app_transactional_cc, app_pricing_cc, 
+--      app_solicited_cc, contact_base, report_results_lookup, historical_lookup
+--    - contact_base is parent to: contact_address, contact_employment
+--    - app_enums is parent to ~15 FK relationships across all tables
+--    - FK constraints are ON DELETE NO ACTION on app_enums (read-only during batch)
+--    - FK constraints are ON DELETE CASCADE on app_base children (normal cascade)
+--    - FK inserts require immediate FK check, but SELECT queries run BEFORE insert attempt
+--      (in migration_engine.py _filter_duplicate_contacts)
+--
+-- 4. COMPOSITE PRIMARY KEY TABLES:
+--    - contact_address (con_id, address_type_enum)
+--    - contact_employment (con_id, employment_type_enum)
+--    - These have CLUSTERED composite keys
+--    - Potential contention point: all workers inserting different con_id values
+--      but potentially same address_type_enum = different rows on same page?
+--      Unlikely = con_id is first key component
+--
+-- 5. DUPLICATE-CHECK QUERIES (pre-insert validation):
+--    SELECT con_id FROM contact_base WHERE con_id IN (?,?,?,...)
+--    SELECT con_id, address_type_enum FROM contact_address WHERE (con_id=? AND address_type_enum=?) OR ...
+--    SELECT con_id, employment_type_enum FROM contact_employment WHERE (con_id=? AND address_type_enum=?) OR ...
+--    
+--    These SELECT queries run BEFORE inserts, on PK columns (fully indexed)
+--    But they're doing OR chains on composite keys = may not use index efficiently
+--    Impact: minimal - these are small result sets on indexed columns
+--
+-- ========================================================================
+
+-- POTENTIAL CONTENTION SCENARIOS:
+-- 
+-- SCENARIO A: IDENTITY ALLOCATION CONTENTION (MOST LIKELY)
+--   - All 4 workers try to INSERT into app_base or contact_base simultaneously
+--   - SQL Server acquires IDENTITY lock to allocate next ID
+--   - Only 1 worker can hold the IDENTITY lock at a time
+--   - Workers 2,3,4 must wait (queue up)
+--   - If you batch 40 app_base records: 40 * 4 workers = 160 IDENTITY allocations
+--   - Result: Workers serialize on IDENTITY lock, losing parallelism
+--   - Symptom: high proportion of time "waiting for IDENTITY lock"
+--   - Check: sp_lock output shows "6 = IDENTITY" lock with REQUEST_STATUS = 'WAIT'
+--
+-- SCENARIO B: PAGE ALLOCATION CONTENTION (POSSIBLE)
+--   - When table grows (new app_base records), SQL Server allocates new pages
+--   - Page allocation is protected by allocation lock
+--   - If all workers trying to allocate at same time, they serialize
+--   - Less likely than IDENTITY because allocation is per-page not per-row
+--   - Symptom: high page_io_latch_wait counts in sys.dm_db_page_info_internal()
+--   - Check: PAGE_LATCH_STATS query shows high wait counts on your tables
+--
+-- SCENARIO C: INDEX FRAGMENTATION (UNLIKELY given low volume)
+--   - New records insert into end of clustered index
+--   - If cluster is severely fragmented, page management becomes complex
+--   - But you said volume is low = unlikely to have fragmentation
+--   - Check: INDEX_FRAGMENTATION query shows > 30% fragmentation
+--
+-- SCENARIO D: FK VERIFICATION SERIALIZATION (VERY UNLIKELY)
+--   - FK constraint requires checking app_enums table during insert
+--   - app_enums is tiny (few hundred rows)
+--   - FK checks can use index on app_enums.enum_id
+--   - Very unlikely to be bottleneck given enum_id is PK
+--   - Check: See if lock waits are on app_enums
+--
+-- ========================================================================
+
+-- WHAT TO LOOK FOR IN YOUR LOCK DATA:
+--
+-- GOOD SIGN (parallel execution):
+--   - You see 4 worker sessions active simultaneously
+--   - Each worker has 'Granted' locks on different rows/pages
+--   - Few or no 'Wait' status locks
+--   - Completion time = expected (batch completes quickly)
+--
+-- BAD SIGN (serialization):
+--   - You see 4 worker sessions, but only 1 has 'running' status
+--   - Others have 'suspended' status with 'Wait' locks
+--   - Many locks with REQUEST_STATUS = 'WAIT'
+--   - Locks are on IDENTITY or ALLOCATION resources
+--   - Completion time = much slower than expected
+--   - Blocks on same few tables (not distributed)
+--
+-- WORST SIGN (wrong architecture):
+--   - Deadlocks appearing in error log
+--   - Circular lock dependency (SPID A waits for B, B waits for A)
+--   - Cascading blocks (A blocks B blocks C blocks D)
+--
+-- ========================================================================
+
+-- SAMPLE QUERY TO RUN DURING BATCH (run every 5 seconds):
+--
+-- SELECT 
+--     l.request_session_id,
+--     l.request_mode,
+--     l.request_status,
+--     OBJECT_NAME(l.resource_associated_entity_id) AS table_name,
+--     l.resource_type,
+--     COUNT(*) AS lock_count
+-- FROM sys.dm_tran_locks l
+-- WHERE database_id = DB_ID()
+--   AND l.request_session_id > 50
+-- GROUP BY 
+--     l.request_session_id,
+--     l.request_mode,
+--     l.request_status,
+--     l.resource_associated_entity_id,
+--     l.resource_type
+-- ORDER BY l.request_session_id, l.request_status DESC;
+--
+-- This aggregates locks by session, showing:
+--   - Which sessions are active
+--   - What lock modes they hold (Shared=S, Exclusive=X, Intent=I)
+--   - Whether they're Granted or Waiting
+--   - Which tables
+--   - How many locks of each type
+--
+-- ========================================================================
+
+-- HYPOTHESIS BASED ON SCHEMA:
+-- 
+-- My GUESS (not proven yet, pending your lock data):
+--   - Batch 1 (40 records): Fresh buffer pool, caches empty, inserts into clean pages
+--     Result: Fast (274 rec/min) because OS page allocation isn't contended
+--   
+--   - Batch 2 (40 records): After Batch 1 inserts:
+--     * app_base.app_id has consumed ~40 IDs, identity counter at 40
+--     * contact_base.con_id has consumed ~40+ IDs, identity counter at 40+
+--     * app_base table has ~1-2 pages allocated, contact_base has ~1-2 pages
+--     * Statistics are fresh from Batch 1 rebuild
+--     
+--     If IDENTITY contention: All 4 workers serialize on app_base PK allocation
+--       → Worker 1 inserts 10, Worker 2 waits, Worker 1 inserts more, etc.
+--       → Perceived parallelism drops from 4x to 1.5-2x
+--       → Batch 2 slows to 176 rec/min (-49% from 274)
+--     
+--     If page allocation contention: Less likely but possible
+--       → Workers fight over new page allocations
+--       → Similar result: serialization instead of parallelism
+--
+-- NEXT STEP:
+--   - Run your batch with LOCK_MONITORING_SCRIPT.sql queries running
+--   - Capture whether you see IDENTITY locks with REQUEST_STATUS = 'WAIT'
+--   - If yes = IDENTITY contention (fixable with partitioned inserts or sequence object)
+--   - If no = some other issue (could be logging, query compilation, etc.)
+--
+-- ========================================================================

@@ -51,7 +51,7 @@ import time
 import threading
 from datetime import datetime
 from threading import Event
-from xml_extractor.processing.insert_queue import (
+from MB_XmlConversionKiro.xml_extractor.processing.unused_insert_queue_concept import (
     InsertQueue, BackgroundInsertThread, InsertQueueItem
 )
 

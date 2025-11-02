@@ -47,22 +47,76 @@ class StringUtils:
     @staticmethod
     def extract_numeric_value(text: str) -> Optional[int]:
         """
-        Extract first numeric value from text like 'Up to $40' -> 40.
+        Extract ALL numeric characters from text (aggressive mode), converting to integer.
+        Used for explicit extract_numeric mapping type.
+        
+        Examples:
+            'Up to $40' -> 40
+            '(555) 555-5555' -> 5555555555
+            '664-50-2346' -> 66450234
         
         Args:
             text: Input text
             
         Returns:
-            First numeric value found, or None if no numbers found
+            Integer from all numeric characters found, or None if no numbers found
         """
         if not text:
             return None
         
+        # Extract all numeric digits from the string
+        digits_only = StringUtils.extract_numbers_only(text)
+        
+        if digits_only:
+            try:
+                return int(digits_only)
+            except ValueError:
+                return None
+        return None
+    
+    @staticmethod
+    def extract_numeric_value_preserving_decimals(text: str) -> Optional[float]:
+        """
+        Extract numeric value from text while preserving decimal structure.
+        Used for auto-extraction when no mapping_type is specified.
+        
+        This extracts the FIRST numeric sequence, preserving the decimal point.
+        Examples:
+            '36.50' -> 36.50
+            'Price: $36.50' -> 36.50
+            'Up to $40' -> 40.0
+        
+        Args:
+            text: Input text
+            
+        Returns:
+            Float from first numeric sequence found, or None if no numbers found
+        """
+        if not text:
+            return None
+        
+        # Match the first sequence of digits with optional decimal point
+        # Allows: 123, 123.45, .45
         match = StringUtils._regex_cache['numeric_extract'].search(str(text))
         if match:
             try:
-                return int(match.group())
-            except ValueError:
+                # Get the first digit sequence
+                first_num = match.group()
+                # Now look for a decimal point that might follow immediately
+                start_pos = match.end()
+                remaining = str(text)[start_pos:]
+                if remaining.startswith('.'):
+                    # Check if there are more digits after the decimal
+                    after_decimal = remaining[1:]
+                    if after_decimal and after_decimal[0].isdigit():
+                        # Extract the decimal number
+                        decimal_match = re.match(r'\.(\d+)', remaining)
+                        if decimal_match:
+                            full_number = first_num + '.' + decimal_match.group(1)
+                            return float(full_number)
+                # No decimal part found, return as float
+                return float(first_num)
+            except (ValueError, AttributeError):
                 return None
         return None
     

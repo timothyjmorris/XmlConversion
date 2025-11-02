@@ -232,7 +232,7 @@ class MigrationEngine(MigrationEngineInterface):
                     con_ids = [record.get('con_id') for record in records if record.get('con_id')]
                     if con_ids:
                         placeholders = ','.join('?' for _ in con_ids)
-                        query = f"SELECT con_id FROM contact_base WHERE con_id IN ({placeholders})"
+                        query = f"SELECT con_id FROM contact_base WITH (NOLOCK) WHERE con_id IN ({placeholders})"
                         cursor.execute(query, con_ids)
                         existing_con_ids = {row[0] for row in cursor.fetchall()}
                         
@@ -264,7 +264,7 @@ class MigrationEngine(MigrationEngineInterface):
                             conditions.append("(con_id = ? AND address_type_enum = ?)")
                             params.extend([con_id, addr_type])
                         
-                        query = f"SELECT con_id, address_type_enum FROM contact_address WHERE {' OR '.join(conditions)}"
+                        query = f"SELECT con_id, address_type_enum FROM contact_address WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
                         cursor.execute(query, params)
                         existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
                         
@@ -296,7 +296,7 @@ class MigrationEngine(MigrationEngineInterface):
                             conditions.append("(con_id = ? AND employment_type_enum = ?)")
                             params.extend([con_id, emp_type])
                         
-                        query = f"SELECT con_id, employment_type_enum FROM contact_employment WHERE {' OR '.join(conditions)}"
+                        query = f"SELECT con_id, employment_type_enum FROM contact_employment WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
                         cursor.execute(query, params)
                         existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
                         
@@ -405,8 +405,9 @@ class MigrationEngine(MigrationEngineInterface):
                 sql = f"INSERT INTO {qualified_table_name} ({column_list}) VALUES ({placeholders})"
                 
                 # Debug logging
-                self.logger.debug(f"SQL: {sql}")
-                self.logger.debug(f"Columns: {columns}")
+                if self.logger.isEnabledFor(logging.DEBUG):
+                    self.logger.debug(f"SQL: {sql}")
+                    self.logger.debug(f"Columns: {columns}")
                 
                 # Prepare data tuples in correct order, only including columns with data
                 data_tuples = []
@@ -432,7 +433,8 @@ class MigrationEngine(MigrationEngineInterface):
                     batch_end = min(batch_start + self.batch_size, len(data_tuples))
                     batch_data = data_tuples[batch_start:batch_end]
                     
-                    self.logger.debug(f"Inserting batch {batch_start}-{batch_end} into {table_name}")
+                    if self.logger.isEnabledFor(logging.DEBUG):
+                        self.logger.debug(f"Inserting batch {batch_start}-{batch_end} into {table_name}")
                     
 
                     

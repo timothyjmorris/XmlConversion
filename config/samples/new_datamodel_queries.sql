@@ -1,13 +1,25 @@
 
-select app_id, cast(xml as xml) from app_xml
+select top 10 app_id, cast(xml as xml) from app_xml order by app_id desc
 
-select * from app_base;
-select * from app_operational_cc;
-select * from app_pricing_cc;
-select * from app_solicited_cc
-select * from contact_base
-select * from contact_address
-select * from contact_employment
+
+select top 10 * from app_base              order by app_id desc
+select top 10 * from app_operational_cc    order by app_id desc
+select top 10 * from app_pricing_cc        order by app_id desc
+select top 10 * from app_solicited_cc      order by app_id desc
+select top 10 * from app_transactional_cc  order by app_id desc
+select top 10 * from contact_base          order by app_id desc
+select top 10 * from contact_address       order by con_id desc
+select top 10 * from contact_employment    order by con_id desc 
+
+select top 100 * from app_xml
+select * from app_base
+
+
+
+
+
+select count(*) from app_xml;
+
 select count(*) from app_base;
 select count(*) from app_operational_cc;
 select count(*) from app_pricing_cc;
@@ -17,6 +29,18 @@ select count(*) from contact_base;
 select count(*) from contact_address;
 select count(*) from contact_employment;
 
+select count(*) from processing_log where [status] = 'failed'
+select * from processing_log
+
+select * from app_enums
+
+/*
+ALTER TABLE app_solicited_cc
+ALTER COLUMN birth_date smalldatetime NULL;
+
+ALTER TABLE app_transactional_cc
+ADD ex_freeze_code varchar(4) NULL;
+*/
 
 /* RESET ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -24,17 +48,91 @@ select count(*) from contact_employment;
     DBCC CHECKIDENT ('app_base', RESEED, 0);
     DBCC CHECKIDENT ('contact_base', RESEED, 0);
 
+    delete from processing_log
+
+    -- DELETE FROM app_xml
+
+
+    EXEC sp_updatestats;
+	ALTER INDEX ALL ON app_base REBUILD;
+	ALTER INDEX ALL ON app_enums REBUILD;
+	ALTER INDEX ALL ON app_operational_cc REBUILD;
+	ALTER INDEX ALL ON app_pricing_cc REBUILD;
+	ALTER INDEX ALL ON app_solicited_cc REBUILD;
+	ALTER INDEX ALL ON app_transactional_cc REBUILD;
+	ALTER INDEX ALL ON app_xml REBUILD;
+	ALTER INDEX ALL ON contact_base REBUILD;
+	ALTER INDEX ALL ON contact_employment REBUILD;
+	ALTER INDEX ALL ON contact_address REBUILD;
+	ALTER INDEX ALL ON processing_log REBUILD;
+
 ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
-    SELECT * 
+
+-- exec sp_who2;
+	SELECT session_id, blocking_session_id, command, status, wait_type, wait_time
+    FROM sys.dm_exec_requests
+    WHERE blocking_session_id IS NOT NULL;
+
+-- Lock Summary
+	SELECT 
+		'SUMMARY' AS metric_type,
+		GETUTCDATE() AS sample_time,
+		COUNT(DISTINCT r.session_id) AS active_sessions,
+		SUM(CASE WHEN l.request_status = 'Wait' THEN 1 ELSE 0 END) AS sessions_waiting,
+		SUM(CASE WHEN l.request_status = 'Granted' THEN 1 ELSE 0 END) AS sessions_with_locks,
+		--COUNT(DISTINCT OBJECT_NAME(l.resource_associated_entity_id)) AS tables_with_locks,
+		COUNT(*) AS total_locks
+	FROM sys.dm_exec_requests r
+	FULL OUTER JOIN sys.dm_tran_locks l ON r.session_id = l.request_session_id
+	WHERE (r.session_id > 50 OR l.request_session_id > 50)
+
+-- Check for Locks ---
+	SELECT
+		l.resource_type,
+		request_mode AS lock_mode,
+		--l.resource_description,
+		OBJECT_NAME(p.object_id) AS TableName,
+		c.name AS ColumnName -- This might not directly give you the locked column, but columns in the affected index
+	FROM sys.dm_tran_locks AS l
+	INNER JOIN sys.partitions AS p ON l.resource_associated_entity_id = p.hobt_id
+	INNER JOIN sys.index_columns AS ic ON p.object_id = ic.object_id AND p.index_id = ic.index_id
+	INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id
+	WHERE
+		--l.resource_type IN ('KEY', 'PAGE', 'TABLE', 'DATABASE') 
+		--AND request_mode IN ('IX', 'X')
+		l.resource_database_id = DB_ID('XmlConversionDB');
+
+
+-- Query to get next processing batch
+	SELECT ax.app_id, ax.xml 
+	FROM app_xml ax
+	LEFT JOIN app_base ab ON ax.app_id = ab.app_id
+	WHERE 
+		ax.xml IS NOT NULL 
+		AND DATALENGTH(ax.xml) > 100
+		-- BAD -> AND (ab.app_id IS NULL OR NOT EXISTS (SELECT 1 FROM app_pricing_cc apc WHERE apc.app_id = ax.app_id))                
+		AND NOT EXISTS (
+			SELECT 1 FROM processing_log pl 
+			WHERE pl.app_id = ax.app_id AND pl.status IN ('failed', 'success')
+		)
+	ORDER BY ax.app_id
+	OFFSET 0 ROWS
+	FETCH NEXT 1000 ROWS ONLY;
+
+
+
+-- Quick check all tables
+	SELECT TOP(10) *
 	FROM app_base AS a                                               
-	INNER JOIN app_operational_cc AS o ON o.app_id = a.app_id
-	INNER JOIN app_pricing_cc AS p ON p.app_id = a.app_id
-	INNER JOIN app_solicited_cc AS s ON s.app_id = a.app_id
-    LEFT JOIN app_transactional_cc AS t ON t.app_id = a.app_id
-	INNER JOIN contact_base AS c ON a.app_id = c.app_id
-    INNER JOIN contact_address AS ca ON ca.con_id = c.con_id
-    INNER JOIN contact_employment AS ce ON ce.con_id = c.con_id
+	LEFT JOIN app_operational_cc AS o ON o.app_id = a.app_id
+	LEFT JOIN app_pricing_cc AS p ON p.app_id = a.app_id
+	LEFT JOIN app_solicited_cc AS s ON s.app_id = a.app_id
+	LEFT JOIN app_transactional_cc AS t ON t.app_id = a.app_id
+	LEFT JOIN contact_base AS c ON a.app_id = c.app_id
+	LEFT JOIN contact_address AS ca ON ca.con_id = c.con_id
+	LEFT JOIN contact_employment AS ce ON ce.con_id = c.con_id
+	ORDER BY a.app_id DESC
     
 
 

@@ -261,7 +261,69 @@ The system uses a **contract-first approach** where mapping contracts define the
 - **Updated Documentation**: Enhanced docstrings and README to reflect architectural changes
 - **Cleaned Configuration**: Removed unused contract sections and consolidated default value handling
 
-## �🛠️ Development Setup
+## 📋 Work Sessions Summary
+
+### Session 1-3: Lock Contention & Resume Logic (Completed)
+**Issues Identified & Fixed:**
+1. **RangeS-U Lock Contention** (RESOLVED)
+   - Symptom: Batch processing hanging during parallel inserts
+   - Root Cause: Duplicate check queries acquiring shared locks, serializing 4 workers
+   - Solution: Added `WITH (NOLOCK)` to 3 duplicate detection queries in `migration_engine.py`
+   - Result: Workers now proceed in parallel without lock serialization
+
+2. **Resume Logic Bug** (RESOLVED)
+   - Symptom: Consecutive runs without clearing `processing_log` would reprocess already-successful apps
+   - Root Cause: WHERE clause excluded only `status='failed'`, not `status='success'`
+   - Solution: Changed to `AND pl.status IN ('success', 'failed')` in `production_processor.py`
+   - Result: Second run correctly returns 0 records, enabling true resume capability
+
+3. **Pagination Bug** (RESOLVED)
+   - Symptom: OFFSET-based pagination skipped records (pattern: apps 1-20, 41-60, 81-100)
+   - Root Cause: OFFSET applied after WHERE filtering, causing cursor misalignment
+   - Solution: Implemented cursor-based pagination using `app_id > last_app_id` with `OFFSET 0 ROWS FETCH`
+   - Result: Sequential processing without gaps
+
+### Session 4: Performance Benchmarking (Completed)
+**Baseline Metrics Established:**
+- Optimal batch-size: **500** (on this machine)
+- Throughput: **1477-1691 applications/minute** (batch-size 500)
+- Target was 3000+ rec/min (not achieved, CPU-bound bottleneck identified)
+
+**Tests Performed & Results:**
+| Batch Size | Throughput (rec/min) | Finding |
+|---|---|---|
+| 20 | 534 | Too small, high orchestration overhead |
+| 50 | 1192 | Better, still suboptimal |
+| 100 | 1791 | Good, but unstable with larger volumes |
+| 500 | 1477-1691 | **Optimal** - consistent, reliable peak |
+| 1000 | 1387 | Declining, memory pressure begins |
+| 2000 | 1393 | Further decline, orchestration overhead |
+
+**Optimization Attempts (Inconclusive):**
+- Conditional logging (reduced DEBUG overhead): ❌ No improvement
+- Connection pooling tuning: ❌ No improvement
+- FK removal + index rebuild: ❌ No improvement
+
+**Root Cause Analysis:**
+- Bottleneck: **CPU-bound processing** (XML parsing with lxml, data mapping/transformation)
+- Database I/O: Not a bottleneck (confirmed by FK removal test)
+- Logging overhead: Negligible (confirmed by conditional logging test)
+
+**Architectural Decisions:**
+1. **Batch-size 500**: Balances memory efficiency vs orchestration overhead
+2. **4 Workers**: One per CPU core, prevents context-switching overhead
+3. **Connection pooling disabled for SQLExpress**: No benefit for local connections
+4. **Three-layer duplicate detection**: Pragmatic balance between performance and correctness
+   - Layer 1: `processing_log` (fast app-level check)
+   - Layer 2: Contact-level table queries with `NOLOCK` (de-duplication)
+   - Layer 3: FK/PK constraints (safety net)
+
+**Documentation Cleanup:**
+- Consolidated 18+ WIP performance docs to single `FINAL_PERFORMANCE_SUMMARY.md`
+- Archived detailed investigation docs to `performance_tuning/archived_analysis/`
+- Kept architectural decisions and methodology for future reference
+
+## 🛠️ Development Setup
 
 ```bash
 # Clone repository
