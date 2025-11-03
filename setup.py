@@ -1,4 +1,15 @@
-"""Setup configuration for XML Database Extraction system."""
+"""
+Setup configuration for XML Database Extraction system.
+Use this for:
+- Creating a Distributable Package
+- Professional Deployment (Installing as a system service, Deploying to production servers)
+
+If you're just setting up another development environment, consider using `pip install -e .` instead.
+
+For Distributable Package:
+- python setup.py sdist bdist_wheel
+    (Creates installable .whl files in dist/ folder)
+"""
 
 from setuptools import setup, find_packages
 

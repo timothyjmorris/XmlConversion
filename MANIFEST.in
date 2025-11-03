@@ -1,0 +1,12 @@
+# Manifest file to include critical deployment files
+include README.md
+include requirements.txt
+include production_processor.py
+recursive-include config *.json *.md *.sql
+recursive-include config/samples *
+recursive-include docs *.md
+recursive-include tests *.py
+recursive-exclude tests/__pycache__ *
+recursive-exclude xml_extractor/__pycache__ *
+global-exclude *.pyc
+global-exclude __pycache__

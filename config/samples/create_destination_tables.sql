@@ -15,27 +15,17 @@ drop table historical_lookup
 drop table report_results_lookup;
 */
 
--- Log
+-- Processing Log (error tracking, resumability)
 CREATE TABLE [sandbox].[processing_log] (
-	[log_id] [int] IDENTITY(1,1) NOT NULL,
-	[app_id] [int] NOT NULL,
-	[status] [varchar](20) NOT NULL,
-	[failure_reason] [varchar](500) NULL,
-	[processing_time] [datetime2](7) NOT NULL,
-	[session_id] [varchar](50) NULL,
-	instance_id INT NULL, 
-    instance_count INT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[log_id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-ALTER TABLE [sandbox].[processing_log] ADD  DEFAULT (getutcdate()) FOR [processing_time]
-GO
-
-
+	[log_id]			int				NOT NULL CONSTRAINT PK_processing_log_log_id PRIMARY KEY IDENTITY(1, 1),
+	[app_id]			int				NOT NULL,
+	[status]			varchar(20)		NOT NULL,
+	[failure_reason]	varchar(500)	NULL,
+	[processing_time]	datetime2(7)	NOT NULL CONSTRAINT DF_processing_log_processing_time DEFAULT GETUTCDATE(),
+	[session_id]		varchar(50)		NULL,
+	app_id_start		int				NULL, 
+    app_id_end			int				NULL
+);
 
 
 -- Groups of static descriptions organized by type
@@ -116,22 +106,40 @@ CREATE TABLE sandbox.app_operational_cc (
 	CONSTRAINT PK_app_operational_cc_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 
--- "Transactional" values only exist until loan is decisioned (cleaned out by a separate job)
--- NOTE: app_id is both the FK & PK (not expecting JOINs to this table)
+-- Extended child application fields, which are somewhat temporary values that only need to exist until loan is decisioned (can be cleaned out by a separate job)
+-- NOTE: app_id is both the FK & PK (not expecting JOINs to this table unless it is from an app)
+/*
+TODO: 
+add app_operational_cc.sc_bank_account_type_num
+add xml mapping contract 
+	- sc_bank_account_type_num
+	- locked_by_user
+	- billing_tree_response_status
+	- billing_tree_token
+	- iovation_blackbox
+	- use_alloy_service_flag
+	- app_pricing_cc.clear_card_flag
+	- app_pricing_cc.population_assignment_enum
+
+*/
 CREATE TABLE sandbox.app_transactional_cc (
 	app_id							int				NOT NULL CONSTRAINT FK_app_transactional_cc_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
 	analyst_review_flag				bit				NULL	 CONSTRAINT DF_app_transactional_cc_analyst_review_flag DEFAULT (0),
+	billing_tree_response_status	varchar(20)		NULL,
+	billing_tree_token				varchar(500)	NULL,
 	booking_paused_flag				bit				NULL	 CONSTRAINT DF_app_transactional_cc_booking_paused_flag DEFAULT (0),
 	disclosures_read_flag			bit				NULL	 CONSTRAINT DF_app_transactional_cc_disclosures_read_flag DEFAULT (0),
 	duplicate_ssn_flag				bit				NULL	 CONSTRAINT DF_app_transactional_cc_duplicate_ssn_flag DEFAULT (0),
 	[error_message]					varchar(255)	NULL,
+	ex_freeze_code					varchar(4)		NULL,
 	fraud_review_flag				bit				NULL	 CONSTRAINT DF_app_transactional_cc_fraud_review_flag DEFAULT (0),
+	iovation_blackbox				varchar(MAX)	NULL,
 	locked_by_user					varchar(80)		NULL,
 	pending_verification_flag		bit				NULL	 CONSTRAINT DF_app_transactional_cc_pending_verification_flag DEFAULT (0),
 	sc_ach_sent_flag				bit				NULL	 CONSTRAINT DF_app_transactional_cc_sc_ach_sent_flag DEFAULT (0),
 	sc_debit_refund_failed_flag		bit				NULL	 CONSTRAINT DF_app_transactional_cc_sc_debit_refund_failed_flag DEFAULT (0),
 	supervisor_review_flag			bit				NULL	 CONSTRAINT DF_app_transactional_cc_supervisor_review_flag DEFAULT (0),
-	ex_freeze_code					varchar(4)		NULL,
+	use_alloy_service_flag			bit				NOT NULL CONSTRAINT DF_app_transactional_cc_use_alloy_service_flag DEFAULT (0),
 	CONSTRAINT PK_app_transactional_cc_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 
@@ -205,26 +213,6 @@ CREATE TABLE sandbox.app_solicited_cc (
 	CONSTRAINT PK_app_solicited_cc_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 
--- Used as a convenient method to store and retrieve key/value pairs from a report w/o parsing it again 
---	(when it doesn't fit in neatly to a score or an indicator or part of every app)
---	e.g. GIACT_Response, InstantID_Score, VeridQA_Result
-CREATE TABLE sandbox.report_results_lookup (
-	app_id						int				NOT NULL CONSTRAINT FK_report_results_lookup_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
-	[name]						varchar(100)	NOT NULL,
-	[value]						varchar(250)	NULL,
-	CONSTRAINT PK_report_results_lookup_app_id PRIMARY KEY CLUSTERED (app_id, [name])	-- composite unique PK
-);
-
--- MAC doesn't join on this, it's retained for "old" applications with "retired" fields
-CREATE TABLE sandbox.historical_lookup (
-	app_id						int				NOT NULL CONSTRAINT FK_historical_lookup_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
-	[name]						varchar(100)	NOT NULL,
-	-- e.g. original table name
-	[source]					varchar(50)		NULL,
-	[value]						varchar(250)	NULL,
-	CONSTRAINT PK_historical_lookup_app_id PRIMARY KEY CLUSTERED (app_id, [name])	-- composite unique PK
-);
-
 -- UC is on con_id & contact_type_enum to prevent duplicates
 CREATE TABLE sandbox.contact_base (
 	con_id						int				NOT NULL CONSTRAINT PK_contact_base_con_id PRIMARY KEY IDENTITY(1, 1),
@@ -289,4 +277,31 @@ CREATE TABLE sandbox.contact_employment (
 	unit							varchar(10)		NULL,
 	zip								varchar(9)		NULL
 	CONSTRAINT PK_contact_employment_con_id_employment_type_enum PRIMARY KEY CLUSTERED (con_id, employment_type_enum)
+);
+
+-- Used as a convenient method to store and retrieve key/value pairs from a report w/o parsing it again 
+--	(when it doesn't fit in neatly to a score or an indicator or part of every app)
+--	e.g. GIACT_Response, InstantID_Score, VeridQA_Result
+CREATE TABLE sandbox.report_results_lookup (
+	app_id						int				NOT NULL CONSTRAINT FK_report_results_lookup_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
+	[name]						varchar(100)	NOT NULL,
+	[value]						varchar(250)	NULL,
+	-- Value preferred but not enforced from [reports].[source] as a key
+	[source_report_key]			varchar(20)		NOT NULL,
+	[rowstamp]					datetime		NOT NULL CONSTRAINT DF_report_results_lookup_value_rowstamp DEFAULT GETUTCDATE(),
+	CONSTRAINT PK_report_results_lookup_app_id PRIMARY KEY CLUSTERED (app_id, [name], source_report_key)	-- composite unique PK
+);
+
+-- This table is used to retain fields and their values from applications that have "retired" fields (column no longer exists)
+-- NOTE: MAC won't operationally join on this
+CREATE TABLE sandbox.historical_lookup (
+	app_id						int				NOT NULL CONSTRAINT FK_historical_lookup_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
+	-- column name
+	[name]						varchar(100)	NOT NULL,
+	-- original table name
+	[source]					varchar(50)		NULL,
+	-- column value
+	[value]						varchar(250)	NULL,
+	[rowstamp]					datetime		NOT NULL CONSTRAINT DF_historical_lookup_value_rowstamp DEFAULT GETUTCDATE(),
+	CONSTRAINT PK_historical_lookup_app_id PRIMARY KEY CLUSTERED (app_id, [name])	-- composite unique PK
 );

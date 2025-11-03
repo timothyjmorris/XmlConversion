@@ -1,37 +1,37 @@
-# Concurrent Processing with Instance-Based Partitioning
+# Parallel Processing with App ID Ranges
 
 ## Overview
 
-Run multiple instances to process XML records faster using modulo-based partitioning. Each instance processes a unique subset of records with zero collision.
+Run multiple instances to process XML records faster using non-overlapping app_id ranges. Each instance processes a distinct subset of records with zero collision and no lock contention.
 
 **Performance Improvement**:
 | Configuration | Throughput | Improvement | Notes |
 |---|---|---|---|
 | Single Instance (Default) | 100-150 apps/min | Baseline | 4-core machine, ~90% CPU |
-| 3 Instances (Same Machine) | 250-350 apps/min | **2.3-2.5x** | Each instance: 85-117 apps/min |
+| 3 Range-Based Instances | 401 apps/min | **2.7-4x** | No lock contention between instances |
 | 3 Instances (Different Machines) | 600-1000+ apps/min | **4-6x+** | True distributed processing |
 
 ---
 
-## Quick Start: Run 3 Concurrent Processors
+## Quick Start: Run 3 Range-Based Processors
 
 ### One-Liner Setup
 
-Open 3 PowerShell windows and run these commands:
+Open 3 PowerShell windows and run these commands (assumes 180,000 total applications):
 
-**Terminal 1 (Instance 0)**
+**Terminal 1 (Range 1-60,000)**
 ```powershell
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --instance-id 0 --instance-count 3 --log-level INFO
+python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --app-id-start 1 --app-id-end 60000 --log-level INFO
 ```
 
-**Terminal 2 (Instance 1)**
+**Terminal 2 (Range 60,001-120,000)**
 ```powershell
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --instance-id 1 --instance-count 3 --log-level INFO
+python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --app-id-start 60001 --app-id-end 120000 --log-level INFO
 ```
 
-**Terminal 3 (Instance 2)**
+**Terminal 3 (Range 120,001-180,000)**
 ```powershell
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --instance-id 2 --instance-count 3 --log-level INFO
+python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --app-id-start 120001 --app-id-end 180000 --log-level INFO
 ```
 
 ### What to Expect
@@ -45,12 +45,11 @@ ProductionProcessor initialized:
   Target Schema: sandbox
   Workers: 4
   Processing Batch Size: 1000
-  Concurrent Instances: Instance 0/3 (partition-based)     ← Shows it's partitioned
-  Instance Partition Filter: app_id % 3 == 0               ← Shows this instance's partition
+  App ID Range: 1 to 60000 (range-based processing)       ← Shows app_id range
   Session ID: 20250102_143022
 
 Extracting XML records (limit=None, last_app_id=0, exclude_failed=True)
-  Partition: app_id % 3 == 0
+  Range Filter: app_id 1 to 60000                         ← Shows this instance's range
 Extracted 485 XML records (excluding already processed and failed)
 
 BATCH PROCESSING COMPLETE
@@ -59,28 +58,28 @@ Success Rate: 99.8%
 Throughput: 95.2 applications/minute
 ```
 
-Each instance should process ~1/3 of the records.
+Each instance processes only its assigned app_id range with no overlap.
 
 ---
 
 ## How It Works
 
-### Instance-Based Partitioning (Modulo Distribution)
+### App ID Range Processing (Non-Overlapping Distribution)
 
-Records are partitioned by `app_id % instance_count`:
+Records are partitioned by explicit app_id ranges:
 
 ```
-Instance 0: Processes records where app_id % 3 == 0  (e.g., 0, 3, 6, 9, 12, ...)
-Instance 1: Processes records where app_id % 3 == 1  (e.g., 1, 4, 7, 10, 13, ...)
-Instance 2: Processes records where app_id % 3 == 2  (e.g., 2, 5, 8, 11, 14, ...)
+Range 1: Processes records where app_id >= 1 AND app_id <= 60000
+Range 2: Processes records where app_id >= 60001 AND app_id <= 120000  
+Range 3: Processes records where app_id >= 120001 AND app_id <= 180000
 ```
 
 **Benefits**:
 - ✅ **Zero Collision**: Each record processed by exactly one instance
-- ✅ **Load Balancing**: Records distributed evenly across instances
+- ✅ **No Lock Contention**: No overlapping duplicate detection queries
 - ✅ **Automatic Resume**: Each instance resumes from its processing_log
-- ✅ **Simple**: No complex coordination, just modulo arithmetic
-- ✅ **Scalable**: Add more instances by increasing `--instance-count`
+- ✅ **Simple**: No complex coordination, just range boundaries
+- ✅ **Scalable**: Add more instances by subdividing ranges further
 
 ### Processing Flow
 

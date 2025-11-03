@@ -25,7 +25,7 @@ FROM sys.dm_tran_locks AS l
 LEFT JOIN sys.dm_exec_sessions AS s ON l.request_session_id = s.session_id
 LEFT JOIN sys.dm_exec_requests AS r ON l.request_session_id = r.session_id
 CROSS APPLY sys.dm_exec_sql_text(r.sql_handle) AS t
-WHERE s.database_id = DB_ID()
+WHERE l.resource_database_id = DB_ID()
   AND l.request_session_id > 50  -- Ignore system sessions
 ORDER BY l.request_session_id, l.request_mode DESC;
 
@@ -91,24 +91,21 @@ ORDER BY s.session_id;
 
 -- ========================================================================
 
--- Option 5: Page latches (pre-allocation contention check)
+-- Option 5: Page latch waits (pre-allocation contention check)
 -- If you see high contention here, it indicates page allocation lock contention
 SELECT 
     'PAGE_LATCH_STATS' AS metric_type,
     GETUTCDATE() AS sample_time,
-    database_id,
-    object_id,
-    index_id,
-    partition_number,
-    page_io_latch_wait_count,
-    page_io_latch_wait_in_ms,
-    page_lock_wait_count,
-    page_lock_wait_in_ms
-FROM sys.dm_db_page_info_internal()
-WHERE database_id = DB_ID()
-  AND object_id > 0
-  AND (page_io_latch_wait_count > 0 OR page_lock_wait_count > 0)
-ORDER BY page_io_latch_wait_count DESC;
+    wait_type,
+    waiting_tasks_count,
+    wait_time_ms,
+    max_wait_time_ms,
+    signal_wait_time_ms
+FROM sys.dm_os_wait_stats
+WHERE wait_type LIKE 'PAGELATCH%' 
+   OR wait_type LIKE 'PAGEIOLATCH%'
+   OR wait_type LIKE 'LCK_%'
+ORDER BY wait_time_ms DESC;
 
 -- ========================================================================
 
@@ -126,8 +123,7 @@ SELECT
 FROM sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, 'LIMITED') ips
 INNER JOIN sys.indexes i ON ips.object_id = i.object_id 
     AND ips.index_id = i.index_id
-WHERE ips.database_id = DB_ID()
-  AND ips.avg_fragmentation_in_percent > 5  -- Only show fragmented indexes
+WHERE ips.avg_fragmentation_in_percent > 5  -- Only show fragmented indexes
   AND ips.page_count > 1000
 ORDER BY ips.avg_fragmentation_in_percent DESC;
 

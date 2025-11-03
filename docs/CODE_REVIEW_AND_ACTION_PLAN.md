@@ -594,8 +594,8 @@ class TestErrorScenarios:
         """Verify error handling when SQL Server disk fills up."""
         pass
     
-    def test_concurrent_instances_no_duplicate_processing(self):
-        """Verify --instance-id and --instance-count prevent duplicate work."""
+    def test_parallel_ranges_no_duplicate_processing(self):
+        """Verify --app-id-start and --app-id-end prevent overlapping work."""
         pass
 ```
 

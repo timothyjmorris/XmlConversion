@@ -87,6 +87,16 @@ ADD ex_freeze_code varchar(4) NULL;
 	FULL OUTER JOIN sys.dm_tran_locks l ON r.session_id = l.request_session_id
 	WHERE (r.session_id > 50 OR l.request_session_id > 50)
 
+-- BLOCKING (fastest blocking detection)
+    SELECT TOP 5
+        blocking_session_id AS [Blocker],
+        session_id AS [Blocked], 
+        wait_type,
+        wait_duration_ms AS [Wait_MS]
+    FROM sys.dm_os_waiting_tasks 
+    WHERE blocking_session_id > 0
+    ORDER BY wait_duration_ms DESC;
+
 -- Check for Locks ---
 	SELECT
 		l.resource_type,
