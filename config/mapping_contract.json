@@ -2,6 +2,16 @@
   "source_table": "app_xml",
   "source_column": "xml",
   "target_schema": "sandbox",
+  "table_insertion_order": [
+    "app_base",
+    "contact_base",
+    "app_operational_cc",
+    "app_pricing_cc",
+    "app_transactional_cc",
+    "app_solicited_cc",
+    "contact_address",
+    "contact_employment"
+  ],
   "xml_root_element": "Provenir",
   "key_identifiers": {
     "app_id": {

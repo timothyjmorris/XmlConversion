@@ -112,13 +112,15 @@ class MigrationEngine(MigrationEngineInterface):
     - Comprehensive error categorization for downstream processing decisions
     """
     
-    def __init__(self, connection_string: Optional[str] = None, batch_size: Optional[int] = None):
+    def __init__(self, connection_string: Optional[str] = None, batch_size: Optional[int] = None, log_level: str = "ERROR"):
         """
         Initialize the migration engine.
         
         Args:
             connection_string: Optional SQL Server connection string. If None, uses centralized config.
             batch_size: Optional batch size for bulk operations. If None, uses centralized config.
+            log_level: Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL).
+                      Defaults to ERROR for production use to minimize overhead.
         """
         self.logger = logging.getLogger(__name__)
         # DEBUG: Attach root logger handlers for troubleshooting
@@ -126,7 +128,10 @@ class MigrationEngine(MigrationEngineInterface):
         root_logger = logging.getLogger()
         for handler in root_logger.handlers:
             self.logger.addHandler(handler)
-        self.logger.setLevel(logging.WARNING)
+        
+        # PRODUCTION FIX: Set log level explicitly (default to ERROR for production)
+        log_level_value = getattr(logging, log_level.upper(), logging.ERROR)
+        self.logger.setLevel(log_level_value)
         
         # Get centralized configuration
         self.config_manager = get_config_manager()
@@ -268,9 +273,11 @@ class MigrationEngine(MigrationEngineInterface):
                 try:
                     cursor.execute("ROLLBACK TRANSACTION")
                     self._transaction_active = False
-                    self.logger.debug("Transaction rolled back")
-                except pyodbc.Error:
-                    pass  # Ignore rollback errors
+                    # CRITICAL FIX: Use ERROR level for production visibility
+                    self.logger.error(f"Transaction rolled back due to error: {str(e)[:200]}")
+                except pyodbc.Error as rollback_error:
+                    # CRITICAL FIX: Use CRITICAL level when rollback itself fails
+                    self.logger.critical(f"ROLLBACK FAILED - Database may be in inconsistent state: {rollback_error}")
             raise e
         finally:
             if cursor:

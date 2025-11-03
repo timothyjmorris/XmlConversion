@@ -124,7 +124,7 @@ class DataMapper(DataMapperInterface):
     - No default values are injected - only explicitly mapped data is processed
     """
     
-    def __init__(self, mapping_contract_path: Optional[str] = None):
+    def __init__(self, mapping_contract_path: Optional[str] = None, log_level: str = "ERROR"):
         """
         Initialize the DataMapper with centralized configuration and mapping contract loading.
 
@@ -135,6 +135,8 @@ class DataMapper(DataMapperInterface):
         Args:
             mapping_contract_path: Optional path to mapping contract JSON file.
                                 If None, uses path from centralized configuration.
+            log_level: Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL).
+                      Defaults to ERROR for production use to minimize overhead.
 
         Configuration Loaded:
         - _enum_mappings: Dict mapping enum_type names to value->integer mappings
@@ -145,6 +147,11 @@ class DataMapper(DataMapperInterface):
         cannot be loaded, empty dictionaries are used as fallbacks.
         """
         self.logger = logging.getLogger(__name__)
+        
+        # PRODUCTION FIX: Set log level explicitly (default to ERROR for production)
+        log_level_value = getattr(logging, log_level.upper(), logging.ERROR)
+        self.logger.setLevel(log_level_value)
+        
         self._validation_errors = []
         self._transformation_stats = {
             'records_processed': 0,
@@ -1310,10 +1317,14 @@ class DataMapper(DataMapperInterface):
                             applied_defaults.add(mapping.target_column)
                             self.logger.debug(f"Using contract default for required column {mapping.target_column}: {default_value}")
                         else:
-                            # No contract default - this is an error for required columns
-                            # For now, set to None and let database handle it, but log warning
-                            record[mapping.target_column] = None
-                            self.logger.warning(f"Required column {mapping.target_column} in {table_name} has no value and no default - will be NULL")
+                            # CRITICAL FIX: No contract default for required field - FAIL FAST
+                            # This prevents silent data corruption and batch failures at database level
+                            raise DataMappingError(
+                                f"Required column '{mapping.target_column}' in table '{table_name}' "
+                                f"has no value and no default_value defined in contract. "
+                                f"Cannot proceed with NULL for NOT NULL column. "
+                                f"Source XML path: {mapping.xml_path}{f'/@{mapping.xml_attribute}' if mapping.xml_attribute else ''}"
+                            )
                 
                 self._transformation_stats['type_conversions'] += 1
                 

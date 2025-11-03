@@ -23,6 +23,8 @@ CREATE TABLE [sandbox].[processing_log] (
 	[failure_reason] [varchar](500) NULL,
 	[processing_time] [datetime2](7) NOT NULL,
 	[session_id] [varchar](50) NULL,
+	instance_id INT NULL, 
+    instance_count INT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[log_id] ASC
@@ -32,7 +34,6 @@ GO
 
 ALTER TABLE [sandbox].[processing_log] ADD  DEFAULT (getutcdate()) FOR [processing_time]
 GO
-
 
 
 
@@ -171,7 +172,7 @@ CREATE TABLE sandbox.app_pricing_cc (
 	monthly_income						decimal(12,2)	NULL, --NOT NULL CONSTRAINT DF_app_pricing_cc_monthly_income DEFAULT (0),
 	-- Will have to rely on XML for pop -- and maybe a fall-back to have this be 'NOT NULL', because the data is missing this value
 	population_assignment_enum			smallint		NOT NULL CONSTRAINT FK_app_pricing_cc_population_assignment_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	pricing_tier						varchar(2)		NOT NULL,
+	pricing_tier						varchar(2)		NULL,
 	sc_multran_account_num				varchar(16)		NULL,
 	segment_plan_version				varchar(3)		NULL,
 	solicitation_num					varchar(15)		NULL,
@@ -185,22 +186,22 @@ CREATE TABLE sandbox.app_pricing_cc (
 -- NOTE: app_id is both the FK & PK (not expecting JOINs to this table)
 CREATE TABLE sandbox.app_solicited_cc (
 	app_id						int				NOT NULL CONSTRAINT FK_app_solicited_cc_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
-	birth_date					smalldatetime	NOT NULL,
-	city						varchar(50)		NOT NULL,
-	first_name					varchar(50)		NOT NULL,
-	last_name					varchar(50)		NOT NULL,
+	birth_date					smalldatetime	NULL,
+	city						varchar(50)		NULL,
+	first_name					varchar(50)		NULL,
+	last_name					varchar(50)		NULL,
 	middle_initial				varchar(1)		NULL,
 	po_box						varchar(10)		NULL,
 	prescreen_fico_grade		char(1)			NULL,
 	prescreen_risk_grade		char(1)			NULL,
 	rural_route					varchar(10)		NULL,
-	ssn							char(9)			NOT NULL,
-	[state]						char(2)			NOT NULL,
+	ssn							char(9)			NULL,
+	[state]						char(2)			NULL,
 	street_name					varchar(50)		NULL,
 	street_number				varchar(10)		NULL,
 	suffix						varchar(10)		NULL,
 	unit						varchar(10)		NULL,
-	zip							varchar(9)		NOT NULL,	
+	zip							varchar(9)		NULL,	
 	CONSTRAINT PK_app_solicited_cc_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 

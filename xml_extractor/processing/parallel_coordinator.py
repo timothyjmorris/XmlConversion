@@ -256,7 +256,7 @@ class ParallelCoordinator:
         
         self.logger.info(f"ParallelCoordinator initialized with {self.num_workers} workers")
     
-    def process_xml_batch(self, xml_records: List[Tuple[int, str]]) -> ProcessingResult:
+    def process_xml_batch(self, xml_records: List[Tuple[int, str]], batch_number: int = 1) -> ProcessingResult:
         """
         Process a batch of XML records in parallel using multiprocessing.Pool.
         
@@ -274,6 +274,7 @@ class ParallelCoordinator:
         
         Args:
             xml_records: List of (app_id, xml_content) tuples
+            batch_number: Batch sequence number (default: 1)
             
         Returns:
             ProcessingResult with comprehensive metrics
@@ -288,7 +289,7 @@ class ParallelCoordinator:
         self.progress_dict['failed_items'] = 0
         self.progress_dict['start_time'] = start_time
         
-        self.logger.info(f"Starting parallel processing of {len(xml_records)} XML records with {self.num_workers} workers")
+        self.logger.info(f"Batch {batch_number}: Starting parallel processing of {len(xml_records)} XML records with {self.num_workers} workers")
         
         # Create work items
         work_items = [
@@ -388,11 +389,11 @@ class ParallelCoordinator:
             }
         )
         
-        self.logger.info(f"Parallel processing completed: {len(successful_results)}/{len(results)} successful "
+        self.logger.info(f"Batch {batch_number}: Parallel processing completed: {len(successful_results)}/{len(results)} successful "
                         f"in {processing_time:.2f}s ({processing_result.performance_metrics['records_per_minute']:.1f} rec/min)")
         
-        # OUTPUT to console
-        print(f"   - Batch completed: {len(successful_results)}/{len(results)} successful "
+        # OUTPUT to console with batch number
+        print(f"   - Batch {batch_number} completed: {len(successful_results)}/{len(results)} successful "
                         f"in {processing_time:.2f}s ({processing_result.performance_metrics['records_per_minute']:.1f} rec/min)")
         
         return processing_result
@@ -603,12 +604,18 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
 
 def _insert_mapped_data_with_fk_order(mapped_data: Dict[str, List[Dict[str, Any]]]) -> Dict[str, int]:
     """
-    Insert mapped data respecting FK dependency order.
+    Insert mapped data respecting FK dependency order from mapping contract.
     
     CRITICAL: This order prevents FK constraint violations by ensuring parent records
-    are inserted before child records:
-    - app_base must exist before app_solicited_cc (FK reference)
-    - contact_base must exist before contact_address (FK reference)
+    are inserted before child records. The insertion order is defined in the mapping
+    contract's table_insertion_order field, which should specify the FK dependency order.
+    
+    Fallback behavior (Option A):
+    - Tables in table_insertion_order are processed in that order
+    - Any tables in mapped_data NOT in table_insertion_order are appended at the end
+    - This allows new product lines to add tables without updating the contract order
+    - If a child table is added without updating the order, it may encounter FK errors
+      (this should be caught during contract definition for the new product line)
     
     Args:
         mapped_data: Dict of {table_name: [records]} from mapper
@@ -616,25 +623,36 @@ def _insert_mapped_data_with_fk_order(mapped_data: Dict[str, List[Dict[str, Any]
     Returns:
         Dict of {table_name: inserted_count} for each table processed
     """
-    global _worker_migration_engine
+    global _worker_migration_engine, _worker_mapper
     
     insertion_results = {}
     
-    # FK DEPENDENCY ORDER (CRITICAL):
-    # 1. Insert parent tables first
-    # 2. Then insert child tables that reference parents
-    # This prevents "referenced key not found" FK violations
-    table_order = [
-        "app_base",              # Parent: all app_*_cc tables FK to this
-        "contact_base",          # Parent: contact_address/employment FK to this + FK to app_base
-        "app_operational_cc",    # Child of app_base
-        "app_pricing_cc",        # Child of app_base
-        "app_transactional_cc",  # Child of app_base
-        "app_solicited_cc",      # Child of app_base
-        "contact_address",       # Child of contact_base
-        "contact_employment",    # Child of contact_base
-    ]
+    # Get table insertion order from contract, or use fallback hardcoded order
+    # The fallback ensures backward compatibility if contract doesn't specify order
+    try:
+        from ..config.config_manager import get_config_manager
+        config_manager = get_config_manager()
+        mapping_contract = config_manager.load_mapping_contract()
+        table_order = mapping_contract.table_insertion_order if mapping_contract and mapping_contract.table_insertion_order else None
+    except Exception:
+        table_order = None
     
+    # Fallback to hardcoded order if contract doesn't specify
+    if not table_order:
+        table_order = [
+            "app_base",              # Parent: all app_*_cc tables FK to this
+            "contact_base",          # Parent: contact_address/employment FK to this + FK to app_base
+            "app_operational_cc",    # Child of app_base
+            "app_pricing_cc",        # Child of app_base
+            "app_transactional_cc",  # Child of app_base
+            "app_solicited_cc",      # Child of app_base
+            "contact_address",       # Child of contact_base
+            "contact_employment",    # Child of contact_base
+        ]
+        _worker_mapper.logger.debug("Using fallback hardcoded table_insertion_order (contract order not available)")
+    
+    # Process tables in order
+    processed_tables = set()
     for table_name in table_order:
         records = mapped_data.get(table_name, [])
         if records:
@@ -645,5 +663,26 @@ def _insert_mapped_data_with_fk_order(mapped_data: Dict[str, List[Dict[str, Any]
                 enable_identity_insert=enable_identity
             )
             insertion_results[table_name] = inserted_count
+            processed_tables.add(table_name)
+    
+    # Option A: Append any tables not in the insertion order (for new product lines)
+    # Log warning if unmapped tables are found (helps with contract debugging)
+    unmapped_tables = set(mapped_data.keys()) - processed_tables
+    if unmapped_tables:
+        _worker_mapper.logger.warning(
+            f"Tables in mapped_data not in table_insertion_order (appending to end): {', '.join(sorted(unmapped_tables))}. "
+            f"If these are child tables with FK dependencies, update table_insertion_order in contract."
+        )
+        # Append unmapped tables at the end (risky but allows flexibility for new product lines)
+        for table_name in sorted(unmapped_tables):
+            records = mapped_data[table_name]
+            if records:
+                enable_identity = table_name in ["app_base", "contact_base"]
+                inserted_count = _worker_migration_engine.execute_bulk_insert(
+                    records, 
+                    table_name, 
+                    enable_identity_insert=enable_identity
+                )
+                insertion_results[table_name] = inserted_count
     
     return insertion_results

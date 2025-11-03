@@ -232,7 +232,9 @@ class ProductionProcessor:
         self.logger.debug(f"  Connection String: {self.connection_string}")
         
         # OUTPUT to console    
-        print(f"Initialized Batch Processor for instance_id={self.instance_id}, instance_count={self.instance_count}..........")
+        print(f"\n============================================================")
+        print(f"INITIALIZED PROCESSING WITH {self.instance_count} INSTANCES AS ID '{self.instance_id}'")
+        print(f"============================================================")
 
     def _build_connection_string_with_pooling(self) -> str:
         """
@@ -295,8 +297,9 @@ class ProductionProcessor:
         logs_dir = Path("logs")
         logs_dir.mkdir(exist_ok=True)
         
-        # Configure logging
-        log_file = logs_dir / f"production_{self.session_id}.log"
+        # Configure logging with instance_id suffix for concurrent runs
+        instance_suffix = f"_{self.instance_id}" if self.instance_count > 1 else ""
+        log_file = logs_dir / f"production_{self.session_id}{instance_suffix}.log"
         
         # Set root logger level to suppress all other module noise
         logging.getLogger().setLevel(logging.WARNING)
@@ -383,52 +386,35 @@ class ProductionProcessor:
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 
-                # Build query - exclude apps that have already been processed or failed
-                base_conditions = """
-                    WHERE 
-                        ax.app_id > {last_app_id}
-                        AND ax.xml IS NOT NULL 
-                        AND DATALENGTH(ax.xml) > 100
-                """.format(last_app_id=last_app_id)
+                # Build WHERE clause based on processing mode
+                # ============================================
+                # Sequential mode (instance_count==1): No pagination, scan all records
+                # Concurrent mode (instance_count > 1): Pagination + modulo partitioning
                 
-                # Add instance-based partitioning if running concurrently
-                if self.instance_count > 1 and self.instance_id is not None:
-                    base_conditions += f"""
-                        AND (ax.app_id % {self.instance_count}) = {self.instance_id}
-                    """
+                base_conditions = "WHERE ax.xml IS NOT NULL AND DATALENGTH(ax.xml) > 100"
                 
+                # For concurrent mode: add cursor pagination and modulo partitioning
+                if self.instance_count > 1:
+                    base_conditions += f" AND ax.app_id > {last_app_id}"
+                    base_conditions += f" AND (ax.app_id % {self.instance_count}) = {self.instance_id}"
+                
+                # Exclude already-processed records (both success and failed)
                 if exclude_failed:
-                    # processing_log table uses target_schema from MappingContract
-                    # Like all target tables, it's schema-isolated (e.g., [sandbox].[processing_log])
-                    
                     base_conditions += f"""
                         AND NOT EXISTS (
                             SELECT 1 
                             FROM [{self.target_schema}].[processing_log] pl 
-                            WHERE 
-                                pl.app_id = ax.app_id 
-                                AND pl.status IN ('success', 'failed')
-                        )  -- Exclude records that were already processed (success or failed)
-                    """
+                            WHERE pl.app_id = ax.app_id AND pl.status IN ('success', 'failed')
+                        )"""
                 
-                if limit:
-                    query = f"""
-                        SELECT ax.app_id, ax.xml 
-                        FROM [dbo].[app_xml] AS ax
-                        LEFT JOIN [{self.target_schema}].[app_base] AS ab ON ax.app_id = ab.app_id
-                        {base_conditions}
-                        ORDER BY ax.app_id
-                        OFFSET 0 ROWS
-                        FETCH NEXT {limit} ROWS ONLY
-                    """
-                else:
-                    query = f"""
-                        SELECT ax.app_id, ax.xml 
-                        FROM [dbo].[app_xml] AS ax
-                        LEFT JOIN [{self.target_schema}].[app_base] AS ab ON ax.app_id = ab.app_id
-                        {base_conditions}
-                        ORDER BY ax.app_id
-                    """
+                # Build final SQL query with LIMIT support
+                query = f"""
+                    SELECT ax.app_id, ax.xml 
+                    FROM [dbo].[app_xml] AS ax
+                    {base_conditions}
+                    ORDER BY ax.app_id
+                    {("OFFSET 0 ROWS FETCH NEXT " + str(limit) + " ROWS ONLY") if limit else ""}
+                """
                 
                 cursor.execute(query)
                 rows = cursor.fetchall()
@@ -485,7 +471,7 @@ class ProductionProcessor:
         except Exception as e:
             self.logger.warning(f"Failed to log processing result for app_id {app_id}: {e}")
     
-    def process_batch(self, xml_records: List[Tuple[int, str]]) -> dict:
+    def process_batch(self, xml_records: List[Tuple[int, str]], batch_number: int = 1) -> dict:
         """
         Process a batch of XML applications with full monitoring.
         
@@ -495,6 +481,10 @@ class ProductionProcessor:
             - applications_successful: XML applications completely processed with data inserted into database
             - applications_processed: Total XML applications attempted 
             - applications_failed: XML applications that failed at any stage (parsing, mapping, or insertion)
+            
+        Args:
+            xml_records: List of (app_id, xml_content) tuples to process
+            batch_number: Batch sequence number (for logging/tracking)
             
         Returns:
             Dictionary containing processing metrics including failed_apps list with failure details
@@ -516,7 +506,7 @@ class ProductionProcessor:
         
         # Process batch
         start_time = time.time()
-        processing_result = coordinator.process_xml_batch(xml_records)
+        processing_result = coordinator.process_xml_batch(xml_records, batch_number=batch_number)
         end_time = time.time()
         
         # Extract failed app details from individual results
@@ -537,7 +527,10 @@ class ProductionProcessor:
                 success = True
             
             if success:
-                self._log_processing_result(app_id, True)
+                # Only log once for successful records
+                if not (app_id and error_stage == 'constraint_violation' and 'PK_app_base' in str(error_message)):
+                    # Normal success path (not already logged above as PK violation)
+                    self._log_processing_result(app_id, True)
             else:
                 failure_reason = f"{error_stage}: {error_message}"
                 self._log_processing_result(app_id, False, failure_reason)
@@ -617,7 +610,7 @@ class ProductionProcessor:
                 self.logger.warning(f"  Unknown Failures: {failure_summary['unknown_failures']} (Unclassified errors)")
             
             # Log failed app_ids (keep it concise)
-            failed_app_ids = [str(f['app_id']) for f in metrics['failed_apps']]
+            failed_app_ids = [str(f['app_id']) for f in metrics['failed_apps'] if f.get('app_id') is not None]
             if len(failed_app_ids) <= 10:
                 self.logger.warning(f"  Failed App IDs: {', '.join(failed_app_ids)}")
             else:
@@ -650,7 +643,9 @@ class ProductionProcessor:
         metrics_dir = Path("metrics")
         metrics_dir.mkdir(exist_ok=True)
         
-        metrics_file = metrics_dir / f"metrics_{self.session_id}.json"
+        # Add instance_id suffix for concurrent runs
+        instance_suffix = f"_{self.instance_id}" if self.instance_count > 1 else ""
+        metrics_file = metrics_dir / f"metrics_{self.session_id}{instance_suffix}.json"
         
         try:
             # Build consolidated metrics structure
@@ -752,7 +747,7 @@ class ProductionProcessor:
             app_ids = [rec[0] for rec in batch_records]
             self.logger.info(f"Processing batch {batch_number}: app_ids {min(app_ids)}-{max(app_ids)}" if app_ids else f"Processing batch {batch_number}: empty batch")
             batch_start_time = time.time()
-            metrics = self.process_batch(batch_records)
+            metrics = self.process_batch(batch_records, batch_number=batch_number)
             batch_duration = time.time() - batch_start_time
             
             # Collect batch metrics for later reporting
@@ -825,7 +820,7 @@ class ProductionProcessor:
                 self.logger.warning(f"Unknown Failures: {overall_failure_summary['unknown_failures']} (Unclassified errors)")
             
             # Log sample of failed app_ids for investigation
-            failed_app_ids = [str(f['app_id']) for f in all_failed_apps]
+            failed_app_ids = [str(f['app_id']) for f in all_failed_apps if f.get('app_id') is not None]
             unique_failed_ids = list(dict.fromkeys(failed_app_ids))  # Remove duplicates while preserving order
             
             if len(unique_failed_ids) <= 20:

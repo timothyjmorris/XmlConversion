@@ -32,7 +32,6 @@ class FieldMapping:
         target_column: Name of the destination column
         data_type: Target data type for the column
         mapping_type: Type of mapping (enum, char_to_bit, identity_insert, etc.)
-        transformation: Optional transformation rule to apply
         expression: Optional calculated field expression for calculated_field mapping type
     """
     xml_path: str
@@ -42,7 +41,6 @@ class FieldMapping:
     data_length: Optional[int] = None
     xml_attribute: Optional[str] = None
     mapping_type: Optional[list] = None
-    transformation: Optional[str] = None
     default_value: Optional[str] = None
     expression: Optional[str] = None
     description: Optional[str] = None
@@ -93,8 +91,6 @@ class RelationshipMapping:
 
 
 @dataclass
-
-@dataclass
 class MappingContract:
     """
     Complete mapping contract defining how XML data maps to relational structure.
@@ -104,6 +100,7 @@ class MappingContract:
         source_column: Column name containing the XML content
         xml_root_element: Root element name in the XML structure
         target_schema: Target database schema (e.g., 'dbo')
+        table_insertion_order: Optional list specifying FK dependency order for table insertion
         key_identifiers: Optional dictionary of key identifiers
         mappings: List of field mappings for individual elements/attributes
         relationships: List of relationship mappings for nested structures
@@ -112,6 +109,7 @@ class MappingContract:
     source_column: str
     xml_root_element: str
     target_schema: Optional[str] = "dbo"
+    table_insertion_order: Optional[List[str]] = None
     key_identifiers: Optional[Dict[str, Any]] = None
     mappings: List[FieldMapping] = None
     relationships: List[RelationshipMapping] = None
