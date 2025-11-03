@@ -15,8 +15,8 @@ workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../
 if workspace_root not in sys.path:
     sys.path.insert(0, workspace_root)
 print('DEBUG sys.path:', sys.path)
-from MB_XmlConversionKiro.xml_extractor.mapping.data_mapper import DataMapper
-from MB_XmlConversionKiro.xml_extractor.models import MappingContract
+from xml_extractor.mapping.data_mapper import DataMapper
+from xml_extractor.models import MappingContract
 
 class TestMappingTypesAndExpressions(unittest.TestCase):
     @classmethod
@@ -26,7 +26,7 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
         with open(contract_path, 'r') as f:
             contract_data = json.load(f)
         # Convert mappings and relationships to objects
-        from MB_XmlConversionKiro.xml_extractor.models import FieldMapping, RelationshipMapping
+        from xml_extractor.models import FieldMapping, RelationshipMapping
         mappings = [FieldMapping(**m) for m in contract_data.get('mappings', [])]
         relationships = [RelationshipMapping(**r) for r in contract_data.get('relationships', [])]
         cls.contract = MappingContract(
@@ -41,7 +41,7 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
         # Initialize DataMapper with contract path to load enum mappings as in production
         cls.mapper = DataMapper(mapping_contract_path=str(contract_path))
         # Parse XML using the real parser
-        from MB_XmlConversionKiro.xml_extractor.parsing.xml_parser import XMLParser
+        from xml_extractor.parsing.xml_parser import XMLParser
         parser = XMLParser(mapping_contract=cls.contract)
         xml_root = parser.parse_xml_stream(cls.sample_xml)
         cls.parsed_xml = parser.extract_elements(xml_root)

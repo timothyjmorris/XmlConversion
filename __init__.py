@@ -1,1 +1,1 @@
-# This file makes MB_XmlConversionKiro a Python package.
+# This file makes XmlConversion a Python package.

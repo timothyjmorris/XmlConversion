@@ -549,7 +549,6 @@ class ConfigManager(ConfigurationManagerInterface):
                     data_length=mapping_data.get('data_length'),
                     xml_attribute=mapping_data.get('xml_attribute'),
                     mapping_type=mapping_data.get('mapping_type'),
-                    transformation=mapping_data.get('transformation'),
                     default_value=mapping_data.get('default_value'),
                     expression=mapping_data.get('expression'),
                     description=mapping_data.get('description'),
