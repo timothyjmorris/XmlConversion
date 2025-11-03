@@ -186,42 +186,6 @@ if table_name == 'contact_address':
 
 ---
 
-### DQ2. Incomplete Business Rule Validation
-**Severity:** MEDIUM  
-**Impact:** Invalid data reaches database  
-**Location:** `data_integrity_validator.py` lines 691-730
-
-**Analysis:**
-Current validation:
-- ✅ SSN format validation
-- ✅ Birth date range validation
-- ❌ No phone number format validation (mentioned in code but not implemented)
-- ❌ No email format validation (basic check exists but not comprehensive)
-- ❌ No zip code validation
-- ❌ No state code validation
-
-**Fix Required:**
-Add comprehensive validation methods:
-```python
-def _validate_phone_number(self, phone: str) -> bool:
-    """Validate phone number is 10 digits."""
-    digits = ''.join(c for c in phone if c.isdigit())
-    return len(digits) == 10
-
-def _validate_email(self, email: str) -> bool:
-    """Validate email format."""
-    import re
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(pattern, email) is not None
-
-def _validate_zip_code(self, zip_code: str) -> bool:
-    """Validate zip code is 5 or 9 digits."""
-    digits = ''.join(c for c in zip_code if c.isdigit())
-    return len(digits) in [5, 9]
-```
-
----
-
 ### DQ3. Enum Mapping - No Validation for Required Enums
 **Severity:** MEDIUM  
 **Impact:** Silent data quality degradation  
