@@ -1050,14 +1050,26 @@ class DataMapper(DataMapperInterface):
                 self.logger.warning(f"Using default enum value for unmapped '{str_value}' in {enum_type}")
                 return enum_map['']
         
-        # INTENTIONAL DESIGN: No valid enum mapping found - return None to exclude column from INSERT
-        # This is BY DESIGN: When XML attribute is missing/empty and no default enum mapping exists,
-        # we intentionally exclude the column from INSERT so the database column remains NULL.
-        # NULL indicates "no source data available" vs. fabricating a default value.
-        # This preserves data integrity and allows applications to distinguish between
-        # "missing in source XML" vs. "explicitly set to default value".
-        self.logger.info(f"No enum mapping found for value '{str_value}' in column {mapping.target_column}, enum_type={enum_type} - excluding column")
-        return None
+        # CRITICAL FIX (DQ3): Check if this is a required (NOT NULL) enum field
+        is_required = not getattr(mapping, 'nullable', True)
+        
+        if is_required:
+            # Required enum with no valid mapping - this is an error
+            if hasattr(mapping, 'default_value') and mapping.default_value is not None:
+                self.logger.warning(f"Using contract default for required enum {mapping.target_column}: {mapping.default_value}")
+                return mapping.default_value
+            else:
+                # FAIL FAST: Required enum field with no valid mapping and no default
+                raise DataMappingError(
+                    f"Required enum field '{mapping.target_column}' has no valid "
+                    f"mapping for value '{str_value}' (enum_type: {enum_type}) and no default_value defined. "
+                    f"Cannot proceed with NULL for NOT NULL enum column."
+                )
+        else:
+            # Nullable enum - returning None is correct (database sets NULL)
+            # This preserves data integrity by distinguishing between missing data and defaults
+            self.logger.info(f"No enum mapping found for value '{str_value}' in column {mapping.target_column}, enum_type={enum_type} - excluding column (nullable)")
+            return None
 
     def _determine_enum_type(self, column_name: str) -> Optional[str]:
         """
