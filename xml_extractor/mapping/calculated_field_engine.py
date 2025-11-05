@@ -147,7 +147,6 @@ class CalculatedFieldEngine:
         Supports multiple WHEN clauses and optional ELSE clause.
         """
         self.logger.debug(f"Evaluating CASE statement for {target_column}: {expression}")
-        # print(f"DEBUG: Evaluating CASE statement for {target_column}")
         
         # Parse CASE statement structure
         case_match = self._case_pattern.search(expression)
@@ -222,25 +221,19 @@ class CalculatedFieldEngine:
         Supports: =, !=, <, >, <=, >=, IS NULL, IS NOT NULL, DATE() function, LIKE operator, IS EMPTY/NOT EMPTY
         """
         condition = condition.strip()
-        # print(f"[DEBUG] Evaluating compound condition: '{condition}'")
         
         # Handle compound conditions with AND/OR
         if ' AND ' in condition.upper():
             parts = self._split_condition(condition, 'AND')
-            # print(f"[DEBUG] AND condition split into {len(parts)} parts: {parts}")
             results = [self._evaluate_simple_condition(part.strip(), element_data) for part in parts]
-            # print(f"[DEBUG] AND results: {results}")
             return all(results)
         elif ' OR ' in condition.upper():
             parts = self._split_condition(condition, 'OR')
-            # print(f"[DEBUG] OR condition split into {len(parts)} parts: {parts}")
             results = [self._evaluate_simple_condition(part.strip(), element_data) for part in parts]
-            # print(f"[DEBUG] OR results: {results}")
             return any(results)
         else:
             # Single condition
             result = self._evaluate_simple_condition(condition, element_data)
-            # print(f"[DEBUG] Single condition result: {result}")
             return result
     
     def _split_condition(self, condition: str, operator: str) -> List[str]:
@@ -322,13 +315,9 @@ class CalculatedFieldEngine:
                         else:
                             right_val = element_data.get(self._find_field_case_insensitive(right_expr, element_data), '')
                     
-                    # Debug logging
-                    # print(f"[DEBUG] Comparison: left_expr='{left_expr}', right_expr='{right_expr}', left_val='{left_val}' (type: {type(left_val)}), right_val='{right_val}' (type: {type(right_val)}), op='{op}'")
-                    
                     # Perform comparison with proper type handling
                     if op == '=':
                         result = self._safe_compare(left_val, right_val, lambda x, y: x == y)
-                        # print(f"[DEBUG] Equality comparison result: {result}")
                         return result
                     elif op == '!=':
                         return self._safe_compare(left_val, right_val, lambda x, y: x != y)

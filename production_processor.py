@@ -2,145 +2,29 @@
 """
 Production XML Processing Script
 
-High-performance ETL processor for transforming XML records into normalized SQL Server tables.
-Supports both direct execution and orchestrated chunked processing for large datasets.
+Contract-driven ETL processor for transforming XML records into normalized SQL Server tables.
+Supports atomic transactions, parallel processing, and resume-safe operations.
 
-=============================================================================
-QUICK START
-=============================================================================
-
-Simple Usage (with defaults):
-    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB"
-    
-    Defaults: batch-size=500, limit=10000 (safety cap), log-level=WARNING, workers=4
-
-Range-Based Processing (recommended for large datasets):
-    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
-        --app-id-start 1 --app-id-end 50000
-    
-    Use explicit ranges to enable concurrent processing across multiple terminal windows.
-
-For Chunked/Long-Running Processing:
-    Use run_production_processor.py instead (handles process lifecycle management)
-
-=============================================================================
-CLI REFERENCE
-=============================================================================
-
-Required:
-    --server              SQL Server instance (e.g., "localhost\\SQLEXPRESS", "prod-server")
-    --database            Database name
-
-Processing Modes (mutually exclusive):
-    --limit               Process up to N records (default: 10000, for testing/safety)
-    --app-id-start + 
-    --app-id-end          Process explicit app_id range (recommended for production)
-
-Performance Tuning:
-    --workers             Parallel workers (default: 4)
-    --batch-size          Records per batch (default: 500, memory vs throughput)
-    --log-level           Console verbosity: WARNING|INFO|DEBUG (default: WARNING)
-
-Connection Options:
-    --username            SQL Server username (omit for Windows auth)
-    --password            SQL Server password
-    --enable-pooling      Enable connection pooling (recommended for remote SQL Server)
-    --disable-mars        Disable MARS (enabled by default)
-
-=============================================================================
-USAGE PATTERNS
-=============================================================================
-
-Pattern 1: Quick Test (10k records with defaults)
+QUICK START:
     python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB"
 
-Pattern 2: Large Dataset - Single Range
-    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
-        --app-id-start 1 --app-id-end 180000
+For detailed documentation, see:
+    - ARCHITECTURE.md (design decisions, data flow, FK ordering, atomicity)
+    - OPERATOR_GUIDE.md (usage patterns, troubleshooting, monitoring)
+    - run_production_processor.py (for large datasets >100k, use this orchestrator)
 
-Pattern 3: Concurrent Processing (multiple terminal windows)
-    # Terminal 1:
-    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
-        --app-id-start 1 --app-id-end 60000
-    
-    # Terminal 2:
-    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
-        --app-id-start 60001 --app-id-end 120000
-    
-    # Terminal 3:
-    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
-        --app-id-start 120001 --app-id-end 180000
+USAGE MODES:
+    Defaults:  batch-size=500, limit=10000, workers=4, log-level=WARNING
+    Range:     --app-id-start N --app-id-end M (concurrent-safe, recommended)
+    Limit:     --limit N (process up to N records, testing/safety)
 
-Pattern 4: Chunked Processing (use orchestrator instead)
-    python run_production_processor.py --app-id-start 1 --app-id-end 180000
-    
-    Automatically breaks into 10k chunks with process lifecycle management.
-
-=============================================================================
-KEY CONCEPTS
-=============================================================================
-
-Batch Size vs Limit:
-    --batch-size: How many records to fetch/process at once (memory management)
-    --limit:      Total records to process before stopping (safety cap)
-    
-    Example: --batch-size 500 --limit 10000
-    Fetches 500 records at a time, stops after processing 10,000 total.
-
-App ID Ranges vs Limit:
-    Ranges (--app-id-start/--app-id-end):
-      - Explicit boundaries for concurrent-safe processing
-      - Recommended for production and large datasets
-      - Enables running multiple instances without conflicts
-    
-    Limit (--limit):
-      - Simple safety cap on total records
-      - Good for testing and development
-      - Starts from app_id 1 or resumes where left off
-
-Resume Capability:
-    Processing automatically skips records already in processing_log.
-    Re-run same command to resume after interruption or failure.
-
-Schema Isolation (Contract-Driven):
-    Target schema is defined in config/mapping_contract.json:
-      - target_schema="sandbox" → All outputs to [sandbox].[table_name]
-      - target_schema="dbo" → All outputs to [dbo].[table_name]
-    
-    Source data always read from [dbo].[app_xml] (read-only).
-    Enables safe dev/test/prod isolation in same database.
-
-=============================================================================
-OUTPUT & MONITORING
-=============================================================================
-
-Logs:      logs/production_YYYYMMDD_HHMMSS.log (or _range_START_END.log)
-Metrics:   metrics/metrics_YYYYMMDD_HHMMSS.json (performance data)
-Console:   Real-time progress (controlled by --log-level)
-
-To see detailed progress:
-    --log-level INFO    # Shows batch-level progress
-    --log-level DEBUG   # Shows record-level details (verbose)
-
-=============================================================================
-PERFORMANCE NOTES
-=============================================================================
-
-Typical throughput: ~1500-1600 applications/minute (4 workers, batch-size=500)
-
-Tuning guidelines:
-  - More workers: Increases parallelism (diminishing returns after 6)
-  - Larger batches: Better throughput but more memory (sweet spot: 500-1000)
-  - Connection pooling: Enable for remote SQL Server (--enable-pooling)
-  - Chunked processing: Use orchestrator for runs > 100k records
-
-For long-running jobs (>100k records):
-    Use run_production_processor.py to prevent memory degradation over time.
-
-=============================================================================
-"""
-
-import argparse
+KEY FEATURES:
+    • Atomic transactions: zero orphaned records, +14% throughput
+    • Resume-safe: processing_log prevents reprocessing
+    • Concurrent instances: non-overlapping app_id ranges prevent locks
+    • Schema isolation: target_schema from MappingContract
+    • Performance: 1,500-1,600 apps/min sustained (4 workers)
+"""import argparse
 import sys
 import time
 import json
@@ -393,9 +277,8 @@ class ProductionProcessor:
         logging.getLogger('lxml').setLevel(logging.WARNING)
         logging.getLogger('urllib3').setLevel(logging.WARNING)
 
-        # DEBUG: Enable detailed migration engine warnings for troubleshooting
-        # Comment out the next line for production runs to suppress SQL insert details
-        logging.getLogger('xml_extractor.database.migration_engine').setLevel(logging.WARNING)
+        # Enable migration engine logging based on log level (controlled by --log-level flag)
+        logging.getLogger('xml_extractor.database.migration_engine').setLevel(logging_level_value)
         
         self.logger.info(f"Logging initialized: {log_file}")
     

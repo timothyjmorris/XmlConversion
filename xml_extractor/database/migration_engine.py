@@ -1,39 +1,17 @@
 ﻿"""
-Migration Engine for SQL Server Database Operations.
+Migration Engine - High-Performance Bulk Insert with Atomic Transactions
 
-This module provides high-performance database migration capabilities optimized for the
-XML Database Extraction System's contract-driven data pipeline. The MigrationEngine serves
-as the final stage of the extraction pipeline, receiving pre-validated, contract-compliant
-relational data from the DataMapper and performing optimized bulk insert operations.
+Final stage of XML extraction pipeline. Receives contract-compliant relational data
+from DataMapper and performs optimized bulk insertion with single-connection atomicity.
 
-SCHEMA ISOLATION (Contract-Driven):
-    The target database schema is determined by MappingContract.target_schema, allowing
-    different processing pipelines to isolate their target tables:
-    - Example: target_schema="sandbox" → all inserts go to [sandbox].[table_name]
-    - Example: target_schema="dbo" → all inserts go to [dbo].[table_name]
-    - Source table (app_xml) always remains in dbo schema regardless of target_schema
-    - This enables safe schema-isolated testing and production separation
+KEY FEATURES:
+- Atomic transactions: Single connection per application (zero orphaned records)
+- Performance: fast_executemany with intelligent fallback to individual inserts
+- Schema isolation: Target schema from MappingContract (sandbox/dbo)
+- FK ordering: Respects table_insertion_order for constraint safety
+- Error recovery: Automatic rollback on failure, proper IDENTITY_INSERT cleanup
 
-Architecture Integration:
-- Receives processed record sets from DataMapper.apply_mapping_contract()
-- Performs bulk insertion using SQL Server-specific optimizations
-- Provides transaction safety and progress tracking for large-scale operations
-- Reports metrics and errors back to CLI tools and batch processors
-- Uses target_schema from MappingContract for schema-qualified table names
-
-Key Responsibilities:
-1. Contract-Compliant Bulk Insertion: Inserts only columns specified by mapping contracts
-2. Performance Optimization: Uses fast_executemany with intelligent fallbacks
-3. Transaction Management: Ensures data consistency with automatic rollback on failures
-4. Progress Reporting: Real-time metrics for CLI monitoring and batch processing
-5. Schema-Qualified Operations: All SQL uses [{target_schema}].[table_name] format
-
-Recent Architecture Changes:
-- Simplified column handling: DataMapper now provides exact column sets per contract rules
-- Removed dynamic column filtering: Contract-driven approach ensures data compatibility
-- Enhanced error recovery: Intelligent fallback from fast_executemany to individual executes
-- Schema Isolation: Target schema driven by MappingContract, not environment variables
-- Streamlined validation: Focus on table existence rather than column compatibility
+For architecture details, see ARCHITECTURE.md (schema isolation, atomicity, FK ordering)
 """
 
 import logging
@@ -123,8 +101,7 @@ class MigrationEngine(MigrationEngineInterface):
                       Defaults to ERROR for production use to minimize overhead.
         """
         self.logger = logging.getLogger(__name__)
-        # DEBUG: Attach root logger handlers for troubleshooting
-        # Comment out for production to suppress detailed SQL insert output
+        # Attach root logger handlers for consistent logging across processes
         root_logger = logging.getLogger()
         for handler in root_logger.handlers:
             self.logger.addHandler(handler)

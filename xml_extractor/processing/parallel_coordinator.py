@@ -1,147 +1,22 @@
 """
-Parallel Processing Coordinator for XML extraction system.
+Parallel Processing Coordinator - Multiprocessing Worker Pool Manager
 
-This module provides multiprocessing capabilities to process XML records
-in parallel across multiple CPU cores for improved throughput.
+Orchestrates parallel XML processing across multiple CPU cores using worker pools.
+Each worker independently loads MappingContract, parses XML, maps data, and inserts atomically.
 
-SCHEMA ISOLATION (Contract-Driven):
-    The target_schema from MappingContract flows through the entire pipeline:
-    - Loaded from mapping_contract.json by each worker process
-    - Passed to DataMapper for transformation
-    - Used by MigrationEngine for schema-qualified SQL operations
-    - All worker processes respect the same contract's target_schema
-    - Results: All inserts go to [{target_schema}].[table_name] consistently
-    
-    This ensures every worker process, regardless of parallelism, writes to
-    the same schema as defined by the contract (e.g., "sandbox" or "dbo").
+KEY FEATURES:
+- Multiprocessing: N independent worker processes (isolated memory/Python interpreters)
+- Contract-driven: Each worker loads mapping_contract.json independently
+- Atomic transactions: Single-connection per application (zero orphaned records)
+- Session tracking: Tracks session_id, app_id_start/end for processing_log audit trail
+- Performance: ~1,500-1,600 apps/min sustained (4 workers, batch-size=500)
 
-ARCHITECTURE & RESPONSIBILITIES
-================================
+ARCHITECTURE:
+- NOT a connection manager: Each worker creates its own independent connections
+- Worker pool approach: Assigns XML records to workers via multiprocessing.Pool
+- Data flow: XML → Worker → Parser → Mapper → Engine → Database (atomic per app)
 
-The ParallelCoordinator is a WORKER POOL MANAGER, not a connection manager. Its job is:
-
-1. MULTIPROCESSING ORCHESTRATION
-   - Creates N independent worker processes (one per CPU core)
-   - Each worker is COMPLETELY ISOLATED (separate Python interpreter, separate memory space)
-   - Coordinates work distribution: assigns XML records to workers
-   - Each worker loads the same MappingContract (with target_schema) independently
-
-2. NOT CONNECTION MANAGEMENT (important!)
-   - Does NOT manage database connections directly
-   - Each worker INDEPENDENTLY creates its own connections via MigrationEngine
-   - Each worker has its own connection(s) to the database
-   - Multiple workers = multiple independent connections to SQL Server
-   - All workers write to the same target_schema (from contract, not environment variables)
-
-3. DATA FLOW
-   
-   ProductionProcessor (main process)
-   ├─ Loads XML records from [dbo].[app_xml] table
-   ├─ Creates ParallelCoordinator (passes mapping_contract_path to workers)
-   └─ Calls process_xml_batch(xml_records)
-      └─ ParallelCoordinator.process_xml_batch()
-         ├─ Creates mp.Pool(num_workers=4)  ← Spawns 4 independent worker processes
-         ├─ For each XML record:
-         │  └─ Worker process (independent interpreter):
-         │     ├─ _init_worker() [runs once per worker]
-         │     │  ├─ Loads MappingContract from mapping_contract.json
-         │     │  ├─ Extracts target_schema (e.g., "sandbox")
-         │     │  └─ Creates its own MigrationEngine(connection_string, target_schema)
-         │     │     └─ Each worker gets ONE connection to SQL Server
-         │     │
-         │     └─ _process_work_item() [runs for each assigned XML]
-         │        ├─ Parse XML (in-memory)
-         │        ├─ Map to database schema using target_schema
-         │        └─ Insert via own MigrationEngine with [{target_schema}].[table_name]
-         │
-         └─ Results aggregated back to main process
-
-4. CONNECTION POOLING RELATIONSHIP
-   
-   How it works with connection pooling:
-   
-   WITHOUT pooling (old code):
-   - Worker 1 creates connection → uses it → closes it
-   - Worker 2 creates connection → uses it → closes it
-   - Worker 3 creates connection → uses it → closes it
-   - Worker 4 creates connection → uses it → closes it
-   
-   WITH pooling (new code):
-   - Worker 1 creates connection from pool (or opens new if min pool not met)
-   - Worker 2 requests connection → gets from pool OR creates new (up to max)
-   - Worker 3 requests connection → gets from pool OR creates new (up to max)
-   - Worker 4 requests connection → gets from pool OR creates new (up to max)
-   
-   KEY INSIGHT: Pooling is PROCESS-LEVEL, not WORKER-LEVEL
-   - The ODBC driver manages the pool at the OS level
-   - Separate Python processes DON'T share the same pool!
-   - Each Python process (worker) gets its own independent pool
-   - So with 4 workers: potentially 4 independent pools × 4 min connections = 16 min connections!
-
-5. WHY POOLING MIGHT HURT (the regression we're seeing)
-   
-   a) Overhead of maintaining multiple pools
-   b) ODBC connection state reset between reuses (expensive)
-   c) Lock contention with multiple workers querying simultaneously
-   d) SQLExpress disk I/O can't handle 4 parallel queries
-   e) Pool management itself is slower than creating fresh connections for short-lived ops
-
-6. BOTTLENECK ANALYSIS
-   
-   ParallelCoordinator is trying to maximize:
-   - CPU utilization (by running 4 Python processes in parallel)
-   - Data processing throughput (parsing + mapping happens in parallel)
-   
-   But ParallelCoordinator CANNOT improve:
-   - SQL Server I/O performance (disk speed, query optimization, indexes)
-   - Network latency (local, so not an issue)
-   - Database query execution (connection pooling helps minimally)
-   
-   If SQL Server CPU < 10%, then:
-   - SQL Server is NOT the bottleneck
-   - Likely bottleneck: Disk I/O, Query execution time, Table locks
-   - Solution: Query optimization, better indexes, or CHANGE THE APPROACH
-   
-   If Python CPU < 20% (XML parsing/mapping), then:
-   - Parsing and mapping are NOT the bottleneck
-   - Likely bottleneck: Database operations (inserts, queries)
-   - Solution: Connection pooling (minimal help), query optimization, batch sizes
-
-WHEN TO USE PARALLELIZATION vs OPTIMIZATION
-==============================================
-
-ParallelCoordinator is good at:
-- Processing multiple XMLs simultaneously (parsing, mapping) while I/O waits
-- Utilizing multiple CPU cores for CPU-intensive work
-- Scaling on multi-core machines
-
-ParallelCoordinator is BAD at:
-- Making disk I/O faster
-- Making queries execute faster
-- Reducing lock contention (can actually increase it!)
-- Helping if bottleneck is SQL Server CPU/disk
-
-WHAT TO DO IF BOTTLENECK IS DATABASE
-=====================================
-
-When ParallelCoordinator hits database I/O wall:
-1. Add indices to WHERE clause columns (SELECT WHERE app_id IN (...))
-2. Partition tables for faster queries
-3. Reduce query complexity
-4. Batch inserts more efficiently (use BULK INSERT, not individual INSERTs)
-5. Tune SQL Server settings
-6. Use ASYNC queries (query while processing next XML)
-
-Connection pooling is NOT a silver bullet - it helps with connection creation overhead
-(usually < 5% of total time), not with actual query execution.
-
-PERFORMANCE TUNING DOC:
-For production, comment out or revert the following:
-- Pass log_level and log_file to ParallelCoordinator for worker logging (see process_xml_batch)
-- Enable detailed timing/logging in parallel_coordinator.py (_init_worker)
-- Any timing/logging added to mapping or database insert logic
-- Any debug-level logging or extra diagnostics
-- Set worker logging to WARNING or CRITICAL and remove file handler for best performance
+For architecture details, see ARCHITECTURE.md (schema isolation, concurrency, atomicity)
 """
 
 import logging
@@ -476,8 +351,7 @@ def _init_worker(connection_string: str, mapping_contract_path: str, progress_di
     global _worker_validator, _worker_parser, _worker_mapper, _worker_migration_engine, _worker_progress_dict
     global _worker_session_id, _worker_app_id_start, _worker_app_id_end
     
-    # PERFORMANCE: Disable all DEBUG/INFO logging in worker processes
-    # Workers should only log critical errors, not debug/trace information
+    # Initialize worker processes with minimal logging (ERROR level only)
     import logging
     logging.basicConfig(level=logging.ERROR)
         
