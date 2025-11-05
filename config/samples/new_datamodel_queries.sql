@@ -1,6 +1,12 @@
 
-select top 10 app_id, cast(xml as xml) from app_xml order by app_id desc
 
+-- Ensure database is in SIMPLE recovery mode for migration
+-- ALTER DATABASE XmlConversionDB SET RECOVERY SIMPLE;
+
+-- After migration, switch back if needed
+-- ALTER DATABASE XmlConversionDB SET RECOVERY FULL;
+
+select top 10 app_id, cast(xml as xml) from app_xml order by app_id desc
 
 select top 10 * from  sandbox.app_base              order by app_id desc
 select top 10 * from  sandbox.app_operational_cc    order by app_id desc
@@ -12,7 +18,8 @@ select top 10 * from  sandbox.contact_address       order by con_id desc
 select top 10 * from  sandbox.contact_employment    order by con_id desc 
 
 select top 100 * from app_xml
-select * from  sandbox.app_base
+
+select * from  sandbox.app_base where app_id > 70990 and app_id < 72010
 
 
 
@@ -34,13 +41,6 @@ select * from  sandbox.processing_log
 
 select * from  sandbox.app_enums
 
-/*
-ALTER TABLE  sandbox.app_solicited_cc
-ALTER COLUMN birth_date smalldatetime NULL;
-
-ALTER TABLE sandbox. sandbox.app_transactional_cc
-ADD ex_freeze_code varchar(4) NULL;
-*/
 
 /* RESET ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -48,7 +48,8 @@ ADD ex_freeze_code varchar(4) NULL;
     DBCC CHECKIDENT ('sandbox.app_base', RESEED, 0);
     DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
 
-    delete from  sandbox.processing_log
+
+    delete from sandbox.app_base		where app_id > 71000 and app_id < 72000
 
     -- DELETE FROM app_xml
 
@@ -72,7 +73,8 @@ ADD ex_freeze_code varchar(4) NULL;
 -- exec sp_who2;
 	SELECT session_id, blocking_session_id, command, status, wait_type, wait_time
     FROM sys.dm_exec_requests
-    WHERE blocking_session_id IS NOT NULL;
+    WHERE blocking_session_id IS NOT NULL and session_id > 50
+	ORDER BY session_id DESC;
 
 -- Lock Summary
 	SELECT 
@@ -115,20 +117,25 @@ ADD ex_freeze_code varchar(4) NULL;
 
 
 -- Query to get next processing batch
-	SELECT ax.app_id, ax.xml 
-	FROM app_xml ax
-	LEFT JOIN  sandbox.app_base ab ON ax.app_id = ab.app_id
+-- Remove the OFFSET / FETCH
+-- under load: started at 1.4 - 2.2s (< 300ms w/o load)
+SET STATISTICS TIME ON
+
+	SELECT TOP (500) ax.app_id, ax.xml 
+	FROM app_xml AS ax
 	WHERE 
-		ax.xml IS NOT NULL 
-		AND DATALENGTH(ax.xml) > 100
-		-- BAD -> AND (ab.app_id IS NULL OR NOT EXISTS (SELECT 1 FROM  sandbox.app_pricing_cc apc WHERE apc.app_id = ax.app_id))                
+		ax.xml IS NOT NULL
+		AND ax.app_id > 178000
+		AND ax.app_id <= 178500 -- this keeps the batch in it's lane to be safe on top of usig TOP
 		AND NOT EXISTS (
-			SELECT 1 FROM  sandbox.processing_log pl 
-			WHERE pl.app_id = ax.app_id AND pl.status IN ('failed', 'success')
+			SELECT 1 
+			FROM sandbox.processing_log AS pl 
+			WHERE pl.app_id = ax.app_id
 		)
-	ORDER BY ax.app_id
-	OFFSET 0 ROWS
-	FETCH NEXT 1000 ROWS ONLY;
+	ORDER BY ax.app_id;
+
+SET STATISTICS TIME OFF
+
 
 
 

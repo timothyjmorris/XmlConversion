@@ -213,7 +213,7 @@ class MigrationEngine(MigrationEngineInterface):
         try:
             connection = pyodbc.connect(
                 self.connection_string,
-                autocommit=True,  # Use autocommit for simpler transaction handling
+                autocommit=False,  # Explicit transaction control for atomic operations
                 timeout=30
             )
             # Enable fast_executemany for bulk operations
@@ -400,7 +400,7 @@ class MigrationEngine(MigrationEngineInterface):
         
         return records
     
-    def execute_bulk_insert(self, records: List[Dict[str, Any]], table_name: str, enable_identity_insert: bool = False) -> int:
+    def execute_bulk_insert(self, records: List[Dict[str, Any]], table_name: str, enable_identity_insert: bool = False, connection=None) -> int:
         """
         Execute optimized bulk insert operation for contract-compliant relational data.
 
@@ -462,126 +462,151 @@ class MigrationEngine(MigrationEngineInterface):
 
         inserted_count = 0
 
-        try:
+        # If caller provided a connection, use it directly (they manage transaction)
+        # If no connection provided, create our own and manage it
+        if connection is not None:
+            # Caller is managing the transaction - just do the insert
+            return self._do_bulk_insert(connection, records, table_name, enable_identity_insert, commit_after=False)
+        else:
+            # We manage the connection and transaction
             with self.get_connection() as conn:
-                cursor = conn.cursor()
+                result = self._do_bulk_insert(conn, records, table_name, enable_identity_insert, commit_after=True)
+                return result
+    
+    def _do_bulk_insert(
+        self,
+        conn,
+        records: List[Dict[str, Any]],
+        table_name: str,
+        enable_identity_insert: bool,
+        commit_after: bool
+    ) -> int:
+        """Internal method that performs the actual bulk insert operation."""
+        inserted_count = 0
+        
+        try:
+            cursor = conn.cursor()
 
-                # Get schema-qualified table name using contract-driven target_schema
-                qualified_table_name = self._get_qualified_table_name(table_name)
+            # Get schema-qualified table name using contract-driven target_schema
+            qualified_table_name = self._get_qualified_table_name(table_name)
 
-                # Enable IDENTITY_INSERT if needed
-                if enable_identity_insert:
-                    cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} ON")
-                    self.logger.debug(f"Enabled IDENTITY_INSERT for {qualified_table_name}")
+            # Enable IDENTITY_INSERT if needed
+            if enable_identity_insert:
+                cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} ON")
+                self.logger.debug(f"Enabled IDENTITY_INSERT for {qualified_table_name}")
 
-                # Enable fast_executemany for optimal performance
-                cursor.fast_executemany = True
+            # Enable fast_executemany for optimal performance
+            cursor.fast_executemany = True
 
-                # Get all columns from the first record - DataMapper has already filtered appropriately
-                columns = list(records[0].keys())
-                column_list = ', '.join(f"[{col}]" for col in columns)
-                placeholders = ', '.join('?' * len(columns))
+            # Get all columns from the first record - DataMapper has already filtered appropriately
+            columns = list(records[0].keys())
+            column_list = ', '.join(f"[{col}]" for col in columns)
+            placeholders = ', '.join('?' * len(columns))
+            
+            # Build INSERT statement with qualified table name
+            sql = f"INSERT INTO {qualified_table_name} ({column_list}) VALUES ({placeholders})"
+            
+            # Debug logging
+            if self.logger.isEnabledFor(logging.DEBUG):
+                self.logger.debug(f"SQL: {sql}")
+                self.logger.debug(f"Columns: {columns}")
+            
+            # Prepare data tuples in correct order, only including columns with data
+            data_tuples = []
+            for record in records:
+                values = []
+                for col in columns:
+                    val = record.get(col)
+                    if val == '':
+                        val = None
+                    elif isinstance(val, str):
+                        try:
+                            val = val.encode('utf-8').decode('utf-8')
+                        except (UnicodeEncodeError, UnicodeDecodeError):
+                            pass
+                    values.append(val)
+                data_tuples.append(tuple(values))
                 
-                # Build INSERT statement with qualified table name
-                sql = f"INSERT INTO {qualified_table_name} ({column_list}) VALUES ({placeholders})"
+            # Try executemany first for performance, fall back to individual executes if needed
+            batch_start = 0
+            use_executemany = True
+            
+            while batch_start < len(data_tuples):
+                batch_end = min(batch_start + self.batch_size, len(data_tuples))
+                batch_data = data_tuples[batch_start:batch_end]
                 
-                # Debug logging
                 if self.logger.isEnabledFor(logging.DEBUG):
-                    self.logger.debug(f"SQL: {sql}")
-                    self.logger.debug(f"Columns: {columns}")
+                    self.logger.debug(f"Inserting batch {batch_start}-{batch_end} into {table_name}")
                 
-                # Prepare data tuples in correct order, only including columns with data
-                data_tuples = []
-                for record in records:
-                    values = []
-                    for col in columns:
-                        val = record.get(col)
-                        if val == '':
-                            val = None
-                        elif isinstance(val, str):
-                            try:
-                                val = val.encode('utf-8').decode('utf-8')
-                            except (UnicodeEncodeError, UnicodeDecodeError):
-                                pass
-                        values.append(val)
-                    data_tuples.append(tuple(values))
-                    
-                # Try executemany first for performance, fall back to individual executes if needed
-                batch_start = 0
-                use_executemany = True
-                
-                while batch_start < len(data_tuples):
-                    batch_end = min(batch_start + self.batch_size, len(data_tuples))
-                    batch_data = data_tuples[batch_start:batch_end]
-                    
-                    if self.logger.isEnabledFor(logging.DEBUG):
-                        self.logger.debug(f"Inserting batch {batch_start}-{batch_end} into {table_name}")
-                    
 
+                
+                try:
+                    # Force individual executes for tables with known pyodbc executemany encoding issues
+                    # These specific tables have string encoding problems when using executemany with pyodbc
+                    # that cause character corruption (strings become question marks in SQL Server)
+                    force_individual_executes = table_name in ['contact_address', 'contact_employment', 'contact_base']
                     
-                    try:
-                        # Force individual executes for tables with known pyodbc executemany encoding issues
-                        # These specific tables have string encoding problems when using executemany with pyodbc
-                        # that cause character corruption (strings become question marks in SQL Server)
-                        force_individual_executes = table_name in ['contact_address', 'contact_employment', 'contact_base']
-                        
-                        if use_executemany and len(batch_data) > 1 and not force_individual_executes:
-                            # Try executemany for better performance
-                            cursor.executemany(sql, batch_data)
-                            batch_inserted = len(batch_data)
-                        else:
-                            # Fall back to individual executes
-                            batch_inserted = 0
-                            for record_values in batch_data:
-                                try:
-                                    cursor.execute(sql, record_values)
-                                    batch_inserted += 1
-                                except pyodbc.Error as record_error:
-                                    # Handle primary key violations for contact_base gracefully
-                                    if table_name == 'contact_base' and ('primary key constraint' in str(record_error).lower() or 'duplicate key' in str(record_error).lower()):
-                                        # Extract con_id from the record values for logging
-                                        con_id = None
-                                        if len(record_values) > 0:
-                                            # con_id is typically the first column in contact_base
-                                            con_id = record_values[0]
-                                        self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id}): {record_error}")
-                                        # Don't increment batch_inserted for skipped records
-                                        continue
-                                    else:
-                                        # Re-raise other errors
-                                        raise record_error
-                    
-                    except pyodbc.Error as e:
-                        if ("cast specification" in str(e) or "converting" in str(e)) and use_executemany:
-                            # Fall back to individual executes for type compatibility
-                            self.logger.warning(f"executemany failed with cast error, falling back to individual executes: {e}")
-                            use_executemany = False
-                            batch_inserted = 0
-                            for record_values in batch_data:
+                    if use_executemany and len(batch_data) > 1 and not force_individual_executes:
+                        # Try executemany for better performance
+                        cursor.executemany(sql, batch_data)
+                        batch_inserted = len(batch_data)
+                    else:
+                        # Fall back to individual executes
+                        batch_inserted = 0
+                        for record_values in batch_data:
+                            try:
                                 cursor.execute(sql, record_values)
                                 batch_inserted += 1
-                        else:
-                            raise e
-                    
-                    inserted_count += batch_inserted
-                    self._processed_records += batch_inserted
-                    batch_start = batch_end
-                    
-                # Disable IDENTITY_INSERT if it was enabled
-                if enable_identity_insert:
-                    cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
-                    self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name}")
+                            except pyodbc.Error as record_error:
+                                # Handle primary key violations for contact_base gracefully
+                                if table_name == 'contact_base' and ('primary key constraint' in str(record_error).lower() or 'duplicate key' in str(record_error).lower()):
+                                    # Extract con_id from the record values for logging
+                                    con_id = None
+                                    if len(record_values) > 0:
+                                        # con_id is typically the first column in contact_base
+                                        con_id = record_values[0]
+                                    self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id}): {record_error}")
+                                    # Don't increment batch_inserted for skipped records
+                                    continue
+                                else:
+                                    # Re-raise other errors
+                                    raise record_error
                 
-                self.logger.info(f"Successfully inserted {inserted_count} records into {table_name}")
+                except pyodbc.Error as e:
+                    if ("cast specification" in str(e) or "converting" in str(e)) and use_executemany:
+                        # Fall back to individual executes for type compatibility
+                        self.logger.warning(f"executemany failed with cast error, falling back to individual executes: {e}")
+                        use_executemany = False
+                        batch_inserted = 0
+                        for record_values in batch_data:
+                            cursor.execute(sql, record_values)
+                            batch_inserted += 1
+                    else:
+                        raise e
+                
+                inserted_count += batch_inserted
+                self._processed_records += batch_inserted
+                batch_start = batch_end
+                
+            # Disable IDENTITY_INSERT if it was enabled
+            if enable_identity_insert:
+                cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
+                self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name}")
+            
+            self.logger.info(f"Successfully inserted {inserted_count} records into {table_name}")
+            
+            # Commit if we're managing the transaction
+            if commit_after:
+                conn.commit()
                     
         except pyodbc.Error as e:
             # Ensure IDENTITY_INSERT is turned off even on error
             if enable_identity_insert:
                 try:
-                    with self.get_connection() as conn:
-                        cursor = conn.cursor()
+                    with self.get_connection() as temp_conn:
+                        temp_cursor = temp_conn.cursor()
                         qualified_table_name = self._get_qualified_table_name(table_name)
-                        cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
+                        temp_cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
                         self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
                 except:
                     pass  # Don't mask the original error
@@ -612,10 +637,10 @@ class MigrationEngine(MigrationEngineInterface):
             # Ensure IDENTITY_INSERT is turned off even on error
             if enable_identity_insert:
                 try:
-                    with self.get_connection() as conn:
-                        cursor = conn.cursor()
+                    with self.get_connection() as temp_conn:
+                        temp_cursor = temp_conn.cursor()
                         qualified_table_name = self._get_qualified_table_name(table_name)
-                        cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
+                        temp_cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
                         self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
                 except:
                     pass  # Don't mask the original error

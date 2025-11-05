@@ -2,85 +2,142 @@
 """
 Production XML Processing Script
 
-Optimized for running on production SQL Server with comprehensive monitoring
-and performance optimization. Designed to be run from command line with
-minimal overhead and maximum throughput.
+High-performance ETL processor for transforming XML records into normalized SQL Server tables.
+Supports both direct execution and orchestrated chunked processing for large datasets.
 
-SCHEMA ISOLATION (Contract-Driven):
-    The target database schema is determined by MappingContract.target_schema:
-    - Loads mapping_contract.json which specifies target_schema (e.g., "sandbox" or "dbo")
-    - All processing output (target tables, processing_log) goes to target_schema
-    - Source table (app_xml) always remains in dbo schema (read-only access)
-    - This enables safe, isolated processing pipelines for development/staging/production
+=============================================================================
+QUICK START
+=============================================================================
+
+Simple Usage (with defaults):
+    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB"
     
-    Example:
-    - target_schema="sandbox" → All inserts go to [sandbox].[app_base], [sandbox].[contact_base], etc.
-    - target_schema="dbo" → All inserts go to [dbo].[app_base], [dbo].[contact_base], etc.
-    - processing_log also uses target_schema: [sandbox].[processing_log]
+    Defaults: batch-size=500, limit=10000 (safety cap), log-level=WARNING, workers=4
 
-Usage:
-    Single Instance (all records):
-        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --log-level WARNING
-        
-    Multiple Instances with App ID Ranges (recommended for large datasets):
-        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --app-id-start 1 --app-id-end 60000 --log-level WARNING
-        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --app-id-start 60001 --app-id-end 120000 --log-level WARNING
-        python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --app-id-start 120001 --app-id-end 180000 --log-level WARNING
-        
-    SQL Server Auth:
-        python production_processor.py --server "your-sql-server" --database "YourDatabase" --username "your-user" --password "your-pass" --workers 4 --log-level INFO
-        
-    Performance Testing:
-        python production_processor.py --server "your-sql-server" --database "YourDatabase" --workers 4 --limit 1000 --log-level ERROR
+Range-Based Processing (recommended for large datasets):
+    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
+        --app-id-start 1 --app-id-end 50000
+    
+    Use explicit ranges to enable concurrent processing across multiple terminal windows.
 
-    * don't forget to use --log-level INFO (or higher to see progress in console!)
+For Chunked/Long-Running Processing:
+    Use run_production_processor.py instead (handles process lifecycle management)
 
-    Batch vs Limit Explained
-    --batch-size (Processing Batches)
-        What it controls: How many XML records to process at once before moving to the next batch
-        Purpose: Memory management and progress tracking
-        Example: --batch-size 25 means:
-        Get 25 XML records from database
-        Process all 25 in parallel (with your 4 workers)
-        Save metrics, show progress
-        Get next 25 records
-        Repeat until done
-    --limit (Total Records)
-        What it controls: Maximum total XML records to process in the entire run
-        Purpose: Testing/limiting scope
-        Example: --limit 100 means:
-        Stop after processing 100 total records
-        Still uses your batch-size for chunking
-        How They Work Together
+=============================================================================
+CLI REFERENCE
+=============================================================================
 
-    Example: --batch-size 25 --limit 100
-        Batch 1: Process records 1-25
-        Batch 2: Process records 26-50
-        Batch 3: Process records 51-75
-        Batch 4: Process records 76-100
-        Stop (reached limit)
+Required:
+    --server              SQL Server instance (e.g., "localhost\\SQLEXPRESS", "prod-server")
+    --database            Database name
 
-    Example: --batch-size 25 (no limit)
-        Processes ALL XML records in your database
-        25 at a time until no more records
+Processing Modes (mutually exclusive):
+    --limit               Process up to N records (default: 10000, for testing/safety)
+    --app-id-start + 
+    --app-id-end          Process explicit app_id range (recommended for production)
 
-    Recommendations
-        For Testing:
-            --batch-size 25 --limit 100  # Process 100 records total, 25 at a time
-        For Production:
-            --batch-size 50              # Process all records, 50 at a time (no limit)
-        For Performance Testing:
-            --batch-size 100 --limit 1000 # Test with 1
+Performance Tuning:
+    --workers             Parallel workers (default: 4)
+    --batch-size          Records per batch (default: 500, memory vs throughput)
+    --log-level           Console verbosity: WARNING|INFO|DEBUG (default: WARNING)
 
+Connection Options:
+    --username            SQL Server username (omit for Windows auth)
+    --password            SQL Server password
+    --enable-pooling      Enable connection pooling (recommended for remote SQL Server)
+    --disable-mars        Disable MARS (enabled by default)
 
-Features:
-- Command line configuration
-- Contract-driven schema isolation
-- Production-optimized logging
-- Real-time progress monitoring
-- Performance metrics export
-- Graceful error handling
-- Resume capability
+=============================================================================
+USAGE PATTERNS
+=============================================================================
+
+Pattern 1: Quick Test (10k records with defaults)
+    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB"
+
+Pattern 2: Large Dataset - Single Range
+    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
+        --app-id-start 1 --app-id-end 180000
+
+Pattern 3: Concurrent Processing (multiple terminal windows)
+    # Terminal 1:
+    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
+        --app-id-start 1 --app-id-end 60000
+    
+    # Terminal 2:
+    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
+        --app-id-start 60001 --app-id-end 120000
+    
+    # Terminal 3:
+    python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" ^
+        --app-id-start 120001 --app-id-end 180000
+
+Pattern 4: Chunked Processing (use orchestrator instead)
+    python run_production_processor.py --app-id-start 1 --app-id-end 180000
+    
+    Automatically breaks into 10k chunks with process lifecycle management.
+
+=============================================================================
+KEY CONCEPTS
+=============================================================================
+
+Batch Size vs Limit:
+    --batch-size: How many records to fetch/process at once (memory management)
+    --limit:      Total records to process before stopping (safety cap)
+    
+    Example: --batch-size 500 --limit 10000
+    Fetches 500 records at a time, stops after processing 10,000 total.
+
+App ID Ranges vs Limit:
+    Ranges (--app-id-start/--app-id-end):
+      - Explicit boundaries for concurrent-safe processing
+      - Recommended for production and large datasets
+      - Enables running multiple instances without conflicts
+    
+    Limit (--limit):
+      - Simple safety cap on total records
+      - Good for testing and development
+      - Starts from app_id 1 or resumes where left off
+
+Resume Capability:
+    Processing automatically skips records already in processing_log.
+    Re-run same command to resume after interruption or failure.
+
+Schema Isolation (Contract-Driven):
+    Target schema is defined in config/mapping_contract.json:
+      - target_schema="sandbox" → All outputs to [sandbox].[table_name]
+      - target_schema="dbo" → All outputs to [dbo].[table_name]
+    
+    Source data always read from [dbo].[app_xml] (read-only).
+    Enables safe dev/test/prod isolation in same database.
+
+=============================================================================
+OUTPUT & MONITORING
+=============================================================================
+
+Logs:      logs/production_YYYYMMDD_HHMMSS.log (or _range_START_END.log)
+Metrics:   metrics/metrics_YYYYMMDD_HHMMSS.json (performance data)
+Console:   Real-time progress (controlled by --log-level)
+
+To see detailed progress:
+    --log-level INFO    # Shows batch-level progress
+    --log-level DEBUG   # Shows record-level details (verbose)
+
+=============================================================================
+PERFORMANCE NOTES
+=============================================================================
+
+Typical throughput: ~1500-1600 applications/minute (4 workers, batch-size=500)
+
+Tuning guidelines:
+  - More workers: Increases parallelism (diminishing returns after 6)
+  - Larger batches: Better throughput but more memory (sweet spot: 500-1000)
+  - Connection pooling: Enable for remote SQL Server (--enable-pooling)
+  - Chunked processing: Use orchestrator for runs > 100k records
+
+For long-running jobs (>100k records):
+    Use run_production_processor.py to prevent memory degradation over time.
+
+=============================================================================
 """
 
 import argparse
@@ -156,7 +213,7 @@ class ProductionProcessor:
     def __init__(self, server: str, database: str, username: str = None, password: str = None,
                  workers: int = 4, batch_size: int = 1000, log_level: str = "INFO",
                  enable_pooling: bool = False, min_pool_size: int = 4, max_pool_size: int = 20,
-                 enable_mars: bool = True, connection_timeout: int = 30, disable_metrics: bool = False,
+                 enable_mars: bool = True, connection_timeout: int = 30,
                  app_id_start: int = None, app_id_end: int = None):
         """
         Initialize production processor.
@@ -174,7 +231,6 @@ class ProductionProcessor:
             max_pool_size: Maximum connection pool size (default: 20, only used if enable_pooling=True)
             enable_mars: Enable Multiple Active Result Sets (default: True)
             connection_timeout: Connection timeout in seconds (default: 30)
-            disable_metrics: Disable metrics JSON file output (default: False, use for PROD)
             app_id_start: Starting app_id for range processing (optional, for non-overlapping instances)
             app_id_end: Ending app_id for range processing (optional, for non-overlapping instances)
         """
@@ -184,7 +240,6 @@ class ProductionProcessor:
         self.password = password
         self.workers = workers
         self.batch_size = batch_size
-        self.disable_metrics = disable_metrics
         self.enable_pooling = enable_pooling
         self.min_pool_size = min_pool_size
         self.max_pool_size = max_pool_size
@@ -239,16 +294,6 @@ class ProductionProcessor:
         self.logger.info(f"  MARS Enabled: {enable_mars}")
         self.logger.info(f"  Session ID: {self.session_id}")
         self.logger.debug(f"  Connection String: {self.connection_string}")
-        
-        # OUTPUT to console    
-        if self.app_id_start is not None and self.app_id_end is not None:
-            print(f"\n============================================================")
-            print(f"INITIALIZED PROCESSING FOR APP_ID RANGE: {self.app_id_start} - {self.app_id_end}")
-            print(f"============================================================")
-        else:
-            print(f"\n============================================================")
-            print(f"INITIALIZED PROCESSING FOR ALL APPLICATIONS")
-            print(f"============================================================")
 
     def _build_connection_string_with_pooling(self) -> str:
         """
@@ -400,41 +445,78 @@ class ProductionProcessor:
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 
-                # Build WHERE clause for XML record extraction
-                # =============================================
-                # Always includes: valid XML content + cursor pagination + app_id range filtering
+                # Build query for XML record extraction using TOP + range filter (avoids OFFSET scan)
+                # ====================================================================================
+                # Uses TOP for fast sequential access, cursor pagination for resumability
                 
-                base_conditions = "WHERE ax.xml IS NOT NULL AND DATALENGTH(ax.xml) > 100"
+                # Build WHERE clause
+                where_conditions = ["ax.xml IS NOT NULL"]
                 
-                # Add cursor pagination (always used for batch processing)
-                base_conditions += f" AND ax.app_id > {last_app_id}"
+                # Cursor pagination: only fetch records after the last processed app_id
+                # This enables resuming mid-range if needed
+                if last_app_id > 0:
+                    where_conditions.append(f"ax.app_id > {last_app_id}")
                 
                 # Add app_id range filtering (optional, for non-overlapping instances)
                 if self.app_id_start is not None:
-                    base_conditions += f" AND ax.app_id >= {self.app_id_start}"
+                    where_conditions.append(f"ax.app_id >= {self.app_id_start}")
                 if self.app_id_end is not None:
-                    base_conditions += f" AND ax.app_id <= {self.app_id_end}"
+                    where_conditions.append(f"ax.app_id <= {self.app_id_end}")
                 
-                # Exclude already-processed records (both success and failed)
+                # Add upper bound to keep batch focused (only if not using explicit ranges)
+                # This optimization helps when processing entire dataset sequentially by limiting
+                # the search space for the TOP query
+                #
+                # IMPORTANT: Resume scenario consideration
+                # When resuming (last_app_id=0 but processing_log has entries), we could either:
+                # A) Skip upper bound entirely (simple, but slower TOP query)
+                # B) Query processing_log for MAX(app_id) to set accurate upper bound (1 extra query)
+                #
+                # We choose (B) because:
+                # - Extra query runs only ONCE per session (first batch only)
+                # - Query is fast: simple aggregate on indexed column
+                # - Preserves performance optimization for large datasets
+                # - Cost: ~10ms one-time overhead vs potential seconds saved on large scans
+                if limit and self.app_id_start is None and self.app_id_end is None:
+                    if last_app_id == 0 and exclude_failed:
+                        # Resume scenario: Check if we have processed records to determine starting point
+                        # This single query enables the TOP + upper bound optimization for the main query
+                        cursor.execute(f"""
+                            SELECT MAX(app_id) 
+                            FROM [{self.target_schema}].[processing_log]
+                        """)
+                        max_processed = cursor.fetchone()[0]
+                        upper_bound = (max_processed or 0) + limit
+                    else:
+                        # Normal continuation: Use cursor-based upper bound
+                        upper_bound = last_app_id + limit
+                    
+                    where_conditions.append(f"ax.app_id <= {upper_bound}")
+                
+                # Exclude already-processed records using NOT EXISTS
                 if exclude_failed:
-                    base_conditions += f"""
-                        AND NOT EXISTS (
-                            SELECT 1 
-                            FROM [{self.target_schema}].[processing_log] pl 
-                            WHERE pl.app_id = ax.app_id AND pl.status IN ('success', 'failed')
-                        )"""
+                    where_conditions.append(f"""NOT EXISTS (
+                        SELECT 1 
+                        FROM [{self.target_schema}].[processing_log] AS pl 
+                        WHERE pl.app_id = ax.app_id
+                    )""")
                 
-                # Build final SQL query with LIMIT support
+                where_clause = "WHERE " + " AND ".join(where_conditions)
+                
+                # Build final SQL query with TOP (faster than OFFSET for sequential access)
+                top_clause = f"TOP ({limit})" if limit else ""
                 query = f"""
-                    SELECT ax.app_id, ax.xml 
+                    SELECT {top_clause} ax.app_id, ax.xml 
                     FROM [dbo].[app_xml] AS ax
-                    {base_conditions}
+                    {where_clause}
                     ORDER BY ax.app_id
-                    {("OFFSET 0 ROWS FETCH NEXT " + str(limit) + " ROWS ONLY") if limit else ""}
                 """
                 
+                # TIME THE QUERY EXECUTION
+                query_start = time.time()
                 cursor.execute(query)
                 rows = cursor.fetchall()
+                query_duration = time.time() - query_start
                 
                 seen_app_ids = set()
                 for row in rows:
@@ -512,13 +594,16 @@ class ProductionProcessor:
         
         self.logger.info(f"Starting batch processing of {len(xml_records)} records")
         
-        # Create parallel coordinator
+        # Create parallel coordinator with session metadata for processing_log
         # Note: batch_size here is for database bulk insert operations
         coordinator = ParallelCoordinator(
             connection_string=self.connection_string,
             mapping_contract_path=self.mapping_contract_path,
             num_workers=self.workers,
-            batch_size=self.batch_size  # Respect processor's batch_size setting
+            batch_size=self.batch_size,  # Respect processor's batch_size setting
+            session_id=self.session_id,
+            app_id_start=self.app_id_start,
+            app_id_end=self.app_id_end
         )
         
         # Process batch
@@ -527,6 +612,8 @@ class ProductionProcessor:
         end_time = time.time()
         
         # Extract failed app details from individual results
+        # NOTE: processing_log entries are now created atomically with data insertion in workers
+        # No need for separate logging here - log entries already exist in database
         individual_results = processing_result.performance_metrics.get('individual_results', [])
         failed_apps = []
         for result in individual_results:
@@ -540,17 +627,12 @@ class ProductionProcessor:
             # Treat as success to prevent re-processing the same record
             if not success and error_stage == 'constraint_violation' and 'PK_app_base' in str(error_message):
                 self.logger.info(f"App {app_id}: PK violation on app_base (data already exists) - treating as success")
-                self._log_processing_result(app_id, True)  # Log as success, not failure
+                # No need to log - already logged atomically with data insertion
                 success = True
             
-            if success:
-                # Only log once for successful records
-                if not (app_id and error_stage == 'constraint_violation' and 'PK_app_base' in str(error_message)):
-                    # Normal success path (not already logged above as PK violation)
-                    self._log_processing_result(app_id, True)
-            else:
+            if not success:
+                # Only track failures for reporting
                 failure_reason = f"{error_stage}: {error_message}"
-                self._log_processing_result(app_id, False, failure_reason)
                 failed_app = {
                     'app_id': app_id,
                     'error_stage': error_stage,
@@ -650,13 +732,7 @@ class ProductionProcessor:
         - Overall run statistics
         - Failure analysis
         - Per-batch detailed breakdown
-        
-        Skipped if disable_metrics=True (production use)
         """
-        if self.disable_metrics:
-            self.logger.debug("Metrics output disabled (--disable-metrics), skipping metrics file")
-            return
-        
         metrics_dir = Path("metrics")
         metrics_dir.mkdir(exist_ok=True)
         
@@ -699,6 +775,20 @@ class ProductionProcessor:
     def run_full_processing(self, limit: Optional[int] = None):
         """Run full processing with batching and monitoring."""
         self.logger.info("Starting full processing run")
+        
+        # Display processing scope in console
+        if self.app_id_start is not None and self.app_id_end is not None:
+            print(f"\n============================================================")
+            print(f"PROCESSING APP_ID RANGE: {self.app_id_start} - {self.app_id_end}")
+            print(f"============================================================")
+        elif limit:
+            print(f"\n============================================================")
+            print(f"PROCESSING UP TO {limit:,} APPLICATIONS")
+            print(f"============================================================")
+        else:
+            print(f"\n============================================================")
+            print(f"PROCESSING ALL APPLICATIONS (NO LIMIT)")
+            print(f"============================================================")
         
         # Test connection first
         if not self.test_connection():
@@ -881,12 +971,10 @@ def main():
     parser.add_argument("--username", help="SQL Server username (uses Windows auth if not provided)")
     parser.add_argument("--password", help="SQL Server password")
     parser.add_argument("--workers", type=int, default=4, help="Number of parallel workers (default: 4)")
-    parser.add_argument("--batch-size", type=int, default=1000, help="Records per batch (default: 1000)")
-    parser.add_argument("--limit", type=int, help="Maximum records to process (default: all)")
-    parser.add_argument("--log-level", default="INFO", choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
-                       help="Logging level (default: INFO)")
-    parser.add_argument("--disable-metrics", action="store_true", default=False,
-                       help="Disable metrics JSON output (recommended for PROD)")
+    parser.add_argument("--batch-size", type=int, default=500, help="Records per batch (default: 500)")
+    parser.add_argument("--limit", type=int, default=10000, help="Maximum records to process (default: 10000, safety limit)")
+    parser.add_argument("--log-level", default="WARNING", choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
+                       help="Logging level (default: WARNING)")
     
     # App ID range processing (eliminates lock contention between instances)
     parser.add_argument("--app-id-start", type=int, 
@@ -901,8 +989,8 @@ def main():
                        help="Minimum connection pool size (default: 4, match number of workers)")
     parser.add_argument("--max-pool-size", type=int, default=20, 
                        help="Maximum connection pool size (default: 20, allows burst capacity)")
-    parser.add_argument("--enable-mars", type=bool, default=True,
-                       help="Enable Multiple Active Result Sets for concurrent queries (default: True)")
+    parser.add_argument("--disable-mars", action="store_true", default=False,
+                       help="Disable Multiple Active Result Sets (MARS enabled by default)")
     parser.add_argument("--connection-timeout", type=int, default=30,
                        help="Connection timeout in seconds (default: 30)")
     
@@ -918,11 +1006,10 @@ def main():
             workers=args.workers,
             batch_size=args.batch_size,
             log_level=args.log_level,
-            disable_metrics=args.disable_metrics,
             enable_pooling=args.enable_pooling,
             min_pool_size=args.min_pool_size,
             max_pool_size=args.max_pool_size,
-            enable_mars=args.enable_mars,
+            enable_mars=not args.disable_mars,  # Invert: MARS enabled by default
             connection_timeout=args.connection_timeout,
             app_id_start=args.app_id_start,
             app_id_end=args.app_id_end

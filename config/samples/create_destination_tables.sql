@@ -1,3 +1,10 @@
+
+-- Ensure database is in SIMPLE recovery mode for migration
+-- ALTER DATABASE XmlConversionDB SET RECOVERY SIMPLE;
+
+-- After migration, switch back if needed
+-- ALTER DATABASE XmlConversionDB SET RECOVERY FULL;
+
 /* --------------------------------------------------------------------------------------------------------------------
 -- File: create_tables.sql
 -------------------------------------------------------------------------------------------------------------------- */
@@ -18,7 +25,7 @@ drop table report_results_lookup;
 -- Processing Log (error tracking, resumability)
 CREATE TABLE [sandbox].[processing_log] (
 	[log_id]			int				NOT NULL CONSTRAINT PK_processing_log_log_id PRIMARY KEY IDENTITY(1, 1),
-	[app_id]			int				NOT NULL,
+	[app_id]			int				NOT NULL CONSTRAINT FK_processing_log__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
 	[status]			varchar(20)		NOT NULL,
 	[failure_reason]	varchar(500)	NULL,
 	[processing_time]	datetime2(7)	NOT NULL CONSTRAINT DF_processing_log_processing_time DEFAULT GETUTCDATE(),
@@ -26,6 +33,18 @@ CREATE TABLE [sandbox].[processing_log] (
 	app_id_start		int				NULL, 
     app_id_end			int				NULL
 );
+
+-- On processing_log  
+CREATE NONCLUSTERED INDEX IX_processing_log_app_id 
+ON sandbox.processing_log(app_id);
+
+-- Convert xml to varchar max so we can index
+ALTER TABLE app_xml
+	ALTER COLUMN xml	varchar(MAX)	NOT NULL;
+-- On filtered index on app_xml
+
+CREATE NONCLUSTERED INDEX IX_app_xml_app_id_xml 
+ON app_xml(app_id) INCLUDE (xml) --WHERE xml IS NOT NULL;
 
 
 -- Groups of static descriptions organized by type

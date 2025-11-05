@@ -147,6 +147,7 @@ For production, comment out or revert the following:
 import logging
 import multiprocessing as mp
 import time
+from datetime import datetime
 from typing import List, Tuple, Dict, Any, Optional
 from dataclasses import dataclass
 
@@ -223,7 +224,7 @@ class ParallelCoordinator:
     - If high I/O wait: Adding more workers makes it WORSE due to lock contention
     """
     
-    def __init__(self, connection_string: str, mapping_contract_path: str, num_workers: Optional[int] = None, batch_size: int = 1000, log_level: str = "INFO", log_file: str = None):
+    def __init__(self, connection_string: str, mapping_contract_path: str, num_workers: Optional[int] = None, batch_size: int = 1000, log_level: str = "INFO", log_file: str = None, session_id: str = None, app_id_start: int = None, app_id_end: int = None):
         """
         Initialize the parallel coordinator.
         
@@ -232,6 +233,11 @@ class ParallelCoordinator:
             mapping_contract_path: Path to mapping contract JSON file
             num_workers: Number of worker processes (defaults to CPU count)
             batch_size: Batch size for database operations
+            log_level: Logging level for workers
+            log_file: Log file path for workers
+            session_id: Session identifier for processing_log tracking
+            app_id_start: Starting app_id for range processing (for processing_log)
+            app_id_end: Ending app_id for range processing (for processing_log)
         """
         self.logger = logging.getLogger(__name__)
         self.connection_string = connection_string
@@ -242,6 +248,11 @@ class ParallelCoordinator:
         # Performance logging configuration
         self.log_level = log_level
         self.log_file = log_file
+        
+        # Session metadata for processing_log
+        self.session_id = session_id
+        self.app_id_start = app_id_start
+        self.app_id_end = app_id_end
         
         # Shared progress tracking
         self.manager = mp.Manager()
@@ -308,7 +319,7 @@ class ParallelCoordinator:
             with mp.Pool(
                 processes=self.num_workers,
                 initializer=_init_worker,
-                initargs=(self.connection_string, self.mapping_contract_path, self.progress_dict)
+                initargs=(self.connection_string, self.mapping_contract_path, self.progress_dict, self.session_id, self.app_id_start, self.app_id_end)
             ) as pool:
                 
                 # Submit all work items
@@ -439,9 +450,12 @@ _worker_parser = None
 _worker_mapper = None
 _worker_migration_engine = None
 _worker_progress_dict = None
+_worker_session_id = None
+_worker_app_id_start = None
+_worker_app_id_end = None
 
 
-def _init_worker(connection_string: str, mapping_contract_path: str, progress_dict):
+def _init_worker(connection_string: str, mapping_contract_path: str, progress_dict, session_id: str = None, app_id_start: int = None, app_id_end: int = None):
     """
     Initialize worker process with required components.
     
@@ -452,11 +466,15 @@ def _init_worker(connection_string: str, mapping_contract_path: str, progress_di
         connection_string: Database connection string
         mapping_contract_path: Path to mapping contract JSON
         progress_dict: Shared dict for progress tracking
+        session_id: Session identifier for processing_log tracking
+        app_id_start: Starting app_id for range processing (for processing_log)
+        app_id_end: Ending app_id for range processing (for processing_log)
     
     PERFORMANCE TUNING: Worker logging disabled for maximum performance.
     Only ERROR+ level logging is active in workers.
     """
     global _worker_validator, _worker_parser, _worker_mapper, _worker_migration_engine, _worker_progress_dict
+    global _worker_session_id, _worker_app_id_start, _worker_app_id_end
     
     # PERFORMANCE: Disable all DEBUG/INFO logging in worker processes
     # Workers should only log critical errors, not debug/trace information
@@ -469,6 +487,11 @@ def _init_worker(connection_string: str, mapping_contract_path: str, progress_di
         _worker_mapper = DataMapper(mapping_contract_path=mapping_contract_path)
         _worker_migration_engine = MigrationEngine(connection_string)
         _worker_progress_dict = progress_dict
+        
+        # Store session metadata for processing_log
+        _worker_session_id = session_id
+        _worker_app_id_start = app_id_start
+        _worker_app_id_end = app_id_end
         
         # Initialize worker stats
         worker_id = mp.current_process().pid
@@ -486,6 +509,7 @@ def _init_worker(connection_string: str, mapping_contract_path: str, progress_di
 def _process_work_item(work_item: WorkItem) -> WorkResult:
     """Process a single work item in a worker process."""
     global _worker_validator, _worker_parser, _worker_mapper, _worker_migration_engine, _worker_progress_dict
+    global _worker_session_id, _worker_app_id_start, _worker_app_id_end
     
     start_time = time.time()
     worker_id = mp.current_process().pid
@@ -543,6 +567,19 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
                 error_message="No data mapped from XML",
                 processing_time=time.time() - start_time
             )
+        
+        # Add processing_log entry to mapped_data (atomically coupled with data insertion)
+        # This ensures log entry only exists if data insertion succeeds (single transaction)
+        # processing_log has FK constraint on app_id → app_base.app_id, so it must come after app_base in insertion order
+        mapped_data['processing_log'] = [{
+            'app_id': work_item.app_id,
+            'status': 'success',
+            'failure_reason': None,
+            'processing_time': datetime.utcnow(),
+            'session_id': _worker_session_id,
+            'app_id_start': _worker_app_id_start,
+            'app_id_end': _worker_app_id_end
+        }]
 
         # Stage 4: Database Insertion
         # Direct blocking inserts with FK dependency ordering to prevent constraint violations
@@ -604,9 +641,13 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
 
 def _insert_mapped_data_with_fk_order(mapped_data: Dict[str, List[Dict[str, Any]]]) -> Dict[str, int]:
     """
-    Insert mapped data respecting FK dependency order from mapping contract.
+    Insert mapped data respecting FK dependency order with atomic transaction per application.
     
-    CRITICAL: This order prevents FK constraint violations by ensuring parent records
+    CRITICAL ATOMICITY: All table inserts for a single application occur within a single
+    database transaction. If any insert fails, the entire transaction is rolled back,
+    preventing orphaned records and ensuring data consistency.
+    
+    CRITICAL FK ORDERING: This order prevents FK constraint violations by ensuring parent records
     are inserted before child records. The insertion order is defined in the mapping
     contract's table_insertion_order field, which should specify the FK dependency order.
     
@@ -622,67 +663,89 @@ def _insert_mapped_data_with_fk_order(mapped_data: Dict[str, List[Dict[str, Any]
         
     Returns:
         Dict of {table_name: inserted_count} for each table processed
+        
+    Raises:
+        XMLExtractionError: If any table insert fails (triggers rollback)
     """
     global _worker_migration_engine, _worker_mapper
     
     insertion_results = {}
     
-    # Get table insertion order from contract, or use fallback hardcoded order
-    # The fallback ensures backward compatibility if contract doesn't specify order
-    try:
-        from ..config.config_manager import get_config_manager
-        config_manager = get_config_manager()
-        mapping_contract = config_manager.load_mapping_contract()
-        table_order = mapping_contract.table_insertion_order if mapping_contract and mapping_contract.table_insertion_order else None
-    except Exception:
-        table_order = None
-    
-    # Fallback to hardcoded order if contract doesn't specify
-    if not table_order:
-        table_order = [
-            "app_base",              # Parent: all app_*_cc tables FK to this
-            "contact_base",          # Parent: contact_address/employment FK to this + FK to app_base
-            "app_operational_cc",    # Child of app_base
-            "app_pricing_cc",        # Child of app_base
-            "app_transactional_cc",  # Child of app_base
-            "app_solicited_cc",      # Child of app_base
-            "contact_address",       # Child of contact_base
-            "contact_employment",    # Child of contact_base
-        ]
-        _worker_mapper.logger.debug("Using fallback hardcoded table_insertion_order (contract order not available)")
-    
-    # Process tables in order
-    processed_tables = set()
-    for table_name in table_order:
-        records = mapped_data.get(table_name, [])
-        if records:
-            enable_identity = table_name in ["app_base", "contact_base"]
-            inserted_count = _worker_migration_engine.execute_bulk_insert(
-                records, 
-                table_name, 
-                enable_identity_insert=enable_identity
-            )
-            insertion_results[table_name] = inserted_count
-            processed_tables.add(table_name)
-    
-    # Option A: Append any tables not in the insertion order (for new product lines)
-    # Log warning if unmapped tables are found (helps with contract debugging)
-    unmapped_tables = set(mapped_data.keys()) - processed_tables
-    if unmapped_tables:
-        _worker_mapper.logger.warning(
-            f"Tables in mapped_data not in table_insertion_order (appending to end): {', '.join(sorted(unmapped_tables))}. "
-            f"If these are child tables with FK dependencies, update table_insertion_order in contract."
-        )
-        # Append unmapped tables at the end (risky but allows flexibility for new product lines)
-        for table_name in sorted(unmapped_tables):
-            records = mapped_data[table_name]
-            if records:
-                enable_identity = table_name in ["app_base", "contact_base"]
-                inserted_count = _worker_migration_engine.execute_bulk_insert(
-                    records, 
-                    table_name, 
-                    enable_identity_insert=enable_identity
+    # Create single connection for atomic transaction spanning all tables
+    # Use the context manager properly - it handles connection lifecycle
+    with _worker_migration_engine.get_connection() as conn:
+        try:
+            # Get table insertion order from contract, or use fallback hardcoded order
+            # The fallback ensures backward compatibility if contract doesn't specify order
+            try:
+                from ..config.config_manager import get_config_manager
+                config_manager = get_config_manager()
+                mapping_contract = config_manager.load_mapping_contract()
+                table_order = mapping_contract.table_insertion_order if mapping_contract and mapping_contract.table_insertion_order else None
+            except Exception:
+                table_order = None
+            
+            # Fallback to hardcoded order if contract doesn't specify
+            if not table_order:
+                table_order = [
+                    "app_base",              # Parent: all app_*_cc tables FK to this
+                    "contact_base",          # Parent: contact_address/employment FK to this + FK to app_base
+                    "app_operational_cc",    # Child of app_base
+                    "app_pricing_cc",        # Child of app_base
+                    "app_transactional_cc",  # Child of app_base
+                    "app_solicited_cc",      # Child of app_base
+                    "contact_address",       # Child of contact_base
+                    "contact_employment",    # Child of contact_base
+                ]
+                _worker_mapper.logger.debug("Using fallback hardcoded table_insertion_order (contract order not available)")
+            
+            # Process tables in order using shared connection for atomic transaction
+            processed_tables = set()
+            for table_name in table_order:
+                records = mapped_data.get(table_name, [])
+                if records:
+                    enable_identity = table_name in ["app_base", "contact_base"]
+                    inserted_count = _worker_migration_engine.execute_bulk_insert(
+                        records, 
+                        table_name, 
+                        enable_identity_insert=enable_identity,
+                        connection=conn  # Pass shared connection
+                    )
+                    insertion_results[table_name] = inserted_count
+                    processed_tables.add(table_name)
+            
+            # Option A: Append any tables not in the insertion order (for new product lines)
+            # Log warning if unmapped tables are found (helps with contract debugging)
+            unmapped_tables = set(mapped_data.keys()) - processed_tables
+            if unmapped_tables:
+                _worker_mapper.logger.warning(
+                    f"Tables in mapped_data not in table_insertion_order (appending to end): {', '.join(sorted(unmapped_tables))}. "
+                    f"If these are child tables with FK dependencies, update table_insertion_order in contract."
                 )
-                insertion_results[table_name] = inserted_count
+                # Append unmapped tables at the end (risky but allows flexibility for new product lines)
+                for table_name in sorted(unmapped_tables):
+                    records = mapped_data[table_name]
+                    if records:
+                        enable_identity = table_name in ["app_base", "contact_base"]
+                        inserted_count = _worker_migration_engine.execute_bulk_insert(
+                            records, 
+                            table_name, 
+                            enable_identity_insert=enable_identity,
+                            connection=conn  # Pass shared connection
+                        )
+                        insertion_results[table_name] = inserted_count
+            
+            # Commit transaction - all tables inserted successfully
+            conn.commit()
+            _worker_mapper.logger.debug(f"Committed transaction for application with {len(insertion_results)} tables")
+            
+        except Exception as e:
+            # Rollback on any error
+            try:
+                conn.rollback()
+                _worker_mapper.logger.error(f"Rolled back transaction due to error: {e}")
+            except:
+                pass
+            raise
     
     return insertion_results

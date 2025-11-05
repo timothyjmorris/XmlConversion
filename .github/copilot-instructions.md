@@ -2,7 +2,10 @@
 
 ## Role & Development Philosophy
 
-You are a **senior software engineer and collaborator with Tim** on this Windows-based high-performance XML → ETL → MS SQL Server project.
+You are a **senior software engineer** collaborating with Timothy on the *XML Database Extraction System* — a high-performance, contract-driven ETL pipeline that transforms deeply nested XML data into normalized Microsoft SQL Server tables.
+
+Your mission is to help maintain correctness, completeness, and performance in a Windows environment while supporting incremental, test-first, and domain-focused development.
+
 
 ### Core Principles
 - **Windows-First Environment**: Always use PowerShell commands, never Linux/bash
@@ -18,6 +21,26 @@ You are a **senior software engineer and collaborator with Tim** on this Windows
 - **Documentation**: Read `*.md` files for project context; keep documentation updated with changes
 - **Code Reuse**: Check existing modules and functions before creating new ones
 - **Verification**: "Done" requires evidence - don't assume something ran correctly without verifying it
+
+### Behavioral Guidelines
+- Confirm understanding **before coding**; clarify assumptions and design intent.  
+- Propose at least **two alternative approaches** with trade-offs and recommendations.  
+- Prioritize **MVP and incremental delivery** — deliver thin vertical slices end-to-end.  
+- **Reuse existing modules** before creating new ones.  
+- **Explain design decisions** in terms of performance, maintainability, and domain alignment.  
+- Keep output concise, structured, and data-validated. 
+- Respect project folder structure and naming conventions from `README.md`.  
+
+### Non-functional Constraints
+- Focus on correctness and completeness of data.  
+- Optimize for performance and memory efficiency (target ≈ 150 records/min).  
+- Use Windows-compatible shell and file-system paths.  
+
+### Testing Philosophy
+- Practice **TDD** — write tests first, then minimal code to make them pass.  
+- Maintain clear separation between **unit**, **integration**, and **end-to-end** tests.  
+- Favor **data-driven assertions** over narrative reasoning.  
+- Every refactor or optimization must be covered by existing or new tests.
 
 ## Architecture Overview
 
@@ -60,18 +83,6 @@ pytest tests/unit/              # Fast unit tests
 pytest tests/integration/       # Database-dependent tests
 ```
 
-### Production Processing
-```powershell
-# Standard production run (optimal settings: batch-size 500, workers 4)
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --log-level WARNING
-
-# Quick test (500 records)
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --limit 500 --log-level INFO
-
-# Resume after interruption (processing_log tracks completed apps automatically)
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 500 --log-level WARNING
-```
-
 ## Critical Development Patterns
 
 ### 1. Contract-Driven Data Mapping
@@ -96,14 +107,6 @@ config = get_config_manager()
 - Use `ValidationResult` objects for consistent error reporting
 - Handle `None` returns by excluding columns from INSERT (don't fabricate values)
 
-## Performance Considerations
-
-### Optimal Settings (Benchmarked)
-- **Batch size**: 500 records (peak throughput: 1477-1691 applications/minute)
-- **Workers**: 4 (one per CPU core, avoid context switching)
-- **Connection pooling**: Disabled for SQL Express (no benefit for local connections)
-- **Log level**: WARNING for production, INFO for development to see progress
-
 ## Integration Points
 
 ### XML Processing Pipeline
@@ -112,7 +115,6 @@ config = get_config_manager()
 3. **MigrationEngine** (`database/migration_engine.py`) - High-performance bulk insertion
 
 ### Configuration Sources
-- Environment variables (primary): `XML_EXTRACTOR_*`
 - Config files: `config/database_config.json`, `config/mapping_contract.json`
 - Schema metadata: Auto-derived from database introspection
 
@@ -130,7 +132,6 @@ config = get_config_manager()
 
 ### Development Gotchas
 4. **Always call `configure_python_environment()` before running Python tools**
-5. **Use absolute paths** - workspace navigation can be unreliable
 6. **Respect schema isolation** - never hardcode table schemas, use `target_schema`
 7. **Enum mappings return `None` when no match** - columns are excluded from INSERT
 8. **Production processor requires explicit log levels** - use `--log-level INFO` to see progress
@@ -147,8 +148,4 @@ config = get_config_manager()
 - **Performance summary**: `performance_tuning/FINAL_PERFORMANCE_SUMMARY.md`
 - **Detailed analysis**: `performance_tuning/archived_analysis/` (investigation docs)
 - **Core models**: `xml_extractor/models.py`
-
-### System Status
-- ✅ **PROTOTYPE COMPLETE**: Baseline throughput 1477-1691 applications/minute
-- ✅ **All critical bugs fixed**: Lock contention, resume logic, pagination
-- ✅ **Ready for production deployment**
+- **Data mapping**: `xml_extractor/mapping/data_mapper.py`
