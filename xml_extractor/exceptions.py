@@ -109,3 +109,18 @@ class PerformanceError(XMLExtractionError):
         self.metric_name = metric_name
         self.current_value = current_value
         self.threshold_value = threshold_value
+
+
+class DatabaseConstraintError(XMLExtractionError):
+    """Exception raised when database constraint violations occur (PK, FK, NOT NULL, etc)."""
+    pass
+
+
+class TransactionAtomicityError(XMLExtractionError):
+    """Exception raised when transaction atomicity cannot be maintained."""
+    pass
+
+
+class BulkInsertError(XMLExtractionError):
+    """Exception raised when bulk insert operations fail completely."""
+    pass

@@ -10,7 +10,7 @@ import logging
 from typing import List, Dict, Any, Tuple
 import pyodbc
 
-from ..exceptions import XMLExtractionError
+from ..exceptions import XMLExtractionError, DatabaseConstraintError
 
 
 class BulkInsertStrategy:
@@ -206,29 +206,33 @@ class BulkInsertStrategy:
     
     def _handle_database_error(self, e: Exception, table_name: str) -> None:
         """
-        Categorize and re-raise database errors with proper context.
+        Categorize and re-raise database errors with proper exception types.
+        
+        Constraint violations raise DatabaseConstraintError (specific type).
+        Other database errors raise XMLExtractionError with database_error category.
         
         Raises:
-            XMLExtractionError: With appropriate error category
+            DatabaseConstraintError: For PK, FK, CHECK, NOT NULL violations
+            XMLExtractionError: For other database errors
         """
         error_str = str(e).lower()
         
         if 'primary key constraint' in error_str or 'duplicate key' in error_str:
             error_msg = f"Primary key violation in {table_name}: {e}"
             self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category="constraint_violation")
+            raise DatabaseConstraintError(error_msg, error_category="primary_key_violation")
         elif 'foreign key constraint' in error_str:
             error_msg = f"Foreign key violation in {table_name}: {e}"
             self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category="constraint_violation")
+            raise DatabaseConstraintError(error_msg, error_category="foreign_key_violation")
         elif 'check constraint' in error_str:
             error_msg = f"Check constraint violation in {table_name}: {e}"
             self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category="constraint_violation")
+            raise DatabaseConstraintError(error_msg, error_category="check_constraint_violation")
         elif 'cannot insert null' in error_str or 'not null constraint' in error_str:
             error_msg = f"NULL constraint violation in {table_name}: {e}"
             self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category="constraint_violation")
+            raise DatabaseConstraintError(error_msg, error_category="not_null_violation")
         else:
             error_msg = f"Database error during bulk insert into {table_name}: {e}"
             self.logger.error(error_msg)

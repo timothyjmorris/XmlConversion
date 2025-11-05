@@ -21,7 +21,13 @@ import pyodbc
 from contextlib import contextmanager
 
 from ..interfaces import MigrationEngineInterface
-from ..exceptions import DatabaseConnectionError, SchemaValidationError, XMLExtractionError
+from ..exceptions import (
+    DatabaseConnectionError, 
+    SchemaValidationError, 
+    XMLExtractionError,
+    TransactionAtomicityError,
+    DatabaseConstraintError
+)
 from ..config.config_manager import get_config_manager
 from .duplicate_contact_detector import DuplicateContactDetector
 from .bulk_insert_strategy import BulkInsertStrategy
@@ -237,6 +243,10 @@ class MigrationEngine(MigrationEngineInterface):
             
         Yields:
             pyodbc.Connection: Connection within transaction context
+            
+        Raises:
+            TransactionAtomicityError: If transaction cannot be rolled back on failure
+            XMLExtractionError: If transaction fails (other errors)
         """
         cursor = None
         try:
@@ -251,17 +261,44 @@ class MigrationEngine(MigrationEngineInterface):
             self._transaction_active = False
             self.logger.debug("Transaction committed")
             
-        except Exception as e:
+        except pyodbc.Error as e:
+            # Database-specific error during transaction
             if cursor and self._transaction_active:
                 try:
                     cursor.execute("ROLLBACK TRANSACTION")
                     self._transaction_active = False
-                    # CRITICAL FIX: Use ERROR level for production visibility
+                    self.logger.error(f"Transaction rolled back due to database error: {str(e)[:200]}")
+                except pyodbc.Error as rollback_error:
+                    # Critical failure: cannot rollback
+                    self.logger.critical(f"ROLLBACK FAILED - Database may be in inconsistent state: {rollback_error}")
+                    raise TransactionAtomicityError(
+                        f"Failed to rollback transaction after error: {rollback_error}",
+                        error_category="transaction_atomicity"
+                    )
+            raise XMLExtractionError(f"Database error during transaction: {e}", error_category="database_error")
+        except XMLExtractionError:
+            # Already an extraction error, re-raise
+            if cursor and self._transaction_active:
+                try:
+                    cursor.execute("ROLLBACK TRANSACTION")
+                    self._transaction_active = False
+                except pyodbc.Error as rollback_error:
+                    self.logger.critical(f"ROLLBACK FAILED: {rollback_error}")
+            raise
+        except Exception as e:
+            # Unexpected error during transaction
+            if cursor and self._transaction_active:
+                try:
+                    cursor.execute("ROLLBACK TRANSACTION")
+                    self._transaction_active = False
                     self.logger.error(f"Transaction rolled back due to error: {str(e)[:200]}")
                 except pyodbc.Error as rollback_error:
-                    # CRITICAL FIX: Use CRITICAL level when rollback itself fails
                     self.logger.critical(f"ROLLBACK FAILED - Database may be in inconsistent state: {rollback_error}")
-            raise e
+                    raise TransactionAtomicityError(
+                        f"Failed to rollback transaction: {rollback_error}",
+                        error_category="transaction_atomicity"
+                    )
+            raise XMLExtractionError(f"Unexpected error during transaction: {e}", error_category="system_error")
         finally:
             if cursor:
                 cursor.close()
