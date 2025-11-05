@@ -43,7 +43,7 @@ sys.path.insert(0, str(project_root))
 from xml_extractor.processing.parallel_coordinator import ParallelCoordinator
 from xml_extractor.database.migration_engine import MigrationEngine
 from xml_extractor.config.config_manager import get_config_manager
-from xml_extractor.interfaces import MappingContract
+from xml_extractor.interfaces import MappingContract, BatchProcessorInterface
 
 
 class ProductionProcessor:
@@ -100,7 +100,8 @@ class ProductionProcessor:
                  workers: int = 4, batch_size: int = 1000, log_level: str = "INFO",
                  enable_pooling: bool = False, min_pool_size: int = 4, max_pool_size: int = 20,
                  enable_mars: bool = True, connection_timeout: int = 30,
-                 app_id_start: int = None, app_id_end: int = None):
+                 app_id_start: int = None, app_id_end: int = None,
+                 batch_processor: BatchProcessorInterface = None):
         """
         Initialize production processor.
         
@@ -119,6 +120,8 @@ class ProductionProcessor:
             connection_timeout: Connection timeout in seconds (default: 30)
             app_id_start: Starting app_id for range processing (optional, for non-overlapping instances)
             app_id_end: Ending app_id for range processing (optional, for non-overlapping instances)
+            batch_processor: BatchProcessorInterface implementation (optional). If None, ParallelCoordinator
+                          used for production. Can be SequentialProcessor for testing or MockProcessor for unit tests.
         """
         self.server = server
         self.database = database
@@ -133,6 +136,7 @@ class ProductionProcessor:
         self.connection_timeout = connection_timeout
         self.app_id_start = app_id_start
         self.app_id_end = app_id_end
+        self.batch_processor = batch_processor  # Store injected processor
         
         # Validate app_id range configuration
         if self.app_id_start is not None and self.app_id_end is not None:
@@ -453,21 +457,21 @@ class ProductionProcessor:
         
         self.logger.info(f"Starting batch processing of {len(xml_records)} records")
         
-        # Create parallel coordinator with session metadata for processing_log
-        # Note: batch_size here is for database bulk insert operations
-        coordinator = ParallelCoordinator(
-            connection_string=self.connection_string,
-            mapping_contract_path=self.mapping_contract_path,
-            num_workers=self.workers,
-            batch_size=self.batch_size,  # Respect processor's batch_size setting
-            session_id=self.session_id,
-            app_id_start=self.app_id_start,
-            app_id_end=self.app_id_end
-        )
+        # Use injected batch processor, or create ParallelCoordinator for production
+        if self.batch_processor is None:
+            self.batch_processor = ParallelCoordinator(
+                connection_string=self.connection_string,
+                mapping_contract_path=self.mapping_contract_path,
+                num_workers=self.workers,
+                batch_size=self.batch_size,
+                session_id=self.session_id,
+                app_id_start=self.app_id_start,
+                app_id_end=self.app_id_end
+            )
         
         # Process batch
         start_time = time.time()
-        processing_result = coordinator.process_xml_batch(xml_records, batch_number=batch_number)
+        processing_result = self.batch_processor.process_xml_batch(xml_records, batch_number=batch_number)
         end_time = time.time()
         
         # Extract failed app details from individual results

@@ -6,7 +6,7 @@ to ensure consistent behavior and enable dependency injection.
 """
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional, Iterator
+from typing import List, Dict, Any, Optional, Iterator, Tuple
 from xml.etree.ElementTree import Element
 
 from .models import MappingContract, ProcessingConfig, ProcessingResult
@@ -259,5 +259,35 @@ class DataIntegrityValidatorInterface(ABC):
             
         Returns:
             ValidationResult containing all validation findings
+        """
+        pass
+
+
+class BatchProcessorInterface(ABC):
+    """
+    Abstract interface for batch XML processing strategies.
+    
+    Enables dependency injection to decouple ProductionProcessor from specific
+    processing implementations (parallel vs sequential).
+    
+    Allows:
+    - Parallel processing via ParallelCoordinator (production)
+    - Sequential processing for testing and debugging
+    - Mock processors for unit testing
+    """
+    
+    @abstractmethod
+    def process_xml_batch(self, 
+                         xml_records: List[Tuple[int, str]], 
+                         batch_number: int = 1) -> ProcessingResult:
+        """
+        Process a batch of XML records using the implementation's strategy.
+        
+        Args:
+            xml_records: List of (app_id, xml_content) tuples to process
+            batch_number: Batch sequence number (for logging/tracking)
+            
+        Returns:
+            ProcessingResult with metrics and results
         """
         pass

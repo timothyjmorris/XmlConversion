@@ -31,6 +31,7 @@ from ..parsing.xml_parser import XMLParser
 from ..mapping.data_mapper import DataMapper
 from ..database.migration_engine import MigrationEngine
 from ..models import ProcessingResult
+from ..interfaces import BatchProcessorInterface
 
 
 @dataclass
@@ -55,7 +56,7 @@ class WorkResult:
     tables_populated: List[str] = None
 
 
-class ParallelCoordinator:
+class ParallelCoordinator(BatchProcessorInterface):
     """
     Multiprocessing Pool Manager for parallel XML record processing.
     
