@@ -450,6 +450,124 @@ class MigrationEngine(MigrationEngineInterface):
                 result = self._do_bulk_insert(conn, records, table_name, enable_identity_insert, commit_after=True)
                 return result
     
+    def _prepare_data_tuples(self, records: List[Dict[str, Any]]) -> tuple:
+        """
+        Prepare data tuples from records, handling encoding and null conversions.
+        
+        Returns: (columns, data_tuples, sql_statement)
+        """
+        columns = list(records[0].keys())
+        column_list = ', '.join(f"[{col}]" for col in columns)
+        placeholders = ', '.join('?' * len(columns))
+        
+        # Build INSERT statement (caller will add qualified table name)
+        sql = f"INSERT INTO {{table}} ({column_list}) VALUES ({placeholders})"
+        
+        if self.logger.isEnabledFor(logging.DEBUG):
+            self.logger.debug(f"Columns: {columns}")
+        
+        # Prepare data tuples with encoding handling
+        data_tuples = []
+        for record in records:
+            values = []
+            for col in columns:
+                val = record.get(col)
+                if val == '':
+                    val = None
+                elif isinstance(val, str):
+                    try:
+                        val = val.encode('utf-8').decode('utf-8')
+                    except (UnicodeEncodeError, UnicodeDecodeError):
+                        pass
+                values.append(val)
+            data_tuples.append(tuple(values))
+        
+        return columns, data_tuples, sql
+    
+    def _try_fast_insert(self, cursor, sql: str, batch_data: list, table_name: str) -> tuple:
+        """
+        Attempt bulk insert using executemany for optimal performance.
+        
+        Returns: (batch_inserted, use_executemany) where use_executemany indicates
+        if the method succeeded or if fallback is needed.
+        """
+        # Force individual executes for tables with known pyodbc executemany encoding issues
+        force_individual_executes = table_name in ['contact_address', 'contact_employment', 'contact_base']
+        
+        if len(batch_data) <= 1 or force_individual_executes:
+            return 0, False  # Skip fast path for single records or problematic tables
+        
+        try:
+            cursor.executemany(sql, batch_data)
+            return len(batch_data), True  # Success
+        except pyodbc.Error as e:
+            if "cast specification" in str(e) or "converting" in str(e):
+                self.logger.warning(f"executemany failed with cast error, falling back to individual executes: {e}")
+                return 0, False  # Signal fallback needed
+            else:
+                raise  # Re-raise non-type-conversion errors
+
+    def _fallback_individual_insert(self, cursor, sql: str, batch_data: list, table_name: str) -> int:
+        """
+        Insert records individually, handling constraint violations gracefully.
+        
+        Returns: count of successfully inserted records.
+        """
+        batch_inserted = 0
+        for record_values in batch_data:
+            try:
+                cursor.execute(sql, record_values)
+                batch_inserted += 1
+            except pyodbc.Error as record_error:
+                # Handle primary key violations for contact_base gracefully
+                if table_name == 'contact_base' and ('primary key constraint' in str(record_error).lower() or 'duplicate key' in str(record_error).lower()):
+                    con_id = record_values[0] if len(record_values) > 0 else None
+                    self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id}): {record_error}")
+                    continue
+                else:
+                    raise record_error
+        return batch_inserted
+    
+    def _handle_database_error(self, e: Exception, table_name: str, is_pyodbc: bool = True) -> None:
+        """
+        Categorize and re-raise database errors with proper context.
+        """
+        error_str = str(e).lower()
+        
+        if 'primary key constraint' in error_str or 'duplicate key' in error_str:
+            error_msg = f"Primary key violation in {table_name}: {e}"
+            self.logger.error(error_msg)
+            raise XMLExtractionError(error_msg, error_category="constraint_violation")
+        elif 'foreign key constraint' in error_str:
+            error_msg = f"Foreign key violation in {table_name}: {e}"
+            self.logger.error(error_msg)
+            raise XMLExtractionError(error_msg, error_category="constraint_violation")
+        elif 'check constraint' in error_str:
+            error_msg = f"Check constraint violation in {table_name}: {e}"
+            self.logger.error(error_msg)
+            raise XMLExtractionError(error_msg, error_category="constraint_violation")
+        elif 'cannot insert null' in error_str or 'not null constraint' in error_str:
+            error_msg = f"NULL constraint violation in {table_name}: {e}"
+            self.logger.error(error_msg)
+            raise XMLExtractionError(error_msg, error_category="constraint_violation")
+        else:
+            category = "database_error" if is_pyodbc else "system_error"
+            error_msg = f"Database error during bulk insert into {table_name}: {e}"
+            self.logger.error(error_msg)
+            raise XMLExtractionError(error_msg, error_category=category)
+    
+    def _disable_identity_insert_safely(self, table_name: str, enable_identity_insert: bool) -> None:
+        """Safely disable IDENTITY_INSERT on error, without masking the original error."""
+        if enable_identity_insert:
+            try:
+                with self.get_connection() as temp_conn:
+                    temp_cursor = temp_conn.cursor()
+                    qualified_table_name = self._get_qualified_table_name(table_name)
+                    temp_cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
+                    self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
+            except:
+                pass  # Don't mask the original error
+
     def _do_bulk_insert(
         self,
         conn,
@@ -458,14 +576,27 @@ class MigrationEngine(MigrationEngineInterface):
         enable_identity_insert: bool,
         commit_after: bool
     ) -> int:
-        """Internal method that performs the actual bulk insert operation."""
+        """
+        Orchestrate bulk insert with optimized fast path and graceful fallback.
+        
+        Strategy:
+        1. Try fast executemany for performance
+        2. Fall back to individual executes on type errors or for problem tables
+        3. Handle constraint violations gracefully (especially contact_base)
+        4. Manage IDENTITY_INSERT lifecycle and transaction atomicity
+        """
         inserted_count = 0
         
         try:
             cursor = conn.cursor()
-
-            # Get schema-qualified table name using contract-driven target_schema
             qualified_table_name = self._get_qualified_table_name(table_name)
+            
+            # Prepare data and SQL statement
+            columns, data_tuples, sql_template = self._prepare_data_tuples(records)
+            sql = sql_template.replace("{table}", qualified_table_name)
+            
+            if self.logger.isEnabledFor(logging.DEBUG):
+                self.logger.debug(f"SQL: {sql}")
 
             # Enable IDENTITY_INSERT if needed
             if enable_identity_insert:
@@ -475,36 +606,7 @@ class MigrationEngine(MigrationEngineInterface):
             # Enable fast_executemany for optimal performance
             cursor.fast_executemany = True
 
-            # Get all columns from the first record - DataMapper has already filtered appropriately
-            columns = list(records[0].keys())
-            column_list = ', '.join(f"[{col}]" for col in columns)
-            placeholders = ', '.join('?' * len(columns))
-            
-            # Build INSERT statement with qualified table name
-            sql = f"INSERT INTO {qualified_table_name} ({column_list}) VALUES ({placeholders})"
-            
-            # Debug logging
-            if self.logger.isEnabledFor(logging.DEBUG):
-                self.logger.debug(f"SQL: {sql}")
-                self.logger.debug(f"Columns: {columns}")
-            
-            # Prepare data tuples in correct order, only including columns with data
-            data_tuples = []
-            for record in records:
-                values = []
-                for col in columns:
-                    val = record.get(col)
-                    if val == '':
-                        val = None
-                    elif isinstance(val, str):
-                        try:
-                            val = val.encode('utf-8').decode('utf-8')
-                        except (UnicodeEncodeError, UnicodeDecodeError):
-                            pass
-                    values.append(val)
-                data_tuples.append(tuple(values))
-                
-            # Try executemany first for performance, fall back to individual executes if needed
+            # Process in batches with fast/fallback strategy
             batch_start = 0
             use_executemany = True
             
@@ -515,51 +617,12 @@ class MigrationEngine(MigrationEngineInterface):
                 if self.logger.isEnabledFor(logging.DEBUG):
                     self.logger.debug(f"Inserting batch {batch_start}-{batch_end} into {table_name}")
                 
-
+                # Try fast path first
+                batch_inserted, success = self._try_fast_insert(cursor, sql, batch_data, table_name)
                 
-                try:
-                    # Force individual executes for tables with known pyodbc executemany encoding issues
-                    # These specific tables have string encoding problems when using executemany with pyodbc
-                    # that cause character corruption (strings become question marks in SQL Server)
-                    force_individual_executes = table_name in ['contact_address', 'contact_employment', 'contact_base']
-                    
-                    if use_executemany and len(batch_data) > 1 and not force_individual_executes:
-                        # Try executemany for better performance
-                        cursor.executemany(sql, batch_data)
-                        batch_inserted = len(batch_data)
-                    else:
-                        # Fall back to individual executes
-                        batch_inserted = 0
-                        for record_values in batch_data:
-                            try:
-                                cursor.execute(sql, record_values)
-                                batch_inserted += 1
-                            except pyodbc.Error as record_error:
-                                # Handle primary key violations for contact_base gracefully
-                                if table_name == 'contact_base' and ('primary key constraint' in str(record_error).lower() or 'duplicate key' in str(record_error).lower()):
-                                    # Extract con_id from the record values for logging
-                                    con_id = None
-                                    if len(record_values) > 0:
-                                        # con_id is typically the first column in contact_base
-                                        con_id = record_values[0]
-                                    self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id}): {record_error}")
-                                    # Don't increment batch_inserted for skipped records
-                                    continue
-                                else:
-                                    # Re-raise other errors
-                                    raise record_error
-                
-                except pyodbc.Error as e:
-                    if ("cast specification" in str(e) or "converting" in str(e)) and use_executemany:
-                        # Fall back to individual executes for type compatibility
-                        self.logger.warning(f"executemany failed with cast error, falling back to individual executes: {e}")
-                        use_executemany = False
-                        batch_inserted = 0
-                        for record_values in batch_data:
-                            cursor.execute(sql, record_values)
-                            batch_inserted += 1
-                    else:
-                        raise e
+                # Fall back to individual inserts if needed
+                if not success:
+                    batch_inserted = self._fallback_individual_insert(cursor, sql, batch_data, table_name)
                 
                 inserted_count += batch_inserted
                 self._processed_records += batch_inserted
@@ -577,54 +640,11 @@ class MigrationEngine(MigrationEngineInterface):
                 conn.commit()
                     
         except pyodbc.Error as e:
-            # Ensure IDENTITY_INSERT is turned off even on error
-            if enable_identity_insert:
-                try:
-                    with self.get_connection() as temp_conn:
-                        temp_cursor = temp_conn.cursor()
-                        qualified_table_name = self._get_qualified_table_name(table_name)
-                        temp_cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
-                        self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
-                except:
-                    pass  # Don't mask the original error
-            
-            # Categorize database errors for better error reporting
-            error_str = str(e).lower()
-            if 'primary key constraint' in error_str or 'duplicate key' in error_str:
-                error_msg = f"Primary key violation in {table_name}: {e}"
-                self.logger.error(error_msg)
-                raise XMLExtractionError(error_msg, error_category="constraint_violation")
-            elif 'foreign key constraint' in error_str:
-                error_msg = f"Foreign key violation in {table_name}: {e}"
-                self.logger.error(error_msg)
-                raise XMLExtractionError(error_msg, error_category="constraint_violation")
-            elif 'check constraint' in error_str:
-                error_msg = f"Check constraint violation in {table_name}: {e}"
-                self.logger.error(error_msg)
-                raise XMLExtractionError(error_msg, error_category="constraint_violation")
-            elif 'cannot insert null' in error_str or 'not null constraint' in error_str:
-                error_msg = f"NULL constraint violation in {table_name}: {e}"
-                self.logger.error(error_msg)
-                raise XMLExtractionError(error_msg, error_category="constraint_violation")
-            else:
-                error_msg = f"Database error during bulk insert into {table_name}: {e}"
-                self.logger.error(error_msg)
-                raise XMLExtractionError(error_msg, error_category="database_error")
+            self._disable_identity_insert_safely(table_name, enable_identity_insert)
+            self._handle_database_error(e, table_name, is_pyodbc=True)
         except Exception as e:
-            # Ensure IDENTITY_INSERT is turned off even on error
-            if enable_identity_insert:
-                try:
-                    with self.get_connection() as temp_conn:
-                        temp_cursor = temp_conn.cursor()
-                        qualified_table_name = self._get_qualified_table_name(table_name)
-                        temp_cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
-                        self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
-                except:
-                    pass  # Don't mask the original error
-            
-            error_msg = f"Unexpected error during bulk insert into {table_name}: {e}"
-            self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category="system_error")
+            self._disable_identity_insert_safely(table_name, enable_identity_insert)
+            self._handle_database_error(e, table_name, is_pyodbc=False)
         
         return inserted_count
     

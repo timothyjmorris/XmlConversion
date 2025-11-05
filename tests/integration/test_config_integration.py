@@ -108,12 +108,11 @@ class TestConfigIntegration(unittest.TestCase):
         
         # Create MigrationEngine with explicit parameters
         migration_engine = MigrationEngine(
-            connection_string='explicit_connection_string',
-            batch_size=3000
+            connection_string='explicit_connection_string'
         )
         
-        # Verify explicit parameters take precedence
-        self.assertEqual(migration_engine.batch_size, 3000)
+        # Verify explicit parameter takes precedence
+        # Note: batch_size is now centralized in ProcessingDefaults and not configurable per-engine
         self.assertEqual(migration_engine.connection_string, 'explicit_connection_string')
     
     def test_data_mapper_uses_centralized_config(self):
