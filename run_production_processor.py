@@ -5,6 +5,8 @@ Manages sequential execution of production_processor.py with automatic process l
 management. Breaks large datasets into manageable chunks, each running as a fresh process
 to prevent memory degradation and performance issues over long runs.
 
+Specifically this addresses Python internal state accumulation: lxml caches, pyodbc metadata, type system caches
+
 =============================================================================
 QUICK START
 =============================================================================
