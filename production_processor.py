@@ -28,6 +28,7 @@ KEY FEATURES:
 import argparse
 import sys
 import time
+from xml_extractor.config.processing_defaults import ProcessingDefaults
 import json
 import logging
 import statistics
@@ -828,11 +829,15 @@ def main():
     # Optional arguments
     parser.add_argument("--username", help="SQL Server username (uses Windows auth if not provided)")
     parser.add_argument("--password", help="SQL Server password")
-    parser.add_argument("--workers", type=int, default=4, help="Number of parallel workers (default: 4)")
-    parser.add_argument("--batch-size", type=int, default=500, help="Records per batch (default: 500)")
-    parser.add_argument("--limit", type=int, default=10000, help="Maximum records to process (default: 10000, safety limit)")
-    parser.add_argument("--log-level", default="WARNING", choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
-                       help="Logging level (default: WARNING)")
+    parser.add_argument("--workers", type=int, default=ProcessingDefaults.WORKERS, 
+                       help=f"Number of parallel workers (default: {ProcessingDefaults.WORKERS})")
+    parser.add_argument("--batch-size", type=int, default=ProcessingDefaults.BATCH_SIZE, 
+                       help=f"Records per batch (default: {ProcessingDefaults.BATCH_SIZE})")
+    parser.add_argument("--limit", type=int, default=ProcessingDefaults.LIMIT, 
+                       help=f"Maximum records to process (default: {ProcessingDefaults.LIMIT}, safety limit)")
+    parser.add_argument("--log-level", default=ProcessingDefaults.LOG_LEVEL, 
+                       choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
+                       help=f"Logging level (default: {ProcessingDefaults.LOG_LEVEL})")
     
     # App ID range processing (eliminates lock contention between instances)
     parser.add_argument("--app-id-start", type=int, 
@@ -841,16 +846,16 @@ def main():
                        help="Ending app_id for processing range (inclusive)")
     
     # Connection pooling optimization arguments
-    parser.add_argument("--enable-pooling", action="store_true", default=False,
-                       help="Enable connection pooling (recommended for SQL Server/Prod, disabled by default for SQLExpress)")
-    parser.add_argument("--min-pool-size", type=int, default=4, 
-                       help="Minimum connection pool size (default: 4, match number of workers)")
-    parser.add_argument("--max-pool-size", type=int, default=20, 
-                       help="Maximum connection pool size (default: 20, allows burst capacity)")
-    parser.add_argument("--disable-mars", action="store_true", default=False,
-                       help="Disable Multiple Active Result Sets (MARS enabled by default)")
-    parser.add_argument("--connection-timeout", type=int, default=30,
-                       help="Connection timeout in seconds (default: 30)")
+    parser.add_argument("--enable-pooling", action="store_true", default=ProcessingDefaults.ENABLE_POOLING,
+                       help=f"Enable connection pooling (default: {ProcessingDefaults.ENABLE_POOLING})")
+    parser.add_argument("--min-pool-size", type=int, default=ProcessingDefaults.CONNECTION_POOL_MIN, 
+                       help=f"Minimum connection pool size (default: {ProcessingDefaults.CONNECTION_POOL_MIN})")
+    parser.add_argument("--max-pool-size", type=int, default=ProcessingDefaults.CONNECTION_POOL_MAX, 
+                       help=f"Maximum connection pool size (default: {ProcessingDefaults.CONNECTION_POOL_MAX})")
+    parser.add_argument("--disable-mars", action="store_true", default=not ProcessingDefaults.MARS_ENABLED,
+                       help=f"Disable Multiple Active Result Sets (default: MARS {'enabled' if ProcessingDefaults.MARS_ENABLED else 'disabled'})")
+    parser.add_argument("--connection-timeout", type=int, default=ProcessingDefaults.CONNECTION_TIMEOUT,
+                       help=f"Connection timeout in seconds (default: {ProcessingDefaults.CONNECTION_TIMEOUT})")
     
     args = parser.parse_args()
     

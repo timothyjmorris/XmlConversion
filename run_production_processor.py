@@ -215,6 +215,7 @@ import sys
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional
+from xml_extractor.config.processing_defaults import ProcessingDefaults
 
 
 class ChunkedProcessorOrchestrator:
@@ -453,8 +454,8 @@ Note: For concurrent processing, manually spawn multiple instances with differen
     )
     
     # Chunking parameters (mutually exclusive: range mode OR limit mode)
-    parser.add_argument("--chunk-size", type=int, default=10000,
-                       help="Number of records per chunk (default: 10000)")
+    parser.add_argument("--chunk-size", type=int, default=ProcessingDefaults.CHUNK_SIZE,
+                       help=f"Number of records per chunk (default: {ProcessingDefaults.CHUNK_SIZE})")
     parser.add_argument("--app-id-start", type=int,
                        help="Starting app_id for range-based chunking (requires --app-id-end)")
     parser.add_argument("--app-id-end", type=int,
@@ -472,25 +473,25 @@ Note: For concurrent processing, manually spawn multiple instances with differen
     parser.add_argument("--password", help="SQL Server password")
     
     # Processing parameters (pass-through)
-    parser.add_argument("--workers", type=int, default=4,
-                       help="Number of parallel workers per chunk (default: 4)")
-    parser.add_argument("--batch-size", type=int, default=500,
-                       help="Records per batch (default: 500)")
-    parser.add_argument("--log-level", default="WARNING",
+    parser.add_argument("--workers", type=int, default=ProcessingDefaults.WORKERS,
+                       help=f"Number of parallel workers per chunk (default: {ProcessingDefaults.WORKERS})")
+    parser.add_argument("--batch-size", type=int, default=ProcessingDefaults.BATCH_SIZE,
+                       help=f"Records per batch (default: {ProcessingDefaults.BATCH_SIZE})")
+    parser.add_argument("--log-level", default=ProcessingDefaults.LOG_LEVEL,
                        choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
-                       help="Logging level (default: WARNING)")
+                       help=f"Logging level (default: {ProcessingDefaults.LOG_LEVEL})")
     
     # Connection pooling (pass-through)
-    parser.add_argument("--enable-pooling", action="store_true", default=False,
-                       help="Enable connection pooling")
-    parser.add_argument("--min-pool-size", type=int, default=4,
-                       help="Minimum pool size (default: 4)")
-    parser.add_argument("--max-pool-size", type=int, default=20,
-                       help="Maximum pool size (default: 20)")
-    parser.add_argument("--disable-mars", action="store_true", default=False,
-                       help="Disable Multiple Active Result Sets (MARS enabled by default)")
-    parser.add_argument("--connection-timeout", type=int, default=30,
-                       help="Connection timeout in seconds (default: 30)")
+    parser.add_argument("--enable-pooling", action="store_true", default=ProcessingDefaults.ENABLE_POOLING,
+                       help=f"Enable connection pooling (default: {ProcessingDefaults.ENABLE_POOLING})")
+    parser.add_argument("--min-pool-size", type=int, default=ProcessingDefaults.CONNECTION_POOL_MIN,
+                       help=f"Minimum pool size (default: {ProcessingDefaults.CONNECTION_POOL_MIN})")
+    parser.add_argument("--max-pool-size", type=int, default=ProcessingDefaults.CONNECTION_POOL_MAX,
+                       help=f"Maximum pool size (default: {ProcessingDefaults.CONNECTION_POOL_MAX})")
+    parser.add_argument("--disable-mars", action="store_true", default=not ProcessingDefaults.MARS_ENABLED,
+                       help=f"Disable Multiple Active Result Sets (default: MARS {'enabled' if ProcessingDefaults.MARS_ENABLED else 'disabled'})")
+    parser.add_argument("--connection-timeout", type=int, default=ProcessingDefaults.CONNECTION_TIMEOUT,
+                       help=f"Connection timeout in seconds (default: {ProcessingDefaults.CONNECTION_TIMEOUT})")
     
     args = parser.parse_args()
     
