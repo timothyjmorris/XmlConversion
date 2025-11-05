@@ -303,18 +303,41 @@ class ParallelCoordinator:
                 )
     
     def _calculate_parallel_efficiency(self, results: List[WorkResult], total_time: float) -> float:
-        """Calculate parallel processing efficiency."""
+        """
+        Calculate parallel processing efficiency as a ratio of actual vs. theoretical speedup.
+        
+        Efficiency Formula:
+        - Sequential time = sum of all individual worker processing times
+        - Actual speedup = sequential_time / total_parallel_time
+        - Theoretical ideal speedup = num_workers (perfect parallelization)
+        - Efficiency = actual_speedup / ideal_speedup
+        
+        Returns:
+            Efficiency ratio (0.0 to 1.0):
+            - 1.0 = perfect parallelization (achieved theoretical maximum speedup)
+            - 0.5 = 50% efficiency (half the theoretical speedup achieved)
+            - Near 0.0 = poor parallelization or high overhead
+            
+        Example:
+            - 4 workers, sequential_time=1000ms, total_time=300ms
+            - Actual speedup = 1000/300 = 3.33x
+            - Ideal speedup = 4.0x
+            - Efficiency = 3.33/4 = 0.83 (83% efficiency)
+        """
         if not results or total_time <= 0:
             return 0.0
         
-        # Sum of individual processing times
-        total_individual_time = sum(r.processing_time for r in results)
+        # Sum of individual processing times (sequential equivalent)
+        sequential_time = sum(r.processing_time for r in results)
         
-        # Theoretical single-threaded time
-        theoretical_time = total_individual_time
+        # Actual speedup: how much faster did we run in parallel vs sequentially?
+        actual_speedup = sequential_time / total_time if total_time > 0 else 0.0
         
-        # Efficiency = theoretical_time / (actual_time * num_workers)
-        efficiency = theoretical_time / (total_time * self.num_workers) if total_time > 0 else 0.0
+        # Ideal speedup with N workers (theoretical maximum)
+        ideal_speedup = self.num_workers
+        
+        # Efficiency: ratio of actual to ideal speedup (0.0 to 1.0)
+        efficiency = actual_speedup / ideal_speedup if ideal_speedup > 0 else 0.0
         
         return min(efficiency, 1.0)  # Cap at 100%
 

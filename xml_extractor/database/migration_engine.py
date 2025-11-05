@@ -648,24 +648,6 @@ class MigrationEngine(MigrationEngineInterface):
         
         return inserted_count
     
-    def validate_target_schema(self, table_names: List[str]) -> bool:
-        """
-        Schema validation for contract-driven data migration.
-
-        DEPRECATED: This method exists for interface compatibility only. All schema validation
-        is now performed upstream by DataMapper using MappingContract rules. This method
-        always returns True as validation responsibilities have been distributed to appropriate
-        pipeline components (DataMapper for contract compliance, Database for constraint validation).
-
-        Args:
-            table_names: List of table names (provided for interface compatibility)
-
-        Returns:
-            True - schema validation delegated to DataMapper contract processing
-        """
-        self.logger.debug(f"Schema validation skipped for {len(table_names)} tables - DataMapper handles column inclusion")
-        return True
-    
     def track_progress(self, processed_count: int, total_count: int) -> None:
         """
         Track and report processing progress with performance metrics.

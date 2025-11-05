@@ -135,19 +135,6 @@ class MigrationEngineInterface(ABC):
         pass
     
     @abstractmethod
-    def validate_target_schema(self, table_names: List[str]) -> bool:
-        """
-        Validate that target schema exists and is compatible.
-        
-        Args:
-            table_names: List of table names to validate
-            
-        Returns:
-            True if schema is valid and compatible
-        """
-        pass
-    
-    @abstractmethod
     def track_progress(self, processed_count: int, total_count: int) -> None:
         """
         Track and report processing progress.
