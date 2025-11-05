@@ -23,6 +23,8 @@ from contextlib import contextmanager
 from ..interfaces import MigrationEngineInterface
 from ..exceptions import DatabaseConnectionError, SchemaValidationError, XMLExtractionError
 from ..config.config_manager import get_config_manager
+from .duplicate_contact_detector import DuplicateContactDetector
+from .bulk_insert_strategy import BulkInsertStrategy
 
 
 class MigrationEngine(MigrationEngineInterface):
@@ -92,7 +94,7 @@ class MigrationEngine(MigrationEngineInterface):
     
     def __init__(self, connection_string: Optional[str] = None, log_level: str = "ERROR"):
         """
-        Initialize the migration engine.
+        Initialize the migration engine with injected dependencies.
         
         Args:
             connection_string: Optional SQL Server connection string. If None, uses centralized config.
@@ -123,6 +125,10 @@ class MigrationEngine(MigrationEngineInterface):
         
         self._connection = None
         self._transaction_active = False
+        
+        # Inject extracted dependencies (Strategy pattern & Dependency Injection)
+        self.duplicate_detector = DuplicateContactDetector(self.get_connection, self.logger)
+        self.insert_strategy = BulkInsertStrategy(self.batch_size, self.logger)
         
         # Progress tracking
         self._total_records = 0
@@ -260,393 +266,54 @@ class MigrationEngine(MigrationEngineInterface):
             if cursor:
                 cursor.close()
     
-    def _filter_duplicate_contacts(self, records: List[Dict[str, Any]], table_name: str) -> List[Dict[str, Any]]:
-        """
-        Filter out duplicate contact records that would violate primary key constraints.
-        
-        For contact_base table, checks if con_id already exists in the database.
-        For contact_address and contact_employment tables, checks if the composite primary key
-        (con_id + type enum) already exists.
-        
-        Args:
-            records: List of records to filter
-            table_name: Target table name
-            
-        Returns:
-            Filtered list of records with duplicates removed
-        """
-        if table_name not in ['contact_base', 'contact_address', 'contact_employment'] or not records:
-            return records
-        
-        try:
-            with self.get_connection() as conn:
-                cursor = conn.cursor()
-                
-                if table_name == 'contact_base':
-                    # Check con_id duplicates
-                    con_ids = [record.get('con_id') for record in records if record.get('con_id')]
-                    if con_ids:
-                        placeholders = ','.join('?' for _ in con_ids)
-                        qualified_table = self._get_qualified_table_name('contact_base')
-                        query = f"SELECT con_id FROM {qualified_table} WITH (NOLOCK) WHERE con_id IN ({placeholders})"
-                        cursor.execute(query, con_ids)
-                        existing_con_ids = {row[0] for row in cursor.fetchall()}
-                        
-                        filtered_records = []
-                        skipped_count = 0
-                        for record in records:
-                            con_id = record.get('con_id')
-                            if con_id in existing_con_ids:
-                                self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id}): Contact already exists in database")
-                                skipped_count += 1
-                            else:
-                                filtered_records.append(record)
-                        
-                        if skipped_count > 0:
-                            self.logger.info(f"Filtered out {skipped_count} duplicate contact_base records from batch")
-                        return filtered_records
-                
-                elif table_name == 'contact_address':
-                    # Check composite key (con_id, address_type_enum) duplicates
-                    key_pairs = [(record.get('con_id'), record.get('address_type_enum')) 
-                               for record in records 
-                               if record.get('con_id') and record.get('address_type_enum')]
-                    
-                    if key_pairs:
-                        # Build query to check existing composite keys
-                        conditions = []
-                        params = []
-                        for con_id, addr_type in key_pairs:
-                            conditions.append("(con_id = ? AND address_type_enum = ?)")
-                            params.extend([con_id, addr_type])
-                        
-                        qualified_table = self._get_qualified_table_name('contact_address')
-                        query = f"SELECT con_id, address_type_enum FROM {qualified_table} WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
-                        cursor.execute(query, params)
-                        existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
-                        
-                        filtered_records = []
-                        skipped_count = 0
-                        for record in records:
-                            key = (record.get('con_id'), record.get('address_type_enum'))
-                            if key in existing_keys:
-                                self.logger.warning(f"Skipping duplicate contact_address record (con_id={key[0]}, address_type_enum={key[1]}): Address already exists in database")
-                                skipped_count += 1
-                            else:
-                                filtered_records.append(record)
-                        
-                        if skipped_count > 0:
-                            self.logger.info(f"Filtered out {skipped_count} duplicate contact_address records from batch")
-                        return filtered_records
-                
-                elif table_name == 'contact_employment':
-                    # Check composite key (con_id, employment_type_enum) duplicates
-                    key_pairs = [(record.get('con_id'), record.get('employment_type_enum')) 
-                               for record in records 
-                               if record.get('con_id') and record.get('employment_type_enum')]
-                    
-                    if key_pairs:
-                        # Build query to check existing composite keys
-                        conditions = []
-                        params = []
-                        for con_id, emp_type in key_pairs:
-                            conditions.append("(con_id = ? AND employment_type_enum = ?)")
-                            params.extend([con_id, emp_type])
-                        
-                        qualified_table = self._get_qualified_table_name('contact_employment')
-                        query = f"SELECT con_id, employment_type_enum FROM {qualified_table} WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
-                        cursor.execute(query, params)
-                        existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
-                        
-                        filtered_records = []
-                        skipped_count = 0
-                        for record in records:
-                            key = (record.get('con_id'), record.get('employment_type_enum'))
-                            if key in existing_keys:
-                                self.logger.warning(f"Skipping duplicate contact_employment record (con_id={key[0]}, employment_type_enum={key[1]}): Employment already exists in database")
-                                skipped_count += 1
-                            else:
-                                filtered_records.append(record)
-                        
-                        if skipped_count > 0:
-                            self.logger.info(f"Filtered out {skipped_count} duplicate contact_employment records from batch")
-                        return filtered_records
-        
-        except pyodbc.Error as e:
-            self.logger.warning(f"Failed to check for duplicate contacts in {table_name}, proceeding with all records: {e}")
-        
-        return records
-    
     def execute_bulk_insert(self, records: List[Dict[str, Any]], table_name: str, enable_identity_insert: bool = False, connection=None) -> int:
         """
         Execute optimized bulk insert operation for contract-compliant relational data.
 
-        This method performs high-performance bulk insertion of records that have been processed
-        and validated by the DataMapper according to mapping contract rules. The MigrationEngine
-        assumes data compatibility since column selection and validation occurs upstream.
-
-        Contract-Driven Bulk Insert Strategy:
-        1. Pre-Validated Columns: Records contain only columns specified by mapping contracts
-        2. Schema-Compliant Data: Data types and constraints validated by DataMapper
-        3. Batch Processing: Splits large record sets into configurable batches for memory management
-        4. Performance Optimization: Uses fast_executemany when possible, falls back to individual executes
-        5. IDENTITY_INSERT Handling: Manages auto-increment columns when required by contract rules
-        6. Transaction Safety: Wraps operations in transactions with automatic rollback on errors
-
-        Key Assumptions (Enforced by DataMapper):
-        - All records have identical column structures (contract-compliant)
-        - Data types match database schema expectations
-        - Required fields are present, nullable fields handled appropriately
-        - Enum values are properly converted to database identifiers
-        - Calculated fields evaluated and validated
-
-        Performance Features:
-        - Automatic batch size optimization based on record count and column complexity
-        - Fast executemany for homogeneous contract-compliant data (significant performance boost)
-        - Individual executes for fallback scenarios or when fast_executemany fails
-        - Connection reuse and prepared statement caching
-        - Memory-efficient processing of large datasets
-
-        Error Handling:
-        - Type conversion errors trigger fallback to individual executes (rare with contract validation)
-        - Constraint violations logged with detailed context and record identification
-        - Connection issues trigger automatic retry logic
-        - Transaction rollback ensures database consistency
-        - Comprehensive error reporting for pipeline monitoring
+        Orchestrates bulk insertion by delegating to injected dependencies:
+        1. DuplicateContactDetector: Filters records that would violate constraints
+        2. BulkInsertStrategy: Executes insert with fast/fallback strategy
+        
+        This thin orchestration method maintains transaction context and error handling
+        while delegating all specific logic to extracted classes.
 
         Args:
             records: List of contract-compliant record dictionaries from DataMapper
             table_name: Target table name (schema-qualified automatically)
             enable_identity_insert: Whether to enable IDENTITY_INSERT for auto-increment columns
+            connection: Optional existing connection (if provided, caller manages transaction)
 
         Returns:
             Number of records successfully inserted
 
         Raises:
             XMLExtractionError: If bulk insert operation fails catastrophically
-
-        Note:
-            This method assumes records are pre-validated by DataMapper and contain only
-            columns specified in the mapping contract. Schema compatibility is guaranteed
-            by the contract-driven architecture.
         """
+        # Get schema-qualified table name
+        qualified_table_name = self._get_qualified_table_name(table_name)
         
-        # Filter out duplicate contact_base records before insertion
-        records = self._filter_duplicate_contacts(records, table_name)
+        # Step 1: Filter duplicate records using injected detector
+        records = self.duplicate_detector.filter_duplicates(records, table_name, qualified_table_name)
         if not records:
-            self.logger.warning(f"No records remain for bulk insert into {table_name} after filtering. Skipping insert.")
+            self.logger.warning(f"No records remain for bulk insert into {table_name} after filtering.")
             return 0
-
-        inserted_count = 0
-
-        # If caller provided a connection, use it directly (they manage transaction)
-        # If no connection provided, create our own and manage it
+        
+        # Step 2: Use provided connection or create new one
         if connection is not None:
             # Caller is managing the transaction - just do the insert
-            return self._do_bulk_insert(connection, records, table_name, enable_identity_insert, commit_after=False)
+            cursor = connection.cursor()
+            return self.insert_strategy.insert(
+                cursor, records, table_name, qualified_table_name, enable_identity_insert
+            )
         else:
             # We manage the connection and transaction
             with self.get_connection() as conn:
-                result = self._do_bulk_insert(conn, records, table_name, enable_identity_insert, commit_after=True)
+                cursor = conn.cursor()
+                result = self.insert_strategy.insert(
+                    cursor, records, table_name, qualified_table_name, enable_identity_insert
+                )
+                conn.commit()  # Commit after successful insert
                 return result
-    
-    def _prepare_data_tuples(self, records: List[Dict[str, Any]]) -> tuple:
-        """
-        Prepare data tuples from records, handling encoding and null conversions.
-        
-        Returns: (columns, data_tuples, sql_statement)
-        """
-        columns = list(records[0].keys())
-        column_list = ', '.join(f"[{col}]" for col in columns)
-        placeholders = ', '.join('?' * len(columns))
-        
-        # Build INSERT statement (caller will add qualified table name)
-        sql = f"INSERT INTO {{table}} ({column_list}) VALUES ({placeholders})"
-        
-        if self.logger.isEnabledFor(logging.DEBUG):
-            self.logger.debug(f"Columns: {columns}")
-        
-        # Prepare data tuples with encoding handling
-        data_tuples = []
-        for record in records:
-            values = []
-            for col in columns:
-                val = record.get(col)
-                if val == '':
-                    val = None
-                elif isinstance(val, str):
-                    try:
-                        val = val.encode('utf-8').decode('utf-8')
-                    except (UnicodeEncodeError, UnicodeDecodeError):
-                        pass
-                values.append(val)
-            data_tuples.append(tuple(values))
-        
-        return columns, data_tuples, sql
-    
-    def _try_fast_insert(self, cursor, sql: str, batch_data: list, table_name: str) -> tuple:
-        """
-        Attempt bulk insert using executemany for optimal performance.
-        
-        Returns: (batch_inserted, use_executemany) where use_executemany indicates
-        if the method succeeded or if fallback is needed.
-        """
-        # Force individual executes for tables with known pyodbc executemany encoding issues
-        force_individual_executes = table_name in ['contact_address', 'contact_employment', 'contact_base']
-        
-        if len(batch_data) <= 1 or force_individual_executes:
-            return 0, False  # Skip fast path for single records or problematic tables
-        
-        try:
-            cursor.executemany(sql, batch_data)
-            return len(batch_data), True  # Success
-        except pyodbc.Error as e:
-            if "cast specification" in str(e) or "converting" in str(e):
-                self.logger.warning(f"executemany failed with cast error, falling back to individual executes: {e}")
-                return 0, False  # Signal fallback needed
-            else:
-                raise  # Re-raise non-type-conversion errors
-
-    def _fallback_individual_insert(self, cursor, sql: str, batch_data: list, table_name: str) -> int:
-        """
-        Insert records individually, handling constraint violations gracefully.
-        
-        Returns: count of successfully inserted records.
-        """
-        batch_inserted = 0
-        for record_values in batch_data:
-            try:
-                cursor.execute(sql, record_values)
-                batch_inserted += 1
-            except pyodbc.Error as record_error:
-                # Handle primary key violations for contact_base gracefully
-                if table_name == 'contact_base' and ('primary key constraint' in str(record_error).lower() or 'duplicate key' in str(record_error).lower()):
-                    con_id = record_values[0] if len(record_values) > 0 else None
-                    self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id}): {record_error}")
-                    continue
-                else:
-                    raise record_error
-        return batch_inserted
-    
-    def _handle_database_error(self, e: Exception, table_name: str, is_pyodbc: bool = True) -> None:
-        """
-        Categorize and re-raise database errors with proper context.
-        """
-        error_str = str(e).lower()
-        
-        if 'primary key constraint' in error_str or 'duplicate key' in error_str:
-            error_msg = f"Primary key violation in {table_name}: {e}"
-            self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category="constraint_violation")
-        elif 'foreign key constraint' in error_str:
-            error_msg = f"Foreign key violation in {table_name}: {e}"
-            self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category="constraint_violation")
-        elif 'check constraint' in error_str:
-            error_msg = f"Check constraint violation in {table_name}: {e}"
-            self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category="constraint_violation")
-        elif 'cannot insert null' in error_str or 'not null constraint' in error_str:
-            error_msg = f"NULL constraint violation in {table_name}: {e}"
-            self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category="constraint_violation")
-        else:
-            category = "database_error" if is_pyodbc else "system_error"
-            error_msg = f"Database error during bulk insert into {table_name}: {e}"
-            self.logger.error(error_msg)
-            raise XMLExtractionError(error_msg, error_category=category)
-    
-    def _disable_identity_insert_safely(self, table_name: str, enable_identity_insert: bool) -> None:
-        """Safely disable IDENTITY_INSERT on error, without masking the original error."""
-        if enable_identity_insert:
-            try:
-                with self.get_connection() as temp_conn:
-                    temp_cursor = temp_conn.cursor()
-                    qualified_table_name = self._get_qualified_table_name(table_name)
-                    temp_cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
-                    self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name} after error")
-            except:
-                pass  # Don't mask the original error
-
-    def _do_bulk_insert(
-        self,
-        conn,
-        records: List[Dict[str, Any]],
-        table_name: str,
-        enable_identity_insert: bool,
-        commit_after: bool
-    ) -> int:
-        """
-        Orchestrate bulk insert with optimized fast path and graceful fallback.
-        
-        Strategy:
-        1. Try fast executemany for performance
-        2. Fall back to individual executes on type errors or for problem tables
-        3. Handle constraint violations gracefully (especially contact_base)
-        4. Manage IDENTITY_INSERT lifecycle and transaction atomicity
-        """
-        inserted_count = 0
-        
-        try:
-            cursor = conn.cursor()
-            qualified_table_name = self._get_qualified_table_name(table_name)
-            
-            # Prepare data and SQL statement
-            columns, data_tuples, sql_template = self._prepare_data_tuples(records)
-            sql = sql_template.replace("{table}", qualified_table_name)
-            
-            if self.logger.isEnabledFor(logging.DEBUG):
-                self.logger.debug(f"SQL: {sql}")
-
-            # Enable IDENTITY_INSERT if needed
-            if enable_identity_insert:
-                cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} ON")
-                self.logger.debug(f"Enabled IDENTITY_INSERT for {qualified_table_name}")
-
-            # Enable fast_executemany for optimal performance
-            cursor.fast_executemany = True
-
-            # Process in batches with fast/fallback strategy
-            batch_start = 0
-            use_executemany = True
-            
-            while batch_start < len(data_tuples):
-                batch_end = min(batch_start + self.batch_size, len(data_tuples))
-                batch_data = data_tuples[batch_start:batch_end]
-                
-                if self.logger.isEnabledFor(logging.DEBUG):
-                    self.logger.debug(f"Inserting batch {batch_start}-{batch_end} into {table_name}")
-                
-                # Try fast path first
-                batch_inserted, success = self._try_fast_insert(cursor, sql, batch_data, table_name)
-                
-                # Fall back to individual inserts if needed
-                if not success:
-                    batch_inserted = self._fallback_individual_insert(cursor, sql, batch_data, table_name)
-                
-                inserted_count += batch_inserted
-                self._processed_records += batch_inserted
-                batch_start = batch_end
-                
-            # Disable IDENTITY_INSERT if it was enabled
-            if enable_identity_insert:
-                cursor.execute(f"SET IDENTITY_INSERT {qualified_table_name} OFF")
-                self.logger.debug(f"Disabled IDENTITY_INSERT for {qualified_table_name}")
-            
-            self.logger.info(f"Successfully inserted {inserted_count} records into {table_name}")
-            
-            # Commit if we're managing the transaction
-            if commit_after:
-                conn.commit()
-                    
-        except pyodbc.Error as e:
-            self._disable_identity_insert_safely(table_name, enable_identity_insert)
-            self._handle_database_error(e, table_name, is_pyodbc=True)
-        except Exception as e:
-            self._disable_identity_insert_safely(table_name, enable_identity_insert)
-            self._handle_database_error(e, table_name, is_pyodbc=False)
-        
-        return inserted_count
     
     def track_progress(self, processed_count: int, total_count: int) -> None:
         """
