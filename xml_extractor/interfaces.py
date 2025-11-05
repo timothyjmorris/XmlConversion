@@ -135,19 +135,6 @@ class MigrationEngineInterface(ABC):
         pass
     
     @abstractmethod
-    def create_target_tables(self, sql_scripts: List[str]) -> bool:
-        """
-        Create target tables using SQL scripts.
-        
-        Args:
-            sql_scripts: List of CREATE TABLE SQL statements
-            
-        Returns:
-            True if all tables created successfully
-        """
-        pass
-    
-    @abstractmethod
     def validate_target_schema(self, table_names: List[str]) -> bool:
         """
         Validate that target schema exists and is compatible.
