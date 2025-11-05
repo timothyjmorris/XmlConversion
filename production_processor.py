@@ -24,7 +24,8 @@ KEY FEATURES:
     • Concurrent instances: non-overlapping app_id ranges prevent locks
     • Schema isolation: target_schema from MappingContract
     • Performance: 1,500-1,600 apps/min sustained (4 workers)
-"""import argparse
+"""
+import argparse
 import sys
 import time
 import json
@@ -278,7 +279,7 @@ class ProductionProcessor:
         logging.getLogger('urllib3').setLevel(logging.WARNING)
 
         # Enable migration engine logging based on log level (controlled by --log-level flag)
-        logging.getLogger('xml_extractor.database.migration_engine').setLevel(logging_level_value)
+        logging.getLogger('xml_extractor.database.migration_engine').setLevel(getattr(logging, log_level.upper()))
         
         self.logger.info(f"Logging initialized: {log_file}")
     
@@ -426,32 +427,6 @@ class ProductionProcessor:
             raise
         
         return xml_records
-    
-
-    def _log_processing_result(self, app_id: int, success: bool, failure_reason: str = None) -> None:
-        """
-        Log processing result to prevent re-processing of failed records.
-        
-        Inserts into [{target_schema}].[processing_log] as determined by MappingContract.
-        Logs session_id and app_id range for processing tracking.
-        """
-        try:
-            migration_engine = MigrationEngine(self.connection_string)
-            with migration_engine.get_connection() as conn:
-                cursor = conn.cursor()
-                
-                status = 'success' if success else 'failed'
-                # Use target_schema for processing_log (schema-isolated like all target tables)
-                qualified_log_table = f"[{self.target_schema}].[processing_log]"
-                cursor.execute(f"""
-                    INSERT INTO {qualified_log_table} (app_id, status, failure_reason, session_id, app_id_start, app_id_end)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                """, (app_id, status, failure_reason, self.session_id, self.app_id_start, self.app_id_end))
-                
-                conn.commit()
-                
-        except Exception as e:
-            self.logger.warning(f"Failed to log processing result for app_id {app_id}: {e}")
     
     def process_batch(self, xml_records: List[Tuple[int, str]], batch_number: int = 1) -> dict:
         """

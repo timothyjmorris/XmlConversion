@@ -90,13 +90,12 @@ class MigrationEngine(MigrationEngineInterface):
     - Comprehensive error categorization for downstream processing decisions
     """
     
-    def __init__(self, connection_string: Optional[str] = None, batch_size: Optional[int] = None, log_level: str = "ERROR"):
+    def __init__(self, connection_string: Optional[str] = None, log_level: str = "ERROR"):
         """
         Initialize the migration engine.
         
         Args:
             connection_string: Optional SQL Server connection string. If None, uses centralized config.
-            batch_size: Optional batch size for bulk operations. If None, uses centralized config.
             log_level: Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL).
                       Defaults to ERROR for production use to minimize overhead.
         """
@@ -116,7 +115,8 @@ class MigrationEngine(MigrationEngineInterface):
         
         # Use provided values or fall back to centralized configuration
         self.connection_string = connection_string or self.config_manager.get_database_connection_string()
-        self.batch_size = batch_size or processing_config.batch_size
+        # Batch size is informational only; determined by fast_executemany performance
+        self.batch_size = processing_config.batch_size
         
         # Load target_schema from MappingContract (contract-driven schema isolation)
         self.target_schema = self._load_target_schema_from_contract()
@@ -682,9 +682,21 @@ class MigrationEngine(MigrationEngineInterface):
             
             for statement in statements:
                 if statement.upper().startswith('CREATE TABLE'):
-                    table_name = self._extract_table_name(statement)
-                    if table_name != "UNKNOWN":
-                        table_names.append(table_name)
+                    # Inline table name extraction from CREATE TABLE statement
+                    try:
+                        parts = statement.split()
+                        for i, part in enumerate(parts):
+                            if part.upper() == 'TABLE' and i + 1 < len(parts):
+                                table_name = parts[i + 1]
+                                # Remove brackets and schema prefix if present
+                                table_name = table_name.replace('[', '').replace(']', '')
+                                if '.' in table_name:
+                                    table_name = table_name.split('.')[-1]
+                                if table_name != "UNKNOWN":
+                                    table_names.append(table_name)
+                                break
+                    except Exception:
+                        pass
         
         if table_names:
             self.logger.info(f"Found {len(table_names)} tables in dataset")
@@ -697,36 +709,16 @@ class MigrationEngine(MigrationEngineInterface):
         """
         Schema validation for contract-driven data migration.
 
-        In the contract-driven architecture, detailed schema validation is performed upstream
-        by the DataMapper component. The MigrationEngine assumes that all data received has
-        been validated against mapping contracts and contains only compatible columns.
-
-        Contract-Driven Validation Context:
-        - DataMapper validates column existence and data types during processing
-        - Only contract-specified columns are included in record sets
-        - Schema compatibility is guaranteed by mapping contract rules
-        - MigrationEngine focuses on bulk insertion performance and error recovery
-
-        Validation Approach:
-        - Table existence confirmed by create_target_tables() method
-        - Column compatibility validated by DataMapper contract processing
-        - Data type validation occurs during DataMapper transformation
-        - Constraint validation happens at database level during insertion
-
-        This method returns True by design, as schema validation responsibilities
-        have been distributed to appropriate pipeline components.
+        DEPRECATED: This method exists for interface compatibility only. All schema validation
+        is now performed upstream by DataMapper using MappingContract rules. This method
+        always returns True as validation responsibilities have been distributed to appropriate
+        pipeline components (DataMapper for contract compliance, Database for constraint validation).
 
         Args:
             table_names: List of table names (provided for interface compatibility)
 
         Returns:
             True - schema validation delegated to DataMapper contract processing
-
-        Note:
-            Schema validation is now distributed across the pipeline:
-            - DataMapper: Contract compliance and column selection
-            - MigrationEngine: Bulk insertion and transaction management
-            - Database: Constraint and referential integrity validation
         """
         self.logger.debug(f"Schema validation skipped for {len(table_names)} tables - DataMapper handles column inclusion")
         return True
@@ -771,38 +763,7 @@ class MigrationEngine(MigrationEngineInterface):
             f"Rate: {records_per_second:.1f} rec/sec, "
             f"Remaining: {remaining_records:,} records"
         )
-    
-    def _extract_table_name(self, create_table_sql: str) -> str:
-        """
-        Extract table name from CREATE TABLE SQL statement.
-        
-        Args:
-            create_table_sql: CREATE TABLE SQL statement
-            
-        Returns:
-            Extracted table name
-        """
-        try:
-            # Simple regex-free approach to extract table name
-            sql_upper = create_table_sql.upper().strip()
-            if not sql_upper.startswith('CREATE TABLE'):
-                return "UNKNOWN"
-            
-            # Find the table name after CREATE TABLE
-            parts = create_table_sql.split()
-            for i, part in enumerate(parts):
-                if part.upper() == 'TABLE' and i + 1 < len(parts):
-                    table_name = parts[i + 1]
-                    # Remove brackets and schema prefix if present
-                    table_name = table_name.replace('[', '').replace(']', '')
-                    if '.' in table_name:
-                        table_name = table_name.split('.')[-1]
-                    return table_name
-            
-            return "UNKNOWN"
-        except Exception:
-            return "UNKNOWN"
-    
+
     def get_processing_metrics(self) -> Dict[str, Any]:
         """
         Get current processing metrics.
