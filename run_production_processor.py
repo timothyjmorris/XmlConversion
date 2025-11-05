@@ -212,6 +212,7 @@ Memory Issues:
 import argparse
 import subprocess
 import sys
+import json
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional
@@ -266,7 +267,6 @@ class ChunkedProcessorOrchestrator:
         self.processor_kwargs = processor_kwargs
         self.num_chunks = (self.total_records + chunk_size - 1) // chunk_size  # Ceiling division
         self.chunk_results: List[Dict] = []
-        
     def run(self) -> int:
         """
         Execute all chunks sequentially.
@@ -318,8 +318,13 @@ class ChunkedProcessorOrchestrator:
                     'end_id': chunk_end_id,
                     'duration_seconds': chunk_duration,
                     'exit_code': result.returncode,
-                    'success': result.returncode == 0
+                    'success': result.returncode == 0,
+                    'throughput': None  # Will be populated from metrics file
                 }
+                
+                # Try to load throughput from metrics file
+                chunk_info['throughput'] = self._extract_throughput_from_metrics(chunk_start_id, chunk_end_id)
+                
                 self.chunk_results.append(chunk_info)
                 
                 # Show chunk summary with context
@@ -383,6 +388,37 @@ class ChunkedProcessorOrchestrator:
         
         return " ".join(cmd_parts)
     
+    def _extract_throughput_from_metrics(self, start_id: int, end_id: int) -> Optional[float]:
+        """
+        Extract throughput (apps/min) from the metrics file for a chunk.
+        
+        Args:
+            start_id: Starting app_id for this chunk
+            end_id: Ending app_id for this chunk
+            
+        Returns:
+            Throughput in apps/minute, or None if metrics file not found
+        """
+        try:
+            # Look for most recent metrics file matching this range
+            metrics_dir = Path("metrics")
+            pattern = f"metrics_*_range_{start_id}_{end_id}.json"
+            
+            matching_files = sorted(metrics_dir.glob(pattern), 
+                                   key=lambda x: x.stat().st_mtime, 
+                                   reverse=True)
+            
+            if matching_files:
+                metrics_file = matching_files[0]
+                with open(metrics_file) as f:
+                    data = json.load(f)
+                    return data.get('applications_per_minute')
+        except Exception:
+            pass  # Silently skip if file not found or error reading
+        
+        return None
+    
+    
     def _print_summary(self, start_time: datetime):
         """Print summary of all chunks processed."""
         end_time = datetime.now()
@@ -410,20 +446,53 @@ class ChunkedProcessorOrchestrator:
         
         print(f"End Time:          {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
         
+        # Throughput analysis (if metrics are available)
+        throughputs = [c['throughput'] for c in self.chunk_results if c['throughput'] is not None]
+        if throughputs:
+            avg_throughput = sum(throughputs) / len(throughputs)
+            min_throughput = min(throughputs)
+            max_throughput = max(throughputs)
+            
+            print(f"\nThroughput Analysis:")
+            print(f"Average:           {avg_throughput:.1f} apps/min")
+            print(f"Peak:              {max_throughput:.1f} apps/min")
+            print(f"Minimum:           {min_throughput:.1f} apps/min")
+            print(f"Range:             {max_throughput - min_throughput:.1f} apps/min ({((max_throughput - min_throughput) / max_throughput * 100):.1f}%)")
+            
+            # Per-third analysis
+            if len(throughputs) >= 3:
+                third = len(throughputs) // 3
+                first_third_avg = sum(throughputs[:third]) / len(throughputs[:third])
+                last_third_avg = sum(throughputs[-third:]) / len(throughputs[-third:])
+                degradation = ((last_third_avg - first_third_avg) / first_third_avg) * 100
+                print(f"First/Last Thirds:  {first_third_avg:.1f} → {last_third_avg:.1f} ({degradation:+.1f}%)")
+        
         # Per-chunk breakdown
         if self.chunk_results:
             print("\nPer-Chunk Breakdown:")
-            print(f"{'Chunk':<8} {'Range':<20} {'Duration':<12} {'Status':<10}")
-            print("-" * 70)
-            
-            for chunk in self.chunk_results:
-                range_str = f"{chunk['start_id']:,}-{chunk['end_id']:,}"
-                duration_str = f"{chunk['duration_seconds']:.1f}s"
-                status_str = "✓ SUCCESS" if chunk['success'] else "✗ FAILED"
+            if throughputs:
+                print(f"{'Chunk':<8} {'Range':<20} {'Duration':<12} {'Apps/Min':<12} {'Status':<10}")
+                print("-" * 82)
                 
-                print(f"{chunk['chunk_num']:<8} {range_str:<20} {duration_str:<12} {status_str:<10}")
+                for i, chunk in enumerate(self.chunk_results):
+                    range_str = f"{chunk['start_id']:,}-{chunk['end_id']:,}"
+                    duration_str = f"{chunk['duration_seconds']:.1f}s"
+                    throughput_str = f"{chunk['throughput']:.1f}" if chunk['throughput'] is not None else "N/A"
+                    status_str = "✓ SUCCESS" if chunk['success'] else "✗ FAILED"
+                    
+                    print(f"{chunk['chunk_num']:<8} {range_str:<20} {duration_str:<12} {throughput_str:<12} {status_str:<10}")
+            else:
+                print(f"{'Chunk':<8} {'Range':<20} {'Duration':<12} {'Status':<10}")
+                print("-" * 70)
+                
+                for chunk in self.chunk_results:
+                    range_str = f"{chunk['start_id']:,}-{chunk['end_id']:,}"
+                    duration_str = f"{chunk['duration_seconds']:.1f}s"
+                    status_str = "✓ SUCCESS" if chunk['success'] else "✗ FAILED"
+                    
+                    print(f"{chunk['chunk_num']:<8} {range_str:<20} {duration_str:<12} {status_str:<10}")
         
-        print("=" * 70)
+        print("=" * 82)
 
 
 def main():
