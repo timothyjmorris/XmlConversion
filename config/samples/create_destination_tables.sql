@@ -1,29 +1,45 @@
 
--- Ensure database is in SIMPLE recovery mode for migration
--- ALTER DATABASE XmlConversionDB SET RECOVERY SIMPLE;
+/* --------------------------------------------------------------------------------------------------------------------
+BEWARE THE LOG FILE !!!
 
--- After migration, switch back if needed
--- ALTER DATABASE XmlConversionDB SET RECOVERY FULL;
+	-- Ensure database is in SIMPLE recovery mode for migration
+	ALTER DATABASE XmlConversionDB SET RECOVERY SIMPLE;
+
+	-- After migration, switch back if needed
+	ALTER DATABASE XmlConversionDB SET RECOVERY FULL;
+
+	
+	-- Get Filename
+	SELECT TYPE_DESC, NAME, size, max_size, growth, is_percent_growth FROM sys.database_files;
+	DBCC SHRINKFILE ('XmlConversionDB')
+	DBCC SHRINKFILE ('XmlConversionDB_log')
+
+-------------------------------------------------------------------------------------------------------------------- */
+
 
 /* --------------------------------------------------------------------------------------------------------------------
--- File: create_tables.sql
+NUKE ALL SANDBOX TABLES
+	drop table sandbox.app_enums;
+	drop table sandbox.app_base;
+	drop table sandbox.app_operational_cc;
+	drop table app_pricing_cc;
+	drop table app_solicited_cc;
+	drop table app_transactional_cc;
+	drop table sandbox.contact_base;
+	drop table contact_address;
+	drop table contact_employment;
+	drop table historical_lookup
+	drop table report_results_lookup;
+	drop table sandbox.processing_log;
+
+RESET & RESEED SANDBOX TABLES
+	DELETE FROM  sandbox.app_base; -- should cascade
+    DBCC CHECKIDENT ('sandbox.app_base', RESEED, 0);
+    DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
 -------------------------------------------------------------------------------------------------------------------- */
-/*
-drop table sandbox.app_enums;
-drop table sandbox.app_base;
-drop table sandbox.app_operational_cc;
-drop table app_pricing_cc;
-drop table app_solicited_cc;
-drop table app_transactional_cc;
-drop table sandbox.contact_base;
-drop table contact_address;
-drop table contact_employment;
-drop table historical_lookup
-drop table report_results_lookup;
-*/
 
 -- Processing Log (error tracking, resumability)
-CREATE TABLE [sandbox].[processing_log] (
+CREATE TABLE sandbox.processing_log (
 	[log_id]			int				NOT NULL CONSTRAINT PK_processing_log_log_id PRIMARY KEY IDENTITY(1, 1),
 	[app_id]			int				NOT NULL CONSTRAINT FK_processing_log__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
 	[status]			varchar(20)		NOT NULL,

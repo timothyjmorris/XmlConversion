@@ -141,10 +141,10 @@ with migration_engine.get_connection() as conn:
 
 | Scenario | Result |
 |----------|--------|
-| All inserts succeed | ✅ COMMIT: All data in DB, log entry exists |
-| Error in app_base | ❌ ROLLBACK: Nothing in DB, no orphans |
-| Error in processing_log | ❌ ROLLBACK: Everything rolled back (no partial data) |
-| Crash mid-transaction | ❌ ROLLBACK: DB recovered on restart, no orphans |
+| All inserts succeed | COMMIT: All data in DB, log entry exists |
+| Error in app_base | ROLLBACK: Nothing in DB, no orphans |
+| Error in processing_log | ROLLBACK: Everything rolled back (no partial data) |
+| Crash mid-transaction | ROLLBACK: DB recovered on restart, no orphans |
 
 ### Resume Capability
 
@@ -257,10 +257,10 @@ python production_processor.py --app-id-start 1 --app-id-end 180000
 ### Crash Recovery
 
 ```
-Crash after COMMIT:        → Data safely in DB ✅
-Crash during transaction:  → Rolled back on restart ✅
-Crash during XML parse:    → No data inserted (parse stage) ✅
-Crash during mapping:      → No data inserted (pre-insert) ✅
+Crash after COMMIT:        → Data safely in DB
+Crash during transaction:  → Rolled back on restart
+Crash during XML parse:    → No data inserted (parse stage)
+Crash during mapping:      → No data inserted (pre-insert)
 ```
 
 ---

@@ -640,18 +640,14 @@ class ProductionProcessor:
         self.logger.info("Starting full processing run")
         
         # Display processing scope in console
+        print("\n=" * 82)
         if self.app_id_start is not None and self.app_id_end is not None:
-            print(f"\n============================================================")
-            print(f"PROCESSING APP_ID RANGE: {self.app_id_start} - {self.app_id_end}")
-            print(f"============================================================")
+           print(f" PROCESSING APP_ID RANGE: {self.app_id_start} - {self.app_id_end}")
         elif limit:
-            print(f"\n============================================================")
-            print(f"PROCESSING UP TO {limit:,} APPLICATIONS")
-            print(f"============================================================")
+            print(f" PROCESSING UP TO {limit:,} APPLICATIONS")
         else:
-            print(f"\n============================================================")
-            print(f"PROCESSING ALL APPLICATIONS (NO LIMIT)")
-            print(f"============================================================")
+            print(f" PROCESSING ALL APPLICATIONS (NO LIMIT)")
+        print("=" * 82)
         
         # Test connection first
         if not self.test_connection():
@@ -755,49 +751,49 @@ class ProductionProcessor:
         overall_rate = total_processed / (overall_time / 60) if overall_time > 0 else 0
         overall_success_rate = (total_successful/total_processed*100) if total_processed > 0 else 0
         
-        self.logger.info("="*80)
-        self.logger.info("FULL PROCESSING COMPLETE")
-        self.logger.info("="*80)
-        self.logger.info(f"Total Applications Processed: {total_processed}")
-        self.logger.info(f"Total Successful: {total_successful}")
-        self.logger.info(f"Total Failed: {total_failed}")
-        self.logger.info(f"Overall Success Rate: {overall_success_rate:.1f}%")
-        self.logger.info(f"Overall Time: {overall_time/60:.1f} minutes")
-        self.logger.info(f"Overall Rate: {overall_rate:.1f} applications/minute")
-        self.logger.info(f"Total Database Records Inserted: {sum(b.get('database_inserts', 0) for b in batch_details)}")
+        self.logger.info("="*82)
+        self.logger.info(" FULL PROCESSING COMPLETE")
+        self.logger.info("="*82)
+        self.logger.info(f"  Total Applications Processed: {total_processed}")
+        self.logger.info(f"  Total Successful: {total_successful}")
+        self.logger.info(f"  Total Failed: {total_failed}")
+        self.logger.info(f"  Overall Success Rate: {overall_success_rate:.1f}%")
+        self.logger.info(f"  Overall Time: {overall_time/60:.1f} minutes")
+        self.logger.info(f"  Overall Rate: {overall_rate:.1f} applications/minute")
+        self.logger.info(f"  Total Database Records Inserted: {sum(b.get('database_inserts', 0) for b in batch_details)}")
         
         # Log overall failure summary if there were failures
         if total_failed > 0:
-            self.logger.warning("="*60)
-            self.logger.warning("FAILURE ANALYSIS")
-            self.logger.warning("="*60)
-            
+            self.logger.warning("="*82)
+            self.logger.warning(" FAILURE ANALYSIS")
+            self.logger.warning("="*82)
+
             if overall_failure_summary.get('validation_failures', 0) > 0:
-                self.logger.warning(f"Validation Failures: {overall_failure_summary['validation_failures']} (XML validation issues)")
+                self.logger.warning(f" Validation Failures: {overall_failure_summary['validation_failures']} (XML validation issues)")
             if overall_failure_summary['parsing_failures'] > 0:
-                self.logger.warning(f"Parsing Failures: {overall_failure_summary['parsing_failures']} (XML structure/format issues)")
+                self.logger.warning(f" Parsing Failures: {overall_failure_summary['parsing_failures']} (XML structure/format issues)")
             if overall_failure_summary['mapping_failures'] > 0:
-                self.logger.warning(f"Mapping Failures: {overall_failure_summary['mapping_failures']} (Data transformation issues)")
+                self.logger.warning(f" Mapping Failures: {overall_failure_summary['mapping_failures']} (Data transformation issues)")
             if overall_failure_summary['insertion_failures'] > 0:
-                self.logger.warning(f"Insertion Failures: {overall_failure_summary['insertion_failures']} (General database insertion issues)")
+                self.logger.warning(f" Insertion Failures: {overall_failure_summary['insertion_failures']} (General database insertion issues)")
             if overall_failure_summary['constraint_violations'] > 0:
-                self.logger.warning(f"Constraint Violations: {overall_failure_summary['constraint_violations']} (Primary key, foreign key, null constraints)")
+                self.logger.warning(f" Constraint Violations: {overall_failure_summary['constraint_violations']} (Primary key, foreign key, null constraints)")
             if overall_failure_summary['database_errors'] > 0:
-                self.logger.warning(f"Database Errors: {overall_failure_summary['database_errors']} (Connection, timeout, SQL errors)")
+                self.logger.warning(f" Database Errors: {overall_failure_summary['database_errors']} (Connection, timeout, SQL errors)")
             if overall_failure_summary['system_errors'] > 0:
-                self.logger.warning(f"System Errors: {overall_failure_summary['system_errors']} (Unexpected system issues)")
+                self.logger.warning(f" System Errors: {overall_failure_summary['system_errors']} (Unexpected system issues)")
             if overall_failure_summary['unknown_failures'] > 0:
-                self.logger.warning(f"Unknown Failures: {overall_failure_summary['unknown_failures']} (Unclassified errors)")
-            
+                self.logger.warning(f" Unknown Failures: {overall_failure_summary['unknown_failures']} (Unclassified errors)")
+
             # Log sample of failed app_ids for investigation
             failed_app_ids = [str(f['app_id']) for f in all_failed_apps if f.get('app_id') is not None]
             unique_failed_ids = list(dict.fromkeys(failed_app_ids))  # Remove duplicates while preserving order
             
             if len(unique_failed_ids) <= 20:
-                self.logger.warning(f"Failed App IDs: {', '.join(unique_failed_ids)}")
+                self.logger.warning(f" Failed App IDs: {', '.join(unique_failed_ids)}")
             else:
-                self.logger.warning(f"Failed App IDs (first 20): {', '.join(unique_failed_ids[:20])}")
-                self.logger.warning(f"Total unique failed apps: {len(unique_failed_ids)}")
+                self.logger.warning(f" Failed App IDs (first 20): {', '.join(unique_failed_ids[:20])}")
+                self.logger.warning(f" Total unique failed apps: {len(unique_failed_ids)}")
         
         final_metrics = {
             'app_id_start': self.app_id_start,
@@ -885,18 +881,18 @@ def main():
         # Run processing
         results = processor.run_full_processing(limit=args.limit)
         
-        print("\n" + "="*60)
-        print("PRODUCTION PROCESSING COMPLETED SUCCESSFULLY")
-        print("="*60)
-        print(f"Check logs/ and metrics/ directories for detailed results")
+        print("\n" + "="*82)
+        print(" PRODUCTION PROCESSING COMPLETED SUCCESSFULLY")
+        print("="*82)
+        print(f" Check logs/ and metrics/ directories for detailed results")
         
         return 0
         
     except KeyboardInterrupt:
-        print("\nProcessing interrupted by user")
+        print("\n Processing interrupted by user")
         return 1
     except Exception as e:
-        print(f"\nProcessing failed: {e}")
+        print(f"\n Processing failed: {e}")
         import traceback
         traceback.print_exc()
         return 1

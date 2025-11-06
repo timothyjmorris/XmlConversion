@@ -21,13 +21,7 @@ import pyodbc
 from contextlib import contextmanager
 
 from ..interfaces import MigrationEngineInterface
-from ..exceptions import (
-    DatabaseConnectionError, 
-    SchemaValidationError, 
-    XMLExtractionError,
-    TransactionAtomicityError,
-    DatabaseConstraintError
-)
+from ..exceptions import (DatabaseConnectionError, XMLExtractionError, TransactionAtomicityError)
 from ..config.config_manager import get_config_manager
 from .duplicate_contact_detector import DuplicateContactDetector
 from .bulk_insert_strategy import BulkInsertStrategy

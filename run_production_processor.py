@@ -27,15 +27,15 @@ WHY USE THIS INSTEAD OF production_processor.py?
 =============================================================================
 
 Use Orchestrator When:
-  ✓ Processing >100k records (prevents memory degradation)
-  ✓ Want automatic resume capability per chunk
-  ✓ Need per-chunk performance tracking
-  ✓ Long-running jobs that might be interrupted
+  - Processing >100k records (prevents memory degradation)
+  - Want automatic resume capability per chunk
+  - Need per-chunk performance tracking
+  - Long-running jobs that might be interrupted
 
 Use Direct Processor When:
-  ✓ Processing <100k records
-  ✓ Running concurrent instances manually
-  ✓ Need fine-grained control over single execution
+  - Processing <100k records
+  - Running concurrent instances manually
+  - Need fine-grained control over single execution
 
 =============================================================================
 HOW IT WORKS
@@ -276,17 +276,17 @@ class ChunkedProcessorOrchestrator:
         Returns:
             0 on success, 1 on failure
         """
-        print("=" * 70)
-        print("CHUNKED PROCESSING ORCHESTRATOR")
-        print("=" * 70)
-        print(f"Mode:           {self.mode.upper()}")
-        print(f"App ID Range:   {self.app_id_start:,} - {self.app_id_end:,} ({self.total_records:,} records)")
-        print(f"Chunk Size:     {self.chunk_size:,}")
-        print(f"Total Chunks:   {self.num_chunks}")
-        print(f"Start Time:     {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print("=" * 70)
-        print("\nNote: Uses --app-id-start/--app-id-end ranges for each chunk.")
-        print("      Already-processed records (in processing_log) are skipped automatically.")
+        print("=" * 82)
+        print(" CHUNKED PROCESSING ORCHESTRATOR")
+        print("=" * 82)
+        print(f"  Run Mode:       {self.mode.upper()}")
+        print(f"  Range:          {self.app_id_start:,} - {self.app_id_end:,} ({self.total_records:,} records)")
+        print(f"  Chunk Size:     {self.chunk_size:,}")
+        print(f"  Total Chunks:   {self.num_chunks}")
+        print(f"  Start Time:     {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print("=" * 82)
+        # print("\n  Note: Uses --app-id-start/--app-id-end ranges for each chunk.")
+        # print("      Already-processed records (in processing_log) are skipped automatically.")
         print()
         
         start_time = datetime.now()
@@ -298,9 +298,9 @@ class ChunkedProcessorOrchestrator:
                 chunk_start_id = self.app_id_start + (chunk_num - 1) * self.chunk_size
                 chunk_end_id = min(self.app_id_start + chunk_num * self.chunk_size - 1, self.app_id_end)
                 
-                print(f"\n{'=' * 70}")
-                print(f"CHUNK {chunk_num}/{self.num_chunks}: Processing app_id {chunk_start_id:,} - {chunk_end_id:,}")
-                print(f"{'=' * 70}")
+                print(f"\n{'=' * 82}")
+                print(f" CHUNK {chunk_num}/{self.num_chunks}: Processing app_id {chunk_start_id:,} - {chunk_end_id:,}")
+                print(f"{'=' * 82}")
                 
                 chunk_start_time = datetime.now()
                 
@@ -330,18 +330,18 @@ class ChunkedProcessorOrchestrator:
                 self.chunk_results.append(chunk_info)
                 
                 # Show chunk summary with context
-                status = "✓ SUCCESS" if result.returncode == 0 else "✗ FAILED"
+                status = " SUCCESS" if result.returncode == 0 else " FAILED"
                 if chunk_duration < 30:
-                    print(f"\nChunk {chunk_num} {status} - Duration: {chunk_duration:.1f}s (fast - likely already processed)")
+                    print(f"\n Chunk {chunk_num} {status} - Duration: {chunk_duration:.1f}s (fast - likely already processed)")
                 else:
-                    print(f"\nChunk {chunk_num} {status} - Duration: {chunk_duration:.1f}s")
+                    print(f"\n Chunk {chunk_num} {status} - Duration: {chunk_duration:.1f}s")
                 
                 if result.returncode != 0:
-                    print(f"\n⚠️  Chunk {chunk_num} FAILED with exit code {result.returncode}")
+                    print(f"\n  Chunk {chunk_num} FAILED with exit code {result.returncode}")
                     if chunk_num < self.num_chunks:
-                        response = input("Continue with next chunk? (y/n): ")
+                        response = input(" Continue with next chunk? (y/n): ")
                         if response.lower() != 'y':
-                            print("Orchestration aborted by user")
+                            print(" Orchestration aborted by user")
                             return 1
             
             # Print final summary
@@ -350,11 +350,11 @@ class ChunkedProcessorOrchestrator:
             return 0
             
         except KeyboardInterrupt:
-            print("\n\n⚠️  Orchestration interrupted by user")
+            print("\n\n  Orchestration interrupted by user")
             self._print_summary(start_time)
             return 1
         except Exception as e:
-            print(f"\n\n❌ Orchestration error: {e}")
+            print(f"\n\n Orchestration error: {e}")
             return 1
     
     def _build_processor_command(self, start_id: int, end_id: int) -> str:
@@ -426,27 +426,27 @@ class ChunkedProcessorOrchestrator:
         end_time = datetime.now()
         total_duration = (end_time - start_time).total_seconds()
         
-        print("\n" + "=" * 70)
-        print("ORCHESTRATION SUMMARY")
-        print("=" * 70)
+        print("\n" + "=" * 82)
+        print(" ORCHESTRATION SUMMARY")
+        print("=" * 82)
         
         if not self.chunk_results:
-            print("No chunks completed")
+            print(" No chunks completed!")
             return
         
         successful_chunks = sum(1 for c in self.chunk_results if c['success'])
         failed_chunks = len(self.chunk_results) - successful_chunks
         
-        print(f"Total Chunks:      {len(self.chunk_results)}/{self.num_chunks}")
-        print(f"Successful:        {successful_chunks}")
-        print(f"Failed:            {failed_chunks}")
-        print(f"Total Duration:    {total_duration:.1f}s ({total_duration / 60:.1f} minutes)")
+        print(f"  Total Chunks:      {len(self.chunk_results)}/{self.num_chunks}")
+        print(f"  Successful:        {successful_chunks}")
+        print(f"  Failed:            {failed_chunks}")
+        print(f"  Total Duration:    {total_duration:.1f}s ({total_duration / 60:.1f} minutes)")
         
         if len(self.chunk_results) > 1:
             avg_duration = sum(c['duration_seconds'] for c in self.chunk_results) / len(self.chunk_results)
-            print(f"Avg Chunk Time:    {avg_duration:.1f}s")
+            print(f"  Avg Chunk Time:    {avg_duration:.1f}s")
         
-        print(f"End Time:          {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"  End Time:          {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
         
         # Throughput analysis (if metrics are available)
         throughputs = [c['throughput'] for c in self.chunk_results if c['throughput'] is not None]
@@ -455,11 +455,11 @@ class ChunkedProcessorOrchestrator:
             min_throughput = min(throughputs)
             max_throughput = max(throughputs)
             
-            print(f"\nThroughput Analysis:")
-            print(f"Average:           {avg_throughput:.1f} apps/min")
-            print(f"Peak:              {max_throughput:.1f} apps/min")
-            print(f"Minimum:           {min_throughput:.1f} apps/min")
-            print(f"Range:             {max_throughput - min_throughput:.1f} apps/min ({((max_throughput - min_throughput) / max_throughput * 100):.1f}%)")
+            print(f"\n THROUGHPUT")
+            print(f"  Average:           {avg_throughput:.1f} apps/min")
+            print(f"  Peak:              {max_throughput:.1f} apps/min")
+            print(f"  Minimum:           {min_throughput:.1f} apps/min")
+            # print(f"  Range:             {max_throughput - min_throughput:.1f} apps/min ({((max_throughput - min_throughput) / max_throughput * 100):.1f}%)")
             
             # Per-third analysis
             if len(throughputs) >= 3:
@@ -467,34 +467,35 @@ class ChunkedProcessorOrchestrator:
                 first_third_avg = sum(throughputs[:third]) / len(throughputs[:third])
                 last_third_avg = sum(throughputs[-third:]) / len(throughputs[-third:])
                 degradation = ((last_third_avg - first_third_avg) / first_third_avg) * 100
-                print(f"First/Last Thirds:  {first_third_avg:.1f} → {last_third_avg:.1f} ({degradation:+.1f}%)")
+                # print(f"  First/Last Thirds:  {first_third_avg:.1f} → {last_third_avg:.1f} ({degradation:+.1f}%)")
         
         # Per-chunk breakdown
         if self.chunk_results:
-            print("\nPer-Chunk Breakdown:")
+            print("\n BREAKDOWN")
             if throughputs:
-                print(f"{'Chunk':<8} {'Range':<20} {'Duration':<12} {'Apps/Min':<12} {'Status':<10}")
+                print(f"{' Chunk':<8} {'Range':<20} {'Duration':<12} {'Apps/Min':<12} {'Status':<10}")
                 print("-" * 82)
                 
                 for i, chunk in enumerate(self.chunk_results):
-                    range_str = f"{chunk['start_id']:,}-{chunk['end_id']:,}"
-                    duration_str = f"{chunk['duration_seconds']:.1f}s"
-                    throughput_str = f"{chunk['throughput']:.1f}" if chunk['throughput'] is not None else "N/A"
-                    status_str = "✓ SUCCESS" if chunk['success'] else "✗ FAILED"
+                    range_str = f" {chunk['start_id']:,}-{chunk['end_id']:,}"
+                    duration_str = f" {chunk['duration_seconds']:.1f}s"
+                    throughput_str = f" {chunk['throughput']:.1f}" if chunk['throughput'] is not None else " N/A"
+                    status_str = " SUCCESS" if chunk['success'] else " FAILED"
                     
-                    print(f"{chunk['chunk_num']:<8} {range_str:<20} {duration_str:<12} {throughput_str:<12} {status_str:<10}")
+                    print(f" {chunk['chunk_num']:<8} {range_str:<20} {duration_str:<12} {throughput_str:<12} {status_str:<10}")
             else:
-                print(f"{'Chunk':<8} {'Range':<20} {'Duration':<12} {'Status':<10}")
-                print("-" * 70)
+                print(f" {'Chunk':<8} {'Range':<20} {'Duration':<12} {'Status':<10}")
+                print("-" * 82)
                 
                 for chunk in self.chunk_results:
-                    range_str = f"{chunk['start_id']:,}-{chunk['end_id']:,}"
-                    duration_str = f"{chunk['duration_seconds']:.1f}s"
-                    status_str = "✓ SUCCESS" if chunk['success'] else "✗ FAILED"
+                    range_str = f" {chunk['start_id']:,}-{chunk['end_id']:,}"
+                    duration_str = f" {chunk['duration_seconds']:.1f}s"
+                    status_str = " SUCCESS" if chunk['success'] else " FAILED"
                     
-                    print(f"{chunk['chunk_num']:<8} {range_str:<20} {duration_str:<12} {status_str:<10}")
+                    print(f" {chunk['chunk_num']:<8} {range_str:<20} {duration_str:<12} {status_str:<10}")
         
         print("=" * 82)
+        print()
 
 
 def main():
@@ -571,33 +572,33 @@ Note: For concurrent processing, manually spawn multiple instances with differen
     has_limit = args.limit is not None
     
     if not has_range and not has_limit:
-        print("Error: Must specify either --app-id-start/--app-id-end (range mode) or --limit (limit mode)")
+        print(" ERROR: Must specify either --app-id-start/--app-id-end (range mode) or --limit (limit mode)")
         return 1
     
     if has_range and has_limit:
-        print("Error: Cannot specify both range mode (--app-id-start/--app-id-end) and limit mode (--limit)")
+        print(" ERROR: Cannot specify both range mode (--app-id-start/--app-id-end) and limit mode (--limit)")
         return 1
     
     if args.app_id_start is not None and args.app_id_end is None:
-        print("Error: --app-id-start requires --app-id-end")
+        print(" ERROR: --app-id-start requires --app-id-end")
         return 1
     
     if args.app_id_end is not None and args.app_id_start is None:
-        print("Error: --app-id-end requires --app-id-start")
+        print(" ERROR: --app-id-end requires --app-id-start")
         return 1
     
     # Validate range values
     if has_range:
         if args.app_id_start < 1:
-            print("Error: --app-id-start must be >= 1")
+            print(" ERROR: --app-id-start must be >= 1")
             return 1
         if args.app_id_end < args.app_id_start:
-            print("Error: --app-id-end must be >= --app-id-start")
+            print(" ERROR: --app-id-end must be >= --app-id-start")
             return 1
     
     # Validate chunk size
     if args.chunk_size <= 0:
-        print("Error: --chunk-size must be positive")
+        print(" ERROR: --chunk-size must be positive")
         return 1
     
     # Build pass-through kwargs
@@ -612,7 +613,7 @@ Note: For concurrent processing, manually spawn multiple instances with differen
         'enable_pooling': args.enable_pooling,
         'min_pool_size': args.min_pool_size,
         'max_pool_size': args.max_pool_size,
-        'disable_mars': args.disable_mars,  # Pass as disable flag
+        'disable_mars': args.disable_mars,
         'connection_timeout': args.connection_timeout
     }
     

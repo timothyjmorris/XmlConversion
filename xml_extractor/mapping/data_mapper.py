@@ -58,17 +58,16 @@ The engine processes XML data through a multi-stage pipeline:
 """
 
 import logging
-import json
 import re
 from typing import Dict, List, Any, Optional
-from datetime import datetime, date
+from datetime import datetime
 from decimal import Decimal, ROUND_HALF_UP
 
 from ..interfaces import DataMapperInterface
-from ..models import MappingContract, FieldMapping, RelationshipMapping
-from ..exceptions import DataMappingError, ValidationError, DataTransformationError
+from ..models import MappingContract, FieldMapping
+from ..exceptions import DataMappingError, DataTransformationError
 from ..validation.element_filter import ElementFilter
-from ..utils import StringUtils, ValidationUtils
+from ..utils import StringUtils
 from ..config.config_manager import get_config_manager
 from .calculated_field_engine import CalculatedFieldEngine
 
@@ -187,12 +186,12 @@ class DataMapper(DataMapperInterface):
         
         self._validation_rules = {}
         
-        # PERFORMANCE TUNING (Phase 1): Pre-compile regex for datetime correction
+        # Pre-compile regex for datetime correction
         # Note: The 'numbers_only' regex is already cached in StringUtils._regex_cache,
         # so we only need to cache the datetime pattern here
         self._regex_invalid_datetime_seconds = re.compile(r'(\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:)(\d{2})(\.\d+)?')
         
-        # PERFORMANCE TUNING: Build enum_type cache at initialization (Phase 1 optimization)
+        # Build enum_type cache at initialization
         # Pre-compute all column name -> enum_type mappings to avoid repeated pattern matching
         self._enum_type_cache = self._build_enum_type_cache()
     

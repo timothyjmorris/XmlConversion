@@ -276,11 +276,11 @@ class ParallelCoordinator(BatchProcessorInterface):
             }
         )
         
-        self.logger.info(f"Batch {batch_number}: Parallel processing completed: {len(successful_results)}/{len(results)} successful "
+        self.logger.info(f"  - Batch {batch_number}: Parallel processing completed: {len(successful_results)}/{len(results)} successful "
                         f"in {processing_time:.2f}s ({processing_result.performance_metrics['records_per_minute']:.1f} rec/min)")
         
         # OUTPUT to console with batch number
-        print(f"   - Batch {batch_number} completed: {len(successful_results)}/{len(results)} successful "
+        print(f"  - Batch {batch_number} completed: {len(successful_results)}/{len(results)} successful "
                         f"in {processing_time:.2f}s ({processing_result.performance_metrics['records_per_minute']:.1f} rec/min)")
         
         return processing_result

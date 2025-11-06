@@ -49,10 +49,11 @@ select * from  sandbox.app_enums
     DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
 
 
-    delete from sandbox.app_base		where app_id > 71000 and app_id < 72000
+    delete from sandbox.app_base		where app_id > 300000
 
-    -- DELETE FROM app_xml
+    -- DELETE FROM app_xml where app_id > 300000
 
+	
 
     EXEC sp_updatestats;
 	ALTER INDEX ALL ON  sandbox.app_base REBUILD;
@@ -66,6 +67,12 @@ select * from  sandbox.app_enums
 	ALTER INDEX ALL ON  sandbox.contact_employment REBUILD;
 	ALTER INDEX ALL ON  sandbox.contact_address REBUILD;
 	ALTER INDEX ALL ON  sandbox.processing_log REBUILD;
+
+
+	SELECT TYPE_DESC, NAME, size, max_size, growth, is_percent_growth FROM sys.database_files;
+
+	DBCC SHRINKFILE ('XmlConversionDB')
+	DBCC SHRINKFILE ('XmlConversionDB_log')
 
 ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -118,15 +125,15 @@ select * from  sandbox.app_enums
 
 -- Query to get next processing batch
 -- Remove the OFFSET / FETCH
--- under load: started at 1.4 - 2.2s (< 300ms w/o load)
+-- under load: ~1s (< 300ms w/o load)
 SET STATISTICS TIME ON
 
 	SELECT TOP (500) ax.app_id, ax.xml 
 	FROM app_xml AS ax
 	WHERE 
 		ax.xml IS NOT NULL
-		AND ax.app_id > 178000
-		AND ax.app_id <= 178500 -- this keeps the batch in it's lane to be safe on top of usig TOP
+		AND ax.app_id > 260000
+		AND ax.app_id <= 260500 -- this keeps the batch in it's lane to be safe on top of usig TOP
 		AND NOT EXISTS (
 			SELECT 1 
 			FROM sandbox.processing_log AS pl 
