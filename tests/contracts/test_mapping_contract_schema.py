@@ -6,8 +6,9 @@ This script checks the JSON mapping contract for completeness and consistency.
 
 import json
 import unittest
+
 from pathlib import Path
-from typing import Dict, List, Set
+from typing import Dict
 
 
 class TestMappingContractSchema(unittest.TestCase):
@@ -26,28 +27,33 @@ class TestMappingContractSchema(unittest.TestCase):
         with open(file_path, 'r') as f:
             return json.load(f)
     
-    def test_key_identifiers_validation(self):
-        """Test key identifier configuration."""
+    def test_element_filtering_validation(self):
+        """Test element filtering configuration."""
         errors = []
         
-        key_ids = self.contract.get('key_identifiers', {})
+        element_filtering = self.contract.get('element_filtering', {})
+        filter_rules = element_filtering.get('filter_rules', [])
         
-        # Check required identifiers
-        required_keys = ['app_id', 'con_id_primary']
-        for key in required_keys:
-            if key not in key_ids:
-                errors.append(f"Missing required key identifier: {key}")
-            elif not key_ids[key].get('required', False):
-                errors.append(f"Key identifier {key} should be marked as required")
+        # Check required element types
+        required_element_types = ['contact', 'address', 'employment']
+        found_types = {rule.get('element_type') for rule in filter_rules}
         
-        # Check XML paths
-        for key, config in key_ids.items():
-            if not config.get('xml_path'):
-                errors.append(f"Key identifier {key} missing xml_path")
-            if not config.get('xml_attribute'):
-                errors.append(f"Key identifier {key} missing xml_attribute")
+        for elem_type in required_element_types:
+            if elem_type not in found_types:
+                errors.append(f"Missing required element type: {elem_type}")
         
-        self.assertEqual(len(errors), 0, f"Key identifier validation errors: {errors}")
+        # Check each rule has required fields
+        for rule in filter_rules:
+            if not rule.get('element_type'):
+                errors.append(f"Filter rule missing element_type")
+            if not rule.get('xml_parent_path'):
+                errors.append(f"Filter rule for {rule.get('element_type')} missing xml_parent_path")
+            if not rule.get('xml_child_path'):
+                errors.append(f"Filter rule for {rule.get('element_type')} missing xml_child_path")
+            if not rule.get('required_attributes'):
+                errors.append(f"Filter rule for {rule.get('element_type')} missing required_attributes")
+        
+        self.assertEqual(len(errors), 0, f"Element filtering validation errors: {errors}")
     
     def test_enum_mappings_validation(self):
         """Test enum mapping configuration."""
@@ -156,7 +162,7 @@ class TestMappingContractSchema(unittest.TestCase):
         """Test overall contract completeness."""
         required_sections = [
             'source_table', 'source_column', 'xml_root_element',
-            'key_identifiers', 'mappings', 'relationships'
+            'element_filtering', 'mappings', 'relationships'
         ]
         
         missing_sections = []
@@ -168,7 +174,7 @@ class TestMappingContractSchema(unittest.TestCase):
         
         # Print summary for information
         print(f"\nContract Summary:")
-        print(f"  - Key Identifiers: {len(self.contract.get('key_identifiers', {}))}")
+        print(f"  - Element Filtering Rules: {len(self.contract.get('element_filtering', {}).get('filter_rules', []))}")
         print(f"  - Field Mappings: {len(self.contract.get('mappings', []))}")
         print(f"  - Enum Types: {len(self.contract.get('enum_mappings', {}))}")
         print(f"  - Bit Conversion Types: {len(self.contract.get('bit_conversions', {}))}")

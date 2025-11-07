@@ -91,6 +91,54 @@ class RelationshipMapping:
 
 
 @dataclass
+class FilterRule:
+    """
+    Defines an element filtering rule for validating XML elements.
+    
+    Attributes:
+        element_type: Type of element being filtered (e.g., 'contact', 'address', 'employment')
+        description: Human-readable description of the filter rule
+        xml_parent_path: XPath expression to locate parent elements
+        xml_child_path: XPath expression to locate child elements to filter
+        required_attributes: Dict mapping attribute names to validation rules
+                            - true: attribute must be present (non-empty)
+                            - list: attribute value must be in this list (case-insensitive)
+    """
+    element_type: str
+    xml_parent_path: str
+    xml_child_path: str
+    required_attributes: Dict[str, Any]
+    description: Optional[str] = None
+    
+    def __post_init__(self):
+        """Validate filter rule configuration."""
+        if not self.element_type:
+            raise ValueError("element_type cannot be empty")
+        if not self.xml_parent_path:
+            raise ValueError("xml_parent_path cannot be empty")
+        if not self.xml_child_path:
+            raise ValueError("xml_child_path cannot be empty")
+        if not self.required_attributes:
+            raise ValueError("required_attributes cannot be empty")
+
+
+@dataclass
+class ElementFiltering:
+    """
+    Container for element filtering rules.
+    
+    Attributes:
+        filter_rules: List of FilterRule objects defining validation for each element type
+    """
+    filter_rules: List[FilterRule]
+    
+    def __post_init__(self):
+        """Validate element filtering configuration."""
+        if not self.filter_rules:
+            raise ValueError("At least one filter_rule must be specified")
+
+
+@dataclass
 class MappingContract:
     """
     Complete mapping contract defining how XML data maps to relational structure.
@@ -101,7 +149,7 @@ class MappingContract:
         xml_root_element: Root element name in the XML structure
         target_schema: Target database schema (e.g., 'dbo')
         table_insertion_order: Optional list specifying FK dependency order for table insertion
-        key_identifiers: Optional dictionary of key identifiers
+        element_filtering: Optional element filtering rules for XML validation
         mappings: List of field mappings for individual elements/attributes
         relationships: List of relationship mappings for nested structures
     """
@@ -110,7 +158,7 @@ class MappingContract:
     xml_root_element: str
     target_schema: Optional[str] = "dbo"
     table_insertion_order: Optional[List[str]] = None
-    key_identifiers: Optional[Dict[str, Any]] = None
+    element_filtering: Optional[ElementFiltering] = None
     mappings: List[FieldMapping] = None
     relationships: List[RelationshipMapping] = None
     enum_mappings: Optional[Dict[str, Any]] = None

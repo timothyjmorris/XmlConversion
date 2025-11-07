@@ -1,4 +1,5 @@
 {
+  "xml_root_element": "Provenir",
   "source_table": "app_xml",
   "source_column": "xml",
   "target_schema": "sandbox",
@@ -13,23 +14,37 @@
     "contact_employment",
     "processing_log"
   ],
-  "xml_root_element": "Provenir",
-  "key_identifiers": {
-    "app_id": {
-      "xml_path": "/Provenir/Request",
-      "xml_attribute": "ID",
-      "required": true
-    },
-    "con_id_primary": {
-      "xml_path": "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']",
-      "xml_attribute": "con_id",
-      "required": true
-    },
-    "con_id_auth": {
-      "xml_path": "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='AUTH']",
-      "xml_attribute": "con_id",
-      "required": false
-    }
+  "element_filtering": {
+    "filter_rules": [
+      {
+        "element_type": "contact",
+        "description": "Filter contacts by con_id valid contact type - used to filter 'last valid contact'",
+        "xml_parent_path": "/Provenir/Request/CustData/application",
+        "xml_child_path": "/Provenir/Request/CustData/application/contact",
+        "required_attributes": {
+          "con_id": true,
+          "ac_role_tp_c": ["PR", "AUTHU"]
+        }
+      },
+      {
+        "element_type": "address",
+        "description": "Filter address elements by valid address type",
+        "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address",
+        "required_attributes": {
+          "address_tp_c": ["CURR", "PREV", "PATR"]
+        }
+      },
+      {
+        "element_type": "employment",
+        "description": "Filter employment elements by valid employment_type",
+        "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+        "required_attributes": {
+          "employment_tp_c": ["CURR", "PREV"]
+        }
+      }
+    ]
   },
   "mappings": [
     {

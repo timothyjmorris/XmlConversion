@@ -532,11 +532,31 @@ class ConfigManager(ConfigurationManagerInterface):
             ValidationError: If contract structure is invalid
         """
         try:
+            from ..models import ElementFiltering, FilterRule
+            
             # Extract basic contract information
             source_table = contract_data.get('source_table', '')
             source_column = contract_data.get('source_column', '')
             xml_root_element = contract_data.get('xml_root_element', '')
             target_schema = contract_data.get('target_schema', 'dbo')  # Contract-driven schema isolation
+            
+            # Parse element filtering rules
+            element_filtering = None
+            element_filtering_data = contract_data.get('element_filtering')
+            if element_filtering_data:
+                filter_rules = []
+                for rule_data in element_filtering_data.get('filter_rules', []):
+                    filter_rule = FilterRule(
+                        element_type=rule_data.get('element_type', ''),
+                        xml_parent_path=rule_data.get('xml_parent_path', ''),
+                        xml_child_path=rule_data.get('xml_child_path', ''),
+                        required_attributes=rule_data.get('required_attributes', {}),
+                        description=rule_data.get('description')
+                    )
+                    filter_rules.append(filter_rule)
+                
+                if filter_rules:
+                    element_filtering = ElementFiltering(filter_rules=filter_rules)
             
             # Parse field mappings
             mappings = []
@@ -574,6 +594,7 @@ class ConfigManager(ConfigurationManagerInterface):
                 source_column=source_column,
                 xml_root_element=xml_root_element,
                 target_schema=target_schema,  # Contract-driven schema from JSON
+                element_filtering=element_filtering,  # Parse element filtering rules
                 mappings=mappings,
                 relationships=relationships
             )

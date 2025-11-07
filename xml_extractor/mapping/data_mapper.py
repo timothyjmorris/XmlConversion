@@ -304,6 +304,9 @@ class DataMapper(DataMapperInterface):
             # Set XML root for contact extraction and CURR address extraction
             if xml_root is not None:
                 self._current_xml_root = xml_root
+            
+            # Store contract for use in element filtering
+            self._current_contract = contract
 
             if valid_contacts is None:
                 # PRE-FLIGHT VALIDATION: Must have app_id and at least one con_id or don't process
@@ -1444,7 +1447,7 @@ class DataMapper(DataMapperInterface):
         
         # Use centralized element filtering for robust extraction of address records
         if hasattr(self, '_current_xml_root') and self._current_xml_root is not None:
-            element_filter = ElementFilter(self.logger)
+            element_filter = ElementFilter(contract=self._current_contract, logger=self.logger)
             try:
                 filtered_elements = element_filter.filter_valid_elements(self._current_xml_root)
                 valid_addresses = filtered_elements['addresses']
@@ -1496,7 +1499,7 @@ class DataMapper(DataMapperInterface):
         
         # Use centralized element filtering for robust extraction of employment records
         if hasattr(self, '_current_xml_root') and self._current_xml_root is not None:
-            element_filter = ElementFilter(self.logger)
+            element_filter = ElementFilter(contract=self._current_contract, logger=self.logger)
             try:
                 filtered_elements = element_filter.filter_valid_elements(self._current_xml_root)
                 valid_employments = filtered_elements['employments']

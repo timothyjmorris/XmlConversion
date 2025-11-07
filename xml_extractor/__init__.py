@@ -1,18 +1,20 @@
 """
 XML Database Extraction System
 
-A high-performance tool for extracting XML data from database text columns
+A configurable, contract-driven, high-performance tool for extracting XML data from database text columns
 and transforming it into normalized relational structures.
 """
 
-__version__ = "1.0.0"
-__author__ = "XML Extractor Team"
+__version__ = "2.1.0"
+__author__ = "Timothy J. Morris"
 
 # Import core models and interfaces for easy access
 from .models import (
     MappingContract,
     FieldMapping, 
     RelationshipMapping,
+    ElementFiltering,
+    FilterRule,
     ProcessingConfig,
     ProcessingResult,
     DataType
