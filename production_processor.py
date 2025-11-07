@@ -640,9 +640,9 @@ class ProductionProcessor:
         self.logger.info("Starting full processing run")
         
         # Display processing scope in console
-        print("\n=" * 82)
+        print("\n" + "=" * 82)
         if self.app_id_start is not None and self.app_id_end is not None:
-           print(f" PROCESSING APP_ID RANGE: {self.app_id_start} - {self.app_id_end}")
+           print(f" PROCESSING [app_id] RANGE: {self.app_id_start} - {self.app_id_end}")
         elif limit:
             print(f" PROCESSING UP TO {limit:,} APPLICATIONS")
         else:
@@ -659,7 +659,7 @@ class ProductionProcessor:
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 # Source table (app_xml) always in [dbo] schema (read-only access)
-                cursor.execute("SELECT COUNT(*) FROM [dbo].[app_xml] WHERE xml IS NOT NULL AND DATALENGTH(xml) > 100")
+                cursor.execute("SELECT COUNT(*) FROM [dbo].[app_xml] WHERE xml IS NOT NULL")
                 total_records = cursor.fetchone()[0]
                 
                 if limit:

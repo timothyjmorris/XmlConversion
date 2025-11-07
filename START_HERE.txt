@@ -2,10 +2,10 @@
                   XML-TO-DATABASE CONVERSION PIPELINE - START HERE
 ================================================================================
 
-PROTOTYPE STATUS: ✅ COMPLETE
-- Baseline throughput: 1477-1691 applications/minute (batch-size 500)
+PROTOTYPE STATUS: COMPLETE
+- Baseline throughput: ~2000 applications/minute (batch-size 1000) on local laptop
 - All critical bugs fixed: Lock contention, resume logic, pagination
-- Ready for production deployment
+- Ready for development deployment testing and baseline
 
 ================================================================================
                               KEY DOCUMENTS
@@ -26,14 +26,19 @@ PROTOTYPE STATUS: ✅ COMPLETE
                          QUICK REFERENCE COMMANDS
 ================================================================================
 
-# Production run (standard config: batch-size 500, workers 4)
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --batch-size 500 --log-level WARNING
+# Production run (confirm baseline and run multiple instances in app_id ranges)
+python run_production_processor.py --server "ut-prdmacsql01" --database "MACProdOperational" --workers 4 --batch-size 1000 --chunk-size 10000 --app-id-start 1 --app-id-end 1000000
+python run_production_processor.py --server "ut-prdmacsql01" --database "MACProdOperational" --workers 4 --batch-size 1000 --chunk-size 10000 --app-id-start 1000001 --app-id-end 2000000
+python run_production_processor.py --server "ut-prdmacsql01" --database "MACProdOperational" --workers 4 --batch-size 1000 --chunk-size 10000--app-id-start 2000001 --app-id-end 3000000
 
-# Quick test (500 records)
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --batch-size 500 --limit 500 --log-level INFO
+# Test in Development environment and baseline
+python run_production_processor.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDevOperational" --workers 4 --batch-size 1000 --chunk-size 10000 --app-id-start 1 --app-id-end 100000  --log-level INFO
 
-# Resume after interruption (processing_log tracks completed apps)
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --batch-size 500 --log-level WARNING
+# Local Test
+python run_production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 1000 --chunk-size 10000 --app-id-start 1 --app-id-end 300000
+
+# Use `production_processor.py` directly to pick up any app_id gaps
+python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 1000 --limit 10000 --log-level WARNING
 
 # Run test suite
 python -m pytest tests/ -v
@@ -42,9 +47,9 @@ python -m pytest tests/ -v
                          CONFIGURATION FINDINGS
 ================================================================================
 
-OPTIMAL BATCH-SIZE: 500 (for this machine)
+OPTIMAL BATCH-SIZE: 1000 (for local dev machine)
 - Tested: 20, 50, 100, 500, 1000, 2000
-- Result: Peak at 500 (1477-1691 rec/min)
+- Result: Peak at 1000 (~2000 apps/min)
 - Above 1000: Memory pressure and orchestration overhead increase
 
 CONNECTION POOLING: Disabled (for SQLExpress)
@@ -63,17 +68,17 @@ WORKERS: 4 (one per CPU core)
                          WHAT WAS FIXED
 ================================================================================
 
-1. ✅ Lock Contention Bug
+1. Lock Contention Bug
    - Issue: RangeS-U locks during parallel inserts causing serialization
    - Fix: Added WITH (NOLOCK) to 3 duplicate check queries
    - Result: Workers now proceed in parallel
 
-2. ✅ Resume Logic Bug  
+2. Resume Logic Bug  
    - Issue: Consecutive runs would reprocess already-successful apps
    - Fix: Changed WHERE clause to exclude both success AND failed apps
    - Result: Second run correctly skips already-processed records
 
-3. ✅ Pagination Bug
+3. Pagination Bug
    - Issue: OFFSET-based pagination skipped records (pattern: 1-20, 41-60, 81-100)
    - Fix: Implemented cursor-based pagination (app_id > last_app_id)
    - Result: Sequential processing without gaps
@@ -85,10 +90,10 @@ WORKERS: 4 (one per CPU core)
 ROOT CAUSE: CPU-bound processing (XML parsing/mapping), NOT database I/O
 
 Tests Conclusive:
-- ❌ Database optimization: Removed FKs, rebuilt indexes → NO improvement
-- ❌ Logging reduction: Conditional DEBUG logs → NO improvement  
-- ❌ Connection pooling: Tested with various pool sizes → NO improvement
-- ✅ Batch size tuning: Optimal at 500 → Peak throughput achieved
+- Database optimization: Removed FKs, rebuilt indexes → NO improvement
+- Logging reduction: Conditional DEBUG logs → NO improvement  
+- Connection pooling: Tested with various pool sizes → NO improvement
+- Batch size tuning: Optimal at 500 → Peak throughput achieved
 
 Bottleneck: XML parsing (lxml ElementTree) and data transformation
 
@@ -113,106 +118,5 @@ Monitoring:
                        FUTURE OPTIMIZATION IDEAS
 ================================================================================
 
-If > 1500 rec/min needed:
-1. Profile CPU during parsing/mapping to identify hot spots
-2. Consider XML parsing alternatives (lxml vs ElementTree vs xmltodict)
-3. Investigate regex compilation/caching in mapping layer
-4. Evaluate async I/O for database operations
-
 Current recommendation: Not worth pursuing for prototype (CPU-bound, diminishing returns)
 
-================================================================================
-                            PROJECT STRUCTURE
-================================================================================
-
-Root:
-  - production_processor.py     (Main entry point)
-  - README.md                   (Setup & overview)
-  - requirements.txt            (Dependencies)
-
-xml_extractor/
-  - cli.py                      (Command-line interface)
-  - models.py                   (Data structures)
-  - utils.py                    (Utilities)
-  - config/                     (Configuration management)
-  - database/                   (Database operations, bulk insert logic)
-  - mapping/                    (XML-to-database schema mapping)
-  - parsing/                    (XML parsing & validation)
-  - validation/                 (Data validation pipeline)
-
-performance_tuning/
-  - FINAL_PERFORMANCE_SUMMARY.md       (This session's findings)
-  - archived_analysis/                 (Investigation docs & benchmarks)
-  - benchmarks/                        (Test scripts & results)
-  - environment_setup/                 (Config templates)
-
-================================================================================
-
-Official Baseline (env_prep/establish_baseline.py):
-  • Runs production_processor multiple times
-  • Clears database between runs for clean measurements
-  • Reports median throughput + std dev
-  • Use for official measurements
-
-Direct Execution (production_processor.py):
-  • Main execution engine
-  • Use directly for testing/profiling
-  • Outputs metrics to metrics/metrics_TIMESTAMP.json
-  • Add --log-level INFO to see worker details
-
-NOTE: The old profiling scripts (profile_phase2_3*.py) are not needed - 
-      just use production_processor.py directly
-
-================================================================================
-                        WHAT'S CONSOLIDATED
-================================================================================
-
-BEFORE: 15+ scattered documents (PHASE2_3_DECISION.md, PHASE2_3_STATUS.md,
-        ACTION_CARD_PHASE2_3b.md, README_PHASE2_3.md, etc.)
-
-AFTER:  3 focused documents + supporting scripts
-        - Easier to navigate
-        - All information in one place
-        - 80% less documentation
-
-See: performance_tuning/CONSOLIDATION_GUIDE.md for complete mapping
-
-================================================================================
-                         TO BEGIN PHASE II.3b
-================================================================================
-
-1. Read: performance_tuning/PHASE_II.md (15 min)
-   → Understand context and what's been done
-
-2. Copy Code: From performance_tuning/PHASE_II_IMPLEMENTATION_CODE.md
-   → Into 3 files (instructions included)
-
-3. Test & Validate:
-   → Run tests (see PHASE_II_IMPLEMENTATION_CODE.md)
-   → Check throughput: 914 → 950-1050 rec/min
-
-Time: 2-3 hours to implement and validate
-
-================================================================================
-                         CURRENT STATUS
-================================================================================
-
-Phase I:     280 → 553.8 rec/min (+97%)        ✅ COMPLETE
-Phase II.1:  553.8 → 959.5 rec/min (+73%)      ✅ COMPLETE
-Phase II.2:  959.5 → 914 rec/min (verified)    ✅ COMPLETE
-Phase II.3a: Profiling & analysis               ✅ COMPLETE
-Phase II.3b: Queue implementation (ready)       🔄 READY
-Phase II.3c: Parameter tuning (optional)        📋 PLANNED
-
-Final Goal: 280 → 1200-1400 rec/min (+250-300%)
-
-================================================================================
-                    NEXT ACTION: BEGIN PHASE II.3b
-================================================================================
-
-Start: performance_tuning/PHASE_II.md
-Code:  performance_tuning/PHASE_II_IMPLEMENTATION_CODE.md
-
-Questions? See CONSOLIDATION_GUIDE.md for documentation map.
-
-================================================================================

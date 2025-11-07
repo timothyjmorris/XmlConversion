@@ -1,8 +1,7 @@
 # XML Database Extraction System - Architecture
 
-**Version:** 1.0 (Final)  
-**Date:** November 4, 2025  
-**Status:** Production-Ready
+**Date:** November 6, 2025  
+**Status:** Ready to Baseline in DEV
 
 ---
 
@@ -35,32 +34,32 @@
 ### Processing Pipeline
 
 ```
-XML Input
-    ↓
-[1] XML PARSER (lxml)
-    • Selective element extraction
-    • Memory-efficient streaming
-    • Validates XML structure
-    ↓
-[2] DATA MAPPER (Contract-Driven)
-    • Extracts fields per MappingContract
-    • Applies enum mappings
-    • Calculates derived fields
-    • Validates data types
-    ↓
-[3] DATA VALIDATION
-    • Required field checks
-    • Enum value verification
-    • FK dependency validation
-    • Duplicate detection
-    ↓
-[4] MIGRATION ENGINE (Atomic Transactions)
-    • Single connection per application
-    • Bulk insert with FK ordering
-    • processing_log entry included
-    • Explicit commit/rollback
-    ↓
-Database Output (Normalized Tables)
+    XML Input
+        ↓
+    [1] XML PARSER (lxml)
+        • Selective element extraction
+        • Memory-efficient streaming
+        • Validates XML structure
+        ↓
+    [2] DATA MAPPER (Contract-Driven)
+        • Extracts fields per MappingContract
+        • Applies enum mappings
+        • Calculates derived fields
+        • Validates data types
+        ↓
+    [3] DATA VALIDATION
+        • Required field checks
+        • Enum value verification
+        • FK dependency validation
+        • Duplicate detection
+        ↓
+    [4] MIGRATION ENGINE (Atomic Transactions)
+        • Single connection per application
+        • Bulk insert with FK ordering
+        • processing_log entry included
+        • Explicit commit/rollback
+        ↓
+    Database Output (Normalized Tables)
 ```
 
 ### Key Stages
@@ -84,22 +83,22 @@ Database Output (Normalized Tables)
 ### Table Insertion Order
 
 ```
-1. app_base
-   ↓ (all app_*_cc tables FK to this)
+    1. app_base
+        ↓ (all app_*_cc tables FK to this)
 
-2. contact_base
-   ↓ (contact_address/contact_employment FK to this)
-   ↓ (also has FK to app_base)
+    2. contact_base
+        ↓ (contact_address/contact_employment FK to this)
+        ↓ (also has FK to app_base)
 
-3. app_operational_cc (child of app_base)
-4. app_pricing_cc (child of app_base)
-5. app_transactional_cc (child of app_base)
-6. app_solicited_cc (child of app_base)
+    3. app_operational_cc   (child of app_base)
+    4. app_pricing_cc       (child of app_base)
+    5. app_transactional_cc (child of app_base)
+    6. app_solicited_cc     (child of app_base)
 
-7. contact_address (child of contact_base)
-8. contact_employment (child of contact_base)
+    7. contact_address      (child of contact_base)
+    8. contact_employment   (child of contact_base)
 
-9. processing_log (audit log, FK to app_base)
+    9. processing_log       (audit log, FK to app_base)
 ```
 
 ### Why This Order Works
@@ -125,16 +124,16 @@ Database Output (Normalized Tables)
 ### Atomic Scope: Single Application
 
 ```python
-# One connection per application for atomic transaction
-with migration_engine.get_connection() as conn:
-    # All inserts share this connection (no autocommit)
-    
-    INSERT INTO app_base (...)                    # Connection A
-    INSERT INTO contact_base (...)                # Connection A
-    INSERT INTO app_operational_cc (...)          # Connection A
-    INSERT INTO processing_log (...)              # Connection A (audit)
-    
-    conn.commit()  # All succeed, or rollback on first error
+    # One connection per application for atomic transaction
+    with migration_engine.get_connection() as conn:
+        # All inserts share this connection (no autocommit)
+        
+        INSERT INTO app_base (...)                    # Connection A
+        INSERT INTO contact_base (...)                # Connection A
+        INSERT INTO app_operational_cc (...)          # Connection A
+        INSERT INTO processing_log (...)              # Connection A (audit)
+        
+        conn.commit()  # All succeed, or rollback on first error
 ```
 
 ### Safety Guarantees
@@ -149,12 +148,12 @@ with migration_engine.get_connection() as conn:
 ### Resume Capability
 
 ```sql
--- processing_log tracks completion
-SELECT * FROM processing_log WHERE app_id = 12345 AND status='success'
+    -- processing_log tracks completion
+    SELECT * FROM processing_log WHERE app_id = 12345 AND status='success'
 
--- Already processed? Skip it on resume
--- Not logged? Retry it
--- Failed? Can retry or investigate
+    -- Already processed? Skip it on resume
+    -- Not logged? Retry it
+    -- Failed? Can retry or investigate
 ```
 
 ---
@@ -166,14 +165,14 @@ SELECT * FROM processing_log WHERE app_id = 12345 AND status='success'
 ### Concurrent Processing Pattern
 
 ```powershell
-# Terminal 1: Process app_ids 1-60,000
-python production_processor.py --app-id-start 1 --app-id-end 60000
+    # Terminal 1: Process app_ids 1-60,000
+    python production_processor.py --app-id-start 1 --app-id-end 60000
 
-# Terminal 2: Process app_ids 60,001-120,000
-python production_processor.py --app-id-start 60001 --app-id-end 120000
+    # Terminal 2: Process app_ids 60,001-120,000
+    python production_processor.py --app-id-start 60001 --app-id-end 120000
 
-# Terminal 3: Process app_ids 120,001-180,000
-python production_processor.py --app-id-start 120001 --app-id-end 180000
+    # Terminal 3: Process app_ids 120,001-180,000
+    python production_processor.py --app-id-start 120001 --app-id-end 180000
 ```
 
 ### How Ranges Prevent Contention
@@ -186,17 +185,17 @@ python production_processor.py --app-id-start 120001 --app-id-end 180000
 ### Query Optimization
 
 ```sql
--- Fast batch query with TOP + range filter (no OFFSET scan penalty)
-SELECT TOP (500) ax.app_id, ax.xml 
-FROM [dbo].[app_xml] AS ax
-WHERE ax.app_id > @last_app_id          -- Cursor pagination
-  AND ax.app_id <= (@last_app_id + 500) -- Upper bound (focused search)
-  AND ax.xml IS NOT NULL
-  AND NOT EXISTS (
-      SELECT 1 FROM [dbo].[processing_log] AS pl
-      WHERE pl.app_id = ax.app_id        -- Already processed?
-  )
-ORDER BY ax.app_id
+    -- Fast batch query with TOP + range filter (no OFFSET scan penalty)
+    SELECT TOP (500) ax.app_id, ax.xml 
+    FROM [dbo].[app_xml] AS ax
+    WHERE ax.app_id > @last_app_id          -- Cursor pagination
+    AND ax.app_id <= (@last_app_id + 500)   -- Upper bound (focused search)
+    AND ax.xml IS NOT NULL
+    AND NOT EXISTS (
+        SELECT 1 FROM [sandbox].[processing_log] AS pl
+        WHERE pl.app_id = ax.app_id        -- Already processed?
+    )
+    ORDER BY ax.app_id
 ```
 
 ---
@@ -207,7 +206,7 @@ ORDER BY ax.app_id
 
 **Baseline:** 1,500-1,600 applications/minute
 - 4 parallel workers
-- batch-size=500
+- batch-size=1000
 - 4-core Windows machine with SQLExpress
 
 **Scaling:**
@@ -216,7 +215,7 @@ ORDER BY ax.app_id
 
 ### Batch Processing
 
-- Batch size: 500 records fetched at once
+- Batch size: 1000 records fetched at once
 - Processing: Parallel across 4 workers
 - Insert: Bulk operation with fast_executemany
 - Memory: ~125MB stable (no degradation)
@@ -236,31 +235,31 @@ For >100k records, use `run_production_processor.py`:
 ### Processing Log States
 
 ```
-status = 'success'   → Application processed successfully, all data inserted
-status = 'failed'    → Application failed, rolled back, no data inserted
-<not in log>         → Application not yet attempted (will retry on resume)
+    status = 'success'   → Application processed successfully, all data inserted
+    status = 'failed'    → Application failed, rolled back, no data inserted
+    <not in log>         → Application not yet attempted (will retry on resume)
 ```
 
 ### Resume After Failure
 
 ```powershell
-# Same command as before (resume-safe):
-python production_processor.py --app-id-start 1 --app-id-end 180000
+    # Same command as before (resume-safe):
+    python production_processor.py --app-id-start 1 --app-id-end 180000
 
-# Automatically:
-# 1. Reads processing_log to find last-processed app_id
-# 2. Skips already-logged entries (success or failed)
-# 3. Continues from where it left off
-# 4. No PK violations, no orphaned data
+    # Automatically:
+    # 1. Reads processing_log to find last-processed app_id
+    # 2. Skips already-logged entries (success or failed)
+    # 3. Continues from where it left off
+    # 4. No PK violations, no orphaned data
 ```
 
 ### Crash Recovery
 
 ```
-Crash after COMMIT:        → Data safely in DB
-Crash during transaction:  → Rolled back on restart
-Crash during XML parse:    → No data inserted (parse stage)
-Crash during mapping:      → No data inserted (pre-insert)
+    Crash after COMMIT:        → Data safely in DB
+    Crash during transaction:  → Rolled back on restart
+    Crash during XML parse:    → No data inserted (parse stage)
+    Crash during mapping:      → No data inserted (pre-insert)
 ```
 
 ---
@@ -270,28 +269,28 @@ Crash during mapping:      → No data inserted (pre-insert)
 ### Mapping Contract (config/mapping_contract.json)
 
 ```json
-{
-  "target_schema": "sandbox",           // or "dbo" for production
-  "table_insertion_order": [...],       // FK dependency order
-  "mappings": [...],                    // Field extraction rules
-  "enum_mappings": {...},               // Value transformations
-  "bit_conversions": {...}              // Boolean handling
-}
+    {
+    "target_schema": "sandbox",           // or "dbo" for production
+    "table_insertion_order": [...],       // FK dependency order
+    "mappings": [...],                    // Field extraction rules
+    "enum_mappings": {...},               // Value transformations
+    "bit_conversions": {...}              // Boolean handling
+    }
 ```
 
 ### Runtime Parameters
 
 ```powershell
-# Mode 1: All records (safety capped at limit)
---limit 10000                           # Process first 10k
+    # Mode 1: All records (safety capped at limit)
+    --limit 10000                           # Process first 10k
 
-# Mode 2: Explicit range (concurrent-safe)
---app-id-start 1 --app-id-end 180000   # Exact boundaries
+    # Mode 2: Explicit range (concurrent-safe)
+    --app-id-start 1 --app-id-end 180000   # Exact boundaries
 
-# Performance tuning
---workers 4                             # Parallel processes (default: 4)
---batch-size 500                        # Records per batch (default: 500)
---enable-pooling                        # Connection pooling (remote SQL Server)
+    # Performance tuning
+    --workers 4                             # Parallel processes (default: 4)
+    --batch-size 1000                       # Records per batch (default: 500)
+    --enable-pooling                        # Connection pooling (remote SQL Server)
 ```
 
 ---

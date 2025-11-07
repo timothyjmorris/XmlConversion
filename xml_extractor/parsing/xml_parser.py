@@ -6,10 +6,8 @@ element parsing based on mapping contracts for optimal performance.
 """
 
 import logging
-from typing import Dict, Any, Optional, List, Union, Iterator, Set
+from typing import Dict, Any, Optional, List, Set
 from xml.etree.ElementTree import Element
-import re
-from pathlib import Path
 
 try:
     from lxml import etree
@@ -20,7 +18,7 @@ except ImportError:
     logging.warning("lxml not available, falling back to xml.etree.ElementTree")
 
 from ..interfaces import XMLParserInterface
-from ..exceptions import XMLParsingError, ValidationError
+from ..exceptions import XMLParsingError
 from ..models import ProcessingConfig, MappingContract
 
 

@@ -88,86 +88,6 @@ Pass-Through Parameters (same as production_processor.py):
     --disable-mars        Disable MARS
 
 =============================================================================
-USAGE PATTERNS
-=============================================================================
-
-Pattern 1: Standard Range-Based Chunking (most common)
-    python run_production_processor.py --app-id-start 1 --app-id-end 180000
-    
-    Creates 18 chunks of 10k each, processes sequentially.
-
-Pattern 2: Resume After Interruption
-    # Same command as before - automatically skips completed chunks
-    python run_production_processor.py --app-id-start 1 --app-id-end 180000
-    
-    Processing log prevents re-processing completed records.
-
-Pattern 3: Different Range with Custom Chunk Size
-    python run_production_processor.py --app-id-start 70001 --app-id-end 100000 --chunk-size 5000
-    
-    Processes 30,000 records in 6 chunks of 5,000 each.
-
-Pattern 4: Limit Mode for Testing
-    python run_production_processor.py --limit 60000
-    
-    Processes app_ids 1-60000 in 6 chunks of 10k.
-
-Pattern 5: Concurrent Chunked Processing (advanced)
-    # Terminal 1:
-    python run_production_processor.py --app-id-start 1 --app-id-end 60000
-    
-    # Terminal 2:
-    python run_production_processor.py --app-id-start 60001 --app-id-end 120000
-    
-    # Terminal 3:
-    python run_production_processor.py --app-id-start 120001 --app-id-end 180000
-    
-    Each orchestrator manages its own range sequentially.
-
-=============================================================================
-OUTPUT & MONITORING
-=============================================================================
-
-Console Output:
-    ======================================================================
-    CHUNKED PROCESSING ORCHESTRATOR
-    ======================================================================
-    Mode:           RANGE
-    App ID Range:   1 - 60,000 (60,000 records)
-    Chunk Size:     10,000
-    Total Chunks:   6
-    Start Time:     2025-11-04 18:30:00
-    ======================================================================
-    
-    CHUNK 1/6: Processing app_id 1 - 10,000
-    [production_processor.py output...]
-    Chunk 1 ✓ SUCCESS - Duration: 420.5s
-    
-    CHUNK 2/6: Processing app_id 10,001 - 20,000
-    [production_processor.py output...]
-    Chunk 2 ✓ SUCCESS - Duration: 415.2s (fast - likely already processed)
-    
-    ... continues for all chunks ...
-    
-    ======================================================================
-    ORCHESTRATION SUMMARY
-    ======================================================================
-    Total Chunks:      6/6
-    Successful:        6
-    Failed:            0
-    Total Duration:    2512.3s (41.9 minutes)
-    Avg Chunk Time:    418.7s
-    ======================================================================
-
-Per-Chunk Artifacts:
-    Logs:    logs/production_YYYYMMDD_HHMMSS_range_START_END.log (one per chunk)
-    Metrics: metrics/metrics_YYYYMMDD_HHMMSS_range_START_END.json (one per chunk)
-
-Fast Chunks:
-    If chunk completes in <30 seconds: "(fast - likely already processed)"
-    Indicates records already in processing_log, minimal work done.
-
-=============================================================================
 PERFORMANCE NOTES
 =============================================================================
 
@@ -215,6 +135,7 @@ import argparse
 import subprocess
 import sys
 import json
+
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional
@@ -224,8 +145,7 @@ from xml_extractor.config.processing_defaults import ProcessingDefaults
 class ChunkedProcessorOrchestrator:
     """Orchestrates sequential execution of production_processor.py in chunks."""
     
-    def __init__(self, chunk_size: int, app_id_start: int = None, app_id_end: int = None, 
-                 limit: int = None, **processor_kwargs):
+    def __init__(self, chunk_size: int, app_id_start: int = None, app_id_end: int = None, limit: int = None, **processor_kwargs):
         """
         Initialize orchestrator.
         
@@ -269,6 +189,7 @@ class ChunkedProcessorOrchestrator:
         self.processor_kwargs = processor_kwargs
         self.num_chunks = (self.total_records + chunk_size - 1) // chunk_size  # Ceiling division
         self.chunk_results: List[Dict] = []
+    
     def run(self) -> int:
         """
         Execute all chunks sequentially.
@@ -280,13 +201,11 @@ class ChunkedProcessorOrchestrator:
         print(" CHUNKED PROCESSING ORCHESTRATOR")
         print("=" * 82)
         print(f"  Run Mode:       {self.mode.upper()}")
-        print(f"  Range:          {self.app_id_start:,} - {self.app_id_end:,} ({self.total_records:,} records)")
+        print(f"  App Id Range:   {self.app_id_start:,} - {self.app_id_end:,} ({self.total_records:,} applications)")
         print(f"  Chunk Size:     {self.chunk_size:,}")
         print(f"  Total Chunks:   {self.num_chunks}")
         print(f"  Start Time:     {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print("=" * 82)
-        # print("\n  Note: Uses --app-id-start/--app-id-end ranges for each chunk.")
-        # print("      Already-processed records (in processing_log) are skipped automatically.")
         print()
         
         start_time = datetime.now()
@@ -298,9 +217,9 @@ class ChunkedProcessorOrchestrator:
                 chunk_start_id = self.app_id_start + (chunk_num - 1) * self.chunk_size
                 chunk_end_id = min(self.app_id_start + chunk_num * self.chunk_size - 1, self.app_id_end)
                 
-                print(f"\n{'=' * 82}")
-                print(f" CHUNK {chunk_num}/{self.num_chunks}: Processing app_id {chunk_start_id:,} - {chunk_end_id:,}")
-                print(f"{'=' * 82}")
+                print("\n" + "=" * 82)
+                print(f" CHUNK {chunk_num}/{self.num_chunks}: [app_id] RANGE: {chunk_start_id:,} - {chunk_end_id:,}")
+                print("=" * 82)
                 
                 chunk_start_time = datetime.now()
                 
@@ -473,29 +392,29 @@ class ChunkedProcessorOrchestrator:
         if self.chunk_results:
             print("\n BREAKDOWN")
             if throughputs:
-                print(f"{' Chunk':<8} {'Range':<20} {'Duration':<12} {'Apps/Min':<12} {'Status':<10}")
+                print(f"{'  Chunk':<10} {' Range':<20} {'Duration':<12} {'Apps/Min':<12} {'Status':<10}")
                 print("-" * 82)
                 
                 for i, chunk in enumerate(self.chunk_results):
-                    range_str = f" {chunk['start_id']:,}-{chunk['end_id']:,}"
+                    range_str = f"  {chunk['start_id']:,}-{chunk['end_id']:,}"
                     duration_str = f" {chunk['duration_seconds']:.1f}s"
                     throughput_str = f" {chunk['throughput']:.1f}" if chunk['throughput'] is not None else " N/A"
                     status_str = " SUCCESS" if chunk['success'] else " FAILED"
                     
-                    print(f" {chunk['chunk_num']:<8} {range_str:<20} {duration_str:<12} {throughput_str:<12} {status_str:<10}")
+                    print(f" {chunk['chunk_num']:<10} {range_str:<20} {duration_str:<12} {throughput_str:<12} {status_str:<10}")
             else:
-                print(f" {'Chunk':<8} {'Range':<20} {'Duration':<12} {'Status':<10}")
+                print(f" {'  Chunk':<10} {' Range':<20} {'Duration':<12} {'Status':<10}")
                 print("-" * 82)
                 
                 for chunk in self.chunk_results:
-                    range_str = f" {chunk['start_id']:,}-{chunk['end_id']:,}"
+                    range_str = f"  {chunk['start_id']:,}-{chunk['end_id']:,}"
                     duration_str = f" {chunk['duration_seconds']:.1f}s"
                     status_str = " SUCCESS" if chunk['success'] else " FAILED"
-                    
-                    print(f" {chunk['chunk_num']:<8} {range_str:<20} {duration_str:<12} {status_str:<10}")
-        
-        print("=" * 82)
-        print()
+
+                    print(f" {chunk['chunk_num']:<10} {range_str:<20} {duration_str:<12} {status_str:<10}")
+
+        print("-" * 82)
+        print("\n FINISHED!\n")
 
 
 def main():
@@ -504,24 +423,20 @@ def main():
         description="Sequential Chunked Processor Orchestrator - Process large datasets in manageable chunks",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Examples:
-  # Process app_ids 1-60,000 in chunks of 10,000 (RANGE MODE - recommended)
-  python run_production_processor.py --app-id-start 1 --app-id-end 60000
-  
-  # Process app_ids 70,001-100,000 with custom chunk size (RANGE MODE)
-  python run_production_processor.py --app-id-start 70001 --app-id-end 100000 --chunk-size 5000
-  
-  # Process up to 60,000 records in default chunks (LIMIT MODE - for testing)
-  python run_production_processor.py --limit 60000
-  
-  # Use 6 workers per chunk with custom batch size
-  python run_production_processor.py --app-id-start 1 --app-id-end 60000 --workers 6 --batch-size 500
-  
-  # Production server with SQL authentication
-  python run_production_processor.py --app-id-start 1 --app-id-end 100000 ^
-      --server "prod-server" --database "ProdDB" --username "sqluser" --password "pass"
+    Examples:
+    # Process app_ids 1-60,000 in chunks of 10,000 (RANGE MODE - recommended)
+        python run_production_processor.py --app-id-start 1 --app-id-end 60000
+    
+    # Process app_ids 70,001-100,000 with custom chunk size (RANGE MODE)
+        python run_production_processor.py --app-id-start 70001 --app-id-end 100000 --chunk-size 5000
+    
+    # Process up to 60,000 records in default chunks (LIMIT MODE - for testing)
+        python run_production_processor.py --limit 60000
+    
+    # Use 6 workers per chunk with custom batch size
+        python run_production_processor.py --batch-size 750 --app-id-start 1 --app-id-end 60000 --workers 6
 
-Note: For concurrent processing, manually spawn multiple instances with different ranges.
+    Note: For concurrent processing, manually spawn multiple instances with different ranges.
         """
     )
     

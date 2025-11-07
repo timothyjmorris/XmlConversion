@@ -9,16 +9,18 @@ constraint compliance verification, and data quality reporting.
 import logging
 import time
 import uuid
-from typing import Dict, List, Any, Optional, Set, Tuple
+from typing import Dict, List, Any, Optional, Set
 from datetime import datetime
-from xml.etree.ElementTree import Element
 
-from ..interfaces import XMLParserInterface
-from ..models import MappingContract, FieldMapping
-from ..exceptions import ValidationError as ValidationException
+from ..models import MappingContract
+from ..exceptions import ValidationError
 from .validation_models import (
-    ValidationResult, ValidationError, IntegrityCheckResult, ValidationConfig,
-    ValidationSeverity, ValidationType
+    ValidationResult, 
+    ValidationError, 
+    IntegrityCheckResult, 
+    ValidationConfig,
+    ValidationSeverity, 
+    ValidationType
 )
 
 
