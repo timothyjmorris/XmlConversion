@@ -1,8 +1,23 @@
 """
-Test module for the comprehensive data integrity validation system.
+Test Harness for Comprehensive Data Integrity Validation System
 
-This module provides test cases and validation scenarios to ensure
-the validation system works correctly with various data conditions.
+This is a TEST UTILITY for validating undeployed validation modules.
+
+IMPORTANT: These tests validate the DataIntegrityValidator and ValidationOrchestrator
+modules, which are FULLY IMPLEMENTED but NOT YET DEPLOYED in the production pipeline.
+
+These modules exist and work correctly (as proven by these tests), but they are:
+- NOT called during standard XML processing
+- NOT part of the core extraction pipeline
+- Ready for deployment when prioritized
+
+Scope & Limitations:
+- Tests validate isolated validation logic with synthetic test data
+- Does NOT test integration with XMLParser/DataMapper/MigrationEngine pipeline
+- Does NOT test against real XML structures
+- Serves as a reference implementation for future deployment
+
+See VALIDATION_MODULE_ANALYSIS.md for deployment roadmap and integration guide.
 """
 
 import unittest
@@ -14,12 +29,13 @@ from typing import Dict, List, Any
 from datetime import datetime
 
 # Add the project root to the path for imports
+# From tests/harness/ → go up to root: ../..
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 try:
-    from xml_extractor.validation.data_integrity_validator import DataIntegrityValidator
+    from xml_extractor.validation.future.data_integrity_validator import DataIntegrityValidator
     from xml_extractor.validation.validation_models import ValidationConfig, ValidationSeverity, ValidationType
-    from xml_extractor.validation.validation_integration import ValidationOrchestrator, ValidationReporter
+    from xml_extractor.validation.future.validation_integration import ValidationOrchestrator, ValidationReporter
     from xml_extractor.models import MappingContract, FieldMapping, RelationshipMapping
 except ImportError as e:
     print(f"Import error: {e}")
@@ -544,8 +560,9 @@ def run_custom_test_harness():
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
     
-    print("\n🧪 VALIDATION SYSTEM UNIT TESTS")
+    print("\n🧪 VALIDATION SYSTEM TEST HARNESS")
     print("=" * 80)
+    print("Testing undeployed validation modules (DataIntegrityValidator, ValidationOrchestrator)")
     
     # Run tests using the custom harness
     results = run_validation_system_tests()
@@ -566,7 +583,7 @@ def run_custom_test_harness():
     
     if results['tests_failed'] == 0:
         print("\n🎉 ALL VALIDATION SYSTEM TESTS PASSED!")
-        print("   System validation components are working correctly")
+        print("   Validation components are ready for deployment")
     else:
         print(f"\n⚠️  {results['tests_failed']} tests failed - check errors above")
     

@@ -22,7 +22,6 @@ Integration Points:
 
 import logging
 from typing import Dict, List, Any
-from lxml import etree
 
 
 class ValidationError(Exception):

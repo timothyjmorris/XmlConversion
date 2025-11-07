@@ -121,7 +121,7 @@ class ProductionProcessor:
             app_id_start: Starting app_id for range processing (optional, for non-overlapping instances)
             app_id_end: Ending app_id for range processing (optional, for non-overlapping instances)
             batch_processor: BatchProcessorInterface implementation (optional). If None, ParallelCoordinator
-                          used for production. Can be SequentialProcessor for testing or MockProcessor for unit tests.
+                          used for production. Can also use MockProcessor for unit tests.
         """
         self.server = server
         self.database = database

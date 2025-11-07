@@ -29,10 +29,10 @@ import logging
 from typing import Dict, List, Any, Optional, Callable
 from datetime import datetime
 
-from ..interfaces import DataMapperInterface, XMLParserInterface
-from ..models import MappingContract, ProcessingResult
+from ...interfaces import DataMapperInterface, XMLParserInterface
+from ...models import MappingContract, ProcessingResult
 from .data_integrity_validator import DataIntegrityValidator
-from .validation_models import ValidationResult, ValidationConfig, ValidationError, ValidationSeverity
+from ..validation_models import ValidationResult, ValidationConfig, ValidationError, ValidationSeverity
 
 
 class ValidationOrchestrator:

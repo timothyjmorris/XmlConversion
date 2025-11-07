@@ -26,12 +26,10 @@ for data quality improvement.
 import logging
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass
-# from xml.etree.ElementTree import Element
 
 from ..parsing.xml_parser import XMLParser
 from ..mapping.data_mapper import DataMapper
 from ..models import MappingContract
-# from ..exceptions import ValidationError, XMLParsingError
 
 
 @dataclass

@@ -148,8 +148,7 @@ BulkInsertStrategy (250 lines)
   • Features: Automatic fallback, constraint handling, mock-testable
 
 BatchProcessorInterface (Existing - Now Used by ProductionProcessor)
-  • Enables Parallel/Sequential processor implementations
-  • SequentialProcessor for testing (1 worker)
+  • Enables parallel processor implementations
   • ParallelCoordinator for production (N workers)
 
 NEW EXCEPTION TYPES

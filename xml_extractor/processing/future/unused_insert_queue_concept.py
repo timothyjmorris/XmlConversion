@@ -287,7 +287,7 @@ class BackgroundInsertThread(threading.Thread):
         
         # Create MigrationEngine if not provided (normal production case)
         if self.migration_engine is None and self.connection_string:
-            from ..database.migration_engine import MigrationEngine
+            from ...database.migration_engine import MigrationEngine
             self.migration_engine = MigrationEngine(self.connection_string)
         
         self.logger.info("Background insert thread started")

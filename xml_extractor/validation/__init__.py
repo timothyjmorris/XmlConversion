@@ -1,27 +1,41 @@
 """
-Data integrity validation system for XML Database Extraction.
+Data Integrity Validation System for XML Database Extraction
 
-This module provides comprehensive validation capabilities including:
-- End-to-end validation comparing source XML with extracted relational data
-- Referential integrity checking for foreign key relationships
-- Constraint compliance validation for target tables
-- Data quality reporting with detailed error information
+STRUCTURE:
+- Deployed modules: ElementFilter, PreProcessingValidator (active in production)
+- Shared models: ValidationModels (used by deployed + future modules)
+- Future enhancement: DataIntegrityValidator, ValidationOrchestrator, ValidationReporter (in future/ subfolder)
+
+DEPLOYED MODULES (Production):
+- ElementFilter: Filters XML elements per business rules (active in DataMapper)
+- PreProcessingValidator: Validates XML before extraction (active in batch processors)
+
+FUTURE MODULES (Not yet deployed):
+See xml_extractor/validation/future/ subfolder for:
+- DataIntegrityValidator: Comprehensive post-extraction validation
+- ValidationOrchestrator: Validates and orchestrates workflows
+- ValidationReporter: Generates validation reports
+
+See VALIDATION_MODULE_ANALYSIS.md and POST_EXTRACTION_VALIDATION_COST_BENEFIT.md
+for deployment status and decision framework.
+
+NOTE: Modules are imported directly from their source to avoid circular imports.
+Import from specific modules, not from this __init__.py.
 """
 
-from .data_integrity_validator import DataIntegrityValidator
+# Shared validation data structures (safe to import here)
 from .validation_models import (
     ValidationResult, ValidationError, IntegrityCheckResult, 
     ValidationConfig, ValidationSeverity, ValidationType
 )
-from .validation_integration import ValidationOrchestrator, ValidationReporter
+
 __all__ = [
-    'DataIntegrityValidator',
+    # Shared models
     'ValidationResult', 
     'ValidationError',
     'IntegrityCheckResult',
     'ValidationConfig',
     'ValidationSeverity',
     'ValidationType',
-    'ValidationOrchestrator',
-    'ValidationReporter'
 ]
+

@@ -238,11 +238,9 @@ class ProductionProcessor:
         return self.batch_processor.process_xml_batch(records)
 
 # Now you can inject:
-# - ParallelCoordinator for prod (4 workers)
-# - SequentialProcessor for testing (1 worker)
+# - ParallelCoordinator for prod (multiple workers)
 # - MockProcessor for unit tests
 ```
-
 **Impact:** ⬆️ Testability, ⬆️ Flexibility, ⬇️ Coupling, ⬆️ Maintainability
 
 ---
