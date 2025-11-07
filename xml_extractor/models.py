@@ -147,6 +147,7 @@ class MappingContract:
         source_table: Name of the source table containing XML data
         source_column: Column name containing the XML content
         xml_root_element: Root element name in the XML structure
+        xml_application_path: Full path to application node (e.g., '/Provenir/Request/CustData/application')
         target_schema: Target database schema (e.g., 'dbo')
         table_insertion_order: Optional list specifying FK dependency order for table insertion
         element_filtering: Optional element filtering rules for XML validation
@@ -156,6 +157,7 @@ class MappingContract:
     source_table: str
     source_column: str
     xml_root_element: str
+    xml_application_path: Optional[str] = None
     target_schema: Optional[str] = "dbo"
     table_insertion_order: Optional[List[str]] = None
     element_filtering: Optional[ElementFiltering] = None

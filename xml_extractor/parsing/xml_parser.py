@@ -79,10 +79,13 @@ class XMLParser(XMLParserInterface):
         # Build set of required element paths for selective parsing
         self.required_paths: Set[str] = set()
         self.required_elements: Set[str] = set()
+        self.core_structure_elements: Set[str] = set()
+        
         # Only build required paths if a mapping contract is provided.
         # This enables the parser to skip irrelevant XML sections for performance.
         if mapping_contract:
             self._build_required_paths()
+            self._build_core_structure_elements()
         
         # Performance tracking
         self.parse_count = 0
@@ -132,6 +135,28 @@ class XMLParser(XMLParserInterface):
         self.logger.debug(f"Built {len(self.required_paths)} required paths: {sorted(self.required_paths)}")
         self.logger.debug(f"Required elements: {sorted(self.required_elements)}")
     
+    def _build_core_structure_elements(self) -> None:
+        """
+        Build set of core XML structure elements from xml_application_path.
+        These are scaffolding elements that enable navigation to data elements.
+        
+        For example, xml_application_path='/Provenir/Request/CustData/application'
+        results in core_structure_elements={'Provenir', 'Request', 'CustData', 'application'}
+        """
+        if not self.mapping_contract:
+            return
+        
+        # Extract structure elements from xml_application_path
+        if self.mapping_contract.xml_application_path:
+            path = self.mapping_contract.xml_application_path.strip('/')
+            if path:
+                self.core_structure_elements = set(path.split('/'))
+                self.logger.debug(f"Core structure elements from contract: {sorted(self.core_structure_elements)}")
+        else:
+            # Fallback to default if not specified in contract
+            self.core_structure_elements = {'Provenir', 'Request', 'CustData', 'application'}
+            self.logger.debug("Using default core structure elements (xml_application_path not in contract)")
+    
     def set_mapping_contract(self, mapping_contract: MappingContract) -> None:
         """
         Set or update the mapping contract for selective parsing.
@@ -142,7 +167,9 @@ class XMLParser(XMLParserInterface):
         self.mapping_contract = mapping_contract
         self.required_paths.clear()
         self.required_elements.clear()
+        self.core_structure_elements.clear()
         self._build_required_paths()
+        self._build_core_structure_elements()
         self.logger.info(f"Updated mapping contract - selective parsing for {len(self.required_paths)} paths")
     
     def parse_xml_stream(self, xml_content: str) -> Element:
@@ -452,9 +479,8 @@ class XMLParser(XMLParserInterface):
         if tag_name in self.required_elements:
             return True
         
-        # Always process core Provenir structure elements
-        core_elements = {'Provenir', 'Request', 'CustData', 'application'}
-        if tag_name in core_elements:
+        # Always process core XML structure elements (from contract or default)
+        if tag_name in self.core_structure_elements:
             return True
         
         return False

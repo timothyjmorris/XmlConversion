@@ -204,8 +204,6 @@ class DataMapper(DataMapperInterface):
         (which does pattern matching on every call), we pre-compute all enum types
         at initialization and cache them.
         
-        Expected speedup: 5-10% (reduces O(n) pattern matching calls to O(1) cache lookup)
-        
         Returns:
             Dictionary mapping column names to their enum_type identifiers
         """
