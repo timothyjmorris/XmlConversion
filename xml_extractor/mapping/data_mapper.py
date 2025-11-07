@@ -194,6 +194,10 @@ class DataMapper(DataMapperInterface):
         # Build enum_type cache at initialization
         # Pre-compute all column name -> enum_type mappings to avoid repeated pattern matching
         self._enum_type_cache = self._build_enum_type_cache()
+        
+        # Build contact type configuration cache at initialization
+        # Extract valid contact type attribute name and values from contract
+        self._valid_contact_type_config = self._get_contact_type_config_from_contract()
     
     def _build_enum_type_cache(self) -> Dict[str, Optional[str]]:
         """
@@ -247,6 +251,78 @@ class DataMapper(DataMapperInterface):
         
         self.logger.debug(f"Built enum_type cache with {len(cache)} entries")
         return cache
+    
+    def _find_filter_rule_by_element_type(self, element_type: str):
+        """
+        Find filter rule by element_type from contract's element_filtering configuration.
+        
+        Follows the pattern from element_filter.py for contract-driven rule discovery.
+        
+        Args:
+            element_type: The element type to find (e.g., 'contact', 'address', 'employment')
+            
+        Returns:
+            FilterRule object if found, None otherwise
+        """
+        try:
+            # Load the full mapping contract to access element_filtering rules
+            contract = self._config_manager.load_mapping_contract(self._mapping_contract_path)
+            if not contract or not hasattr(contract, 'element_filtering') or not contract.element_filtering:
+                return None
+            
+            # Find the filter rule matching the element_type
+            for rule in contract.element_filtering.filter_rules:
+                if rule.element_type == element_type:
+                    return rule
+            
+            return None
+        except Exception as e:
+            self.logger.warning(f"Could not load filter rule for element_type '{element_type}': {e}")
+            return None
+    
+    def _get_contact_type_config_from_contract(self) -> tuple:
+        """
+        Extract contact type configuration from contract's element_filtering rules.
+        
+        Returns tuple of (attribute_name, valid_values_list) for contact type validation.
+        This enables fully product-agnostic contact filtering where both the attribute
+        name (e.g., 'ac_role_tp_c' vs 'borrower_type') and valid values can differ.
+        
+        Pattern mirrors element_filter.py approach: discover attribute names dynamically
+        from contract rather than hard-coding them.
+        
+        Returns:
+            Tuple of (attribute_name, valid_values_list)
+            Example: ('ac_role_tp_c', ['PR', 'AUTHU'])
+            Fallback: ('ac_role_tp_c', ['PR', 'AUTHU']) if not found in contract
+        """
+        try:
+            contact_rule = self._find_filter_rule_by_element_type('contact')
+            if not contact_rule:
+                self.logger.warning("Contact filter rule not found in contract - using fallback ('ac_role_tp_c', ['PR', 'AUTHU'])")
+                return ('ac_role_tp_c', ['PR', 'AUTHU'])
+            
+            if not hasattr(contact_rule, 'required_attributes'):
+                self.logger.warning("Contact filter rule has no required_attributes - using fallback")
+                return ('ac_role_tp_c', ['PR', 'AUTHU'])
+            
+            self.logger.debug(f"Contact rule required_attributes: {contact_rule.required_attributes}")
+            
+            # Find the attribute that has an array of values (that's the type attribute)
+            # In the contract: "ac_role_tp_c": ["PR", "AUTHU"]
+            for attr_name, attr_config in contact_rule.required_attributes.items():
+                self.logger.debug(f"Checking attribute {attr_name}: {attr_config} (type: {type(attr_config)})")
+                if isinstance(attr_config, list) and len(attr_config) > 0:
+                    self.logger.debug(f"Extracted contact type config from contract: attribute='{attr_name}', valid_values={attr_config}")
+                    return (attr_name, attr_config)
+            
+            # If no array-valued attribute found, fall back
+            self.logger.warning("No contact type attribute with array values found in contract - using fallback")
+            return ('ac_role_tp_c', ['PR', 'AUTHU'])
+            
+        except Exception as e:
+            self.logger.warning(f"Error extracting contact type config from contract: {e} - using fallback")
+            return ('ac_role_tp_c', ['PR', 'AUTHU'])
     
     def apply_mapping_contract(self, xml_data: Dict[str, Any], 
                              contract: MappingContract,
@@ -486,42 +562,49 @@ class DataMapper(DataMapperInterface):
     def _extract_valid_contacts(self, xml_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
         Extract valid contacts using 'last valid element' logic:
-        - Only contacts with BOTH con_id AND ac_role_tp_c are considered
-        - Only PR and AUTHU contact types are valid (future TODO: use "contact_type_enum" from mapping contract to future-proof types)
+        - Only contacts with BOTH con_id AND contact_type_attribute are considered
+        - Contact types are validated against contract's element_filtering rules (contract-driven)
         - Max of one contact per con_id is returned (last valid element wins)
         - This function also deduplicates contacts by con_id across types (to prevent SQL errors)
         Returns a list of contacts which can safely be inserted.
         """
         try:
+            # Get contact type configuration from contract (cached at init)
+            contact_type_attr, valid_contact_types = self._valid_contact_type_config
+            
             contacts = self._navigate_to_contacts(xml_data)
-            self.logger.info(f"Contacts found: {[(c.get('con_id', '').strip(), c.get('first_name', ''), c.get('ac_role_tp_c', '')) for c in contacts if isinstance(c, dict)]}")
+            self.logger.info(f"Contacts found: {[(c.get('con_id', '').strip(), c.get('first_name', ''), c.get(contact_type_attr, '')) for c in contacts if isinstance(c, dict)]}")
 
-            # Only consider contacts with required fields: con_id and ac_role_tp_c
+            # Only consider contacts with required fields: con_id and contact_type_attribute
+            # Note: Using dynamic contact_type_attr from contract instead of hard-coded 'ac_role_tp_c'
             filtered_contacts = []
             for contact in contacts:
                 if not isinstance(contact, dict):
                     continue
                 con_id = contact.get('con_id', '').strip()
-                ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
-                if not con_id or not ac_role_tp_c:
+                contact_type_value = contact.get(contact_type_attr, '').strip()
+                if not con_id or not contact_type_value:
                     continue
-                if ac_role_tp_c not in ('PR', 'AUTHU'):
+                # CONTRACT-DRIVEN: Validate against valid types from element_filtering rules
+                if contact_type_value not in valid_contact_types:
                     continue
                 filtered_contacts.append(contact)
 
             # For each con_id, prefer PR contact over AUTHU (business rule: PR takes precedence)
+            # NOTE: This precedence logic will be made contract-driven in Task 2
             con_id_map = {}
             for contact in filtered_contacts:
                 con_id = contact.get('con_id', '').strip()
-                ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
+                contact_type_value = contact.get(contact_type_attr, '').strip()
                 if con_id not in con_id_map:
                     con_id_map[con_id] = contact
                 else:
+                    # TEMPORARY: Hard-coded PR precedence - will be contract-driven in Task 2
                     # If current contact is PR, always prefer it over existing
-                    if ac_role_tp_c == 'PR':
+                    if contact_type_value == 'PR':
                         con_id_map[con_id] = contact
                     # If existing is not PR and current is AUTHU, keep the latest AUTHU
-                    elif con_id_map[con_id].get('ac_role_tp_c', '').strip() != 'PR':
+                    elif con_id_map[con_id].get(contact_type_attr, '').strip() != 'PR':
                         con_id_map[con_id] = contact
                     # If existing is PR, keep it (don't overwrite with AUTHU)
 
@@ -641,14 +724,16 @@ class DataMapper(DataMapperInterface):
 
         Context Data Usage:
         - For contact-level mappings: context_data contains the specific contact's data
-            seen_con_ids_authu = set()
+            # Example pattern (contact type attribute is contract-driven):
+            contact_type_attr, valid_types = self._valid_contact_type_config
+            seen_con_ids = set()
             for contact in reversed(contacts):
                 if isinstance(contact, dict):
                     con_id = contact.get('con_id', '').strip()
-                    ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
-                    if ac_role_tp_c == 'AUTHU' and con_id and con_id not in seen_con_ids_authu:
-                        authu_contacts.insert(0, contact)
-                        seen_con_ids_authu.add(con_id)
+                    contact_type = contact.get(contact_type_attr, '').strip()
+                    if contact_type in valid_types and con_id and con_id not in seen_con_ids:
+                        valid_contacts.insert(0, contact)
+                        seen_con_ids.add(con_id)
 
         Returns:
             Extracted value or None if not found. For calculated fields, returns sentinel string.

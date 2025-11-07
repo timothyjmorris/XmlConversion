@@ -143,7 +143,7 @@ SET STATISTICS TIME ON
 
 SET STATISTICS TIME OFF
 
-
+select * from sandbox.processing_log
 
 
 -- Quick check all tables

@@ -1,6 +1,8 @@
 import unittest
 import sys
 import os
+import json
+import tempfile
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 if base_dir not in sys.path:
     sys.path.insert(0, base_dir)
@@ -130,6 +132,105 @@ class TestExtractValidContacts(unittest.TestCase):
         self.assertEqual(len(contacts), 2)
         self.assertTrue(any(c['first_name'] == 'Dave' and c['con_id'] == '1' for c in contacts))
         self.assertTrue(any(c['first_name'] == 'Eve' and c['con_id'] == '2' for c in contacts))
+
+
+class TestContractDrivenContactTypes(unittest.TestCase):
+    """Test that contact type validation is fully contract-driven."""
+    
+    def setUp(self):
+        """Create a temporary contract with custom contact types."""
+        self.temp_contract = tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False)
+        # Custom contract with different contact type attribute and values
+        contract_data = {
+            "xml_root_element": "Provenir",
+            "xml_application_path": "/Provenir/Request/CustData/application",
+            "source_table": "app_xml",
+            "source_column": "xml",
+            "target_schema": "sandbox",
+            "table_insertion_order": ["app_base", "contact_base"],
+            "element_filtering": {
+                "filter_rules": [
+                    {
+                        "element_type": "contact",
+                        "description": "Custom contact types for testing",
+                        "xml_parent_path": "/Provenir/Request/CustData/application",
+                        "xml_child_path": "/Provenir/Request/CustData/application/contact",
+                        "required_attributes": {
+                            "con_id": True,
+                            "borrower_type": ["PRIMARY", "SECONDARY", "COSIGNER"]
+                        }
+                    }
+                ]
+            },
+            "enum_mappings": {
+                "contact_type_enum": {
+                    "PRIMARY": 1,
+                    "SECONDARY": 2,
+                    "COSIGNER": 3
+                }
+            },
+            "bit_conversions": {},
+            "mappings": [
+                {
+                    "xml_path": "/Provenir/Request",
+                    "xml_attribute": "ID",
+                    "target_table": "app_base",
+                    "target_column": "app_id",
+                    "data_type": "int",
+                    "nullable": False
+                }
+            ]
+        }
+        json.dump(contract_data, self.temp_contract)
+        self.temp_contract.close()
+        
+        # Initialize mapper with custom contract and DEBUG logging
+        self.mapper = DataMapper(mapping_contract_path=self.temp_contract.name, log_level="DEBUG")
+    
+    def tearDown(self):
+        """Clean up temporary contract file."""
+        os.unlink(self.temp_contract.name)
+    
+    def test_custom_contact_type_attribute_name(self):
+        """Verify that custom contact type attribute name is recognized."""
+        contact_type_attr, valid_types = self.mapper._valid_contact_type_config
+        self.assertEqual(contact_type_attr, "borrower_type")
+        self.assertEqual(set(valid_types), {"PRIMARY", "SECONDARY", "COSIGNER"})
+    
+    def test_extract_contacts_with_custom_types(self):
+        """Verify contact extraction works with custom contact type values."""
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '1', 'borrower_type': 'PRIMARY', 'first_name': 'John'},
+                {'con_id': '2', 'borrower_type': 'SECONDARY', 'first_name': 'Jane'},
+                {'con_id': '3', 'borrower_type': 'COSIGNER', 'first_name': 'Bob'},
+                {'con_id': '4', 'borrower_type': 'INVALID_TYPE', 'first_name': 'Invalid'},  # Should be filtered
+                {'con_id': '5', 'ac_role_tp_c': 'PR', 'first_name': 'OldAttribute'},  # Wrong attribute name
+            ]
+        }
+        self.mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = self.mapper._extract_valid_contacts(xml_data)
+        
+        # Should only extract contacts with valid borrower_type values
+        self.assertEqual(len(contacts), 3)
+        contact_names = {c['first_name'] for c in contacts}
+        self.assertEqual(contact_names, {'John', 'Jane', 'Bob'})
+        
+        # Verify the INVALID_TYPE and wrong attribute contacts were filtered out
+        self.assertNotIn('Invalid', contact_names)
+        self.assertNotIn('OldAttribute', contact_names)
+    
+    def test_fallback_to_defaults_when_contract_missing(self):
+        """Verify fallback to default values when contract is missing filter rules."""
+        # Create mapper with default contract (no custom path)
+        default_mapper = DataMapper()
+        contact_type_attr, valid_types = default_mapper._valid_contact_type_config
+        
+        # Should fall back to standard ac_role_tp_c with PR/AUTHU
+        self.assertEqual(contact_type_attr, "ac_role_tp_c")
+        self.assertIn("PR", valid_types)
+        self.assertIn("AUTHU", valid_types)
+
 
 if __name__ == '__main__':
     unittest.main()
