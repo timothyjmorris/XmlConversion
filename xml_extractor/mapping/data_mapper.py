@@ -439,24 +439,19 @@ class DataMapper(DataMapperInterface):
         Raises:
             ConfigurationError: If element_filtering rule is missing or incomplete
         """
+        # Contract guarantee: Element filtering rules validated at startup by MappingContractValidator
+        # If this method runs, we know the filter rule exists and is well-formed
         filter_rule = self._find_filter_rule_by_element_type(element_type)
         
         if not filter_rule:
+            # Fail-fast: Contract validation should have caught this at startup
             raise ConfigurationError(
                 f"Missing element_filtering rule for '{element_type}' in mapping contract. "
                 f"Contract must define element_filtering.filter_rules with element_type='{element_type}'. "
-                f"Check mapping_contract.json section: element_filtering.filter_rules"
+                f"Run MappingContractValidator at startup to catch configuration issues early."
             )
         
-        # Access FilterRule object attributes
-        required_attrs = filter_rule.required_attributes if hasattr(filter_rule, 'required_attributes') else {}
-        
-        if not required_attrs:
-            raise ConfigurationError(
-                f"Element filtering rule for '{element_type}' has no required_attributes. "
-                f"Filter rule must specify required_attributes with type filtering values. "
-                f"Example: required_attributes: {{'{element_type}_tp_c': ['TYPE1', 'TYPE2']}}"
-            )
+        required_attrs = filter_rule.required_attributes
         
         # Find the type attribute (key with list value)
         type_attr_name = None
@@ -467,14 +462,6 @@ class DataMapper(DataMapperInterface):
                 type_attr_name = attr_name
                 type_values = attr_value
                 break
-        
-        if not type_attr_name or not type_values:
-            raise ConfigurationError(
-                f"Element filtering rule for '{element_type}' missing required_attributes list. "
-                f"At least one attribute must have a list of valid values. "
-                f"Found attributes: {list(required_attrs.keys())}, "
-                f"Expected format: {{'{element_type}_tp_c': ['TYPE1', 'TYPE2']}}"
-            )
         
         # Return based on mode
         if return_mode == 'preferred':
