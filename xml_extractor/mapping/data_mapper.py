@@ -285,17 +285,14 @@ class DataMapper(DataMapperInterface):
         Returns:
             Dictionary mapping child_table names to their XML element names
         """
+        # Contract guarantee: Relationships validated at startup by MappingContractValidator
+        # If this method runs, we know relationships exist and are well-formed
         cache = {}
         
         try:
-            # Try loading contract through config manager first (normal production path)
             contract = self._config_manager.load_mapping_contract(self._mapping_contract_path)
             
-            if not contract or not hasattr(contract, 'relationships') or not contract.relationships:
-                self.logger.debug("No relationships found in contract for element name cache")
-                return cache
-            
-            # Extract element name from xml_child_path for each relationship
+            # Validator guarantees relationships exist and are well-formed
             for relationship in contract.relationships:
                 child_table = relationship.child_table
                 xml_child_path = relationship.xml_child_path
@@ -306,36 +303,12 @@ class DataMapper(DataMapperInterface):
                     cache[child_table] = element_name
             
             self.logger.debug(f"Built element name cache with {len(cache)} entries")
+            return cache
             
         except Exception as e:
-            # Fallback: Try loading JSON directly for absolute paths - and unit test infrastructure
-            self.logger.debug(f"Config manager load failed, trying direct JSON load: {e}")
-            try:
-                import json
-                from pathlib import Path
-                contract_path = Path(self._mapping_contract_path)
-                
-                if contract_path.exists() and contract_path.suffix == '.json':
-                    with open(contract_path, 'r', encoding='utf-8') as f:
-                        contract_data = json.load(f)
-                    
-                    # Extract relationships directly from JSON data
-                    relationships = contract_data.get('relationships', [])
-                    for rel in relationships:
-                        child_table = rel.get('child_table')
-                        xml_child_path = rel.get('xml_child_path')
-                        
-                        if child_table and xml_child_path:
-                            element_name = xml_child_path.rstrip('/').split('/')[-1]
-                            cache[child_table] = element_name
-                    
-                    self.logger.debug(f"Built element name cache (direct load) with {len(cache)} entries")
-                else:
-                    self.logger.warning(f"Could not load contract from path: {contract_path}")
-            except Exception as fallback_error:
-                self.logger.warning(f"Could not build element name cache: {fallback_error}")
-        
-        return cache
+            # File system issues only (contract already validated)
+            self.logger.warning(f"Could not load contract for cache building: {e}")
+            return {}
     
     def _get_child_element_name(self, child_table_name: str) -> str:
         """
