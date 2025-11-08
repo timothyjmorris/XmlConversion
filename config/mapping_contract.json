@@ -19,7 +19,7 @@
     "filter_rules": [
       {
         "element_type": "contact",
-        "description": "Filter contacts by con_id valid contact type - used to filter 'last valid contact'",
+        "description": "Filter contacts by con_id and valid contact type. Array order determines priority (first = highest) - used for deduplication and primary contact identification.",
         "xml_parent_path": "/Provenir/Request/CustData/application",
         "xml_child_path": "/Provenir/Request/CustData/application/contact",
         "required_attributes": {

@@ -232,5 +232,155 @@ class TestContractDrivenContactTypes(unittest.TestCase):
         self.assertIn("AUTHU", valid_types)
 
 
+class TestContactTypePriority(unittest.TestCase):
+    """Test that contact type priority is determined by array order."""
+    
+    def test_default_priority_order_pr_over_authu(self):
+        """Verify default priority: PR (index 0) beats AUTHU (index 1)."""
+        mapper = DataMapper()
+        
+        # Default contract has ["PR", "AUTHU"] order
+        priority_map = mapper._contact_type_priority_map
+        self.assertEqual(priority_map['PR'], 0)
+        self.assertEqual(priority_map['AUTHU'], 1)
+        
+        # Test deduplication - PR should win
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '1', 'ac_role_tp_c': 'AUTHU', 'first_name': 'AuthUser'},
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'PrimaryUser'},  # Should win
+            ]
+        }
+        mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = mapper._extract_valid_contacts(xml_data)
+        
+        self.assertEqual(len(contacts), 1)
+        self.assertEqual(contacts[0]['first_name'], 'PrimaryUser')
+    
+    def test_reversed_priority_order(self):
+        """Verify reversed priority: AUTHU wins when it comes first in array."""
+        temp_contract = tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False)
+        contract_data = {
+            "xml_root_element": "Provenir",
+            "xml_application_path": "/Provenir/Request/CustData/application",
+            "source_table": "app_xml",
+            "source_column": "xml",
+            "target_schema": "sandbox",
+            "table_insertion_order": ["app_base", "contact_base"],
+            "element_filtering": {
+                "filter_rules": [
+                    {
+                        "element_type": "contact",
+                        "description": "Reversed priority - AUTHU first",
+                        "xml_parent_path": "/Provenir/Request/CustData/application",
+                        "xml_child_path": "/Provenir/Request/CustData/application/contact",
+                        "required_attributes": {
+                            "con_id": True,
+                            "ac_role_tp_c": ["AUTHU", "PR"]  # AUTHU first!
+                        }
+                    }
+                ]
+            },
+            "enum_mappings": {"contact_type_enum": {"PR": 1, "AUTHU": 2}},
+            "bit_conversions": {},
+            "mappings": [{"xml_path": "/Provenir/Request", "xml_attribute": "ID", "target_table": "app_base", "target_column": "app_id", "data_type": "int", "nullable": False}]
+        }
+        json.dump(contract_data, temp_contract)
+        temp_contract.close()
+        
+        try:
+            mapper = DataMapper(mapping_contract_path=temp_contract.name, log_level="DEBUG")
+            
+            # Priority map should be reversed
+            priority_map = mapper._contact_type_priority_map
+            self.assertEqual(priority_map['AUTHU'], 0)  # AUTHU is now highest priority
+            self.assertEqual(priority_map['PR'], 1)
+            
+            # Test deduplication - AUTHU should win
+            xml_data = {
+                '/Provenir/Request/contact': [
+                    {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'PrimaryUser'},
+                    {'con_id': '1', 'ac_role_tp_c': 'AUTHU', 'first_name': 'AuthUser'},  # Should win now!
+                ]
+            }
+            mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+            contacts = mapper._extract_valid_contacts(xml_data)
+            
+            self.assertEqual(len(contacts), 1)
+            self.assertEqual(contacts[0]['first_name'], 'AuthUser')
+        finally:
+            os.unlink(temp_contract.name)
+    
+    def test_equal_priority_last_wins(self):
+        """Verify that when priorities are equal, last element wins."""
+        mapper = DataMapper()
+        
+        # All contacts have same priority
+        xml_data = {
+            '/Provenir/Request/contact': [
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'First'},
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'Second'},
+                {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'Last'},  # Should win
+            ]
+        }
+        mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+        contacts = mapper._extract_valid_contacts(xml_data)
+        
+        self.assertEqual(len(contacts), 1)
+        self.assertEqual(contacts[0]['first_name'], 'Last')
+    
+    def test_unknown_type_lowest_priority(self):
+        """Verify unknown contact types get lowest priority."""
+        temp_contract = tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False)
+        contract_data = {
+            "xml_root_element": "Provenir",
+            "xml_application_path": "/Provenir/Request/CustData/application",
+            "source_table": "app_xml",
+            "source_column": "xml",
+            "target_schema": "sandbox",
+            "table_insertion_order": ["app_base", "contact_base"],
+            "element_filtering": {
+                "filter_rules": [
+                    {
+                        "element_type": "contact",
+                        "xml_parent_path": "/Provenir/Request/CustData/application",
+                        "xml_child_path": "/Provenir/Request/CustData/application/contact",
+                        "required_attributes": {
+                            "con_id": True,
+                            "ac_role_tp_c": ["PR", "AUTHU", "UNKNOWN"]  # Allow UNKNOWN type
+                        }
+                    }
+                ]
+            },
+            "enum_mappings": {"contact_type_enum": {"PR": 1, "AUTHU": 2, "UNKNOWN": 3}},
+            "bit_conversions": {},
+            "mappings": [{"xml_path": "/Provenir/Request", "xml_attribute": "ID", "target_table": "app_base", "target_column": "app_id", "data_type": "int", "nullable": False}]
+        }
+        json.dump(contract_data, temp_contract)
+        temp_contract.close()
+        
+        try:
+            mapper = DataMapper(mapping_contract_path=temp_contract.name, log_level="DEBUG")
+            
+            # UNKNOWN has higher index (lower priority)
+            priority_map = mapper._contact_type_priority_map
+            self.assertEqual(priority_map['UNKNOWN'], 2)  # Index 2 = lowest priority
+            
+            # PR should win over UNKNOWN
+            xml_data = {
+                '/Provenir/Request/contact': [
+                    {'con_id': '1', 'ac_role_tp_c': 'UNKNOWN', 'first_name': 'UnknownContact'},
+                    {'con_id': '1', 'ac_role_tp_c': 'PR', 'first_name': 'PrimaryUser'},  # Should win
+                ]
+            }
+            mapper._navigate_to_contacts = lambda x: xml_data['/Provenir/Request/contact']
+            contacts = mapper._extract_valid_contacts(xml_data)
+            
+            self.assertEqual(len(contacts), 1)
+            self.assertEqual(contacts[0]['first_name'], 'PrimaryUser')
+        finally:
+            os.unlink(temp_contract.name)
+
+
 if __name__ == '__main__':
     unittest.main()

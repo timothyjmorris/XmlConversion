@@ -198,6 +198,10 @@ class DataMapper(DataMapperInterface):
         # Build contact type configuration cache at initialization
         # Extract valid contact type attribute name and values from contract
         self._valid_contact_type_config = self._get_contact_type_config_from_contract()
+        
+        # Build contact type priority map from array order
+        # Array order determines precedence: first element = highest priority
+        self._contact_type_priority_map = self._get_contact_type_priority_map()
     
     def _build_enum_type_cache(self) -> Dict[str, Optional[str]]:
         """
@@ -323,6 +327,34 @@ class DataMapper(DataMapperInterface):
         except Exception as e:
             self.logger.warning(f"Error extracting contact type config from contract: {e} - using fallback")
             return ('ac_role_tp_c', ['PR', 'AUTHU'])
+    
+    def _get_contact_type_priority_map(self) -> Dict[str, int]:
+        """
+        Build priority map from contact type array order in contract.
+        
+        Array order determines priority precedence: first element = highest priority (index 0).
+        This follows the "derive > configure" principle - we use existing array order rather
+        than adding a redundant priority_order field.
+        
+        Convention: When multiple contacts share the same con_id, the contact with the LOWEST
+        priority score (earliest in array) wins during deduplication.
+        
+        Example:
+            Contract: ["PR", "AUTHU"] 
+            Result: {'PR': 0, 'AUTHU': 1}
+            Behavior: PR (priority 0) wins over AUTHU (priority 1)
+            
+        Returns:
+            Dictionary mapping contact type values to priority scores (0 = highest)
+            Unknown types should be assigned priority 999 (lowest) during comparison
+        """
+        contact_type_attr, valid_contact_types = self._valid_contact_type_config
+        
+        # Build priority map: first in array = priority 0 (highest)
+        priority_map = {type_val: idx for idx, type_val in enumerate(valid_contact_types)}
+        
+        self.logger.debug(f"Built contact type priority map: {priority_map}")
+        return priority_map
     
     def apply_mapping_contract(self, xml_data: Dict[str, Any], 
                              contract: MappingContract,
@@ -590,23 +622,37 @@ class DataMapper(DataMapperInterface):
                     continue
                 filtered_contacts.append(contact)
 
-            # For each con_id, prefer PR contact over AUTHU (business rule: PR takes precedence)
-            # NOTE: This precedence logic will be made contract-driven in Task 2
+            # Deduplicate contacts by con_id using priority-based precedence
+            # CONTRACT-DRIVEN: Priority determined by array order in element_filtering rules
+            # Lower priority score = higher precedence (first in array wins)
             con_id_map = {}
             for contact in filtered_contacts:
                 con_id = contact.get('con_id', '').strip()
                 contact_type_value = contact.get(contact_type_attr, '').strip()
+                
                 if con_id not in con_id_map:
+                    # First contact with this con_id - add it
                     con_id_map[con_id] = contact
                 else:
-                    # TEMPORARY: Hard-coded PR precedence - will be contract-driven in Task 2
-                    # If current contact is PR, always prefer it over existing
-                    if contact_type_value == 'PR':
+                    # Contact with this con_id already exists - compare priorities
+                    existing_contact = con_id_map[con_id]
+                    existing_type = existing_contact.get(contact_type_attr, '').strip()
+                    
+                    # Get priority scores (lower = higher priority)
+                    # Unknown types get priority 999 (lowest)
+                    current_priority = self._contact_type_priority_map.get(contact_type_value, 999)
+                    existing_priority = self._contact_type_priority_map.get(existing_type, 999)
+                    
+                    # Replace if current contact has higher priority (lower score)
+                    if current_priority < existing_priority:
                         con_id_map[con_id] = contact
-                    # If existing is not PR and current is AUTHU, keep the latest AUTHU
-                    elif con_id_map[con_id].get(contact_type_attr, '').strip() != 'PR':
+                        self.logger.debug(f"con_id={con_id}: Replaced {existing_type} (priority {existing_priority}) with {contact_type_value} (priority {current_priority})")
+                    elif current_priority == existing_priority:
+                        # Same priority - keep last (last valid element logic)
                         con_id_map[con_id] = contact
-                    # If existing is PR, keep it (don't overwrite with AUTHU)
+                        self.logger.debug(f"con_id={con_id}: Same priority, keeping last {contact_type_value}")
+                    else:
+                        self.logger.debug(f"con_id={con_id}: Keeping existing {existing_type} (priority {existing_priority}) over {contact_type_value} (priority {current_priority})")
 
             valid_contacts = list(con_id_map.values())
             return valid_contacts
@@ -1945,40 +1991,55 @@ class DataMapper(DataMapperInterface):
         return None
     
     def _extract_from_last_valid_pr_contact(self, mapping, context_data=None):
-        """Extract value from the last valid PR contact with enhanced debugging."""
+        """
+        Extract value from the last valid primary contact with enhanced debugging.
+        
+        CONTRACT-DRIVEN: Primary contact type is determined by first element in contact type array.
+        For example: ["PR", "AUTHU"] → PR is primary, ["PRIMARY", "SECONDARY"] → PRIMARY is primary
+        """
         self.logger.debug(f"ENTERING _extract_from_last_valid_pr_contact for field {mapping.target_column}")
         try:
             if not hasattr(self, '_current_xml_root') or self._current_xml_root is None:
                 self.logger.debug("No XML root available for last_valid_pr_contact extraction")
                 return None
             
-            # Find all PR contacts
-            pr_contacts = self._current_xml_root.xpath('.//contact[@ac_role_tp_c="PR"]')
-            self.logger.debug(f"Found {len(pr_contacts)} PR contacts via xpath")
-            if not pr_contacts:
-                self.logger.debug("No PR contacts found in XML")
+            # Get primary contact type from contract (first in array = highest priority)
+            contact_type_attr, valid_contact_types = self._valid_contact_type_config
+            if not valid_contact_types:
+                self.logger.warning("No valid contact types in contract - cannot extract primary contact")
                 return None
             
-            # Find the last VALID PR contact (one with non-empty con_id AND non-empty ac_role_tp_c)
-            last_valid_pr_contact = None
-            for contact in reversed(pr_contacts):  # Start from the end
+            primary_contact_type = valid_contact_types[0]  # First in array = primary
+            self.logger.debug(f"Using primary contact type: {primary_contact_type} (attr: {contact_type_attr})")
+            
+            # Find all primary contacts using dynamic attribute and value
+            xpath_query = f'.//contact[@{contact_type_attr}="{primary_contact_type}"]'
+            primary_contacts = self._current_xml_root.xpath(xpath_query)
+            self.logger.debug(f"Found {len(primary_contacts)} {primary_contact_type} contacts via xpath")
+            if not primary_contacts:
+                self.logger.debug(f"No {primary_contact_type} contacts found in XML")
+                return None
+            
+            # Find the last VALID primary contact (one with non-empty con_id AND non-empty contact_type)
+            last_valid_primary_contact = None
+            for contact in reversed(primary_contacts):  # Start from the end
                 con_id = contact.get('con_id', '').strip()
-                ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
-                if con_id and ac_role_tp_c:  # Both must be non-empty
-                    last_valid_pr_contact = contact
+                contact_type = contact.get(contact_type_attr, '').strip()
+                if con_id and contact_type:  # Both must be non-empty
+                    last_valid_primary_contact = contact
                     break
             
-            if last_valid_pr_contact is None:
-                self.logger.debug("No valid PR contacts found (all have empty con_id or ac_role_tp_c)")
+            if last_valid_primary_contact is None:
+                self.logger.debug(f"No valid {primary_contact_type} contacts found (all have empty con_id or {contact_type_attr})")
                 return None
             
-            selected_con_id = last_valid_pr_contact.get('con_id', 'UNKNOWN')
-            self.logger.debug(f"Selected last VALID PR contact: con_id={selected_con_id}")
+            selected_con_id = last_valid_primary_contact.get('con_id', 'UNKNOWN')
+            self.logger.debug(f"Selected last VALID {primary_contact_type} contact: con_id={selected_con_id}")
             
             # Extract the requested attribute directly from the contact or its child elements
             if 'contact_address' in mapping.xml_path:
                 # Look for contact_address elements within this contact
-                address_elements = last_valid_pr_contact.xpath('.//contact_address')
+                address_elements = last_valid_primary_contact.xpath('.//contact_address')
                 # Filter to only CURR (current) addresses - these have the most relevant data
                 curr_address_elements = [addr for addr in address_elements if addr.get('address_tp_c') == 'CURR']
                 # Use CURR addresses if available, otherwise fall back to all addresses
@@ -2006,7 +2067,7 @@ class DataMapper(DataMapperInterface):
                     return value
             elif 'app_prod_bcard' in mapping.xml_path:
                 # Look for app_prod_bcard element within this contact
-                app_prod_bcard_elements = last_valid_pr_contact.xpath('.//app_prod_bcard')
+                app_prod_bcard_elements = last_valid_primary_contact.xpath('.//app_prod_bcard')
                 self.logger.debug(f"Found {len(app_prod_bcard_elements)} app_prod_bcard elements for con_id {selected_con_id}")
                 if app_prod_bcard_elements:
                     # Get the last app_prod_bcard element
@@ -2024,7 +2085,7 @@ class DataMapper(DataMapperInterface):
             
             # Always try to extract directly from the contact element first
             # This handles banking attributes and other contact-level attributes
-            value = last_valid_pr_contact.get(mapping.xml_attribute)
+            value = last_valid_primary_contact.get(mapping.xml_attribute)
             self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' directly from contact con_id {selected_con_id}")
             # Enforce string truncation for all string fields
             # Enforce string truncation using contract data_length
@@ -2085,14 +2146,24 @@ class DataMapper(DataMapperInterface):
         - employment.field_name (references employment data)
         - app_product.field_name (references app_product data)
         - application.field_name (references application data)
+        
+        CONTRACT-DRIVEN: Primary contact is determined by first element in contact type array.
         """
         context = {}
         
         # Flatten all contact data for easy access
         if valid_contacts:
-            # Primary contact (first PR contact or first contact)
-            pr_contacts = [c for c in valid_contacts if c.get('ac_role_tp_c') == 'PR']
-            primary_contact = pr_contacts[0] if pr_contacts else valid_contacts[0]
+            # Get primary contact type from contract (first in array = highest priority)
+            contact_type_attr, valid_contact_types = self._valid_contact_type_config
+            primary_contact_type = valid_contact_types[0] if valid_contact_types else None
+            
+            # Find primary contact (first contact with primary type, or first contact)
+            primary_contact = None
+            if primary_contact_type:
+                primary_contacts = [c for c in valid_contacts if c.get(contact_type_attr) == primary_contact_type]
+                primary_contact = primary_contacts[0] if primary_contacts else valid_contacts[0]
+            else:
+                primary_contact = valid_contacts[0]
             
             # Add contact fields with 'contact.' prefix for cross-element references
             for key, value in primary_contact.items():
