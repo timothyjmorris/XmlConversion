@@ -7,6 +7,7 @@ base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 if base_dir not in sys.path:
     sys.path.insert(0, base_dir)
 from xml_extractor.mapping.data_mapper import DataMapper
+from xml_extractor.config.config_manager import get_config_manager
 
 class TestExtractValidContacts(unittest.TestCase):
     def test_no_valid_contacts(self):
@@ -378,6 +379,109 @@ class TestContactTypePriority(unittest.TestCase):
             
             self.assertEqual(len(contacts), 1)
             self.assertEqual(contacts[0]['first_name'], 'PrimaryUser')
+        finally:
+            os.unlink(temp_contract.name)
+
+
+class TestAddressTypeFiltering(unittest.TestCase):
+    """Test that preferred address type is determined by array order in contract."""
+    
+    def test_default_preferred_address_curr(self):
+        """Verify default contract uses CURR as preferred address type (first in array)."""
+        mapper = DataMapper(log_level="DEBUG")
+        
+        # Default contract has ["CURR", "PREV", "PATR"] - CURR should be preferred (index 0)
+        address_type_attr, preferred_address_type = mapper._preferred_address_type_config
+        
+        self.assertEqual(address_type_attr, 'address_tp_c')
+        self.assertEqual(preferred_address_type, 'CURR')
+    
+    def test_custom_preferred_address_type(self):
+        """Verify custom contract can define different preferred address (first in array)."""
+        # Load the default contract file and modify it
+        config_dir = os.path.join(os.path.dirname(__file__), '../../config')
+        with open(os.path.join(config_dir, 'mapping_contract.json'), 'r') as f:
+            custom_contract = json.load(f)
+        
+        # Modify address filter rule to use custom types
+        for rule in custom_contract['element_filtering']['filter_rules']:
+            if rule['element_type'] == 'address':
+                rule['required_attributes']['location_type'] = ["HOME", "WORK", "MAIL"]
+                del rule['required_attributes']['address_tp_c']
+                break
+        
+        # Write custom contract to temp file
+        temp_contract = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json')
+        json.dump(custom_contract, temp_contract)
+        temp_contract.close()
+        
+        try:
+            mapper = DataMapper(mapping_contract_path=temp_contract.name, log_level="DEBUG")
+            
+            # Should extract attribute name and preferred type from custom contract
+            address_type_attr, preferred_address_type = mapper._preferred_address_type_config
+            
+            self.assertEqual(address_type_attr, 'location_type')
+            self.assertEqual(preferred_address_type, 'HOME')  # First in array
+        finally:
+            os.unlink(temp_contract.name)
+    
+    def test_reversed_address_priority_prev_over_curr(self):
+        """Verify reversed address order: PREV preferred when it comes first in array."""
+        # Load the default contract file and modify it
+        config_dir = os.path.join(os.path.dirname(__file__), '../../config')
+        with open(os.path.join(config_dir, 'mapping_contract.json'), 'r') as f:
+            custom_contract = json.load(f)
+        
+        # Modify address filter rule to reverse order
+        for rule in custom_contract['element_filtering']['filter_rules']:
+            if rule['element_type'] == 'address':
+                # Reverse order: PREV first, then CURR
+                rule['required_attributes']['address_tp_c'] = ["PREV", "CURR", "PATR"]
+                break
+        
+        # Write custom contract to temp file
+        temp_contract = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json')
+        json.dump(custom_contract, temp_contract)
+        temp_contract.close()
+        
+        try:
+            mapper = DataMapper(mapping_contract_path=temp_contract.name, log_level="DEBUG")
+            
+            # Should prefer PREV (first in array)
+            address_type_attr, preferred_address_type = mapper._preferred_address_type_config
+            
+            self.assertEqual(address_type_attr, 'address_tp_c')
+            self.assertEqual(preferred_address_type, 'PREV')  # First in reversed array
+        finally:
+            os.unlink(temp_contract.name)
+    
+    def test_fallback_when_contract_incomplete(self):
+        """Verify graceful fallback to defaults when address filter rule missing."""
+        # Load the default contract file and modify it
+        config_dir = os.path.join(os.path.dirname(__file__), '../../config')
+        with open(os.path.join(config_dir, 'mapping_contract.json'), 'r') as f:
+            custom_contract = json.load(f)
+        
+        # Remove address filter rule
+        custom_contract['element_filtering']['filter_rules'] = [
+            rule for rule in custom_contract['element_filtering']['filter_rules']
+            if rule['element_type'] != 'address'
+        ]
+        
+        # Write custom contract to temp file
+        temp_contract = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json')
+        json.dump(custom_contract, temp_contract)
+        temp_contract.close()
+        
+        try:
+            mapper = DataMapper(mapping_contract_path=temp_contract.name, log_level="DEBUG")
+            
+            # Should fall back to defaults
+            address_type_attr, preferred_address_type = mapper._preferred_address_type_config
+            
+            self.assertEqual(address_type_attr, 'address_tp_c')
+            self.assertEqual(preferred_address_type, 'CURR')
         finally:
             os.unlink(temp_contract.name)
 

@@ -59,7 +59,7 @@ The engine processes XML data through a multi-stage pipeline:
 
 import logging
 import re
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime
 from decimal import Decimal, ROUND_HALF_UP
 
@@ -197,11 +197,15 @@ class DataMapper(DataMapperInterface):
         
         # Build contact type configuration cache at initialization
         # Extract valid contact type attribute name and values from contract
-        self._valid_contact_type_config = self._get_contact_type_config_from_contract()
+        self._valid_contact_type_config = self._get_element_type_filters('contact', return_mode='all')
         
         # Build contact type priority map from array order
         # Array order determines precedence: first element = highest priority
         self._contact_type_priority_map = self._get_contact_type_priority_map()
+        
+        # Build address type configuration cache at initialization
+        # Extract preferred address type attribute name and value from contract
+        self._preferred_address_type_config = self._get_element_type_filters('address', return_mode='preferred')
     
     def _build_enum_type_cache(self) -> Dict[str, Optional[str]]:
         """
@@ -284,49 +288,98 @@ class DataMapper(DataMapperInterface):
             self.logger.warning(f"Could not load filter rule for element_type '{element_type}': {e}")
             return None
     
-    def _get_contact_type_config_from_contract(self) -> tuple:
+    def _get_element_type_filters(self, element_type: str, return_mode: str = 'all') -> Tuple[str, Union[List[str], str]]:
         """
-        Extract contact type configuration from contract's element_filtering rules.
+        Get type filtering attribute and values from contract's element filter rules.
         
-        Returns tuple of (attribute_name, valid_values_list) for contact type validation.
-        This enables fully product-agnostic contact filtering where both the attribute
-        name (e.g., 'ac_role_tp_c' vs 'borrower_type') and valid values can differ.
+        Extracts the attribute name used for type filtering along with valid or preferred values.
+        This enables product-agnostic filtering where both attribute names and values are dynamic.
         
-        Pattern mirrors element_filter.py approach: discover attribute names dynamically
-        from contract rather than hard-coding them.
+        CONTACT FAMILY: All element types are part of the contact hierarchy:
+        - 'contact': Base contact elements (filtered by ac_role_tp_c, borrower_type, etc.)
+        - 'address': Contact addresses (filtered by address_tp_c, location_type, etc.)
+        - 'employment': Contact employment (filtered by employment_tp_c, etc.)
+        
+        ARRAY-ORDER CONVENTION: First element in required_attributes array = preferred/primary type.
+        This follows "derive > configure" principle - priority implicit in array order.
+        
+        Args:
+            element_type: Element type to query ('contact', 'address', 'employment')
+            return_mode: 
+                - 'all': Return all valid values from array
+                - 'preferred': Return only first value (preferred/primary type)
         
         Returns:
-            Tuple of (attribute_name, valid_values_list)
-            Example: ('ac_role_tp_c', ['PR', 'AUTHU'])
-            Fallback: ('ac_role_tp_c', ['PR', 'AUTHU']) if not found in contract
+            Tuple of (attribute_name, values)
+            
+            Examples:
+                _get_element_type_filters('contact', 'all') 
+                → ('ac_role_tp_c', ['PR', 'AUTHU'])
+                
+                _get_element_type_filters('address', 'preferred') 
+                → ('address_tp_c', 'CURR')
+                
+                _get_element_type_filters('employment', 'all')
+                → ('employment_tp_c', ['CURR', 'PREV'])
+        
+        Fallback Behavior:
+            If contract incomplete or missing, returns sensible defaults with warning:
+            - contact: ('ac_role_tp_c', ['PR', 'AUTHU']) or ('ac_role_tp_c', 'PR')
+            - address: ('address_tp_c', ['CURR', 'PREV', 'PATR']) or ('address_tp_c', 'CURR')
+            - employment: ('employment_tp_c', ['CURR', 'PREV']) or ('employment_tp_c', 'CURR')
         """
+        # Define fallback values by element type
+        fallback_map = {
+            'contact': ('ac_role_tp_c', ['PR', 'AUTHU']),
+            'address': ('address_tp_c', ['CURR', 'PREV', 'PATR']),
+            'employment': ('employment_tp_c', ['CURR', 'PREV'])
+        }
+        
         try:
-            contact_rule = self._find_filter_rule_by_element_type('contact')
-            if not contact_rule:
-                self.logger.warning("Contact filter rule not found in contract - using fallback ('ac_role_tp_c', ['PR', 'AUTHU'])")
-                return ('ac_role_tp_c', ['PR', 'AUTHU'])
+            filter_rule = self._find_filter_rule_by_element_type(element_type)
             
-            if not hasattr(contact_rule, 'required_attributes'):
-                self.logger.warning("Contact filter rule has no required_attributes - using fallback")
-                return ('ac_role_tp_c', ['PR', 'AUTHU'])
+            if not filter_rule:
+                self.logger.warning(f"No {element_type} filter rule found in contract - using fallback")
+                attr_name, values = fallback_map.get(element_type, ('type_attr', []))
+                return (attr_name, values[0] if return_mode == 'preferred' else values)
             
-            self.logger.debug(f"Contact rule required_attributes: {contact_rule.required_attributes}")
+            # Access FilterRule object attributes
+            required_attrs = filter_rule.required_attributes if hasattr(filter_rule, 'required_attributes') else {}
             
-            # Find the attribute that has an array of values (that's the type attribute)
-            # In the contract: "ac_role_tp_c": ["PR", "AUTHU"]
-            for attr_name, attr_config in contact_rule.required_attributes.items():
-                self.logger.debug(f"Checking attribute {attr_name}: {attr_config} (type: {type(attr_config)})")
-                if isinstance(attr_config, list) and len(attr_config) > 0:
-                    self.logger.debug(f"Extracted contact type config from contract: attribute='{attr_name}', valid_values={attr_config}")
-                    return (attr_name, attr_config)
+            if not required_attrs:
+                self.logger.warning(f"{element_type.capitalize()} filter rule has no required_attributes - using fallback")
+                attr_name, values = fallback_map.get(element_type, ('type_attr', []))
+                return (attr_name, values[0] if return_mode == 'preferred' else values)
             
-            # If no array-valued attribute found, fall back
-            self.logger.warning("No contact type attribute with array values found in contract - using fallback")
-            return ('ac_role_tp_c', ['PR', 'AUTHU'])
+            # Find the type attribute (key with list value)
+            type_attr_name = None
+            type_values = None
+            
+            for attr_name, attr_value in required_attrs.items():
+                if isinstance(attr_value, list) and len(attr_value) > 0:
+                    type_attr_name = attr_name
+                    type_values = attr_value
+                    break
+            
+            if not type_attr_name or not type_values:
+                self.logger.warning(f"{element_type.capitalize()} filter rule missing required_attributes list - using fallback")
+                attr_name, values = fallback_map.get(element_type, ('type_attr', []))
+                return (attr_name, values[0] if return_mode == 'preferred' else values)
+            
+            # Return based on mode
+            if return_mode == 'preferred':
+                result_value = type_values[0]  # First element = preferred
+                self.logger.debug(f"Extracted {element_type} type filters: attribute='{type_attr_name}', "
+                                f"preferred='{result_value}', all_values={type_values}")
+                return (type_attr_name, result_value)
+            else:
+                self.logger.debug(f"Extracted {element_type} type filters: attribute='{type_attr_name}', values={type_values}")
+                return (type_attr_name, type_values)
             
         except Exception as e:
-            self.logger.warning(f"Error extracting contact type config from contract: {e} - using fallback")
-            return ('ac_role_tp_c', ['PR', 'AUTHU'])
+            self.logger.warning(f"Error extracting {element_type} type filters from contract: {e} - using fallback")
+            attr_name, values = fallback_map.get(element_type, ('type_attr', []))
+            return (attr_name, values[0] if return_mode == 'preferred' else values)
     
     def _get_contact_type_priority_map(self) -> Dict[str, int]:
         """
@@ -1735,17 +1788,20 @@ class DataMapper(DataMapperInterface):
             # Use the last contact element (following "last valid" logic)
             contact_element = contact_elements[-1]
             
-            # Find the CURR address within this contact
-            curr_address_elements = contact_element.xpath("contact_address[@address_tp_c='CURR']")
-            if not curr_address_elements:
+            # CONTRACT-DRIVEN: Get preferred address type from contract (first in array)
+            address_type_attr, preferred_address_type = self._preferred_address_type_config
+            
+            # Find the preferred address within this contact using dynamic attribute and value
+            preferred_address_elements = contact_element.xpath(f"contact_address[@{address_type_attr}='{preferred_address_type}']")
+            if not preferred_address_elements:
                 return None
             
-            # Use the last CURR address element
-            curr_address_element = curr_address_elements[-1]
+            # Use the last preferred address element
+            preferred_address_element = preferred_address_elements[-1]
             
             # Extract the requested attribute
-            value = curr_address_element.get(mapping.xml_attribute)
-            self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' from CURR address for con_id {con_id}")
+            value = preferred_address_element.get(mapping.xml_attribute)
+            self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' from {preferred_address_type} address for con_id {con_id}")
             
             return value
             
@@ -2040,10 +2096,14 @@ class DataMapper(DataMapperInterface):
             if 'contact_address' in mapping.xml_path:
                 # Look for contact_address elements within this contact
                 address_elements = last_valid_primary_contact.xpath('.//contact_address')
-                # Filter to only CURR (current) addresses - these have the most relevant data
-                curr_address_elements = [addr for addr in address_elements if addr.get('address_tp_c') == 'CURR']
-                # Use CURR addresses if available, otherwise fall back to all addresses
-                target_addresses = curr_address_elements if curr_address_elements else address_elements
+                
+                # CONTRACT-DRIVEN: Filter to preferred address type from contract (first in array)
+                address_type_attr, preferred_address_type = self._preferred_address_type_config
+                preferred_address_elements = [addr for addr in address_elements 
+                                             if addr.get(address_type_attr) == preferred_address_type]
+                
+                # Use preferred addresses if available, otherwise fall back to all addresses
+                target_addresses = preferred_address_elements if preferred_address_elements else address_elements
                 if target_addresses:
                     # Find the first address that has the required attribute
                     selected_address = None
