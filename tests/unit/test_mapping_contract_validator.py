@@ -6,6 +6,7 @@ specific validation rules in Steps 3-5.
 """
 
 import unittest
+
 from xml_extractor.validation.mapping_contract_validator import MappingContractValidator
 from xml_extractor.models import MappingContractValidationResult
 
@@ -309,6 +310,7 @@ class TestElementFilteringValidation(unittest.TestCase):
                     {"element_type": "address", "required_attributes": {}}
                 ]
             },
+            "table_insertion_order": ["app_base", "processing_log"],
             "relationships": [],
             "enum_mappings": {},
             "mappings": []
@@ -334,6 +336,7 @@ class TestElementFilteringValidation(unittest.TestCase):
                     {"element_type": "contact", "required_attributes": {}}
                 ]
             },
+            "table_insertion_order": ["app_base", "processing_log"],
             "relationships": [],
             "enum_mappings": {},
             "mappings": []
@@ -359,6 +362,7 @@ class TestElementFilteringValidation(unittest.TestCase):
                     {"element_type": "employment", "required_attributes": {}}
                 ]
             },
+            "table_insertion_order": ["app_base", "processing_log"],
             "relationships": [],
             "enum_mappings": {},
             "mappings": []
@@ -394,6 +398,233 @@ class TestElementFilteringValidation(unittest.TestCase):
         result = validator.validate_contract()
         
         # Should pass - we only validate structure (contact + address rules exist)
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
+
+
+class TestRelationshipsValidation(unittest.TestCase):
+    """Test _validate_relationships() method - cross-reference with table_insertion_order."""
+    
+    def test_valid_relationships_with_all_tables_present(self):
+        """Contract with all tables from insertion order in relationships passes."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": [
+                "app_base",
+                "contact_base",
+                "contact_address",
+                "processing_log"
+            ],
+            "relationships": [
+                {"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"},
+                {"parent_table": "contact_base", "child_table": "contact_address", "foreign_key_column": "con_id"}
+            ],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
+    
+    def test_processing_log_excluded_from_validation(self):
+        """processing_log in table_insertion_order does not require relationship."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": [
+                "app_base",
+                "processing_log"  # No relationship needed
+            ],
+            "relationships": [
+                # No relationship for processing_log - should be fine
+            ],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
+    
+    def test_missing_table_insertion_order_section(self):
+        """Contract without table_insertion_order fails."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "relationships": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertGreater(result.error_count, 0)
+        error = result.errors[0]
+        self.assertEqual(error.category, "relationships")
+        self.assertIn("table_insertion_order", error.message.lower())
+    
+    def test_missing_relationships_section(self):
+        """Contract without relationships section fails."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": ["app_base", "contact_base"],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertGreater(result.error_count, 0)
+    
+    def test_orphaned_table_in_insertion_order(self):
+        """Table in insertion_order but not in relationships fails."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": [
+                "app_base",
+                "contact_base",
+                "contact_address",  # Missing from relationships
+                "processing_log"
+            ],
+            "relationships": [
+                {"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"}
+                # contact_address is missing!
+            ],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertEqual(result.error_count, 1)
+        error = result.errors[0]
+        self.assertEqual(error.category, "relationships")
+        self.assertIn("contact_address", error.message)
+        self.assertIn("table_insertion_order", error.message.lower())
+    
+    def test_multiple_orphaned_tables(self):
+        """Multiple tables missing from relationships reported."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": [
+                "app_base",
+                "contact_base",
+                "contact_address",
+                "contact_employment",
+                "processing_log"
+            ],
+            "relationships": [
+                {"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"}
+                # contact_address and contact_employment missing!
+            ],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertEqual(result.error_count, 2)
+        error_messages = [e.message for e in result.errors]
+        self.assertTrue(any("contact_address" in msg for msg in error_messages))
+        self.assertTrue(any("contact_employment" in msg for msg in error_messages))
+    
+    def test_relationship_missing_foreign_key_column(self):
+        """Relationship without foreign_key_column field fails."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": [
+                "app_base",
+                "contact_base",
+                "processing_log"
+            ],
+            "relationships": [
+                {"parent_table": "app_base", "child_table": "contact_base"}  # Missing foreign_key_column!
+            ],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertGreater(result.error_count, 0)
+        error = result.errors[0]
+        self.assertEqual(error.category, "relationships")
+        self.assertIn("foreign_key_column", error.message.lower())
+        self.assertIn("contact_base", error.message)
+    
+    def test_app_base_not_required_in_relationships(self):
+        """app_base as root table doesn't need to appear as child_table."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": [
+                "app_base",  # Root table - no relationship as child
+                "contact_base",
+                "processing_log"
+            ],
+            "relationships": [
+                {"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"}
+                # app_base doesn't appear as child_table - should be OK
+            ],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
         self.assertTrue(result.is_valid)
         self.assertEqual(result.error_count, 0)
 

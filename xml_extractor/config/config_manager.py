@@ -591,6 +591,10 @@ class ConfigManager(ConfigurationManagerInterface):
                 )
                 relationships.append(relationship)
             
+            # Parse table_insertion_order and enum_mappings
+            table_insertion_order = contract_data.get('table_insertion_order')
+            enum_mappings = contract_data.get('enum_mappings')
+            
             contract = MappingContract(
                 source_table=source_table,
                 source_column=source_column,
@@ -599,7 +603,9 @@ class ConfigManager(ConfigurationManagerInterface):
                 target_schema=target_schema,  # Contract-driven schema from JSON
                 element_filtering=element_filtering,  # Parse element filtering rules
                 mappings=mappings,
-                relationships=relationships
+                relationships=relationships,
+                table_insertion_order=table_insertion_order,  # FK dependency order
+                enum_mappings=enum_mappings  # Enum value mappings
             )
             
             # Store raw contract data for accessing additional configurations

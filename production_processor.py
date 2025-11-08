@@ -35,8 +35,7 @@ import statistics
 from pathlib import Path
 from datetime import datetime
 from typing import List, Tuple, Optional
-from dataclasses import asdict        
-        
+
 from xml_extractor.config.processing_defaults import ProcessingDefaults
 from xml_extractor.processing.parallel_coordinator import ParallelCoordinator
 from xml_extractor.database.migration_engine import MigrationEngine
@@ -258,11 +257,8 @@ class ProductionProcessor:
             SystemExit: If contract validation fails (exit code 1)
         """
         
-        # Convert mapping contract dataclass to dict for validation
-        contract_dict = asdict(self.mapping_contract)
-        
-        # Validate contract structure
-        validator = MappingContractValidator(contract_dict)
+        # Validate contract structure (validator handles dataclass directly)
+        validator = MappingContractValidator(self.mapping_contract)
         result = validator.validate_contract()
         
         if not result.is_valid:
