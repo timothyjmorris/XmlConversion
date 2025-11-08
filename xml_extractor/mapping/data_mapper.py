@@ -1282,14 +1282,16 @@ class DataMapper(DataMapperInterface):
         # Determine enum type from target column name
         enum_type = self._determine_enum_type(mapping.target_column)
         
-        # Debug logging
-        self.logger.debug(f"Enum mapping: value='{str_value}', column={mapping.target_column}, enum_type={enum_type}")
-        self.logger.debug(f"Available enum types: {list(self._enum_mappings.keys())}")
-        
-        # Only apply enum mapping if a valid enum_type is detected for this column
-        if enum_type and enum_type in self._enum_mappings:
+        # Contract guarantee: Enum mapping exists for this target_column (validated at startup)
+        # Note: enum_type can be None if column name doesn't match any pattern
+        if not enum_type or enum_type not in self._enum_mappings:
+            # No enum mapping available - handle as data issue below
+            enum_map = None
+        else:
             enum_map = self._enum_mappings[enum_type]
-            self.logger.debug(f"Enum map for {enum_type}: {enum_map}")
+        
+        # If enum mapping exists, try to find a match
+        if enum_map:
             # Try exact match first
             if str_value in enum_map:
                 result = enum_map[str_value]
@@ -1307,6 +1309,7 @@ class DataMapper(DataMapperInterface):
                 self.logger.warning(f"Using default enum value for unmapped '{str_value}' in {enum_type}")
                 return enum_map['']
         
+        # DATA ISSUE: No valid mapping for this value
         # CRITICAL FIX (DQ3): Check if this is a required (NOT NULL) enum field
         is_required = not getattr(mapping, 'nullable', True)
         
