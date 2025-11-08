@@ -244,3 +244,125 @@ class ProcessingResult:
         if self.records_processed == 0:
             return 0.0
         return (self.records_successful / self.records_processed) * 100.0
+
+
+@dataclass
+class MappingContractValidationError:
+    """
+    Represents a specific validation error in a mapping contract.
+    
+    Provides detailed, actionable information about what's wrong and how to fix it.
+    These are CRITICAL errors that must be fixed before processing can begin.
+    
+    Attributes:
+        category: High-level error category (e.g., "element_filtering", "relationships", "enum_mappings")
+        message: Human-readable description of what's wrong
+        contract_location: Where in the contract the issue exists (JSONPath-style: "element_filtering.filter_rules[0]")
+        fix_guidance: Specific instructions on how to fix the issue
+        example_fix: Optional code example showing correct structure
+    """
+    category: str
+    message: str
+    contract_location: str
+    fix_guidance: str
+    example_fix: Optional[str] = None
+    
+    def format_error(self) -> str:
+        """Format error for display with all details."""
+        lines = [
+            f"X: [{self.category}] {self.message}",
+            f"  Location: {self.contract_location}",
+            f"  Fix: {self.fix_guidance}"
+        ]
+        if self.example_fix:
+            lines.append(f"  Example:\n{self.example_fix}")
+        return "\n".join(lines)
+
+
+@dataclass
+class MappingContractValidationWarning:
+    """
+    Represents a non-critical issue in a mapping contract.
+    
+    Warnings indicate suspicious patterns or sub-optimal configurations that
+    won't block processing but should be reviewed.
+    
+    Attributes:
+        category: High-level warning category (e.g., "performance", "consistency", "best_practices")
+        message: Human-readable description of the concern
+        contract_location: Where in the contract the issue exists
+        recommendation: Suggested improvement
+    """
+    category: str
+    message: str
+    contract_location: str
+    recommendation: str
+    
+    def format_warning(self) -> str:
+        """Format warning for display."""
+        return (
+            f"!: [{self.category}] {self.message}\n"
+            f"  Location: {self.contract_location}\n"
+            f"  Recommendation: {self.recommendation}"
+        )
+
+
+@dataclass
+class MappingContractValidationResult:
+    """
+    Result of validating a mapping contract against business rules.
+    
+    Contains all validation errors (blocking) and warnings (non-blocking) discovered
+    during pre-flight contract validation.
+    
+    Attributes:
+        is_valid: True if no critical errors (warnings are OK)
+        errors: List of critical errors that must be fixed
+        warnings: List of non-critical issues that should be reviewed
+    """
+    is_valid: bool
+    errors: List[MappingContractValidationError]
+    warnings: List[MappingContractValidationWarning]
+    
+    def __post_init__(self):
+        """Ensure is_valid matches error count."""
+        if self.errors and self.is_valid:
+            raise ValueError("MappingContractValidationResult cannot be valid with errors present")
+        if not self.errors and not self.is_valid:
+            raise ValueError("MappingContractValidationResult must be valid if no errors present")
+    
+    @property
+    def has_warnings(self) -> bool:
+        """Check if validation result has warnings."""
+        return len(self.warnings) > 0
+    
+    @property
+    def error_count(self) -> int:
+        """Count of critical errors."""
+        return len(self.errors)
+    
+    @property
+    def warning_count(self) -> int:
+        """Count of warnings."""
+        return len(self.warnings)
+    
+    def format_summary(self) -> str:
+        """Format a summary of validation results."""
+        if self.is_valid and not self.has_warnings:
+            return "> Mapping contract validation passed (no errors, no warnings)"
+        
+        lines = []
+        if not self.is_valid:
+            lines.append(f"X: Mapping contract validation FAILED ({self.error_count} error(s)):")
+            for error in self.errors:
+                lines.append("")
+                lines.append(error.format_error())
+        
+        if self.has_warnings:
+            lines.append("")
+            lines.append(f"!: Mapping contract validation has {self.warning_count} warning(s):")
+            for warning in self.warnings:
+                lines.append("")
+                lines.append(warning.format_warning())
+        
+        return "\n".join(lines)
