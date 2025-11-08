@@ -17,12 +17,12 @@ select top 10 * from  sandbox.contact_base          order by app_id desc
 select top 10 * from  sandbox.contact_address       order by con_id desc
 select top 10 * from  sandbox.contact_employment    order by con_id desc 
 
-select top 100 * from app_xml
+select top 100 * from app_xml order by app_id desc
 
 select * from  sandbox.app_base where app_id > 70990 and app_id < 72010
 
 
-
+select * from sandbox.app_base
 
 
 select count(*) from app_xml;
@@ -35,8 +35,8 @@ select count(*) from  sandbox.app_transactional_cc;
 select count(*) from  sandbox.contact_base;
 select count(*) from  sandbox.contact_address;
 select count(*) from  sandbox.contact_employment;
+select count(*) from  sandbox.processing_log
 
-select count(*) from  sandbox.processing_log where [status] = 'failed'
 select * from  sandbox.processing_log
 
 select * from  sandbox.app_enums
@@ -47,7 +47,7 @@ select * from  sandbox.app_enums
     DELETE FROM  sandbox.app_base; -- should cascade
     DBCC CHECKIDENT ('sandbox.app_base', RESEED, 0);
     DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
-
+	delete from sandbox.processing_log;
 
     delete from sandbox.app_base		where app_id > 300000
 
@@ -127,13 +127,23 @@ select * from  sandbox.app_enums
 -- Remove the OFFSET / FETCH
 -- under load: ~1s (< 300ms w/o load)
 SET STATISTICS TIME ON
+	
+	-- Running in LIMIT mode
+	SELECT TOP(20) ax.app_id, ax.xml
+	FROM app_xml ax
+	WHERE ax.xml IS NOT NULL
+	  AND NOT EXISTS (SELECT 1 FROM sandbox.processing_log AS pl WHERE pl.app_id = ax.app_id)
+	ORDER BY ax.app_id
 
-	SELECT TOP (500) ax.app_id, ax.xml 
+	-- Running in app_id RANGE mode
+	SELECT 
+		TOP (500) ax.app_id, --batch-size
+		ax.xml 
 	FROM app_xml AS ax
 	WHERE 
 		ax.xml IS NOT NULL
-		AND ax.app_id > 260000
-		AND ax.app_id <= 260500 -- this keeps the batch in it's lane to be safe on top of usig TOP
+		AND ax.app_id > 200000	--app-id-start (should probably default to 1)
+		AND ax.app_id <= 300000 --app-id-end (should be required if using --app-id-start)		(this keeps the batch in it's lane to be safe on top of usig TOP)
 		AND NOT EXISTS (
 			SELECT 1 
 			FROM sandbox.processing_log AS pl 
@@ -145,6 +155,8 @@ SET STATISTICS TIME OFF
 
 select * from sandbox.processing_log
 
+DELETE FROM sandbox.processing_log WHERE app_id = 443306
+DELETE FROM sandbox.app_base WHERE app_id = 443306
 
 -- Quick check all tables
 	SELECT TOP(10) *

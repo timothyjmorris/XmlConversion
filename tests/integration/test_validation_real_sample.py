@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Test validation using the real sample XML with ghost nodes and edge cases.
 
@@ -8,9 +7,9 @@ our system handles real-world edge cases correctly
 
 import unittest
 import logging
-from pathlib import Path
 import sys
 
+from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 

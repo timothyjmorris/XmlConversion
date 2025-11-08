@@ -16,6 +16,7 @@ Examples for 'calculated_field' as a mapping_type in the mapping contract:
 
 import re
 import logging
+
 from typing import Dict, Any, Optional, Union, List
 from decimal import Decimal
 from datetime import datetime

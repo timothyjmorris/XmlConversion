@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Production XML Processing Script
 
@@ -25,25 +24,27 @@ KEY FEATURES:
     • Schema isolation: target_schema from MappingContract
     • Performance: 1,500-1,600 apps/min sustained (4 workers)
 """
+
 import argparse
 import sys
 import time
-from xml_extractor.config.processing_defaults import ProcessingDefaults
 import json
 import logging
 import statistics
+
 from pathlib import Path
 from datetime import datetime
 from typing import List, Tuple, Optional
 
-# Add project root to path
-project_root = Path(__file__).parent
-sys.path.insert(0, str(project_root))
-
+from xml_extractor.config.processing_defaults import ProcessingDefaults
 from xml_extractor.processing.parallel_coordinator import ParallelCoordinator
 from xml_extractor.database.migration_engine import MigrationEngine
 from xml_extractor.config.config_manager import get_config_manager
 from xml_extractor.interfaces import MappingContract, BatchProcessorInterface
+
+# Add project root to path
+project_root = Path(__file__).parent
+sys.path.insert(0, str(project_root))
 
 
 class ProductionProcessor:

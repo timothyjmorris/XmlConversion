@@ -6,6 +6,7 @@ truthiness checks instead of using the actual conversion mappings from the contr
 """
 
 import pytest
+
 from xml_extractor.mapping.data_mapper import DataMapper
 
 

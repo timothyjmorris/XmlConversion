@@ -16,8 +16,9 @@ For architecture details, see ARCHITECTURE.md (schema isolation, atomicity, FK o
 
 import logging
 import time
-from typing import List, Dict, Any, Optional
 import pyodbc
+
+from typing import List, Dict, Any, Optional
 from contextlib import contextmanager
 
 from ..interfaces import MigrationEngineInterface

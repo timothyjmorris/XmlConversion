@@ -9,9 +9,9 @@ component integration.
 import os
 import tempfile
 import unittest
+
 from pathlib import Path
 from unittest.mock import patch, MagicMock
-
 from xml_extractor.config.config_manager import (
     ConfigManager, 
     get_config_manager, 

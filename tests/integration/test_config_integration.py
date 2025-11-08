@@ -8,6 +8,7 @@ with the MigrationEngine and DataMapper components.
 import os
 import tempfile
 import unittest
+
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
@@ -56,6 +57,27 @@ class TestConfigIntegration(unittest.TestCase):
                 }
             ],
             "relationships": [],
+            "element_filtering": {
+                "filter_rules": [
+                    {
+                        "element_type": "contact",
+                        "xml_parent_path": "/Provenir/Request/CustData/application",
+                        "xml_child_path": "/Provenir/Request/CustData/application/contact",
+                        "required_attributes": {
+                            "con_id": True,
+                            "ac_role_tp_c": ["PR", "AUTHU"]
+                        }
+                    },
+                    {
+                        "element_type": "address",
+                        "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+                        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address",
+                        "required_attributes": {
+                            "address_tp_c": ["CURR", "PREV"]
+                        }
+                    }
+                ]
+            },
             "enum_mappings": {},
             "bit_conversions": {},
             "default_values": {}
@@ -136,12 +158,59 @@ class TestConfigIntegration(unittest.TestCase):
         # Initialize config manager
         config_manager = get_config_manager(self.temp_path)
         
+        # Create a separate contract file with explicit path
+        explicit_contract_path = self.temp_path / "custom_contract.json"
+        explicit_contract_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        import json
+        with open(explicit_contract_path, 'w') as f:
+            # Use the same contract structure from setUp
+            test_contract = {
+                "source_table": "app_xml",
+                "source_column": "xml",
+                "xml_root_element": "Provenir",
+                "mappings": [
+                    {
+                        "xml_path": "/Provenir/Request",
+                        "xml_attribute": "ID",
+                        "target_table": "app_base",
+                        "target_column": "app_id",
+                        "data_type": "int"
+                    }
+                ],
+                "relationships": [],
+                "element_filtering": {
+                    "filter_rules": [
+                        {
+                            "element_type": "contact",
+                            "xml_parent_path": "/Provenir/Request/CustData/application",
+                            "xml_child_path": "/Provenir/Request/CustData/application/contact",
+                            "required_attributes": {
+                                "con_id": True,
+                                "ac_role_tp_c": ["PR", "AUTHU"]
+                            }
+                        },
+                        {
+                            "element_type": "address",
+                            "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+                            "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address",
+                            "required_attributes": {
+                                "address_tp_c": ["CURR", "PREV"]
+                            }
+                        }
+                    ]
+                },
+                "enum_mappings": {},
+                "bit_conversions": {},
+                "default_values": {}
+            }
+            json.dump(test_contract, f)
+        
         # Create DataMapper with explicit mapping contract path
-        explicit_path = "custom/mapping/contract.json"
-        data_mapper = DataMapper(mapping_contract_path=explicit_path)
+        data_mapper = DataMapper(mapping_contract_path=str(explicit_contract_path))
         
         # Verify explicit path takes precedence
-        self.assertEqual(data_mapper._mapping_contract_path, explicit_path)
+        self.assertEqual(data_mapper._mapping_contract_path, str(explicit_contract_path))
     
     def test_components_share_same_config_manager(self):
         """Test that components share the same global config manager instance."""

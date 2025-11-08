@@ -1,12 +1,16 @@
 
 import sys
 import os
+import pytest
+
+from xml_extractor.mapping.data_mapper import DataMapper
+from xml_extractor.models import FieldMapping
+
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 if base_dir not in sys.path:
     sys.path.insert(0, base_dir)
-import pytest
-from xml_extractor.mapping.data_mapper import DataMapper
-from xml_extractor.models import FieldMapping
+
+
 
 @pytest.fixture
 def mapper():

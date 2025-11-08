@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Production XML Batch Processing Test
 
@@ -20,15 +19,12 @@ NOTE: this test deletes destination data first!!! Comment out the cleanup step i
 import unittest
 import logging
 import sys
-from pathlib import Path
-from datetime import datetime
-from typing import List, Dict, Any, Tuple
 import traceback
 import json
 
-# Add project root to path
-project_root = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(project_root))
+from pathlib import Path
+from datetime import datetime
+from typing import List, Dict, Any, Tuple
 
 from xml_extractor.validation.pre_processing_validator import PreProcessingValidator
 from xml_extractor.parsing.xml_parser import XMLParser
@@ -36,6 +32,11 @@ from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.database.migration_engine import MigrationEngine
 # Import DatabaseConnectionTester from integration tests
 from tests.integration.test_database_connection import DatabaseConnectionTester
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
+
 
 
 class TestProductionXMLBatch(unittest.TestCase):

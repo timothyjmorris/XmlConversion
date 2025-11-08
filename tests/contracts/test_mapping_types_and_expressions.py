@@ -1,22 +1,24 @@
-#!/usr/bin/env python3
 """
 Test script to validate all mapping types and expressions in the mapping contract are supported, exercised, and produce correct results.
 - It checks that every mapping type listed in the contract is implemented in DataMapper.
 - It does not check that mapping types are exercised or produce correct results.
 - Uses central sample XML files for real coverage.
 """
+
 import unittest
 import json
 from pathlib import Path
 import sys
 import os
+
+from xml_extractor.mapping.data_mapper import DataMapper
+from xml_extractor.models import MappingContract
+
 # Ensure workspace root (parent of MB_XmlConversionKiro) is in sys.path for imports
 workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
 if workspace_root not in sys.path:
     sys.path.insert(0, workspace_root)
-print('DEBUG sys.path:', sys.path)
-from xml_extractor.mapping.data_mapper import DataMapper
-from xml_extractor.models import MappingContract
+
 
 class TestMappingTypesAndExpressions(unittest.TestCase):
     @classmethod

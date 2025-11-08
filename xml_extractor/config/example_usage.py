@@ -7,6 +7,7 @@ for the XML Database Extraction system.
 
 import os
 import logging
+
 from pathlib import Path
 
 from .config_manager import ConfigManager, get_config_manager, reset_config_manager

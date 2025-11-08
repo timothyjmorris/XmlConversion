@@ -7,8 +7,9 @@ prevent lock contention and maintains schema isolation via qualified table names
 """
 
 import logging
-from typing import List, Dict, Any
 import pyodbc
+
+from typing import List, Dict, Any
 
 
 class DuplicateContactDetector:

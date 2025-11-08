@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Integration Test Suite Runner
 
@@ -13,12 +12,14 @@ Test Categories:
 
 import sys
 import subprocess
-from pathlib import Path
 import time
+
+from pathlib import Path
+
 
 def run_test_suite():
     """Run the complete integration test suite."""
-    print("🚀 RUNNING INTEGRATION TEST SUITE")
+    print("RUNNING INTEGRATION TEST SUITE")
     print("=" * 80)
     
     # Test suite configuration - organized by category

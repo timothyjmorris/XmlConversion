@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Comprehensive XML validation test scenarios using mock Provenir XML samples.
 
@@ -7,6 +6,7 @@ Tests all validation rules and edge cases before processing real data.
 
 import unittest
 import logging
+
 from typing import Dict, Any
 from xml_extractor.parsing.xml_parser import XMLParser
 from xml_extractor.mapping.data_mapper import DataMapper

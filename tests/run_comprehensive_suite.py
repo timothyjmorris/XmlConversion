@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Comprehensive Test Suite Runner
 
@@ -9,14 +8,14 @@ This script runs tests across all categories with appropriate execution strategi
 - Contract Tests: Schema and configuration validation
 """
 
+import os
 import sys
 import subprocess
 import time
 import argparse
+
 from pathlib import Path
 from typing import Dict, List, Tuple
-
-import os
 
 
 class TestSuiteRunner:

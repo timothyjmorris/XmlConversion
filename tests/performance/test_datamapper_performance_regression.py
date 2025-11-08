@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Performance Regression Test Suite for DataMapper Refactoring
 
@@ -14,13 +13,15 @@ import time
 import psutil
 import os
 import statistics
+import xml.etree.ElementTree as ET
+
 from typing import List, Dict, Any, Tuple
 from contextlib import contextmanager
-import xml.etree.ElementTree as ET
 
 from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.models import FieldMapping, MappingContract
 from xml_extractor.config.config_manager import get_config_manager
+
 
 # Mark all performance tests as slow/optional - skip by default in main test suite
 pytestmark = pytest.mark.slow

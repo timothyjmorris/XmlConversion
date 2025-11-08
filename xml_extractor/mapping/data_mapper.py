@@ -65,7 +65,7 @@ from decimal import Decimal, ROUND_HALF_UP
 
 from ..interfaces import DataMapperInterface
 from ..models import MappingContract, FieldMapping
-from ..exceptions import DataMappingError, DataTransformationError
+from ..exceptions import DataMappingError, DataTransformationError, ConfigurationError
 from ..validation.element_filter import ElementFilter
 from ..utils import StringUtils
 from ..config.config_manager import get_config_manager
@@ -206,6 +206,10 @@ class DataMapper(DataMapperInterface):
         # Build address type configuration cache at initialization
         # Extract preferred address type attribute name and value from contract
         self._preferred_address_type_config = self._get_element_type_filters('address', return_mode='preferred')
+        
+        # Build element name cache at initialization (Task 5: Contract-Driven XPath Element Names)
+        # Pre-compute child_table -> XML element name mappings from relationships array
+        self._element_name_cache = self._build_element_name_cache()
     
     def _build_enum_type_cache(self) -> Dict[str, Optional[str]]:
         """
@@ -260,6 +264,111 @@ class DataMapper(DataMapperInterface):
         self.logger.debug(f"Built enum_type cache with {len(cache)} entries")
         return cache
     
+    def _build_element_name_cache(self) -> Dict[str, str]:
+        """
+        Pre-build cache of child_table -> XML element name mappings from mapping contract.
+        
+        Instead of hard-coding element names like 'contact_employment' or 'contact_address'
+        in XPath queries, we extract them dynamically from the mapping contract's relationships
+        array. This enables multi-product support where different products use different XML
+        element names but map to the same destination tables.
+        
+        Example:
+        - Standard product: xml_child_path = ".../contact/contact_address"
+          → element name = "contact_address"
+        - IL Lending product: xml_child_path = ".../IL_contact/IL_contact_address"
+          → element name = "IL_contact_address"
+        - Both products use child_table = "contact_address" (stable destination table)
+        
+        The cache maps child_table name → XML element name for performance.
+        
+        Returns:
+            Dictionary mapping child_table names to their XML element names
+        """
+        cache = {}
+        
+        try:
+            # Try loading contract through config manager first (normal production path)
+            contract = self._config_manager.load_mapping_contract(self._mapping_contract_path)
+            
+            if not contract or not hasattr(contract, 'relationships') or not contract.relationships:
+                self.logger.debug("No relationships found in contract for element name cache")
+                return cache
+            
+            # Extract element name from xml_child_path for each relationship
+            for relationship in contract.relationships:
+                child_table = relationship.child_table
+                xml_child_path = relationship.xml_child_path
+                
+                if child_table and xml_child_path:
+                    # Extract last segment from path: "/path/to/element" → "element"
+                    element_name = xml_child_path.rstrip('/').split('/')[-1]
+                    cache[child_table] = element_name
+            
+            self.logger.debug(f"Built element name cache with {len(cache)} entries")
+            
+        except Exception as e:
+            # Fallback: Try loading JSON directly for absolute paths - and unit test infrastructure
+            self.logger.debug(f"Config manager load failed, trying direct JSON load: {e}")
+            try:
+                import json
+                from pathlib import Path
+                contract_path = Path(self._mapping_contract_path)
+                
+                if contract_path.exists() and contract_path.suffix == '.json':
+                    with open(contract_path, 'r', encoding='utf-8') as f:
+                        contract_data = json.load(f)
+                    
+                    # Extract relationships directly from JSON data
+                    relationships = contract_data.get('relationships', [])
+                    for rel in relationships:
+                        child_table = rel.get('child_table')
+                        xml_child_path = rel.get('xml_child_path')
+                        
+                        if child_table and xml_child_path:
+                            element_name = xml_child_path.rstrip('/').split('/')[-1]
+                            cache[child_table] = element_name
+                    
+                    self.logger.debug(f"Built element name cache (direct load) with {len(cache)} entries")
+                else:
+                    self.logger.warning(f"Could not load contract from path: {contract_path}")
+            except Exception as fallback_error:
+                self.logger.warning(f"Could not build element name cache: {fallback_error}")
+        
+        return cache
+    
+    def _get_child_element_name(self, child_table_name: str) -> str:
+        """
+        Get XML element name for a child table using cached contract-driven lookups.
+        
+        Extracts the XML element name from the mapping contract's relationships array
+        using `child_table` as the lookup key. This allows XPath queries to adapt to
+        different product XML structures while maintaining consistent database schemas.
+        
+        The method uses a pre-built cache (_element_name_cache) populated during
+        initialization for O(1) lookup performance.
+        
+        Args:
+            child_table_name: The destination table name (e.g., 'contact_address')
+            
+        Returns:
+            XML element name from xml_child_path (e.g., 'contact_address' or 'IL_contact_address')
+            Falls back to child_table_name if no relationship found (backwards compatibility)
+        
+        Example:
+            # Standard contract relationships:
+            # child_table='contact_address', xml_child_path='.../contact/contact_address'
+            element_name = mapper._get_child_element_name('contact_address')
+            # Returns: 'contact_address'
+            
+            # IL Lending contract relationships:
+            # child_table='contact_address', xml_child_path='.../IL_contact/IL_contact_address'
+            element_name = mapper._get_child_element_name('contact_address')
+            # Returns: 'IL_contact_address'
+        """
+        # Use cached element name for O(1) lookup
+        return self._element_name_cache.get(child_table_name, child_table_name)
+    
     def _find_filter_rule_by_element_type(self, element_type: str):
         """
         Find filter rule by element_type from contract's element_filtering configuration.
@@ -292,6 +401,11 @@ class DataMapper(DataMapperInterface):
         """
         Get type filtering attribute and values from contract's element filter rules.
         
+        CONTRACT-DRIVEN FAIL-FAST: This method requires a valid contract with complete
+        element_filtering configuration. Missing or incomplete configuration indicates
+        a critical contract issue that should be caught during initialization, not
+        silently degraded during processing.
+        
         Extracts the attribute name used for type filtering along with valid or preferred values.
         This enables product-agnostic filtering where both attribute names and values are dynamic.
         
@@ -322,64 +436,55 @@ class DataMapper(DataMapperInterface):
                 _get_element_type_filters('employment', 'all')
                 → ('employment_tp_c', ['CURR', 'PREV'])
         
-        Fallback Behavior:
-            If contract incomplete or missing, returns sensible defaults with warning:
-            - contact: ('ac_role_tp_c', ['PR', 'AUTHU']) or ('ac_role_tp_c', 'PR')
-            - address: ('address_tp_c', ['CURR', 'PREV', 'PATR']) or ('address_tp_c', 'CURR')
-            - employment: ('employment_tp_c', ['CURR', 'PREV']) or ('employment_tp_c', 'CURR')
+        Raises:
+            ConfigurationError: If element_filtering rule is missing or incomplete
         """
-        # Define fallback values by element type
-        fallback_map = {
-            'contact': ('ac_role_tp_c', ['PR', 'AUTHU']),
-            'address': ('address_tp_c', ['CURR', 'PREV', 'PATR']),
-            'employment': ('employment_tp_c', ['CURR', 'PREV'])
-        }
+        filter_rule = self._find_filter_rule_by_element_type(element_type)
         
-        try:
-            filter_rule = self._find_filter_rule_by_element_type(element_type)
-            
-            if not filter_rule:
-                self.logger.warning(f"No {element_type} filter rule found in contract - using fallback")
-                attr_name, values = fallback_map.get(element_type, ('type_attr', []))
-                return (attr_name, values[0] if return_mode == 'preferred' else values)
-            
-            # Access FilterRule object attributes
-            required_attrs = filter_rule.required_attributes if hasattr(filter_rule, 'required_attributes') else {}
-            
-            if not required_attrs:
-                self.logger.warning(f"{element_type.capitalize()} filter rule has no required_attributes - using fallback")
-                attr_name, values = fallback_map.get(element_type, ('type_attr', []))
-                return (attr_name, values[0] if return_mode == 'preferred' else values)
-            
-            # Find the type attribute (key with list value)
-            type_attr_name = None
-            type_values = None
-            
-            for attr_name, attr_value in required_attrs.items():
-                if isinstance(attr_value, list) and len(attr_value) > 0:
-                    type_attr_name = attr_name
-                    type_values = attr_value
-                    break
-            
-            if not type_attr_name or not type_values:
-                self.logger.warning(f"{element_type.capitalize()} filter rule missing required_attributes list - using fallback")
-                attr_name, values = fallback_map.get(element_type, ('type_attr', []))
-                return (attr_name, values[0] if return_mode == 'preferred' else values)
-            
-            # Return based on mode
-            if return_mode == 'preferred':
-                result_value = type_values[0]  # First element = preferred
-                self.logger.debug(f"Extracted {element_type} type filters: attribute='{type_attr_name}', "
-                                f"preferred='{result_value}', all_values={type_values}")
-                return (type_attr_name, result_value)
-            else:
-                self.logger.debug(f"Extracted {element_type} type filters: attribute='{type_attr_name}', values={type_values}")
-                return (type_attr_name, type_values)
-            
-        except Exception as e:
-            self.logger.warning(f"Error extracting {element_type} type filters from contract: {e} - using fallback")
-            attr_name, values = fallback_map.get(element_type, ('type_attr', []))
-            return (attr_name, values[0] if return_mode == 'preferred' else values)
+        if not filter_rule:
+            raise ConfigurationError(
+                f"Missing element_filtering rule for '{element_type}' in mapping contract. "
+                f"Contract must define element_filtering.filter_rules with element_type='{element_type}'. "
+                f"Check mapping_contract.json section: element_filtering.filter_rules"
+            )
+        
+        # Access FilterRule object attributes
+        required_attrs = filter_rule.required_attributes if hasattr(filter_rule, 'required_attributes') else {}
+        
+        if not required_attrs:
+            raise ConfigurationError(
+                f"Element filtering rule for '{element_type}' has no required_attributes. "
+                f"Filter rule must specify required_attributes with type filtering values. "
+                f"Example: required_attributes: {{'{element_type}_tp_c': ['TYPE1', 'TYPE2']}}"
+            )
+        
+        # Find the type attribute (key with list value)
+        type_attr_name = None
+        type_values = None
+        
+        for attr_name, attr_value in required_attrs.items():
+            if isinstance(attr_value, list) and len(attr_value) > 0:
+                type_attr_name = attr_name
+                type_values = attr_value
+                break
+        
+        if not type_attr_name or not type_values:
+            raise ConfigurationError(
+                f"Element filtering rule for '{element_type}' missing required_attributes list. "
+                f"At least one attribute must have a list of valid values. "
+                f"Found attributes: {list(required_attrs.keys())}, "
+                f"Expected format: {{'{element_type}_tp_c': ['TYPE1', 'TYPE2']}}"
+            )
+        
+        # Return based on mode
+        if return_mode == 'preferred':
+            result_value = type_values[0]  # First element = preferred
+            self.logger.debug(f"Extracted {element_type} type filters: attribute='{type_attr_name}', "
+                            f"preferred='{result_value}', all_values={type_values}")
+            return (type_attr_name, result_value)
+        else:
+            self.logger.debug(f"Extracted {element_type} type filters: attribute='{type_attr_name}', values={type_values}")
+            return (type_attr_name, type_values)
     
     def _get_contact_type_priority_map(self) -> Dict[str, int]:
         """
@@ -759,16 +864,21 @@ class DataMapper(DataMapperInterface):
         try:
             # Use XPath to find all contact elements
             contact_elements = xml_root.xpath('.//contact[@ac_role_tp_c]')
+            
+            # Get dynamic element names from contract (Task 5: Contract-Driven XPath Element Names)
+            employment_element = self._get_child_element_name('contact_employment')
+            address_element = self._get_child_element_name('contact_address')
+            
             for contact_elem in contact_elements:
                 # Extract all attributes as a dictionary
                 contact_dict = dict(contact_elem.attrib)
 
-                # Extract child employment elements
-                employment_elems = contact_elem.xpath('./contact_employment')
+                # Extract child employment elements using dynamic element name
+                employment_elems = contact_elem.xpath(f'./{employment_element}')
                 contact_dict['contact_employment'] = [dict(emp.attrib) for emp in employment_elems]
 
-                # Extract child address elements
-                address_elems = contact_elem.xpath('./contact_address')
+                # Extract child address elements using dynamic element name
+                address_elems = contact_elem.xpath(f'./{address_element}')
                 contact_dict['contact_address'] = [dict(addr.attrib) for addr in address_elems]
 
                 contacts.append(contact_dict)
@@ -865,12 +975,12 @@ class DataMapper(DataMapperInterface):
             current_data = None
 
             # Handle contact-specific mappings with context_data when available
+            # CONTRACT-DRIVEN: Use target_table (stable) instead of xml_path string matching (product-specific)
             if context_data and ('contact' in mapping.xml_path or 
-                               'contact_address' in mapping.xml_path or 
-                               'contact_employment' in mapping.xml_path):
-                # For contact_address and contact_employment, context_data contains {'attributes': {...}}
+                               mapping.target_table in ['contact_address', 'contact_employment']):
+                # For contact_address and contact_employment tables, context_data contains {'attributes': {...}}
                 # BUT skip this for special mapping types that have their own handling
-                if (('contact_address' in mapping.xml_path or 'contact_employment' in mapping.xml_path) and 
+                if (mapping.target_table in ['contact_address', 'contact_employment'] and 
                     mapping.mapping_type not in ['curr_address_only', 'last_valid_pr_contact']):
                     # Extract directly from context attributes
                     if mapping.xml_attribute and 'attributes' in context_data:
@@ -1665,8 +1775,8 @@ class DataMapper(DataMapperInterface):
                         self.logger.debug(f"Created contact_address record for con_id {con_id}")
                         
             except Exception as e:
-                self.logger.error(f"Error in centralized address filtering: {e}")
-                self._validation_errors.append(f"Address filtering error: {str(e)}")
+                self.logger.error(f"HANDLED in centralized address filtering: {e}")
+                self._validation_errors.append(f"Address filtering: {str(e)}")
                 # Fallback to empty records rather than crash
                 
         else:
@@ -1718,8 +1828,8 @@ class DataMapper(DataMapperInterface):
                         self.logger.debug(f"Created contact_employment record for con_id {con_id}")
                         
             except Exception as e:
-                self.logger.error(f"Error in centralized employment filtering: {e}")
-                self._validation_errors.append(f"Employment filtering error: {str(e)}")
+                self.logger.error(f"HANDLED in centralized employment filtering: {e}")
+                self._validation_errors.append(f"Employment filtering: {str(e)}")
                 # Fallback to empty records rather than crash
                 
         else:
@@ -2098,9 +2208,13 @@ class DataMapper(DataMapperInterface):
             self.logger.debug(f"Selected last VALID {primary_contact_type} contact: con_id={selected_con_id}")
             
             # Extract the requested attribute directly from the contact or its child elements
-            if 'contact_address' in mapping.xml_path:
-                # Look for contact_address elements within this contact
-                address_elements = last_valid_primary_contact.xpath('.//contact_address')
+            # CONTRACT-DRIVEN: Check if mapping refers to address data (either in target_table or xml_path)
+            # Get dynamic element name for address elements
+            address_element_name = self._get_child_element_name('contact_address')
+            
+            if mapping.target_table == 'contact_address' or address_element_name in mapping.xml_path:
+                # Look for address elements within this contact using dynamic element name
+                address_elements = last_valid_primary_contact.xpath(f'.//{address_element_name}')
                 
                 # CONTRACT-DRIVEN: Filter to preferred address type from contract (first in array)
                 address_type_attr, preferred_address_type = self._preferred_address_type_config

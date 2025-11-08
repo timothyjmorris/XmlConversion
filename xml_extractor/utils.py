@@ -3,6 +3,7 @@ Utility functions for common patterns across the XML extraction system.
 """
 
 import re
+
 from typing import Any, Optional
 
 

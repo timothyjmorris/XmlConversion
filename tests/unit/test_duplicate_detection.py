@@ -8,6 +8,7 @@ Tests verify duplicate detection logic for contact records with different key st
 """
 
 import unittest
+
 from unittest.mock import Mock
 from xml_extractor.database.duplicate_contact_detector import DuplicateContactDetector
 

@@ -7,8 +7,9 @@ error recovery for constraint violations.
 """
 
 import logging
-from typing import List, Dict, Any, Tuple
 import pyodbc
+
+from typing import List, Dict, Any, Tuple
 
 from ..exceptions import XMLExtractionError, DatabaseConstraintError
 

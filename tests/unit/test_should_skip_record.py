@@ -2,10 +2,14 @@
 import unittest
 import sys
 import os
+
+from xml_extractor.mapping.data_mapper import DataMapper
+
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 if base_dir not in sys.path:
     sys.path.insert(0, base_dir)
-from xml_extractor.mapping.data_mapper import DataMapper
+    
+
 
 class TestShouldSkipRecord(unittest.TestCase):
     def setUp(self):

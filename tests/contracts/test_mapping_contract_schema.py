@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Test script to validate the credit card mapping contract configuration.
 This script checks the JSON mapping contract for completeness and consistency.

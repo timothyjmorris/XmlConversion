@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Performance Test Runner for DataMapper Regression Testing
 
@@ -12,10 +11,11 @@ import sys
 import json
 import time
 import os
+import argparse
+
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Any
-import argparse
 
 # Add project root to Python path for imports
 script_dir = Path(__file__).parent

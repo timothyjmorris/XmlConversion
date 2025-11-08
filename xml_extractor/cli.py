@@ -7,6 +7,7 @@ from the command line with centralized configuration management.
 
 import sys
 import logging
+
 from typing import Optional
 
 from .config.config_manager import get_config_manager

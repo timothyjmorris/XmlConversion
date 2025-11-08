@@ -1,14 +1,19 @@
+
 import sys
 import os
-base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
-if base_dir not in sys.path:
-    sys.path.insert(0, base_dir)
 import pytest
+import json
+
 from pathlib import Path
+
 from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.parsing.xml_parser import XMLParser
 from xml_extractor.models import MappingContract, FieldMapping, RelationshipMapping
-import json
+
+base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+if base_dir not in sys.path:
+    sys.path.insert(0, base_dir)
+
 
 @pytest.fixture(scope="module")
 def fixture():

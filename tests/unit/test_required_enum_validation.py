@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Test case for DQ3 - Required Enum Validation
 
@@ -8,6 +7,7 @@ the critical fix identified in CODE_REVIEW_AND_ACTION_PLAN.md.
 """
 
 import pytest
+
 from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.models import FieldMapping
 from xml_extractor.exceptions import DataMappingError

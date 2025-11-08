@@ -1,13 +1,17 @@
+
 import unittest
 import sys
 import os
 import json
 import tempfile
+
+from xml_extractor.mapping.data_mapper import DataMapper
+from xml_extractor.exceptions import ConfigurationError
+
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 if base_dir not in sys.path:
     sys.path.insert(0, base_dir)
-from xml_extractor.mapping.data_mapper import DataMapper
-from xml_extractor.config.config_manager import get_config_manager
+
 
 class TestExtractValidContacts(unittest.TestCase):
     def test_no_valid_contacts(self):
@@ -160,6 +164,14 @@ class TestContractDrivenContactTypes(unittest.TestCase):
                             "con_id": True,
                             "borrower_type": ["PRIMARY", "SECONDARY", "COSIGNER"]
                         }
+                    },
+                    {
+                        "element_type": "address",
+                        "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+                        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address",
+                        "required_attributes": {
+                            "address_tp_c": ["CURR", "PREV", "PATR"]
+                        }
                     }
                 ]
             },
@@ -279,6 +291,14 @@ class TestContactTypePriority(unittest.TestCase):
                             "con_id": True,
                             "ac_role_tp_c": ["AUTHU", "PR"]  # AUTHU first!
                         }
+                    },
+                    {
+                        "element_type": "address",
+                        "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+                        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address",
+                        "required_attributes": {
+                            "address_tp_c": ["CURR", "PREV"]
+                        }
                     }
                 ]
             },
@@ -349,6 +369,14 @@ class TestContactTypePriority(unittest.TestCase):
                         "required_attributes": {
                             "con_id": True,
                             "ac_role_tp_c": ["PR", "AUTHU", "UNKNOWN"]  # Allow UNKNOWN type
+                        }
+                    },
+                    {
+                        "element_type": "address",
+                        "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+                        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address",
+                        "required_attributes": {
+                            "address_tp_c": ["CURR", "PREV"]
                         }
                     }
                 ]
@@ -457,7 +485,7 @@ class TestAddressTypeFiltering(unittest.TestCase):
             os.unlink(temp_contract.name)
     
     def test_fallback_when_contract_incomplete(self):
-        """Verify graceful fallback to defaults when address filter rule missing."""
+        """Verify fail-fast ConfigurationError when address filter rule missing."""
         # Load the default contract file and modify it
         config_dir = os.path.join(os.path.dirname(__file__), '../../config')
         with open(os.path.join(config_dir, 'mapping_contract.json'), 'r') as f:
@@ -475,13 +503,13 @@ class TestAddressTypeFiltering(unittest.TestCase):
         temp_contract.close()
         
         try:
-            mapper = DataMapper(mapping_contract_path=temp_contract.name, log_level="DEBUG")
+            # Should raise ConfigurationError, not fall back to defaults
+            with self.assertRaises(ConfigurationError) as context:
+                DataMapper(mapping_contract_path=temp_contract.name, log_level="DEBUG")
             
-            # Should fall back to defaults
-            address_type_attr, preferred_address_type = mapper._preferred_address_type_config
-            
-            self.assertEqual(address_type_attr, 'address_tp_c')
-            self.assertEqual(preferred_address_type, 'CURR')
+            # Verify error message is actionable
+            self.assertIn("Missing element_filtering rule for 'address'", str(context.exception))
+            self.assertIn("element_filtering.filter_rules", str(context.exception))
         finally:
             os.unlink(temp_contract.name)
 

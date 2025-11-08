@@ -21,7 +21,7 @@ class ProcessingDefaults:
     """
     
     # Batch processing
-    BATCH_SIZE = 500  # Records per batch for parallel workers
+    BATCH_SIZE = 1000  # Records per batch for parallel workers
     CHUNK_SIZE = 10000  # XML chunk size for memory-efficient parsing
     
     # Parallelization

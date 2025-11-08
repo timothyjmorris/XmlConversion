@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Quick Test Runner for Development
 
@@ -9,12 +8,13 @@ Perfect for running after code changes to ensure nothing is broken.
 import sys
 import subprocess
 import time
+
 from pathlib import Path
 
 
 def run_quick_tests():
     """Run quick tests for fast development feedback."""
-    print("⚡ RUNNING QUICK TESTS (Unit + Contract)")
+    print("RUNNING QUICK TESTS (Unit + Contract)")
     print("=" * 60)
     
     # Quick test categories

@@ -16,7 +16,9 @@ Tests mock cursors to verify BulkInsertStrategy behavior directly.
 
 import pytest
 import pyodbc
+
 from unittest.mock import Mock, MagicMock, patch, call
+
 from xml_extractor.database.bulk_insert_strategy import BulkInsertStrategy
 from xml_extractor.exceptions import XMLExtractionError
 

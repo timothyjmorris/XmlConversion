@@ -8,6 +8,7 @@ These tests verify that the extract_numeric mapping type correctly:
 """
 
 import pytest
+
 from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.models import FieldMapping
 

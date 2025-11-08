@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Database connection test for SQL Server environment validation.
 This script tests the database connection and validates the environment is ready.
@@ -7,14 +6,10 @@ This script tests the database connection and validates the environment is ready
 import json
 import logging
 import sys
+import pyodbc
+
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
-
-try:
-    import pyodbc
-except ImportError:
-    print("ERROR: pyodbc not installed. Run: pip install pyodbc")
-    sys.exit(1)
 
 
 class DatabaseConnectionTester:

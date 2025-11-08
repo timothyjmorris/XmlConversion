@@ -15,20 +15,21 @@ with actual database insertion and validation.
 import unittest
 import logging
 import tempfile
-from pathlib import Path
 import sys
 import pyodbc
-from datetime import datetime
 import json
 
-# Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from pathlib import Path
+from datetime import datetime
 
 from xml_extractor.validation.pre_processing_validator import PreProcessingValidator
 from xml_extractor.parsing.xml_parser import XMLParser
 from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.database.migration_engine import MigrationEngine
 from xml_extractor.models import ProcessingConfig
+
+# Add project root to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestEndToEndIntegration(unittest.TestCase):
