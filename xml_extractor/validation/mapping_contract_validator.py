@@ -265,17 +265,73 @@ class MappingContractValidator:
         """
         Validate enum_mappings section and cross-reference with mappings.
         
-        Checks:
-            1. All mappings with mapping_type=["enum"] have corresponding enum definitions
-            2. Enum name extracted from target_column (e.g., "app_source_enum" key required
-               for mapping with target_column="app_source_enum")
-            3. No unused enum definitions (warning only)
+        Checks that every mapping with mapping_type=["enum"] has its target_column
+        defined in the enum_mappings section. This ensures enum transformations
+        won't silently fail at runtime due to missing configuration.
         
-        Pattern: Scan mappings for `"mapping_type": ["enum"]`, extract target_column,
-        verify key exists in enum_mappings section.
+        Design: Simple one-way check - mappings → enum_mappings.
+        - Unused enum_mappings are allowed (no warnings)
+        - Column naming conventions not enforced (allow flexibility)
+        - Just verify: if mapping uses enum, the enum definition must exist
         
-        Adds errors to self.errors list for missing enum definitions.
-        Adds warnings to self.warnings list for unused enum definitions.
+        Adds errors to self.errors list for:
+        - Missing enum_mappings section when enum mappings exist
+        - Missing enum definition for any mapping with mapping_type=["enum"]
         """
-        # TODO: Implement enum mappings validation
-        pass
+        # Get enum_mappings section
+        enum_mappings = self._get_attr(self.contract, "enum_mappings")
+        
+        # Get all mappings
+        mappings = self._get_attr(self.contract, "mappings", [])
+        if not mappings:
+            return  # No mappings to validate
+        
+        # Find all mappings that use enum transformation
+        enum_mapped_columns = []
+        for mapping in mappings:
+            mapping_type = self._get_attr(mapping, "mapping_type", [])
+            
+            # Handle None, string, and list formats
+            if mapping_type is None:
+                mapping_type = []
+            elif isinstance(mapping_type, str):
+                mapping_type = [mapping_type]
+            
+            # Check if "enum" is in the mapping_type list
+            if "enum" in mapping_type:
+                target_column = self._get_attr(mapping, "target_column")
+                target_table = self._get_attr(mapping, "target_table")
+                if target_column:
+                    enum_mapped_columns.append({
+                        "column": target_column,
+                        "table": target_table
+                    })
+        
+        # If no enum mappings used, no validation needed
+        if not enum_mapped_columns:
+            return
+        
+        # Check if enum_mappings section exists
+        if enum_mappings is None:
+            self.errors.append(MappingContractValidationError(
+                category="enum_mappings",
+                message="Missing enum_mappings section but mappings use mapping_type=['enum']",
+                contract_location="enum_mappings",
+                fix_guidance="Add enum_mappings section with definitions for all enum columns",
+                example_fix='{"enum_mappings": {"app_source_enum": {"VALUE1": 1, "VALUE2": 2}}}'
+            ))
+            return
+        
+        # Validate each enum-mapped column has definition in enum_mappings
+        for enum_col in enum_mapped_columns:
+            column_name = enum_col["column"]
+            table_name = enum_col["table"]
+            
+            if column_name not in enum_mappings:
+                self.errors.append(MappingContractValidationError(
+                    category="enum_mappings",
+                    message=f"Column '{column_name}' uses mapping_type=['enum'] but not defined in enum_mappings",
+                    contract_location=f"mappings (target_table='{table_name}', target_column='{column_name}') / enum_mappings",
+                    fix_guidance=f"Add enum definition for '{column_name}' to enum_mappings section",
+                    example_fix=f'"{column_name}": {{"VALUE1": 1, "VALUE2": 2}}'
+                ))

@@ -629,5 +629,242 @@ class TestRelationshipsValidation(unittest.TestCase):
         self.assertEqual(result.error_count, 0)
 
 
+class TestEnumMappingsValidation(unittest.TestCase):
+    """Test _validate_enum_mappings() - Step 5."""
+    
+    def test_valid_enum_mappings_all_defined(self):
+        """All enum mappings referenced in mappings are defined in enum_mappings."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": ["app_base", "processing_log"],
+            "relationships": [],
+            "enum_mappings": {
+                "app_source_enum": {"WEB": 1, "MOBILE": 2},
+                "status_enum": {"ACTIVE": 1, "INACTIVE": 2}
+            },
+            "mappings": [
+                {
+                    "target_table": "app_base",
+                    "target_column": "app_source_enum",
+                    "mapping_type": ["enum"]
+                },
+                {
+                    "target_table": "app_base",
+                    "target_column": "status_enum",
+                    "mapping_type": ["enum"]
+                },
+                {
+                    "target_table": "app_base",
+                    "target_column": "app_id",
+                    "mapping_type": []  # Not an enum
+                }
+            ]
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
+    
+    def test_missing_enum_mappings_section(self):
+        """Error when enum_mappings section is missing entirely."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": ["app_base", "processing_log"],
+            "relationships": [],
+            # enum_mappings missing entirely
+            "mappings": [
+                {
+                    "target_table": "app_base",
+                    "target_column": "app_source_enum",
+                    "mapping_type": ["enum"]
+                }
+            ]
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertEqual(result.error_count, 1)
+        error = result.errors[0]
+        self.assertEqual(error.category, "enum_mappings")
+        self.assertIn("missing", error.message.lower())
+    
+    def test_enum_mapping_not_defined(self):
+        """Error when mapping uses enum but target_column not in enum_mappings."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": ["app_base", "processing_log"],
+            "relationships": [],
+            "enum_mappings": {
+                "status_enum": {"ACTIVE": 1}
+            },
+            "mappings": [
+                {
+                    "target_table": "app_base",
+                    "target_column": "app_source_enum",  # Not in enum_mappings!
+                    "mapping_type": ["enum"]
+                }
+            ]
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertEqual(result.error_count, 1)
+        error = result.errors[0]
+        self.assertEqual(error.category, "enum_mappings")
+        self.assertIn("app_source_enum", error.message)
+        self.assertIn("not defined", error.message.lower())
+    
+    def test_multiple_missing_enum_mappings(self):
+        """Errors for each missing enum mapping."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": ["app_base", "processing_log"],
+            "relationships": [],
+            "enum_mappings": {},
+            "mappings": [
+                {
+                    "target_table": "app_base",
+                    "target_column": "app_source_enum",
+                    "mapping_type": ["enum"]
+                },
+                {
+                    "target_table": "app_base",
+                    "target_column": "status_enum",
+                    "mapping_type": ["enum"]
+                },
+                {
+                    "target_table": "app_base",
+                    "target_column": "decision_enum",
+                    "mapping_type": ["enum"]
+                }
+            ]
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertEqual(result.error_count, 3)
+        # Check all three are reported
+        error_messages = " ".join([e.message for e in result.errors])
+        self.assertIn("app_source_enum", error_messages)
+        self.assertIn("status_enum", error_messages)
+        self.assertIn("decision_enum", error_messages)
+    
+    def test_chained_mapping_type_with_enum(self):
+        """Enum validation works when enum is part of chained mapping_type."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": ["app_base", "processing_log"],
+            "relationships": [],
+            "enum_mappings": {
+                "contact_type_enum": {"PR": 1, "AUTHU": 2}
+            },
+            "mappings": [
+                {
+                    "target_table": "contact_base",
+                    "target_column": "contact_type_enum",
+                    "mapping_type": ["last_valid_pr_contact", "enum"]  # Chained
+                }
+            ]
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
+    
+    def test_empty_enum_mappings_section_with_enum_usage(self):
+        """Error when enum_mappings exists but is empty and enums are used."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": ["app_base", "processing_log"],
+            "relationships": [],
+            "enum_mappings": {},  # Empty
+            "mappings": [
+                {
+                    "target_table": "app_base",
+                    "target_column": "app_source_enum",
+                    "mapping_type": ["enum"]
+                }
+            ]
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertEqual(result.error_count, 1)
+        self.assertIn("app_source_enum", result.errors[0].message)
+    
+    def test_unused_enum_mappings_allowed(self):
+        """Unused enum_mappings (not referenced in mappings) are allowed."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": ["app_base", "processing_log"],
+            "relationships": [],
+            "enum_mappings": {
+                "app_source_enum": {"WEB": 1},
+                "unused_enum": {"VALUE": 99},  # Not referenced - OK
+                "another_unused": {"X": 1}      # Also not referenced - OK
+            },
+            "mappings": [
+                {
+                    "target_table": "app_base",
+                    "target_column": "app_source_enum",
+                    "mapping_type": ["enum"]
+                }
+            ]
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
+
+
 if __name__ == '__main__':
     unittest.main()
