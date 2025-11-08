@@ -32,6 +32,8 @@ from ..mapping.data_mapper import DataMapper
 from ..database.migration_engine import MigrationEngine
 from ..models import ProcessingResult
 from ..interfaces import BatchProcessorInterface
+from ..exceptions import (XMLParsingError, DataMappingError, DataTransformationError,
+                         ValidationError, DatabaseConnectionError, DatabaseConstraintError)
 
 
 @dataclass
@@ -54,6 +56,7 @@ class WorkResult:
     records_inserted: int = 0
     processing_time: float = 0.0
     tables_populated: List[str] = None
+    quality_issues: List[str] = None  # Non-fatal data quality warnings (e.g., validation errors during optional field processing)
 
 
 class ParallelCoordinator(BatchProcessorInterface):
@@ -269,7 +272,8 @@ class ParallelCoordinator(BatchProcessorInterface):
                         'processing_time': r.processing_time,
                         'records_inserted': r.records_inserted,
                         'error_stage': r.error_stage,
-                        'error_message': r.error_message
+                        'error_message': r.error_message,
+                        'quality_issues': r.quality_issues
                     }
                     for r in results
                 ]
@@ -466,6 +470,9 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
                 processing_time=time.time() - start_time
             )
         
+        # Capture data quality issues from mapper (non-fatal warnings)
+        quality_issues = _worker_mapper.get_validation_errors() if hasattr(_worker_mapper, 'get_validation_errors') else []
+        
         # Add processing_log entry to mapped_data (atomically coupled with data insertion)
         # This ensures log entry only exists if data insertion succeeds (single transaction)
         # processing_log has FK constraint on app_id → app_base.app_id, so it must come after app_base in insertion order
@@ -508,7 +515,8 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
             success=True,
             records_inserted=total_inserted,
             processing_time=time.time() - start_time,
-            tables_populated=list(mapped_data.keys())
+            tables_populated=list(mapped_data.keys()),
+            quality_issues=quality_issues if quality_issues else None
         )
         
     except Exception as e:
@@ -517,15 +525,40 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
             _worker_progress_dict['worker_stats'][worker_id]['processed'] += 1
             _worker_progress_dict['worker_stats'][worker_id]['failed'] += 1
         
-        # Determine error stage from exception type and category
-        error_stage = 'unknown'
-        if hasattr(e, 'error_category'):
-            if e.error_category == 'constraint_violation':
-                error_stage = 'constraint_violation'
-            elif e.error_category == 'database_error':
-                error_stage = 'database_error'
-            elif e.error_category == 'system_error':
-                error_stage = 'system_error'
+        # Determine error stage from exception type
+        if isinstance(e, XMLParsingError):
+            error_stage = 'parsing'
+        elif isinstance(e, ValidationError):
+            error_stage = 'validation'
+        elif isinstance(e, (DataMappingError, DataTransformationError)):
+            error_stage = 'mapping'
+        elif isinstance(e, DatabaseConstraintError):
+            error_stage = 'constraint_violation'
+        elif isinstance(e, DatabaseConnectionError):
+            error_stage = 'database'
+        else:
+            error_stage = 'unknown'
+        
+        # Log the failure to processing_log so we don't retry this app_id
+        # This prevents repeatedly attempting to process failed applications
+        try:
+            failure_message = f"{error_stage}: {str(e)}"
+            _worker_migration_engine.execute_bulk_insert(
+                records=[{
+                    'app_id': work_item.app_id,
+                    'status': 'failed',
+                    'failure_reason': failure_message[:500],  # Truncate to column size
+                    'processing_time': datetime.utcnow(),
+                    'session_id': _worker_session_id,
+                    'app_id_start': _worker_app_id_start,
+                    'app_id_end': _worker_app_id_end
+                }],
+                table_name='processing_log',
+                enable_identity_insert=False
+            )
+        except Exception as log_error:
+            # If logging fails, at least log to Python logs (logging already imported at module level)
+            logging.error(f"Failed to log failure for app_id {work_item.app_id}: {log_error}")
         
         return WorkResult(
             sequence=work_item.sequence,

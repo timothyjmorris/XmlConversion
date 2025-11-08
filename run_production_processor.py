@@ -74,13 +74,14 @@ Processing Mode (choose one):
     --limit               Process up to N records starting from app_id 1
 
 Chunking:
-    --chunk-size          Records per chunk (default: 10000)
+    --chunk-size          App IDs per chunk - each chunk runs as separate process (default: 10000)
+                         Prevents performance degradation on long production runs (>100k applications)
 
 Pass-Through Parameters (same as production_processor.py):
     --server              SQL Server instance (default: localhost\\SQLEXPRESS)
     --database            Database name (default: XmlConversionDB)
     --workers             Parallel workers per chunk (default: 4)
-    --batch-size          Records per batch (default: 500)
+    --batch-size          Application XMLs to fetch per SQL query within each chunk (default: 500)
     --log-level           Console verbosity (default: WARNING)
     --username            SQL Server username (optional)
     --password            SQL Server password (optional)
@@ -150,10 +151,13 @@ class ChunkedProcessorOrchestrator:
         Initialize orchestrator.
         
         Args:
-            chunk_size: Records per chunk
+            chunk_size: Number of app_ids per chunk (each chunk spawns a separate process).
+                       Example: chunk_size=10000 with app_id range 1-60000 creates 6 chunks.
+                       Prevents performance degradation on long production runs (>100k applications).
+                       NOT the same as batch_size (which controls App XML fetch size within each chunk).
             app_id_start: Starting app_id for range-based processing (requires app_id_end)
             app_id_end: Ending app_id for range-based processing (requires app_id_start)
-            limit: Total records to process starting from app_id 1 (alternative to range mode)
+            limit: Total applications to process starting from app_id 1 (alternative to range mode)
             **processor_kwargs: Pass-through arguments for production_processor.py
         
         Note: Must provide EITHER (app_id_start AND app_id_end) OR limit, not both.
@@ -463,7 +467,7 @@ def main():
     parser.add_argument("--workers", type=int, default=ProcessingDefaults.WORKERS,
                        help=f"Number of parallel workers per chunk (default: {ProcessingDefaults.WORKERS})")
     parser.add_argument("--batch-size", type=int, default=ProcessingDefaults.BATCH_SIZE,
-                       help=f"Records per batch (default: {ProcessingDefaults.BATCH_SIZE})")
+                       help=f"Application XMLs to fetch per SQL query (pagination size, default: {ProcessingDefaults.BATCH_SIZE})")
     parser.add_argument("--log-level", default=ProcessingDefaults.LOG_LEVEL,
                        choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
                        help=f"Logging level (default: {ProcessingDefaults.LOG_LEVEL})")

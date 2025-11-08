@@ -41,7 +41,7 @@ RESET & RESEED SANDBOX TABLES
 -- Processing Log (error tracking, resumability)
 CREATE TABLE sandbox.processing_log (
 	[log_id]			int				NOT NULL CONSTRAINT PK_processing_log_log_id PRIMARY KEY IDENTITY(1, 1),
-	[app_id]			int				NOT NULL CONSTRAINT FK_processing_log__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
+	[app_id]			int				NOT NULL, -- DO NOT PUT AN FK CONSTRAINT HERE, OTHERWISE WE CAN'T INSERT FAILURES!
 	[status]			varchar(20)		NOT NULL,
 	[failure_reason]	varchar(500)	NULL,
 	[processing_time]	datetime2(7)	NOT NULL CONSTRAINT DF_processing_log_processing_time DEFAULT GETUTCDATE(),
@@ -49,7 +49,6 @@ CREATE TABLE sandbox.processing_log (
 	app_id_start		int				NULL, 
     app_id_end			int				NULL
 );
-
 -- On processing_log  
 CREATE NONCLUSTERED INDEX IX_processing_log_app_id 
 ON sandbox.processing_log(app_id);

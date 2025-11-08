@@ -111,7 +111,7 @@ class ProductionProcessor:
             username: SQL Server username (optional, uses Windows auth if not provided)
             password: SQL Server password (optional)
             workers: Number of parallel workers
-            batch_size: Records to process per batch
+            batch_size: Number of application XMLs to fetch from database per SQL query (pagination size)
             log_level: Logging level (CRITICAL, ERROR, WARNING, INFO, DEBUG)
             enable_pooling: Enable connection pooling (default: False for SQLExpress, True for SQL Server/Prod)
             min_pool_size: Minimum connection pool size (default: 4, only used if enable_pooling=True)
@@ -314,9 +314,11 @@ class ProductionProcessor:
             eliminating lock contention during duplicate detection queries.
         
         Args:
-            limit: Maximum number of records to retrieve (None for all)
-            last_app_id: Only fetch records with app_id > last_app_id (cursor-based pagination)
-            exclude_failed: Whether to exclude records that have failed processing before
+            limit: Maximum number of App XMLs to retrieve in this fetch (controls SQL TOP clause)
+                  Used for batch-size pagination - fetches up to 'limit' application XMLs per query.
+                  NOT the same as total application limit passed to run_full_processing().
+            last_app_id: Only fetch App XMLs with app_id > last_app_id (cursor-based pagination)
+            exclude_failed: Whether to exclude applications that have failed processing before
             
         Returns:
             List of (app_id, xml_content) tuples, ordered by app_id
@@ -352,36 +354,6 @@ class ProductionProcessor:
                 if self.app_id_end is not None:
                     where_conditions.append(f"ax.app_id <= {self.app_id_end}")
                 
-                # Add upper bound to keep batch focused (only if not using explicit ranges)
-                # This optimization helps when processing entire dataset sequentially by limiting
-                # the search space for the TOP query
-                #
-                # IMPORTANT: Resume scenario consideration
-                # When resuming (last_app_id=0 but processing_log has entries), we could either:
-                # A) Skip upper bound entirely (simple, but slower TOP query)
-                # B) Query processing_log for MAX(app_id) to set accurate upper bound (1 extra query)
-                #
-                # We choose (B) because:
-                # - Extra query runs only ONCE per session (first batch only)
-                # - Query is fast: simple aggregate on indexed column
-                # - Preserves performance optimization for large datasets
-                # - Cost: ~10ms one-time overhead vs potential seconds saved on large scans
-                if limit and self.app_id_start is None and self.app_id_end is None:
-                    if last_app_id == 0 and exclude_failed:
-                        # Resume scenario: Check if we have processed records to determine starting point
-                        # This single query enables the TOP + upper bound optimization for the main query
-                        cursor.execute(f"""
-                            SELECT MAX(app_id) 
-                            FROM [{self.target_schema}].[processing_log]
-                        """)
-                        max_processed = cursor.fetchone()[0]
-                        upper_bound = (max_processed or 0) + limit
-                    else:
-                        # Normal continuation: Use cursor-based upper bound
-                        upper_bound = last_app_id + limit
-                    
-                    where_conditions.append(f"ax.app_id <= {upper_bound}")
-                
                 # Exclude already-processed records using NOT EXISTS
                 if exclude_failed:
                     where_conditions.append(f"""NOT EXISTS (
@@ -400,6 +372,9 @@ class ProductionProcessor:
                     {where_clause}
                     ORDER BY ax.app_id
                 """
+                
+                # Log the actual SQL query for debugging
+                self.logger.debug(f"Executing SQL query:\n{query}")
                 
                 # TIME THE QUERY EXECUTION
                 query_start = time.time()
@@ -479,11 +454,13 @@ class ProductionProcessor:
         # No need for separate logging here - log entries already exist in database
         individual_results = processing_result.performance_metrics.get('individual_results', [])
         failed_apps = []
+        quality_issue_apps = []  # Apps that succeeded but had data quality warnings
         for result in individual_results:
             success = result.get('success', True)
             app_id = result.get('app_id')
             error_stage = result.get('error_stage', 'unknown')
             error_message = result.get('error_message', 'No error message available')
+            quality_issues = result.get('quality_issues', [])
             
             # Special case: PK violations on app_base are NOT failures
             # They mean the data already exists in the database, which is the desired end state
@@ -503,6 +480,14 @@ class ProductionProcessor:
                     'processing_time': result.get('processing_time', 0)
                 }
                 failed_apps.append(failed_app)
+            elif quality_issues:
+                # Track successful apps with data quality warnings
+                quality_issue_app = {
+                    'app_id': app_id,
+                    'quality_issues': quality_issues,
+                    'processing_time': result.get('processing_time', 0)
+                }
+                quality_issue_apps.append(quality_issue_app)
         
         # Categorize failures by stage
         failure_summary = {
@@ -534,7 +519,9 @@ class ProductionProcessor:
             'server': self.server,
             'database': self.database,
             'failed_apps': failed_apps,
-            'failure_summary': failure_summary
+            'failure_summary': failure_summary,
+            'quality_issue_apps': quality_issue_apps,
+            'quality_issue_count': len(quality_issue_apps)
         }
         
         # Log summary
@@ -584,6 +571,20 @@ class ProductionProcessor:
         else:
             self.logger.info("All records processed successfully!")
         
+        # Log quality issues if any (successful apps with data quality warnings)
+        if metrics['quality_issue_count'] > 0:
+            self.logger.warning(f"Data Quality Warnings: {metrics['quality_issue_count']} applications had non-fatal data quality issues")
+            quality_app_ids = [str(app['app_id']) for app in metrics['quality_issue_apps']]
+            if len(quality_app_ids) <= 10:
+                self.logger.warning(f"  Apps with Quality Issues: {', '.join(quality_app_ids)}")
+            else:
+                self.logger.warning(f"  Apps with Quality Issues: {', '.join(quality_app_ids[:10])} ... and {len(quality_app_ids)-10} more")
+            
+            # Log detailed quality issues at INFO level
+            for quality_app in metrics['quality_issue_apps']:
+                for issue in quality_app['quality_issues']:
+                    self.logger.info(f"  App {quality_app['app_id']}: {issue}")
+        
         return metrics
     
     def _save_metrics(self, metrics: dict):
@@ -626,6 +627,8 @@ class ProductionProcessor:
                 'parallel_efficiency': metrics.get('parallel_efficiency', 0),
                 'failure_summary': metrics.get('failure_summary', {}),
                 'failed_apps': metrics.get('failed_apps', []),
+                'quality_issue_apps': metrics.get('quality_issue_apps', []),
+                'quality_issue_count': metrics.get('quality_issue_count', 0),
                 'batch_details': metrics.get('batch_details', [])
             }
             
@@ -636,7 +639,15 @@ class ProductionProcessor:
             self.logger.error(f"Failed to save metrics: {e}")
     
     def run_full_processing(self, limit: Optional[int] = None):
-        """Run full processing with batching and monitoring."""
+        """
+        Run full processing with batching and monitoring.
+        
+        Args:
+            limit: Maximum total number of applications to process before stopping (safety cap).
+                  NOT the same as batch_size - this limits total applications across all batches.
+                  Applications are fetched in batches of self.batch_size until limit is reached.
+                  Example: limit=10000, batch_size=500 → process up to 10,000 applications, fetching 500 App XMLs at a time.
+        """
         self.logger.info("Starting full processing run")
         
         # Display processing scope in console
@@ -676,6 +687,7 @@ class ProductionProcessor:
         total_successful = 0
         total_failed = 0
         all_failed_apps = []
+        all_quality_issue_apps = []  # Collect quality warnings across batches
         batch_details = []  # Collect per-batch metrics
         overall_failure_summary = {
             'validation_failures': 0,
@@ -737,6 +749,9 @@ class ProductionProcessor:
             batch_failure_summary = metrics.get('failure_summary', {})
             for key in overall_failure_summary:
                 overall_failure_summary[key] += batch_failure_summary.get(key, 0)
+            
+            # Accumulate quality issue apps
+            all_quality_issue_apps.extend(metrics.get('quality_issue_apps', []))
             
             # Update cursor to last app_id in batch for next iteration
             if batch_records:
@@ -806,6 +821,8 @@ class ProductionProcessor:
             'overall_rate_per_minute': overall_rate,
             'failed_apps': all_failed_apps,
             'failure_summary': overall_failure_summary,
+            'quality_issue_apps': all_quality_issue_apps,
+            'quality_issue_count': len(all_quality_issue_apps),
             'batch_details': batch_details,
             'limit': limit,
             'total_database_inserts': sum(b.get('database_inserts', 0) for b in batch_details),
@@ -832,9 +849,9 @@ def main():
     parser.add_argument("--workers", type=int, default=ProcessingDefaults.WORKERS, 
                        help=f"Number of parallel workers (default: {ProcessingDefaults.WORKERS})")
     parser.add_argument("--batch-size", type=int, default=ProcessingDefaults.BATCH_SIZE, 
-                       help=f"Records per batch (default: {ProcessingDefaults.BATCH_SIZE})")
+                       help=f"Application XMLs to fetch per SQL query (pagination size, default: {ProcessingDefaults.BATCH_SIZE})")
     parser.add_argument("--limit", type=int, default=ProcessingDefaults.LIMIT, 
-                       help=f"Maximum records to process (default: {ProcessingDefaults.LIMIT}, safety limit)")
+                       help=f"Total applications to process before stopping (safety cap, default: {ProcessingDefaults.LIMIT})")
     parser.add_argument("--log-level", default=ProcessingDefaults.LOG_LEVEL, 
                        choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
                        help=f"Logging level (default: {ProcessingDefaults.LOG_LEVEL})")

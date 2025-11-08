@@ -27,6 +27,7 @@ Contract-Driven:
 """
 
 import logging
+
 from typing import Dict, List, Any, Optional
 from xml_extractor.models import MappingContract
 

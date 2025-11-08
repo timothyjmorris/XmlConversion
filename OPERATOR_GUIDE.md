@@ -65,16 +65,19 @@
 
 ### 2. Batch Size vs Limit
 
-**--batch-size** (Memory Management)
-- How many records to fetch and process at once
-- Default: 500 records/batch
+**--batch-size** (Applications per SQL fetch)
+- How many App XMLs to fetch from database in a single SQL query
+- Default: 500 applications/batch
 - Larger = better throughput but more memory
 - Sweet spot: 500-1000
+- Used internally for cursor-based pagination
 
-**--limit** (Safety Cap)
-- Total records to process before stopping
-- Default: 10,000 records
-- Example: `--batch-size 500 --limit 10000` = 20 batches of 500 each
+**--limit** (Total application processing cap)
+- Maximum total number of applications to process before stopping
+- Default: 10,000 applications
+- Acts as a safety limit to prevent runaway processing
+- Example: `--batch-size 500 --limit 10000` = Process up to 10,000 applications, fetching 500 at a time
+- When limit is reached, processing stops even if more unprocessed App XMLs exist
 
 ### 3. Schema Isolation (Contract-Driven)
 

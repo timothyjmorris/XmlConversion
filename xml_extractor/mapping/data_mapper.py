@@ -537,6 +537,9 @@ class DataMapper(DataMapperInterface):
             This method assumes pre-validation of app_id and contacts. For full validation
             including contact extraction and deduplication, use apply_mapping_contract directly.
         """
+        # Clear validation errors from previous app (important for reused mapper instances)
+        self._validation_errors = []
+        
         # Set the XML root for contact extraction
         if xml_root is not None:
             self._current_xml_root = xml_root
@@ -1663,6 +1666,7 @@ class DataMapper(DataMapperInterface):
                         
             except Exception as e:
                 self.logger.error(f"Error in centralized address filtering: {e}")
+                self._validation_errors.append(f"Address filtering error: {str(e)}")
                 # Fallback to empty records rather than crash
                 
         else:
@@ -1715,6 +1719,7 @@ class DataMapper(DataMapperInterface):
                         
             except Exception as e:
                 self.logger.error(f"Error in centralized employment filtering: {e}")
+                self._validation_errors.append(f"Employment filtering error: {str(e)}")
                 # Fallback to empty records rather than crash
                 
         else:

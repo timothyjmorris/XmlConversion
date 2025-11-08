@@ -48,9 +48,11 @@ python -m pytest tests/ -v
 ================================================================================
 
 OPTIMAL BATCH-SIZE: 1000 (for local dev machine)
+- What it controls: Number of App XMLs fetched per SQL query (pagination size)
 - Tested: 20, 50, 100, 500, 1000, 2000
 - Result: Peak at 1000 (~2000 apps/min)
 - Above 1000: Memory pressure and orchestration overhead increase
+- Note: Different from --limit (total applications cap) and --chunk-size (process boundaries for long runs >100k)
 
 CONNECTION POOLING: Disabled (for SQLExpress)
 - Tested with FK removal and index rebuild: No improvement

@@ -206,7 +206,7 @@
 
 **Baseline:** 1,500-1,600 applications/minute
 - 4 parallel workers
-- batch-size=1000
+- batch-size=1000 (App XMLs per SQL fetch)
 - 4-core Windows machine with SQLExpress
 
 **Scaling:**
@@ -215,18 +215,19 @@
 
 ### Batch Processing
 
-- Batch size: 1000 records fetched at once
+- Batch size: 1000 App XMLs fetched per SQL query (pagination size)
 - Processing: Parallel across 4 workers
-- Insert: Bulk operation with fast_executemany
+- Insert: Bulk operation with fast_executemany (each application expands to multiple normalized database records)
 - Memory: ~125MB stable (no degradation)
 
-### Chunked Processing (Large Datasets)
+### Chunked Processing (Long Production Runs)
 
-For >100k records, use `run_production_processor.py`:
-- Chunks: 10k records per chunk (default)
+For >100k applications, use `run_production_processor.py`:
+- Chunk size: 10k app_ids per chunk (default) - each chunk is a separate process
+- Batch size: 500-1000 App XMLs per SQL query within each chunk
 - Lifecycle: Fresh Python process per chunk
-- Benefits: Prevents memory degradation, natural checkpoints
-- Performance: Same throughput, better stability
+- Benefits: Prevents performance degradation on long runs, natural checkpoints
+- Performance: Same throughput, better stability over extended processing
 
 ---
 
@@ -281,16 +282,16 @@ For >100k records, use `run_production_processor.py`:
 ### Runtime Parameters
 
 ```powershell
-    # Mode 1: All records (safety capped at limit)
-    --limit 10000                           # Process first 10k
+    # LIMIT Mode: Sequential with total cap (safety limit)
+    --limit 10000                           # Process up to 10k applications
 
-    # Mode 2: Explicit range (concurrent-safe)
-    --app-id-start 1 --app-id-end 180000   # Exact boundaries
+    # RANGE Mode: Explicit range (concurrent-safe for multiple instances)
+    --app-id-start 1 --app-id-end 180000   # Process only applications in this app_id range
 
     # Performance tuning
-    --workers 4                             # Parallel processes (default: 4)
-    --batch-size 1000                       # Records per batch (default: 500)
-    --enable-pooling                        # Connection pooling (remote SQL Server)
+    --workers 4                             # Parallel processes per instance (default: 4)
+    --batch-size 1000                       # App XMLs per SQL fetch (pagination, default: 500)
+    --enable-pooling                        # Connection pooling (for remote SQL Server)
 ```
 
 ---

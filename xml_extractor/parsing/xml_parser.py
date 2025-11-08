@@ -6,6 +6,7 @@ element parsing based on mapping contracts for optimal performance.
 """
 
 import logging
+
 from typing import Dict, Any, Optional, List, Set
 from xml.etree.ElementTree import Element
 

@@ -60,6 +60,24 @@ This document identifies all hard-coded product-specific references in `data_map
 
 **Opportunity**: Derive table categories from contract metadata rather than hard-coding names.
 
+**POSSIBLE: LOOK AT THE {RELATIONSHIPS} IN THE MAPPING CONTRACT**: these have destination tables and the source XML! You could even traverse it from child_table to parent_table I think. We can extent the table with needed, but the destination will always be the same, it's the xml_parent_path and xml_child_path that will vary by product.
+
+```json
+    {
+      "parent_table": "app_base",
+      "child_table": "contact_base",
+      "foreign_key_column": "app_id",
+      "xml_parent_path": "/Provenir/Request",
+      "xml_child_path": "/Provenir/Request/CustData/application/contact"
+    },
+    {
+      "parent_table": "contact_base",
+      "child_table": "contact_address",
+      "foreign_key_column": "con_id",
+      "xml_parent_path": "/Provenir/Request/CustData/application/contact",
+      "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address"
+    }
+``` 
 ---
 
 ### 4. **XPath Pattern Strings in Logic**
@@ -75,6 +93,7 @@ This document identifies all hard-coded product-specific references in `data_map
 - Can extract element names from these paths!
 
 **Opportunity**: Derive XPath patterns from `xml_child_path` in filter rules.
+**POSSIBLE: LOOK AT THE {RELATIONSHIPS} IN THE MAPPING CONTRACT**: these have destination tables and the source XML! You could even traverse it from child_table to parent_table I think. We can extent the table with needed, but the destination will always be the same, it's the xml_parent_path and xml_child_path that will vary by product.
 
 ---
 
