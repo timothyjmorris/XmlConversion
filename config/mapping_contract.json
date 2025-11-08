@@ -33,7 +33,7 @@
         "xml_parent_path": "/Provenir/Request/CustData/application/contact",
         "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address",
         "required_attributes": {
-          "address_tp_c": ["CURR", "PREV", "PATR"]
+          "address_tp_c": ["CURR", "PREV"]
         }
       },
       {

@@ -94,8 +94,68 @@ class MappingContractValidator:
         
         Adds errors to self.errors list for missing required sections.
         """
-        # TODO: Implement element filtering validation
-        pass
+        # Check if element_filtering section exists
+        if "element_filtering" not in self.contract:
+            self.errors.append(MappingContractValidationError(
+                category="element_filtering",
+                message="Missing required 'element_filtering' section in contract",
+                contract_location="root",
+                fix_guidance="Add 'element_filtering' section with 'filter_rules' array containing 'contact' and 'address' rules",
+                example_fix='{\n  "element_filtering": {\n    "filter_rules": [\n      {"element_type": "contact", "required_attributes": {...}},\n      {"element_type": "address", "required_attributes": {...}}\n    ]\n  }\n}'
+            ))
+            return
+        
+        element_filtering = self.contract["element_filtering"]
+        
+        # Check if filter_rules key exists
+        if "filter_rules" not in element_filtering:
+            self.errors.append(MappingContractValidationError(
+                category="element_filtering",
+                message="Missing 'filter_rules' key in element_filtering section",
+                contract_location="element_filtering",
+                fix_guidance="Add 'filter_rules' array with 'contact' and 'address' filter rule entries",
+                example_fix='"filter_rules": [\n  {"element_type": "contact", ...},\n  {"element_type": "address", ...}\n]'
+            ))
+            return
+        
+        filter_rules = element_filtering["filter_rules"]
+        
+        # Check if filter_rules is empty
+        if not filter_rules or len(filter_rules) == 0:
+            self.errors.append(MappingContractValidationError(
+                category="element_filtering",
+                message="Empty 'filter_rules' array - must contain at least 'contact' and 'address' rules",
+                contract_location="element_filtering.filter_rules",
+                fix_guidance="Add filter rule entries for 'contact' and 'address' element types",
+                example_fix='[\n  {"element_type": "contact", "required_attributes": {"con_id": true, "ac_role_tp_c": ["PR", "AUTHU"]}},\n  {"element_type": "address", "required_attributes": {"address_tp_c": ["CURR"]}}\n]'
+            ))
+            return
+        
+        # Extract all element_type values from filter_rules
+        element_types = set()
+        for rule in filter_rules:
+            if isinstance(rule, dict) and "element_type" in rule:
+                element_types.add(rule["element_type"])
+        
+        # Check for required 'contact' filter rule
+        if "contact" not in element_types:
+            self.errors.append(MappingContractValidationError(
+                category="element_filtering",
+                message="Missing required filter rule with element_type='contact'",
+                contract_location="element_filtering.filter_rules",
+                fix_guidance="Add a filter rule entry for 'contact' element type to filter_rules array",
+                example_fix='{"element_type": "contact", "required_attributes": {"con_id": true, "ac_role_tp_c": ["PR", "AUTHU"]}}'
+            ))
+        
+        # Check for required 'address' filter rule
+        if "address" not in element_types:
+            self.errors.append(MappingContractValidationError(
+                category="element_filtering",
+                message="Missing required filter rule with element_type='address'",
+                contract_location="element_filtering.filter_rules",
+                fix_guidance="Add a filter rule entry for 'address' element type to filter_rules array",
+                example_fix='{"element_type": "address", "required_attributes": {"address_tp_c": ["CURR", "PREV"]}}'
+            ))
     
     def _validate_relationships(self) -> None:
         """

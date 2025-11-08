@@ -35,12 +35,15 @@ import statistics
 from pathlib import Path
 from datetime import datetime
 from typing import List, Tuple, Optional
-
+from dataclasses import asdict        
+        
 from xml_extractor.config.processing_defaults import ProcessingDefaults
 from xml_extractor.processing.parallel_coordinator import ParallelCoordinator
 from xml_extractor.database.migration_engine import MigrationEngine
 from xml_extractor.config.config_manager import get_config_manager
 from xml_extractor.interfaces import MappingContract, BatchProcessorInterface
+from xml_extractor.validation.mapping_contract_validator import MappingContractValidator
+
 
 # Add project root to path
 project_root = Path(__file__).parent
@@ -165,6 +168,9 @@ class ProductionProcessor:
         self.config_manager = get_config_manager()
         self.mapping_contract = self.config_manager.load_mapping_contract()
         
+        # Validate mapping contract structure (fail-fast on config errors)
+        self._validate_contract()
+        
         # Extract target schema from contract (with dbo default)
         self.target_schema = self.mapping_contract.target_schema if self.mapping_contract else 'dbo'
         
@@ -240,6 +246,41 @@ class ProductionProcessor:
             conn_string += "Pooling=False;"
         
         return conn_string
+    
+    def _validate_contract(self):
+        """
+        Validate mapping contract structure before processing begins.
+        
+        Fail-fast on configuration errors to catch issues at startup,
+        not after processing 1000 records.
+        
+        Raises:
+            SystemExit: If contract validation fails (exit code 1)
+        """
+        
+        # Convert mapping contract dataclass to dict for validation
+        contract_dict = asdict(self.mapping_contract)
+        
+        # Validate contract structure
+        validator = MappingContractValidator(contract_dict)
+        result = validator.validate_contract()
+        
+        if not result.is_valid:
+            # Print validation errors to console
+            print("\n" + "="*80)
+            print(" MAPPING CONTRACT VALIDATION FAILED")
+            print("="*80)
+            print(result.format_summary())
+            print("="*80)
+            print("\n  Processing cannot continue with invalid contract configuration.")
+            print("  Please fix the contract errors above and try again.\n")
+            sys.exit(1)
+        
+        # Log warnings if present (non-blocking)
+        if result.has_warnings:
+            self.logger.warning("Mapping contract validation warnings:")
+            for warning in result.warnings:
+                self.logger.warning(warning.format_warning())
     
     def _setup_logging(self, log_level: str):
         """Set up production-optimized logging."""

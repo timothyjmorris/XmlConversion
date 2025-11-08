@@ -144,7 +144,19 @@ class TestValidatorErrorAggregation(unittest.TestCase):
         """Validator can add errors to errors list."""
         from xml_extractor.models import MappingContractValidationError
         
-        contract = {"element_filtering": {}, "relationships": [], "enum_mappings": {}, "mappings": []}
+        # Use valid contract to avoid validation errors
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "relationships": [],
+            "table_insertion_order": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
         validator = MappingContractValidator(contract)
         
         # Manually add an error (simulates what validation methods will do)
@@ -165,7 +177,19 @@ class TestValidatorErrorAggregation(unittest.TestCase):
         """Validator can add warnings to warnings list."""
         from xml_extractor.models import MappingContractValidationWarning
         
-        contract = {"element_filtering": {}, "relationships": [], "enum_mappings": {}, "mappings": []}
+        # Use valid contract to avoid validation errors
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "relationships": [],
+            "table_insertion_order": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
         validator = MappingContractValidator(contract)
         
         # Manually add a warning
@@ -181,6 +205,197 @@ class TestValidatorErrorAggregation(unittest.TestCase):
         
         # Warning should be cleared after validate_contract() (fresh start)
         self.assertEqual(result.warning_count, 0)
+
+
+class TestElementFilteringValidation(unittest.TestCase):
+    """Test _validate_element_filtering() method - structure validation only."""
+    
+    def test_valid_element_filtering_with_contact_and_address(self):
+        """Contract with contact and address filter rules passes."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact", "required_attributes": {"con_id": True}},
+                    {"element_type": "address", "required_attributes": {"address_tp_c": ["CURR"]}}
+                ]
+            },
+            "relationships": [],
+            "table_insertion_order": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
+    
+    def test_valid_with_extra_filter_rules(self):
+        """Contract with contact, address, and additional filter rules passes."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact", "required_attributes": {}},
+                    {"element_type": "address", "required_attributes": {}},
+                    {"element_type": "employment", "required_attributes": {}}
+                ]
+            },
+            "relationships": [],
+            "table_insertion_order": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
+    
+    def test_missing_element_filtering_section(self):
+        """Contract without element_filtering section fails."""
+        contract = {
+            "relationships": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertGreater(result.error_count, 0)
+        # Check error details
+        error = result.errors[0]
+        self.assertEqual(error.category, "element_filtering")
+        self.assertIn("element_filtering", error.message.lower())
+    
+    def test_missing_filter_rules_key(self):
+        """Contract with element_filtering but no filter_rules key fails."""
+        contract = {
+            "element_filtering": {},
+            "relationships": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertGreater(result.error_count, 0)
+    
+    def test_empty_filter_rules_array(self):
+        """Contract with empty filter_rules array fails."""
+        contract = {
+            "element_filtering": {"filter_rules": []},
+            "relationships": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertGreater(result.error_count, 0)
+    
+    def test_missing_contact_filter_rule(self):
+        """Contract with address but no contact filter rule fails."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "address", "required_attributes": {}}
+                ]
+            },
+            "relationships": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertEqual(result.error_count, 1)
+        # Check error specifics
+        error = result.errors[0]
+        self.assertEqual(error.category, "element_filtering")
+        self.assertIn("contact", error.message.lower())
+        self.assertIn("element_filtering.filter_rules", error.contract_location)
+        self.assertIsNotNone(error.fix_guidance)
+    
+    def test_missing_address_filter_rule(self):
+        """Contract with contact but no address filter rule fails."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact", "required_attributes": {}}
+                ]
+            },
+            "relationships": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertEqual(result.error_count, 1)
+        # Check error specifics
+        error = result.errors[0]
+        self.assertEqual(error.category, "element_filtering")
+        self.assertIn("address", error.message.lower())
+        self.assertIn("element_filtering.filter_rules", error.contract_location)
+        self.assertIsNotNone(error.fix_guidance)
+    
+    def test_missing_both_contact_and_address_rules(self):
+        """Contract missing both contact and address rules reports both errors."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "employment", "required_attributes": {}}
+                ]
+            },
+            "relationships": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        self.assertFalse(result.is_valid)
+        self.assertEqual(result.error_count, 2)
+        # Both errors should be present
+        error_messages = [e.message.lower() for e in result.errors]
+        self.assertTrue(any("contact" in msg for msg in error_messages))
+        self.assertTrue(any("address" in msg for msg in error_messages))
+    
+    def test_filter_values_not_validated(self):
+        """Validator does NOT check filter attribute values (structure only)."""
+        # Even with nonsensical filter values, structure validation passes
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact", "required_attributes": {"nonsense": ["bad", "values"]}},
+                    {"element_type": "address", "required_attributes": {"invalid": "data"}}
+                ]
+            },
+            "relationships": [],
+            "table_insertion_order": [],
+            "enum_mappings": {},
+            "mappings": []
+        }
+        validator = MappingContractValidator(contract)
+        
+        result = validator.validate_contract()
+        
+        # Should pass - we only validate structure (contact + address rules exist)
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
 
 
 if __name__ == '__main__':
