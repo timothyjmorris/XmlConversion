@@ -36,7 +36,7 @@ pip install -r requirements.txt
 
 ### CLI Usage
 
-**Two main tools available:**
+**Three main tools available:**
 
 1. **Configuration Display**: `xml-extractor` command for system status
 ```bash
@@ -45,35 +45,46 @@ xml-extractor
 # Shows: database settings, processing config, environment variables
 ```
 
-2. **Production Processing**: `production_processor.py` for actual data processing  
+2. **Direct Processing**: `production_processor.py` - Flexible single-invocation processor
 ```bash
-# This is the main tool for processing XML data
-python production_processor.py --server "server" --database "db" [options]
+# Gap filling / cleanup (limit mode)
+python production_processor.py --server "server" --database "db" --limit 10000
+
+# Specific range (range mode)
+python production_processor.py --server "server" --database "db" --app-id-start 1 --app-id-end 50000
+
+# Testing with defaults (10k limit applied automatically)
+python production_processor.py --server "server" --database "db"
 ```
 
-**Important**: `xml-extractor` is for configuration display only. Use `production_processor.py` for all actual data processing operations.
+3. **Chunked Processing**: `run_production_processor.py` - For large datasets (>100k)
+```bash
+# Breaks range into chunks, spawns fresh process per chunk
+python run_production_processor.py --app-id-start 1 --app-id-end 300000
 
-### Production Processing
+# Custom chunk size (default 10k)
+python run_production_processor.py --app-id-start 1 --app-id-end 1000000 --chunk-size 5000
+```
 
-The production processor remains the primary tool for batch processing:
+**Key Distinctions:**
+- **`production_processor.py`**: Supports both LIMIT mode (gap filling) and RANGE mode. Single process.
+- **`run_production_processor.py`**: RANGE MODE ONLY. Chunks large ranges into fresh processes to prevent memory degradation.
+
+### Production Processing Examples
 
 ```bash
-# High-performance production processing
-python production_processor.py \
-  --server "prod-sql-server" \
-  --database "ProductionDB" \
-  --workers 4 \
-  --batch-size 100 \
-  --log-level ERROR
+# Small test run (10k records with defaults)
+python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB"
 
-# Development/testing
-python production_processor.py \
-  --server "dev-server" \
-  --database "TestDB" \
-  --workers 2 \
-  --batch-size 25 \
-  --limit 1000 \
-  --log-level INFO
+# Gap filling (processes up to 50k records, skips already-processed)
+python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --limit 50000
+
+# Medium production run (<100k apps)
+python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" \
+  --app-id-start 1 --app-id-end 50000 --workers 6 --batch-size 1000
+
+# Large production run (>100k apps - use orchestrator)
+python run_production_processor.py --app-id-start 1 --app-id-end 300000
 ```
 
 ## 📁 Project Structure

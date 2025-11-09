@@ -6,25 +6,34 @@
 
 ## Quick Start (Most Common Scenarios)
 
-### Test Run (10k records)
+### Test Run (10k records with defaults)
 ```powershell
     python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB"
 ```
-- Uses sensible defaults: 4 workers, 500 records/batch, 10k safety limit
+- Uses sensible defaults: 4 workers, 1000 records/batch, 10k safety limit
 - Perfect for testing before larger runs
 
-### Production Run (Single Range)
+### Gap Filling / Cleanup (limit mode)
+```powershell
+    python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --limit 50000
+```
+- Processes up to 50k records starting from app_id 1
+- Automatically skips already-processed records
+- Great for filling gaps after failed runs
+
+### Production Run (Single Range <100k)
 ```powershell
     python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --app-id-start 1 --app-id-end 180000
 ```
 - Processes specific app_id range
-- Shows progress with INFO logging
+- Single process, good for moderate datasets
 
-### Chunked Processing (Recommended for >100k records)
+### Chunked Processing (Large Datasets >100k)
 ```powershell
     python run_production_processor.py --app-id-start 1 --app-id-end 180000
 ```
-- Automatically breaks into 10k chunks
+- **RANGE MODE ONLY** (orchestrator doesn't support --limit)
+- Automatically breaks into chunks (default 10k per chunk)
 - Fresh Python process per chunk (prevents memory degradation)
 - Sequential execution with automatic progress tracking
 
@@ -35,33 +44,36 @@
 | Scenario | Use This Tool | Why |
 |----------|--------------|-----|
 | Quick test (<10k records) | `production_processor.py` | Simple, fast, one command |
-| Single production run | `production_processor.py` with ranges | Direct control, good for moderate datasets |
-| Very large dataset (>100k) | `run_production_processor.py` | Process lifecycle management prevents memory issues |
+| Gap filling/cleanup | `production_processor.py --limit N` | Processes N records from app_id 1, skips already-processed |
+| Single production run (<100k) | `production_processor.py` with ranges | Direct control, good for moderate datasets |
+| Very large dataset (>100k) | `run_production_processor.py` | Chunks into fresh processes, prevents memory degradation |
 | Concurrent processing | Multiple `production_processor.py` instances | Maximum throughput with non-overlapping ranges |
+| Concurrent + chunked | Multiple `run_production_processor.py` instances | Ultimate performance for multi-million record datasets |
 
 ---
 
 ## Core Concepts
 
-### 1. Processing Modes (Mutually Exclusive)
+### 1. Processing Modes
 
-**Limit Mode** (Testing/Safety Cap)
+**Limit Mode** (`production_processor.py` only)
 ```powershell
-    --limit 10000
+    python production_processor.py --server X --database Y --limit 10000
 ```
-- Processes up to N records total
-- Good for: development, testing, safety-limited runs
-- Starts from beginning or resumes where left off
-- **Default: 10,000 records**
+- Processes up to N records starting from app_id 1
+- Automatically skips already-processed records (fills gaps)
+- Good for: testing, gap filling, cleanup runs
+- **Default when no range specified: 10,000 records**
 
-**Range Mode** (Production/Concurrent-Safe)
+**Range Mode** (both tools support this)
 ```powershell
-    --app-id-start 1 --app-id-end 50000
+    python production_processor.py --server X --database Y --app-id-start 1 --app-id-end 50000
+    python run_production_processor.py --app-id-start 1 --app-id-end 50000
 ```
-- Processes specific app_id boundaries
-- Good for: production, large datasets, concurrent processing
-- Required for running multiple instances simultaneously
-- No default (must specify both start and end)
+- Processes specific app_id boundaries (inclusive)
+- Good for: production runs, concurrent processing
+- Required for running multiple instances simultaneously (non-overlapping ranges)
+- `run_production_processor.py` ONLY supports this mode (chunks it automatically)
 
 ### 2. Batch Size vs Limit
 
@@ -140,16 +152,16 @@ Processing automatically skips records already in `processing_log`:
 ```
 **Key**: Non-overlapping ranges eliminate lock contention
 
-### Pattern 4: Chunked Processing (Large Datasets)
+### Pattern 4: Chunked Processing (Large Datasets >100k)
 ```powershell
-    # Sequential chunked processing (10k per chunk)
+    # Sequential chunked processing (default 10k per chunk)
     python run_production_processor.py --app-id-start 1 --app-id-end 180000
 
-    # Custom chunk size
-    python run_production_processor.py --app-id-start 1 --app-id-end 180000 --chunk-size 10000
-
-    # Limit mode (for testing orchestrator)
-    python run_production_processor.py --limit 50000
+    # Custom chunk size (for memory-constrained systems)
+    python run_production_processor.py --app-id-start 1 --app-id-end 180000 --chunk-size 5000
+    
+    # Note: Orchestrator is RANGE-ONLY (no --limit support)
+    # For limit-based processing, use production_processor.py directly
 ```
 
 ### Pattern 5: Concurrent Chunked Processing (Ultimate Speed)

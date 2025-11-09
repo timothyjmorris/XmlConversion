@@ -888,8 +888,8 @@ def main():
                        help=f"Number of parallel workers (default: {ProcessingDefaults.WORKERS})")
     parser.add_argument("--batch-size", type=int, default=ProcessingDefaults.BATCH_SIZE, 
                        help=f"Application XMLs to fetch per SQL query (pagination size, default: {ProcessingDefaults.BATCH_SIZE})")
-    parser.add_argument("--limit", type=int, default=ProcessingDefaults.LIMIT, 
-                       help=f"Total applications to process before stopping (safety cap, default: {ProcessingDefaults.LIMIT})")
+    parser.add_argument("--limit", type=int, 
+                       help=f"Total applications to process before stopping (safety cap). In RANGE mode (--app-id-start/--app-id-end), this parameter is ignored. Default when not in range mode: {ProcessingDefaults.LIMIT}")
     parser.add_argument("--log-level", default=ProcessingDefaults.LOG_LEVEL, 
                        choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
                        help=f"Logging level (default: {ProcessingDefaults.LOG_LEVEL})")
@@ -914,6 +914,25 @@ def main():
     
     args = parser.parse_args()
     
+    # Handle limit defaults and range mode interaction
+    # ================================================
+    # When in RANGE mode (--app-id-start/--app-id-end), ignore --limit entirely
+    # When NOT in range mode and no --limit provided, apply safety default
+    in_range_mode = args.app_id_start is not None and args.app_id_end is not None
+    
+    if in_range_mode:
+        # Range mode: process entire range, ignore limit
+        processing_limit = None
+        if args.limit is not None:
+            print(f" WARNING: --limit={args.limit} ignored in RANGE mode (--app-id-start/--app-id-end specified)")
+    else:
+        # Not in range mode: apply limit or default
+        if args.limit is None:
+            processing_limit = ProcessingDefaults.LIMIT
+            print(f" INFO: No --limit specified, applying safety default: {ProcessingDefaults.LIMIT}")
+        else:
+            processing_limit = args.limit
+    
     try:
         # Create processor with connection pooling optimizations
         processor = ProductionProcessor(
@@ -933,8 +952,8 @@ def main():
             app_id_end=args.app_id_end
         )
         
-        # Run processing
-        results = processor.run_full_processing(limit=args.limit)
+        # Run processing with calculated limit
+        results = processor.run_full_processing(limit=processing_limit)
         
         print("\n" + "="*82)
         print(" PRODUCTION PROCESSING COMPLETED SUCCESSFULLY")

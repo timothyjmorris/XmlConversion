@@ -147,49 +147,40 @@ from xml_extractor.config.processing_defaults import ProcessingDefaults
 class ChunkedProcessorOrchestrator:
     """Orchestrates sequential execution of production_processor.py in chunks."""
     
-    def __init__(self, chunk_size: int, app_id_start: int = None, app_id_end: int = None, limit: int = None, **processor_kwargs):
+    def __init__(self, chunk_size: int, app_id_start: int, app_id_end: int, **processor_kwargs):
         """
-        Initialize orchestrator.
+        Initialize chunked processing orchestrator.
+        
+        Purpose:
+            Breaks large app_id ranges into smaller chunks, spawning fresh Python processes
+            for each chunk to prevent memory degradation on very long production runs.
         
         Args:
             chunk_size: Number of app_ids per chunk (each chunk spawns a separate process).
-                       Example: chunk_size=10000 with app_id range 1-60000 creates 6 chunks.
-                       Prevents performance degradation on long production runs (>100k applications).
-                       NOT the same as batch_size (which controls App XML fetch size within each chunk).
-            app_id_start: Starting app_id for range-based processing (requires app_id_end)
-            app_id_end: Ending app_id for range-based processing (requires app_id_start)
-            limit: Total applications to process starting from app_id 1 (alternative to range mode)
+                       Example: chunk_size=10000 with range 1-60000 creates 6 chunks.
+                       Recommended: 5,000-15,000 per chunk.
+            app_id_start: Starting app_id for processing range (inclusive, required)
+            app_id_end: Ending app_id for processing range (inclusive, required)
             **processor_kwargs: Pass-through arguments for production_processor.py
+                               (server, database, workers, batch_size, log_level, etc.)
         
-        Note: Must provide EITHER (app_id_start AND app_id_end) OR limit, not both.
+        Note:
+            This orchestrator is RANGE-ONLY. For limit-based processing or gap filling,
+            use production_processor.py directly with --limit parameter.
         """
-        # Validate mutually exclusive modes
-        if (app_id_start is not None or app_id_end is not None) and limit is not None:
-            raise ValueError("Cannot specify both app_id range (--app-id-start/--app-id-end) and --limit")
+        # Validate required parameters
+        if app_id_start is None or app_id_end is None:
+            raise ValueError("Orchestrator requires both --app-id-start and --app-id-end (RANGE mode only)")
         
-        if app_id_start is not None and app_id_end is None:
-            raise ValueError("--app-id-start requires --app-id-end")
+        if app_id_start < 1:
+            raise ValueError("--app-id-start must be >= 1")
         
-        if app_id_end is not None and app_id_start is None:
-            raise ValueError("--app-id-end requires --app-id-start")
+        if app_id_end < app_id_start:
+            raise ValueError("--app-id-end must be >= --app-id-start")
         
-        if app_id_start is None and app_id_end is None and limit is None:
-            raise ValueError("Must specify either app_id range (--app-id-start and --app-id-end) or --limit")
-        
-        # Calculate range parameters
-        if app_id_start is not None and app_id_end is not None:
-            # Range mode
-            self.app_id_start = app_id_start
-            self.app_id_end = app_id_end
-            self.total_records = app_id_end - app_id_start + 1
-            self.mode = "range"
-        else:
-            # Limit mode
-            self.app_id_start = 1
-            self.app_id_end = limit
-            self.total_records = limit
-            self.mode = "limit"
-        
+        self.app_id_start = app_id_start
+        self.app_id_end = app_id_end
+        self.total_records = app_id_end - app_id_start + 1
         self.chunk_size = chunk_size
         self.processor_kwargs = processor_kwargs
         self.num_chunks = (self.total_records + chunk_size - 1) // chunk_size  # Ceiling division
@@ -197,7 +188,10 @@ class ChunkedProcessorOrchestrator:
     
     def run(self) -> int:
         """
-        Execute all chunks sequentially.
+        Execute chunked processing sequentially.
+        
+        Breaks the app_id range into chunks and processes each chunk in a fresh
+        Python process to prevent memory degradation on very long production runs.
         
         Returns:
             0 on success, 1 on failure
@@ -205,7 +199,6 @@ class ChunkedProcessorOrchestrator:
         print("=" * 82)
         print(" CHUNKED PROCESSING ORCHESTRATOR")
         print("=" * 82)
-        print(f"  Run Mode:       {self.mode.upper()}")
         print(f"  App Id Range:   {self.app_id_start:,} - {self.app_id_end:,} ({self.total_records:,} applications)")
         print(f"  Chunk Size:     {self.chunk_size:,}")
         print(f"  Total Chunks:   {self.num_chunks}")
@@ -278,7 +271,8 @@ class ChunkedProcessorOrchestrator:
             self._print_summary(start_time)
             return 1
         except Exception as e:
-            print(f"\n\n Orchestration error: {e}")
+            print(f"\n  ERROR: Orchestration failed: {e}")
+            self._print_summary(start_time)
             return 1
     
     def _build_processor_command(self, start_id: int, end_id: int) -> str:
@@ -291,6 +285,13 @@ class ChunkedProcessorOrchestrator:
             
         Returns:
             Command string ready for subprocess.run()
+            
+        Note:
+            The orchestrator defines exact ranges for each chunk (--app-id-start/--app-id-end).
+            We NEVER pass --limit to the processor because:
+            - Each chunk has explicit start/end boundaries
+            - Passing --limit would interfere with range-based processing
+            - The processor would stop early when reaching the limit
         """
         cmd_parts = [
             "python",
@@ -299,8 +300,12 @@ class ChunkedProcessorOrchestrator:
             f"--app-id-end {end_id}"
         ]
         
-        # Add pass-through parameters
+        # Add pass-through parameters (excluding 'limit' which conflicts with range mode)
         for key, value in self.processor_kwargs.items():
+            # Skip 'limit' parameter - orchestrator handles chunking via explicit ranges
+            if key == 'limit':
+                continue
+                
             if value is not None:
                 # Convert Python snake_case to CLI kebab-case
                 cli_key = key.replace('_', '-')
@@ -423,37 +428,39 @@ class ChunkedProcessorOrchestrator:
 
 
 def main():
-    """Parse arguments and run orchestrator."""
+    """Parse arguments and run chunked orchestrator."""
     parser = argparse.ArgumentParser(
-        description="Sequential Chunked Processor Orchestrator - Process large datasets in manageable chunks",
+        description="Chunked Processing Orchestrator - Break large app_id ranges into chunks for sequential processing",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
     Examples:
-    # Process app_ids 1-60,000 in chunks of 10,000 (RANGE MODE - recommended)
-        python run_production_processor.py --app-id-start 1 --app-id-end 60000
+    # Process app_ids 1-300,000 in chunks of 10,000 (default)
+        python run_production_processor.py --app-id-start 1 --app-id-end 300000
     
-    # Process app_ids 70,001-100,000 with custom chunk size (RANGE MODE)
-        python run_production_processor.py --app-id-start 70001 --app-id-end 100000 --chunk-size 5000
+    # Custom chunk size for memory-constrained systems
+        python run_production_processor.py --app-id-start 1 --app-id-end 100000 --chunk-size 5000
     
-    # Process up to 60,000 records in default chunks (LIMIT MODE - for testing)
-        python run_production_processor.py --limit 60000
-    
-    # Use 6 workers per chunk with custom batch size
-        python run_production_processor.py --batch-size 750 --app-id-start 1 --app-id-end 60000 --workers 6
+    # Tune performance per chunk
+        python run_production_processor.py --app-id-start 1 --app-id-end 60000 --workers 6 --batch-size 1000
 
-    Note: For concurrent processing, manually spawn multiple instances with different ranges.
+    # Concurrent orchestrators (non-overlapping ranges)
+        # Terminal 1: python run_production_processor.py --app-id-start 1 --app-id-end 1000000
+        # Terminal 2: python run_production_processor.py --app-id-start 1000001 --app-id-end 2000000
+
+    Note:
+        This orchestrator is RANGE-ONLY (requires --app-id-start and --app-id-end).
+        For limit-based processing or gap filling, use production_processor.py directly:
+            python production_processor.py --server X --database Y --limit 10000
         """
     )
     
-    # Chunking parameters (mutually exclusive: range mode OR limit mode)
+    # Required chunking parameters
+    parser.add_argument("--app-id-start", type=int, required=True,
+                       help="Starting app_id for processing range (inclusive, REQUIRED)")
+    parser.add_argument("--app-id-end", type=int, required=True,
+                       help="Ending app_id for processing range (inclusive, REQUIRED)")
     parser.add_argument("--chunk-size", type=int, default=ProcessingDefaults.CHUNK_SIZE,
-                       help=f"Number of records per chunk (default: {ProcessingDefaults.CHUNK_SIZE})")
-    parser.add_argument("--app-id-start", type=int,
-                       help="Starting app_id for range-based chunking (requires --app-id-end)")
-    parser.add_argument("--app-id-end", type=int,
-                       help="Ending app_id for range-based chunking (requires --app-id-start)")
-    parser.add_argument("--limit", type=int,
-                       help="Total records to process starting from app_id 1 (alternative to range mode)")
+                       help=f"Number of app_ids per chunk (default: {ProcessingDefaults.CHUNK_SIZE})")
     
     # Database connection (pass-through to production_processor.py)
     parser.add_argument("--server", default="localhost\\SQLEXPRESS",
@@ -487,36 +494,15 @@ def main():
     
     args = parser.parse_args()
     
-    # Validate mutually exclusive modes
-    has_range = args.app_id_start is not None or args.app_id_end is not None
-    has_limit = args.limit is not None
-    
-    if not has_range and not has_limit:
-        print(" ERROR: Must specify either --app-id-start/--app-id-end (range mode) or --limit (limit mode)")
+    # Validate parameters (argparse already ensures app_id_start/end are provided via required=True)
+    if args.app_id_start < 1:
+        print(" ERROR: --app-id-start must be >= 1")
         return 1
     
-    if has_range and has_limit:
-        print(" ERROR: Cannot specify both range mode (--app-id-start/--app-id-end) and limit mode (--limit)")
+    if args.app_id_end < args.app_id_start:
+        print(" ERROR: --app-id-end must be >= --app-id-start")
         return 1
     
-    if args.app_id_start is not None and args.app_id_end is None:
-        print(" ERROR: --app-id-start requires --app-id-end")
-        return 1
-    
-    if args.app_id_end is not None and args.app_id_start is None:
-        print(" ERROR: --app-id-end requires --app-id-start")
-        return 1
-    
-    # Validate range values
-    if has_range:
-        if args.app_id_start < 1:
-            print(" ERROR: --app-id-start must be >= 1")
-            return 1
-        if args.app_id_end < args.app_id_start:
-            print(" ERROR: --app-id-end must be >= --app-id-start")
-            return 1
-    
-    # Validate chunk size
     if args.chunk_size <= 0:
         print(" ERROR: --chunk-size must be positive")
         return 1
@@ -542,7 +528,6 @@ def main():
         chunk_size=args.chunk_size,
         app_id_start=args.app_id_start,
         app_id_end=args.app_id_end,
-        limit=args.limit,
         **processor_kwargs
     )
     

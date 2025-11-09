@@ -8,24 +8,27 @@
 
 select top 10 app_id, cast(xml as xml) from app_xml order by app_id desc
 
-select top 10 * from  sandbox.app_base              order by app_id desc
-select top 10 * from  sandbox.app_operational_cc    order by app_id desc
-select top 10 * from  sandbox.app_pricing_cc        order by app_id desc
-select top 10 * from  sandbox.app_solicited_cc      order by app_id desc
-select top 10 * from  sandbox.app_transactional_cc  order by app_id desc
-select top 10 * from  sandbox.contact_base          order by app_id desc
-select top 10 * from  sandbox.contact_address       order by con_id desc
-select top 10 * from  sandbox.contact_employment    order by con_id desc 
+select top 11 * from  sandbox.app_base              order by app_id desc
+select top 11 * from  sandbox.app_operational_cc    order by app_id desc
+select top 11 * from  sandbox.app_pricing_cc        order by app_id desc
+select top 11 * from  sandbox.app_solicited_cc      order by app_id desc
+select top 11 * from  sandbox.app_transactional_cc  order by app_id desc
+select top 11 * from  sandbox.contact_base          order by app_id desc
+select top 11 * from  sandbox.contact_address       order by con_id desc
+select top 11 * from  sandbox.contact_employment    order by con_id desc 
 
-select top 100 * from app_xml order by app_id desc
+select top 100 * from app_xml where app_id > 10000 and app_id < 11001 order by app_id desc
 
-select * from  sandbox.app_base where app_id > 70990 and app_id < 72010
+select * from  sandbox.app_base where app_id > 10000 and app_id < 11001
 
 
 select * from sandbox.app_base
 
 
 select count(*) from app_xml;
+
+select max(app_id) from app_xml
+select max(app_id) from  sandbox.app_base;
 
 select count(*) from  sandbox.app_base;
 select count(*) from  sandbox.app_operational_cc;
@@ -49,7 +52,8 @@ select * from  sandbox.app_enums
     DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
 	delete from sandbox.processing_log;
 
-    delete from sandbox.app_base		where app_id > 300000
+    delete from sandbox.app_base		where app_id > 10000 and app_id < 11001
+	delete from sandbox.processing_log	where app_id > 10000 and app_id < 11001
 
     -- DELETE FROM app_xml where app_id > 300000
 
@@ -166,8 +170,9 @@ DELETE FROM sandbox.app_base WHERE app_id = 443306
 	LEFT JOIN  sandbox.app_solicited_cc AS s ON s.app_id = a.app_id
 	LEFT JOIN  sandbox.app_transactional_cc AS t ON t.app_id = a.app_id
 	LEFT JOIN  sandbox.contact_base AS c ON a.app_id = c.app_id
-	LEFT JOIN  sandbox.contact_address AS ca ON ca.con_id = c.con_id
-	LEFT JOIN  sandbox.contact_employment AS ce ON ce.con_id = c.con_id
+	--LEFT JOIN  sandbox.contact_address AS ca ON ca.con_id = c.con_id
+	--LEFT JOIN  sandbox.contact_employment AS ce ON ce.con_id = c.con_id
+	WHERE a.app_id = 443306
 	ORDER BY a.app_id DESC
     
 
