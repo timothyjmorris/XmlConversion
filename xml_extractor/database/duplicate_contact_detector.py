@@ -4,6 +4,41 @@ Duplicate Contact Detection - Prevents Constraint Violations
 Encapsulates business logic for identifying and filtering duplicate contact records
 that would violate primary key constraints. Queries database with NOLOCK hints to
 prevent lock contention and maintains schema isolation via qualified table names.
+
+DESIGN RATIONALE - Why Check Each Table Separately:
+
+The initial intuition was to simplify this to a single query against contact_base.con_id
+for all three tables, since contact_address and contact_employment have FK constraints
+to contact_base. However, this approach has a critical flaw:
+
+SCENARIO: Processing app_id 443306 (first run, database empty)
+1. Insert contact_base: con_id=738936, con_id=738937
+2. Before inserting contact_address with records for those con_ids:
+   - If we query contact_base, we FIND both con_ids (just inserted in step 1)
+   - We incorrectly filter ALL contact_address records as "duplicates"
+   - Insert 0 records
+
+The issue is that within a single transaction, we see our own uncommitted inserts.
+We can't distinguish between:
+- "con_id exists because WE just inserted it" (should insert children)  
+- "con_id exists from a previous app" (should skip children)
+
+CORRECT APPROACH - Check Destination Tables:
+- contact_base: Check contact_base for existing con_id (prevents PK violation)
+- contact_address: Check contact_address for existing (con_id, address_type_enum) pairs
+- contact_employment: Check contact_employment for existing (con_id, employment_type_enum) pairs
+
+This works because:
+- First run: Destination tables empty → nothing filtered
+- Subsequent runs: Only actual duplicates from previous apps are filtered
+
+TRADE-OFF: 3 queries per app vs 1 query
+- Cost: ~2 extra queries per app (typically <5ms each with NOLOCK and indexed lookups)
+- Benefit: Correct handling of initial inserts + cross-app duplicate detection
+- Scale: Acceptable for batch processing (processing time dominated by XML parsing/mapping)
+
+Note: DataMapper already handles within-batch deduplication using contact type priority,
+so we should never see duplicate con_ids within a single app's processing batch.
 """
 
 import logging
