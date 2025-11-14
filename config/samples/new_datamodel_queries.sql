@@ -19,7 +19,7 @@ select top 11 * from  sandbox.contact_employment    order by con_id desc
 
 select top 100 * from app_xml where app_id > 10000 and app_id < 11001 order by app_id desc
 
-select * from  sandbox.app_base where app_id > 10000 and app_id < 11001
+select * from  sandbox.app_base where app_id > 100 and app_id < 201
 
 
 select * from sandbox.app_base
@@ -52,8 +52,8 @@ select * from  sandbox.app_enums
     DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
 	delete from sandbox.processing_log;
 
-    delete from sandbox.app_base		where app_id > 10000 and app_id < 11001
-	delete from sandbox.processing_log	where app_id > 10000 and app_id < 11001
+    delete from sandbox.app_base		where app_id > 100 and app_id < 201
+	delete from sandbox.processing_log	where app_id > 100 and app_id < 201
 
     -- DELETE FROM app_xml where app_id > 300000
 
@@ -73,6 +73,7 @@ select * from  sandbox.app_enums
 	ALTER INDEX ALL ON  sandbox.processing_log REBUILD;
 
 
+	-- Get database file names
 	SELECT TYPE_DESC, NAME, size, max_size, growth, is_percent_growth FROM sys.database_files;
 
 	DBCC SHRINKFILE ('XmlConversionDB')

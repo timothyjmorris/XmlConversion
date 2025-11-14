@@ -12,6 +12,7 @@ For Distributable Package:
 """
 
 from setuptools import setup, find_packages
+from pathlib import Path
 
 with open("requirements.txt", "r", encoding="utf-8") as fh:
     requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
@@ -30,23 +31,22 @@ for req in requirements:
         main_requirements.append(req)
 
 setup(
-    name="xml-database-extractor",
-    version="1.0.0",
+    name="xml_extractor",
+    version="1.6.4",
     author="XML Extractor Team",
-    description="High-performance tool for extracting XML data from database text columns",
-    long_description="A configurable data migration tool that processes XML content stored in database text columns and transforms it into normalized relational structures.",
-    long_description_content_type="text/plain",
+    description="Configurable high-performance tool for migrating XML to database relational structures.",
+    long_description=Path("README.md").read_text(encoding="utf-8"),
+    long_description_content_type="text/markdown",
     packages=find_packages(),
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: Pre-Production",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Database",
+        "Topic :: Text Processing :: Markup :: XML",
     ],
     python_requires=">=3.8",
     install_requires=main_requirements,
@@ -56,7 +56,9 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "xml-extractor=xml_extractor.cli:main",
+            "production_processor=xml_extractor.cli:main",
+            "run_production_processor=xml_extractor.cli:main",
+            "xml_extractor=xml_extractor.cli:main",
         ],
     },
 )

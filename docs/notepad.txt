@@ -33,45 +33,9 @@ python -m pytest tests/ -q --tb=short
 TARGET: 11MM apps in 2 days = 3,820 apps/minute needed
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Baseline: 
-	1224 apps/min - 3 instances, 160k apps chunking (restarting every 10k) in batches of 500 in partitioned ranges (over-night)
-	1386 apps/min - 1 instance, 60k apps chunking (restarting every 10k) in batches of 500 in a range of 1 - 60000
-	1560 apps/min - 1 instance, 60k apps chunking (restarting every 10k) in batches of 500 in a range of 1 - 60000
-	1637 apps/min - 1 instance, 220k apps chunking (restarting every 10k) in batches of 500 in a range of 1 - 220000 (over-night)
-	
-	python run_production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --batch-size 1000 --chunk-size 10000 --app-id-start 1 --app-id-end 60000
-	
-	- starting with app_base of 220k
-	1392 apps/min - 1 instance, 60k apps chunking (restarting every 10k) in batches of 500 in a range of 1 - 60000
-	1274 apps/min - 1 instance, 60k apps chunking (restarting every 10k) in batches of 500 in a range of 1 - 60000
-	- cleared app_base
-	1474 apps/min - 1 instance, 60k apps chunking (restarting every 10k) in batches of 500 in a range of 1 - 60000
-	
-	-- ran successively w/o clearing database
-	- shut more tasks down (Tanium Python) 
-	1786 1 - 60k
-	1903 6k - 120k
-	1591 120k - 180k
-	1691 180k - 220k
-
-	-- trying 1k batch-size! Higher & seems more stable
-	2032 app/min 1 instance, 300k apps chunking (restarting every 10k) using batches of 1000 in a range of 1 - 300000
-	
-	python run_production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --workers 4 --chunk-size 10000 --batch-size 1000 --app-id-start 1 --app-id-end 300000
-	
-	
-BASELINE NO CHUNKING: 2514
+BASELINE CHUNKING: ~2400
 	- using defaults:  --workers 4 --batch-size 1000
-	python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --limit 200000	
-	
-	
-	
-BASELINE CHUNKING
-	python run_production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB"--chunk-size 100000 --app-id-start 1 --app-id-end 300000
-	
-	python run_production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB"--chunk-size 100000 --limit 200000
-	
-	^^^ limit is being applied to range ^^^
+	python run_production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --chunk-size 100000 --app-id-start 1 --app-id-end 300000
 	
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -80,19 +44,21 @@ restart processor every {n} records for performance with --chunk-size
 supports running app_id ranges for easy segmentmentation with multiple instances (no SQL collisions)
 recommend chunks ~100,000
 
-	RANGE MODE - BIG CHUNKS
-	python run_production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --chunk-size 100000 --app-id-start 1 --app-id-end 300000
-	# Processes any applications in range, up to 300,000
-	# Each chunk: python production_processor.py --app-id-start X --app-id-end Y (no --limit)
-
-
-SMALL RUNS
+	RANGE MODE - USE BIG CHUNKS
+	# Processes any applications in range
+	python run_production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --chunk-size 100000 --app-id-start 1 --app-id-end 500000
+	
+	
+DIRECT SINGLE-INSTANCE PROCESSING
+For smaller runs using ranges or limits, filling in gaps in app_id ranges, and specific fixes/clean-up
+	
 	SEQUENTIAL LIMIT MODE
+	python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --limit 2000
 	
 	- OR - 
 	
 	RANGE MODE
-	
+	python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --app-id-start 1900 --app-id-end 3000
 	
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
