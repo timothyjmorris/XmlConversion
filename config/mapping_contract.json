@@ -636,8 +636,8 @@
       "target_column": "self_employed_flag",
       "data_type": "bit",
       "mapping_type": ["char_to_bit"],
-      "nullable": true,
-      "required": false,
+      "nullable": false,
+      "required": true,
       "default_value": 0
     },
     {
@@ -794,7 +794,7 @@
       "xml_attribute": "annual_fee",
       "target_table": "app_pricing_cc",
       "target_column": "card_annual_fee",
-      "data_type": "smallint",
+      "data_type": "decimal",
       "nullable": true,
       "required": false
     },
@@ -1023,8 +1023,8 @@
       "data_type": "smalldatetime",
       "default_value": "1900-01-01",
       "exclude_default_when_record_empty": true,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1033,8 +1033,8 @@
       "target_column": "first_name",
       "data_type": "string",
       "data_length": 50,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1064,8 +1064,8 @@
       "data_type": "string",
       "mapping_type": ["numbers_only"],
       "data_length": 9,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1084,8 +1084,8 @@
       "target_column": "city",
       "data_type": "string",
       "data_length": 50,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1094,8 +1094,8 @@
       "target_column": "state",
       "data_type": "string",
       "data_length": 2,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1105,8 +1105,8 @@
       "data_type": "string",
       "mapping_type": ["numbers_only"],
       "data_length": 9,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
@@ -1272,8 +1272,8 @@
       "xml_attribute": "credit_life_ind",
       "target_table": "app_operational_cc",
       "target_column": "payment_protection_plan",
-      "data_type": "bit",
-      "mapping_type": ["char_to_bit"],
+      "data_type": "string",
+      "data_length": 1,
       "nullable": true,
       "required": false
     },
@@ -1712,8 +1712,8 @@
       "target_column": "esign_consent_flag",
       "data_type": "bit",
       "mapping_type": ["boolean_to_bit"],
-      "nullable": true,
-      "required": false,
+      "nullable": false,
+      "required": true,
       "default_value": 0
     },
     {
@@ -1723,8 +1723,8 @@
       "target_column": "paperless_flag",
       "data_type": "bit",
       "mapping_type": ["boolean_to_bit"],
-      "nullable": true,
-      "required": false,
+      "nullable": false,
+      "required": true,
       "default_value": 0
     },
     {
@@ -1734,8 +1734,8 @@
       "target_column": "sms_consent_flag",
       "data_type": "bit",
       "mapping_type": ["boolean_to_bit"],
-      "nullable": true,
-      "required": false,
+      "nullable": false,
+      "required": true,
       "default_value": 0
     },
     {
