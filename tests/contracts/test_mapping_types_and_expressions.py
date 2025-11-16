@@ -10,6 +10,8 @@ import json
 from pathlib import Path
 import sys
 import os
+from typing import Dict
+from tests.helpers import safe_coerce_dict
 
 from xml_extractor.mapping.data_mapper import DataMapper
 from xml_extractor.models import MappingContract
@@ -145,10 +147,11 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
         """
         Functional test: Validate that enum mapping produces the expected output for known XML input.
         """
-        # Ensure enum mappings are loaded from the contract
+        # Ensure enum mappings are loaded from the contract. Use safe helper to
+        # coerce possibly-None contract values into an empty dict when needed.
         if hasattr(self.mapper, '_enum_mappings') and not self.mapper._enum_mappings:
-            if hasattr(self.contract, 'enum_mappings'):
-                self.mapper._enum_mappings = self.contract.enum_mappings
+            enum_mappings = getattr(self.contract, 'enum_mappings', None)
+            self.mapper._enum_mappings = safe_coerce_dict(enum_mappings)
         mapping = next(m for m in self.contract.mappings if m.target_column == "app_type_enum")
         app_path = '/Provenir/Request/CustData/application'
         app_data = self.parsed_xml.get(app_path, {})
