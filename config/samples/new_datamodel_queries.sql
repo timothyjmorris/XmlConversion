@@ -42,7 +42,7 @@ select count(*) from  sandbox.processing_log
 
 select * from  sandbox.processing_log
 
-select * from  sandbox.app_enums
+select * from  sandbox.app_enums where type not like'%_cc' and  type not like'%_sc'
 
 
 /* RESET ----------------------------------------------------------------------------------------------------------------------------------------

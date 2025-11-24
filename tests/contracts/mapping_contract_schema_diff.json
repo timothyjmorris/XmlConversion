@@ -1,0 +1,50 @@
+[
+  {
+    "table": "app_base",
+    "column": "ip_address",
+    "property": "data_length",
+    "contract_value": 50,
+    "db_value": 39,
+    "recommendation": 39
+  },
+  {
+    "table": "app_base",
+    "column": "product_line_enum",
+    "property": "nullable",
+    "contract_value": true,
+    "db_value": false,
+    "recommendation": false
+  },
+  {
+    "table": "app_base",
+    "column": "product_line_enum",
+    "property": "required",
+    "contract_value": false,
+    "db_value": true,
+    "recommendation": true
+  },
+  {
+    "table": "contact_base",
+    "column": "cell_phone",
+    "property": "data_length",
+    "contract_value": 20,
+    "db_value": 10,
+    "recommendation": 10
+  },
+  {
+    "table": "contact_address",
+    "column": "street_number",
+    "property": "data_length",
+    "contract_value": 20,
+    "db_value": 10,
+    "recommendation": 10
+  },
+  {
+    "table": "contact_employment",
+    "column": "months_at_job",
+    "property": "data_type",
+    "contract_value": "int",
+    "db_value": "smallint",
+    "recommendation": "smallint"
+  }
+]
