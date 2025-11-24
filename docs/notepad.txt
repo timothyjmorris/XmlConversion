@@ -53,7 +53,7 @@ DIRECT SINGLE-INSTANCE PROCESSING
 For smaller runs using ranges or limits, filling in gaps in app_id ranges, and specific fixes/clean-up
 	
 	SEQUENTIAL LIMIT MODE
-	python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --limit 2000
+	python production_processor.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --limit 2000
 	
 	- OR - 
 	

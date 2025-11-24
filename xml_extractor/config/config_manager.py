@@ -25,8 +25,8 @@ class DatabaseConfig:
     """Database configuration with environment variable support."""
     connection_string: str
     driver: str = "ODBC Driver 17 for SQL Server"
-    server: str = "localhost\\SQLEXPRESS"
-    database: str = "XmlConversionDB"
+    server: str = "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com"
+    database: str = "MACDEVOperational"
     trusted_connection: bool = True
     connection_timeout: int = 30
     command_timeout: int = 300
