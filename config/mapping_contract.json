@@ -90,6 +90,17 @@
       "required": false
     },
     {
+      "xml_path": "/Provenir/Request/CustData/application",
+      "xml_attribute": "product_line",
+      "target_table": "app_base",
+      "target_column": "product_line_enum",
+      "data_type": "smallint",
+      "mapping_type": ["enum"],
+      "nullable": false,
+      "required": true,
+      "description": "Product line enum mapping; mapper will map empty->600 via enum_mappings or raise if missing."
+    },
+    {
       "xml_path": "/Provenir/Request/CustData/application/app_product",
       "xml_attribute": "decision_tp_c",
       "target_table": "app_base",
