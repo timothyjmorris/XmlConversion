@@ -123,6 +123,12 @@ class MigrationEngine(MigrationEngineInterface):
         
         # Load target_schema from MappingContract (contract-driven schema isolation)
         self.target_schema = self._load_target_schema_from_contract()
+        # Load source_table from MappingContract so 'source table always in dbo' rule is contract-driven
+        try:
+            mapping_contract = self.config_manager.load_mapping_contract()
+            self.source_table = mapping_contract.source_table if mapping_contract and getattr(mapping_contract, 'source_table', None) else 'app_xml'
+        except Exception:
+            self.source_table = 'app_xml'
         
         self._connection = None
         self._transaction_active = False
@@ -177,8 +183,14 @@ class MigrationEngine(MigrationEngineInterface):
             Schema-qualified table name (e.g., "[sandbox].[app_base]")
         """
         # Source table always stays in dbo regardless of target_schema
-        if table_name == 'app_xml':
-            return '[dbo].[app_xml]'
+        # Compare case-insensitively against configured source_table from the mapping contract
+        try:
+            if table_name.lower() == (self.source_table or 'app_xml').lower():
+                return f'[dbo].[{self.source_table}]'
+        except Exception:
+            # Fallback to legacy behavior if anything goes wrong
+            if table_name.lower() == 'app_xml':
+                return '[dbo].[app_xml]'
         
         return f'[{self.target_schema}].[{table_name}]'
         

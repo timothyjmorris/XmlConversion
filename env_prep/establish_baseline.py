@@ -103,7 +103,7 @@ class BaselineEstablisher:
         try:
             with self.migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
-                cursor.execute("SELECT COUNT(*) FROM app_xml WHERE xml IS NOT NULL")
+                cursor.execute("SELECT COUNT(*) FROM app_xml WHERE app_XML IS NOT NULL")
                 count = cursor.fetchone()[0]
                 return count
         except Exception as e:

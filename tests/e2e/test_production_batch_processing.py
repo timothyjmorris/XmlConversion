@@ -70,6 +70,9 @@ class TestProductionXMLBatch(unittest.TestCase):
             with open(mapping_contract_path, 'r', encoding='utf-8') as f:
                 contract = json.load(f)
                 cls.target_schema = contract.get('target_schema', 'dbo') or 'dbo'
+                # Contract-driven source table/column for production XML extraction
+                cls.source_table = contract.get('source_table', 'app_xml')
+                cls.source_column = contract.get('source_column', 'xml')
         except Exception:
             # Fallback to dbo if contract cannot be read
             cls.target_schema = 'dbo'
@@ -178,15 +181,22 @@ class TestProductionXMLBatch(unittest.TestCase):
         try:
             with self.migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
-                
+                # Resolve source table/column from mapping contract (default to legacy names)
+                source_table = getattr(self, 'source_table', 'app_xml') or 'app_xml'
+                source_column = getattr(self, 'source_column', 'xml') or 'xml'
+
+                qualified_source = f"[dbo].[{source_table}]"
+                column_bracketed = f"[{source_column}]"
+
                 # COMPLETE VALIDATION: Process ALL 10 random XML records
-                cursor.execute("""
-                    SELECT TOP(10) app_id, xml 
-                    FROM app_xml 
-                    WHERE DATALENGTH(xml) > 100
+                sql = f"""
+                    SELECT TOP(10) app_id, {column_bracketed} 
+                    FROM {qualified_source}
+                    WHERE DATALENGTH({column_bracketed}) > 100
                     -- AND app_id BETWEEN 1 AND 24  -- Complete benchmark 1-24
                     ORDER BY NEWID()
-                """)
+                """
+                cursor.execute(sql)
                 
                 rows = cursor.fetchall()
                 

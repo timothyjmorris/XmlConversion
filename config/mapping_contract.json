@@ -2,7 +2,7 @@
   "xml_root_element": "Provenir",
   "xml_application_path": "/Provenir/Request/CustData/application",
   "source_table": "app_xml",
-  "source_column": "xml",
+  "source_column": "app_XML",
   "target_schema": "sandbox",
   "table_insertion_order": [
     "app_base",    

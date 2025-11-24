@@ -74,7 +74,7 @@ class MockXMLGenerator:
                     # Insert into app_xml table
                     try:
                         cursor.execute(
-                            "INSERT INTO app_xml (app_id, xml) VALUES (?, ?)",
+                            "INSERT INTO app_xml (app_id, app_XML) VALUES (?, ?)",
                             (app_id, xml_content)
                         )
                         inserted_count += 1
@@ -188,7 +188,7 @@ class DatasetManager:
         try:
             with self.migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
-                cursor.execute("SELECT COUNT(*) FROM app_xml WHERE xml IS NOT NULL")
+                cursor.execute("SELECT COUNT(*) FROM app_xml WHERE app_XML IS NOT NULL")
                 return cursor.fetchone()[0]
         except Exception as e:
             print(f"Error getting app_xml count: {e}")

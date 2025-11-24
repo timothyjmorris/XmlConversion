@@ -370,16 +370,23 @@ class ProductionProcessor:
         xml_records = []
         
         try:
+            # Load mapping contract to get the source table/column names (contract-driven)
+            config_manager = get_config_manager()
+            mapping_contract = config_manager.load_mapping_contract()
+            source_table = mapping_contract.source_table
+            source_column = mapping_contract.source_column
+
             migration_engine = MigrationEngine(self.connection_string)
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
-                
+
                 # Build query for XML record extraction using TOP + range filter (avoids OFFSET scan)
                 # ====================================================================================
                 # Uses TOP for fast sequential access, cursor pagination for resumability
-                
-                # Build WHERE clause
-                where_conditions = ["ax.xml IS NOT NULL"]
+
+                # Build WHERE clause (use contract-driven source column)
+                # Ensure column is properly quoted in case of mixed-case or special names
+                where_conditions = [f"ax.[{source_column}] IS NOT NULL"]
                 
                 # Cursor pagination: only fetch records after the last processed app_id
                 # This enables resuming mid-range if needed
@@ -404,9 +411,10 @@ class ProductionProcessor:
                 
                 # Build final SQL query with TOP (faster than OFFSET for sequential access)
                 top_clause = f"TOP ({limit})" if limit else ""
+                # Use contract-driven source table and column for extraction
                 query = f"""
-                    SELECT {top_clause} ax.app_id, ax.xml 
-                    FROM [dbo].[app_xml] AS ax
+                    SELECT {top_clause} ax.app_id, ax.[{source_column}]
+                    FROM [dbo].[{source_table}] AS ax
                     {where_clause}
                     ORDER BY ax.app_id
                 """
@@ -702,13 +710,18 @@ class ProductionProcessor:
         if not self.test_connection():
             raise RuntimeError("Database connection test failed")
         
-        # Get total record count for progress tracking
+        # Get total record count for progress tracking (use contract-driven source table/column)
         try:
+            config_manager = get_config_manager()
+            mapping_contract = config_manager.load_mapping_contract()
+            source_table = mapping_contract.source_table
+            source_column = mapping_contract.source_column
+
             migration_engine = MigrationEngine(self.connection_string)
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
-                # Source table (app_xml) always in [dbo] schema (read-only access)
-                cursor.execute("SELECT COUNT(*) FROM [dbo].[app_xml] WHERE xml IS NOT NULL")
+                # Source table always in [dbo] schema (read-only access)
+                cursor.execute(f"SELECT COUNT(*) FROM [dbo].[{source_table}] WHERE [{source_column}] IS NOT NULL")
                 total_records = cursor.fetchone()[0]
                 
                 if limit:
