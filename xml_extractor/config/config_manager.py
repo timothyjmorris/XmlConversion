@@ -538,6 +538,7 @@ class ConfigManager(ConfigurationManagerInterface):
             # Extract basic contract information
             source_table = contract_data.get('source_table', '')
             source_column = contract_data.get('source_column', '')
+            source_application_table = contract_data.get('source_application_table')
             xml_root_element = contract_data.get('xml_root_element', '')
             xml_application_path = contract_data.get('xml_application_path')
             target_schema = contract_data.get('target_schema', 'dbo')  # Contract-driven schema isolation
@@ -598,6 +599,7 @@ class ConfigManager(ConfigurationManagerInterface):
             contract = MappingContract(
                 source_table=source_table,
                 source_column=source_column,
+                source_application_table=source_application_table,
                 xml_root_element=xml_root_element,
                 xml_application_path=xml_application_path,
                 target_schema=target_schema,  # Contract-driven schema from JSON
