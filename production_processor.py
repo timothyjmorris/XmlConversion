@@ -411,10 +411,19 @@ class ProductionProcessor:
                 
                 # Build final SQL query with TOP (faster than OFFSET for sequential access)
                 top_clause = f"TOP ({limit})" if limit else ""
-                # Use contract-driven source table and column for extraction
+                # Use contract-driven source table and column for extraction. If contract defines
+                # a "source_application_table" then INNER JOIN to [dbo].[<source_application_table>]
+                # on app_id to ensure we only process genuine application rows (filters dirty staging rows).
+                source_app_table = getattr(mapping_contract, 'source_application_table', None)
+                join_clause = ""
+                if source_app_table:
+                    # Always reference source application table in dbo schema
+                    join_clause = f"INNER JOIN [dbo].[{source_app_table}] AS sa ON sa.app_id = ax.app_id"
+
                 query = f"""
                     SELECT {top_clause} ax.app_id, ax.[{source_column}]
                     FROM [dbo].[{source_table}] AS ax
+                    {join_clause}
                     {where_clause}
                     ORDER BY ax.app_id
                 """

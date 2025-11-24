@@ -47,11 +47,22 @@ def load_files_to_db():
                 except ET.ParseError as e:
                     logging.warning(f"Failed to parse XML in {file_path}: {e}")
                     app_id = None
+                # If app_id is missing, derive a new one based on MAX(app_id)+1 to ensure uniqueness
                 if app_id is None:
-                    logging.warning(f"Skipping {file_path}: No app_id found.")
-                    continue
+                    try:
+                        cursor.execute("SELECT MAX(app_id) FROM app_xml")
+                        max_row = cursor.fetchone()
+                        max_id = max_row[0] if max_row and max_row[0] is not None else 0
+                        app_id = int(max_id) + 1
+                        logging.info(f"Derived app_id {app_id} for file {file_path} (no ID in XML)")
+                    except Exception as e:
+                        logging.warning(f"Failed to derive app_id for {file_path}: {e}")
+                        logging.warning(f"Skipping {file_path}: No app_id found and could not derive one.")
+                        continue
+
+                # Insert using the contract column name `app_XML` (preserve case as used in DB)
                 cursor.execute(
-                    "INSERT INTO app_xml (xml, app_id) VALUES (?, ?)", xml_content, app_id
+                    "INSERT INTO app_xml (app_id, app_XML) VALUES (?, ?)", app_id, xml_content
                 )
                 loaded += 1
             cursor.execute("SET IDENTITY_INSERT app_xml OFF;")

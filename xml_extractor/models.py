@@ -166,6 +166,7 @@ class MappingContract:
     enum_mappings: Optional[Dict[str, Any]] = None
     bit_conversions: Optional[Dict[str, Any]] = None
     validation_rules: Optional[Dict[str, Any]] = None
+    source_application_table: Optional[str] = None
     
     def __post_init__(self):
         """Validate mapping contract configuration."""
