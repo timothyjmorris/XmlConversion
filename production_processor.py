@@ -678,8 +678,22 @@ class ProductionProcessor:
                 'batch_details': metrics.get('batch_details', [])
             }
             
+            # JSON serializer helper to handle Decimal and datetime objects gracefully
+            from decimal import Decimal
+            def _json_default(o):
+                if isinstance(o, Decimal):
+                    return float(o)
+                # datetime -> ISO string
+                try:
+                    import datetime as _dt
+                    if isinstance(o, _dt.datetime):
+                        return o.isoformat()
+                except Exception:
+                    pass
+                return str(o)
+
             with open(metrics_file, 'w') as f:
-                json.dump(consolidated_metrics, f, indent=2)
+                json.dump(consolidated_metrics, f, indent=2, default=_json_default)
             self.logger.info(f"Metrics saved to: {metrics_file}")
         except Exception as e:
             self.logger.error(f"Failed to save metrics: {e}")
@@ -783,8 +797,8 @@ class ProductionProcessor:
             batch_detail = {
                 'batch_number': batch_number,
                 'total_applications_processed': metrics.get('records_processed', 0),
-                'duration_seconds': batch_duration,
-                'applications_per_minute': (metrics.get('records_processed', 0) / batch_duration * 60) if batch_duration > 0 else 0,
+                'duration_seconds': float(batch_duration),
+                'applications_per_minute': float((metrics.get('records_processed', 0) / batch_duration * 60) if batch_duration > 0 else 0),
                 'database_inserts': metrics.get('total_records_inserted', 0),
                 'application_failures': metrics.get('records_failed', 0)
             }
