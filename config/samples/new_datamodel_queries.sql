@@ -24,7 +24,7 @@ select * from  sandbox.app_base where app_id > 100 and app_id < 201
 
 select * from sandbox.app_base
 
-
+select * from app_xml_staging
 select count(*) from app_xml;
 
 select max(app_id) from app_xml
@@ -44,6 +44,8 @@ select * from  sandbox.processing_log
 
 select * from  sandbox.app_enums
 
+select * from application
+insert into application (app_id) values (1),(2),(3),(4),(5),(6),(7),(9),(10)
 
 /* RESET ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -56,7 +58,7 @@ select * from  sandbox.app_enums
 	delete from sandbox.processing_log	where app_id > 100 and app_id < 201
 
     -- DELETE FROM app_xml where app_id > 300000
-
+	DELETE FROM app_xml_staging
 	
 
     EXEC sp_updatestats;
@@ -73,6 +75,13 @@ select * from  sandbox.app_enums
 	ALTER INDEX ALL ON  sandbox.processing_log REBUILD;
 
 
+	CREATE TABLE dbo.app_xml_staging (
+	  app_id INT NOT NULL PRIMARY KEY,
+	  app_XML NVARCHAR(MAX) NULL,
+	  extracted_at DATETIME2 NOT NULL DEFAULT (SYSUTCDATETIME())
+	);
+	CREATE INDEX IX_app_xml_staging_app_id ON dbo.app_xml_staging (app_id);
+
 	-- Get database file names
 	SELECT TYPE_DESC, NAME, size, max_size, growth, is_percent_growth FROM sys.database_files;
 
@@ -80,6 +89,26 @@ select * from  sandbox.app_enums
 	DBCC SHRINKFILE ('XmlConversionDB_log')
 
 ---------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+
+SET STATISTICS IO ON;
+SET STATISTICS TIME ON;
+-- Include Actual Execution Plan (SSMS: Ctrl-M / Include Actual Plan)
+SELECT TOP (500) ax.app_id,
+       CAST(ax.[app_XML] AS XML).value('(/Provenir/Request/@ID)[1]', 'nvarchar(max)') AS req_id,
+       CAST(ax.[app_XML] AS XML).query('/Provenir/Request/CustData') AS custdata_xml
+FROM dbo.app_xml ax
+WHERE ax.[app_XML] IS NOT NULL
+ORDER BY ax.app_id;
+
+SET STATISTICS IO ON; SET STATISTICS TIME ON;
+SELECT TOP (500) ax.app_id, ax.[app_XML]
+FROM dbo.app_xml ax
+WHERE ax.[app_XML] LIKE '%<CustData%'
+ORDER BY ax.app_id;
+SET STATISTICS IO OFF;
+SET STATISTICS TIME OFF;
 
 
 -- exec sp_who2;
@@ -134,19 +163,19 @@ select * from  sandbox.app_enums
 SET STATISTICS TIME ON
 	
 	-- Running in LIMIT mode
-	SELECT TOP(20) ax.app_id, ax.xml
+	SELECT TOP(500) ax.app_id, ax.app_xml
 	FROM app_xml ax
-	WHERE ax.xml IS NOT NULL
+	WHERE ax.app_xml IS NOT NULL
 	  AND NOT EXISTS (SELECT 1 FROM sandbox.processing_log AS pl WHERE pl.app_id = ax.app_id)
 	ORDER BY ax.app_id
 
 	-- Running in app_id RANGE mode
 	SELECT 
 		TOP (500) ax.app_id, --batch-size
-		ax.xml 
+		ax.app_xml 
 	FROM app_xml AS ax
 	WHERE 
-		ax.xml IS NOT NULL
+		ax.app_xml IS NOT NULL
 		AND ax.app_id > 200000	--app-id-start (should probably default to 1)
 		AND ax.app_id <= 300000 --app-id-end (should be required if using --app-id-start)		(this keeps the batch in it's lane to be safe on top of usig TOP)
 		AND NOT EXISTS (
