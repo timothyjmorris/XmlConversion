@@ -1160,16 +1160,16 @@ INSERT INTO sandbox.app_collateral_rl
 		a.app_id,
 		-- This collateral type sniffing is just handy for the near-future implementation, but lets try to categorize it correctly
 		CASE
-			WHEN RTRIM(a.app_type_code) = 'MARINE'	THEN	411	-- BOAT (MARINE)
-			WHEN RTRIM(a.app_type_code) = 'RV'		THEN	418	-- RV
+			WHEN RTRIM(a.app_type_code) = 'MARINE'	THEN	412	-- BOAT (MARINE)
+			WHEN RTRIM(a.app_type_code) = 'RV'		THEN	419	-- RV
 			WHEN RTRIM(a.app_type_code) = 'HT'		THEN	415	-- HORSE TRAILER
-			WHEN RTRIM(a.app_type_code) = 'UT'		THEN	421	-- MOTORCYCLE
-			WHEN RTRIM(a.app_type_code) = 'MC'		THEN	416	-- UTILITY TRAILER
+			WHEN RTRIM(a.app_type_code) = 'UT'		THEN	421	-- UTILITY TRAILER
+			WHEN RTRIM(a.app_type_code) = 'MC'		THEN	416	-- MOTORCYCLE
 			-- sub-types for OR's
 			WHEN RTRIM(a.app_type_code) = 'OR' AND a.sub_type_code = 'ATV'			THEN	410	-- ATV
 			WHEN RTRIM(a.app_type_code) = 'OR' AND a.sub_type_code = 'UTV'			THEN	422	-- UTV
-			WHEN RTRIM(a.app_type_code) = 'OR' AND a.sub_type_code = 'PWC'			THEN	417	-- PWC
-			WHEN RTRIM(a.app_type_code) = 'OR' AND a.sub_type_code = 'SNOWMOBILE'	THEN	419	-- SNOWMOBILE
+			WHEN RTRIM(a.app_type_code) = 'OR' AND a.sub_type_code = 'PWC'			THEN	418	-- PWC
+			WHEN RTRIM(a.app_type_code) = 'OR' AND a.sub_type_code = 'SNOWMOBILE'	THEN	420	-- SNOWMOBILE
 			ELSE 423 -- UNDETERMINED
 		END AS collateral_type_enum,
 		NULL AS [length],
@@ -1218,7 +1218,7 @@ INSERT INTO sandbox.app_collateral_rl
 		a.app_id,
 		-- This collateral type sniffing is just handy for the near-future implementation, but lets try to categorize it correctly
 		CASE
-			WHEN RTRIM(a.app_type_code) = 'MARINE' OR coll2_HP_Marine > 0	THEN	412	-- ENGINE-1 (MARINE)
+			WHEN RTRIM(a.app_type_code) = 'MARINE' OR coll2_HP_Marine > 0	THEN	413	-- ENGINE-1 (MARINE)
 			ELSE 423 -- UNDETERMINED
 		END AS collateral_type_enum,
 		NULL AS [length],
@@ -1674,3 +1674,4 @@ INSERT INTO sandbox.contact_employment
 UPDATE STATISTICS sandbox.contact_employment;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
+

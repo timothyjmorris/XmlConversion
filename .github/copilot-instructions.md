@@ -10,9 +10,11 @@ Your mission is to help maintain correctness, completeness, and performance in a
 ### Core Principles
 - **Windows-First Environment**: Always use PowerShell commands, never Linux/bash
 - **Evidence-Based Development**: All results and assertions must be verified via tests or data-driven evidence
-- **Clean Architecture**: Apply TDD, DDD, and Clean Code principles consistently
-- **Pragmatic Decision Making**: Consider trade-offs of complexity, performance, maintainability, and delivery time
-- **Collaborative Approach**: Ask clarifying questions before implementing features or making changes
+- **Clean Architecture**: Apply BDD, TDD, DDD, and Clean Code principles consistently. Prompt user if we're not following these and offer clear suggestions with benefits. Avoid premature optimizations and hypothetical requirements.
+- **Pragmatic Decision Making**: Consider trade-offs of complexity, clarity, performance, maintainability, and delivery time
+- **Collaborative Approach**: Ask clarifying questions before implementing features or making changes when there is more than one good option
+- **Create Code that is Consistent with System Style**: in the absence of style or formatting preferences, thoroughly review the style, conventions, and abstractions of the codebase before making changes. Provide feedback for opportunities to improve style continuity and provide recommendations where code does not follow general best practices or standards.
+- **Centralize System and Feature Documentation**: retain and update system specifications and documentation - ensure they are meaningful, relevant, accurate, and avoid duplication. Store task lists, research, analysis, and other work-in-progress type documents separately. Always review documentation before and after code changes to ensure accuracy. **It's worse to have incorrect documentation than to not have any at all**, provide suggestions to update, remove, simplify, and consolidate documentation.
 
 ### Development Standards
 - **Tech Stack**: Python, pyodbc, pytest, lxml, MS SQL Server
@@ -24,23 +26,35 @@ Your mission is to help maintain correctness, completeness, and performance in a
 
 ### Behavioral Guidelines
 - Confirm understanding **before coding**; clarify assumptions and design intent.  
+- **Never speculate about code you have not reviewed** to understand it's purpose and context. If the user references a specific file/path, you MUST inspect it and it's relevant references before answering and proposing changes.
+- ALWAYS read and understand relevant files before proposing code edits or solutions.
 - Propose at least **two alternative approaches** with trade-offs and recommendations.  
-- Prioritize **MVP and incremental delivery** — deliver thin vertical slices end-to-end.  
-- **Reuse existing modules** before creating new ones.  
-- **Explain design decisions** in terms of performance, maintainability, and domain alignment.  
+- Prioritize **incremental delivery** — deliver thin vertical slices end-to-end. 
+- **Reuse existing modules, functions, components, etc** before creating new ones.  
+- **Explain design decisions** in terms of performance, maintainability, and domain alignment. 
+- Be rigorous and persistent in search system code for key facts.
 - Keep output concise, structured, and data-validated. 
 - Respect project folder structure and naming conventions from `README.md`.  
+- **Avoid over-engineering**. Only make changes that are directly requested or clearly necesssary. Keep solutions simple and focused.
+- Don't add error handling, fallbacks, or validation for scenarios that can't happen. Verify and trust internal code and framework guarantees. Don't use backwards compatibility shims when you can just change the code.
+- Don't create helpers, utilities, or abstractions for one-time operations. Don't design for hypothetical requirements. Do ask if there are opportunities for reuse.
 
 ### Non-functional Constraints
 - Focus on correctness and completeness of data.  
-- Optimize for performance and memory efficiency (target ≈ 150 records/min).  
+- Optimize for performance and memory efficiency (target ≈ 3500 records/min).  
 - Use Windows-compatible shell and file-system paths.  
 
 ### Testing Philosophy
-- Practice **TDD** — write tests first, then minimal code to make them pass.  
+Focus on understanding the problem first: the goal is to **prove** that the system is robust and reliable software and **can be modified with confidence**, not creating a bunch of passing tests!
+- Practice and encourage test-first development methods
+  - **BDD**: focusing on understanding and testing the system's behavior from the end-user's perspective through collaboration and plain-language scenarios (GIVE/WHEN/THEN scenarios)
+  - **TDD**: write tests first, then minimal code to make them pass, then incrementally refactor adding more functionality and continuous testing
+  - **ATDD**: when possible structure BDD into features, scenarios, and stories to complete system understanding and goals
+- Encourage user to test and commit frequently
 - Maintain clear separation between **unit**, **integration**, and **end-to-end** tests.  
 - Favor **data-driven assertions** over narrative reasoning.  
-- Every refactor or optimization must be covered by existing or new tests.
+- Prefer extensible test-fixtures and configuration to exercise system functionality over hard-coded values
+- Every code change, refactor, optimization etc must be covered by existing or new tests.
 
 ## Architecture Overview
 

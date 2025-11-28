@@ -154,7 +154,7 @@ SET STATISTICS TIME OFF;
 	WHERE request_mode IN ('X')
 		--l.resource_type IN ('KEY', 'PAGE', 'TABLE', 'DATABASE') 
 		--AND request_mode IN ('IX', 'X')
-		l.resource_database_id = DB_ID('XmlConversionDB');
+		--l.resource_database_id = DB_ID('XmlConversionDB');
 
 
 -- Query to get next processing batch
@@ -209,6 +209,19 @@ DELETE FROM sandbox.app_base WHERE app_id = 443306
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- QUERIES: for new data model being populated by source XML
+-------------------------------------------------------------------------------------------------------------------------------------------------
+	-- Example getting one application for Credit Card, with the primary address and current employment - as a single row
+	SELECT TOP (10) *
+	FROM sandbox.app_base AS a
+	INNER JOIN sandbox.app_enums AS e1 ON e1.enum_id = a.product_line_enum
+	LEFT JOIN sandbox.app_operational_cc AS o ON o.app_id = a.app_id
+	LEFT JOIN sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
+	LEFT JOIN sandbox.app_solicited_cc AS s ON s.app_id = a.app_id
+	LEFT JOIN sandbox.app_transactional_cc AS t ON t.app_id = a.app_id
+	INNER JOIN sandbox.campaign_cc AS cam ON cam.campaign_num = p.campaign_num
+	INNER JOIN sandbox.contact_base AS c ON c.app_id = a.app_id
+	LEFT JOIN sandbox.contact_address AS ca ON ca.con_id = c.con_id AND ca.address_type_enum = 320			-- PRIMARY address
+	LEFT JOIN sandbox.contact_employment AS ce ON ce.con_id = c.con_id AND ce.employment_type_enum = 350	-- CURRENT employment
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
 SET STATISTICS TIME ON

@@ -16,42 +16,79 @@ BEWARE THE LOG FILE !!!
 
 -------------------------------------------------------------------------------------------------------------------- */
 
+-- IF NOT EXISTS(SELECT * FROM sys.schemas WHERE name = N'sandbox') EXEC('CREATE SCHEMA [sandbox] AUTHORIZATION [dbo]');
 
-/* --------------------------------------------------------------------------------------------------------------------
-NUKE ALL SANDBOX TABLES
-	drop table sandbox.app_enums;
-	drop table sandbox.app_base;
-	drop table sandbox.app_operational_cc;
-	drop table app_pricing_cc;
-	drop table app_solicited_cc;
-	drop table app_transactional_cc;
-	drop table sandbox.contact_base;
-	drop table contact_address;
-	drop table contact_employment;
-	drop table historical_lookup
-	drop table report_results_lookup;
-	drop table sandbox.processing_log;
+/* -----------------------------------------------------------------------------------------------------------------------------------------
+TEAR DOWN TABLES
+	DELETE FROM sandbox.app_base;
+	DELETE FROM sandbox.app_enums;
+	DELETE FROM sandbox.campaign_cc
+	DROP TABLE IF EXISTS sandbox.app_operational_cc;
+	DROP TABLE IF EXISTS sandbox.app_pricing_cc;
+	DROP TABLE IF EXISTS sandbox.app_solicited_cc;
+	DROP TABLE IF EXISTS sandbox.app_transactional_cc;
+	DROP TABLE IF EXISTS sandbox.historical_lookup;
+	DROP TABLE IF EXISTS sandbox.report_results_lookup;
+	DROP TABLE IF EXISTS sandbox.contact_address;
+	DROP TABLE IF EXISTS sandbox.contact_employment;
+	DROP TABLE IF EXISTS sandbox.contact_base;
+	DROP TABLE IF EXISTS sandbox.campaign_cc;
+	DROP TABLE IF EXISTS sandbox.app_base;
+	DROP TABLE IF EXISTS sandbox.app_enums;
+-------------------------------------------------------------------------------------------------------------------------------------------- */
 
-RESET & RESEED SANDBOX TABLES
-	DELETE FROM  sandbox.app_base; -- should cascade
-    DBCC CHECKIDENT ('sandbox.app_base', RESEED, 0);
-    DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
--------------------------------------------------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------------------------------------------------------------------
+# OVERVIEW FOR NEW OPERATIONAL DATA MODEL USED BY MAC AS THE SOURCE OF TRUTH FOR LOAN APPLICATIONS
+	The tables below include central tables that support all products and product-specific tables, which are 
+	differentiated by their suffix, e.g. app_base.product_line_enum = 600 (for Credit Card) will also use tables ending with `*_cc`.
+	The [sandbox] schema is temporary to support an application upgrade transition. There are many other tables related
+	to an application in the [dbo] schema which can be joined on with a related [app_id] column (which remain unchanged by the new data model)
+	`Contact` tables are also product agnostic and support the application. Unlike the other tables supporting application (ending with `*_cc`),
+	There can be more than one [contact_base] table. This table is supported by [contact_address] and [contract_employment], which may also 
+	have more than one.
+-------------------------------------------------------------------------------------------------------------------------------------------- */
 
+/* -----------------------------------------------------------------------------------------------------------------------------------------
+Example getting one application for Credit Card, with the primary address and current employment - as a single row
+	SELECT TOP (1) *
+	FROM sandbox.app_base AS a
+	INNER JOIN sandbox.app_enums AS e1 ON e1.enum_id = a.product_line_enum
+	LEFT JOIN sandbox.app_operational_cc AS o ON o.app_id = a.app_id
+	LEFT JOIN sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
+	LEFT JOIN sandbox.app_solicited_cc AS s ON s.app_id = a.app_id
+	LEFT JOIN sandbox.app_transactional_cc AS t ON t.app_id = a.app_id
+	INNER JOIN sandbox.campaign_cc AS cam ON cam.campaign_num = p.campaign_num
+	INNER JOIN sandbox.contact_base AS c ON c.app_id = a.app_id
+	LEFT JOIN sandbox.contact_address AS ca ON ca.con_id = c.con_id AND ca.address_type_enum = 320			-- PRIMARY address
+	LEFT JOIN sandbox.contact_employment AS ce ON ce.con_id = c.con_id AND ce.employment_type_enum = 350	-- CURRENT employment
+-------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+
+-- SET LOGGING FOR PROCESS SO WE DON'T KILL OURSELVES --------------------------------------------------------------------------------------------
+-- Ensure database is in SIMPLE recovery mode for migration
+-- ALTER DATABASE XmlConversionDB SET RECOVERY SIMPLE;
+
+-- After migration, switch back if needed
+-- ALTER DATABASE XmlConversionDB SET RECOVERY FULL;
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
 -- Processing Log (error tracking, resumability)
 CREATE TABLE sandbox.processing_log (
-	[log_id]			int				NOT NULL CONSTRAINT PK_processing_log_log_id PRIMARY KEY IDENTITY(1, 1),
-	[app_id]			int				NOT NULL, -- DO NOT PUT AN FK CONSTRAINT HERE, OTHERWISE WE CAN'T INSERT FAILURES!
+	log_id				int				NOT NULL CONSTRAINT PK_processing_log_log_id PRIMARY KEY IDENTITY(1, 1),
+	app_id				int				NOT NULL,
 	[status]			varchar(20)		NOT NULL,
-	[failure_reason]	varchar(500)	NULL,
-	[processing_time]	datetime2(7)	NOT NULL CONSTRAINT DF_processing_log_processing_time DEFAULT GETUTCDATE(),
+	failure_reason		varchar(500)	NULL,
+	processing_time		datetime2(7)	NOT NULL CONSTRAINT DF_processing_log_processing_time DEFAULT GETUTCDATE(),
 	[session_id]		varchar(50)		NULL,
 	app_id_start		int				NULL, 
     app_id_end			int				NULL
 );
+
 -- On processing_log  
 CREATE NONCLUSTERED INDEX IX_processing_log_app_id 
-ON sandbox.processing_log(app_id);
+	ON sandbox.processing_log(app_id);
 
 -- Convert xml to varchar max so we can index
 ALTER TABLE app_xml
@@ -59,17 +96,19 @@ ALTER TABLE app_xml
 -- On filtered index on app_xml
 
 CREATE NONCLUSTERED INDEX IX_app_xml_app_id_xml 
-ON app_xml(app_id) INCLUDE (xml) --WHERE xml IS NOT NULL;
+	ON app_xml(app_id) INCLUDE (xml) --WHERE xml IS NOT NULL;
 
 
--- Groups of static descriptions organized by type
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+-- Enable the data to lookup up a consistent/static value from a list by storing it's reference id
 CREATE TABLE sandbox.app_enums (
 	enum_id							smallint		NOT NULL CONSTRAINT PK_app_enums_enum_id PRIMARY KEY,
-	[type]							varchar(50)		NOT NULL,	-- purely for human readability, also to create a list if needed
+	[type]							varchar(50)		NOT NULL,	-- purely for human readability, could be used to create a list if needed
 	[value]							varchar(100)	NOT NULL
 );
 
--- Parent table for all application types with general-use columns: these values should be static
+-- Parent table that supports all product types (product_line_enum). These values do not change.
 CREATE TABLE sandbox.app_base (
 	app_id							int				NOT NULL CONSTRAINT PK_app_base_app_id PRIMARY KEY IDENTITY(1, 1),
 	app_source_enum					smallint		NULL	 CONSTRAINT FK_app_base_app_source_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
@@ -79,14 +118,14 @@ CREATE TABLE sandbox.app_base (
 	decision_date					datetime		NULL,
 	funding_date					datetime		NULL,
 	ip_address						varchar(39)		NULL,
-	product_line_enum				smallint		NOT NULL DEFAULT (600) CONSTRAINT FK_app_base_product_line_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+	product_line_enum				smallint		NOT NULL CONSTRAINT FK_app_base_product_line_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
 	receive_date					datetime		NOT NULL CONSTRAINT DF_app_base_receive_date DEFAULT GETUTCDATE(),
 	retain_until_date				datetime		NULL,
 	sc_multran_booked_date			datetime		NULL,
 	sub_type_enum					smallint		NULL	 CONSTRAINT FK_app_base_sub_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION
 );
 
--- Extended child application fields are specific to application type, persists, and may be changed
+-- Extended persistent child application fields are specific to application - and may be changed throughout the lifecycle
 -- NOTE: app_id is both the FK & PK (not expecting JOINs to this table)
 CREATE TABLE sandbox.app_operational_cc (
 	app_id							int				NOT NULL CONSTRAINT FK_app_operational_cc_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
@@ -152,12 +191,14 @@ add xml mapping contract
 	- billing_tree_token
 	- iovation_blackbox
 	- use_alloy_service_flag
+	- alloy_tag_list (not implemented)
 	- app_pricing_cc.clear_card_flag
 	- app_pricing_cc.population_assignment_enum
 
 */
 CREATE TABLE sandbox.app_transactional_cc (
 	app_id							int				NOT NULL CONSTRAINT FK_app_transactional_cc_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
+	alloy_tag_list					varchar(MAX)	NULL,
 	analyst_review_flag				bit				NULL	 CONSTRAINT DF_app_transactional_cc_analyst_review_flag DEFAULT (0),
 	billing_tree_response_status	varchar(20)		NULL,
 	billing_tree_token				varchar(500)	NULL,
@@ -177,11 +218,27 @@ CREATE TABLE sandbox.app_transactional_cc (
 	CONSTRAINT PK_app_transactional_cc_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 
--- NOTE: app_id is both the FK & PK (not expecting JOINs to this table)
+
+-- Mail solicitation / Marketing campaign information
+CREATE TABLE sandbox.campaign_cc (
+	campaign_num					varchar(6)		NOT NULL CONSTRAINT PK_campaign_campaign_num PRIMARY KEY,
+	agreement_num					int				NULL,
+	booking_on_flag					bit				NOT NULL CONSTRAINT DF_campaign_booking_on_flag DEFAULT (0),
+	in_home_date					datetime		NULL,	 -- should we not allow nulls and default ancient null dates to 1900-01-01 or something?
+	internet_responses_on_flag		bit				NOT NULL CONSTRAINT DF_campaign_internet_responses_on_flag DEFAULT (0),
+	letters_on_flag					bit				NOT NULL CONSTRAINT DF_campaign_letters_on_flag DEFAULT (0),
+	processing_complete_flag		bit				NOT NULL CONSTRAINT DF_campaign_processing_complete_flag DEFAULT (0),
+	processing_expiration_date		datetime		NULL,	 -- SC & U2FL are nulls for the following dates
+	solicitation_expiration_date	datetime		NULL	 -- SC is null
+);
+
+
+-- Information that drives the pricing and the outcome
+-- NOTE: app_id is both the FK & PK (not expecting JOINs to this table unless it is from an app)
 CREATE TABLE sandbox.app_pricing_cc (
 	app_id								int				NOT NULL CONSTRAINT FK_app_pricing_cc_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
 	account_number						char(16)		NULL,
-	campaign_num						varchar(6)		NOT NULL, --CONSTRAINT FK_app_pricing_cc_campaign_num__campaign_campaign_num FOREIGN KEY REFERENCES campaign(campaign_num) ON DELETE NO ACTION,
+	campaign_num						varchar(6)		NOT NULL CONSTRAINT FK_app_pricing_cc_campaign_num__campaign_campaign_num FOREIGN KEY REFERENCES sandbox.campaign_cc(campaign_num) ON DELETE NO ACTION,
 	card_art_code						varchar(2)		NULL,
 	card_account_setup_fee				tinyint			NULL,
 	card_additional_card_fee			tinyint			NULL,
@@ -208,7 +265,7 @@ CREATE TABLE sandbox.app_pricing_cc (
 	credit_line_possible				smallint		NULL, --NOT NULL CONSTRAINT DF_app_pricing_cc_credit_line_possible DEFAULT (0),
 	debt_to_income_ratio				decimal(12,2)	NULL, --NOT NULL CONSTRAINT DF_app_pricing_cc_debt_to_income_ratio DEFAULT (0),
 	decision_model_enum					smallint		NULL	 CONSTRAINT FK_app_pricing_cc_decision_model_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	marketing_segment					varchar(10)		NOT NULL,	
+	marketing_segment					varchar(10)		NULL,	
 	min_payment_due						decimal(12,2)	NULL, --NOT NULL CONSTRAINT DF_app_pricing_cc_min_payment_due DEFAULT (0),
 	monthly_debt						decimal(12,2)	NULL, --NOT NULL CONSTRAINT DF_app_pricing_cc_monthly_debt DEFAULT (0),
 	monthly_income						decimal(12,2)	NULL, --NOT NULL CONSTRAINT DF_app_pricing_cc_monthly_income DEFAULT (0),
@@ -225,6 +282,8 @@ CREATE TABLE sandbox.app_pricing_cc (
 	CONSTRAINT PK_app_pricing_cc_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 
+
+-- Solicitation information from applicant for Mail Offer
 -- NOTE: app_id is both the FK & PK (not expecting JOINs to this table)
 CREATE TABLE sandbox.app_solicited_cc (
 	app_id						int				NOT NULL CONSTRAINT FK_app_solicited_cc_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
@@ -245,72 +304,6 @@ CREATE TABLE sandbox.app_solicited_cc (
 	unit						varchar(10)		NULL,
 	zip							varchar(9)		NULL,	
 	CONSTRAINT PK_app_solicited_cc_app_id PRIMARY KEY CLUSTERED (app_id)
-);
-
--- UC is on con_id & contact_type_enum to prevent duplicates
-CREATE TABLE sandbox.contact_base (
-	con_id						int				NOT NULL CONSTRAINT PK_contact_base_con_id PRIMARY KEY IDENTITY(1, 1),
-	app_id						int				NOT NULL CONSTRAINT FK_contact_base_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
-	birth_date					smalldatetime	NOT NULL,	-- PROBLEM, we have a bunch of NULL AUTHU accounts, before 2008: suggest migrating this to 1900-01-01
-	cell_phone					char(10)		NULL,
-	contact_type_enum			smallint		NOT NULL CONSTRAINT FK_contact_base_con_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	email						varchar(100)	NULL,
-	esign_consent_flag			bit				NOT NULL CONSTRAINT DF_contact_base_esign_consent_flag DEFAULT (0),
-	first_name					varchar(50)		NOT NULL,
-	fraud_type_enum				smallint		NULL	 CONSTRAINT FK_contact_base_fraud_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	home_phone					char(10)		NULL,
-	last_name					varchar(50)		NOT NULL,
-	middle_initial				varchar(1)		NULL,
-	mother_maiden_name			varchar(50)		NULL,
-	paperless_flag				bit				NOT NULL CONSTRAINT DF_contact_base_paperless_flag DEFAULT (0),
-	sms_consent_flag			bit				NOT NULL CONSTRAINT DF_contact_base_sms_consent_flag DEFAULT (0),
-	ssn							char(9)			NOT NULL,	-- PROBLEM, we have a bunch of NULL AUTHU accounts, before 2008: suggest migrating this to 000000000
-	ssn_last_4					AS RIGHT(4, ssn) PERSISTED,	-- Greatly improves SSN_4 searching
-	suffix						varchar(10)		NULL,
-	CONSTRAINT UC_contact_base_con_id_contact_type_enum UNIQUE (con_id, contact_type_enum)
-);
-
--- NOTE: con_id is both the FK & PK, PK is on con_id & address_type_enum to prevent duplicates
-CREATE TABLE sandbox.contact_address (
-	con_id						int				NOT NULL CONSTRAINT FK_contact_address_con_id__contact_base_con_id FOREIGN KEY REFERENCES sandbox.contact_base(con_id) ON DELETE CASCADE,
-	address_line_1				varchar(100)	NULL,
-	address_type_enum			smallint		NOT NULL CONSTRAINT FK_contact_address_address_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	city						varchar(50)		NOT NULL,
-	months_at_address			smallint		NULL,
-	ownership_type_enum			smallint		NULL CONSTRAINT FK_contact_address_ownership_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	po_box						varchar(10)		NULL,
-	rural_route					varchar(10)		NULL,
-	[state]						char(2)			NOT NULL,
-	street_name					varchar(50)		NULL,
-	street_number				varchar(10)		NULL,
-	unit						varchar(10)		NULL,
-	zip							varchar(9)		NOT NULL,
-	CONSTRAINT PK_contact_address_con_id_address_type_enum PRIMARY KEY CLUSTERED (con_id, address_type_enum)
-);
-
--- NOTE: con_id is both the FK & PK, PK is on con_id & employment_type_enum to prevent duplicates
-CREATE TABLE sandbox.contact_employment (
-	con_id							int				NOT NULL CONSTRAINT FK_contact_employment_con_id__contact_base_con_id FOREIGN KEY REFERENCES sandbox.contact_base(con_id) ON DELETE CASCADE,
-	address_line_1					varchar(100)	NULL,	-- for RL
-	city							varchar(50)		NULL,
-	business_name					varchar(100)	NULL,	
-	employment_type_enum			smallint		NOT NULL CONSTRAINT FK_contact_employment_employment_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,	
-	income_source_nontaxable_flag	bit				NULL,	-- RL doesn't have this
-	income_type_enum				smallint		NULL	 CONSTRAINT FK_contact_employment_income_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	job_title						varchar(100)	NULL,
-	monthly_salary					decimal(12,2)	NULL,
-	months_at_job					smallint		NULL,
-	other_monthly_income			decimal(12,2)	NULL,
-	other_income_type_enum			smallint		NULL	 CONSTRAINT FK_contact_employment_other_income_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,	
-	other_income_source_detail		varchar(50)		NULL,
-	phone							char(10)		NULL,	
-	self_employed_flag				bit				NOT NULL CONSTRAINT DF_contact_employment_self_employed_flag DEFAULT (0),
-	[state]							char(2)			NULL,
-	street_name						varchar(50)		NULL,
-	street_number					varchar(10)		NULL,
-	unit							varchar(10)		NULL,
-	zip								varchar(9)		NULL
-	CONSTRAINT PK_contact_employment_con_id_employment_type_enum PRIMARY KEY CLUSTERED (con_id, employment_type_enum)
 );
 
 -- Used as a convenient method to store and retrieve key/value pairs from a report w/o parsing it again 
@@ -338,4 +331,73 @@ CREATE TABLE sandbox.historical_lookup (
 	[value]						varchar(250)	NULL,
 	[rowstamp]					datetime		NOT NULL CONSTRAINT DF_historical_lookup_value_rowstamp DEFAULT GETUTCDATE(),
 	CONSTRAINT PK_historical_lookup_app_id PRIMARY KEY CLUSTERED (app_id, [name])	-- composite unique PK
+);
+
+-- Base indentity information on contact. There may be multiple contacts, categorized by contact_type_enum.
+-- (Unique Constaint is on con_id & contact_type_enum to prevent duplicates)
+CREATE TABLE sandbox.contact_base (
+	con_id						int				NOT NULL CONSTRAINT PK_contact_base_con_id PRIMARY KEY IDENTITY(1, 1),
+	app_id						int				NOT NULL CONSTRAINT FK_contact_base_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
+	birth_date					smalldatetime	NOT NULL,	-- PROBLEM, we have a bunch of NULL AUTHU accounts, before 2008: suggest migrating this to 1900-01-01
+	cell_phone					char(10)		NULL,
+	contact_type_enum			smallint		NOT NULL CONSTRAINT FK_contact_base_con_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+	email						varchar(100)	NULL,
+	esign_consent_flag			bit				NOT NULL CONSTRAINT DF_contact_base_esign_consent_flag DEFAULT (0),
+	first_name					varchar(50)		NOT NULL,
+	fraud_type_enum				smallint		NULL	 CONSTRAINT FK_contact_base_fraud_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+	home_phone					char(10)		NULL,
+	last_name					varchar(50)		NOT NULL,
+	middle_initial				varchar(1)		NULL,
+	mother_maiden_name			varchar(50)		NULL,
+	paperless_flag				bit				NOT NULL CONSTRAINT DF_contact_base_paperless_flag DEFAULT (0),
+	sms_consent_flag			bit				NOT NULL CONSTRAINT DF_contact_base_sms_consent_flag DEFAULT (0),
+	ssn							char(9)			NOT NULL,	-- PROBLEM, we have a bunch of NULL AUTHU accounts, before 2008: suggest migrating this to 000000000
+	ssn_last_4					AS RIGHT(4, ssn) PERSISTED,	-- Greatly improves SSN_4 searching
+	suffix						varchar(10)		NULL,
+	CONSTRAINT UC_contact_base_con_id_contact_type_enum UNIQUE (con_id, contact_type_enum)
+);
+
+-- Extended indentity information on contact for addresses. There may be multiple contacts, categorized by address_type_enum.
+-- NOTE: con_id is both the FK & PK, PK is on con_id & address_type_enum to prevent duplicates
+CREATE TABLE sandbox.contact_address (
+	con_id						int				NOT NULL CONSTRAINT FK_contact_address_con_id__contact_base_con_id FOREIGN KEY REFERENCES sandbox.contact_base(con_id) ON DELETE CASCADE,
+	address_line_1				varchar(100)	NULL,
+	address_type_enum			smallint		NOT NULL CONSTRAINT FK_contact_address_address_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+	city						varchar(50)		NULL,
+	months_at_address			smallint		NULL,
+	ownership_type_enum			smallint		NULL CONSTRAINT FK_contact_address_ownership_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+	po_box						varchar(10)		NULL,
+	rural_route					varchar(10)		NULL,
+	[state]						char(2)			NULL,
+	street_name					varchar(50)		NULL,
+	street_number				varchar(10)		NULL,
+	unit						varchar(10)		NULL,
+	zip							varchar(9)		NULL,
+	CONSTRAINT PK_contact_address_con_id_address_type_enum PRIMARY KEY CLUSTERED (con_id, address_type_enum)
+);
+
+-- Extended indentity information on contact for employments. There may be multiple employments, categorized by employment_type_enum.
+-- NOTE: con_id is both the FK & PK, PK is on con_id & employment_type_enum to prevent duplicates
+CREATE TABLE sandbox.contact_employment (
+	con_id							int				NOT NULL CONSTRAINT FK_contact_employment_con_id__contact_base_con_id FOREIGN KEY REFERENCES sandbox.contact_base(con_id) ON DELETE CASCADE,
+	address_line_1					varchar(100)	NULL,	-- for RL
+	city							varchar(50)		NULL,
+	business_name					varchar(100)	NULL,	
+	employment_type_enum			smallint		NOT NULL CONSTRAINT FK_contact_employment_employment_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,	
+	income_source_nontaxable_flag	bit				NULL,	-- RL doesn't have this
+	income_type_enum				smallint		NULL	 CONSTRAINT FK_contact_employment_income_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+	job_title						varchar(100)	NULL,
+	monthly_salary					decimal(12,2)	NULL,
+	months_at_job					smallint		NULL,
+	other_monthly_income			decimal(12,2)	NULL,
+	other_income_type_enum			smallint		NULL	 CONSTRAINT FK_contact_employment_other_income_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,	
+	other_income_source_detail		varchar(50)		NULL,
+	phone							char(10)		NULL,	
+	self_employed_flag				bit				NOT NULL CONSTRAINT DF_contact_employment_self_employed_flag DEFAULT (0),
+	[state]							char(2)			NULL,
+	street_name						varchar(50)		NULL,
+	street_number					varchar(10)		NULL,
+	unit							varchar(10)		NULL,
+	zip								varchar(9)		NULL
+	CONSTRAINT PK_contact_employment_con_id_employment_type_enum PRIMARY KEY CLUSTERED (con_id, employment_type_enum)
 );

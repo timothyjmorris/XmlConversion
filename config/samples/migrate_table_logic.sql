@@ -1,307 +1,371 @@
 	
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_enums ------------------------------------------------------------------------------------------------------------------------------------
--- These are the enums used to map old xml values to new enum values. Those "rules" can be interpretted by the queries below.
-DELETE FROM app_enums;
+/*
+ALTER TABLE sandbox.app_operational_cc NOCHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.app_pricing_cc NOCHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.app_transactional_cc NOCHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.contact_address NOCHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.contact_employment NOCHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.contact_base NOCHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.app_base NOCHECK CONSTRAINT ALL;
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (1, 'app_source_cc', 'INTERNET');	-- I
-INSERT INTO app_enums (enum_id, type, value) VALUES (2, 'app_source_cc', 'MAILED-IN');	-- M
-INSERT INTO app_enums (enum_id, type, value) VALUES (3, 'app_source_cc', 'T');			-- T
-INSERT INTO app_enums (enum_id, type, value) VALUES (4, 'app_source_cc', 'U');			-- U
+ALTER TABLE sandbox.app_operational_cc CHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.app_pricing_cc CHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.app_transactional_cc CHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.contact_address CHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.contact_employment CHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.contact_base CHECK CONSTRAINT ALL;
+ALTER TABLE sandbox.app_base CHECK CONSTRAINT ALL;
+*/
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (10, 'app_source_rl', 'APPONE');		-- A
-INSERT INTO app_enums (enum_id, type, value) VALUES (11, 'app_source_rl', 'DEALERTRACK');	-- D
-INSERT INTO app_enums (enum_id, type, value) VALUES (12, 'app_source_rl', 'FAXED-IN');		-- F
-INSERT INTO app_enums (enum_id, type, value) VALUES (13, 'app_source_rl', 'S');				-- S
-INSERT INTO app_enums (enum_id, type, value) VALUES (14, 'app_source_rl', 'DEALER DIRECT');	-- (new)
+
+
+
+
+DELETE FROM sandbox.app_enums;
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (1, 'app_source_cc', 'INTERNET');	-- I
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (2, 'app_source_cc', 'MAILED-IN');	-- M
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (3, 'app_source_cc', 'TELEPHONE');	-- T
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (4, 'app_source_cc', 'U');			-- U
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (5, 'app_source_cc', 'CK-API');		-- C
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (6, 'app_source_cc', 'EX-API');		-- E
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (10, 'app_source_rl', 'APPONE');		-- A
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (11, 'app_source_rl', 'DEALERTRACK');	-- D
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (12, 'app_source_rl', 'FAXED-IN');		-- F
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (13, 'app_source_rl', 'S');				-- S
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (14, 'app_source_rl', 'DEALER DIRECT');	-- P
  
-INSERT INTO app_enums (enum_id, type, value) VALUES (20, 'app_type_cc', 'ALL');		-- ALL
-INSERT INTO app_enums (enum_id, type, value) VALUES (21, 'app_type_cc', 'CBC');		-- CBC
-INSERT INTO app_enums (enum_id, type, value) VALUES (22, 'app_type_cc', 'FPP');		-- FPP
-INSERT INTO app_enums (enum_id, type, value) VALUES (23, 'app_type_cc', 'GEICO');	-- GEICO
-INSERT INTO app_enums (enum_id, type, value) VALUES (24, 'app_type_cc', 'GPA');		-- GPA
-INSERT INTO app_enums (enum_id, type, value) VALUES (25, 'app_type_cc', 'GREST');	-- GREST
-INSERT INTO app_enums (enum_id, type, value) VALUES (26, 'app_type_cc', 'HCOSC');	-- HCOSC
-INSERT INTO app_enums (enum_id, type, value) VALUES (27, 'app_type_cc', 'HT1');		-- HT1
-INSERT INTO app_enums (enum_id, type, value) VALUES (28, 'app_type_cc', 'PCP');		-- PCP
-INSERT INTO app_enums (enum_id, type, value) VALUES (29, 'app_type_cc', 'PCT');		-- PCT
-INSERT INTO app_enums (enum_id, type, value) VALUES (30, 'app_type_cc', 'PRODB');	-- PRODB
-INSERT INTO app_enums (enum_id, type, value) VALUES (31, 'app_type_cc', 'REST');	-- REST
-INSERT INTO app_enums (enum_id, type, value) VALUES (32, 'app_type_cc', 'SECURE');	-- SECURE
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (20, 'app_type_cc', 'ALL');		-- ALL
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (21, 'app_type_cc', 'CBC');		-- CBC
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (22, 'app_type_cc', 'FPP');		-- FPP
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (23, 'app_type_cc', 'GEICO');	-- GEICO
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (24, 'app_type_cc', 'GPA');		-- GPA
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (25, 'app_type_cc', 'GREST');	-- GREST
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (26, 'app_type_cc', 'HCOSC');	-- HCOSC
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (27, 'app_type_cc', 'HT1');		-- HT1
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (28, 'app_type_cc', 'PCP');		-- PCP
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (29, 'app_type_cc', 'PCT');		-- PCT
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (30, 'app_type_cc', 'PRODB');	-- PRODB
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (31, 'app_type_cc', 'REST');	-- REST
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (32, 'app_type_cc', 'SECURE');	-- SECURE
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (33, 'app_type_cc', 'DIGITAL');	-- 
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (38, 'app_type_rl', 'HT');		-- HT
-INSERT INTO app_enums (enum_id, type, value) VALUES (39, 'app_type_rl', 'MARINE');	-- MARINE
-INSERT INTO app_enums (enum_id, type, value) VALUES (40, 'app_type_rl', 'MC');		-- MC
-INSERT INTO app_enums (enum_id, type, value) VALUES (41, 'app_type_rl', 'OR');		-- OR
-INSERT INTO app_enums (enum_id, type, value) VALUES (42, 'app_type_rl', 'RV');		-- RV
-INSERT INTO app_enums (enum_id, type, value) VALUES (43, 'app_type_rl', 'UT');		-- UT
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (38, 'app_type_rl', 'HT');		-- HT
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (39, 'app_type_rl', 'MARINE');	-- MARINE
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (40, 'app_type_rl', 'MC');		-- MC
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (41, 'app_type_rl', 'OR');		-- OR
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (42, 'app_type_rl', 'RV');		-- RV
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (43, 'app_type_rl', 'UT');		-- UT
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (45, 'sub_type_rl', 'ATV');			-- ATV
-INSERT INTO app_enums (enum_id, type, value) VALUES (46, 'sub_type_rl', 'PWC');			-- PWC
-INSERT INTO app_enums (enum_id, type, value) VALUES (47, 'sub_type_rl', 'SNOWMOBILE');	-- SNOWMOBILE
-INSERT INTO app_enums (enum_id, type, value) VALUES (48, 'sub_type_rl', 'UTV');			-- UTV
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (45, 'sub_type_rl', 'ATV');			-- ATV
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (46, 'sub_type_rl', 'PWC');			-- PWC
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (47, 'sub_type_rl', 'SNOWMOBILE');	-- SNOWMOBILE
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (48, 'sub_type_rl', 'UTV');			-- UTV
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (50, 'decision_type_cc', 'APPROVED');
-INSERT INTO app_enums (enum_id, type, value) VALUES (51, 'decision_type_cc', 'DECLINED');
-INSERT INTO app_enums (enum_id, type, value) VALUES (52, 'decision_type_cc', 'DECLINED-NC');
-INSERT INTO app_enums (enum_id, type, value) VALUES (53, 'decision_type_cc', 'FAILED-BIT');
-INSERT INTO app_enums (enum_id, type, value) VALUES (54, 'decision_type_cc', 'FAILED-GIACT');
-INSERT INTO app_enums (enum_id, type, value) VALUES (55, 'decision_type_cc', 'NOCHK');
-INSERT INTO app_enums (enum_id, type, value) VALUES (56, 'decision_type_cc', 'NO DECISION');		-- NONE
-INSERT INTO app_enums (enum_id, type, value) VALUES (57, 'decision_type_cc', 'PENDING-DEPOSIT');
-INSERT INTO app_enums (enum_id, type, value) VALUES (58, 'decision_type_cc', 'PENDING-FINICITY');
-INSERT INTO app_enums (enum_id, type, value) VALUES (59, 'decision_type_cc', 'PENDING-NOVA');
-INSERT INTO app_enums (enum_id, type, value) VALUES (60, 'decision_type_cc', 'WITHDRAWN');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (50, 'decision_type_cc', 'APPROVED');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (51, 'decision_type_cc', 'DECLINED');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (52, 'decision_type_cc', 'DECLINED-NC');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (53, 'decision_type_cc', 'FAILED-BIT');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (54, 'decision_type_cc', 'FAILED-GIACT');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (55, 'decision_type_cc', 'NOCHK');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (56, 'decision_type_cc', 'NO DECISION');		-- NONE
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (57, 'decision_type_cc', 'PENDING-DEPOSIT');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (58, 'decision_type_cc', 'PENDING-FINICITY');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (59, 'decision_type_cc', 'PENDING-NOVA');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (60, 'decision_type_cc', 'WITHDRAWN');
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (65, 'decision_type_rl', 'APPROVED');		-- APPRV
-INSERT INTO app_enums (enum_id, type, value) VALUES (66, 'decision_type_rl', 'DECLINED');		-- DECLN
-INSERT INTO app_enums (enum_id, type, value) VALUES (67, 'decision_type_rl', 'WITHDRAWN');		-- WITHD
-INSERT INTO app_enums (enum_id, type, value) VALUES (68, 'decision_type_rl', 'NO DECISION');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (65, 'decision_type_rl', 'APPROVED');		-- APPRV
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (66, 'decision_type_rl', 'DECLINED');		-- DECLN
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (67, 'decision_type_rl', 'WITHDRAWN');		-- WITHD
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (68, 'decision_type_rl', 'NO DECISION');
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (70, 'bank_account_type', 'CHECKING');		-- C
-INSERT INTO app_enums (enum_id, type, value) VALUES (71, 'bank_account_type', 'SAVINGS');		-- S
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (70, 'bank_account_type', 'CHECKING');		-- C
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (71, 'bank_account_type', 'SAVINGS');		-- S
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (80, 'priority_cc', 'Alloy Error');			-- Alloy Error
-INSERT INTO app_enums (enum_id, type, value) VALUES (81, 'priority_cc', 'Offline Step-Up');		-- Offline Step-Up
-INSERT INTO app_enums (enum_id, type, value) VALUES (82, 'priority_cc', 'Step-Up Received');	-- Step-Up Received
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (80, 'priority_cc', 'Alloy Error');			-- Alloy Error
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (81, 'priority_cc', 'Offline Step-Up');		-- Offline Step-Up
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (82, 'priority_cc', 'Step-Up Received');	-- Step-Up Received
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (100, 'process_cc', '00050');
-INSERT INTO app_enums (enum_id, type, value) VALUES (101, 'process_cc', '00100');
-INSERT INTO app_enums (enum_id, type, value) VALUES (102, 'process_cc', '01000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (103, 'process_cc', '02000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (104, 'process_cc', '03000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (105, 'process_cc', '03010');
-INSERT INTO app_enums (enum_id, type, value) VALUES (106, 'process_cc', '06000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (107, 'process_cc', '07000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (108, 'process_cc', '07500');
-INSERT INTO app_enums (enum_id, type, value) VALUES (109, 'process_cc', '08000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (110, 'process_cc', '09000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (111, 'process_cc', '11000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (112, 'process_cc', '13000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (113, 'process_cc', '20000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (114, 'process_cc', '30000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (115, 'process_cc', '40000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (116, 'process_cc', '99000');
-INSERT INTO app_enums (enum_id, type, value) VALUES (117, 'process_cc', '99500');
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (130, 'funding_source_sc', 'ACH');
-INSERT INTO app_enums (enum_id, type, value) VALUES (131, 'funding_source_sc', 'Check');
-INSERT INTO app_enums (enum_id, type, value) VALUES (132, 'funding_source_sc', 'Debit');
-INSERT INTO app_enums (enum_id, type, value) VALUES (133, 'funding_source_sc', 'Mail CC/MO');
-INSERT INTO app_enums (enum_id, type, value) VALUES (134, 'funding_source_sc', 'Money Gram ');
-INSERT INTO app_enums (enum_id, type, value) VALUES (135, 'funding_source_sc', 'Money Order');
-INSERT INTO app_enums (enum_id, type, value) VALUES (136, 'funding_source_sc', 'Online Bill Pay');
-INSERT INTO app_enums (enum_id, type, value) VALUES (137, 'funding_source_sc', 'Undetermined');
-INSERT INTO app_enums (enum_id, type, value) VALUES (138, 'funding_source_sc', 'Western Union');
-INSERT INTO app_enums (enum_id, type, value) VALUES (139, 'funding_source_sc', 'Wire Transfer');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (90, 'process_cc', '00025');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (92, 'process_cc', '00050');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (94, 'process_cc', '00095');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (95, 'process_cc', '00098');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (96, 'process_cc', '00100');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (98, 'process_cc', '00500');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (100, 'process_cc', '01000');	
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (102, 'process_cc', '02000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (104, 'process_cc', '03000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (106, 'process_cc', '03010');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (107, 'process_cc', '03100');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (108, 'process_cc', '06000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (110, 'process_cc', '07000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (112, 'process_cc', '07500');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (114, 'process_cc', '08000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (116, 'process_cc', '09000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (118, 'process_cc', '10900');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (120, 'process_cc', '11000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (121, 'process_cc', '11000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (122, 'process_cc', '13000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (123, 'process_cc', '15000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (124, 'process_cc', '20000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (126, 'process_cc', '30000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (128, 'process_cc', '40000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (129, 'process_cc', '99000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (130, 'process_cc', '99500');
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (150, 'ssn_match_cc', 'CLOSE');
-INSERT INTO app_enums (enum_id, type, value) VALUES (151, 'ssn_match_cc', 'NO');
-INSERT INTO app_enums (enum_id, type, value) VALUES (152, 'ssn_match_cc', 'YES');
+-- REMAP THESE AWAY ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (100, 'process_cc', '00050');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (101, 'process_cc', '00100');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (102, 'process_cc', '01000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (103, 'process_cc', '02000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (104, 'process_cc', '03000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (105, 'process_cc', '03010');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (106, 'process_cc', '06000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (107, 'process_cc', '07000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (108, 'process_cc', '07500');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (109, 'process_cc', '08000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (110, 'process_cc', '09000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (111, 'process_cc', '11000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (112, 'process_cc', '13000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (113, 'process_cc', '20000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (114, 'process_cc', '30000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (115, 'process_cc', '40000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (116, 'process_cc', '99000');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (117, 'process_cc', '99500');
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (160, 'status_cc', 'A');	-- A
-INSERT INTO app_enums (enum_id, type, value) VALUES (161, 'status_cc', 'B');	-- B
-INSERT INTO app_enums (enum_id, type, value) VALUES (162, 'status_cc', 'C');	-- C
-INSERT INTO app_enums (enum_id, type, value) VALUES (163, 'status_cc', 'D');	-- D
-INSERT INTO app_enums (enum_id, type, value) VALUES (164, 'status_cc', 'F');	-- F
-INSERT INTO app_enums (enum_id, type, value) VALUES (165, 'status_cc', 'P');	-- P
-INSERT INTO app_enums (enum_id, type, value) VALUES (166, 'status_cc', 'Q');	-- Q
-INSERT INTO app_enums (enum_id, type, value) VALUES (167, 'status_cc', 'W');	-- W
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (130, 'funding_source_sc', 'ACH');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (131, 'funding_source_sc', 'Check');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (132, 'funding_source_sc', 'Debit');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (133, 'funding_source_sc', 'Mail CC/MO');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (134, 'funding_source_sc', 'Money Gram ');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (135, 'funding_source_sc', 'Money Order');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (136, 'funding_source_sc', 'Online Bill Pay');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (137, 'funding_source_sc', 'Undetermined');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (138, 'funding_source_sc', 'Western Union');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (139, 'funding_source_sc', 'Wire Transfer');
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (180, 'verification_source_cc', 'CAL');					-- CAL
-INSERT INTO app_enums (enum_id, type, value) VALUES (181, 'verification_source_cc', 'CF');					-- CF
-INSERT INTO app_enums (enum_id, type, value) VALUES (182, 'verification_source_cc', 'CM');					-- CM
-INSERT INTO app_enums (enum_id, type, value) VALUES (183, 'verification_source_cc', 'CTC');					-- CTC
-INSERT INTO app_enums (enum_id, type, value) VALUES (184, 'verification_source_cc', 'EXPERIAN');			-- EX
-INSERT INTO app_enums (enum_id, type, value) VALUES (185, 'verification_source_cc', 'FDR');					-- FDR
-INSERT INTO app_enums (enum_id, type, value) VALUES (186, 'verification_source_cc', 'FDW');					-- FDW
-INSERT INTO app_enums (enum_id, type, value) VALUES (187, 'verification_source_cc', 'EX PRECISE ID KIQ');	-- EX
-INSERT INTO app_enums (enum_id, type, value) VALUES (188, 'verification_source_cc', 'LEXISNEXIS');			-- LNA
-INSERT INTO app_enums (enum_id, type, value) VALUES (189, 'verification_source_cc', 'LNI');					-- LNI
-INSERT INTO app_enums (enum_id, type, value) VALUES (190, 'verification_source_cc', 'LNQ');					-- LNQ
-INSERT INTO app_enums (enum_id, type, value) VALUES (191, 'verification_source_cc', 'MAC');					-- MAC
-INSERT INTO app_enums (enum_id, type, value) VALUES (192, 'verification_source_cc', 'ORG');					-- ORG
-INSERT INTO app_enums (enum_id, type, value) VALUES (193, 'verification_source_cc', 'PCR');					-- PCR
-INSERT INTO app_enums (enum_id, type, value) VALUES (194, 'verification_source_cc', 'PID');					-- PID
-INSERT INTO app_enums (enum_id, type, value) VALUES (195, 'verification_source_cc', 'PWS');					-- PWS
-INSERT INTO app_enums (enum_id, type, value) VALUES (196, 'verification_source_cc', 'SOL');					-- SOL
-INSERT INTO app_enums (enum_id, type, value) VALUES (197, 'verification_source_cc', 'TU-TLO');				-- TLO
-INSERT INTO app_enums (enum_id, type, value) VALUES (198, 'verification_source_cc', 'TRANSUNION');			-- TU
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (150, 'ssn_match_cc', 'CLOSE');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (151, 'ssn_match_cc', 'NO');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (152, 'ssn_match_cc', 'YES');
 
-INSERT INTO app_enums (enum_id, type, value) VALUES (210, 'decision_model_cc', 'CLASSIC 08');
-INSERT INTO app_enums (enum_id, type, value) VALUES (211, 'decision_model_cc', 'EX FICO 08');
-INSERT INTO app_enums (enum_id, type, value) VALUES (212, 'decision_model_cc', 'EX FICO 10T');
-INSERT INTO app_enums (enum_id, type, value) VALUES (213, 'decision_model_cc', 'EX VANTAGE4');
-INSERT INTO app_enums (enum_id, type, value) VALUES (214, 'decision_model_cc', 'TU FICO 09');
-INSERT INTO app_enums (enum_id, type, value) VALUES (215, 'decision_model_cc', 'TU FICO 10T');
-INSERT INTO app_enums (enum_id, type, value) VALUES (216, 'decision_model_cc', 'TU VANTAGE');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (160, 'status_cc', 'A');	-- A
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (161, 'status_cc', 'B');	-- B
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (162, 'status_cc', 'C');	-- C
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (163, 'status_cc', 'D');	-- D
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (164, 'status_cc', 'F');	-- F
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (165, 'status_cc', 'P');	-- P
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (166, 'status_cc', 'Q');	-- Q
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (167, 'status_cc', 'W');	-- W
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (180, 'verification_source_cc', 'CAL');					-- CAL
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (181, 'verification_source_cc', 'CF');					-- CF
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (182, 'verification_source_cc', 'CM');					-- CM
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (183, 'verification_source_cc', 'CTC');					-- CTC
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (184, 'verification_source_cc', 'EXPERIAN');			-- EX
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (185, 'verification_source_cc', 'FDR');					-- FDR
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (186, 'verification_source_cc', 'FDW');					-- FDW
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (187, 'verification_source_cc', 'EX PRECISE ID KIQ');	-- EX
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (188, 'verification_source_cc', 'LEXISNEXIS');			-- LNA
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (189, 'verification_source_cc', 'LNI');					-- LNI
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (190, 'verification_source_cc', 'LNQ');					-- LNQ
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (191, 'verification_source_cc', 'MAC');					-- MAC
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (192, 'verification_source_cc', 'ORG');					-- ORG
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (193, 'verification_source_cc', 'PCR');					-- PCR
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (194, 'verification_source_cc', 'PID');					-- PID
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (195, 'verification_source_cc', 'PWS');					-- PWS
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (196, 'verification_source_cc', 'SOL');					-- SOL
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (197, 'verification_source_cc', 'TU-TLO');				-- TLO
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (198, 'verification_source_cc', 'TRANSUNION');			-- TU
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (210, 'decision_model_cc', 'CLASSIC 08');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (211, 'decision_model_cc', 'EX FICO 08');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (212, 'decision_model_cc', 'EX FICO 10T');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (213, 'decision_model_cc', 'EX VANTAGE4');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (214, 'decision_model_cc', 'TU FICO 09');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (215, 'decision_model_cc', 'TU FICO 10T');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (216, 'decision_model_cc', 'TU VANTAGE');
 
 -- Hopefully 'MISSING' value is not needed, temporarily using this as a fallback for missing data
-INSERT INTO app_enums (enum_id, type, value) VALUES (229, 'population_assignment_cc', 'MISSING');		-- ''
-INSERT INTO app_enums (enum_id, type, value) VALUES (230, 'population_assignment_cc', '02');			-- 02
-INSERT INTO app_enums (enum_id, type, value) VALUES (231, 'population_assignment_cc', '1');				-- 1
-INSERT INTO app_enums (enum_id, type, value) VALUES (232, 'population_assignment_cc', '2');				-- 2			
-INSERT INTO app_enums (enum_id, type, value) VALUES (233, 'population_assignment_cc', '3');				-- 3
-INSERT INTO app_enums (enum_id, type, value) VALUES (234, 'population_assignment_cc', 'BL');			-- BL
-INSERT INTO app_enums (enum_id, type, value) VALUES (235, 'population_assignment_cc', 'EX FICO 08');	-- CM
-INSERT INTO app_enums (enum_id, type, value) VALUES (236, 'population_assignment_cc', 'CONTROL');		-- CONTROL
-INSERT INTO app_enums (enum_id, type, value) VALUES (237, 'population_assignment_cc', 'TU FICO 09');	-- DN
-INSERT INTO app_enums (enum_id, type, value) VALUES (238, 'population_assignment_cc', 'EX EVS');		-- EV
-INSERT INTO app_enums (enum_id, type, value) VALUES (239, 'population_assignment_cc', 'TU FICO 09');	-- HD
-INSERT INTO app_enums (enum_id, type, value) VALUES (240, 'population_assignment_cc', 'EX FICO 08');	-- HE
-INSERT INTO app_enums (enum_id, type, value) VALUES (241, 'population_assignment_cc', 'HOLDOUT');		-- HOLDOUT
-INSERT INTO app_enums (enum_id, type, value) VALUES (242, 'population_assignment_cc', 'TU FICO 10T');	-- HU
-INSERT INTO app_enums (enum_id, type, value) VALUES (243, 'population_assignment_cc', 'TU VANTAGE');	-- HV
-INSERT INTO app_enums (enum_id, type, value) VALUES (244, 'population_assignment_cc', 'EX VANTAGE');	-- HW
-INSERT INTO app_enums (enum_id, type, value) VALUES (245, 'population_assignment_cc', 'PRECISION');		-- JB
-INSERT INTO app_enums (enum_id, type, value) VALUES (246, 'population_assignment_cc', 'JH');			-- JH
-INSERT INTO app_enums (enum_id, type, value) VALUES (247, 'population_assignment_cc', 'TU L2C');		-- L2
-INSERT INTO app_enums (enum_id, type, value) VALUES (248, 'population_assignment_cc', 'TU VANTAGE');	-- LB
-INSERT INTO app_enums (enum_id, type, value) VALUES (249, 'population_assignment_cc', 'LP');			-- LP
-INSERT INTO app_enums (enum_id, type, value) VALUES (250, 'population_assignment_cc', 'TU FICO 10T');	-- SB
-INSERT INTO app_enums (enum_id, type, value) VALUES (251, 'population_assignment_cc', 'TU FICO 10T');	-- SO
-INSERT INTO app_enums (enum_id, type, value) VALUES (252, 'population_assignment_cc', 'T');				-- T
-INSERT INTO app_enums (enum_id, type, value) VALUES (253, 'population_assignment_cc', 'VIP');			-- VIP
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (229, 'population_assignment_cc', 'MISSING');		-- ''
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (230, 'population_assignment_cc', '02');			-- 02
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (231, 'population_assignment_cc', '1');				-- 1
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (232, 'population_assignment_cc', '2');				-- 2			
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (233, 'population_assignment_cc', '3');				-- 3
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (234, 'population_assignment_cc', 'BL');			-- BL
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (235, 'population_assignment_cc', 'EX FICO 08');	-- CM
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (236, 'population_assignment_cc', 'CONTROL');		-- CONTROL
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (237, 'population_assignment_cc', 'TU FICO 09');	-- DN
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (238, 'population_assignment_cc', 'EX EVS');		-- EV
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (239, 'population_assignment_cc', 'TU FICO 09');	-- HD
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (240, 'population_assignment_cc', 'EX FICO 08');	-- HE
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (241, 'population_assignment_cc', 'HOLDOUT');		-- HOLDOUT
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (242, 'population_assignment_cc', 'TU FICO 10T');	-- HU
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (243, 'population_assignment_cc', 'TU VANTAGE');	-- HV
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (244, 'population_assignment_cc', 'EX VANTAGE');	-- HW
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (245, 'population_assignment_cc', 'PRECISION');		-- JB
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (246, 'population_assignment_cc', 'JH');			-- JH
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (247, 'population_assignment_cc', 'TU L2C');		-- L2
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (248, 'population_assignment_cc', 'TU VANTAGE');	-- LB
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (249, 'population_assignment_cc', 'LP');			-- LP
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (250, 'population_assignment_cc', 'TU FICO 10T');	-- SB
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (251, 'population_assignment_cc', 'TU FICO 10T');	-- SO
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (252, 'population_assignment_cc', 'T');				-- T
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (253, 'population_assignment_cc', 'VIP');			-- VIP
 
 -- contact.ac_role_tp_c
-INSERT INTO app_enums (enum_id, type, value) VALUES (280, 'contact_type', 'AUTHORIZED USER');			-- AUTHU
-INSERT INTO app_enums (enum_id, type, value) VALUES (281, 'contact_type', 'PRIMARY');					-- PR
-INSERT INTO app_enums (enum_id, type, value) VALUES (282, 'contact_type', 'SECONDARY');					-- SEC
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (280, 'contact_type', 'AUTHORIZED USER');			-- AUTHU
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (281, 'contact_type', 'PRIMARY');					-- PR
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (282, 'contact_type', 'SECONDARY');					-- SEC
 
 -- contact.fraud_ind
-INSERT INTO app_enums (enum_id, type, value) VALUES (290, 'fraud_type_cc', 'SUSPECTED');				-- S
-INSERT INTO app_enums (enum_id, type, value) VALUES (291, 'fraud_type_cc', 'VERIFIED');					-- V
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (290, 'fraud_type_cc', 'SUSPECTED');				-- S
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (291, 'fraud_type_cc', 'VERIFIED');					-- V
 
 -- contact_address.address_tp_c
-INSERT INTO app_enums (enum_id, type, value) VALUES (320, 'address_type', 'CURRENT');					-- CURR
-INSERT INTO app_enums (enum_id, type, value) VALUES (321, 'address_type', 'PREVIOUS');					-- PREV
-INSERT INTO app_enums (enum_id, type, value) VALUES (322, 'address_type', 'PATRIOT');					-- PATR (RL)
-INSERT INTO app_enums (enum_id, type, value) VALUES (323, 'address_type', 'COLLATERAL');				-- COLL (RL)
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (320, 'address_type', 'CURRENT');					-- CURR
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (321, 'address_type', 'PREVIOUS');					-- PREV
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (322, 'address_type', 'PATRIOT');					-- PATR (RL)
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (323, 'address_type', 'COLLATERAL');				-- COLL (RL)
 
 -- contact_address.ownership_tp_c
-INSERT INTO app_enums (enum_id, type, value) VALUES (330, 'ownership_type', 'OWN WITH MORTGAGE');		-- O
-INSERT INTO app_enums (enum_id, type, value) VALUES (331, 'ownership_type', 'OWN NO	MORTGAGE');			-- F (RL)
-INSERT INTO app_enums (enum_id, type, value) VALUES (332, 'ownership_type', 'RENT');					-- R
-INSERT INTO app_enums (enum_id, type, value) VALUES (333, 'ownership_type', 'WITH RELATIVES');			-- L (RL)
-INSERT INTO app_enums (enum_id, type, value) VALUES (334, 'ownership_type', 'OTHER');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (330, 'ownership_type', 'OWN WITH MORTGAGE');		-- O
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (331, 'ownership_type', 'OWN NO	MORTGAGE');			-- F (RL)
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (332, 'ownership_type', 'RENT');					-- R
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (333, 'ownership_type', 'WITH RELATIVES');			-- L (RL)
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (334, 'ownership_type', 'OTHER');					-- T (RL - new)
 -- What are these exactly?
-INSERT INTO app_enums (enum_id, type, value) VALUES (324, 'ownership_type', 'W');						-- W (RL)
-INSERT INTO app_enums (enum_id, type, value) VALUES (335, 'ownership_type', 'X');						-- X
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (324, 'ownership_type', 'W');						-- W (RL)
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (335, 'ownership_type', 'X');						-- X
 
 -- contact_employment.employment_tp_c
-INSERT INTO app_enums (enum_id, type, value) VALUES (350, 'employment_type', 'CURRENT');				-- CURR
-INSERT INTO app_enums (enum_id, type, value) VALUES (351, 'employment_type', 'PREVIOUS');				-- PREV
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (350, 'employment_type', 'CURRENT');				-- CURR
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (351, 'employment_type', 'PREVIOUS');				-- PREV
 
 -- contact_employment.b_primary_income_source_tp_c
-INSERT INTO app_enums (enum_id, type, value) VALUES (360, 'income_type', 'ALLOWANCE');					-- ALLOW
-INSERT INTO app_enums (enum_id, type, value) VALUES (361, 'income_type', 'EMPLOYMENT');					-- EMPLOY
-INSERT INTO app_enums (enum_id, type, value) VALUES (362, 'income_type', 'GOVAST');						-- GOVAST
-INSERT INTO app_enums (enum_id, type, value) VALUES (363, 'income_type', 'INVESTMENT');					-- INVEST
-INSERT INTO app_enums (enum_id, type, value) VALUES (364, 'income_type', 'OTHER');						-- OTHER
-INSERT INTO app_enums (enum_id, type, value) VALUES (365, 'income_type', 'RENTAL PROPERTY');			-- RENTAL
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (360, 'income_type', 'ALLOWANCE');					-- ALLOW
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (361, 'income_type', 'EMPLOYMENT');					-- EMPLOY
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (362, 'income_type', 'GOVAST');						-- GOVAST
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (363, 'income_type', 'INVESTMENT');					-- INVEST
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (364, 'income_type', 'OTHER');						-- OTHER
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (365, 'income_type', 'RENTAL PROPERTY');			-- RENTAL
 
 -- contact_employment.b_other_income_source_tp_c
-INSERT INTO app_enums (enum_id, type, value) VALUES (380, 'other_income_type', 'ALLOWANCE');			-- ALLOW
-INSERT INTO app_enums (enum_id, type, value) VALUES (381, 'other_income_type', 'ALIMONY');				-- ALMONY
-INSERT INTO app_enums (enum_id, type, value) VALUES (382, 'other_income_type', 'BONUS');				-- BONUS
-INSERT INTO app_enums (enum_id, type, value) VALUES (383, 'other_income_type', 'CHILD SUPPORT');		-- CHDSUP
-INSERT INTO app_enums (enum_id, type, value) VALUES (384, 'other_income_type', 'COURT PAYMENT');		-- CTPYMT
-INSERT INTO app_enums (enum_id, type, value) VALUES (385, 'other_income_type', 'DISABILIY');			-- DISINC
-INSERT INTO app_enums (enum_id, type, value) VALUES (386, 'other_income_type', 'EMPLOYMENT');			-- EMPLOY
-INSERT INTO app_enums (enum_id, type, value) VALUES (387, 'other_income_type', 'INVESTMENT');			-- INVEST
-INSERT INTO app_enums (enum_id, type, value) VALUES (388, 'other_income_type', 'INSURANCE');
-INSERT INTO app_enums (enum_id, type, value) VALUES (389, 'other_income_type', 'MILITARY');				-- MILTRY
-INSERT INTO app_enums (enum_id, type, value) VALUES (390, 'other_income_type', 'OTHER');				-- OTHER
-INSERT INTO app_enums (enum_id, type, value) VALUES (391, 'other_income_type', 'PENSION');				-- PNSION
-INSERT INTO app_enums (enum_id, type, value) VALUES (392, 'other_income_type', 'PUBLIC ASSISTANCE');	-- PUBAST
-INSERT INTO app_enums (enum_id, type, value) VALUES (393, 'other_income_type', 'RENTAL PROPERTY');		-- RENTAL
-INSERT INTO app_enums (enum_id, type, value) VALUES (394, 'other_income_type', 'SECOND JOB');			-- 2NDJOB
-INSERT INTO app_enums (enum_id, type, value) VALUES (395, 'other_income_type', 'SOCIAL SECURITY');		-- SOCSEC
-INSERT INTO app_enums (enum_id, type, value) VALUES (396, 'other_income_type', 'SPOUSE');				-- SPOUSE
-INSERT INTO app_enums (enum_id, type, value) VALUES (397, 'other_income_type', 'TRUST FUND');			-- TRUST
-INSERT INTO app_enums (enum_id, type, value) VALUES (398, 'other_income_type', 'UNEMPLOYMENT');			-- UEMBEN, UNEMPL
-INSERT INTO app_enums (enum_id, type, value) VALUES (399, 'other_income_type', 'UNKNOWN');				-- UNKN
-INSERT INTO app_enums (enum_id, type, value) VALUES (400, 'other_income_type', 'VETERANS AFFAIRS');		-- VA  
-
---
--- Does this make sense being similar to app_sub_types?
---
-INSERT INTO app_enums (enum_id, type, value) VALUES (410, 'collateral_type_rl', 'ALL TERRAIN VEHICLE');
-INSERT INTO app_enums (enum_id, type, value) VALUES (411, 'collateral_type_rl', 'BOAT');
-INSERT INTO app_enums (enum_id, type, value) VALUES (412, 'collateral_type_rl', 'ENGINE-1');
-INSERT INTO app_enums (enum_id, type, value) VALUES (413, 'collateral_type_rl', 'ENGINE-2');
-INSERT INTO app_enums (enum_id, type, value) VALUES (414, 'collateral_type_rl', 'ENGINE-3');
-INSERT INTO app_enums (enum_id, type, value) VALUES (415, 'collateral_type_rl', 'HORSE TRAILER');
-INSERT INTO app_enums (enum_id, type, value) VALUES (416, 'collateral_type_rl', 'MOTORCYCLE');
-INSERT INTO app_enums (enum_id, type, value) VALUES (417, 'collateral_type_rl', 'PERSONAL WATERCRAFT');
-INSERT INTO app_enums (enum_id, type, value) VALUES (418, 'collateral_type_rl', 'RV');
-INSERT INTO app_enums (enum_id, type, value) VALUES (419, 'collateral_type_rl', 'SNOWMOBILE');
-INSERT INTO app_enums (enum_id, type, value) VALUES (420, 'collateral_type_rl', 'TRAILER');
-INSERT INTO app_enums (enum_id, type, value) VALUES (421, 'collateral_type_rl', 'UTILITY TRAILER');
-INSERT INTO app_enums (enum_id, type, value) VALUES (422, 'collateral_type_rl', 'UTILITY TASK VEHICLE');
-INSERT INTO app_enums (enum_id, type, value) VALUES (423, 'collateral_type_rl', 'UNDETERMINED');				-- Could not resolve
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (600, 'product_line', 'CC');
-INSERT INTO app_enums (enum_id, type, value) VALUES (601, 'product_line', 'RCLI');
-INSERT INTO app_enums (enum_id, type, value) VALUES (602, 'product_line', 'RL');
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (610, 'decision_rl', 'APPROVED');							-- APPRV
-INSERT INTO app_enums (enum_id, type, value) VALUES (611, 'decision_rl', 'DECLINED');							-- DECLN
-INSERT INTO app_enums (enum_id, type, value) VALUES (612, 'decision_rl', 'WITHDRAWN');							-- WITHD
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (620, 'warranty_type_rl', 'Credit Disability');
-INSERT INTO app_enums (enum_id, type, value) VALUES (621, 'warranty_type_rl', 'Credit Life');
-INSERT INTO app_enums (enum_id, type, value) VALUES (622, 'warranty_type_rl', 'Extended Warranty');
-INSERT INTO app_enums (enum_id, type, value) VALUES (623, 'warranty_type_rl', 'Gap Insurance');
-INSERT INTO app_enums (enum_id, type, value) VALUES (624, 'warranty_type_rl', 'Other');
-INSERT INTO app_enums (enum_id, type, value) VALUES (625, 'warranty_type_rl', 'Road Side Assistance');
-INSERT INTO app_enums (enum_id, type, value) VALUES (626, 'warranty_type_rl', 'Service Contract');
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (630, 'policy_exception_type_rl', 'Capacity Exception');
-INSERT INTO app_enums (enum_id, type, value) VALUES (631, 'policy_exception_type_rl', 'Collateral Program Exception');
-INSERT INTO app_enums (enum_id, type, value) VALUES (632, 'policy_exception_type_rl', 'Credit Exception');
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (640, 'mrv_model_type_rl', 'MRV');
-INSERT INTO app_enums (enum_id, type, value) VALUES (641, 'mrv_model_type_rl', 'Vantage');
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (650, 'bank_account_type_rl', 'CHECKING');					-- 22
-INSERT INTO app_enums (enum_id, type, value) VALUES (651, 'bank_account_type_rl', 'SAVINGS');					-- 32
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (655, 'fund_loan_indicator_rl', 'YES');						-- Y
-INSERT INTO app_enums (enum_id, type, value) VALUES (656, 'fund_loan_indicator_rl', 'NO');						-- N
-INSERT INTO app_enums (enum_id, type, value) VALUES (657, 'fund_loan_indicator_rl', 'PENDING');					-- P
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (660, 'funding_validation_indicator_rl', 'YES');			-- Y
-INSERT INTO app_enums (enum_id, type, value) VALUES (661, 'funding_validation_indicator_rl', 'NO');				-- N
-INSERT INTO app_enums (enum_id, type, value) VALUES (662, 'funding_validation_indicator_rl', 'DOES NOT APPLY');	-- D
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (670, 'process_rl', '03800');
-INSERT INTO app_enums (enum_id, type, value) VALUES (671, 'process_rl', '05800');
-INSERT INTO app_enums (enum_id, type, value) VALUES (672, 'process_rl', '06800');
-INSERT INTO app_enums (enum_id, type, value) VALUES (673, 'process_rl', '06850');
-INSERT INTO app_enums (enum_id, type, value) VALUES (674, 'process_rl', '08800');
-INSERT INTO app_enums (enum_id, type, value) VALUES (675, 'process_rl', '20800');
-INSERT INTO app_enums (enum_id, type, value) VALUES (676, 'process_rl', '30800');
-INSERT INTO app_enums (enum_id, type, value) VALUES (677, 'process_rl', '40800');
-INSERT INTO app_enums (enum_id, type, value) VALUES (678, 'process_rl', '99800');
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (690, 'status_rl', 'F');	--	F
-INSERT INTO app_enums (enum_id, type, value) VALUES (691, 'status_rl', 'P');	--	P
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (700, 'supervisor_review_indicator_rl', 'COMPLETED');	--	C
-INSERT INTO app_enums (enum_id, type, value) VALUES (701, 'supervisor_review_indicator_rl', 'IN-REVIEW');	--	R
-
-INSERT INTO app_enums (enum_id, type, value) VALUES (706, 'audit_flag_rl', 'REVIEWED');	--	R
-INSERT INTO app_enums (enum_id, type, value) VALUES (707, 'audit_flag_rl', 'PENDING');	--	P
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (380, 'other_income_type', 'ALLOWANCE');			-- ALLOW
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (381, 'other_income_type', 'ALIMONY');				-- ALMONY
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (382, 'other_income_type', 'BONUS');				-- BONUS
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (383, 'other_income_type', 'CHILD SUPPORT');		-- CHDSUP
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (384, 'other_income_type', 'COURT PAYMENT');		-- CTPYMT
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (385, 'other_income_type', 'DISABILIY');			-- DISINC
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (386, 'other_income_type', 'EMPLOYMENT');			-- EMPLOY
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (387, 'other_income_type', 'INVESTMENT');			-- INVEST
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (388, 'other_income_type', 'INSURANCE');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (389, 'other_income_type', 'MILITARY');				-- MILTRY
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (390, 'other_income_type', 'OTHER');				-- OTHER
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (391, 'other_income_type', 'PENSION');				-- PNSION
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (392, 'other_income_type', 'PUBLIC ASSISTANCE');	-- PUBAST
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (393, 'other_income_type', 'RENTAL PROPERTY');		-- RENTAL
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (394, 'other_income_type', 'SECOND JOB');			-- 2NDJOB
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (395, 'other_income_type', 'SOCIAL SECURITY');		-- SOCSEC
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (396, 'other_income_type', 'SPOUSE');				-- SPOUSE
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (397, 'other_income_type', 'TRUST FUND');			-- TRUST
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (398, 'other_income_type', 'UNEMPLOYMENT');			-- UEMBEN, UNEMPL
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (399, 'other_income_type', 'UNKNOWN');				-- UNKN
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (400, 'other_income_type', 'VETERANS AFFAIRS');		-- VA  
 
 
-UPDATE STATISTICS app_enums;
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (410, 'collateral_type_rl', 'ALL TERRAIN VEHICLE');	-- all_terrain_vehicle
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (411, 'collateral_type_rl', 'TRAILER BIN');			-- bin
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (412, 'collateral_type_rl', 'BOAT');				-- boat
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (413, 'collateral_type_rl', 'ENGINE');				-- engine
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (414, 'collateral_type_rl', 'ENGINE REPOWER');		-- engine_repower
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (415, 'collateral_type_rl', 'HORSE TRAILER');		-- horse_trailer
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (416, 'collateral_type_rl', 'MOTORCYCLE');			-- motorcycle
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (417, 'collateral_type_rl', 'OTHER TRAILER');		-- other_trailer
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (418, 'collateral_type_rl', 'PERSONAL WATERCRAFT');	-- personal_watercraft
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (419, 'collateral_type_rl', 'RV');					-- rv
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (420, 'collateral_type_rl', 'SNOWMOBILE');			-- snowmobile
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (421, 'collateral_type_rl', 'UTILITY TRAILER');		-- utility_trailer
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (422, 'collateral_type_rl', 'UTILITY VEHICLE');		-- utility_vehicle
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (423, 'collateral_type_rl', 'UNDETERMINED');		-- Could not resolve
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (600, 'product_line', 'CC');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (601, 'product_line', 'RCLI');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (602, 'product_line', 'RL');
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (610, 'decision_rl', 'APPROVED');							-- APPRV
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (611, 'decision_rl', 'DECLINED');							-- DECLN
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (612, 'decision_rl', 'PENDING');							-- 
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (613, 'decision_rl', 'WITHDRAWN');							-- WITHD
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (620, 'warranty_type_rl', 'Credit Disability');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (621, 'warranty_type_rl', 'Credit Life');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (622, 'warranty_type_rl', 'Extended Warranty');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (623, 'warranty_type_rl', 'Gap Insurance');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (624, 'warranty_type_rl', 'Other');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (625, 'warranty_type_rl', 'Road Side Assistance');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (626, 'warranty_type_rl', 'Service Contract');
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (630, 'policy_exception_type_rl', 'Capacity Exception');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (631, 'policy_exception_type_rl', 'Collateral Program Exception');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (632, 'policy_exception_type_rl', 'Credit Exception');
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (640, 'mrv_model_type_rl', 'MRV');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (641, 'mrv_model_type_rl', 'Vantage');
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (650, 'bank_account_type_rl', 'CHECKING');					-- 22
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (651, 'bank_account_type_rl', 'SAVINGS');					-- 32
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (655, 'fund_loan_indicator_rl', 'YES');						-- Y
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (656, 'fund_loan_indicator_rl', 'NO');						-- N
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (657, 'fund_loan_indicator_rl', 'PENDING');					-- P
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (660, 'funding_validation_indicator_rl', 'YES');			-- Y
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (661, 'funding_validation_indicator_rl', 'NO');				-- N
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (662, 'funding_validation_indicator_rl', 'DOES NOT APPLY');	-- D
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (670, 'process_rl', '03800');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (671, 'process_rl', '05800');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (672, 'process_rl', '06800');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (673, 'process_rl', '06850');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (674, 'process_rl', '08800');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (675, 'process_rl', '20800');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (676, 'process_rl', '30800');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (677, 'process_rl', '40800');
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (678, 'process_rl', '99800');
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (690, 'status_rl', 'F');	--	F
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (691, 'status_rl', 'P');	--	P
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (700, 'supervisor_review_indicator_rl', 'COMPLETED');	--	C
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (701, 'supervisor_review_indicator_rl', 'IN-REVIEW');	--	R
+
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (706, 'audit_flag_rl', 'REVIEWED');	--	R
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (707, 'audit_flag_rl', 'PENDING');	--	P
+
+
+-- b_othr_inc_basis_tp_c, other_income_source_type_code, b_salary_basis_tp_c, salary_basis_type_code
+/*
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (380, 'income_basis_type', 'ANNUAL');	-- ANNUM 
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (381, 'income_basis_type', 'MONTH');	-- MONTH, MONTHL
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (382, 'income_basis_type', 'OTHER');	-- OTHER (RL other type includes: child_, disabi, invest, pensio rental, second, social, vetera)
+INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (383, 'income_basis_type', 'WEEK');		-- WEEK
+*/
+
+
+-- b_job_title_tp_c, title_position
+
+
+UPDATE STATISTICS sandbox.app_enums;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_base -------------------------------------------------------------------------------------------------------------------------------------
-SET IDENTITY_INSERT app_base ON;
+SET IDENTITY_INSERT sandbox.app_base ON;
 
-	INSERT INTO app_base
+	INSERT INTO sandbox.app_base
 		(app_id, product_line_enum, app_source_enum, app_type_enum, booked_date, decision_enum, decision_date, ip_address, receive_date, retain_until_date, sc_multran_booked_date)
 		SELECT 
 			a.app_id, 
@@ -355,18 +419,18 @@ SET IDENTITY_INSERT app_base ON;
 		FROM application AS a
 		LEFT JOIN app_product AS p ON p.app_id = a.app_id;
 
-SET IDENTITY_INSERT app_base OFF;
+SET IDENTITY_INSERT sandbox.app_base OFF;
 
 -- Reseed table to be next app_id
-DECLARE	@max	int	= (SELECT MAX(app_id) FROM app_base);
-DBCC CHECKIDENT ('app_base', RESEED, @max);
+DECLARE	@max	int	= (SELECT MAX(app_id) FROM sandbox.app_base);
+DBCC CHECKIDENT ('sandbox.app_base', RESEED, @max);
 
-UPDATE STATISTICS app_base;
+UPDATE STATISTICS sandbox.app_base;
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_operational_cc ---------------------------------------------------------------------------------------------------------------------------
-INSERT INTO app_operational_cc
+INSERT INTO sandbox.app_operational_cc
 	(app_id, assigned_to, auth_user_spouse_flag, backend_fico_grade, backend_risk_grade, cb_score_factor_code_1, cb_score_factor_code_2, cb_score_factor_code_3, cb_score_factor_code_4, 
 	 cb_score_factor_code_5, cb_score_factor_type_1, cb_score_factor_type_2, cb_score_factor_type_3, cb_score_factor_type_4, cb_score_factor_type_5,
 	 sc_bank_aba, sc_bank_account_num, sc_bank_account_type_enum, housing_monthly_payment, last_bureau_pulled_type, last_updated_by, last_updated_date, meta_url, priority_enum, 
@@ -730,12 +794,12 @@ INSERT INTO app_operational_cc
 		having count(*) > 1
 	*/
 
-UPDATE STATISTICS app_operational_cc;
+UPDATE STATISTICS sandbox.app_operational_cc;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_transactional_cc -------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO app_transactional_cc
+INSERT INTO sandbox.app_transactional_cc
 	(app_id, sc_ach_sent_flag, sc_debit_refund_failed_flag, analyst_review_flag, booking_paused_flag, disclosures_read_flag, duplicate_ssn_flag, 
 	 fraud_review_flag, pending_verification_flag, supervisor_review_flag)
 	SELECT DISTINCT
@@ -789,13 +853,13 @@ INSERT INTO app_transactional_cc
 		LEN(ap.pending_verif_ind) > 0 OR
 		LEN(ap.supervisor_rev_ind) > 0;
 
-UPDATE STATISTICS app_transactional_cc;
+UPDATE STATISTICS sandbox.app_transactional_cc;
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_pricing_cc -------------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO app_pricing_cc
+INSERT INTO sandbox.app_pricing_cc
 	(app_id, account_number, campaign_num, card_art_code, clear_card_flag, credit_line, credit_line_max, credit_line_possible, debt_to_income_ratio,  
 	 decision_model_enum, marketing_segment, monthly_debt, monthly_income, min_payment_due, sc_multran_account_num, population_assignment_enum, pricing_tier, solicitation_num, 
 	 card_account_setup_fee, card_additional_card_fee, card_annual_fee, card_cash_advance_apr, card_cash_advance_fee, card_cash_advance_percent, card_cash_advance_margin_apr, 
@@ -975,12 +1039,12 @@ INSERT INTO app_pricing_cc
 	-- Should we ALLOW BAD DATA and violate the PK? -- NO DATA LIKE THIS EXIST IN PROD
 	WHERE a.app_id NOT IN (7357);
 
-UPDATE STATISTICS app_pricing_cc;
+UPDATE STATISTICS sandbox.app_pricing_cc;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_solicited_cc -----------------------------------------------------------------------------------------------------------------------------
-INSERT INTO app_solicited_cc
-	(app_id, birth_date, city, first_name, last_name, middle_initial, po_box, prescreen_fico_grade, prescreen_risk_score, rural_route, ssn, [state], 
+INSERT INTO sandbox.app_solicited_cc
+	(app_id, birth_date, city, first_name, last_name, middle_initial, po_box, prescreen_fico_grade, prescreen_risk_grade, rural_route, ssn, [state], 
 	 street_name, street_number, suffix, unit, zip)
 	SELECT DISTINCT
 		a.app_id,
@@ -1001,8 +1065,8 @@ INSERT INTO app_solicited_cc
 			WHEN ap.prescreen_fico_grade <> '' AND ap.prescreen_fico_grade IS NOT NULL	THEN ap.prescreen_fico_grade
 		END AS prescreen_fico_grade,
 		CASE
-			WHEN ap.prescreen_risk_score <> '' AND ap.prescreen_risk_score IS NOT NULL	THEN ap.prescreen_risk_score
-		END AS prescreen_risk_score,
+			WHEN ap.prescreen_risk_grade <> '' AND ap.prescreen_risk_grade IS NOT NULL	THEN ap.prescreen_risk_grade
+		END AS prescreen_risk_grade,
 		CASE
 			WHEN LEN(rm.pri_rural_rt_num) > 0 THEN RTRIM(rm.pri_rural_rt_num)
 		END AS rural_route,
@@ -1022,13 +1086,13 @@ INSERT INTO app_solicited_cc
 	LEFT JOIN app_product AS ap ON ap.app_id = a.app_id
 	WHERE rm.CB_prescreen_birth_date <> '';
 
-UPDATE STATISTICS app_solicited_cc;
+UPDATE STATISTICS sandbox.app_solicited_cc;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- contact_base ---------------------------------------------------------------------------------------------------------------------------------
-SET IDENTITY_INSERT contact_base ON;
+SET IDENTITY_INSERT sandbox.contact_base ON;
 
-	INSERT INTO contact_base
+	INSERT INTO sandbox.contact_base
 		(con_id, app_id, birth_date, cell_phone, contact_type_enum, email, esign_consent_flag, first_name, fraud_type_enum, home_phone, last_name, 
 		 middle_initial, mother_maiden_name, paperless_flag, sms_consent_flag, ssn, suffix)
 		SELECT 
@@ -1046,7 +1110,7 @@ SET IDENTITY_INSERT contact_base ON;
 			CASE
 				WHEN RTRIM(c.ac_role_tp_c) = 'AUTHU'	THEN 280
 				WHEN RTRIM(c.ac_role_tp_c) = 'PR'		THEN 281
-			END AS ac_role_tp_c,
+			END AS contact_type_enum,
 			CASE
 				WHEN LEN(c.email) > 0 THEN RTRIM(c.email) 
 				ELSE NULL
@@ -1087,25 +1151,25 @@ SET IDENTITY_INSERT contact_base ON;
 			a.app_id NOT IN (7357);
 		
 
-SET IDENTITY_INSERT contact_base OFF;
+SET IDENTITY_INSERT sandbox.contact_base OFF;
 
 -- Reseed table to be next app_id
-DECLARE	@max2	int	= (SELECT MAX(con_id) FROM contact_base);
-DBCC CHECKIDENT ('contact_base', RESEED, @max2);
+DECLARE	@max2	int	= (SELECT MAX(con_id) FROM sandbox.contact_base);
+DBCC CHECKIDENT ('sandbox.contact_base', RESEED, @max2);
 
-UPDATE STATISTICS contact_base;
+UPDATE STATISTICS sandbox.contact_base;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- contact_address ------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO contact_address
+INSERT INTO sandbox.contact_address
 	(con_id, address_type_enum, city, months_at_address. ownership_type_enum, po_box, rural_route, [state], street_name, street_number, unit, zip)
 	SELECT 
 		ca.con_id,
 	CASE
 		WHEN RTRIM(ca.address_tp_c) = 'CURR'	THEN 320
 		WHEN RTRIM(ca.address_tp_c) = 'PREV'	THEN 321
-	END AS address_tp_c,
+	END AS address_type_enum,
 	ca.city,
 	CASE
 		WHEN ca.months_at_residence > 0 OR ca.years_at_residence > 0	THEN CAST(ca.months_at_residence + (ca.years_at_residence * 12) AS smallint) 
@@ -1116,7 +1180,7 @@ INSERT INTO contact_address
 		WHEN RTRIM(ca.ownership_tp_c) = 'R'		THEN 332
 		WHEN RTRIM(ca.ownership_tp_c) = 'X'		THEN 335
 		ELSE NULL
-	END AS ownership_tp_c,
+	END AS ownership_type_enum,
 	CASE
 		WHEN ca.po_box <> '' THEN ca.po_box
 		ELSE NULL
@@ -1140,7 +1204,7 @@ INSERT INTO contact_address
 	END AS unit,
 	ca.zip
 	FROM contact_address AS ca
-	INNER JOIN contact_base AS c ON c.con_id = ca.con_id	-- make sure we don't have any orphans that would violate our FK for con_id
+	INNER JOIN sandbox.contact_base AS c ON c.con_id = ca.con_id	-- make sure we don't have any orphans that would violate our FK for con_id
 	-- ****
 	--INNER JOIN contact AS c ON c.con_id = ca.con_id		-- make sure we don't have any orphans that would violate our FK for con_id
 	
@@ -1149,27 +1213,27 @@ INSERT INTO contact_address
 		ca.address_tp_c IS NOT NULL AND ca.address_tp_c <> ''
 		AND c.app_id NOT IN (7357);
 
-UPDATE STATISTICS contact_address;
+UPDATE STATISTICS sandbox.contact_address;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- contact_address ------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO contact_employment
+INSERT INTO sandbox.contact_employment
 	(con_id, city, business_name, employment_type_enum, income_source_nontaxable_flag, income_type_enum, job_title, monthly_salary, months_at_job, 
 	 other_monthly_income, other_income_type_enum, other_income_source_detail, phone, self_employed_flag, [state], 
 	 street_name, street_number, unit, zip)
 	SELECT 
 		e.con_id,
 		e.b_city,
-		e.b_name,
+		e.b_name AS business_name,
 	CASE
 		WHEN RTRIM(e.employment_tp_c) = 'CURR'	THEN 350
 		WHEN RTRIM(e.employment_tp_c) = 'PREV'	THEN 351
-	END AS employment_tp_c,
+	END AS employment_type_enum,
 	CASE
 		WHEN b_income_source_nontaxable = 'Y' THEN 1
 		ELSE 0
-	END AS b_income_source_nontaxable,
+	END AS income_source_nontaxable_flag,
 	CASE
 		WHEN RTRIM(e.b_primary_income_source_tp_c) = 'ALLOW'	THEN 360
 		WHEN RTRIM(e.b_primary_income_source_tp_c) = 'EMPLOY'	THEN 361
@@ -1233,12 +1297,12 @@ INSERT INTO contact_employment
 	END AS unit,
 	b_zip
 	FROM contact_employment AS e
-	INNER JOIN contact_base AS c ON c.con_id = e.con_id	-- make sure we don't have any orphans that would violate our FK for con_id
+	INNER JOIN sandbox.contact_base AS c ON c.con_id = e.con_id	-- make sure we don't have any orphans that would violate our FK for con_id
 	WHERE 
 		e.employment_tp_c IN ('CURR', 'PREV')
 		AND c.app_id NOT IN (7357);
 
-UPDATE STATISTICS contact_employment;
+UPDATE STATISTICS sandbox.contact_employment;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1247,7 +1311,7 @@ UPDATE STATISTICS contact_employment;
 --	(when it doesn't fit in neatly to a score or an indicator or part of every app)	e.g. GIACT_Response, InstantID_Score, VeridQA_Result
 
 -- GIACT
-INSERT INTO report_results_lookup
+INSERT INTO sandbox.report_results_lookup
 	(app_id, [name], [value])
 	SELECT DISTINCT
 		a.app_id,
@@ -1258,7 +1322,7 @@ INSERT INTO report_results_lookup
 	WHERE LEN(p.GIACT_Response) > 0 AND p.GIACT_Response <> 'Null';
 
 -- InstantID
-INSERT INTO report_results_lookup
+INSERT INTO sandbox.report_results_lookup
 	(app_id, [name], [value])
 	SELECT DISTINCT
 		a.app_id,
@@ -1269,7 +1333,7 @@ INSERT INTO report_results_lookup
 	WHERE LEN(p.InstantID_Score) > 0;
 
 -- VeridQA
-INSERT INTO report_results_lookup
+INSERT INTO sandbox.report_results_lookup
 	(app_id, [name], [value])
 	SELECT DISTINCT
 		a.app_id,
@@ -1279,6 +1343,6 @@ INSERT INTO report_results_lookup
 	INNER JOIN app_product AS p ON p.app_id = a.app_id
 	WHERE LEN(p.VeridQA_Result) > 0;
 
-UPDATE STATISTICS report_results_lookup;
+UPDATE STATISTICS sandbox.report_results_lookup;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------

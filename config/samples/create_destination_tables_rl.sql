@@ -1,4 +1,16 @@
-
+/* -----------------------------------------------------------------------------------------------------------------------------------------
+TEAR DOWN TABLES
+	DROP TABLE IF EXISTS sandbox.app_operational_rl;
+	DROP TABLE IF EXISTS sandbox.app_pricing_rl;
+	DROP TABLE IF EXISTS sandbox.app_transactional_rl;
+	DROP TABLE IF EXISTS sandbox.app_funding_rl;
+	DROP TABLE IF EXISTS sandbox.app_funding_checklist_rl;
+	DROP TABLE IF EXISTS sandbox.app_funding_contract_rl;
+	DROP TABLE IF EXISTS sandbox.app_warranties_rl;
+	DROP TABLE IF EXISTS sandbox.app_policy_exceptions_rl;
+	DROP TABLE IF EXISTS sandbox.app_collateral_rl;
+	DROP TABLE IF EXISTS sandbox.app_dealer_rl;	
+-------------------------------------------------------------------------------------------------------------------------------------------- */
 
 CREATE TABLE sandbox.app_operational_rl (
 	app_id								int				NOT NULL CONSTRAINT FK_app_operational_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
