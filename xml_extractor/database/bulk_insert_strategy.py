@@ -80,17 +80,17 @@ class BulkInsertStrategy:
                         self.logger.debug(f"Sample params (first record): {sample_map}")
                     except Exception as e:
                         self.logger.debug(f"Failed to build sample params debug info: {e}")
-            else:
-                # If DEBUG logging is suppressed, print SQL and a sample param mapping to stdout
-                try:
-                    print("[BULK INSERT SQL]:", sql)
-                    if data_tuples:
-                        first_tuple = data_tuples[0]
-                        sample_map = {col: first_tuple[i] for i, col in enumerate(columns)}
-                        print("[BULK INSERT SAMPLE PARAMS]:", sample_map)
-                except Exception as e:
-                    # Avoid raising; fallback to logger
-                    self.logger.info(f"Could not print sample params: {e}")
+#            else:
+#                # If DEBUG logging is suppressed, print SQL and a sample param mapping to stdout
+#                try:
+#                    print("[BULK INSERT SQL]:", sql)
+#                    if data_tuples:
+#                        first_tuple = data_tuples[0]
+#                        sample_map = {col: first_tuple[i] for i, col in enumerate(columns)}
+#                        print("[BULK INSERT SAMPLE PARAMS]:", sample_map)
+#                except Exception as e:
+#                    # Avoid raising; fallback to logger
+#                    self.logger.info(f"Could not print sample params: {e}")
             
             # Enable IDENTITY_INSERT if needed
             if enable_identity_insert:
