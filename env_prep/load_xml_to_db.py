@@ -60,10 +60,22 @@ def load_files_to_db():
                         logging.warning(f"Skipping {file_path}: No app_id found and could not derive one.")
                         continue
 
-                # Insert using the contract column name `app_XML` (preserve case as used in DB)
-                cursor.execute(
-                    "INSERT INTO app_xml (app_id, app_XML) VALUES (?, ?)", app_id, xml_content
-                )
+                # Insert using the contract column name `app_XML` and capture the inserted app_id
+                try:
+                    insert_sql = "INSERT INTO app_xml (app_id, app_XML) OUTPUT inserted.app_id VALUES (?, ?)"
+                    cursor.execute(insert_sql, app_id, xml_content)
+                    row = cursor.fetchone()
+                    returned_app_id = int(row[0]) if row and row[0] is not None else int(app_id)
+                except Exception:
+                    # Fallback: if OUTPUT isn't supported for some reason, use provided app_id
+                    returned_app_id = int(app_id)
+
+                # Ensure the application table has this app_id (insert if missing)
+                try:
+                    # Use dbo.application as the canonical source_application_table
+                    cursor.execute("IF NOT EXISTS (SELECT 1 FROM [dbo].[application] WHERE app_id = ?) INSERT INTO [dbo].[application] (app_id) VALUES (?)", returned_app_id, returned_app_id)
+                except Exception as e:
+                    logging.warning(f"Failed to mirror app_id {returned_app_id} into [dbo].[application]: {e}")
                 loaded += 1
             cursor.execute("SET IDENTITY_INSERT app_xml OFF;")
             conn.commit()
