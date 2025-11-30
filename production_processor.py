@@ -104,7 +104,8 @@ class ProductionProcessor:
                  enable_pooling: bool = False, min_pool_size: int = 4, max_pool_size: int = 20,
                  enable_mars: bool = True, connection_timeout: int = 30,
                  app_id_start: int = None, app_id_end: int = None,
-                 batch_processor: BatchProcessorInterface = None):
+                 batch_processor: BatchProcessorInterface = None,
+                 enable_instrumentation: bool = False):
         """
         Initialize production processor.
         
@@ -140,6 +141,7 @@ class ProductionProcessor:
         self.app_id_start = app_id_start
         self.app_id_end = app_id_end
         self.batch_processor = batch_processor  # Store injected processor
+        self.enable_instrumentation = enable_instrumentation
         
         # Validate app_id range configuration
         if self.app_id_start is not None and self.app_id_end is not None:
@@ -496,7 +498,8 @@ class ProductionProcessor:
                 batch_size=self.batch_size,
                 session_id=self.session_id,
                 app_id_start=self.app_id_start,
-                app_id_end=self.app_id_end
+                app_id_end=self.app_id_end,
+                enable_instrumentation=self.enable_instrumentation
             )
         
         # Process batch
@@ -949,6 +952,8 @@ def main():
                        help=f"Disable Multiple Active Result Sets (default: MARS {'enabled' if ProcessingDefaults.MARS_ENABLED else 'disabled'})")
     parser.add_argument("--connection-timeout", type=int, default=ProcessingDefaults.CONNECTION_TIMEOUT,
                        help=f"Connection timeout in seconds (default: {ProcessingDefaults.CONNECTION_TIMEOUT})")
+    parser.add_argument("--enable-instrumentation", action="store_true", default=ProcessingDefaults.ENABLE_INSTRUMENTATION,
+                       help=f"Enable detailed per-record instrumentation for metrics (default: {ProcessingDefaults.ENABLE_INSTRUMENTATION})")
     
     args = parser.parse_args()
     
@@ -988,6 +993,7 @@ def main():
             connection_timeout=args.connection_timeout,
             app_id_start=args.app_id_start,
             app_id_end=args.app_id_end
+            ,enable_instrumentation=args.enable_instrumentation
         )
         
         # Run processing with calculated limit

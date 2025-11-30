@@ -39,6 +39,8 @@ class ProcessingDefaults:
     
     # Logging
     LOG_LEVEL = "WARNING"  # Default logging level (CRITICAL, ERROR, WARNING, INFO, DEBUG)
+    # Instrumentation
+    ENABLE_INSTRUMENTATION = False  # When True, emit per-record detailed timings to metrics
     
     @classmethod
     def to_dict(cls) -> dict:

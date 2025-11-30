@@ -57,6 +57,7 @@ class WorkResult:
     records_inserted: int = 0
     processing_time: float = 0.0
     mapping_time: float = 0.0
+    parsing_time: float = 0.0
     db_insert_time: float = 0.0
     tables_populated: List[str] = None
     quality_issues: List[str] = None  # Non-fatal data quality warnings (e.g., validation errors during optional field processing)
@@ -106,7 +107,7 @@ class ParallelCoordinator(BatchProcessorInterface):
     - If high I/O wait: Adding more workers makes it WORSE due to lock contention
     """
     
-    def __init__(self, connection_string: str, mapping_contract_path: str, num_workers: Optional[int] = None, batch_size: int = 1000, log_level: str = "INFO", log_file: str = None, session_id: str = None, app_id_start: int = None, app_id_end: int = None):
+    def __init__(self, connection_string: str, mapping_contract_path: str, num_workers: Optional[int] = None, batch_size: int = 1000, log_level: str = "INFO", log_file: str = None, session_id: str = None, app_id_start: int = None, app_id_end: int = None, enable_instrumentation: bool = False):
         """
         Initialize the parallel coordinator.
         
@@ -135,6 +136,8 @@ class ParallelCoordinator(BatchProcessorInterface):
         self.session_id = session_id
         self.app_id_start = app_id_start
         self.app_id_end = app_id_end
+        # Instrumentation flag: when True include per-record timings in metrics
+        self.enable_instrumentation = enable_instrumentation
         
         # Shared progress tracking
         self.manager = mp.Manager()
@@ -201,7 +204,7 @@ class ParallelCoordinator(BatchProcessorInterface):
             with mp.Pool(
                 processes=self.num_workers,
                 initializer=_init_worker,
-                initargs=(self.connection_string, self.mapping_contract_path, self.progress_dict, self.log_level, self.session_id, self.app_id_start, self.app_id_end)
+                initargs=(self.connection_string, self.mapping_contract_path, self.progress_dict, self.log_level, self.session_id, self.app_id_start, self.app_id_end, self.enable_instrumentation)
             ) as pool:
                 
                 # Submit all work items
@@ -268,18 +271,32 @@ class ParallelCoordinator(BatchProcessorInterface):
                 'parallel_efficiency': self._calculate_parallel_efficiency(results, processing_time),
                 'worker_count': self.num_workers,
                 'individual_results': [
-                    {
-                        'sequence': r.sequence,
-                        'app_id': r.app_id,
-                        'success': r.success,
-                        'processing_time': r.processing_time,
-                        'mapping_time': getattr(r, 'mapping_time', 0.0),
-                        'db_insert_time': getattr(r, 'db_insert_time', 0.0),
-                        'records_inserted': r.records_inserted,
-                        'error_stage': r.error_stage,
-                        'error_message': r.error_message,
-                        'quality_issues': r.quality_issues
-                    }
+                    (
+                        {
+                            'sequence': r.sequence,
+                            'app_id': r.app_id,
+                            'success': r.success,
+                            'processing_time': r.processing_time,
+                            'records_inserted': r.records_inserted,
+                            'error_stage': r.error_stage,
+                            'error_message': r.error_message,
+                            'quality_issues': r.quality_issues
+                        }
+                        if not self.enable_instrumentation else
+                        {
+                            'sequence': r.sequence,
+                            'app_id': r.app_id,
+                            'success': r.success,
+                            'processing_time': r.processing_time,
+                            'parsing_time': getattr(r, 'parsing_time', 0.0),
+                            'mapping_time': getattr(r, 'mapping_time', 0.0),
+                            'db_insert_time': getattr(r, 'db_insert_time', 0.0),
+                            'records_inserted': r.records_inserted,
+                            'error_stage': r.error_stage,
+                            'error_message': r.error_message,
+                            'quality_issues': r.quality_issues
+                        }
+                    )
                     for r in results
                 ]
             }
@@ -361,9 +378,10 @@ _worker_progress_dict = None
 _worker_session_id = None
 _worker_app_id_start = None
 _worker_app_id_end = None
+_worker_enable_instrumentation = False
 
 
-def _init_worker(connection_string: str, mapping_contract_path: str, progress_dict, log_level: str = None, session_id: str = None, app_id_start: int = None, app_id_end: int = None):
+def _init_worker(connection_string: str, mapping_contract_path: str, progress_dict, log_level: str = None, session_id: str = None, app_id_start: int = None, app_id_end: int = None, enable_instrumentation: bool = False):
     """
     Initialize worker process with required components.
     
@@ -382,7 +400,7 @@ def _init_worker(connection_string: str, mapping_contract_path: str, progress_di
     Only ERROR+ level logging is active in workers.
     """
     global _worker_validator, _worker_parser, _worker_mapper, _worker_migration_engine, _worker_progress_dict
-    global _worker_session_id, _worker_app_id_start, _worker_app_id_end
+    global _worker_session_id, _worker_app_id_start, _worker_app_id_end, _worker_enable_instrumentation
     
     # Initialize worker processes with configurable logging (defaults to ERROR)
     import logging
@@ -398,6 +416,8 @@ def _init_worker(connection_string: str, mapping_contract_path: str, progress_di
         _worker_mapper = DataMapper(mapping_contract_path=mapping_contract_path)
         _worker_migration_engine = MigrationEngine(connection_string)
         _worker_progress_dict = progress_dict
+        # Worker-level instrumentation flag
+        _worker_enable_instrumentation = bool(enable_instrumentation)
         
         # Store session metadata for processing_log
         _worker_session_id = session_id
@@ -442,9 +462,12 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
                 processing_time=time.time() - start_time
             )
         
-        # Stage 2: Parsing
+        # Stage 2: Parsing (timed when instrumentation is enabled)
+        parse_start = time.time()
         root = _worker_parser.parse_xml_stream(work_item.xml_content)
         xml_data = _worker_parser.extract_elements(root)
+        parse_end = time.time()
+        parsing_duration = parse_end - parse_start
         
         if root is None or not xml_data:
             return WorkResult(
@@ -525,6 +548,7 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
             records_inserted=total_inserted,
             processing_time=time.time() - start_time,
             mapping_time=mapping_duration,
+            parsing_time=parsing_duration,
             db_insert_time=db_insert_duration,
             tables_populated=list(mapped_data.keys()),
             quality_issues=quality_issues if quality_issues else None
