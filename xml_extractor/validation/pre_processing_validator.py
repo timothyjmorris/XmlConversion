@@ -464,7 +464,7 @@ class PreProcessingValidator:
         # Rule: AUTHU contacts are optional
         authu_contacts = [c for c in valid_contacts if c.get('ac_role_tp_c') == 'AUTHU']
         if len(authu_contacts) > 0:
-            self.logger.info(f"Found {len(authu_contacts)} authorized user contacts")
+            self.logger.debug(f"Found {len(authu_contacts)} authorized user contacts")
         
         # Rule: Check for duplicate con_ids
         con_ids = [c.get('con_id') for c in valid_contacts]
@@ -585,7 +585,7 @@ class PreProcessingValidator:
         record_info = f" (Record: {source_record_id})" if source_record_id else ""
         
         if is_valid:
-            self.logger.info(
+            self.logger.debug(
                 f"Validation PASSED{record_info}: app_id={app_id}, "
                 f"valid_contacts={len(valid_contacts)}, warnings={len(warnings)}"
             )
@@ -651,7 +651,7 @@ class PreProcessingValidator:
             )
         
         # Log batch summary
-        self.logger.info(
+        self.logger.debug(
             f"Batch validation complete: {summary['valid_records']}/{summary['total_records']} "
             f"valid ({summary['valid_records']/summary['total_records']*100:.1f}%)"
         )
@@ -740,20 +740,16 @@ def create_sample_validation_scenarios() -> List[Tuple[str, str]]:
 
 
 if __name__ == '__main__':
-    # Run validation on sample scenarios
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-    
+    # Run validation on sample scenarios (do not reconfigure root logging here)
     validator = PreProcessingValidator()
     scenarios = create_sample_validation_scenarios()
     
-    print("Running pre-processing validation on sample scenarios...")
+    logger = logging.getLogger(__name__)
+    logger.info("Running pre-processing validation on sample scenarios...")
     batch_results = validator.validate_batch(scenarios)
-    
-    print(f"\nValidation Summary:")
+
+    logger.info("Validation Summary:")
     for key, value in batch_results['summary'].items():
-        print(f"  {key}: {value}")
-    
-    print(f"\nReady to process {batch_results['summary']['valid_records']} valid records.")
+        logger.info(f"  {key}: {value}")
+
+    logger.info(f"Ready to process {batch_results['summary']['valid_records']} valid records.")

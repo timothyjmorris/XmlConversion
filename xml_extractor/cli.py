@@ -26,57 +26,62 @@ def main(args: Optional[list] = None) -> int:
     if args is None:
         args = sys.argv[1:]
     
-    # Set up logging
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # Set up logging without reconfiguring root if already configured
+    root_logger = logging.getLogger()
+    if not root_logger.handlers:
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+        root_logger.addHandler(handler)
+        root_logger.setLevel(logging.INFO)
     logger = logging.getLogger(__name__)
     
-    print("XML Database Extraction System v1.0.0")
-    print("Centralized Configuration Management Active")
+    logger.info("XML Database Extraction System v1.0.0")
+    logger.info("Centralized Configuration Management Active")
     
     try:
         # Initialize centralized configuration
         config_manager = get_config_manager()
         
         # Display configuration summary
-        print("\n=== Configuration Summary ===")
+        logger.info("\n=== Configuration Summary ===")
         summary = config_manager.get_configuration_summary()
-        
-        print(f"Database Server: {summary['database']['server']}")
-        print(f"Database Name: {summary['database']['database']}")
-        print(f"Batch Size: {summary['processing']['batch_size']}")
-        print(f"Parallel Processes: {summary['processing']['parallel_processes']}")
-        print(f"Memory Limit: {summary['processing']['memory_limit_mb']}MB")
+
+        logger.info(f"Database Server: {summary['database']['server']}")
+        logger.info(f"Database Name: {summary['database']['database']}")
+        logger.info(f"Batch Size: {summary['processing']['batch_size']}")
+        logger.info(f"Parallel Processes: {summary['processing']['parallel_processes']}")
+        logger.info(f"Memory Limit: {summary['processing']['memory_limit_mb']}MB")
         
         # Validate configuration
-        print("\n=== Configuration Validation ===")
+        logger.info("\n=== Configuration Validation ===")
         is_valid = config_manager.validate_configuration()
-        print(f"Configuration Status: {'VALID' if is_valid else 'INVALID'}")
-        
-        print("\n=== Available Components ===")
-        print("- OK Centralized Configuration Management")
-        print("- OK Database Connection Management")
-        print("- OK Variable Support")
-        print("- OK XML parsing engine") 
-        print("- OK Data mapping system")
-        print("- OK Migration engine")
-        print("- OK Performance monitoring")
+        logger.info(f"Configuration Status: {'VALID' if is_valid else 'INVALID'}")
 
-        print("\n=== Environment Variables ===")
-        print("Set these environment variables to customize configuration:")
-        print("- XML_EXTRACTOR_CONNECTION_STRING: Database connection string")
-        print("- XML_EXTRACTOR_BATCH_SIZE: Batch size for processing")
-        print("- XML_EXTRACTOR_PARALLEL_PROCESSES: Number of parallel processes")
-        print("- XML_EXTRACTOR_MEMORY_LIMIT_MB: Memory limit in MB")
-        print("- XML_EXTRACTOR_DB_SERVER: Database server")
-        print("- XML_EXTRACTOR_DB_DATABASE: Database name")
-        
-        print("\nCLI interface will be fully implemented in task 8.1")
+        logger.info("\n=== Available Components ===")
+        logger.info("- OK Centralized Configuration Management")
+        logger.info("- OK Database Connection Management")
+        logger.info("- OK Variable Support")
+        logger.info("- OK XML parsing engine")
+        logger.info("- OK Data mapping system")
+        logger.info("- OK Migration engine")
+        logger.info("- OK Performance monitoring")
+
+        logger.info("\n=== Environment Variables ===")
+        logger.info("Set these environment variables to customize configuration:")
+        logger.info("- XML_EXTRACTOR_CONNECTION_STRING: Database connection string")
+        logger.info("- XML_EXTRACTOR_BATCH_SIZE: Batch size for processing")
+        logger.info("- XML_EXTRACTOR_PARALLEL_PROCESSES: Number of parallel processes")
+        logger.info("- XML_EXTRACTOR_MEMORY_LIMIT_MB: Memory limit in MB")
+        logger.info("- XML_EXTRACTOR_DB_SERVER: Database server")
+        logger.info("- XML_EXTRACTOR_DB_DATABASE: Database name")
+
+        logger.info("\nCLI interface will be fully implemented in task 8.1")
         
         return 0
         
     except Exception as e:
         logger.error(f"Configuration initialization failed: {e}")
-        print(f"ERROR: {e}")
+        logger.error(f"ERROR: {e}")
         return 1
 
 

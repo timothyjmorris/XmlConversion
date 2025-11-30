@@ -202,9 +202,9 @@ class ConfigManager(ConfigurationManagerInterface):
         self._table_structure_cache: Dict[str, Dict[str, Dict[str, str]]] = {}
         self._sample_xml_cache: Dict[str, List[str]] = {}
         
-        self.logger.info(f"ConfigManager initialized with base path: {self.paths.base_config_path}")
-        self.logger.info(f"Database server: {self.database_config.server}")
-        self.logger.info(f"Processing batch size: {self.processing_params.batch_size}")
+        self.logger.debug(f"ConfigManager initialized with base path: {self.paths.base_config_path}")
+        self.logger.debug(f"Database server: {self.database_config.server}")
+        self.logger.debug(f"Processing batch size: {self.processing_params.batch_size}")
     
     def get_database_connection_string(self) -> str:
         """
@@ -292,7 +292,7 @@ class ConfigManager(ConfigurationManagerInterface):
         # Cache the result
         self._mapping_contract_cache[contract_path] = contract
         
-        self.logger.info(f"Loaded mapping contract from {contract_path}")
+        self.logger.debug(f"Loaded mapping contract from {contract_path}")
         return contract
     
     def load_table_structure(self, sql_script_path: Optional[str] = None, 
@@ -339,7 +339,7 @@ class ConfigManager(ConfigurationManagerInterface):
         # Cache the result
         self._table_structure_cache[cache_key] = table_structure
         
-        self.logger.info(f"Loaded table structure from {sql_script_path} and {data_model_path}")
+        self.logger.debug(f"Loaded table structure from {sql_script_path} and {data_model_path}")
         return table_structure
     
     def load_sample_xml(self, sample_path: Optional[str] = None) -> List[str]:
@@ -391,7 +391,7 @@ class ConfigManager(ConfigurationManagerInterface):
         # Cache the result
         self._sample_xml_cache[sample_path] = sample_xml_content
         
-        self.logger.info(f"Loaded {len(sample_xml_content)} sample XML files from {sample_path}")
+        self.logger.debug(f"Loaded {len(sample_xml_content)} sample XML files from {sample_path}")
         return sample_xml_content
     
     def get_enum_mappings(self, contract_path: Optional[str] = None) -> Dict[str, Dict[str, int]]:
@@ -465,7 +465,7 @@ class ConfigManager(ConfigurationManagerInterface):
         if errors:
             raise ConfigurationError(f"Configuration validation failed: {'; '.join(errors)}")
         
-        self.logger.info("Configuration validation passed")
+        self.logger.debug("Configuration validation passed")
         return True
     
     def get_configuration_summary(self) -> Dict[str, Any]:
@@ -507,7 +507,7 @@ class ConfigManager(ConfigurationManagerInterface):
         self._table_structure_cache.clear()
         self._sample_xml_cache.clear()
         
-        self.logger.info("Configuration cache cleared")
+        self.logger.debug("Configuration cache cleared")
     
     def reload_configuration(self) -> None:
         """Reload configuration from environment variables and clear cache."""
@@ -515,7 +515,7 @@ class ConfigManager(ConfigurationManagerInterface):
         self.processing_params = ProcessingParameters.from_environment()
         self.clear_cache()
         
-        self.logger.info("Configuration reloaded from environment variables")
+        self.logger.debug("Configuration reloaded from environment variables")
     
     def _parse_mapping_contract(self, contract_data: Dict[str, Any], 
                               contract_path: str) -> MappingContract:

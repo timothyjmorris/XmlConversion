@@ -94,9 +94,9 @@ class XMLParser(XMLParserInterface):
         self.elements_skipped = 0
         self.elements_processed = 0
         
-        self.logger.info(f"XMLParser initialized with lxml={'available' if LXML_AVAILABLE else 'not available'}")
+        self.logger.debug(f"XMLParser initialized with lxml={'available' if LXML_AVAILABLE else 'not available'}")
         if self.required_paths:
-            self.logger.info(f"Selective parsing enabled for {len(self.required_paths)} element paths")
+            self.logger.debug(f"Selective parsing enabled for {len(self.required_paths)} element paths")
     
     def _build_required_paths(self) -> None:
         """
@@ -171,7 +171,7 @@ class XMLParser(XMLParserInterface):
         self.core_structure_elements.clear()
         self._build_required_paths()
         self._build_core_structure_elements()
-        self.logger.info(f"Updated mapping contract - selective parsing for {len(self.required_paths)} paths")
+        self.logger.debug(f"Updated mapping contract - selective parsing for {len(self.required_paths)} paths")
     
     def parse_xml_stream(self, xml_content: str) -> Element:
         """
