@@ -56,6 +56,8 @@ class WorkResult:
     error_message: Optional[str] = None
     records_inserted: int = 0
     processing_time: float = 0.0
+    mapping_time: float = 0.0
+    db_insert_time: float = 0.0
     tables_populated: List[str] = None
     quality_issues: List[str] = None  # Non-fatal data quality warnings (e.g., validation errors during optional field processing)
 
@@ -199,7 +201,7 @@ class ParallelCoordinator(BatchProcessorInterface):
             with mp.Pool(
                 processes=self.num_workers,
                 initializer=_init_worker,
-                initargs=(self.connection_string, self.mapping_contract_path, self.progress_dict, self.session_id, self.app_id_start, self.app_id_end)
+                initargs=(self.connection_string, self.mapping_contract_path, self.progress_dict, self.log_level, self.session_id, self.app_id_start, self.app_id_end)
             ) as pool:
                 
                 # Submit all work items
@@ -271,6 +273,8 @@ class ParallelCoordinator(BatchProcessorInterface):
                         'app_id': r.app_id,
                         'success': r.success,
                         'processing_time': r.processing_time,
+                        'mapping_time': getattr(r, 'mapping_time', 0.0),
+                        'db_insert_time': getattr(r, 'db_insert_time', 0.0),
                         'records_inserted': r.records_inserted,
                         'error_stage': r.error_stage,
                         'error_message': r.error_message,
@@ -359,7 +363,7 @@ _worker_app_id_start = None
 _worker_app_id_end = None
 
 
-def _init_worker(connection_string: str, mapping_contract_path: str, progress_dict, session_id: str = None, app_id_start: int = None, app_id_end: int = None):
+def _init_worker(connection_string: str, mapping_contract_path: str, progress_dict, log_level: str = None, session_id: str = None, app_id_start: int = None, app_id_end: int = None):
     """
     Initialize worker process with required components.
     
@@ -380,9 +384,13 @@ def _init_worker(connection_string: str, mapping_contract_path: str, progress_di
     global _worker_validator, _worker_parser, _worker_mapper, _worker_migration_engine, _worker_progress_dict
     global _worker_session_id, _worker_app_id_start, _worker_app_id_end
     
-    # Initialize worker processes with minimal logging (ERROR level only)
+    # Initialize worker processes with configurable logging (defaults to ERROR)
     import logging
-    logging.basicConfig(level=logging.ERROR)
+    try:
+        level = getattr(logging, log_level.upper()) if log_level else logging.ERROR
+    except Exception:
+        level = logging.ERROR
+    logging.basicConfig(level=level)
         
     try:
         _worker_validator = PreProcessingValidator()
@@ -516,6 +524,8 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
             success=True,
             records_inserted=total_inserted,
             processing_time=time.time() - start_time,
+            mapping_time=mapping_duration,
+            db_insert_time=db_insert_duration,
             tables_populated=list(mapped_data.keys()),
             quality_issues=quality_issues if quality_issues else None
         )

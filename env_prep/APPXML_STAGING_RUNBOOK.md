@@ -42,7 +42,7 @@ Use the `--drop-index` option on the initial load to drop `IX_app_xml_staging_ap
 
 - Small real run (single worker):
 ```powershell
-python .\env_prep\appxml_staging_extractor.py --batch 1000 --limit 10000 --drop-index --metrics metrics\appxml_w0.json
+python .\env_prep\appxml_staging_extractor.py --batch 500 --limit 10000 --drop-index --metrics metrics\appxml_w0.json
 ```
 
 ## Parallel worker orchestration (PowerShell example)
@@ -51,7 +51,7 @@ This example launches N workers partitioned by `app_id % N` (each worker writes 
 
 ```powershell
 $workers = 8
-$batch = 2000
+$batch = 1000
 
 # Create directories for logs + metrics
 New-Item -ItemType Directory -Path .\logs -Force
@@ -74,9 +74,9 @@ Notes:
 
 ## Suggested scaling parameters (initial plan)
 
-- Observed baseline: 1000 rows in 30s → ~33 rows/sec per worker.
+- Observed baseline in DEV: ~13k rows in 320s → ~40 rows/sec per worker `--batch 500`.
 - Target overall throughput for <18 hours: ~170 rows/sec total.
-- Suggested starting configuration: **8 workers**, `--batch 2000`. Best-case completion ≈ 11.5 hours.
+- Suggested starting configuration: **8 workers**, `--batch 1000`. Best-case completion ≈ 11.5 hours.
 - If DB can scale, consider 12 workers for ~7.7 hours (expect diminishing returns).
 
 ## DB-side guidance (coordinate with DBA)
@@ -114,11 +114,6 @@ SELECT COUNT(*) FROM dbo.app_xml_staging;
 - If inserts are very slow, reduce batch size, or temporarily pause workers and re-run a single-worker test.
 - If you see many `custdata_xml` missing, check source data distribution; the script will skip rows without `CustData`.
 - If ODBC errors appear, check `config/database_config.json` and ensure the ODBC driver is installed.
-
-## Next steps and automation
-
-- Option A: use `env_prep/appxml_staging_orchestrator.py` to launch and monitor N workers and aggregate metrics.
-- Option B: add `Request/@ID` vs `app_id` validation in the script to detect mismatches (useful during first run).
 
 ---
 

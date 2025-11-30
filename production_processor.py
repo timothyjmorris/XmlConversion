@@ -573,6 +573,7 @@ class ProductionProcessor:
             'worker_count': self.workers,
             'server': self.server,
             'database': self.database,
+            'individual_results': processing_result.performance_metrics.get('individual_results', []),
             'failed_apps': failed_apps,
             'failure_summary': failure_summary,
             'quality_issue_apps': quality_issue_apps,
@@ -809,7 +810,8 @@ class ProductionProcessor:
                 'duration_seconds': float(batch_duration),
                 'applications_per_minute': float((metrics.get('records_processed', 0) / batch_duration * 60) if batch_duration > 0 else 0),
                 'database_inserts': metrics.get('total_records_inserted', 0),
-                'application_failures': metrics.get('records_failed', 0)
+                'application_failures': metrics.get('records_failed', 0),
+                'individual_results': metrics.get('individual_results', [])
             }
             batch_details.append(batch_detail)
             

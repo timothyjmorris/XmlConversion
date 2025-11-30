@@ -337,7 +337,12 @@ class MigrationEngine(MigrationEngineInterface):
         qualified_table_name = self._get_qualified_table_name(table_name)
         
         # Step 1: Filter duplicate records using injected detector
-        records = self.duplicate_detector.filter_duplicates(records, table_name, qualified_table_name)
+        # If caller provided a shared connection, prefer that to avoid extra connections/round-trips
+        try:
+            records = self.duplicate_detector.filter_duplicates(records, table_name, qualified_table_name, connection=connection)
+        except TypeError:
+            # Backward compatibility: if detector doesn't accept connection arg, call old way
+            records = self.duplicate_detector.filter_duplicates(records, table_name, qualified_table_name)
         if not records:
             self.logger.warning(f"No records remain for bulk insert into {table_name} after filtering.")
             return 0

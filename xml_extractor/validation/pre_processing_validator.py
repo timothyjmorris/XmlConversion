@@ -147,6 +147,10 @@ class PreProcessingValidator:
 
             # Step 3.5: Defensive schema and product line validation
             app_id = self._extract_and_validate_app_id(xml_data, errors)
+
+            """
+            I don't think this part of the pre-processor matters anymore because we filter based on the mapping_contract {source_application_table}
+            """
             # Check for Rec Lending in nested structure
             has_rec_lending_app = False
             try:
@@ -158,12 +162,10 @@ class PreProcessingValidator:
                 )
             except Exception:
                 pass
+            
             if has_rec_lending_app:
-                errors.append(
-                    "Unsupported application type: Rec Lending (product_line_enum 601) detected. "
-                    "Current version only supports Credit Card (product_line_enum 600). "
-                    "Rec Lending and other types will require future enhancements."
-                )
+                errors.append("Rec Lending application type detected, moving on.")
+
             # Check for Credit Card application in nested structure
             has_credit_card_app = False
             try:
@@ -175,12 +177,10 @@ class PreProcessingValidator:
                 )
             except Exception:
                 pass
+           
             if not has_credit_card_app:
-                errors.append(
-                    "Missing required Credit Card application element: /Provenir/Request/CustData/application. "
-                    "Current version only supports Credit Card (product_line_enum 600). "
-                    "Rec Lending and other types will require future enhancements."
-                )
+                errors.append("Missing required Credit Card application element: /Provenir/Request/CustData/application.")
+
             # Defensive: If app_id is missing or invalid, error is already appended by _extract_and_validate_app_id
 
             # Step 5: Validate contacts and collect valid ones

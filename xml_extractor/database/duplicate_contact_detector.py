@@ -74,7 +74,8 @@ class DuplicateContactDetector:
         self,
         records: List[Dict[str, Any]],
         table_name: str,
-        qualified_table_name: str
+        qualified_table_name: str,
+        connection: Any = None
     ) -> List[Dict[str, Any]]:
         """
         Filter out duplicate contact records from batch.
@@ -98,11 +99,11 @@ class DuplicateContactDetector:
         
         try:
             if table_name == 'contact_base':
-                return self._filter_contact_base_duplicates(records, qualified_table_name)
+                return self._filter_contact_base_duplicates(records, qualified_table_name, connection=connection)
             elif table_name == 'contact_address':
-                return self._filter_contact_address_duplicates(records, qualified_table_name)
+                return self._filter_contact_address_duplicates(records, qualified_table_name, connection=connection)
             elif table_name == 'contact_employment':
-                return self._filter_contact_employment_duplicates(records, qualified_table_name)
+                return self._filter_contact_employment_duplicates(records, qualified_table_name, connection=connection)
         
         except pyodbc.Error as e:
             self.logger.warning(f"Failed to check for duplicates in {table_name}, proceeding with all records: {e}")
@@ -112,10 +113,18 @@ class DuplicateContactDetector:
     def _filter_contact_base_duplicates(
         self,
         records: List[Dict[str, Any]],
-        qualified_table_name: str
+        qualified_table_name: str,
+        connection: Any = None
     ) -> List[Dict[str, Any]]:
         """Filter duplicate contact_base records by con_id."""
-        with self.connection_provider() as conn:
+        # Prefer using provided connection to avoid creating a new connection per check
+        conn_ctx = None
+        if connection is not None:
+            conn = connection
+            cursor = conn.cursor()
+        else:
+            conn_ctx = self.connection_provider()
+            conn = conn_ctx.__enter__()
             cursor = conn.cursor()
             
             # Extract con_id values from records
@@ -142,16 +151,30 @@ class DuplicateContactDetector:
             
             if skipped_count > 0:
                 self.logger.info(f"Filtered {skipped_count} duplicate contact_base records")
-            
+
+            # Cleanup created connection context if we opened it
+            if conn_ctx is not None:
+                try:
+                    conn_ctx.__exit__(None, None, None)
+                except Exception:
+                    pass
+
             return filtered_records
     
     def _filter_contact_address_duplicates(
         self,
         records: List[Dict[str, Any]],
-        qualified_table_name: str
+        qualified_table_name: str,
+        connection: Any = None
     ) -> List[Dict[str, Any]]:
         """Filter duplicate contact_address records by (con_id, address_type_enum) composite key."""
-        with self.connection_provider() as conn:
+        conn_ctx = None
+        if connection is not None:
+            conn = connection
+            cursor = conn.cursor()
+        else:
+            conn_ctx = self.connection_provider()
+            conn = conn_ctx.__enter__()
             cursor = conn.cursor()
             
             # Extract composite keys
@@ -188,16 +211,29 @@ class DuplicateContactDetector:
             
             if skipped_count > 0:
                 self.logger.info(f"Filtered {skipped_count} duplicate contact_address records")
-            
+
+            if conn_ctx is not None:
+                try:
+                    conn_ctx.__exit__(None, None, None)
+                except Exception:
+                    pass
+
             return filtered_records
     
     def _filter_contact_employment_duplicates(
         self,
         records: List[Dict[str, Any]],
-        qualified_table_name: str
+        qualified_table_name: str,
+        connection: Any = None
     ) -> List[Dict[str, Any]]:
         """Filter duplicate contact_employment records by (con_id, employment_type_enum) composite key."""
-        with self.connection_provider() as conn:
+        conn_ctx = None
+        if connection is not None:
+            conn = connection
+            cursor = conn.cursor()
+        else:
+            conn_ctx = self.connection_provider()
+            conn = conn_ctx.__enter__()
             cursor = conn.cursor()
             
             # Extract composite keys
@@ -234,5 +270,11 @@ class DuplicateContactDetector:
             
             if skipped_count > 0:
                 self.logger.info(f"Filtered {skipped_count} duplicate contact_employment records")
-            
+
+            if conn_ctx is not None:
+                try:
+                    conn_ctx.__exit__(None, None, None)
+                except Exception:
+                    pass
+
             return filtered_records

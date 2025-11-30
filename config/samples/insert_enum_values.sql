@@ -101,25 +101,6 @@ INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (128, 'process_cc', 
 INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (129, 'process_cc', '99000');
 INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (130, 'process_cc', '99500');
 
--- REMAP THESE AWAY ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (100, 'process_cc', '00050');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (101, 'process_cc', '00100');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (102, 'process_cc', '01000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (103, 'process_cc', '02000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (104, 'process_cc', '03000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (105, 'process_cc', '03010');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (106, 'process_cc', '06000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (107, 'process_cc', '07000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (108, 'process_cc', '07500');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (109, 'process_cc', '08000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (110, 'process_cc', '09000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (111, 'process_cc', '11000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (112, 'process_cc', '13000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (113, 'process_cc', '20000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (114, 'process_cc', '30000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (115, 'process_cc', '40000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (116, 'process_cc', '99000');
-INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (117, 'process_cc', '99500');
 
 INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (130, 'funding_source_sc', 'ACH');
 INSERT INTO sandbox.app_enums (enum_id, type, value) VALUES (131, 'funding_source_sc', 'Check');
