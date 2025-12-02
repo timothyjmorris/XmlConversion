@@ -1571,8 +1571,13 @@ class DataMapper(DataMapperInterface):
                         if default_value is not None:
                             # Use contract default value
                             record[mapping.target_column] = default_value
-                            applied_defaults.add(mapping.target_column)
-                            self.logger.debug(f"Using contract default for required column {mapping.target_column}: {default_value}")
+                            # Track whether this should be excluded if record is empty
+                            exclude_when_empty = getattr(mapping, 'exclude_default_when_record_empty', False)
+                            if exclude_when_empty:
+                                conditional_defaults.add(mapping.target_column)
+                            else:
+                                applied_defaults.add(mapping.target_column)
+                            self.logger.debug(f"Using contract default for required column {mapping.target_column}: {default_value} (exclude_if_empty={exclude_when_empty})")
                         else:
                             # CRITICAL FIX: No contract default for required field - FAIL FAST
                             # This prevents silent data corruption and batch failures at database level

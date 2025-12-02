@@ -73,4 +73,4 @@ TODO:
 
 TROUBLESHOOTING
 
-python .\production_processor.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --workers 4 --batch-size 100 --limit 200 --log-level INFO
+python production_processor.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --log-level ERROR --workers 4 --batch-size 500 --limit 500 --enable-instrumentation

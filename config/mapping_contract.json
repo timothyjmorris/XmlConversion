@@ -324,7 +324,9 @@
       "data_type": "string",
       "data_length": 50,
       "nullable": false,
-      "required": true
+      "required": true,
+      "default_value": "UNKNOWN",
+      "exclude_default_when_record_empty": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -334,7 +336,9 @@
       "data_type": "string",
       "data_length": 50,
       "nullable": false,
-      "required": true
+      "required": true,
+      "default_value": "UNKNOWN",
+      "exclude_default_when_record_empty": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
@@ -345,7 +349,9 @@
       "mapping_type": ["numbers_only"],
       "data_length": 9,
       "nullable": false,
-      "required": true
+      "required": true,
+      "default_value": "000000000",
+      "exclude_default_when_record_empty": true
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",

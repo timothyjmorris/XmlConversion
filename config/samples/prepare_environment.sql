@@ -29,7 +29,7 @@ TEAR DOWN TABLES
 	DBCC CHECKIDENT ('sandbox.processing_log', RESEED, 0);
 
 	--DELETE FROM app_xml_staging;
-
+	--DELETE FROM  sandbox.app_base where app_id > 300000
 -------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
@@ -90,10 +90,12 @@ TEAR DOWN TABLES
 -- INSPECT -----------------------------------------------------------------------------------------------------------------------
 
 SELECT COUNT(*) FROM sandbox.app_base;
+SELECT MAX(app_id) FROM sandbox.app_base;
 SELECT COUNT(*) FROM sandbox.processing_log;
 select * from sandbox.processing_log;
 SELECT COUNT(*) FROM app_xml
 SELECT COUNT(*) FROM app_xml_staging;
+select app_id, lockedby, shred_version, cast(app_xml as xml) as xml from app_XML where app_id in (311201)
 
 SELECT TOP 10 app_id, CAST(app_xml AS xml) AS XML 
 FROM app_xml_staging 
@@ -107,7 +109,6 @@ SELECT app_id FROM IL_application WHERE app_id = 124294
 -- DELETE FROM app_xml_staging
 
 
-select app_id, lockedby, shred_version, cast(app_xml as xml) as xml from app_XML where app_id in (326217, 227491, 228056, 228074)
 
 -- THIS IS INCLUDED IN APP XML STAGING SCRIPT ------------------------------------------------------------------------------------
 -- FIND ORPHANED XML (not joined to application or IL_application): some is hard-erroring in SQL as "illegal xml character"
@@ -121,14 +122,8 @@ select app_id, lockedby, shred_version, cast(app_xml as xml) as xml from app_XML
 	ORDER BY app_id
 
 -- FINE, JUST FREAKING REMOVE THE REC LENDING APPS
-select count(*)
---delete
-from app_xml_staging
-where 
-	cast(app_XML as xml).value('(/Provenir/Request/CustData/application/@app_receive_date)[1]', 'varchar(20)') IS NULL
-
--- 58,850
-select max(datalength(app_xml)) from app_xml_staging
-
--- 53,684,379
-select max(datalength(app_xml)) from app_xml
+	select count(*)
+	--delete
+	from app_xml_staging
+	where 
+		cast(app_XML as xml).value('(/Provenir/Request/CustData/application/@app_receive_date)[1]', 'varchar(20)') IS NULL

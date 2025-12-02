@@ -92,7 +92,7 @@ insert into application (app_id) values (1),(2),(3),(4),(5),(6),(7),(9),(10)
 
 
 
-SET STATISTICS IO ON;
+
 SET STATISTICS TIME ON;
 -- Include Actual Execution Plan (SSMS: Ctrl-M / Include Actual Plan)
 SELECT TOP (500) ax.app_id,
@@ -102,12 +102,11 @@ FROM dbo.app_xml ax
 WHERE ax.[app_XML] IS NOT NULL
 ORDER BY ax.app_id;
 
-SET STATISTICS IO ON; SET STATISTICS TIME ON;
+SET STATISTICS TIME ON;
 SELECT TOP (500) ax.app_id, ax.[app_XML]
 FROM dbo.app_xml ax
 WHERE ax.[app_XML] LIKE '%<CustData%'
 ORDER BY ax.app_id;
-SET STATISTICS IO OFF;
 SET STATISTICS TIME OFF;
 
 
@@ -163,12 +162,18 @@ SET STATISTICS TIME OFF;
 SET STATISTICS TIME ON
 	
 	-- Running in LIMIT mode
-	SELECT TOP(500) ax.app_id, ax.app_xml
-	FROM app_xml ax
-	WHERE ax.app_xml IS NOT NULL
-	  AND NOT EXISTS (SELECT 1 FROM sandbox.processing_log AS pl WHERE pl.app_id = ax.app_id)
-	ORDER BY ax.app_id
+	SELECT TOP (500) ax.app_id, ax.[app_XML]
+    FROM [dbo].[app_xml_staging] AS ax
+    WHERE ax.[app_XML] IS NOT NULL AND NOT EXISTS (
+        SELECT 1
+        FROM [sandbox].[processing_log] AS pl
+        WHERE pl.app_id = ax.app_id
+    )
+    ORDER BY ax.app_id
 
+SET STATISTICS TIME OFF
+
+SET STATISTICS TIME ON
 	-- Running in app_id RANGE mode
 	SELECT 
 		TOP (500) ax.app_id, --batch-size
