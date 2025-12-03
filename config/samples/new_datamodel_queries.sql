@@ -205,12 +205,12 @@ DELETE FROM sandbox.app_base WHERE app_id = 443306
 	LEFT JOIN  sandbox.app_solicited_cc AS s ON s.app_id = a.app_id
 	LEFT JOIN  sandbox.app_transactional_cc AS t ON t.app_id = a.app_id
 	LEFT JOIN  sandbox.contact_base AS c ON a.app_id = c.app_id
-	--LEFT JOIN  sandbox.contact_address AS ca ON ca.con_id = c.con_id
-	--LEFT JOIN  sandbox.contact_employment AS ce ON ce.con_id = c.con_id
-	WHERE a.app_id = 443306
+	LEFT JOIN  sandbox.contact_address AS ca ON ca.con_id = c.con_id
+	LEFT JOIN  sandbox.contact_employment AS ce ON ce.con_id = c.con_id
+	--WHERE a.app_id in (154416, 170691, 312916, 325119, 325431, 312437)
 	ORDER BY a.app_id DESC
     
-
+	select * from sandbox.contact_base where birth_date is not null
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- QUERIES: for new data model being populated by source XML

@@ -482,24 +482,39 @@ class CalculatedFieldEngine:
         Evaluate arithmetic expressions safely using restricted eval.
         
         Only allows field references and basic math operations.
+        Returns None if any referenced field is missing or null (nullable behavior).
         """
-        # Create safe namespace with only field values and safe operations
-        safe_namespace = {
-            '__builtins__': {},  # Remove all built-in functions
-            # Add field values as variables (including dotted cross-element references)
-            **{k: ValidationUtils.safe_float_conversion(v, 0.0) 
-               for k, v in element_data.items() if v is not None}
-        }
-        
         # Validate expression contains only safe characters (allow dots for cross-element refs and quotes for literals)
         if not re.match(r'^[a-zA-Z0-9_+\-*/().\'"\s]+$', expression):
             raise DataTransformationError(f"Expression contains unsafe characters: {expression}")
         
-        # Replace field names with safe variable names (in case they have special chars)
+        # Extract all field names referenced in the expression (simple token extraction)
+        # This matches variable names (alphanumeric + underscore, can have dots)
+        referenced_fields = set(re.findall(r'\b[a-zA-Z_][a-zA-Z0-9_.]*\b', expression))
+        
+        # Check if ALL referenced fields exist and are not None/empty
+        # If ANY field is missing or null, return None (respect nullable: true)
+        for field_name in referenced_fields:
+            if field_name not in element_data:
+                self.logger.debug(f"Calculated field '{target_column}': Field '{field_name}' not found in element_data - returning None")
+                return None
+            
+            field_value = element_data[field_name]
+            if field_value is None or (isinstance(field_value, str) and field_value.strip() == ''):
+                self.logger.debug(f"Calculated field '{target_column}': Field '{field_name}' is null/empty - returning None")
+                return None
+        
+        # All fields exist and have values - build safe namespace
+        safe_namespace = {
+            '__builtins__': {},  # Remove all built-in functions
+        }
+        
+        # Replace field names with safe variable names and add to namespace
         safe_expression = expression
         for field_name in element_data.keys():
             if field_name in expression:
                 safe_var_name = re.sub(r'[^a-zA-Z0-9_]', '_', field_name)
+                # Convert to float for arithmetic - we've already checked it's not None
                 safe_namespace[safe_var_name] = ValidationUtils.safe_float_conversion(
                     element_data[field_name], 0.0
                 )

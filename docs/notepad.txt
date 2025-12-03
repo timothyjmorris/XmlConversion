@@ -71,6 +71,36 @@ TODO:
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-TROUBLESHOOTING
+================================================================================
+ANALYSIS & IMPACT
+================================================================================
 
-python production_processor.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --log-level ERROR --workers 4 --batch-size 500 --limit 500 --enable-instrumentation
+Per-Operation Latency:
+  Connection establishment: 273.3 ms
+  Simple query (reuse conn): 84.5 ms
+
+Impact with 16 workers processing 2000 apps:
+
+  Scenario 1: New connection per app
+    Each worker: 125 apps × 273.3ms = 34.2s wasted on connections
+    All 16 workers: 546.6s total wasted time
+
+  Scenario 2: Reused connections, 50 queries per app
+    Each worker: 125 apps × 50 queries × 84.5ms
+    Each worker: 528.4s spent waiting for query responses
+    All 16 workers: 8453.8s total wait time
+
+  Performance Impact:
+    ⚠️  HIGH LATENCY DETECTED (84.5ms per query)
+
+
+TROUBLESHOOTING
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--enable-pooling doesn't matter because it's already happening
+
+~520 2020-12-02
+python production_processor.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --log-level ERROR --workers 16 --limit 2000
+
+# 10 instances ~4,900 apps/min
+python launch_parallel_instances.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --log-level ERROR --instances 10 --workers 16 --limit 10000

@@ -466,11 +466,79 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
         result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data={})
         self.assertIsNone(result, "Should return None when required context data is missing")
 
-        # Test with partial context data
+        # Test with partial context data (missing one field)
         test_context = {'months_at_residence': 5}  # missing years_at_residence
         result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
-        # Expression should handle missing variables gracefully (likely return None or error)
-        # This tests the robustness of the expression engine
+        self.assertIsNone(result, "Should return None when any field in arithmetic expression is missing (respects nullable: true)")
+
+        # Test with empty string values
+        test_context = {'months_at_residence': '', 'years_at_residence': 2}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertIsNone(result, "Should return None when any field is empty string (respects nullable: true)")
+
+        # Test with None values
+        test_context = {'months_at_residence': None, 'years_at_residence': 2}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertIsNone(result, "Should return None when any field is None (respects nullable: true)")
+
+    def test_calculated_field_null_handling(self):
+        """
+        Test that calculated fields properly handle missing/null data and return None 
+        instead of manufacturing fake data (like converting missing fields to 0).
+        This respects the nullable: true setting in the mapping contract.
+        
+        Critical business requirement: "If there truly is missing fields or blank data, 
+        we don't want to return a 0, we want to return a null. I don't want to manufacture 
+        data that wasn't there."
+        """
+        def get_mapping(target_column):
+            return next(m for m in self.contract.mappings if m.target_column == target_column)
+
+        # Test 1: months_at_job with missing b_months_at_job (should return None, not 0)
+        mapping = get_mapping("months_at_job")
+        test_context = {'b_years_at_job': 2}  # b_months_at_job missing
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertIsNone(result, 
+            "months_at_job should return None when b_months_at_job is missing (not manufacture 0)")
+
+        # Test 2: months_at_job with missing b_years_at_job (should return None, not 0)
+        test_context = {'b_months_at_job': 10}  # b_years_at_job missing
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertIsNone(result, 
+            "months_at_job should return None when b_years_at_job is missing (not manufacture 0)")
+
+        # Test 3: months_at_address with empty string values (should return None)
+        mapping = get_mapping("months_at_address")
+        test_context = {'months_at_residence': '', 'years_at_residence': 2}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertIsNone(result, 
+            "months_at_address should return None when months_at_residence is empty string")
+
+        # Test 4: months_at_address with None values (should return None)
+        test_context = {'months_at_residence': 5, 'years_at_residence': None}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertIsNone(result, 
+            "months_at_address should return None when years_at_residence is None")
+
+        # Test 5: monthly_salary with missing b_salary (should return None)
+        mapping = get_mapping("monthly_salary")
+        test_context = {'b_salary_basis_tp_c': 'ANNUM'}  # b_salary missing
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertIsNone(result, 
+            "monthly_salary should return None when b_salary is missing")
+
+        # Test 6: Verify valid data still works (not breaking normal operation)
+        test_context = {'b_months_at_job': 10, 'b_years_at_job': 2}
+        mapping = get_mapping("months_at_job")
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 34, 
+            "months_at_job should still calculate correctly when all fields are present")
+
+        # Test 7: Verify zero values work correctly (0 is valid data, not missing)
+        test_context = {'b_months_at_job': 0, 'b_years_at_job': 0}
+        result = self.mapper._apply_calculated_field_mapping(None, mapping, context_data=test_context)
+        self.assertEqual(result, 0, 
+            "months_at_job should return 0 when fields are present with value 0 (not None)")
 
     def test_calculated_field_expression_scenarios(self):
         """

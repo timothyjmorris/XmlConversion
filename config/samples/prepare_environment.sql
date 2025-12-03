@@ -30,6 +30,7 @@ TEAR DOWN TABLES
 
 	--DELETE FROM app_xml_staging;
 	--DELETE FROM  sandbox.app_base where app_id > 300000
+	--DELETE FROM  sandbox.processing_log where app_id > 300000
 -------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
@@ -92,10 +93,15 @@ TEAR DOWN TABLES
 SELECT COUNT(*) FROM sandbox.app_base;
 SELECT MAX(app_id) FROM sandbox.app_base;
 SELECT COUNT(*) FROM sandbox.processing_log;
-select * from sandbox.processing_log;
+select * from sandbox.processing_log where status <> 'success'
 SELECT COUNT(*) FROM app_xml
 SELECT COUNT(*) FROM app_xml_staging;
-select app_id, lockedby, shred_version, cast(app_xml as xml) as xml from app_XML where app_id in (311201)
+
+select top 10 app_id, cast(app_xml as xml) as xml from app_xml_staging where app_id in (326213)
+
+delete from sandbox.app_base where app_id > 302200 --in (154416, 170691, 312916, 325119, 325431, 312437)
+delete from sandbox.processing_log where app_id > 302200 -- in (154416, 170691, 312916, 325119, 325431, 312437)
+
 
 SELECT TOP 10 app_id, CAST(app_xml AS xml) AS XML 
 FROM app_xml_staging 

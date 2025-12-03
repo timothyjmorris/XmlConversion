@@ -795,6 +795,7 @@ class ProductionProcessor:
         total_failed = 0
         all_failed_apps = []
         all_quality_issue_apps = []  # Collect quality warnings across batches
+        total_database_inserts = 0  # Track total inserts regardless of instrumentation
         batch_details = [] if self.enable_instrumentation else None  # Collect per-batch metrics only when instrumented
         batch_count = 0  # Track batch number independently of batch_details
         overall_failure_summary = {
@@ -854,6 +855,7 @@ class ProductionProcessor:
             total_processed += metrics.get('records_processed', 0)
             total_successful += metrics.get('records_successful', 0)
             total_failed += metrics.get('records_failed', 0)
+            total_database_inserts += metrics.get('total_records_inserted', 0)
             
             # Accumulate failed apps and failure summary
             all_failed_apps.extend(metrics.get('failed_apps', []))
@@ -937,7 +939,7 @@ class ProductionProcessor:
             'quality_issue_count': len(all_quality_issue_apps),
             'batch_details': batch_details if self.enable_instrumentation else [],
             'limit': limit,
-            'total_database_inserts': sum(b.get('database_inserts', 0) for b in batch_details) if self.enable_instrumentation and batch_details else 0,
+            'total_database_inserts': total_database_inserts,
             'parallel_efficiency': statistics.mean([b.get('applications_per_minute', 0) / overall_rate for b in batch_details]) if self.enable_instrumentation and batch_details and overall_rate > 0 else 0
         }
         
