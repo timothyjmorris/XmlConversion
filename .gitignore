@@ -55,6 +55,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 *.pyc
+tests/contracts/mapping_contract_schema_diff.json
 
 # Database
 *.db
