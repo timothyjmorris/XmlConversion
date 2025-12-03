@@ -126,40 +126,40 @@ class DuplicateContactDetector:
             conn_ctx = self.connection_provider()
             conn = conn_ctx.__enter__()
             cursor = conn.cursor()
-            
-            # Extract con_id values from records
-            con_ids = [record.get('con_id') for record in records if record.get('con_id')]
-            if not con_ids:
-                return records
-            
-            # Query database for existing con_ids
-            placeholders = ','.join('?' for _ in con_ids)
-            query = f"SELECT con_id FROM {qualified_table_name} WITH (NOLOCK) WHERE con_id IN ({placeholders})"
-            cursor.execute(query, con_ids)
-            existing_con_ids = {row[0] for row in cursor.fetchall()}
-            
-            # Filter and track
-            filtered_records = []
-            skipped_count = 0
-            for record in records:
-                con_id = record.get('con_id')
-                if con_id in existing_con_ids:
-                    self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id})")
-                    skipped_count += 1
-                else:
-                    filtered_records.append(record)
-            
-            if skipped_count > 0:
-                self.logger.info(f"Filtered {skipped_count} duplicate contact_base records")
+        
+        # Extract con_id values from records
+        con_ids = [record.get('con_id') for record in records if record.get('con_id')]
+        if not con_ids:
+            return records
+        
+        # Query database for existing con_ids
+        placeholders = ','.join('?' for _ in con_ids)
+        query = f"SELECT con_id FROM {qualified_table_name} WITH (NOLOCK) WHERE con_id IN ({placeholders})"
+        cursor.execute(query, con_ids)
+        existing_con_ids = {row[0] for row in cursor.fetchall()}
+        
+        # Filter and track
+        filtered_records = []
+        skipped_count = 0
+        for record in records:
+            con_id = record.get('con_id')
+            if con_id in existing_con_ids:
+                self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id})")
+                skipped_count += 1
+            else:
+                filtered_records.append(record)
+        
+        if skipped_count > 0:
+            self.logger.info(f"Filtered {skipped_count} duplicate contact_base records")
 
-            # Cleanup created connection context if we opened it
-            if conn_ctx is not None:
-                try:
-                    conn_ctx.__exit__(None, None, None)
-                except Exception:
-                    pass
+        # Cleanup created connection context if we opened it
+        if conn_ctx is not None:
+            try:
+                conn_ctx.__exit__(None, None, None)
+            except Exception:
+                pass
 
-            return filtered_records
+        return filtered_records
     
     def _filter_contact_address_duplicates(
         self,
@@ -176,49 +176,49 @@ class DuplicateContactDetector:
             conn_ctx = self.connection_provider()
             conn = conn_ctx.__enter__()
             cursor = conn.cursor()
-            
-            # Extract composite keys
-            key_pairs = [
-                (record.get('con_id'), record.get('address_type_enum'))
-                for record in records
-                if record.get('con_id') and record.get('address_type_enum')
-            ]
-            
-            if not key_pairs:
-                return records
-            
-            # Build parameterized query for composite keys
-            conditions = []
-            params = []
-            for con_id, addr_type in key_pairs:
-                conditions.append("(con_id = ? AND address_type_enum = ?)")
-                params.extend([con_id, addr_type])
-            
-            query = f"SELECT con_id, address_type_enum FROM {qualified_table_name} WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
-            cursor.execute(query, params)
-            existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
-            
-            # Filter and track
-            filtered_records = []
-            skipped_count = 0
-            for record in records:
-                key = (record.get('con_id'), record.get('address_type_enum'))
-                if key in existing_keys:
-                    self.logger.warning(f"Skipping duplicate contact_address (con_id={key[0]}, address_type_enum={key[1]})")
-                    skipped_count += 1
-                else:
-                    filtered_records.append(record)
-            
-            if skipped_count > 0:
-                self.logger.info(f"Filtered {skipped_count} duplicate contact_address records")
+        
+        # Extract composite keys
+        key_pairs = [
+            (record.get('con_id'), record.get('address_type_enum'))
+            for record in records
+            if record.get('con_id') and record.get('address_type_enum')
+        ]
+        
+        if not key_pairs:
+            return records
+        
+        # Build parameterized query for composite keys
+        conditions = []
+        params = []
+        for con_id, addr_type in key_pairs:
+            conditions.append("(con_id = ? AND address_type_enum = ?)")
+            params.extend([con_id, addr_type])
+        
+        query = f"SELECT con_id, address_type_enum FROM {qualified_table_name} WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
+        cursor.execute(query, params)
+        existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
+        
+        # Filter and track
+        filtered_records = []
+        skipped_count = 0
+        for record in records:
+            key = (record.get('con_id'), record.get('address_type_enum'))
+            if key in existing_keys:
+                self.logger.warning(f"Skipping duplicate contact_address (con_id={key[0]}, address_type_enum={key[1]})")
+                skipped_count += 1
+            else:
+                filtered_records.append(record)
+        
+        if skipped_count > 0:
+            self.logger.info(f"Filtered {skipped_count} duplicate contact_address records")
 
-            if conn_ctx is not None:
-                try:
-                    conn_ctx.__exit__(None, None, None)
-                except Exception:
-                    pass
+        if conn_ctx is not None:
+            try:
+                conn_ctx.__exit__(None, None, None)
+            except Exception:
+                pass
 
-            return filtered_records
+        return filtered_records
     
     def _filter_contact_employment_duplicates(
         self,
@@ -235,46 +235,46 @@ class DuplicateContactDetector:
             conn_ctx = self.connection_provider()
             conn = conn_ctx.__enter__()
             cursor = conn.cursor()
-            
-            # Extract composite keys
-            key_pairs = [
-                (record.get('con_id'), record.get('employment_type_enum'))
-                for record in records
-                if record.get('con_id') and record.get('employment_type_enum')
-            ]
-            
-            if not key_pairs:
-                return records
-            
-            # Build parameterized query for composite keys
-            conditions = []
-            params = []
-            for con_id, emp_type in key_pairs:
-                conditions.append("(con_id = ? AND employment_type_enum = ?)")
-                params.extend([con_id, emp_type])
-            
-            query = f"SELECT con_id, employment_type_enum FROM {qualified_table_name} WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
-            cursor.execute(query, params)
-            existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
-            
-            # Filter and track
-            filtered_records = []
-            skipped_count = 0
-            for record in records:
-                key = (record.get('con_id'), record.get('employment_type_enum'))
-                if key in existing_keys:
-                    self.logger.warning(f"Skipping duplicate contact_employment (con_id={key[0]}, employment_type_enum={key[1]})")
-                    skipped_count += 1
-                else:
-                    filtered_records.append(record)
-            
-            if skipped_count > 0:
-                self.logger.info(f"Filtered {skipped_count} duplicate contact_employment records")
+        
+        # Extract composite keys
+        key_pairs = [
+            (record.get('con_id'), record.get('employment_type_enum'))
+            for record in records
+            if record.get('con_id') and record.get('employment_type_enum')
+        ]
+        
+        if not key_pairs:
+            return records
+        
+        # Build parameterized query for composite keys
+        conditions = []
+        params = []
+        for con_id, emp_type in key_pairs:
+            conditions.append("(con_id = ? AND employment_type_enum = ?)")
+            params.extend([con_id, emp_type])
+        
+        query = f"SELECT con_id, employment_type_enum FROM {qualified_table_name} WITH (NOLOCK) WHERE {' OR '.join(conditions)}"
+        cursor.execute(query, params)
+        existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
+        
+        # Filter and track
+        filtered_records = []
+        skipped_count = 0
+        for record in records:
+            key = (record.get('con_id'), record.get('employment_type_enum'))
+            if key in existing_keys:
+                self.logger.warning(f"Skipping duplicate contact_employment (con_id={key[0]}, employment_type_enum={key[1]})")
+                skipped_count += 1
+            else:
+                filtered_records.append(record)
+        
+        if skipped_count > 0:
+            self.logger.info(f"Filtered {skipped_count} duplicate contact_employment records")
 
-            if conn_ctx is not None:
-                try:
-                    conn_ctx.__exit__(None, None, None)
-                except Exception:
-                    pass
+        if conn_ctx is not None:
+            try:
+                conn_ctx.__exit__(None, None, None)
+            except Exception:
+                pass
 
-            return filtered_records
+        return filtered_records

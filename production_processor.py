@@ -105,7 +105,8 @@ class ProductionProcessor:
                  enable_mars: bool = True, connection_timeout: int = 30,
                  app_id_start: int = None, app_id_end: int = None,
                  batch_processor: BatchProcessorInterface = None,
-                 enable_instrumentation: bool = False):
+                 enable_instrumentation: bool = False,
+                 modulo_shard: int = None, modulo_instance: int = None):
         """
         Initialize production processor.
         
@@ -142,6 +143,17 @@ class ProductionProcessor:
         self.app_id_end = app_id_end
         self.batch_processor = batch_processor  # Store injected processor
         self.enable_instrumentation = enable_instrumentation
+        self.modulo_shard = modulo_shard
+        self.modulo_instance = modulo_instance
+        
+        # Validate modulo sharding configuration
+        if (self.modulo_shard is None) != (self.modulo_instance is None):
+            raise ValueError("Both modulo_shard and modulo_instance must be specified together, or neither")
+        if self.modulo_shard is not None:
+            if self.modulo_shard < 2:
+                raise ValueError(f"modulo_shard must be >= 2, got {self.modulo_shard}")
+            if self.modulo_instance < 0 or self.modulo_instance >= self.modulo_shard:
+                raise ValueError(f"modulo_instance must be in range [0, {self.modulo_shard-1}], got {self.modulo_instance}")
         
         # Validate app_id range configuration
         if self.app_id_start is not None and self.app_id_end is not None:
@@ -181,7 +193,9 @@ class ProductionProcessor:
         self.logger.info(f"  Target Schema: {self.target_schema}")
         self.logger.info(f"  Workers: {workers}")
         self.logger.info(f"  Processing Batch Size: {batch_size}")
-        if self.app_id_start is not None and self.app_id_end is not None:
+        if self.modulo_shard is not None:
+            self.logger.info(f"  Modulo Sharding: Instance {self.modulo_instance} of {self.modulo_shard} (app_id % {self.modulo_shard} == {self.modulo_instance})")
+        elif self.app_id_start is not None and self.app_id_end is not None:
             self.logger.info(f"  App ID Range: {self.app_id_start} to {self.app_id_end} (range-based processing)")
         else:
             self.logger.info(f"  App ID Range: ALL (full table processing)")
@@ -395,11 +409,15 @@ class ProductionProcessor:
                 if last_app_id > 0:
                     where_conditions.append(f"ax.app_id > {last_app_id}")
                 
+                # Add modulo sharding filter (highest priority, mutually exclusive with range)
+                if self.modulo_shard is not None:
+                    where_conditions.append(f"(ax.app_id % {self.modulo_shard}) = {self.modulo_instance}")
                 # Add app_id range filtering (optional, for non-overlapping instances)
-                if self.app_id_start is not None:
-                    where_conditions.append(f"ax.app_id >= {self.app_id_start}")
-                if self.app_id_end is not None:
-                    where_conditions.append(f"ax.app_id <= {self.app_id_end}")
+                elif self.app_id_start is not None or self.app_id_end is not None:
+                    if self.app_id_start is not None:
+                        where_conditions.append(f"ax.app_id >= {self.app_id_start}")
+                    if self.app_id_end is not None:
+                        where_conditions.append(f"ax.app_id <= {self.app_id_end}")
                 
                 # Exclude already-processed records using NOT EXISTS
                 if exclude_failed:
@@ -659,9 +677,14 @@ class ProductionProcessor:
         metrics_dir = Path("metrics")
         metrics_dir.mkdir(exist_ok=True)
         
-        # Add app_id range suffix for range-based processing
-        range_suffix = f"_range_{self.app_id_start}_{self.app_id_end}" if self.app_id_start is not None and self.app_id_end is not None else ""
-        metrics_file = metrics_dir / f"metrics_{self.session_id}{range_suffix}.json"
+        # Add modulo instance suffix for multi-instance runs, or range suffix for range-based processing
+        if self.modulo_shard is not None:
+            instance_suffix = f"_instance_{self.modulo_instance}_of_{self.modulo_shard}"
+        elif self.app_id_start is not None and self.app_id_end is not None:
+            instance_suffix = f"_range_{self.app_id_start}_{self.app_id_end}"
+        else:
+            instance_suffix = ""
+        metrics_file = metrics_dir / f"metrics_{self.session_id}{instance_suffix}.json"
         
         try:
             # Build consolidated metrics structure
@@ -709,7 +732,13 @@ class ProductionProcessor:
                 json.dump(consolidated_metrics, f, indent=2, default=_json_default)
             self.logger.info(f"Metrics saved to: {metrics_file}")
         except Exception as e:
-            self.logger.error(f"Failed to save metrics: {e}")
+            error_msg = f"CRITICAL: Failed to save metrics to {metrics_file}: {e}"
+            self.logger.error(error_msg)
+            print(f"\n{'='*80}\n{error_msg}\n{'='*80}\n")
+            import traceback
+            traceback.print_exc()
+            # Re-raise to make failure visible in console
+            raise
     
     def run_full_processing(self, limit: Optional[int] = None):
         """
@@ -766,7 +795,8 @@ class ProductionProcessor:
         total_failed = 0
         all_failed_apps = []
         all_quality_issue_apps = []  # Collect quality warnings across batches
-        batch_details = []  # Collect per-batch metrics
+        batch_details = [] if self.enable_instrumentation else None  # Collect per-batch metrics only when instrumented
+        batch_count = 0  # Track batch number independently of batch_details
         overall_failure_summary = {
             'validation_failures': 0,
             'parsing_failures': 0,
@@ -799,24 +829,26 @@ class ProductionProcessor:
                 break
             
             # Process batch
-            batch_number = len(batch_details) + 1
+            batch_count += 1
+            batch_number = batch_count
             app_ids = [rec[0] for rec in batch_records]
             self.logger.info(f"Processing batch {batch_number}: app_ids {min(app_ids)}-{max(app_ids)}" if app_ids else f"Processing batch {batch_number}: empty batch")
             batch_start_time = time.time()
             metrics = self.process_batch(batch_records, batch_number=batch_number)
             batch_duration = time.time() - batch_start_time
             
-            # Collect batch metrics for later reporting
-            batch_detail = {
-                'batch_number': batch_number,
-                'total_applications_processed': metrics.get('records_processed', 0),
-                'duration_seconds': float(batch_duration),
-                'applications_per_minute': float((metrics.get('records_processed', 0) / batch_duration * 60) if batch_duration > 0 else 0),
-                'database_inserts': metrics.get('total_records_inserted', 0),
-                'application_failures': metrics.get('records_failed', 0),
-                'individual_results': metrics.get('individual_results', [])
-            }
-            batch_details.append(batch_detail)
+            # Collect batch metrics for later reporting (only if instrumentation enabled)
+            if self.enable_instrumentation:
+                batch_detail = {
+                    'batch_number': batch_number,
+                    'total_applications_processed': metrics.get('records_processed', 0),
+                    'duration_seconds': float(batch_duration),
+                    'applications_per_minute': float((metrics.get('records_processed', 0) / batch_duration * 60) if batch_duration > 0 else 0),
+                    'database_inserts': metrics.get('total_records_inserted', 0),
+                    'application_failures': metrics.get('records_failed', 0),
+                    'individual_results': metrics.get('individual_results', [])
+                }
+                batch_details.append(batch_detail)
             
             # Update totals
             total_processed += metrics.get('records_processed', 0)
@@ -854,7 +886,8 @@ class ProductionProcessor:
         self.logger.info(f"  Overall Success Rate: {overall_success_rate:.1f}%")
         self.logger.info(f"  Overall Time: {overall_time/60:.1f} minutes")
         self.logger.info(f"  Overall Rate: {overall_rate:.1f} applications/minute")
-        self.logger.info(f"  Total Database Records Inserted: {sum(b.get('database_inserts', 0) for b in batch_details)}")
+        if self.enable_instrumentation and batch_details:
+            self.logger.info(f"  Total Database Records Inserted: {sum(b.get('database_inserts', 0) for b in batch_details)}")
         
         # Log overall failure summary if there were failures
         if total_failed > 0:
@@ -902,10 +935,10 @@ class ProductionProcessor:
             'failure_summary': overall_failure_summary,
             'quality_issue_apps': all_quality_issue_apps,
             'quality_issue_count': len(all_quality_issue_apps),
-            'batch_details': batch_details,
+            'batch_details': batch_details if self.enable_instrumentation else [],
             'limit': limit,
-            'total_database_inserts': sum(b.get('database_inserts', 0) for b in batch_details),
-            'parallel_efficiency': statistics.mean([b.get('applications_per_minute', 0) / overall_rate for b in batch_details]) if batch_details and overall_rate > 0 else 0
+            'total_database_inserts': sum(b.get('database_inserts', 0) for b in batch_details) if self.enable_instrumentation and batch_details else 0,
+            'parallel_efficiency': statistics.mean([b.get('applications_per_minute', 0) / overall_rate for b in batch_details]) if self.enable_instrumentation and batch_details and overall_rate > 0 else 0
         }
         
         # Save consolidated metrics file once at end of run
@@ -955,6 +988,12 @@ def main():
     parser.add_argument("--enable-instrumentation", action="store_true", default=ProcessingDefaults.ENABLE_INSTRUMENTATION,
                        help=f"Enable detailed per-record instrumentation for metrics (default: {ProcessingDefaults.ENABLE_INSTRUMENTATION})")
     
+    # Modulo sharding arguments (for horizontal scaling with multiple instances)
+    parser.add_argument("--modulo-shard", type=int, default=None,
+                       help="Total number of instances for modulo sharding (must specify with --modulo-instance)")
+    parser.add_argument("--modulo-instance", type=int, default=None,
+                       help="Instance ID (0 to N-1) for modulo sharding (processes app_id %% N == instance_id)")
+    
     args = parser.parse_args()
     
     # Handle limit defaults and range mode interaction
@@ -992,8 +1031,10 @@ def main():
             enable_mars=not args.disable_mars,  # Invert: MARS enabled by default
             connection_timeout=args.connection_timeout,
             app_id_start=args.app_id_start,
-            app_id_end=args.app_id_end
-            ,enable_instrumentation=args.enable_instrumentation
+            app_id_end=args.app_id_end,
+            enable_instrumentation=args.enable_instrumentation,
+            modulo_shard=args.modulo_shard,
+            modulo_instance=args.modulo_instance
         )
         
         # Run processing with calculated limit

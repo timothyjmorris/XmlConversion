@@ -556,7 +556,6 @@ class DataMapper(DataMapperInterface):
                     self._validation_errors.append(f"Table processing error for {table_name}: {e}")
                     continue
             
-
             # Handle relationships and foreign keys
             result_tables = self._apply_relationships(result_tables, contract, xml_data, app_id, valid_contacts)
 
@@ -1482,20 +1481,19 @@ class DataMapper(DataMapperInterface):
             # valid_contacts is already deduped by con_id
             for contact in valid_contacts:
                 record = self._create_record_from_mappings(xml_data, mappings, contact)
-                if record:
-                    record['con_id'] = int(contact['con_id']) if str(contact['con_id']).isdigit() else contact['con_id']
-                    record['app_id'] = int(app_id) if app_id.isdigit() else app_id
-                    records.append(record)
-                    self.logger.debug(f"Created contact_base record for con_id={contact['con_id']}")
-                else:
-                    self.logger.debug(f"Skipping empty contact_base record for con_id={contact['con_id']}")
+                # CRITICAL FIX: Add FK columns (con_id, app_id) BEFORE checking if record is empty
+                # contact_base records should always exist for relationship integrity even with minimal data
+                # The record dict might be empty from _create_record_from_mappings, but we still need the FKs
+                if not isinstance(record, dict):
+                    record = {}
+                record['con_id'] = int(contact['con_id']) if str(contact['con_id']).isdigit() else contact['con_id']
+                record['app_id'] = int(app_id) if app_id.isdigit() else app_id
+                records.append(record)
         elif table_name == 'contact_address':
             # Extract contact_address elements directly from XML data
-            self.logger.debug(f"Extracting contact_address with {len(mappings)} mappings")
             records = self._extract_contact_address_records(xml_data, mappings, app_id, valid_contacts)
         elif table_name == 'contact_employment':
             # Extract contact_employment elements directly from XML data
-            self.logger.debug(f"Extracting contact_employment with {len(mappings)} mappings")
             records = self._extract_contact_employment_records(xml_data, mappings, app_id, valid_contacts)
         else:
             # Create single record for app-level tables
