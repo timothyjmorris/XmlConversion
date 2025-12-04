@@ -8,71 +8,71 @@
 
 select top 10 app_id, cast(xml as xml) from app_xml order by app_id desc
 
-select top 11 * from  sandbox.app_base              order by app_id desc
-select top 11 * from  sandbox.app_operational_cc    order by app_id desc
-select top 11 * from  sandbox.app_pricing_cc        order by app_id desc
-select top 11 * from  sandbox.app_solicited_cc      order by app_id desc
-select top 11 * from  sandbox.app_transactional_cc  order by app_id desc
-select top 11 * from  sandbox.contact_base          order by app_id desc
-select top 11 * from  sandbox.contact_address       order by con_id desc
-select top 11 * from  sandbox.contact_employment    order by con_id desc 
+select top 11 * from  dbo.app_base              order by app_id desc
+select top 11 * from  dbo.app_operational_cc    order by app_id desc
+select top 11 * from  dbo.app_pricing_cc        order by app_id desc
+select top 11 * from  dbo.app_solicited_cc      order by app_id desc
+select top 11 * from  dbo.app_transactional_cc  order by app_id desc
+select top 11 * from  dbo.app_contact_base          order by app_id desc
+select top 11 * from  dbo.app_contact_address       order by con_id desc
+select top 11 * from  dbo.app_contact_employment    order by con_id desc 
 
 select top 100 * from app_xml where app_id > 10000 and app_id < 11001 order by app_id desc
 
-select * from  sandbox.app_base where app_id > 100 and app_id < 201
+select * from  dbo.app_base where app_id > 100 and app_id < 201
 
 
-select * from sandbox.app_base
+select * from dbo.app_base
 
 select * from app_xml_staging
 select count(*) from app_xml;
 
 select max(app_id) from app_xml
-select max(app_id) from  sandbox.app_base;
+select max(app_id) from  dbo.app_base;
 
-select count(*) from  sandbox.app_base;
-select count(*) from  sandbox.app_operational_cc;
-select count(*) from  sandbox.app_pricing_cc;
-select count(*) from  sandbox.app_solicited_cc;
-select count(*) from  sandbox.app_transactional_cc;
-select count(*) from  sandbox.contact_base;
-select count(*) from  sandbox.contact_address;
-select count(*) from  sandbox.contact_employment;
-select count(*) from  sandbox.processing_log
+select count(*) from  dbo.app_base;
+select count(*) from  dbo.app_operational_cc;
+select count(*) from  dbo.app_pricing_cc;
+select count(*) from  dbo.app_solicited_cc;
+select count(*) from  dbo.app_transactional_cc;
+select count(*) from  dbo.app_contact_base;
+select count(*) from  dbo.app_contact_address;
+select count(*) from  dbo.app_contact_employment;
+select count(*) from  dbo.processing_log
 
-select * from  sandbox.processing_log
+select * from  dbo.processing_log
 
-select * from  sandbox.app_enums
+select * from  dbo.app_enums
 
 select * from application
 insert into application (app_id) values (1),(2),(3),(4),(5),(6),(7),(9),(10)
 
 /* RESET ----------------------------------------------------------------------------------------------------------------------------------------
 
-    DELETE FROM  sandbox.app_base; -- should cascade
-    DBCC CHECKIDENT ('sandbox.app_base', RESEED, 0);
-    DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
-	delete from sandbox.processing_log;
+    DELETE FROM  dbo.app_base; -- should cascade
+    DBCC CHECKIDENT ('dbo.app_base', RESEED, 0);
+    DBCC CHECKIDENT ('dbo.app_contact_base', RESEED, 0);
+	delete from dbo.processing_log;
 
-    delete from sandbox.app_base		where app_id > 100 and app_id < 201
-	delete from sandbox.processing_log	where app_id > 100 and app_id < 201
+    delete from dbo.app_base		where app_id > 100 and app_id < 201
+	delete from dbo.processing_log	where app_id > 100 and app_id < 201
 
     -- DELETE FROM app_xml where app_id > 300000
 	DELETE FROM app_xml_staging
 	
 
     EXEC sp_updatestats;
-	ALTER INDEX ALL ON  sandbox.app_base REBUILD;
-	ALTER INDEX ALL ON  sandbox.app_enums REBUILD;
-	ALTER INDEX ALL ON  sandbox.app_operational_cc REBUILD;
-	ALTER INDEX ALL ON  sandbox.app_pricing_cc REBUILD;
-	ALTER INDEX ALL ON  sandbox.app_solicited_cc REBUILD;
-	ALTER INDEX ALL ON  sandbox.app_transactional_cc REBUILD;
+	ALTER INDEX ALL ON  dbo.app_base REBUILD;
+	ALTER INDEX ALL ON  dbo.app_enums REBUILD;
+	ALTER INDEX ALL ON  dbo.app_operational_cc REBUILD;
+	ALTER INDEX ALL ON  dbo.app_pricing_cc REBUILD;
+	ALTER INDEX ALL ON  dbo.app_solicited_cc REBUILD;
+	ALTER INDEX ALL ON  dbo.app_transactional_cc REBUILD;
 	ALTER INDEX ALL ON  app_xml REBUILD;
-	ALTER INDEX ALL ON  sandbox.contact_base REBUILD;
-	ALTER INDEX ALL ON  sandbox.contact_employment REBUILD;
-	ALTER INDEX ALL ON  sandbox.contact_address REBUILD;
-	ALTER INDEX ALL ON  sandbox.processing_log REBUILD;
+	ALTER INDEX ALL ON  dbo.app_contact_base REBUILD;
+	ALTER INDEX ALL ON  dbo.app_contact_employment REBUILD;
+	ALTER INDEX ALL ON  dbo.app_contact_address REBUILD;
+	ALTER INDEX ALL ON  dbo.processing_log REBUILD;
 
 
 	CREATE TABLE dbo.app_xml_staging (
@@ -185,48 +185,156 @@ SET STATISTICS TIME ON
 		AND ax.app_id <= 300000 --app-id-end (should be required if using --app-id-start)		(this keeps the batch in it's lane to be safe on top of usig TOP)
 		AND NOT EXISTS (
 			SELECT 1 
-			FROM sandbox.processing_log AS pl 
+			FROM dbo.processing_log AS pl 
 			WHERE pl.app_id = ax.app_id
 		)
 	ORDER BY ax.app_id;
 
 SET STATISTICS TIME OFF
 
-select * from sandbox.processing_log
+select * from dbo.processing_log
 
-DELETE FROM sandbox.processing_log WHERE app_id = 443306
-DELETE FROM sandbox.app_base WHERE app_id = 443306
+DELETE FROM dbo.processing_log WHERE app_id = 443306
+DELETE FROM dbo.app_base WHERE app_id = 443306
 
--- Quick check all tables
-	SELECT TOP(10) *
-	FROM  sandbox.app_base AS a                                               
-	LEFT JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
-	LEFT JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
-	LEFT JOIN  sandbox.app_solicited_cc AS s ON s.app_id = a.app_id
-	LEFT JOIN  sandbox.app_transactional_cc AS t ON t.app_id = a.app_id
-	LEFT JOIN  sandbox.contact_base AS c ON a.app_id = c.app_id
-	LEFT JOIN  sandbox.contact_address AS ca ON ca.con_id = c.con_id
-	LEFT JOIN  sandbox.contact_employment AS ce ON ce.con_id = c.con_id
-	--WHERE a.app_id in (154416, 170691, 312916, 325119, 325431, 312437)
+-- DATA VERIFICATION Quick check all tables --------------------------------------------------------------------------------------
+-- DEFAULT / MISSING VALUES 
+	SELECT TOP(2000) *
+	FROM  dbo.app_base AS a                                               
+	LEFT JOIN  dbo.app_operational_cc AS o ON o.app_id = a.app_id
+	LEFT JOIN  dbo.app_pricing_cc AS p ON p.app_id = a.app_id
+	LEFT JOIN  dbo.app_solicited_cc AS s ON s.app_id = a.app_id
+	LEFT JOIN  dbo.app_transactional_cc AS t ON t.app_id = a.app_id
+	LEFT JOIN  dbo.app_contact_base AS c ON a.app_id = c.app_id
+	LEFT JOIN  dbo.app_contact_address AS ca ON ca.con_id = c.con_id
+	LEFT JOIN  dbo.app_contact_employment AS ce ON ce.con_id = c.con_id
+	WHERE 
+		-- check for missing values with applied defaults
+		-- 0
+		--a.receive_date = '1900-01-01 00:00:00.000' OR 
+		-- 754
+		--p.marketing_segment = 'UNKNOWN' OR 
+		-- 0
+		--p.campaign_num = 'BLANK' OR 
+		-- 140
+		--s.birth_date = '1900-01-01 00:00:00' OR 
+		-- 3
+		--c.first_name = 'UNKNOWN' OR
+		-- 4
+		--c.last_name = 'UNKNOWN' OR
+		-- 308
+		--c.birth_date = '1900-01-01 00:00:00' OR
+		-- 3
+		--c.ssn = '000000000' OR
+		-- 41
+		--ca.city = 'MISSING' OR
+		-- 0
+		--ca.state = 'MISSING' OR ca.state = 'XX' OR
+		--ca.zip = '00000'
+
 	ORDER BY a.app_id DESC
     
-	select * from sandbox.contact_base where birth_date is not null
 
+-- DATA VERIFICATION Quick check individual columns --------------------------------------------------------------------------------------
+	
+	select top 100 * from app_operational_cc where auth_user_spouse_flag = 1
+	select top 100 * from app_operational_cc where cb_score_factor_code_5 is not null
+	select top 100 * from app_operational_cc where cb_score_factor_type_5 is not null
+	select top 100 * from app_operational_cc where last_updated_by is not null
+	select top 100 * from app_operational_cc where last_updated_date is not null
+	select top 100 * from app_operational_cc where meta_url is not null
+	select top 100 * from app_operational_cc where payment_protection_plan is not null
+	select top 100 * from app_operational_cc where priority_enum is not null
+	select top 100 * from app_operational_cc where risk_model_score_factor_code_4 is not null
+	select top 100 * from app_operational_cc where risk_model_score_factor_type_4 is not null
+	select top 100 * from app_operational_cc where sc_bank_account_type_enum is not null
+	select top 100 * from app_operational_cc where sc_debit_nsf_return_date is not null
+	select top 100 * from app_operational_cc where sc_debit_refund_amount is not null
+	select top 100 * from app_operational_cc where sc_debit_refund_date is not null
+	select top 100 * from app_operational_cc where verification_source_enum is not null
+
+	-- spot check some pricing
+	select top 100 * from app_pricing_cc where account_number is not null
+	select top 100 * from app_pricing_cc where card_account_setup_fee > 0
+	select top 100 * from app_pricing_cc where card_intro_cash_advance_apr > 0
+	select top 100 * from app_pricing_cc where card_min_payment_fee > 0
+	select top 100 * from app_pricing_cc where card_over_limit_fee > 0
+	select top 100 * from app_pricing_cc where credit_line_max > 0
+	select top 100 * from app_pricing_cc where credit_line_possible > 0
+	select top 100 * from app_pricing_cc where decision_model_enum is not null
+	select top 100 * from app_pricing_cc where sc_multran_account_num is not null
+	select top 100 * from app_pricing_cc where segment_plan_version is not null
+	select top 100 * from app_pricing_cc where solicitation_num is not null
+
+	-- some transaction
+	select count(*) from app_transactional_cc where analyst_review_flag = 1
+	select count(*) from app_transactional_cc where booking_paused_flag = 1
+	select count(*) from app_transactional_cc where fraud_review_flag = 1
+	select count(*) from app_transactional_cc where pending_verification_flag = 1
+	select count(*) from app_transactional_cc where sc_ach_sent_flag = 1
+	select count(*) from app_transactional_cc where sc_debit_refund_failed_flag = 1
+	select count(*) from app_transactional_cc where supervisor_review_flag = 1
+	select count(*) from app_transactional_cc where use_alloy_service_flag = 1
+
+	-- contact
+	select count(*) from app_contact_base where fraud_type_enum is not null
+	select count(*) from app_contact_base where paperless_flag = 1
+	select count(*) from app_contact_base where sms_consent_flag = 1
+	
+	-- computed fields
+	select top 100 * from app_contact_address where months_at_address > 0
+	select top 100 * from app_contact_address where ownership_type_enum is not null
+	select top 100 * from app_contact_address where rural_route is not null	
+	
+	-- employment
+	select top 100 * from app_contact_employment where business_name is not null
+	select top 100 * from app_contact_employment where city is not null	
+	select top 100 * from app_contact_employment where income_source_nontaxable_flag = 1
+	select top 100 * from app_contact_employment where income_type_enum is not null
+	select top 100 * from app_contact_employment where job_title is not null
+	select top 100 * from app_contact_employment where months_at_job > 0
+	select top 100 * from app_contact_employment where other_monthly_income is not null	
+	select top 100 * from app_contact_employment where other_income_source_detail is not null
+	select top 100 * from app_contact_employment where other_income_type_enum is not null
+	select top 100 * from app_contact_employment where self_employed_flag = 1
+	select top 100 * from app_contact_employment where state is not null
+
+	-- problems
+	select top 100 * from app_operational_cc where sc_bank_account_type_enum is not null
+	select top 100 * from app_contact_employment where other_income_type_enum is not null
+	select top 100 * from app_contact_employment where self_employed_flag = 1
+	select count(*) from app_transactional_cc where use_alloy_service_flag = 1
+	select count(*) from app_transactional_cc where sc_ach_sent_flag = 1
+
+	-- suspect
+	select top 100 * from app_contact_address where months_at_address > 0
+	select top 100 * from app_contact_address where ownership_type_enum is not null
+
+	select top 100 * from app_pricing_cc where card_account_setup_fee > 0
+	select top 100 * from app_pricing_cc where card_over_limit_fee > 0
+	select top 100 * from app_pricing_cc where credit_line_max > 0
+
+	-- just 1
+	select top 100 * from app_operational_cc where sc_debit_nsf_return_date is not null
+
+
+	-- look for nulls to be sure it works
+	-- app_contact_employment: city, business_name, other_monthly_income, other_income_type_enum, other_income_source_detail, phone, state, street_name, street_number, unit, zip
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- QUERIES: for new data model being populated by source XML
 -------------------------------------------------------------------------------------------------------------------------------------------------
 	-- Example getting one application for Credit Card, with the primary address and current employment - as a single row
 	SELECT TOP (10) *
-	FROM sandbox.app_base AS a
-	INNER JOIN sandbox.app_enums AS e1 ON e1.enum_id = a.product_line_enum
-	LEFT JOIN sandbox.app_operational_cc AS o ON o.app_id = a.app_id
-	LEFT JOIN sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
-	LEFT JOIN sandbox.app_solicited_cc AS s ON s.app_id = a.app_id
-	LEFT JOIN sandbox.app_transactional_cc AS t ON t.app_id = a.app_id
-	INNER JOIN sandbox.campaign_cc AS cam ON cam.campaign_num = p.campaign_num
-	INNER JOIN sandbox.contact_base AS c ON c.app_id = a.app_id
-	LEFT JOIN sandbox.contact_address AS ca ON ca.con_id = c.con_id AND ca.address_type_enum = 320			-- PRIMARY address
-	LEFT JOIN sandbox.contact_employment AS ce ON ce.con_id = c.con_id AND ce.employment_type_enum = 350	-- CURRENT employment
+	FROM dbo.app_base AS a
+	INNER JOIN dbo.app_enums AS e1 ON e1.enum_id = a.product_line_enum
+	LEFT JOIN dbo.app_operational_cc AS o ON o.app_id = a.app_id
+	LEFT JOIN dbo.app_pricing_cc AS p ON p.app_id = a.app_id
+	LEFT JOIN dbo.app_solicited_cc AS s ON s.app_id = a.app_id
+	LEFT JOIN dbo.app_transactional_cc AS t ON t.app_id = a.app_id
+	INNER JOIN dbo.campaign_cc AS cam ON cam.campaign_num = p.campaign_num
+	INNER JOIN dbo.app_contact_base AS c ON c.app_id = a.app_id
+	LEFT JOIN dbo.app_contact_address AS ca ON ca.con_id = c.con_id AND ca.address_type_enum = 320			-- PRIMARY address
+	LEFT JOIN dbo.app_contact_employment AS ce ON ce.con_id = c.con_id AND ce.employment_type_enum = 350	-- CURRENT employment
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
 SET STATISTICS TIME ON
@@ -251,33 +359,33 @@ SET STATISTICS TIME ON
 		ce.con_id, ce.city, ce.business_name, ce.employment_type_enum, e16.[value] AS employment_type, ce.income_source_nontaxable_flag, ce.income_type_enum, 
 		e17.[value] AS income_type, ce.job_title, ce.monthly_salary, ce.months_at_job, ce.other_monthly_income, ce.other_income_type_enum, e15.[value] AS other_income_type,
 		ce.other_income_source_detail, ce.phone, ce.self_employed_flag, ce.[state], UPPER(ce.street_name) AS street_name, ce.street_number, ce.unit, ce.zip
-	FROM  sandbox.app_base AS a
-	LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = a.app_source_enum
-	LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = a.app_type_enum
-	LEFT JOIN  sandbox.app_enums AS e3 ON e3.enum_id = a.decision_enum
-	LEFT JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
-	LEFT JOIN  sandbox.app_enums AS e4 ON e4.enum_id = o.sc_bank_account_type_enum
-	LEFT JOIN  sandbox.app_enums AS e5 ON e5.enum_id = o.priority_enum
-	LEFT JOIN  sandbox.app_enums AS e6 ON e6.enum_id = o.process_enum
-	LEFT JOIN  sandbox.app_enums AS e7 ON e7.enum_id = o.sc_debit_funding_source_enum
-	LEFT JOIN  sandbox.app_enums AS e8 ON e8.enum_id = o.ssn_match_type_enum
-	LEFT JOIN  sandbox.app_enums AS e9 ON e9.enum_id = o.status_enum
-	LEFT JOIN  sandbox.app_enums AS e10 ON e10.enum_id = o.verification_source_enum
-	LEFT JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
-	LEFT JOIN  sandbox.app_enums AS e11 ON e11.enum_id = p.decision_model_enum
-	LEFT JOIN  sandbox.app_enums AS e12 ON e12.enum_id = p.population_assignment_enum
-	LEFT JOIN  sandbox.app_transactional_cc AS t ON t.app_id = a.app_id
-	INNER JOIN  sandbox.contact_base AS c ON c.app_id = a.app_id
-	LEFT JOIN  sandbox.app_enums AS e13 ON e13.enum_id = c.contact_type_enum
-	LEFT JOIN  sandbox.app_enums AS e14 ON e14.enum_id = c.fraud_type_enum
-	LEFT JOIN  sandbox.contact_address AS ca ON ca.con_id = c.con_id AND ca.address_type_enum = 320			-- PRIMARY address
-	LEFT JOIN  sandbox.app_enums AS e15 ON e15.enum_id = ca.address_type_enum
-	LEFT JOIN  sandbox.contact_employment AS ce ON ce.con_id = c.con_id AND ce.employment_type_enum = 350	-- CURRENT employment
-	LEFT JOIN  sandbox.app_enums AS e16 ON e16.enum_id = ce.employment_type_enum
-	LEFT JOIN  sandbox.app_enums AS e17 ON e17.enum_id = ce.income_type_enum
-	LEFT JOIN  sandbox.app_enums AS e18 ON e18.enum_id = ce.other_income_type_enum
+	FROM  dbo.app_base AS a
+	LEFT JOIN  dbo.app_enums AS e1 ON e1.enum_id = a.app_source_enum
+	LEFT JOIN  dbo.app_enums AS e2 ON e2.enum_id = a.app_type_enum
+	LEFT JOIN  dbo.app_enums AS e3 ON e3.enum_id = a.decision_enum
+	LEFT JOIN  dbo.app_operational_cc AS o ON o.app_id = a.app_id
+	LEFT JOIN  dbo.app_enums AS e4 ON e4.enum_id = o.sc_bank_account_type_enum
+	LEFT JOIN  dbo.app_enums AS e5 ON e5.enum_id = o.priority_enum
+	LEFT JOIN  dbo.app_enums AS e6 ON e6.enum_id = o.process_enum
+	LEFT JOIN  dbo.app_enums AS e7 ON e7.enum_id = o.sc_debit_funding_source_enum
+	LEFT JOIN  dbo.app_enums AS e8 ON e8.enum_id = o.ssn_match_type_enum
+	LEFT JOIN  dbo.app_enums AS e9 ON e9.enum_id = o.status_enum
+	LEFT JOIN  dbo.app_enums AS e10 ON e10.enum_id = o.verification_source_enum
+	LEFT JOIN  dbo.app_pricing_cc AS p ON p.app_id = a.app_id
+	LEFT JOIN  dbo.app_enums AS e11 ON e11.enum_id = p.decision_model_enum
+	LEFT JOIN  dbo.app_enums AS e12 ON e12.enum_id = p.population_assignment_enum
+	LEFT JOIN  dbo.app_transactional_cc AS t ON t.app_id = a.app_id
+	INNER JOIN  dbo.app_contact_base AS c ON c.app_id = a.app_id
+	LEFT JOIN  dbo.app_enums AS e13 ON e13.enum_id = c.contact_type_enum
+	LEFT JOIN  dbo.app_enums AS e14 ON e14.enum_id = c.fraud_type_enum
+	LEFT JOIN  dbo.app_contact_address AS ca ON ca.con_id = c.con_id AND ca.address_type_enum = 320			-- PRIMARY address
+	LEFT JOIN  dbo.app_enums AS e15 ON e15.enum_id = ca.address_type_enum
+	LEFT JOIN  dbo.app_contact_employment AS ce ON ce.con_id = c.con_id AND ce.employment_type_enum = 350	-- CURRENT employment
+	LEFT JOIN  dbo.app_enums AS e16 ON e16.enum_id = ce.employment_type_enum
+	LEFT JOIN  dbo.app_enums AS e17 ON e17.enum_id = ce.income_type_enum
+	LEFT JOIN  dbo.app_enums AS e18 ON e18.enum_id = ce.other_income_type_enum
 
-	-- USE _enum ID in WHERE clause, not  sandbox.app_enums.value -- otherwise we need all kinds of indexes I think
+	-- USE _enum ID in WHERE clause, not  dbo.app_enums.value -- otherwise we need all kinds of indexes I think
 	-- e.g. use: "WHERE a.decision_enum = 50" vs. "WHERE e3.value = 'APPROVED'"
 	WHERE 
 		a.product_line_enum = 600 AND -- CC
@@ -327,14 +435,14 @@ SET STATISTICS TIME ON
 		END AS sla,
 		CAST(DATEDIFF(day, a.receive_date, GETUTCDATE()) AS int) AS slaDays,
 		COUNT(a.app_id) OVER() AS total_count
-	FROM  sandbox.app_base AS a                                               
-	INNER JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
-	INNER JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
+	FROM  dbo.app_base AS a                                               
+	INNER JOIN  dbo.app_operational_cc AS o ON o.app_id = a.app_id
+	INNER JOIN  dbo.app_pricing_cc AS p ON p.app_id = a.app_id
 	INNER JOIN campaign AS cam ON cam.campaign_num = p.campaign_num
-	LEFT JOIN  sandbox.contact_base AS c ON a.app_id = c.app_id 
+	LEFT JOIN  dbo.app_contact_base AS c ON a.app_id = c.app_id 
 	LEFT JOIN Indicators AS i ON a.app_id = i.app_id
-	LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = o.priority_enum
-	LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = o.process_enum
+	LEFT JOIN  dbo.app_enums AS e1 ON e1.enum_id = o.priority_enum
+	LEFT JOIN  dbo.app_enums AS e2 ON e2.enum_id = o.process_enum
 	WHERE (c.contact_type_enum = 281 OR c.contact_type_enum IS NULL)	-- contact type no longer nullable... problem?
 		AND p.campaign_num <> 'ORL'
 		AND product_line_enum = 600		-- CC
@@ -422,19 +530,19 @@ GO
 			END AS regBDays,
 			-- Calculate slaDays once
 			DATEDIFF(day, a.receive_date, GETUTCDATE()) AS slaDays
-		FROM  sandbox.app_base AS a
-		INNER JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
-		INNER JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
+		FROM  dbo.app_base AS a
+		INNER JOIN  dbo.app_operational_cc AS o ON o.app_id = a.app_id
+		INNER JOIN  dbo.app_pricing_cc AS p ON p.app_id = a.app_id
 		INNER JOIN campaign AS cam ON cam.campaign_num = p.campaign_num
-		LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = o.priority_enum
-		LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = o.process_enum
+		LEFT JOIN  dbo.app_enums AS e1 ON e1.enum_id = o.priority_enum
+		LEFT JOIN  dbo.app_enums AS e2 ON e2.enum_id = o.process_enum
 		
 		-- Uncomment for Queue filtering
 		--INNER JOIN application_queues aq ON aq.app_id = a.app_id
 		--INNER JOIN queue_definitions qd ON qd.id = aq.queue_id AND qd.[name] = 'Review' AND qd.product = 'cc'
 		
 		-- Uncomment for Quick-Search filtering
-		--LEFT JOIN  sandbox.contact_base AS c_search ON c_search.app_id = a.app_id
+		--LEFT JOIN  dbo.app_contact_base AS c_search ON c_search.app_id = a.app_id
 
 		WHERE a.product_line_enum = 600
 			AND p.campaign_num <> 'ORL'
@@ -496,11 +604,11 @@ GO
 		base.slaDays,
 		COUNT(base.app_id) OVER() AS total_count
 	FROM BaseApps AS base
-	LEFT JOIN  sandbox.contact_base AS c ON base.app_id = c.app_id AND c.contact_type_enum = 281
+	LEFT JOIN  dbo.app_contact_base AS c ON base.app_id = c.app_id AND c.contact_type_enum = 281
 	LEFT JOIN TUDocApps AS tu ON tu.app_id = base.app_id
 	LEFT JOIN PinnedComments pc ON pc.app_id = base.app_id
-	LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = base.priority_enum
-	LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = base.process_enum
+	LEFT JOIN  dbo.app_enums AS e1 ON e1.enum_id = base.priority_enum
+	LEFT JOIN  dbo.app_enums AS e2 ON e2.enum_id = base.process_enum
 	ORDER BY 
 		base.regBDays DESC, base.receive_date
 		--updatedBy DESC, base.app_id	--base.receive_date DESC, base.app_id	--applicantName DESC, base.app_id
@@ -520,12 +628,12 @@ SET STATISTICS TIME ON
 		e1.[value] AS process, e2.[value] AS [status],  p.campaign_num AS campaign,
 		(SELECT TOP (1) isPinned FROM comments WHERE isPinned = 1 AND comments.app_id = a.app_id) AS hasPinnedComments,
 		COUNT(a.app_id) OVER() AS total_count
-	FROM  sandbox.app_base AS a
-	INNER JOIN  sandbox.app_operational_cc AS o ON o.app_id = a.app_id
-	INNER JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
-	INNER JOIN  sandbox.contact_base AS c ON c.app_id = a.app_id
-	LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = o.process_enum
-	LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = o.status_enum
+	FROM  dbo.app_base AS a
+	INNER JOIN  dbo.app_operational_cc AS o ON o.app_id = a.app_id
+	INNER JOIN  dbo.app_pricing_cc AS p ON p.app_id = a.app_id
+	INNER JOIN  dbo.app_contact_base AS c ON c.app_id = a.app_id
+	LEFT JOIN  dbo.app_enums AS e1 ON e1.enum_id = o.process_enum
+	LEFT JOIN  dbo.app_enums AS e2 ON e2.enum_id = o.status_enum
 	
 	WHERE 
 		(c.contact_type_enum = 281 OR c.contact_type_enum IS NULL)	-- contact type no longer nullable... problem?
@@ -545,8 +653,8 @@ SET STATISTICS TIME ON
 	OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY
 
 	OPTION (USE HINT('QUERY_OPTIMIZER_COMPATIBILITY_LEVEL_150'))	
-	--select * from  sandbox.contact_base where app_id = 3791848
-	--update  sandbox.contact_base set first_name='KIRNAN', last_name='MCGUIRE' where con_id = 4238138
+	--select * from  dbo.app_contact_base where app_id = 3791848
+	--update  dbo.app_contact_base set first_name='KIRNAN', last_name='MCGUIRE' where con_id = 4238138
 SET STATISTICS TIME OFF
 
 -----------------------------------------------------------------------------------------------------------------------------------
@@ -572,9 +680,9 @@ GO
 -- FORCE Filter to matching apps FIRST, then get display data (better than correlated subquery in WHERE clause where SQL joins first and creates massive intermediate result sets)
 WITH MatchingApps AS (
     SELECT DISTINCT a.app_id, a.receive_date, a.decision_enum, p.campaign_num
-    FROM  sandbox.app_base AS a
-    INNER JOIN  sandbox.contact_base AS c ON c.app_id = a.app_id 
-	INNER JOIN  sandbox.app_pricing_cc AS p ON p.app_id = a.app_id
+    FROM  dbo.app_base AS a
+    INNER JOIN  dbo.app_contact_base AS c ON c.app_id = a.app_id 
+	INNER JOIN  dbo.app_pricing_cc AS p ON p.app_id = a.app_id
 	WHERE 
 		(c.contact_type_enum = 281 OR c.contact_type_enum IS NULL)	-- contact type no longer nullable... problem?
 		AND product_line_enum = 600		-- CC
@@ -600,16 +708,16 @@ SELECT
 	(SELECT TOP (1) isPinned FROM comments WHERE isPinned = 1 AND comments.app_id = cte.app_id) AS hasPinnedComments,
 	COUNT(cte.app_id) OVER() AS total_count
 FROM MatchingApps AS cte
-INNER JOIN  sandbox.app_operational_cc AS o ON o.app_id = cte.app_id
---INNER JOIN  sandbox.contact_base AS pc ON pc.app_id = cte.app_id AND pc.contact_type_enum = 281
+INNER JOIN  dbo.app_operational_cc AS o ON o.app_id = cte.app_id
+--INNER JOIN  dbo.app_contact_base AS pc ON pc.app_id = cte.app_id AND pc.contact_type_enum = 281
 -- Essentially a correlated subquery (executes once per row), works with smaller result-sets only, otherwise use a JOIN for larger expected results
 OUTER APPLY (
         SELECT TOP 1 first_name, last_name
-        FROM  sandbox.contact_base
+        FROM  dbo.app_contact_base
         WHERE app_id = cte.app_id AND contact_type_enum = 281
     ) AS pc
-LEFT JOIN  sandbox.app_enums AS e1 ON e1.enum_id = o.process_enum
-LEFT JOIN  sandbox.app_enums AS e2 ON e2.enum_id = o.status_enum
+LEFT JOIN  dbo.app_enums AS e1 ON e1.enum_id = o.process_enum
+LEFT JOIN  dbo.app_enums AS e2 ON e2.enum_id = o.status_enum
 ORDER BY cte.receive_date DESC
 OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY
 OPTION (USE HINT('QUERY_OPTIMIZER_COMPATIBILITY_LEVEL_150'));

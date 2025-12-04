@@ -1,21 +1,4 @@
 
-/* --------------------------------------------------------------------------------------------------------------------
-BEWARE THE LOG FILE !!!
-
-	-- Ensure database is in SIMPLE recovery mode for migration
-	ALTER DATABASE XmlConversionDB SET RECOVERY SIMPLE;
-
-	-- After migration, switch back if needed
-	ALTER DATABASE XmlConversionDB SET RECOVERY FULL;
-
-	
-	-- Get Filename
-	SELECT TYPE_DESC, NAME, size, max_size, growth, is_percent_growth FROM sys.database_files;
-	DBCC SHRINKFILE ('XmlConversionDB')
-	DBCC SHRINKFILE ('XmlConversionDB_log')
-
--------------------------------------------------------------------------------------------------------------------- */
-
 -- IF NOT EXISTS(SELECT * FROM sys.schemas WHERE name = N'sandbox') EXEC('CREATE SCHEMA [sandbox] AUTHORIZATION [dbo]');
 
 /* -----------------------------------------------------------------------------------------------------------------------------------------

@@ -43,26 +43,26 @@ class TestShouldSkipRecord(unittest.TestCase):
         should_skip = self.mapper._should_skip_record(record, 'app_base', applied_defaults, set())
         self.assertFalse(should_skip, "Should NOT skip app_base with only keys and defaults (special case)")
 
-    def test_keep_contact_base_minimal_data(self):
+    def test_keep_app_contact_base_minimal_data(self):
         # con_id only - should NOT be skipped (relationship integrity)
         record = {'con_id': 123}
         applied_defaults = set()
-        should_skip = self.mapper._should_skip_record(record, 'contact_base', applied_defaults, set())
-        self.assertFalse(should_skip, "Should NOT skip contact_base even with minimal data (relationship integrity)")
+        should_skip = self.mapper._should_skip_record(record, 'app_contact_base', applied_defaults, set())
+        self.assertFalse(should_skip, "Should NOT skip app_contact_base even with minimal data (relationship integrity)")
 
-    def test_keep_contact_base_with_applied_default_birth_date(self):
+    def test_keep_app_contact_base_with_applied_default_birth_date(self):
         # con_id + applied default birth_date - should NOT be skipped (relationship integrity)
         record = {'con_id': 124, 'birth_date': '1900-01-01'}
         applied_defaults = {'birth_date'}
-        should_skip = self.mapper._should_skip_record(record, 'contact_base', applied_defaults, set())
-        self.assertFalse(should_skip, "Should NOT skip contact_base with con_id + applied default birth_date (relationship integrity)")
+        should_skip = self.mapper._should_skip_record(record, 'app_contact_base', applied_defaults, set())
+        self.assertFalse(should_skip, "Should NOT skip app_contact_base with con_id + applied default birth_date (relationship integrity)")
 
-    def test_keep_contact_base_with_valid_birth_date_only(self):
+    def test_keep_app_contact_base_with_valid_birth_date_only(self):
         # con_id + valid birth_date, no other data - should NOT be skipped (relationship integrity)
         record = {'con_id': 125, 'birth_date': '1990-05-15'}
         applied_defaults = set()
-        should_skip = self.mapper._should_skip_record(record, 'contact_base', applied_defaults, set())
-        self.assertFalse(should_skip, "Should NOT skip contact_base with con_id + valid birth_date (relationship integrity)")
+        should_skip = self.mapper._should_skip_record(record, 'app_contact_base', applied_defaults, set())
+        self.assertFalse(should_skip, "Should NOT skip app_contact_base with con_id + valid birth_date (relationship integrity)")
 
     def test_skip_other_table_minimal_data(self):
         # Other table with only keys and defaults - SHOULD be skipped

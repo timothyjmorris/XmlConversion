@@ -216,7 +216,7 @@ def test_field_mappings_validation(contract):
             target_table = mapping.get('target_table', '')
             valid_tables = [
                 'app_base', 'app_operational_cc', 'app_pricing_cc', 'app_transactional_cc', 'app_solicited_cc',
-                'contact_base', 'contact_address', 'contact_employment'
+                'app_contact_base', 'app_contact_address', 'app_contact_employment'
             ]
             if target_table and target_table not in valid_tables:
                 errors.append(f"Mapping {i} invalid target table: {target_table}")

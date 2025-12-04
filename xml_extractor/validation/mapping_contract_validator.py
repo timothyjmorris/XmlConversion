@@ -199,7 +199,7 @@ class MappingContractValidator:
                 message="Missing required 'table_insertion_order' section in contract",
                 contract_location="root",
                 fix_guidance="Add 'table_insertion_order' array listing all destination tables in FK dependency order",
-                example_fix='{\n  "table_insertion_order": [\n    "app_base",\n    "contact_base",\n    "contact_address",\n    "processing_log"\n  ]\n}'
+                example_fix='{\n  "table_insertion_order": [\n    "app_base",\n    "app_contact_base",\n    "app_contact_address",\n    "processing_log"\n  ]\n}'
             ))
             return
         
@@ -211,7 +211,7 @@ class MappingContractValidator:
                 message="Missing required 'relationships' section in contract",
                 contract_location="root",
                 fix_guidance="Add 'relationships' array defining parent-child table relationships",
-                example_fix='{\n  "relationships": [\n    {"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"}\n  ]\n}'
+                example_fix='{\n  "relationships": [\n    {"parent_table": "app_base", "child_table": "app_contact_base", "foreign_key_column": "app_id"}\n  ]\n}'
             ))
             return
         
@@ -226,7 +226,7 @@ class MappingContractValidator:
                     message=f"Relationship at index {idx} missing required 'child_table' field",
                     contract_location=f"relationships[{idx}]",
                     fix_guidance="Add 'child_table' field specifying the child table name",
-                    example_fix='{"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"}'
+                    example_fix='{"parent_table": "app_base", "child_table": "app_contact_base", "foreign_key_column": "app_id"}'
                 ))
                 continue
             

@@ -163,7 +163,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             root
         )
         self.assertIn("app_base", mapped_data, "Should map app_base data")
-        self.assertIn("contact_base", mapped_data, "Should map contact_base data")
+        self.assertIn("app_contact_base", mapped_data, "Should map app_contact_base data")
         print(f"[OK] Mapping completed: {len(mapped_data)} tables mapped")
         for table_name, records in mapped_data.items():
             print(f"   - {table_name}: {len(records)} records")
@@ -172,12 +172,12 @@ class TestEndToEndIntegration(unittest.TestCase):
         print("\n[STEP 4] Inserting into database...")
         table_order = [
             "app_base", "app_operational_cc", "app_pricing_cc", "app_transactional_cc", "app_solicited_cc",
-            "contact_base", "contact_address", "contact_employment"
+            "app_contact_base", "app_contact_address", "contact_employment"
         ]
         for table_name in table_order:
             records = mapped_data.get(table_name, [])
             if records:
-                enable_identity = table_name in ["app_base", "contact_base"]
+                enable_identity = table_name in ["app_base", "app_contact_base"]
                 result = self.migration_engine.execute_bulk_insert(records, table_name, enable_identity_insert=enable_identity)
                 print(f"[OK] Inserted {result} records into {table_name}")
 
@@ -202,14 +202,14 @@ class TestEndToEndIntegration(unittest.TestCase):
             
             print(f"[OK] app_base verified: {app_count} record, app_id={app_record[0]}")
             
-            # Check contact_base table (not "contact")
-            cursor.execute(f"SELECT COUNT(*) FROM {self._qualify_table('contact_base')} WHERE app_id = 443306")
+            # Check app_contact_base table (not "contact")
+            cursor.execute(f"SELECT COUNT(*) FROM {self._qualify_table('app_contact_base')} WHERE app_id = 443306")
             contact_count = cursor.fetchone()[0]
             self.assertEqual(contact_count, 2, "Should have 2 contact records")
             
             cursor.execute(f"""
                 SELECT con_id, contact_type_enum, first_name 
-                FROM {self._qualify_table('contact_base')} 
+                FROM {self._qualify_table('app_contact_base')} 
                 WHERE app_id = 443306
                 ORDER BY con_id
             """)
@@ -232,7 +232,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             # Verify curr_address_only mapping for home_phone and cell_phone on PR contact
             cursor.execute(f"""
                 SELECT home_phone, cell_phone 
-                FROM {self._qualify_table('contact_base')} 
+                FROM {self._qualify_table('app_contact_base')} 
                 WHERE con_id = 738936
             """)
             phone_record = cursor.fetchone()
@@ -295,11 +295,11 @@ class TestEndToEndIntegration(unittest.TestCase):
             self.assertIsNotNone(housing_monthly_payment, "housing_monthly_payment should not be null")
             self.assertEqual(float(housing_monthly_payment), 893.55, f"housing_monthly_payment should be 893.55 but got {housing_monthly_payment}")
             
-            # Verify calculated fields in contact_address table
+            # Verify calculated fields in app_contact_address table
             cursor.execute(f"""
                 SELECT ca.con_id, ca.city, ca.months_at_address 
-                FROM {self._qualify_table('contact_address')} ca
-                INNER JOIN {self._qualify_table('contact_base')} cb ON ca.con_id = cb.con_id
+                FROM {self._qualify_table('app_contact_address')} ca
+                INNER JOIN {self._qualify_table('app_contact_base')} cb ON ca.con_id = cb.con_id
                 WHERE cb.app_id = 443306 
                 ORDER BY ca.con_id, ca.months_at_address
             """)
@@ -316,13 +316,13 @@ class TestEndToEndIntegration(unittest.TestCase):
             self.assertEqual(actual_months, expected_months, 
                            f"months_at_address values should be {expected_months} but got {actual_months}")
             
-            print(f"[OK] contact_address calculated fields verified: {len(address_records)} records with months_at_address={actual_months}")
+            print(f"[OK] app_contact_address calculated fields verified: {len(address_records)} records with months_at_address={actual_months}")
             
-            # Verify calculated fields in contact_employment table
+            # Verify calculated fields in app_contact_employment table
             cursor.execute(f"""
                 SELECT ce.con_id, ce.business_name, ce.monthly_salary, ce.months_at_job 
-                FROM {self._qualify_table('contact_employment')} ce
-                INNER JOIN {self._qualify_table('contact_base')} cb ON ce.con_id = cb.con_id
+                FROM {self._qualify_table('app_contact_employment')} ce
+                INNER JOIN {self._qualify_table('app_contact_base')} cb ON ce.con_id = cb.con_id
                 WHERE cb.app_id = 443306 
                 ORDER BY ce.con_id
             """)

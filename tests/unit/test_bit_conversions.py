@@ -181,7 +181,7 @@ class TestBitConversions:
         mapping = FieldMapping(
             xml_path="/Provenir/Request/CustData/application",
             xml_attribute="esign_consent_flag",
-            target_table="contact_base",
+            target_table="app_contact_base",
             target_column="esign_consent_flag",
             data_type="bit",
             mapping_type=["boolean_to_bit"],
@@ -203,7 +203,7 @@ class TestBitConversions:
         mapping = FieldMapping(
             xml_path="/Provenir/Request/CustData/application/contact",
             xml_attribute="sms_consent_flag",
-            target_table="contact_base",
+            target_table="app_contact_base",
             target_column="sms_consent_flag",
             data_type="bit",
             mapping_type=["boolean_to_bit"],
@@ -225,7 +225,7 @@ class TestBitConversions:
         mapping = FieldMapping(
             xml_path="/Provenir/Request/CustData/application/contact/contact_employment",
             xml_attribute="b_income_source_nontaxable",
-            target_table="contact_employment",
+            target_table="app_contact_employment",
             target_column="income_source_nontaxable_flag",
             data_type="bit",
             mapping_type=["char_to_bit"],

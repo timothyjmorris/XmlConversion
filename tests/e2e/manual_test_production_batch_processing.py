@@ -372,14 +372,14 @@ class TestProductionXMLBatch(unittest.TestCase):
         
         # Use the same table order as existing end-to-end test
         # This is the proven working order from test_end_to_end_integration.py
-        table_order = ["app_base", "app_operational_cc", "app_pricing_cc", "app_transactional_cc", "app_solicited_cc", "contact_base", "contact_address", "contact_employment"]
+        table_order = ["app_base", "app_operational_cc", "app_pricing_cc", "app_transactional_cc", "app_solicited_cc", "app_contact_base", "app_contact_address", "app_contact_employment"]
         
         for table_name in table_order:
             records = mapped_data.get(table_name, [])
             if records:
                 try:
                     # Use same identity insert logic as existing test
-                    enable_identity = table_name in ["app_base", "contact_base"]
+                    enable_identity = table_name in ["app_base", "app_contact_base"]
                     
                     inserted_count = self.migration_engine.execute_bulk_insert(
                         records, 
@@ -411,7 +411,7 @@ class TestProductionXMLBatch(unittest.TestCase):
         
         # Track if this application had no valid contacts (will skip contact tables)
         if len(validation_result.valid_contacts) == 0:
-            self.batch_results['data_quality_issues']['skipped_contact_tables'] += 3  # contact_base, contact_address, contact_employment
+            self.batch_results['data_quality_issues']['skipped_contact_tables'] += 3  # app_contact_base, app_contact_address, app_contact_employment
 
     def analyze_batch_results(self):
         """Analyze and report on batch processing results."""

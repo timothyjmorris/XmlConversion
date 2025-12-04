@@ -2,37 +2,37 @@
 
 /* -----------------------------------------------------------------------------------------------------------------------------------------
 TEAR DOWN TABLES
-	DELETE FROM sandbox.app_base;
-	DELETE FROM sandbox.app_enums;
-	DELETE FROM sandbox.campaign_cc
-	DROP TABLE IF EXISTS sandbox.app_operational_cc;
-	DROP TABLE IF EXISTS sandbox.app_pricing_cc;
-	DROP TABLE IF EXISTS sandbox.app_solicited_cc;
-	DROP TABLE IF EXISTS sandbox.app_transactional_cc;
-	DROP TABLE IF EXISTS sandbox.historical_lookup;
-	DROP TABLE IF EXISTS sandbox.report_results_lookup;
-	DROP TABLE IF EXISTS sandbox.contact_address;
-	DROP TABLE IF EXISTS sandbox.contact_employment;
-	DROP TABLE IF EXISTS sandbox.contact_base;
-	DROP TABLE IF EXISTS sandbox.campaign_cc;
-	DROP TABLE IF EXISTS sandbox.app_base;
-	DROP TABLE IF EXISTS sandbox.app_enums;
+	DELETE FROM app_base;
+	DELETE FROM app_enums;
+	DELETE FROM campaign_cc
+	DROP TABLE IF EXISTS app_operational_cc;
+	DROP TABLE IF EXISTS app_pricing_cc;
+	DROP TABLE IF EXISTS app_solicited_cc;
+	DROP TABLE IF EXISTS app_transactional_cc;
+	DROP TABLE IF EXISTS historical_lookup;
+	DROP TABLE IF EXISTS report_results_lookup;
+	DROP TABLE IF EXISTS app_contact_address;
+	DROP TABLE IF EXISTS app_contact_employment;
+	DROP TABLE IF EXISTS app_contact_base;
+	DROP TABLE IF EXISTS campaign_cc;
+	DROP TABLE IF EXISTS app_base;
+	DROP TABLE IF EXISTS app_enums;
 -------------------------------------------------------------------------------------------------------------------------------------------- */
 
 /* RESET -----------------------------------------------------------------------------------------------------------------------------------
 
-    DELETE FROM  sandbox.app_base; -- should cascade
-    DBCC CHECKIDENT ('sandbox.app_base', RESEED, 0);
-    DBCC CHECKIDENT ('sandbox.contact_base', RESEED, 0);
+    DELETE FROM  app_base; -- should cascade
+    DBCC CHECKIDENT ('app_base', RESEED, 0);
+    DBCC CHECKIDENT ('app_contact_base', RESEED, 0);
 	
-	DELETE FROM sandbox.processing_log;
-	DBCC CHECKIDENT ('sandbox.processing_log', RESEED, 0);
+	DELETE FROM processing_log;
+	DBCC CHECKIDENT ('processing_log', RESEED, 0);
 
 	--DELETE FROM app_xml_staging;
-	--DELETE FROM  sandbox.app_base where app_id > 300000
-	--DELETE FROM  sandbox.processing_log where app_id > 300000
+	--DELETE FROM  app_base where app_id > 300000
+	--DELETE FROM  processing_log where app_id > 300000
 -------------------------------------------------------------------------------------------------------------------------------------------- */
-
+select * from app_enums
 
 -- BEWARE THE LOG FILE: shrink, and set to simple recovery while running the xml conversion ------------------------------------------------
 
@@ -58,7 +58,7 @@ TEAR DOWN TABLES
 	ALTER INDEX ALL ON  app_xml		REBUILD;
 
 	-- Processing Log (error tracking, resumability)
-	CREATE TABLE sandbox.processing_log (
+	CREATE TABLE processing_log (
 		log_id				int				NOT NULL CONSTRAINT PK_processing_log_log_id PRIMARY KEY IDENTITY(1, 1),
 		app_id				int				NOT NULL,
 		[status]			varchar(20)		NOT NULL,
@@ -71,7 +71,7 @@ TEAR DOWN TABLES
 
 	-- On processing_log  
 	CREATE NONCLUSTERED INDEX IX_processing_log_app_id 
-		ON sandbox.processing_log(app_id);
+		ON processing_log(app_id);
 
 	-- This is used to for an XML fragment of "/Provenir/Request/CustData" to speed up load time
 	CREATE TABLE app_xml_staging (
@@ -84,23 +84,23 @@ TEAR DOWN TABLES
 	CREATE NONCLUSTERED INDEX IX_app_xml_staging_app_id ON app_xml_staging (app_id) INCLUDE (app_xml);
 
 
+	-- LOAD UP!
+	-- python .\env_prep\appxml_staging_extractor.py --batch 500 --limit 100 --source-table app_XML --source-column  app_XML --metrics metrics\appxml_w0.json
+
 	-- and xml staging table after it's loaded up
 	ALTER INDEX ALL ON  app_xml_staging		REBUILD;
 
 
 -- INSPECT -----------------------------------------------------------------------------------------------------------------------
 
-SELECT COUNT(*) FROM sandbox.app_base;
-SELECT MAX(app_id) FROM sandbox.app_base;
-SELECT COUNT(*) FROM sandbox.processing_log;
-select * from sandbox.processing_log where status <> 'success'
+SELECT COUNT(*) FROM app_base;
+SELECT MAX(app_id) FROM app_base;
+SELECT COUNT(*) FROM processing_log;
+select * from processing_log where status <> 'success'
 SELECT COUNT(*) FROM app_xml
 SELECT COUNT(*) FROM app_xml_staging;
 
-select top 10 app_id, cast(app_xml as xml) as xml from app_xml_staging where app_id in (326213)
-
-delete from sandbox.app_base where app_id > 302200 --in (154416, 170691, 312916, 325119, 325431, 312437)
-delete from sandbox.processing_log where app_id > 302200 -- in (154416, 170691, 312916, 325119, 325431, 312437)
+select top 100 app_id, cast(app_xml as xml) as xml from app_xml_staging where app_id in (326213)
 
 
 SELECT TOP 10 app_id, CAST(app_xml AS xml) AS XML 
@@ -127,7 +127,9 @@ SELECT app_id FROM IL_application WHERE app_id = 124294
 		)
 	ORDER BY app_id
 
--- FINE, JUST FREAKING REMOVE THE REC LENDING APPS
+-- I DON'T WANT TO SEE A WARNING ABOUT EVERY REC LENDING APPLICATION WHEN RUNNING THE MIGRATOR ----------------------------------
+-- Probably should do this on the `appxml_staging_extractor.py` if that's how we're going to implement it, but for now...
+-- JUST FREAKING REMOVE THE REC LENDING APPS, WE CAN RE-STAGE WHEN WE DO THE RL PRODUCT LINE
 	select count(*)
 	--delete
 	from app_xml_staging

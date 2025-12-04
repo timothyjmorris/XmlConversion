@@ -280,12 +280,12 @@ class CurrentStateBenchmark:
         # Use proven table order from existing tests
         table_order = ["app_base", "app_operational_cc", "app_pricing_cc", 
                       "app_transactional_cc", "app_solicited_cc", 
-                      "contact_base", "contact_address", "contact_employment"]
+                      "app_contact_base", "app_contact_address", "app_contact_employment"]
         
         for table_name in table_order:
             records = mapped_data.get(table_name, [])
             if records:
-                enable_identity = table_name in ["app_base", "contact_base"]
+                enable_identity = table_name in ["app_base", "app_contact_base"]
                 inserted_count = self.migration_engine.execute_bulk_insert(
                     records, 
                     table_name, 

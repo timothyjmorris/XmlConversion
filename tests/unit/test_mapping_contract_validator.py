@@ -416,13 +416,13 @@ class TestRelationshipsValidation(unittest.TestCase):
             },
             "table_insertion_order": [
                 "app_base",
-                "contact_base",
-                "contact_address",
+                "app_contact_base",
+                "app_contact_address",
                 "processing_log"
             ],
             "relationships": [
-                {"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"},
-                {"parent_table": "contact_base", "child_table": "contact_address", "foreign_key_column": "con_id"}
+                {"parent_table": "app_base", "child_table": "app_contact_base", "foreign_key_column": "app_id"},
+                {"parent_table": "app_contact_base", "child_table": "app_contact_address", "foreign_key_column": "con_id"}
             ],
             "enum_mappings": {},
             "mappings": []
@@ -492,7 +492,7 @@ class TestRelationshipsValidation(unittest.TestCase):
                     {"element_type": "address"}
                 ]
             },
-            "table_insertion_order": ["app_base", "contact_base"],
+            "table_insertion_order": ["app_base", "app_contact_base"],
             "enum_mappings": {},
             "mappings": []
         }
@@ -514,13 +514,13 @@ class TestRelationshipsValidation(unittest.TestCase):
             },
             "table_insertion_order": [
                 "app_base",
-                "contact_base",
-                "contact_address",  # Missing from relationships
+                "app_contact_base",
+                "app_contact_address",  # Missing from relationships
                 "processing_log"
             ],
             "relationships": [
-                {"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"}
-                # contact_address is missing!
+                {"parent_table": "app_base", "child_table": "app_contact_base", "foreign_key_column": "app_id"}
+                # app_contact_address is missing!
             ],
             "enum_mappings": {},
             "mappings": []
@@ -533,7 +533,7 @@ class TestRelationshipsValidation(unittest.TestCase):
         self.assertEqual(result.error_count, 1)
         error = result.errors[0]
         self.assertEqual(error.category, "relationships")
-        self.assertIn("contact_address", error.message)
+        self.assertIn("app_contact_address", error.message)
         self.assertIn("table_insertion_order", error.message.lower())
     
     def test_multiple_orphaned_tables(self):
@@ -547,14 +547,14 @@ class TestRelationshipsValidation(unittest.TestCase):
             },
             "table_insertion_order": [
                 "app_base",
-                "contact_base",
-                "contact_address",
-                "contact_employment",
+                "app_contact_base",
+                "app_contact_address",
+                "app_contact_employment",
                 "processing_log"
             ],
             "relationships": [
-                {"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"}
-                # contact_address and contact_employment missing!
+                {"parent_table": "app_base", "child_table": "app_contact_base", "foreign_key_column": "app_id"}
+                # app_contact_address and app_contact_employment missing!
             ],
             "enum_mappings": {},
             "mappings": []
@@ -566,8 +566,8 @@ class TestRelationshipsValidation(unittest.TestCase):
         self.assertFalse(result.is_valid)
         self.assertEqual(result.error_count, 2)
         error_messages = [e.message for e in result.errors]
-        self.assertTrue(any("contact_address" in msg for msg in error_messages))
-        self.assertTrue(any("contact_employment" in msg for msg in error_messages))
+        self.assertTrue(any("app_contact_address" in msg for msg in error_messages))
+        self.assertTrue(any("app_contact_employment" in msg for msg in error_messages))
     
     def test_relationship_missing_foreign_key_column(self):
         """Relationship without foreign_key_column field fails."""
@@ -580,11 +580,11 @@ class TestRelationshipsValidation(unittest.TestCase):
             },
             "table_insertion_order": [
                 "app_base",
-                "contact_base",
+                "app_contact_base",
                 "processing_log"
             ],
             "relationships": [
-                {"parent_table": "app_base", "child_table": "contact_base"}  # Missing foreign_key_column!
+                {"parent_table": "app_base", "child_table": "app_contact_base"}  # Missing foreign_key_column!
             ],
             "enum_mappings": {},
             "mappings": []
@@ -598,7 +598,7 @@ class TestRelationshipsValidation(unittest.TestCase):
         error = result.errors[0]
         self.assertEqual(error.category, "relationships")
         self.assertIn("foreign_key_column", error.message.lower())
-        self.assertIn("contact_base", error.message)
+        self.assertIn("app_contact_base", error.message)
     
     def test_app_base_not_required_in_relationships(self):
         """app_base as root table doesn't need to appear as child_table."""
@@ -611,11 +611,11 @@ class TestRelationshipsValidation(unittest.TestCase):
             },
             "table_insertion_order": [
                 "app_base",  # Root table - no relationship as child
-                "contact_base",
+                "app_contact_base",
                 "processing_log"
             ],
             "relationships": [
-                {"parent_table": "app_base", "child_table": "contact_base", "foreign_key_column": "app_id"}
+                {"parent_table": "app_base", "child_table": "app_contact_base", "foreign_key_column": "app_id"}
                 # app_base doesn't appear as child_table - should be OK
             ],
             "enum_mappings": {},
@@ -793,7 +793,7 @@ class TestEnumMappingsValidation(unittest.TestCase):
             },
             "mappings": [
                 {
-                    "target_table": "contact_base",
+                    "target_table": "app_contact_base",
                     "target_column": "contact_type_enum",
                     "mapping_type": ["last_valid_pr_contact", "enum"]  # Chained
                 }

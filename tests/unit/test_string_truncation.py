@@ -39,7 +39,7 @@ def test_string_truncation(mapper):
         FieldMapping(
             xml_path='/Provenir/Request/CustData/application/contact',
             xml_attribute='cell_phone',
-            target_table='contact_base',
+            target_table='app_contact_base',
             target_column='cell_phone',
             data_type='string',
             data_length=12,
@@ -48,7 +48,7 @@ def test_string_truncation(mapper):
         FieldMapping(
             xml_path='/Provenir/Request/CustData/application/contact',
             xml_attribute='zip',
-            target_table='contact_base',
+            target_table='app_contact_base',
             target_column='zip',
             data_type='string',
             data_length=5,
@@ -57,7 +57,7 @@ def test_string_truncation(mapper):
         FieldMapping(
             xml_path='/Provenir/Request/CustData/application/contact',
             xml_attribute='ssn',
-            target_table='contact_base',
+            target_table='app_contact_base',
             target_column='ssn',
             data_type='string',
             data_length=9,
@@ -66,7 +66,7 @@ def test_string_truncation(mapper):
         FieldMapping(
             xml_path='/Provenir/Request/CustData/application/contact/contact_address',
             xml_attribute='cell_phone',
-            target_table='contact_base',
+            target_table='app_contact_base',
             target_column='cell_phone_cur_addr',
             data_type='string',
             data_length=10,

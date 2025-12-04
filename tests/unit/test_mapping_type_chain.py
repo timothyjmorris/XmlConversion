@@ -45,6 +45,6 @@ class TestMappingTypeChain:
         xml_root = fixture["parser"].parse_xml_stream(fixture["sample_xml"])
         xml_data = fixture["parser"].extract_elements(xml_root)
         mapped_tables = fixture["mapper"].apply_mapping_contract(xml_data, fixture["contract"], xml_root=xml_root)
-        contact_base = mapped_tables.get("contact_base", [])
-        cell_phones = [rec.get("cell_phone") for rec in contact_base if rec.get("cell_phone")]
+        app_contact_base = mapped_tables.get("app_contact_base", [])
+        cell_phones = [rec.get("cell_phone") for rec in app_contact_base if rec.get("cell_phone")]
         assert cell_phones and cell_phones[0] == "5555555555"

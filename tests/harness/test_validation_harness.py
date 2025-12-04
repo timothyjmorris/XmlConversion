@@ -286,8 +286,8 @@ class TestValidationSystem(unittest.TestCase):
             source_xml_data = self._create_valid_xml_data()
             extracted_tables = {
                 'app_base': [{'app_id': 123456}],
-                'contact_base': [{'con_id': 789, 'app_id': 123456}],
-                'contact_address': [
+                'app_contact_base': [{'con_id': 789, 'app_id': 123456}],
+                'app_contact_address': [
                     {'con_id': 999, 'app_id': 123456},  # Invalid con_id reference
                     {'con_id': 789, 'app_id': 999999}   # Invalid app_id reference
                 ]
@@ -325,7 +325,7 @@ class TestValidationSystem(unittest.TestCase):
                     {'app_id': None},  # Required field violation
                     {'app_id': 123456, 'ssn': '123456789'}  # Valid record
                 ],
-                'contact_base': [
+                'app_contact_base': [
                     {'con_id': 789, 'app_id': 123456, 'ssn': '000000000'}  # Invalid SSN
                 ]
             }
@@ -362,7 +362,7 @@ class TestValidationSystem(unittest.TestCase):
                     {'app_id': 123456, 'name': 'John Doe', 'email': 'john@example.com'},
                     {'app_id': 789012, 'name': '', 'email': None}  # Missing data
                 ],
-                'contact_base': [
+                'app_contact_base': [
                     {'con_id': 789, 'app_id': 123456, 'name': 'Jane Doe'},
                     {'con_id': 101112, 'app_id': 789012, 'name': None}  # Missing data
                 ]
@@ -494,11 +494,11 @@ class TestValidationSystem(unittest.TestCase):
             'app_base': [
                 {'app_id': 123456, 'name': 'Test Application', 'created_date': datetime.now()}
             ],
-            'contact_base': [
+            'app_contact_base': [
                 {'con_id': 789, 'app_id': 123456, 'name': 'John Doe', 'created_date': datetime.now()},
                 {'con_id': 101112, 'app_id': 123456, 'name': 'Jane Doe', 'created_date': datetime.now()}
             ],
-            'contact_address': [
+            'app_contact_address': [
                 {'con_id': 789, 'app_id': 123456, 'address_line1': '123 Main St', 'created_date': datetime.now()}
             ]
         }
@@ -516,7 +516,7 @@ class TestValidationSystem(unittest.TestCase):
             FieldMapping(
                 xml_path='/Provenir/Request/CustData/application/contact',
                 xml_attribute='con_id',
-                target_table='contact_base',
+                target_table='app_contact_base',
                 target_column='con_id',
                 data_type='int'
             )
@@ -525,7 +525,7 @@ class TestValidationSystem(unittest.TestCase):
         relationships = [
             RelationshipMapping(
                 parent_table='app_base',
-                child_table='contact_base',
+                child_table='app_contact_base',
                 foreign_key_column='app_id',
                 xml_parent_path='/Provenir/Request',
                 xml_child_path='/Provenir/Request/CustData/application/contact'

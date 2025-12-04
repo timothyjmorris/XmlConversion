@@ -2,9 +2,9 @@
 Unit Tests for DuplicateContactDetector (extracted from MigrationEngine)
 
 Tests verify duplicate detection logic for contact records with different key structures:
-- contact_base: Single primary key (con_id)
-- contact_address: Composite key (con_id + address_type_enum)
-- contact_employment: Composite key (con_id + employment_type_enum)
+- app_contact_base: Single primary key (con_id)
+- app_contact_address: Composite key (con_id + address_type_enum)
+- app_contact_employment: Composite key (con_id + employment_type_enum)
 """
 
 import unittest
@@ -53,7 +53,7 @@ class TestDuplicateDetection(unittest.TestCase):
         self.detector = DuplicateContactDetector(connection_provider=lambda: None)
     
     def test_contact_base_duplicate(self):
-        """Test filtering of duplicate contact_base records."""
+        """Test filtering of duplicate app_contact_base records."""
         # Simulate existing con_id in DB
         batch = [
             {'con_id': 100, 'app_id': 1},
@@ -65,14 +65,14 @@ class TestDuplicateDetection(unittest.TestCase):
             return DummyConn([100])  # con_id 100 exists
         
         detector = DuplicateContactDetector(connection_provider=mock_conn_provider)
-        filtered = detector.filter_duplicates(batch, 'contact_base', '[dbo].[contact_base]')
+        filtered = detector.filter_duplicates(batch, 'app_contact_base', '[dbo].[app_contact_base]')
         
         # Should only have con_id 101 (100 is duplicate)
         assert len(filtered) == 1
         assert filtered[0]['con_id'] == 101
     
     def test_contact_address_duplicate(self):
-        """Test filtering of duplicate contact_address records."""
+        """Test filtering of duplicate app_contact_address records."""
         batch = [
             {'con_id': 200, 'address_type_enum': 1},
             {'con_id': 200, 'address_type_enum': 2},
@@ -84,7 +84,7 @@ class TestDuplicateDetection(unittest.TestCase):
             return DummyConn([(200, 1)])
         
         detector = DuplicateContactDetector(connection_provider=mock_conn_provider)
-        filtered = detector.filter_duplicates(batch, 'contact_address', '[dbo].[contact_address]')
+        filtered = detector.filter_duplicates(batch, 'app_contact_address', '[dbo].[app_contact_address]')
         
         # Should have 2 records (skip (200, 1))
         assert len(filtered) == 2
@@ -92,7 +92,7 @@ class TestDuplicateDetection(unittest.TestCase):
         assert {'con_id': 201, 'address_type_enum': 1} in filtered
     
     def test_contact_employment_duplicate(self):
-        """Test filtering of duplicate contact_employment records."""
+        """Test filtering of duplicate app_contact_employment records."""
         batch = [
             {'con_id': 300, 'employment_type_enum': 1},
             {'con_id': 300, 'employment_type_enum': 2},
@@ -104,7 +104,7 @@ class TestDuplicateDetection(unittest.TestCase):
             return DummyConn([(300, 2)])
         
         detector = DuplicateContactDetector(connection_provider=mock_conn_provider)
-        filtered = detector.filter_duplicates(batch, 'contact_employment', '[dbo].[contact_employment]')
+        filtered = detector.filter_duplicates(batch, 'app_contact_employment', '[dbo].[app_contact_employment]')
         
         # Should have 2 records (skip (300, 2))
         assert len(filtered) == 2
@@ -135,7 +135,7 @@ class TestDuplicateDetection(unittest.TestCase):
             return DummyConn([])
         
         detector = DuplicateContactDetector(connection_provider=mock_conn_provider)
-        filtered = detector.filter_duplicates(batch, 'contact_base', '[dbo].[contact_base]')
+        filtered = detector.filter_duplicates(batch, 'app_contact_base', '[dbo].[app_contact_base]')
         
         assert filtered == []
 

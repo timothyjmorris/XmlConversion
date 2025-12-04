@@ -42,7 +42,7 @@ Use the `--drop-index` option on the initial load to drop `IX_app_xml_staging_ap
 
 - Small real run (single worker):
 ```powershell
-python .\env_prep\appxml_staging_extractor.py --batch 500 --limit 10000 --drop-index --metrics metrics\appxml_w0.json
+python .\env_prep\appxml_staging_extractor.py --batch 500 --limit 100 --source-table app_XML --source-column  app_XML --metrics metrics\appxml_w0.json
 ```
 
 ## Parallel worker orchestration (PowerShell example)

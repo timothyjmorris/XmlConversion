@@ -173,7 +173,7 @@ class MigrationEngine(MigrationEngineInterface):
         Contract-Driven Schema Isolation:
         - All target table names are qualified with target_schema from MappingContract
         - Format: [target_schema].[table_name]
-        - Example: [sandbox].[app_base] or [dbo].[contact_base]
+        - Example: [sandbox].[app_base] or [dbo].[app_contact_base]
         - Source table (app_xml) always remains in [dbo].[app_xml]
         
         Args:

@@ -655,13 +655,13 @@ def _insert_mapped_data_with_fk_order(mapped_data: Dict[str, List[Dict[str, Any]
             if not table_order:
                 table_order = [
                     "app_base",              # Parent: all app_*_cc tables FK to this
-                    "contact_base",          # Parent: contact_address/employment FK to this + FK to app_base
+                    "app_contact_base",      # Parent: app_contact_address/employment FK to this + FK to app_base
                     "app_operational_cc",    # Child of app_base
                     "app_pricing_cc",        # Child of app_base
                     "app_transactional_cc",  # Child of app_base
                     "app_solicited_cc",      # Child of app_base
-                    "contact_address",       # Child of contact_base
-                    "contact_employment",    # Child of contact_base
+                    "app_contact_address",   # Child of app_contact_base
+                    "app_contact_employment",# Child of app_contact_base
                 ]
                 _worker_mapper.logger.debug("Using fallback hardcoded table_insertion_order (contract order not available)")
             
@@ -670,7 +670,7 @@ def _insert_mapped_data_with_fk_order(mapped_data: Dict[str, List[Dict[str, Any]
             for table_name in table_order:
                 records = mapped_data.get(table_name, [])
                 if records:
-                    enable_identity = table_name in ["app_base", "contact_base"]
+                    enable_identity = table_name in ["app_base", "app_contact_base"]
                     inserted_count = _worker_migration_engine.execute_bulk_insert(
                         records, 
                         table_name, 
@@ -692,7 +692,7 @@ def _insert_mapped_data_with_fk_order(mapped_data: Dict[str, List[Dict[str, Any]
                 for table_name in sorted(unmapped_tables):
                     records = mapped_data[table_name]
                     if records:
-                        enable_identity = table_name in ["app_base", "contact_base"]
+                        enable_identity = table_name in ["app_base", "app_contact_base"]
                         inserted_count = _worker_migration_engine.execute_bulk_insert(
                             records, 
                             table_name, 

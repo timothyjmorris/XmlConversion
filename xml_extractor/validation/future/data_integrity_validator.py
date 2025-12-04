@@ -261,11 +261,11 @@ class DataIntegrityValidator:
             
             # Collect all primary keys
             app_ids = self._collect_primary_keys(extracted_tables, 'app_base', 'app_id')
-            con_ids = self._collect_primary_keys(extracted_tables, 'contact_base', 'con_id')
+            con_ids = self._collect_primary_keys(extracted_tables, 'app_contact_base', 'con_id')
             
             # Validate app_id foreign key references
             app_fk_tables = [
-                'app_operational_cc', 'contact_base', 'contact_address', 'contact_employment'
+                'app_operational_cc', 'app_contact_base', 'app_contact_address', 'app_contact_employment'
             ]
             for table_name in app_fk_tables:
                 if table_name in extracted_tables:
@@ -275,12 +275,12 @@ class DataIntegrityValidator:
                     )
             
             # Validate con_id foreign key references
-            con_fk_tables = ['contact_address', 'contact_employment']
+            con_fk_tables = ['app_contact_address', 'app_contact_employment']
             for table_name in con_fk_tables:
                 if table_name in extracted_tables:
                     self._validate_foreign_key_references(
                         extracted_tables[table_name], 'con_id', con_ids,
-                        table_name, 'contact_base', result, check_result
+                        table_name, 'app_contact_base', result, check_result
                     )
             
             # Count records checked
@@ -494,9 +494,9 @@ class DataIntegrityValidator:
         check_result: IntegrityCheckResult
     ) -> None:
         """Validate contact_id consistency between source and extracted data."""
-        if 'contact_base' in extracted_tables:
+        if 'app_contact_base' in extracted_tables:
             extracted_contact_ids = set()
-            for record_index, record in enumerate(extracted_tables['contact_base']):
+            for record_index, record in enumerate(extracted_tables['app_contact_base']):
                 extracted_con_id = str(record.get('con_id', ''))
                 extracted_contact_ids.add(extracted_con_id)
                 
@@ -505,7 +505,7 @@ class DataIntegrityValidator:
                         error_type=ValidationType.END_TO_END,
                         severity=ValidationSeverity.ERROR,
                         message=f"Unexpected con_id in extracted data: '{extracted_con_id}'",
-                        table_name='contact_base',
+                        table_name='app_contact_base',
                         record_index=record_index,
                         field_name='con_id',
                         expected_value=source_contact_ids,
@@ -521,7 +521,7 @@ class DataIntegrityValidator:
                         error_type=ValidationType.END_TO_END,
                         severity=ValidationSeverity.WARNING,
                         message=f"Missing con_id in extracted data: '{source_con_id}'",
-                        table_name='contact_base',
+                        table_name='app_contact_base',
                         field_name='con_id',
                         expected_value=source_con_id
                     ))
@@ -812,9 +812,9 @@ class DataIntegrityValidator:
         """Get list of required fields for a table."""
         required_fields_map = {
             'app_base': ['app_id'],
-            'contact_base': ['con_id', 'app_id'],
-            'contact_address': ['con_id', 'app_id'],
-            'contact_employment': ['con_id', 'app_id'],
+            'app_contact_base': ['con_id', 'app_id'],
+            'app_contact_address': ['con_id', 'app_id'],
+            'app_contact_employment': ['con_id', 'app_id'],
             'app_operational_cc': ['app_id']
         }
         return required_fields_map.get(table_name, [])

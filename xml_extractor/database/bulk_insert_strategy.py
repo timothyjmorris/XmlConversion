@@ -220,12 +220,12 @@ class BulkInsertStrategy:
             (batch_inserted, success, elapsed_seconds) where success=True if fast path worked
         """
         # Keep these tables on the individual-insert blacklist due to known issues:
-        # - contact_base, app_pricing_cc: FK/ordering failures when batched  
-        # - app_solicited_cc, contact_address, contact_employment: Character encoding corruption
+        # - app_contact_base, app_pricing_cc: FK/ordering failures when batched  
+        # - app_solicited_cc, app_contact_address, app_contact_employment: Character encoding corruption
         #   with fast_executemany in grouped-commit scenarios (pyodbc bug?)
         # These must use conservative per-row insertion path for data integrity.
-        force_individual = table_name in ('contact_base', 'app_pricing_cc', 'app_solicited_cc', 
-                                         'contact_address', 'contact_employment')
+        force_individual = table_name in ('app_contact_base', 'app_pricing_cc', 'app_solicited_cc', 
+                                         'app_contact_address', 'app_contact_employment')
 
         if len(batch_data) <= 1 or force_individual:
             return 0, False, 0.0  # Use fallback path
@@ -268,12 +268,12 @@ class BulkInsertStrategy:
                 batch_inserted += 1
             except pyodbc.Error as record_error:
                 error_str = str(record_error).lower()
-                # Handle contact_base duplicate keys gracefully
-                if table_name == 'contact_base' and (
+                # Handle app_contact_base duplicate keys gracefully
+                if table_name == 'app_contact_base' and (
                     'primary key constraint' in error_str or 'duplicate key' in error_str
                 ):
                     con_id = record_values[0] if len(record_values) > 0 else None
-                    self.logger.warning(f"Skipping duplicate contact_base (con_id={con_id})")
+                    self.logger.warning(f"Skipping duplicate app_contact_base (con_id={con_id})")
                     continue
                 else:
                     raise record_error

@@ -66,7 +66,7 @@ class BaselineEstablisher:
         - app_pricing_cc
         - app_transactional_cc
         - app_solicited_cc
-        - contact_base (and its children contact_address, contact_employment)
+        - app_contact_base (and its children app_contact_address, app_contact_employment)
         
         Also clears processing_log so XMLs can be re-processed.
         """

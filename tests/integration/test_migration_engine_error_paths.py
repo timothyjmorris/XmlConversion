@@ -209,7 +209,7 @@ class TestBulkInsertErrorPaths:
             )
     
     def test_duplicate_key_in_contact_base_skipped(self, bulk_insert_strategy, mock_cursor):
-        """Duplicate contact_base records should be skipped gracefully."""
+        """Duplicate app_contact_base records should be skipped gracefully."""
         # First record succeeds, second fails with duplicate key
         mock_cursor.execute = Mock(side_effect=[
             None,  # First insert succeeds
@@ -225,12 +225,12 @@ class TestBulkInsertErrorPaths:
         count = bulk_insert_strategy.insert(
             cursor=mock_cursor,
             records=records,
-            table_name='contact_base',
-            qualified_table_name='[dbo].[contact_base]',
+            table_name='app_contact_base',
+            qualified_table_name='[dbo].[app_contact_base]',
             enable_identity_insert=False
         )
         
-        # For contact_base, duplicate key errors are caught and skipped gracefully
+        # For app_contact_base, duplicate key errors are caught and skipped gracefully
         assert count >= 1
 
 

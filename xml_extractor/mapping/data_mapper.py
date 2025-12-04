@@ -532,13 +532,17 @@ class DataMapper(DataMapperInterface):
             # Store contract for use in element filtering
             self._current_contract = contract
 
-            if valid_contacts is None:
+            # Extract valid contacts if not provided or empty
+            # The validator may pass an empty list [] instead of None when no contacts found
+            # ALWAYS re-extract if we have xml_root available (validator may have missed contacts)
+            if not valid_contacts or (xml_root is not None and hasattr(self, '_current_xml_root')):
                 # PRE-FLIGHT VALIDATION: Must have app_id and at least one con_id or don't process
                 if not self._pre_flight_validation(xml_data):
                     # If validation fails, do not process this XML record
                     raise DataMappingError(f"Pre-flight validation failed: {self._validation_errors}")
                 # Extract valid contacts using 'last valid element' approach
                 valid_contacts = self._extract_valid_contacts(xml_data)
+                self.logger.debug(f"Re-extracted {len(valid_contacts)} valid contacts from XML root")
             
             # Group mappings by target table for efficient processing
             table_mappings = self._group_mappings_by_table(contract.mappings)
@@ -550,6 +554,9 @@ class DataMapper(DataMapperInterface):
                     table_records = self._process_table_mappings(xml_data, mappings, app_id, valid_contacts)
                     if table_records:
                             result_tables[table_name] = table_records
+                            self.logger.debug(f"Added {len(table_records)} records for {table_name}")
+                    else:
+                            self.logger.warning(f"No records generated for {table_name} (table_records is empty or falsy)")
                 except Exception as e:
                     # Log and continue processing other tables
                     self.logger.error(f"Failed to process table {table_name}: {e}")
@@ -558,7 +565,6 @@ class DataMapper(DataMapperInterface):
             
             # Handle relationships and foreign keys
             result_tables = self._apply_relationships(result_tables, contract, xml_data, app_id, valid_contacts)
-
 
             # NO DEFAULT VALUES APPLIED - only use data from XML mapping
             # This ensures that only explicitly mapped data is inserted, avoiding silent data corruption.
@@ -918,8 +924,8 @@ class DataMapper(DataMapperInterface):
             if hasattr(mapping, 'mapping_type') and mapping.mapping_type and 'calculated_field' in mapping.mapping_type:
                 return "__CALCULATED_FIELD_SENTINEL__"
             
-            # Handle application-level attributes that need to be threaded to contact_base
-            if (mapping.target_table == 'contact_base' and 
+            # Handle application-level attributes that need to be threaded to app_contact_base
+            if (mapping.target_table == 'app_contact_base' and 
                 mapping.xml_path == '/Provenir/Request/CustData/application' and
                 context_data is not None):
                 # Extract from application level, not contact level
@@ -936,10 +942,10 @@ class DataMapper(DataMapperInterface):
             # Handle contact-specific mappings with context_data when available
             # CONTRACT-DRIVEN: Use target_table (stable) instead of xml_path string matching (product-specific)
             if context_data and ('contact' in mapping.xml_path or 
-                               mapping.target_table in ['contact_address', 'contact_employment']):
-                # For contact_address and contact_employment tables, context_data contains {'attributes': {...}}
+                               mapping.target_table in ['app_contact_address', 'app_contact_employment']):
+                # For app_contact_address and app_contact_employment tables, context_data contains {'attributes': {...}}
                 # BUT skip this for special mapping types that have their own handling
-                if (mapping.target_table in ['contact_address', 'contact_employment'] and 
+                if (mapping.target_table in ['app_contact_address', 'app_contact_employment'] and 
                     mapping.mapping_type not in ['curr_address_only', 'last_valid_pr_contact']):
                     # Extract directly from context attributes
                     if mapping.xml_attribute and 'attributes' in context_data:
@@ -1477,23 +1483,30 @@ class DataMapper(DataMapperInterface):
         # Get table name from the first mapping
         table_name = mappings[0].target_table if mappings else ""
         
-        if table_name == 'contact_base':
+        if table_name == 'app_contact_base':
             # valid_contacts is already deduped by con_id
+            self.logger.debug(f"Processing app_contact_base table with {len(valid_contacts)} valid contacts")
             for contact in valid_contacts:
                 record = self._create_record_from_mappings(xml_data, mappings, contact)
                 # CRITICAL FIX: Add FK columns (con_id, app_id) BEFORE checking if record is empty
-                # contact_base records should always exist for relationship integrity even with minimal data
+                # app_contact_base records should always exist for relationship integrity even with minimal data
                 # The record dict might be empty from _create_record_from_mappings, but we still need the FKs
                 if not isinstance(record, dict):
                     record = {}
                 record['con_id'] = int(contact['con_id']) if str(contact['con_id']).isdigit() else contact['con_id']
                 record['app_id'] = int(app_id) if app_id.isdigit() else app_id
                 records.append(record)
-        elif table_name == 'contact_address':
-            # Extract contact_address elements directly from XML data
+                self.logger.debug(f"Created app_contact_base record for con_id={contact['con_id']}, app_id={app_id}")
+            self.logger.debug(f"Returning {len(records)} app_contact_base records")
+            self.logger.debug(f"Created app_contact_base record for con_id={contact['con_id']}, app_id={app_id}")
+            self.logger.debug(f"Returning {len(records)} app_contact_base records")
+        elif table_name == 'app_contact_address':
+            # Extract app_contact_address elements directly from XML data
+            self.logger.debug(f"Extracting app_contact_address with {len(mappings)} mappings")
             records = self._extract_contact_address_records(xml_data, mappings, app_id, valid_contacts)
-        elif table_name == 'contact_employment':
-            # Extract contact_employment elements directly from XML data
+        elif table_name == 'app_contact_employment':
+            # Extract app_contact_employment elements directly from XML data
+            self.logger.debug(f"Extracting app_contact_employment with {len(mappings)} mappings")
             records = self._extract_contact_employment_records(xml_data, mappings, app_id, valid_contacts)
         else:
             # Create single record for app-level tables
@@ -1527,7 +1540,7 @@ class DataMapper(DataMapperInterface):
         table_name = mappings[0].target_table if mappings else ""
         
         # Apply element filtering rules based on required attributes  
-        # REMOVED: This validation was preventing contact_base records from being created
+        # REMOVED: This validation was preventing app_contact_base records from being created
         # The con_id validation is already handled in the calling code        
         for mapping in mappings:
             try:
@@ -1643,8 +1656,8 @@ class DataMapper(DataMapperInterface):
             return False
 
         # Record has only keys and/or applied defaults - should be skipped
-        # Exception: contact_base should be kept even with minimal data for relationship integrity
-        if table_name == 'contact_base':
+        # Exception: app_contact_base should be kept even with minimal data for relationship integrity
+        if table_name == 'app_contact_base':
             return False
 
         return True
@@ -1700,7 +1713,7 @@ class DataMapper(DataMapperInterface):
 
     def _extract_contact_address_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], 
                                        app_id: str, valid_contacts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Extract contact_address records using centralized element filtering."""
+        """Extract app_contact_address records using centralized element filtering."""
         records = []
         
         # Create set of valid con_ids for efficient lookup
@@ -1738,7 +1751,7 @@ class DataMapper(DataMapperInterface):
                     if record:
                         record['con_id'] = int(con_id) if str(con_id).isdigit() else con_id
                         records.append(record)
-                        self.logger.debug(f"Created contact_address record for con_id {con_id}")
+                        self.logger.debug(f"Created app_contact_address record for con_id {con_id}")
                         
             except Exception as e:
                 self.logger.error(f"HANDLED in centralized address filtering: {e}")
@@ -1748,7 +1761,7 @@ class DataMapper(DataMapperInterface):
         else:
             self.logger.warning("No XML root available for address extraction")
         
-        self.logger.debug(f"Extracted {len(records)} contact_address records")
+        self.logger.debug(f"Extracted {len(records)} app_contact_address records")
         return records
 
     def _extract_contact_employment_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], 
@@ -1791,7 +1804,7 @@ class DataMapper(DataMapperInterface):
                     if record:
                         record['con_id'] = int(con_id) if str(con_id).isdigit() else con_id
                         records.append(record)
-                        self.logger.debug(f"Created contact_employment record for con_id {con_id}")
+                        self.logger.debug(f"Created app_contact_employment record for con_id {con_id}")
                         
             except Exception as e:
                 self.logger.error(f"HANDLED in centralized employment filtering: {e}")
@@ -2178,7 +2191,7 @@ class DataMapper(DataMapperInterface):
             # Get dynamic element name for address elements
             address_element_name = self._get_child_element_name('contact_address')
             
-            if mapping.target_table == 'contact_address' or address_element_name in mapping.xml_path:
+            if mapping.target_table == 'app_contact_address' or address_element_name in mapping.xml_path:
                 # Look for address elements within this contact using dynamic element name
                 address_elements = last_valid_primary_contact.xpath(f'.//{address_element_name}')
                 

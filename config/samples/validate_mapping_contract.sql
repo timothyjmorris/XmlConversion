@@ -20,15 +20,15 @@ SELECT
         ELSE 'MISSING'
     END AS app_pricing_cc_status,
     CASE 
-        WHEN EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'contact_base') THEN 'EXISTS'
+        WHEN EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'app_contact_base') THEN 'EXISTS'
         ELSE 'MISSING'
     END AS contact_base_status,
     CASE 
-        WHEN EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'contact_address') THEN 'EXISTS'
+        WHEN EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'app_contact_address') THEN 'EXISTS'
         ELSE 'MISSING'
     END AS contact_address_status,
     CASE 
-        WHEN EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'contact_employment') THEN 'EXISTS'
+        WHEN EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'app_contact_employment') THEN 'EXISTS'
         ELSE 'MISSING'
     END AS contact_employment_status;
 
@@ -118,13 +118,13 @@ ORDER BY ORDINAL_POSITION;
 
 -- Check contact_base columns
 SELECT 
-    'contact_base' AS table_name,
+    'app_contact_base' AS table_name,
     COLUMN_NAME,
     DATA_TYPE,
     IS_NULLABLE,
     COLUMN_DEFAULT
 FROM INFORMATION_SCHEMA.COLUMNS 
-WHERE TABLE_NAME = 'contact_base'
+WHERE TABLE_NAME = 'app_contact_base'
 AND COLUMN_NAME IN ('con_id', 'app_id', 'contact_type_enum', 'first_name', 'last_name', 'ssn', 'birth_date')
 ORDER BY ORDINAL_POSITION;
 
@@ -143,5 +143,5 @@ INNER JOIN sys.tables tr ON fk.referenced_object_id = tr.object_id
 INNER JOIN sys.foreign_key_columns fkc ON fk.object_id = fkc.constraint_object_id
 INNER JOIN sys.columns cp ON fkc.parent_column_id = cp.column_id AND fkc.parent_object_id = cp.object_id
 INNER JOIN sys.columns cr ON fkc.referenced_column_id = cr.column_id AND fkc.referenced_object_id = cr.object_id
-WHERE tp.name IN ('app_base', 'app_operational_cc', 'app_pricing_cc', 'contact_base', 'contact_address', 'contact_employment')
+WHERE tp.name IN ('app_base', 'app_operational_cc', 'app_pricing_cc', 'app_contact_base', 'app_contact_address', 'app_contact_employment')
 ORDER BY tp.name, fk.name;

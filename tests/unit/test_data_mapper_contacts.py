@@ -152,7 +152,7 @@ class TestContractDrivenContactTypes(unittest.TestCase):
             "source_table": "app_xml",
             "source_column": "xml",
             "target_schema": "sandbox",
-            "table_insertion_order": ["app_base", "contact_base"],
+            "table_insertion_order": ["app_base", "app_contact_base"],
             "element_filtering": {
                 "filter_rules": [
                     {
@@ -279,7 +279,7 @@ class TestContactTypePriority(unittest.TestCase):
             "source_table": "app_xml",
             "source_column": "xml",
             "target_schema": "sandbox",
-            "table_insertion_order": ["app_base", "contact_base"],
+            "table_insertion_order": ["app_base", "app_contact_base"],
             "element_filtering": {
                 "filter_rules": [
                     {
@@ -359,7 +359,7 @@ class TestContactTypePriority(unittest.TestCase):
             "source_table": "app_xml",
             "source_column": "xml",
             "target_schema": "sandbox",
-            "table_insertion_order": ["app_base", "contact_base"],
+            "table_insertion_order": ["app_base", "app_contact_base"],
             "element_filtering": {
                 "filter_rules": [
                     {

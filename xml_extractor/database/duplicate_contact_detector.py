@@ -7,15 +7,15 @@ prevent lock contention and maintains schema isolation via qualified table names
 
 DESIGN RATIONALE - Why Check Each Table Separately:
 
-The initial intuition was to simplify this to a single query against contact_base.con_id
-for all three tables, since contact_address and contact_employment have FK constraints
-to contact_base. However, this approach has a critical flaw:
+The initial intuition was to simplify this to a single query against app_contact_base.con_id
+for all three tables, since app_contact_address and app_contact_employment have FK constraints
+to app_contact_base. However, this approach has a critical flaw:
 
 SCENARIO: Processing app_id 443306 (first run, database empty)
-1. Insert contact_base: con_id=738936, con_id=738937
-2. Before inserting contact_address with records for those con_ids:
-   - If we query contact_base, we FIND both con_ids (just inserted in step 1)
-   - We incorrectly filter ALL contact_address records as "duplicates"
+1. Insert app_contact_base: con_id=738936, con_id=738937
+2. Before inserting app_contact_address with records for those con_ids:
+   - If we query app_contact_base, we FIND both con_ids (just inserted in step 1)
+   - We incorrectly filter ALL app_contact_address records as "duplicates"
    - Insert 0 records
 
 The issue is that within a single transaction, we see our own uncommitted inserts.
@@ -24,9 +24,9 @@ We can't distinguish between:
 - "con_id exists from a previous app" (should skip children)
 
 CORRECT APPROACH - Check Destination Tables:
-- contact_base: Check contact_base for existing con_id (prevents PK violation)
-- contact_address: Check contact_address for existing (con_id, address_type_enum) pairs
-- contact_employment: Check contact_employment for existing (con_id, employment_type_enum) pairs
+- app_contact_base: Check app_contact_base for existing con_id (prevents PK violation)
+- app_contact_address: Check app_contact_address for existing (con_id, address_type_enum) pairs
+- app_contact_employment: Check app_contact_employment for existing (con_id, employment_type_enum) pairs
 
 This works because:
 - First run: Destination tables empty → nothing filtered
@@ -52,9 +52,9 @@ class DuplicateContactDetector:
     Detects and filters duplicate contact records to prevent constraint violations.
     
     Handles three types of contact records with different key structures:
-    - contact_base: Single primary key (con_id)
-    - contact_address: Composite key (con_id + address_type_enum)
-    - contact_employment: Composite key (con_id + employment_type_enum)
+    - app_contact_base: Single primary key (con_id)
+    - app_contact_address: Composite key (con_id + address_type_enum)
+    - app_contact_employment: Composite key (con_id + employment_type_enum)
     
     Uses NOLOCK hints to prevent lock contention on duplicate queries.
     """
@@ -81,28 +81,28 @@ class DuplicateContactDetector:
         Filter out duplicate contact records from batch.
         
         Strategy:
-        1. For contact_base: Check con_id existence
-        2. For contact_address: Check (con_id, address_type_enum) composite key
-        3. For contact_employment: Check (con_id, employment_type_enum) composite key
+        1. For app_contact_base: Check con_id existence
+        2. For app_contact_address: Check (con_id, address_type_enum) composite key
+        3. For app_contact_employment: Check (con_id, employment_type_enum) composite key
         
         Args:
             records: List of records to filter
-            table_name: Table name (contact_base, contact_address, contact_employment)
+            table_name: Table name (app_contact_base, app_contact_address, app_contact_employment)
             qualified_table_name: Schema-qualified table name ([schema].[table])
             
         Returns:
             Filtered list of records with duplicates removed
         """
         # Only filter for contact tables; pass through others
-        if table_name not in ['contact_base', 'contact_address', 'contact_employment'] or not records:
+        if table_name not in ['app_contact_base', 'app_contact_address', 'app_contact_employment'] or not records:
             return records
         
         try:
-            if table_name == 'contact_base':
+            if table_name == 'app_contact_base':
                 return self._filter_contact_base_duplicates(records, qualified_table_name, connection=connection)
-            elif table_name == 'contact_address':
+            elif table_name == 'app_contact_address':
                 return self._filter_contact_address_duplicates(records, qualified_table_name, connection=connection)
-            elif table_name == 'contact_employment':
+            elif table_name == 'app_contact_employment':
                 return self._filter_contact_employment_duplicates(records, qualified_table_name, connection=connection)
         
         except pyodbc.Error as e:
@@ -116,7 +116,7 @@ class DuplicateContactDetector:
         qualified_table_name: str,
         connection: Any = None
     ) -> List[Dict[str, Any]]:
-        """Filter duplicate contact_base records by con_id."""
+        """Filter duplicate app_contact_base records by con_id."""
         # Prefer using provided connection to avoid creating a new connection per check
         conn_ctx = None
         if connection is not None:
@@ -144,13 +144,13 @@ class DuplicateContactDetector:
         for record in records:
             con_id = record.get('con_id')
             if con_id in existing_con_ids:
-                self.logger.warning(f"Skipping duplicate contact_base record (con_id={con_id})")
+                self.logger.warning(f"Skipping duplicate app_contact_base record (con_id={con_id})")
                 skipped_count += 1
             else:
                 filtered_records.append(record)
         
         if skipped_count > 0:
-            self.logger.info(f"Filtered {skipped_count} duplicate contact_base records")
+            self.logger.info(f"Filtered {skipped_count} duplicate app_contact_base records")
 
         # Cleanup created connection context if we opened it
         if conn_ctx is not None:
@@ -167,7 +167,7 @@ class DuplicateContactDetector:
         qualified_table_name: str,
         connection: Any = None
     ) -> List[Dict[str, Any]]:
-        """Filter duplicate contact_address records by (con_id, address_type_enum) composite key."""
+        """Filter duplicate app_contact_address records by (con_id, address_type_enum) composite key."""
         conn_ctx = None
         if connection is not None:
             conn = connection
@@ -204,13 +204,13 @@ class DuplicateContactDetector:
         for record in records:
             key = (record.get('con_id'), record.get('address_type_enum'))
             if key in existing_keys:
-                self.logger.warning(f"Skipping duplicate contact_address (con_id={key[0]}, address_type_enum={key[1]})")
+                self.logger.warning(f"Skipping duplicate app_contact_address (con_id={key[0]}, address_type_enum={key[1]})")
                 skipped_count += 1
             else:
                 filtered_records.append(record)
         
         if skipped_count > 0:
-            self.logger.info(f"Filtered {skipped_count} duplicate contact_address records")
+            self.logger.info(f"Filtered {skipped_count} duplicate app_contact_address records")
 
         if conn_ctx is not None:
             try:
@@ -226,7 +226,7 @@ class DuplicateContactDetector:
         qualified_table_name: str,
         connection: Any = None
     ) -> List[Dict[str, Any]]:
-        """Filter duplicate contact_employment records by (con_id, employment_type_enum) composite key."""
+        """Filter duplicate app_contact_employment records by (con_id, employment_type_enum) composite key."""
         conn_ctx = None
         if connection is not None:
             conn = connection
@@ -263,13 +263,13 @@ class DuplicateContactDetector:
         for record in records:
             key = (record.get('con_id'), record.get('employment_type_enum'))
             if key in existing_keys:
-                self.logger.warning(f"Skipping duplicate contact_employment (con_id={key[0]}, employment_type_enum={key[1]})")
+                self.logger.warning(f"Skipping duplicate app_contact_employment (con_id={key[0]}, employment_type_enum={key[1]})")
                 skipped_count += 1
             else:
                 filtered_records.append(record)
         
         if skipped_count > 0:
-            self.logger.info(f"Filtered {skipped_count} duplicate contact_employment records")
+            self.logger.info(f"Filtered {skipped_count} duplicate app_contact_employment records")
 
         if conn_ctx is not None:
             try:

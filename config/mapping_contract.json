@@ -4,16 +4,16 @@
   "source_table": "app_xml_staging",
   "source_column": "app_XML",
   "source_application_table": "application",
-  "target_schema": "sandbox",
+  "target_schema": "dbo",
   "table_insertion_order": [
     "app_base",    
-    "contact_base",
+    "app_contact_base",
     "app_operational_cc",
     "app_pricing_cc",
     "app_transactional_cc",
     "app_solicited_cc",
-    "contact_address",
-    "contact_employment",
+    "app_contact_address",
+    "app_contact_employment",
     "processing_log"
   ],
   "element_filtering": {
@@ -219,8 +219,8 @@
       "data_length": 10,
       "default_value": "UNKNOWN",
       "exclude_default_when_record_empty": true,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -309,7 +309,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "con_id",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "con_id",
       "data_type": "int",
       "mapping_type": ["identity_insert"],
@@ -319,7 +319,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "first_name",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "first_name",
       "data_type": "string",
       "data_length": 50,
@@ -331,7 +331,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "last_name",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "last_name",
       "data_type": "string",
       "data_length": 50,
@@ -343,7 +343,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "ssn",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "ssn",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
@@ -356,7 +356,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "birth_date",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "birth_date",
       "data_type": "smalldatetime",
       "default_value": "1900-01-01",
@@ -367,7 +367,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "ac_role_tp_c",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "contact_type_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
@@ -377,7 +377,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "initials",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "middle_initial",
       "data_type": "string",
       "data_length": 1,
@@ -387,7 +387,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "mother_maiden_name",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "mother_maiden_name",
       "data_type": "string",
       "data_length": 50,
@@ -397,7 +397,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "suffix",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "suffix",
       "data_type": "string",
       "data_length": 10,
@@ -407,7 +407,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "email",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "email",
       "data_type": "string",
       "data_length": 100,
@@ -417,31 +417,31 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "city",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "city",
       "data_type": "string",
       "data_length": 50,
       "default_value": "MISSING",
       "exclude_default_when_record_empty": true,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "state",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "state",
       "data_type": "string",
       "data_length": 2,
-      "default_value": "MISSING",
+      "default_value": "XX",
       "exclude_default_when_record_empty": true,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "address_tp_c",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "address_type_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
@@ -451,7 +451,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "address_line_1",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "address_line_1",
       "data_type": "string",
       "data_length": 100,
@@ -461,7 +461,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "street_number",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "street_number",
       "data_type": "string",
       "data_length": 10,
@@ -471,7 +471,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "street_name",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "street_name",
       "data_type": "string",
       "data_length": 50,
@@ -481,7 +481,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "unit",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "unit",
       "data_type": "string",
       "data_length": 10,
@@ -491,7 +491,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "po_box",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "po_box",
       "data_type": "string",
       "data_length": 10,
@@ -501,7 +501,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "rural_route",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "rural_route",
       "data_type": "string",
       "data_length": 10,
@@ -511,20 +511,20 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "zip",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "zip",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
       "data_length": 9,
       "default_value": "00000",
       "exclude_default_when_record_empty": true,
-      "nullable": false,
-      "required": true
+      "nullable": true,
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "months_at_residence",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "months_at_address",
       "data_type": "smallint",
       "mapping_type": ["calculated_field"],
@@ -535,7 +535,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "ownership_tp_c",
-      "target_table": "contact_address",
+      "target_table": "app_contact_address",
       "target_column": "ownership_type_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
@@ -545,7 +545,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "home_phone",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "home_phone",
       "data_type": "string",
       "data_length": 10,
@@ -556,7 +556,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "cell_phone",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "cell_phone",
       "data_type": "string",
       "data_length": 10,
@@ -567,7 +567,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "employment_tp_c",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "employment_type_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
@@ -577,7 +577,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_name",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "business_name",
       "data_type": "string",
       "data_length": 100,
@@ -587,7 +587,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_job_title_tp_c",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "job_title",
       "data_type": "string",
       "data_length": 100,
@@ -597,7 +597,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_salary",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "monthly_salary",
       "data_type": "decimal",
       "data_length": 2,
@@ -609,7 +609,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_months_at_job",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "months_at_job",
       "data_type": "smallint",
       "mapping_type": ["calculated_field"],
@@ -620,7 +620,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_other_income_amt",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "other_monthly_income",
       "data_type": "decimal",
       "data_length": 2,
@@ -630,7 +630,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_primary_income_source_tp_c",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "income_type_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
@@ -640,7 +640,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_other_income_source_tp_c",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "other_income_type_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
@@ -650,7 +650,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_self_employed_ind",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "self_employed_flag",
       "data_type": "bit",
       "mapping_type": ["char_to_bit"],
@@ -661,7 +661,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_income_source_nontaxable",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "income_source_nontaxable_flag",
       "data_type": "bit",
       "mapping_type": ["char_to_bit"],
@@ -672,7 +672,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_phone_no",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "phone",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
@@ -683,7 +683,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_city",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "city",
       "data_type": "string",
       "data_length": 50,
@@ -693,7 +693,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_state",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "state",
       "data_type": "string",
       "data_length": 2,
@@ -703,7 +703,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_street_name",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "street_name",
       "data_type": "string",
       "data_length": 50,
@@ -713,7 +713,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_street_number",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "street_number",
       "data_type": "string",
       "data_length": 10,
@@ -723,7 +723,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_unit",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "unit",
       "data_type": "string",
       "data_length": 10,
@@ -733,7 +733,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_zip",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "zip",
       "data_type": "string",
       "mapping_type": ["numbers_only"],
@@ -1726,7 +1726,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "esign_consent_flag",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "esign_consent_flag",
       "data_type": "bit",
       "mapping_type": ["boolean_to_bit"],
@@ -1737,7 +1737,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "paperless_flag",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "paperless_flag",
       "data_type": "bit",
       "mapping_type": ["boolean_to_bit"],
@@ -1748,7 +1748,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "sms_consent_flag",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "sms_consent_flag",
       "data_type": "bit",
       "mapping_type": ["boolean_to_bit"],
@@ -1759,7 +1759,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact",
       "xml_attribute": "fraud_ind",
-      "target_table": "contact_base",
+      "target_table": "app_contact_base",
       "target_column": "fraud_type_enum",
       "data_type": "smallint",
       "mapping_type": ["enum"],
@@ -1769,7 +1769,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_addr_1",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "address_line_1",
       "data_type": "string",
       "data_length": 100,
@@ -1779,7 +1779,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_employment",
       "xml_attribute": "b_other_income_source_detail",
-      "target_table": "contact_employment",
+      "target_table": "app_contact_employment",
       "target_column": "other_income_source_detail",
       "data_type": "string",
       "data_length": 50,
@@ -1818,21 +1818,21 @@
     },
     {
       "parent_table": "app_base",
-      "child_table": "contact_base",
+      "child_table": "app_contact_base",
       "foreign_key_column": "app_id",
       "xml_parent_path": "/Provenir/Request",
       "xml_child_path": "/Provenir/Request/CustData/application/contact"
     },
     {
-      "parent_table": "contact_base",
-      "child_table": "contact_address",
+      "parent_table": "app_contact_base",
+      "child_table": "app_contact_address",
       "foreign_key_column": "con_id",
       "xml_parent_path": "/Provenir/Request/CustData/application/contact",
       "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address"
     },
     {
-      "parent_table": "contact_base",
-      "child_table": "contact_employment",
+      "parent_table": "app_contact_base",
+      "child_table": "app_contact_employment",
       "foreign_key_column": "con_id",
       "xml_parent_path": "/Provenir/Request/CustData/application/contact",
       "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_employment"

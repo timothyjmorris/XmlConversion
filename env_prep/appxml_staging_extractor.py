@@ -44,57 +44,66 @@ def build_connection_string(db_config):
 
 
 def parse_request_and_custdata(xml_text):
+    """
+    Parse XML and extract Request node attributes and CustData XML.
+    
+    Returns:
+        dict with keys: app_id, process, status, priority, last_updated_by, cust_xml
+        Returns None if parsing fails or required elements are missing.
+    """
     try:
         root = etree.fromstring(xml_text.encode('utf-8') if isinstance(xml_text, str) else xml_text)
     except Exception:
         try:
             root = etree.fromstring(xml_text)
         except Exception:
-            return None, None
+            return None
 
-    req = root.find('Request')
-    if req is None:
-        return None, None
+    # Stop here if there's not even a Request node
+    request_node = root.find('Request')
+    if request_node is None:
+        return None
 
-    """
-    Also need to extract attributes from <Request>
-        Process
-        Status
-        Priority
-        LastUpdatedBy
+    # Get attributes from <Request> node
+    app_id = request_node.get('ID') or request_node.get('Id') or request_node.get('id')
+    process = request_node.get('Process') or ''
+    status = request_node.get('Status') or ''
+    priority = request_node.get('Priority') or ''
+    last_updated_by = request_node.get('LastUpdatedBy') or ''
     
-    Check
-        iovation_sessionid
-        triggerFinicity
-        triggerNova
-        btcardtoken
-        btresponsecode
-
-    # UH-OH, do we need to map and capture <Provenir> attributes for applications still processing?
-        a1_date
-    """
-
-
-    req_id = req.get('ID') or req.get('Id') or req.get('id')
-    cust = req.find('CustData')
+    # TODO: Extract additional attributes as needed:
+    # iovation_sessionid = request_node.get('iovation_sessionid') or ''
+    # trigger_finicity = request_node.get('triggerFinicity') or ''
+    # trigger_nova = request_node.get('triggerNova') or ''
+    # bt_card_token = request_node.get('btcardtoken') or ''
+    # bt_response_code = request_node.get('btresponsecode') or ''
+    
+    cust = request_node.find('CustData')
     if cust is None:
-        return req_id, None
+        return None
 
     try:
         cust_xml = etree.tostring(cust, encoding='unicode')
     except Exception:
-        cust_xml = None
+        return None
 
-    return req_id, cust_xml
+    return {
+        'app_id': app_id,
+        'process': process,
+        'status': status,
+        'priority': priority,
+        'last_updated_by': last_updated_by,
+        'cust_xml': cust_xml
+    }
 
 
 def drop_staging_index(cursor):
-    drop_sql = f"""IF EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_app_xml_staging_app_id' AND object_id = OBJECT_ID(N'{STAGING_TABLE}'))
+    drop_idx_sql = f"""IF EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_app_xml_staging_app_id' AND object_id = OBJECT_ID(N'{STAGING_TABLE}'))
                     BEGIN
                         DROP INDEX IX_app_xml_staging_app_id ON {STAGING_TABLE};
                     END
                     """
-    cursor.execute(drop_sql)
+    cursor.execute(drop_idx_sql)
     try:
         cursor.commit()
     except Exception:
@@ -102,8 +111,8 @@ def drop_staging_index(cursor):
 
 
 def create_staging_index(cursor):
-    create_sql = f"CREATE INDEX IX_app_xml_staging_app_id ON {STAGING_TABLE} (app_id) INCLUDE (app_xml);"
-    cursor.execute(create_sql)
+    create_idx_sql = f"CREATE INDEX IX_app_xml_staging_app_id ON {STAGING_TABLE} (app_id) INCLUDE (app_xml);"
+    cursor.execute(create_idx_sql)
     try:
         cursor.commit()
     except Exception:
@@ -132,7 +141,7 @@ def main(batch_size, limit, start_after, mod=None, rem=None, drop_index=False, r
     except Exception:
         pass
     
-    # don't allow table creation, just bomb out bro
+    # don't allow table creation in python outside of DEV, just bomb out bro
     # ensure_staging_table(cursor)
 
     if drop_index:
@@ -169,14 +178,22 @@ def main(batch_size, limit, start_after, mod=None, rem=None, drop_index=False, r
 
         parsed_rows = []
         for app_id, xml_text in rows:
-            req_id, cust_xml = parse_request_and_custdata(xml_text)
-            if cust_xml is None:
+            parsed = parse_request_and_custdata(xml_text)
+            
+            # Skip rows where parsing failed or CustData is missing
+            if parsed is None:
                 continue
 
-            req_id_attr = str(req_id) if req_id is not None else ''
-            minimal_xml = f"<Provenir><Request ID=\"{req_id_attr}\">{cust_xml}</Request></Provenir>"
-            parsed_rows.append((app_id, minimal_xml))
-            last_app_id = app_id
+            # Extract values from dictionary
+            app_id_attr = str(parsed['app_id']) if parsed['app_id'] is not None else ''
+            process_attr = str(parsed['process'])
+            status_attr = str(parsed['status'])
+            priority_attr = str(parsed['priority'])
+            last_updated_by_attr = str(parsed['last_updated_by'])
+            
+            minimal_xml = f"<Provenir><Request ID=\"{app_id_attr}\" Process=\"{process_attr}\" Status=\"{status_attr}\" Priority=\"{priority_attr}\" LastUpdatedBy=\"{last_updated_by_attr}\">{parsed['cust_xml']}</Request></Provenir>"
+            parsed_rows.append((parsed['app_id'], minimal_xml))
+            last_app_id = parsed['app_id']
             processed_count += 1
             if limit and processed_count >= limit:
                 break
