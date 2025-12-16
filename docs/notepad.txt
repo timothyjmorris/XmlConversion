@@ -97,7 +97,7 @@ Impact with 16 workers processing 2000 apps:
 LATEST
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 RUN XML STAGER
-python .\env_prep\appxml_staging_extractor.py --batch 500 --limit 100 --source-table app_XML --source-column  app_XML --metrics metrics\appxml_w0.json
+python .\env_prep\appxml_staging_extractor.py --batch 500 --limit 15000 --source-table app_XML --source-column  app_XML --metrics metrics\appxml_w0.json
 
 
 --enable-pooling doesn't matter because it's already happening

@@ -212,10 +212,11 @@ class MigrationEngine(MigrationEngineInterface):
                 autocommit=False,  # Explicit transaction control for atomic operations
                 timeout=30
             )
-            # Enable fast_executemany for bulk operations
-            connection.setdecoding(pyodbc.SQL_CHAR, encoding='utf-8')
-            connection.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
-            connection.setencoding(encoding='utf-8')
+            # TEMPORARY: Disable explicit encoding to match appxml_staging_extractor.py behavior
+            # which works without setdecoding() calls. pyodbc will use driver defaults.
+            # connection.setdecoding(pyodbc.SQL_CHAR, encoding='latin1')
+            # connection.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
+            # connection.setencoding(encoding='utf-8')
             
             yield connection
             

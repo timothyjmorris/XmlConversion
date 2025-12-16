@@ -462,6 +462,16 @@ class ProductionProcessor:
                     app_id = row[0]
                     xml_content = row[1]
                     
+                    # Handle encoding issues - SQL Server may return Windows-1252 encoded data
+                    if xml_content and isinstance(xml_content, bytes):
+                        try:
+                            # Try UTF-8 first
+                            xml_content = xml_content.decode('utf-8')
+                        except UnicodeDecodeError:
+                            # Fall back to Windows-1252 (common in SQL Server)
+                            xml_content = xml_content.decode('windows-1252', errors='replace')
+                            self.logger.debug(f"app_id {app_id}: Decoded XML using windows-1252")
+                    
                     if xml_content and len(xml_content.strip()) > 0:
                         # Check for duplicate app_ids in the same batch
                         if app_id in seen_app_ids:

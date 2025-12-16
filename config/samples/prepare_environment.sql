@@ -85,7 +85,7 @@ select * from app_enums
 
 
 	-- LOAD UP!
-	-- python .\env_prep\appxml_staging_extractor.py --batch 500 --limit 100 --source-table app_XML --source-column  app_XML --metrics metrics\appxml_w0.json
+	-- python .\env_prep\appxml_staging_extractor.py --batch 500 --limit 15000 --source-table app_XML --source-column  app_XML --metrics metrics\appxml_w0.json
 
 	-- and xml staging table after it's loaded up
 	ALTER INDEX ALL ON  app_xml_staging		REBUILD;
