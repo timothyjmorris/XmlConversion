@@ -70,13 +70,16 @@ def parse_request_and_custdata(xml_text):
     status = request_node.get('Status') or ''
     priority = request_node.get('Priority') or ''
     last_updated_by = request_node.get('LastUpdatedBy') or ''
-    
-    # TODO: Extract additional attributes as needed:
+    locked_by = request_node.get('LockedBy') or ''
+    btcardtoken = request_node.get('btcardtoken') or ''
+    btresponsecode = request_node.get('btresponsecode') or ''
+    iovation_blackbox = request_node.get('iovation_blackbox') or ''
+    use_alloy_service = request_node.get('useAlloyService') or ''
+    trans = request_node.get('Trans') or ''
+
+    # TODO: Extract additional attributes as needed: -------------------------------------------------
     # iovation_sessionid = request_node.get('iovation_sessionid') or ''
-    # trigger_finicity = request_node.get('triggerFinicity') or ''
-    # trigger_nova = request_node.get('triggerNova') or ''
-    # bt_card_token = request_node.get('btcardtoken') or ''
-    # bt_response_code = request_node.get('btresponsecode') or ''
+    # trigger_finicity = request_node.get('triggerFinicity') or ''    
     
     cust = request_node.find('CustData')
     if cust is None:
@@ -93,15 +96,21 @@ def parse_request_and_custdata(xml_text):
         'status': status,
         'priority': priority,
         'last_updated_by': last_updated_by,
+        "locked_by": locked_by,
+        "btcardtoken": btcardtoken,
+        "btresponsecode": btresponsecode,
+        "iovation_blackbox": iovation_blackbox,
+        "use_alloy_service": use_alloy_service,
+        "trans": trans,
         'cust_xml': cust_xml
     }
 
 
 def drop_staging_index(cursor):
     drop_idx_sql = f"""IF EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_app_xml_staging_app_id' AND object_id = OBJECT_ID(N'{STAGING_TABLE}'))
-                    BEGIN
-                        DROP INDEX IX_app_xml_staging_app_id ON {STAGING_TABLE};
-                    END
+                        BEGIN
+                            DROP INDEX IX_app_xml_staging_app_id ON {STAGING_TABLE};
+                        END
                     """
     cursor.execute(drop_idx_sql)
     try:
@@ -190,8 +199,15 @@ def main(batch_size, limit, start_after, mod=None, rem=None, drop_index=False, r
             status_attr = str(parsed['status'])
             priority_attr = str(parsed['priority'])
             last_updated_by_attr = str(parsed['last_updated_by'])
-            
-            minimal_xml = f"<Provenir><Request ID=\"{app_id_attr}\" Process=\"{process_attr}\" Status=\"{status_attr}\" Priority=\"{priority_attr}\" LastUpdatedBy=\"{last_updated_by_attr}\">{parsed['cust_xml']}</Request></Provenir>"
+            locked_by_attr = str(parsed['locked_by'])
+            btcardtoken_attr = str(parsed['btcardtoken'])
+            btresponsecode_attr = str(parsed['btresponsecode'])
+            iovation_blackbox_attr = str(parsed['iovation_blackbox'])
+            use_alloy_service_attr = str(parsed['use_alloy_service'])
+            trans_attr = str(parsed['trans'])
+
+
+            minimal_xml = f"<Provenir><Request ID=\"{app_id_attr}\" Process=\"{process_attr}\" Status=\"{status_attr}\" Priority=\"{priority_attr}\" LastUpdatedBy=\"{last_updated_by_attr}\" LockedBy=\"{locked_by_attr}\" btcardtoken=\"{btcardtoken_attr}\" btresponsecode=\"{btresponsecode_attr}\" iovation_blackbox=\"{iovation_blackbox_attr}\" useAlloyService=\"{use_alloy_service_attr}\" Trans=\"{trans_attr}\">{parsed['cust_xml']}</Request></Provenir>"
             parsed_rows.append((parsed['app_id'], minimal_xml))
             last_app_id = parsed['app_id']
             processed_count += 1

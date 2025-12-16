@@ -229,12 +229,13 @@ DELETE FROM dbo.app_base WHERE app_id = 443306
 		-- 41
 		--ca.city = 'MISSING' OR
 		-- 0
-		--ca.state = 'MISSING' OR ca.state = 'XX' OR
+		ca.state = 'XX' OR
 		--ca.zip = '00000'
 
 	ORDER BY a.app_id DESC
     
-
+	select top 100 app_id, cast(app_xml as xml) as xml from app_xml_staging where app_id in (325942)
+	select top 100 app_id, cast(app_xml as xml) as xml from app_xml where app_id in (325942)
 -- DATA VERIFICATION Quick check individual columns --------------------------------------------------------------------------------------
 	
 	select top 100 * from app_operational_cc where auth_user_spouse_flag = 1
@@ -300,22 +301,42 @@ DELETE FROM dbo.app_base WHERE app_id = 443306
 	select top 100 * from app_contact_employment where state is not null
 
 	-- problems
-	select top 100 * from app_operational_cc where sc_bank_account_type_enum is not null
+	-- verified data and mapping is there (has chained mapping type): missing loads of mapped values
+	select top 100 * from app_operational_cc where sc_bank_account_type_enum is not null	
+	-- NOT A PROBLEM: nothing exists in the data or app xml
 	select top 100 * from app_contact_employment where other_income_type_enum is not null
+	-- NOT A PROBLEM: only 'N' and null exists in data
 	select top 100 * from app_contact_employment where self_employed_flag = 1
-	select count(*) from app_transactional_cc where use_alloy_service_flag = 1
-	select count(*) from app_transactional_cc where sc_ach_sent_flag = 1
+	
+	select top 100 * from app_transactional_cc where use_alloy_service_flag = 1
+	select top 100 * from app_transactional_cc where sc_ach_sent_flag = 1
 
 	-- suspect
 	select top 100 * from app_contact_address where months_at_address > 0
 	select top 100 * from app_contact_address where ownership_type_enum is not null
-
 	select top 100 * from app_pricing_cc where card_account_setup_fee > 0
 	select top 100 * from app_pricing_cc where card_over_limit_fee > 0
 	select top 100 * from app_pricing_cc where credit_line_max > 0
-
 	-- just 1
 	select top 100 * from app_operational_cc where sc_debit_nsf_return_date is not null
+
+
+	select top 100 app_id, cast(app_xml as xml) as xml from app_xml where app_id in (325119)
+	
+	-- Check the mapping and then check the app_xml values (not staging)
+	select top 100 * from app_operational_cc where sc_bank_account_type_enum is not null
+	select top 100 app_id, cast(app_XML as xml) as xml,
+	cast(app_XML as xml).value('(/Provenir/Request/CustData/application/contact/@banking_account_type)[1]', 'varchar(20)') as 'value'
+	from app_xml_staging 
+	where cast(app_XML as xml).value('(/Provenir/Request/CustData/application/contact/@banking_account_type)[1]', 'varchar(20)') <> ''
+
+	-- No value in data
+	select top 100 * from app_transactional_cc where use_alloy_service_flag = 1
+	select distinct b_self_employed_ind from contact_employment
+	select top 10 app_id, cast(app_XML as xml) as xml,
+	cast(app_XML as xml).value('(/Provenir/Request/CustData/application/contact/contact_employment/@b_self_employed_ind)[1]', 'varchar(20)') as 'value'
+	from app_xml_staging 
+	where cast(app_XML as xml).value('(/Provenir/Request/CustData/application/contact/contact_employment/@b_self_employed_ind)[1]', 'varchar(20)') <> ''
 
 
 	-- look for nulls to be sure it works

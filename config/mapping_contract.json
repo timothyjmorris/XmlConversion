@@ -121,6 +121,67 @@
       "required": false
     },
     {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "LockedBy",
+      "target_table": "app_transactional_cc",
+      "target_column": "locked_by_user",
+      "data_type": "string",
+      "data_length": 80,
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "btcardtoken",
+      "target_table": "app_transactional_cc",
+      "target_column": "billing_tree_token",
+      "data_type": "string",
+      "data_length": 500,
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "btresponsecode",
+      "target_table": "app_transactional_cc",
+      "target_column": "billing_tree_response_status",
+      "data_type": "string",
+      "data_length": 20,
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "iovation_blackbox",
+      "target_table": "app_transactional_cc",
+      "target_column": "iovation_blackbox",
+      "data_type": "string",
+      "data_length": "max",
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "useAlloyService",
+      "target_table": "app_operational_cc",
+      "target_column": "use_alloy_service_flag",
+      "data_type": "bit",
+      "mapping_type": ["boolean_to_bit"],
+      "nullable": true,
+      "required": false,
+      "default_value": "0"
+    },
+    {
+      "xml_path": "/Provenir/Request",
+      "xml_attribute": "Trans",
+      "target_table": "app_operational_cc",
+      "target_column": "provenir_transaction",
+      "data_type": "string",
+      "data_length": 40,
+      "nullable": true,
+      "required": false
+    },
+    {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "signature_ind",
       "target_table": "app_operational_cc",
