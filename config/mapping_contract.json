@@ -291,7 +291,7 @@
       "data_type": "smallint",
       "mapping_type": ["enum"],
 	    "exclude_default_when_record_empty": true,
-      "nullable": false,
+      "nullable": true,
       "required": true
     },
     {
@@ -1543,13 +1543,24 @@
       "required": false
     },
     {
+      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_attribute": "issue_card_ind",
+      "target_table": "app_operational_cc",
+      "target_column": "auth_user_issue_card_flag",
+      "data_type": "bit",
+      "mapping_type": ["char_to_bit", "authu_contact"],
+      "nullable": true,
+      "required": false,
+      "default_value": null
+    },
+    {
       "xml_path": "/Provenir/Request/CustData/application/rmts_info",
       "xml_attribute": "auth_user_is_spouse",
       "target_table": "app_operational_cc",
       "target_column": "auth_user_spouse_flag",
       "data_type": "bit",
       "mapping_type": ["char_to_bit"],
-      "nullable": false,
+      "nullable": true,
       "required": true,
       "default_value": "0"
     },
@@ -1907,7 +1918,9 @@
       "I": 1,
       "M": 2,
       "T": 3,
-      "U": 4
+      "U": 4,
+      "CK-API": 5,
+      "EX-API": 6
     },
     "app_type_enum": {
       "ALL": 20,
@@ -1922,7 +1935,8 @@
       "PCT": 29,
       "PRODB": 30,
       "REST": 31,
-      "SECURE": 32
+      "SECURE": 32,
+      "DIGITAL": 33
     },
     "decision_enum": {
       "APPRV": 50,
