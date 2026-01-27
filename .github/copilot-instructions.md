@@ -22,6 +22,36 @@ Your mission is to help maintain correctness, completeness, and performance in a
 - **Code Consistency**: Thoroughly review codebase style/conventions before making changes
 - **Documentation Rigor**: Keep documentation accurate and meaningful — incorrect docs are worse than none
 
+### Data Integrity & DDL Policy (Non-Negotiable)
+
+**This application will NEVER:**
+- Execute DDL statements (CREATE SCHEMA, CREATE TABLE, ALTER TABLE, DROP TABLE, DROP SCHEMA, DROP INDEX, etc.)
+- Delete, truncate, or remove data via DELETE, TRUNCATE, or other SQL removal operations
+- Execute DROP or TRUNCATE without explicit, situation-specific approval from you
+
+**Database Changes:**
+- All schema changes (tables, columns, indexes, schemas) managed **outside** the application by you
+- If new structures needed: you create them before application deployment
+- If structures need removal: you handle that, outside the application
+
+**Data Deletion Exception:**
+- **Permitted:** Automatic cleanup of temporary **test fixture files** created by tests
+- **Prohibited:** Automated data deletion from databases, even in tests (must be manual, approved)
+
+**File Operations in Repository:**
+- Agents may delete files in this repo as permitted, but never database data
+
+### Documentation Principles (Non-Negotiable)
+
+- **Organized and purposeful:** Documentation must have a clear, durable purpose.
+- **Accuracy:** Incorrect or outdated docs are dangerous; keep docs aligned with code.
+- **Qualified content:** Docs have value and cost; continuously qualify and prune.
+- **Minimize overlap:** Reduce duplication across docs to ease updates and improve discoverability.
+- **WIP isolation:** Temporary or work-in-progress documents belong in a separate `wip/` folder and should not be treated as canonical.
+- **Avoid temporal summaries in repo:** Status reports, audits, and ephemeral summaries should stay in chat or PR comments, not persist as files.
+
+Agents: Prefer updating existing canonical docs over creating new summary files. When context or status needs to be shared, use chat.
+
 ### Development Standards
 - **Tech Stack**: Python, pyodbc, pytest, lxml, MS SQL Server
 - **Entry Point**: `production_processor.py` (main) or `xml_extractor/cli.py` (config status)

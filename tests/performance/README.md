@@ -1,6 +1,6 @@
 # DataMapper Performance Regression Testing
 
-This directory contains comprehensive performance testing infrastructure for validating DataMapper performance before, during, and after DATAMAPPER_REFACTORING_PLAN refactoring.
+This directory contains comprehensive performance testing infrastructure for validating DataMapper performance before, during, and after refactors.
 
 MOST TESTS ARE INTENTIONALLY SKIPPED FOR NOW UNTIL IMPLEMENTED
 - Need better XML data integration to work properly
@@ -246,7 +246,6 @@ git add . && git commit -m "Refactor: Extract EnumMapper component"
 
 ## 📚 Related Documentation
 
-- **[DATAMAPPER_REFACTORING_PLAN.md](../docs/DATAMAPPER_REFACTORING_PLAN.md)** - Complete refactoring strategy
 - **[TESTING_GAPS_ANALYSIS.md](../docs/TESTING_GAPS_ANALYSIS.md)** - Testing infrastructure requirements  
 - **[FINAL_PERFORMANCE_SUMMARY.md](../../performance_tuning/FINAL_PERFORMANCE_SUMMARY.md)** - Current performance characteristics
 
@@ -260,4 +259,4 @@ Performance tests should **PASS** with:
 - ✅ No memory leaks detected
 - ✅ Stable performance across load scenarios
 
-**Ready for DATAMAPPER_REFACTORING_PLAN refactoring when all performance tests consistently pass! 🚀**
+**Ready for refactors when all performance tests consistently pass! 🚀**

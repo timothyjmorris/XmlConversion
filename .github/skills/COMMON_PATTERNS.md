@@ -435,7 +435,7 @@ for app_record in engine.fetch_resumable_apps(batch_size=1000):
 ```python
 # In test setup
 contract = {
-    'target_schema': 'test_healthcare',  # Isolated schema
+    'target_schema': 'test_healthcare',  # Isolated schema (created by you beforehand)
     # ... rest of contract
 }
 
@@ -454,9 +454,15 @@ cursor.execute("SELECT COUNT(*) FROM [test_healthcare].[provider_base]")
 count = cursor.fetchone()[0]
 assert count == 1
 
-# In teardown
-cursor.execute("DROP SCHEMA [test_healthcare]")  # Clean isolated schema
+# In teardown: Do NOT drop schema
+# The test schema should be created and cleaned up by you outside the application
+# (Either manually or via DBA/IT operations, not via automated scripts)
 ```
+
+**Important:** 
+- Test schemas must be created **by you** before the test suite runs (not by the application)
+- Do NOT use DDL (CREATE/DROP) statements in test code
+- Clean up happens outside the application (manual or ops-driven)
 
 ---
 
@@ -576,7 +582,7 @@ def fixture_healthcare_xml():
 
 ### Pattern 5.3: Test Fixture - Schema Isolation
 
-**When to use:** Set up isolated test database per product line
+**When to use:** Tests for new product lines (schema must be created by you beforehand)
 
 ```python
 import pytest
@@ -584,39 +590,38 @@ from pyodbc import connect
 
 @pytest.fixture(scope='function')
 def test_schema_healthcare(db_connection):
-    """Create and cleanup isolated test schema"""
+    """Use isolated test schema for healthcare tests
     
-    # Setup: Create test schema and tables
+    NOTE: This fixture assumes test schema [test_healthcare] 
+    already exists and is empty. Create it before running tests.
+    
+    The application will NOT create or drop schemas.
+    """
+    
+    # Verify test schema exists (it should, created by you)
     cursor = db_connection.cursor()
-    cursor.execute("CREATE SCHEMA [test_healthcare]")
-    
-    # Create provider_base table
-    cursor.execute(f"""
-        CREATE TABLE [test_healthcare].[provider_base] (
-            provider_id VARCHAR(10) PRIMARY KEY,
-            credential_type VARCHAR(50),
-            created_at DATETIME DEFAULT GETUTCDATE()
-        )
+    cursor.execute("""
+        SELECT 1 FROM sys.schemas WHERE name = 'test_healthcare'
     """)
     
-    # Create provider_credentials table with FK
-    cursor.execute(f"""
-        CREATE TABLE [test_healthcare].[provider_credentials] (
-            credential_id INT PRIMARY KEY,
-            provider_id VARCHAR(10) NOT NULL,
-            credential_type VARCHAR(50),
-            FOREIGN KEY (provider_id) REFERENCES [test_healthcare].[provider_base](provider_id)
+    if not cursor.fetchone():
+        raise RuntimeError(
+            "Test schema [test_healthcare] not found. "
+            "Create it manually before running tests. "
+            "The application will not create DDL structures."
         )
-    """)
     
-    db_connection.commit()
-    
+    # Tables should also exist (created by you via SQL script)
     yield db_connection  # Test uses this connection
     
-    # Teardown: Drop entire test schema
-    cursor.execute("DROP SCHEMA [test_healthcare]")
-    db_connection.commit()
+    # In teardown: Do NOT drop schema or tables
+    # The test DBA or you manage cleanup outside the application
 ```
+
+**Important Notes:**
+- Test infrastructure (schemas, tables) must be created **by you** before tests run
+- The application never executes DDL (CREATE/DROP/ALTER) statements
+- Test cleanup is manual, not automated
 
 ---
 

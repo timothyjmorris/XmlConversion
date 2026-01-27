@@ -1,22 +1,27 @@
 # XML Database Extraction System
 
-A high-performance, configurable data migration tool that processes XML content using a "contract-driven" approach using mapping rules that define the ETL into normalized relational structures.
+A high-performance, contract-driven ETL pipeline that transforms deeply nested XML data into normalized Microsoft SQL Server relational structures.
 
-## Tech Stack Summary
-- OS: Windows
-- SHELL: powershell
-- DB: MS SQL Server
-- LANGUAGE: Python
-- CONNECTIVITY: pyodbc
-- TESTING: pytest
-- XML: lxml
+## 📖 Documentation Quick Links
 
+- **[Operator Guide](docs/operator-guide.md)** - Production operations, commands, troubleshooting
+- **[Deployment Guide](docs/deployment-guide.md)** - Package installation and environment setup
+- **[Architecture Guide](ARCHITECTURE.md)** - System design and technical details
+- **[Bug Fixes](docs/decisions/bug-fixes.md)** - Critical bugs resolved
+- **[Performance Findings](docs/decisions/performance-findings.md)** - Configuration and optimization decisions
+
+---
+
+## Tech Stack
+- **OS:** Windows | **Shell:** PowerShell | **Database:** MS SQL Server  
+- **Language:** Python | **DB Driver:** pyodbc | **Testing:** pytest | **XML:** lxml
+
+---
 
 ## 🚀 Quick Start
 
-### Installation Methods
+### Installation
 
-#### Method 1: Package Installation (Recommended)
 ```bash
 # Development installation (editable)
 pip install -e .
@@ -24,68 +29,30 @@ pip install -e .
 # Production installation  
 pip install .
 
-# With optional dependencies
-pip install -e ".[dev]"      # Include development tools (pytest, black, etc.)
-pip install -e ".[optional]" # Include optional features
+# With development dependencies
+pip install -e ".[dev]"
 ```
 
-#### Method 2: Manual Installation (Legacy)
-```bash
-pip install -r requirements.txt
-```
+See **[Deployment Guide](docs/deployment-guide.md)** for detailed installation options.
 
-### CLI Usage
+---
 
-**Three main tools available:**
-
-1. **Configuration Display**: `xml-extractor` command for system status
-```bash
-# Display system information and configuration
-xml-extractor
-# Shows: database settings, processing config, environment variables
-```
-
-2. **Direct Processing**: `production_processor.py` - Flexible single-invocation processor
-```bash
-# Gap filling / cleanup (limit mode)
-python production_processor.py --server "server" --database "db" --limit 10000
-
-# Specific range (range mode)
-python production_processor.py --server "server" --database "db" --app-id-start 1 --app-id-end 50000
-
-# Testing with defaults (10k limit applied automatically)
-python production_processor.py --server "server" --database "db"
-```
-
-3. **Chunked Processing**: `run_production_processor.py` - For large datasets (>100k)
-```bash
-# Breaks range into chunks, spawns fresh process per chunk
-python run_production_processor.py --app-id-start 1 --app-id-end 300000
-
-# Custom chunk size (default 10k)
-python run_production_processor.py --app-id-start 1 --app-id-end 1000000 --chunk-size 5000
-```
-
-**Key Distinctions:**
-- **`production_processor.py`**: Supports both LIMIT mode (gap filling) and RANGE mode. Single process.
-- **`run_production_processor.py`**: RANGE MODE ONLY. Chunks large ranges into fresh processes to prevent memory degradation.
-
-### Production Processing Examples
+### Basic Usage
 
 ```bash
-# Small test run (10k records with defaults)
+# Test run (10k records)
 python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB"
 
-# Gap filling (processes up to 50k records, skips already-processed)
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --limit 50000
+# Gap filling
+python production_processor.py --server "server" --database "db" --limit 50000
 
-# Medium production run (<100k apps)
-python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" \
-  --app-id-start 1 --app-id-end 50000 --workers 6 --batch-size 1000
-
-# Large production run (>100k apps - use orchestrator)
+# Large dataset processing
 python run_production_processor.py --app-id-start 1 --app-id-end 300000
 ```
+
+For complete operational guidance, see **[Operator Guide](docs/operator-guide.md)**.
+
+---
 
 ## 📁 Project Structure
 
@@ -139,12 +106,19 @@ config/
 
 # Documentation
 docs/
-├── bulk-insert-architecture.md             # Bulk insert design and optimization
-├── data-intake-and-preparation.md          # Data intake processes
-├── mapping-principles.md                   # Mapping system principles
-├── testing-philosophy.md                   # Testing approach and strategy
-├── validation-and-testing-strategy.md      # Validation framework
-└── xml-hierarchy-corrections.md            # XML structure corrections
+├── decisions/                              # Architecture decisions and learnings
+│   ├── bug-fixes.md                        # Critical bugs resolved
+│   └── performance-findings.md             # Configuration and optimization decisions
+├── deployment-guide.md                     # Package installation and setup
+├── operator-guide.md                       # Operations, commands, troubleshooting
+├── mapping/                                # Mapping and contract docs
+│   ├── mapping-principles.md               # Mapping system principles
+│   ├── datamapper-functions.md             # DataMapper function reference
+│   └── [IL/RL docs]                        # RecLending product line mapping
+├── onboard_reclending/                     # RecLending onboarding materials
+├── operations/
+│   └── production-deployment.md            # Production deployment specifics
+└── [other technical docs]                  # Architecture, testing, validation
 
 # Tests
 tests/
@@ -380,50 +354,27 @@ python tests/run_integration_suite.py    # Runs all test categories with reporti
 
 ## 📊 Configuration
 
-### Environment Variables
-```bash
-# Database connection
-export XML_EXTRACTOR_DB_SERVER="your-sql-server"
-export XML_EXTRACTOR_DB_DATABASE="YourDatabase"
-export XML_EXTRACTOR_CONNECTION_STRING="Driver={ODBC Driver 17 for SQL Server};Server=...;"
+See **[Operator Guide](docs/operator-guide.md)** for detailed configuration options.
 
-# Processing configuration
-export XML_EXTRACTOR_BATCH_SIZE=100
-export XML_EXTRACTOR_PARALLEL_PROCESSES=4
-export XML_EXTRACTOR_MEMORY_LIMIT_MB=512
-
-# Schema configuration (for multi-environment support)
-export XML_EXTRACTOR_DB_SCHEMA_PREFIX=sandbox    # Optional: for non-production schemas
-```
-
-### Configuration Validation
+### Quick Configuration
 ```bash
 # Check configuration status
 xml-extractor
 
-# Test database connectivity
-python production_processor.py --server "server" --database "db" --limit 1 --log-level DEBUG
+# Environment variables (optional)
+export XML_EXTRACTOR_DB_SERVER="your-sql-server"
+export XML_EXTRACTOR_DB_DATABASE="YourDatabase"
 ```
+
+---
 
 ## 🚀 Production Deployment
 
-See [docs/production-deployment.md](docs/production-deployment.md) for comprehensive production deployment guide including:
+See **[Deployment Guide](docs/deployment-guide.md)** for package distribution and installation.
 
-- Performance optimization
-- Monitoring and alerting
-- Database configuration
-- Operational procedures
-- Troubleshooting
+See **[Operator Guide](docs/operator-guide.md)** for operations, monitoring, and troubleshooting.
 
-### Quick Production Setup
-```bash
-# 1. Install package
-pip install .
-
-# 2. Test connectivity
-python production_processor.py --server "prod-server" --database "DB" --limit 1
-
-# 3. Run production batch
+---
 python production_processor.py \
   --server "prod-server" \
   --database "ProductionDB" \

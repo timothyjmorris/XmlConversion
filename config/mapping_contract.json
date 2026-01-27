@@ -1412,7 +1412,7 @@
       "target_column": "risk_model_score_factor_type_1",
       "data_type": "string",
       "mapping_type": ["calculated_field"],
-      "expression": "CASE WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
+      "expression": "CASE WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'SB' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
       "data_length": 25,
       "nullable": true,
       "required": false
@@ -1424,7 +1424,7 @@
       "target_column": "risk_model_score_factor_type_2",
       "data_type": "string",
       "mapping_type": ["calculated_field"],
-      "expression": "CASE WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
+      "expression": "CASE WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'SB' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
       "data_length": 25,
       "nullable": true,
       "required": false
@@ -1436,7 +1436,7 @@
       "target_column": "risk_model_score_factor_type_3",
       "data_type": "string",
       "mapping_type": ["calculated_field"],
-      "expression": "CASE WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
+      "expression": "CASE WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'SB' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
       "data_length": 25,
       "nullable": true,
       "required": false
@@ -1448,7 +1448,7 @@
       "target_column": "risk_model_score_factor_type_4",
       "data_type": "string",
       "mapping_type": ["calculated_field"],
-      "expression": "CASE WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'snowbird' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
+      "expression": "CASE WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'SB' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
       "data_length": 25,
       "nullable": true,
       "required": false

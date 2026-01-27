@@ -50,17 +50,20 @@ elif source == "type_B":
 - Enables sandbox/dbo/product-prod schema isolation
 - Allows parallel development (different teams on different schemas)
 - Provides safe testing without production data
-- Simplifies cleanup (drop entire schema for failed experiments)
+- Supports isolated testing (different schemas for different product lines)
 
 **What This Means:**
 - ❌ NEVER hardcode schema names in code (e.g., `[dbo].table_name`)
 - ❌ NEVER use `sys.tables` to discover schemas dynamically
+- ❌ NEVER execute DDL (CREATE SCHEMA, DROP SCHEMA) in application code
 - ✅ Always read target_schema from contract config
 - ✅ Pass schema through database operations (MigrationEngine, Validator)
+- ✅ Manage schemas outside application (by you, via SQL scripts or operations)
 
 **Example - WRONG:**
 ```python
 query = f"SELECT * FROM [dbo].[app_base]"  # Hardcoded!
+cursor.execute("DROP SCHEMA [test_schema]")  # Never in app code!
 ```
 
 **Example - RIGHT:**

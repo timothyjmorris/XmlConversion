@@ -18,6 +18,23 @@ This directory contains structured knowledge that enables GitHub Copilot and oth
 
 ---
 
+## Documentation Principles
+
+- **Organized and purposeful:** Every document has a clear, stable purpose and audience.
+- **Accuracy is critical:** Incorrect or outdated docs are dangerous; keep docs aligned with code.
+- **Qualified content:** Documentation has value and cost; we continuously qualify and prune.
+- **Minimize overlap:** Reduce duplicate content across docs to ease updates and discovery.
+- **WIP isolation:** Temporary or work-in-progress content belongs in a separate `wip/` folder, not mixed with canonical docs.
+- **No temporal summaries in repo:** Status reports or audit summaries live in chat/PR comments, not as persistent files.
+
+Where to place docs:
+- Canonical references → `docs/` or root README(s) where appropriate
+- Agent skills → `.github/skills/`
+- Operational guides → `OPERATOR_GUIDE.md`, `DEPLOYMENT_GUIDE.md`
+- Temporary/WIP → `wip/` (can be organized but not treated as canonical)
+
+---
+
 ## Quick Reference: Which Skill to Read?
 
 ### I'm Adding a New Product Line

@@ -80,7 +80,7 @@ Identify Issues → Fix Problems → Repeat Until Confident
 ### Documentation Integration
 
 This testing philosophy integrates with:
-- **Mapping Principles** (`docs/mapping-principles.md`): Ensures contracts handle real data
+- **Mapping Principles** (`docs/mapping/mapping-principles.md`): Ensures contracts handle real data
 - **Requirements** (`.kiro/specs/xml-database-extraction/requirements.md`): Validates system meets real-world needs
 - **Design** (`.kiro/specs/xml-database-extraction/design.md`): Proves architecture handles production scale
 

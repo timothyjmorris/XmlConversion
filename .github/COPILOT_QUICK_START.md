@@ -46,13 +46,14 @@ Use these when asking Copilot to add features or product lines.
 ```
 
 ### 3. **Test It**
-Open Copilot Chat and ask:
+Open Copilot Chat and ask naturally:
 ```
-I want to add healthcare provider support. 
-Before suggesting code, what does DECISION_FRAMEWORKS.md say about extending configs?
+I want to add healthcare provider support. How should I scope this?
 ```
 
-Copilot should reference the decision framework about contract-driven design.
+Copilot will reference DECISION_FRAMEWORKS.md automatically with guidance on thin vertical slices.
+
+*(You don't need to tell it which file to check—it'll reference skills on its own.)*
 
 ### 4. **Start Building**
 When expanding to a new product line:
@@ -119,39 +120,63 @@ When expanding to a new product line:
 ## How to Use These Skills
 
 ### Scenario 1: Adding a New Field
+
+**You ask:**
 ```
-1. Check SYSTEM_CONSTRAINTS.md: "Should this be in code or config?"
-   → Answer: Always in mapping_contract.json
-2. Look in COMMON_PATTERNS.md: "Show me enum mapping example"
-   → Copy Pattern 2.1
-3. Extend config, write test using pattern from COMMON_PATTERNS.md
+Should I put this field mapping in code or in the config?
 ```
+
+**Copilot responds:**
+```
+According to SYSTEM_CONSTRAINTS.md: Always in mapping_contract.json
+See COMMON_PATTERNS.md Pattern 2.1 for an enum mapping example
+```
+
+---
 
 ### Scenario 2: New Product Line Support
+
+**You ask:**
 ```
-1. Check DECISION_FRAMEWORKS.md: "How do I scope this?"
-   → Answer: Thin vertical slices, one feature at a time
-2. Follow playbook in PRODUCT_LINE_EXPANSION.md (Phase 2)
-3. Use COMMON_PATTERNS.md for each slice
-4. Verify against SYSTEM_CONSTRAINTS.md checklist
+I want to add healthcare provider support. How should I scope this?
 ```
+
+**Copilot responds:**
+```
+DECISION_FRAMEWORKS.md recommends: Thin vertical slices, one feature at a time
+Use COMMON_PATTERNS.md for implementation patterns
+Verify against SYSTEM_CONSTRAINTS.md checklist before merging
+```
+
+---
 
 ### Scenario 3: Performance Problem
+
+**You ask:**
 ```
-1. Check DECISION_FRAMEWORKS.md: "Performance Decisions" section
-   → Answer: Measure first, optimize second
-2. Use patterns from COMMON_PATTERNS.md: Pattern 6.1 (baseline), Pattern 6.2 (tuning)
-3. Verify change improves metrics (don't assume)
+Processing is slow. How should I approach optimization?
 ```
 
-### Scenario 4: Uncertain About Architecture
+**Copilot responds:**
 ```
-1. Check DECISION_FRAMEWORKS.md for relevant decision tree
-   → Provides specific guidance for your situation
-2. If still unclear, check SYSTEM_CONSTRAINTS.md: "Code Review Checklist"
-   → Tells you what MUST be true
-3. Find similar pattern in COMMON_PATTERNS.md
-   → Shows how it's done
+DECISION_FRAMEWORKS.md: Measure first, optimize second
+Patterns 6.1 (baseline) and 6.2 (tuning) in COMMON_PATTERNS.md show how
+```
+
+---
+
+### Scenario 4: Uncertain About Architecture
+
+**You ask:**
+```
+I'm not sure if this design is right. What should I verify?
+```
+
+**Copilot responds:**
+```
+Use the decision tree in DECISION_FRAMEWORKS.md for your situation
+Check SYSTEM_CONSTRAINTS.md's Code Review Checklist for non-negotiables
+Find similar patterns in COMMON_PATTERNS.md
 ```
 
 ---
@@ -214,25 +239,27 @@ When expanding to a new product line:
 4. Skim COMMON_PATTERNS.md (15 min)
 ```
 
-### Tuesday: Configure Copilot
+### Tuesday: Test & Validate
 ```
-1. Add reference to copilot-instructions.md (5 min)
-2. Create .vscode/settings.json (5 min)
-3. Test Copilot with sample prompt (10 min)
-```
-
-### Wednesday: First Real Use
-```
-1. Ask Copilot for help with a feature
-2. See if it references the skills
-3. Provide feedback (was it helpful?)
+1. Open Copilot Chat
+2. Ask a natural question about the system (e.g., "Where should field mappings go?")
+3. Verify Copilot references the skills files in its response
+4. Try another scenario to see different skill references
 ```
 
-### Thursday: Team Enablement
+### Wednesday: Team Enablement
 ```
-1. Share with team: "Check .github/skills/ for guidance"
-2. Create COPILOT_PROMPTS.md with your team's common questions
-3. Discuss decision frameworks in next team meeting
+1. Share copilot-instructions.md with team
+2. Point them to .github/COPILOT_QUICK_START.md for orientation
+3. Show example: Ask Copilot a question, see skills references in response
+4. Discuss with team how this helps development
+```
+
+### Thursday: Create Team Reference
+```
+1. Create COPILOT_PROMPTS.md with your team's common questions
+2. Document which prompts work well with the skills
+3. Share examples in team meeting
 ```
 
 ### Friday: Plan Phase 2

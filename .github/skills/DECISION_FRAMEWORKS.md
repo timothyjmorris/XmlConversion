@@ -121,9 +121,10 @@ def old_validation(record):
 
 **Example - RIGHT:**
 ```python
-# Replace all callers at once
-# Search for old_validation() → update 3 files → delete function
+# Replace all callers at once (code refactoring)
+# Search for old_validation() → update 3 files → delete function (from codebase)
 # Clean, explicit, no hidden coupling
+# Note: Deleting code from repo is OK; deleting data is never OK without approval
 ```
 
 ### No Premature Optimization
