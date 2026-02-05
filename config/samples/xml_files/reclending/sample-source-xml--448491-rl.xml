@@ -1,0 +1,73 @@
+<Provenir transactionID="DE6ae8284c_19ba4e26416_07ffd19ba4e40bb7_0a5b0f0c.5" error="" Org="" shred_version="1.0">
+  <api traceId="From Postman 2026-01-15T21:53:59.482Z" dealer_number="603724" />
+  <Request Trans="ILPROCESSDEALERAPP" ID="448491" Workflow="75" Process="03800" Priority="" Status="" LockedBy="" UserID="" Version="0" Readonly="0" _LockedBy="" LockedAt="">
+    <CustData>
+      <IL_application app_cash_down_payment="6000" app_sale_price="57400.33" requested_term_months="120" loan_amount_requested="51400.33" trade_allowance="0" trade_payoff_amount="0" app_type_code="RV" individual_joint_app_ind="I" trade_net_tradein_amount="0.0" app_receive_date="01/15/2026" app_source_ind="P" app_entry_date="2026-01-15 21:54:22.099" client_id="8675309" parent_dealer_number="603724" esign_eligible="N" application_eligible="true" dlr_broker="Y" dlr_num_ht="" dlr_num_marine="" dlr_num_mc="" dlr_num_or="" dlr_num_rv="603724" dlr_num_trailer="" dlr_address_line1="1706 Tennison Pkwy #160" dlr_city="Colleyville" dlr_email="apps@rocksolidfunding.com;apps@rocksolidfunding.com" dlr_fax="8004714842" dlr_name="Rock Solid Funding" dlr_phone="8006071108" dlr_state="TX" dlr_zipcode="76034" fsp_name="" fsp_phone="" dealer_count="38.0" app_counted="Y" assigned_analyst="joshua.ramsey@merrickbank.com" duplicate_app_ind="Y">
+        <IL_collateral coll1_make="JAYCO" coll1_mileage="68" coll1_model="CRUISER" coll1_value="57000" coll1_VIN="JC4DC4450RS002530" coll1_year="2025" coll1_type="rv" coll_option_total_value="1677" coll_option1="1677" coll_option1_desc="Sweet Sound System" coll_option2="" coll_option2_desc="" coll4_new_used_demo="" coll3_new_used_demo="" coll2_new_used_demo="" coll_option3="" coll_option3_desc="" coll_option4="" coll_option4_desc="" coll_option5="" coll_option5_desc="" coll_option6="" coll_option6_desc="" coll_option7="" coll_option7_desc="" coll_option8="" coll_option8_desc="" coll1_new_used_demo="N" />
+        <IL_app_decision_info />
+        <IL_fund_dlr_ach dlr_aba="111000614" dlr_account_num="582991595" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="Chase Bank" dlr_bank_phone="" dlr_check_or_sav="22" dlr_name="Rock Solid Funding" dlr_num="603724" dlr_fsp_num="" dlr_fsp_yn="N" pre_note_date="null" />
+        <IL_ITI_control />
+        <IL_application_verification />
+        <IL_fund_checklist loan_officer_responsible_code="9998" collateral_ages_within_policy="Y" />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income />
+        </IL_Incomes>
+        <WorkItems>
+          <WorkItem />
+        </WorkItems>
+        <IL_Adjustments>
+          <IL_Adjustment />
+        </IL_Adjustments>
+        <IL_Payment />
+        <IL_TempVariables />
+        <IL_ITI_note />
+        <IL_ITI_portfolio />
+        <IL_contact suffix="" ssn="123456789" middle_initial="Q" last_name="Applicant" first_name="Showcase" email="showcase@example.com" birth_date="01/05/1985" cell_phone="8015551234" ac_role_tp_c="PR" con_id="46147">
+          <IL_contact_employment business_name="Acme Inc" business_phone="8015550000" salary="5000" title_position="Sales" months_at_job="59" other_income_amt="600" other_income_source_type_code="OTHER" self_employed_ind="N" other_income_basis_type_code="MONTH" salary_basis_type_code="MONTH" employment_type_code="CURR" city="Murray" state="UT" zip_code="84107" address_line1="1 Commerce Blvd" po_box="" rural_route="" street_name="Commerce Blvd" street_number="1" />
+          <IL_contact_address city="Salt Lake City" residence_monthly_pymnt="1500" months_at_residence="81" po_box="" rural_route="" state="UT" street_name="Main St" street_number="123" apartment_unit_number="" zip_code="84101" address_type_code="CURR" ownership_type_code="O" />
+          <IL_contact_address />
+        </IL_contact>
+        <IL_comments comment_seq_number="1" comment="Reported SSN: 123456789 Matches a Previous Applicant's SSN: 123456789, Previous Applicant Name: Showcase Applicant, Application ID: 448322, Decision: , Analyst: joshua.ramsey@merrickbank.com" user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2026-01-15 21:54:23.026" />
+        <IL_comments comment_seq_number="2" comment="Reported SSN: 123456789 Matches a Previous Applicant's SSN: 123456789, Previous Applicant Name: Showcase Applicant, Application ID: 448390, Decision: , Analyst: joshua.ramsey@merrickbank.com" user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2026-01-15 21:54:23.027" />
+        <IL_comments comment_seq_number="3" comment="Reported SSN: 123456789 Matches a Previous Applicant's SSN: 123456789, Previous Applicant Name: Showcase Applicant, Application ID: 448436, Decision: , Analyst: joshua.ramsey@merrickbank.com" user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2026-01-15 21:54:23.028" />
+        <IL_comments comment_seq_number="4" comment="Reported SSN: 123456789 Matches a Previous Applicant's SSN: 123456789, Previous Applicant Name: Showcase Applicant, Application ID: 448466, Decision: , Analyst: joshua.ramsey@merrickbank.com" user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2026-01-15 21:54:23.028" />
+      </IL_application>
+    </CustData>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" ID="SSDUP90-" Description="Duplicate Social Security Number on applications 90 or less days old." Timestamp="2026-01-15 21:54:23.029" Severity="0" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2026-01-15 21:54:22.928" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2026-01-15 21:54:22.929" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2026-01-15 21:54:22.930" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2026-01-15 21:54:22.931" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2026-01-15 21:54:22.931" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2026-01-15 21:54:22.942" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2026-01-15 21:54:22.943" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2026-01-15 21:54:22.944" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2026-01-15 21:54:22.945" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELCO" Timestamp="2026-01-15 21:54:22.946" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELPR" Timestamp="2026-01-15 21:54:22.948" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2026-01-15 21:54:22.949" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2026-01-15 21:54:22.974" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2026-01-15 21:54:22.975" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2026-01-15 21:54:22.977" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2026-01-15 21:54:22.979" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2026-01-15 21:54:22.980" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2026-01-15 21:54:23.011" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2026-01-15 21:54:23.011" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="2026-01-15 21:54:23.012" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2026-01-15 21:54:23.029" Status="true" />
+      <Journal Type="Process" ID="03800" Timestamp="2026-01-15 21:54:23.029" Status="Fail" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2026-02-05 16:34:14.353" Status="Opened" />
+    </Journals>
+  </Request>
+  <queues>
+    <queue name="Rock Solid Work Queue" id="42" />
+    <queue name="A VIP Work Queue" id="32" />
+    <queue name="A Work Queue" id="28" />
+    <queue name="A $0 - $75,000 Work Queue" id="43" />
+    <queue name="T All Applications" id="45" />
+  </queues>
+</Provenir>

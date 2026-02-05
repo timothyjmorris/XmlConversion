@@ -1,0 +1,75 @@
+<Provenir ipaddress="172.51.51.51, 204.10.148.229:15554, 10.254.23.54" dt_dealer_id="600026" dt_app_id="1070003779" lender_dealer_id="300409" transactionID="DE05e15374b_19ba2f81970_07ffd19ba2fa4d89_0a5b0f0c.2" error="" Org="" product="rl" app_source="API" shred_version="1.0">
+  <Request ID="448464" Process="01800" LockedBy="" UserID="" Priority="" Status="" Workflow="75" Trans="ILPROCESSDEALERTRACKAPP" Readonly="0" _LockedBy="" LockedAt="">
+    <CustData>
+      <IL_application app_source_ind="D" app_type_code="RV" sub_type_code="" parent_dealer_number="300409" esign_eligible="Y" application_eligible="true" dlr_broker="N" dlr_num_ht="" dlr_num_marine="" dlr_num_mc="" dlr_num_or="" dlr_num_rv="605143" dlr_num_trailer="" dlr_address_line1="" dlr_city="" dlr_email="astarr@merrickbank.com" dlr_fax="9996663333" dlr_name="Goofy's Trailers" dlr_phone="" dlr_state="" dlr_zipcode="" fsp_name="Disney Financial" fsp_phone="2225556663" requested_term_months="36" app_cash_down_payment="1500" app_sale_price="22000" trade_net_tradein_amount="12000" app_invoice_amount="23000" loan_amount_requested="21000" trade_year="2011" trade_make="Trade Description" trade_model="Trade Model" trade1_HP_Marine="S12" trade1_engine_size_CC="Super Duper Big" trade_financed_by="Name of Creditor" trade2_year="2013" trade2_make="Trade Other Description" trade2_model="Trade Other Model" client_id="1070003779" campaign_num="MARRV" individual_joint_app_ind="J" opt_out_ind="N" tied_app_id="" tied_app_indicator="" add_TTL_to_amt_fin="" app_entry_date="2026-01-09 14:19:59.416" app_receive_date="01/09/2026" dealer_count="4.0" app_counted="Y">
+        <IL_fund_dlr_ach dlr_num="605143" dlr_aba="124000054" dlr_account_num="1345654" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="Zions Bank" dlr_bank_phone="" dlr_check_or_sav="22" dlr_name="Goofy's Trailers" dlr_fsp_num="910222" dlr_fsp_yn="Y" pre_note_date="null" />
+        <IL_app_decision_info />
+        <IL_collateral coll1_year="2020" coll1_make="ACURA" coll1_model="CL" coll1_VIN="2HE2323L232333217" coll2_HP_Marine="400" coll2_VIN="Engine Serial" coll2_model="Engine Model" coll2_make="Engine Make" coll2_year="2020" coll3_VIN="Engine Serial" coll3_HP_Marine="400" coll3_model="Engine Model" coll3_make="Engine Make" coll3_year="2020" coll4_make="Trailer Make" coll4_model="Trailer Model" coll4_year="2019" coll4_VIN="Trailer Serial" coll2_new_used_demo="N" coll3_new_used_demo="N" coll4_new_used_demo="N" coll1_new_used_demo="N" coll_is_motorhome="Y" coll2_value="0" coll1_value="0" coll3_value="0" coll4_value="0" />
+        <IL_application_verification />
+        <IL_fund_checklist fund_this_loan_indicator="" ct_cash_down_payment="" ct_cash_proceeds="" ct_rate_over_split="" ct_sale_price="" ct_total_dealer_proceeds="" document_prep_fee="" finance_charge="" license_fee="" loan_amount_approved="" loan_officer_responsible_code="" loan_officer_open_acct_code="" payoff_amount="" registration_fee="" payoff_loan_number="" subtotal="" taxes="" term="" title_fee="" total_amount_financed="" total_of_payments="" warranty_term="" />
+        <IL_TempVariables />
+        <IL_rule_flags />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income />
+        </IL_Incomes>
+        <IL_letters_faxes />
+        <IL_ITI_control />
+        <IL_comments comment_seq_number="1" comment="Data truncated for field (other_income_basis_type_code), Original value: MONTHLY, New saved value: MONTHL." user_id="System" comment_type_code="API" related_to="" time_stamp="2026-01-09 14:19:59.519" />
+        <IL_ITI_line />
+        <IL_ITI_loan_add_collateral />
+        <IL_ITI_loan_add_tickler />
+        <IL_ITI_note />
+        <IL_ITI_note_code_status />
+        <IL_ITI_note_misc />
+        <IL_ITI_note_payment />
+        <IL_ITI_note_variable />
+        <IL_ITI_payment_sched />
+        <IL_ITI_portfolio />
+        <IL_contact first_name="JACINTA" middle_initial="N" last_name="KIMBROUGH" ssn="666986274" home_phone="8152271188" email="bob@aol.com" cell_phone="" drivers_license="407082929" drivers_license_state="IL" birth_date="11/02/1977" suffix="" ac_role_tp_c="PR" con_id="46134">
+          <IL_contact_address years_at_residence="4" months_at_residence="2" residence_monthly_pymnt="700" apartment_unit_number="" city="DES PLAINES" po_box="" rural_route="" state="IL" zip_code="60016" street_number="9446" ownership_type_code="R" street_name="N DEE STREET" address_type_code="CURR" address_seq_no="1" />
+          <IL_contact_address street_number="" apartment_unit_number="" po_box="3232" rural_route="" city="BUMMER CITY" state="NY" zip_code="11552" street_name="" address_type_code="PREV" address_seq_no="2" />
+          <IL_contact_employment other_income_amt="2000" business_name="CHASE" business_phone="5162131243" years_at_job="3" months_at_job="2" other_income_source_type_code="OTHER" self_employed_ind="N" salary="14166.67" other_income_basis_type_code="MONTHL" title_position="MANAGER" employment_seq_no="1" employment_type_code="CURR" salary_basis_type_code="MONTH" />
+          <IL_contact_employment self_employed_ind="N" salary="0.00" employment_seq_no="2" employment_type_code="PREV" salary_basis_type_code="MONTH" />
+        </IL_contact>
+        <IL_contact first_name="JANALEE" middle_initial="M" last_name="CHANDLER-ZOSS" ssn="666055123" relationship_to_applicant="spouse" home_phone="8017831212" email="sally@aol.com" cell_phone="" drivers_license="SALLY5165KGCNJ" drivers_license_state="NJ" birth_date="04/22/1943" suffix="" ac_role_tp_c="SEC" con_id="46135">
+          <IL_contact_address years_at_residence="4" residence_monthly_pymnt="1000" apartment_unit_number="" city="HINSDALE" po_box="" rural_route="" state="MA" zip_code="01235" street_number="280" ownership_type_code="X" street_name="MAIN STREET" address_type_code="CURR" address_seq_no="1" />
+          <IL_contact_address street_name="" address_type_code="PREV" address_seq_no="2" />
+          <IL_contact_employment business_name="CHASE" business_phone="5162138765" years_at_job="3" other_income_source_type_code="OTHER" self_employed_ind="N" salary="12500.00" other_income_basis_type_code="" title_position="DEVELOPER" employment_seq_no="1" employment_type_code="CURR" salary_basis_type_code="MONTH" />
+          <IL_contact_employment self_employed_ind="N" salary="0.00" employment_seq_no="2" employment_type_code="PREV" salary_basis_type_code="MONTH" />
+        </IL_contact>
+        <IL_comments comment_seq_number="2" comment="John Smith: CAN I HAVE @ WORD NOW?" user_id="DEALER MSG" comment_type_code="API" related_to="" time_stamp="2026-01-09 14:19:59.529" />
+      </IL_application>
+    </CustData>
+    <Reports />
+    <Documents />
+    <Audits>
+      <Audit UserID="SYSTEM" XPATH="other_income_basis_type_code" To="MONTHL" From="MONTHLY" Timestamp="2026-01-09 14:19:59.518" Source="API" />
+    </Audits>
+    <Rules>
+      <Rule guid="repoObj_063d536e5_141c6fd9ecb_07f11142914bbc8b" ID="MSDLR" Description="Dealer info missing. Verify if dealer is dormant, contact dealer and withdraw application." Timestamp="2026-01-09 14:20:00.057" Severity="0" Override="0" AllowOverride="0" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2026-01-09 14:19:59.976" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2026-01-09 14:19:59.986" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2026-01-09 14:19:59.995" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2026-01-09 14:20:00.006" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2026-01-09 14:20:00.015" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2026-01-09 14:20:00.031" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2026-01-09 14:20:00.040" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2026-01-09 14:20:00.049" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2026-01-09 14:20:00.058" Status="true" />
+      <Journal Type="Rule" ID="APPGENDELCO" Timestamp="2026-01-09 14:20:00.070" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELPR" Timestamp="2026-01-09 14:20:00.080" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2026-01-09 14:20:00.087" Status="Fail" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2026-02-05 16:34:50.032" Status="Opened" />
+    </Journals>
+  </Request>
+  <queues>
+    <queue name="A Work Queue" id="28" />
+    <queue name="A $0 - $25,000 Work Queue" id="29" />
+    <queue name="A $0 - $50,000 Work Queue" id="30" />
+    <queue name="A $0 - $75,000 Work Queue" id="43" />
+    <queue name="T All Applications" id="45" />
+  </queues>
+</Provenir>

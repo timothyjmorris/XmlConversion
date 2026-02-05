@@ -1,0 +1,113 @@
+<Provenir transactionID="DE06ec1dd20_19b0f5942b6_07ffd19b0f5b4110_0a5b0f0c.1" error="" Org="" shred_version="3.0">
+  <api traceId="From Postman 2025-12-11T23:02:03.509Z" dealer_number="605072" />
+  <Request Trans="ILPROCESSDEALERAPP" ID="448360" Workflow="75" Process="03800" Priority="" Status="" LockedBy="" UserID="" Version="0" Readonly="0" _LockedBy="" LockedAt="" LastUpdatedBy="TIMOTHY.MORRIS@MERRICKBANK.COM">
+    <CustData>
+      <IL_application app_cash_down_payment="4400" app_sale_price="43408.17" requested_term_months="180" loan_amount_requested="35508.17" trade_allowance="3500" trade_payoff_amount="17029.52" app_type_code="MARINE" individual_joint_app_ind="J" trade_net_tradein_amount="-13529.52" app_receive_date="12/11/2025" app_source_ind="P" app_entry_date="2025-12-11 23:02:08.229" client_id="8675321" parent_dealer_number="605072" esign_eligible="Y" application_eligible="true" dlr_broker="N" dlr_num_ht="" dlr_num_marine="605072" dlr_num_mc="" dlr_num_or="" dlr_num_rv="" dlr_num_trailer="" dlr_address_line1="1112 Preserve Point Drive" dlr_city="Winter Park" dlr_email="astarr@merrickbank.com" dlr_fax="9996663333" dlr_name="Mickey Mouse RV" dlr_phone="5709921234" dlr_state="FL" dlr_zipcode="32789" fsp_name="Disney Financial" fsp_phone="2225556663" dealer_count="74.0" app_counted="Y" assigned_analyst="" duplicate_app_ind="Y" last_update_time="2025-12-11 23:10:31.459">
+        <IL_collateral coll1_make="Yamaha" coll1_mileage="4" coll1_model="AR210" coll1_value="28500" coll1_VIN="1HGBH41JXMN109186" coll1_year="2025" coll1_type="boat" coll2_make="Mercury" coll2_model="FourStroke 150" coll2_value="13500" coll2_VIN="ENG-150879-45" coll2_year="2025" coll2_type="engine" coll4_make="ShoreLand’r" coll4_model="SLR-222" coll4_value="3200" coll4_VIN="2G1WD58C369175838" coll4_year="2021" coll4_type="other_trailer" coll_option_total_value="2872" coll_option1="500" coll_option1_desc="Bimini Top" coll_option2="1200" coll_option2_desc="Trailer Package" coll4_new_used_demo="U" coll3_new_used_demo="" coll2_new_used_demo="N" coll_option3="600" coll_option3_desc="Stainless Prop" coll_option4="" coll_option4_desc="" coll_option5="" coll_option5_desc="" coll_option6="" coll_option6_desc="" coll_option7="150" coll_option7_desc="Spare Tire" coll_option8="422" coll_option8_desc="Super Long Tongue" coll1_new_used_demo="N" />
+        <IL_app_decision_info manual_adj_monthly_income="" monthly_income="13620" regular_pymt_amount1="0" manual_adj_monthly_debt="0.00" monthly_debt="0" debt_to_income_ratio="0" manual_adj_DTI_ratio="0" max_DTI="47.49" />
+        <IL_fund_dlr_ach dlr_aba="026009593" dlr_account_num="45674323" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="Bill Bixby Bank" dlr_bank_phone="" dlr_check_or_sav="22" dlr_name="Mickey Mouse RV" dlr_num="605072" dlr_fsp_num="910222" dlr_fsp_yn="Y" pre_note_date="null" />
+        <IL_ITI_control />
+        <IL_application_verification />
+        <IL_fund_checklist collateral_ages_within_policy="Y" loan_officer_responsible_code="3000" />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income baseMonthlyIncome="0.00" ytdMonthlyIncome="0.00" />
+        </IL_Incomes>
+        <WorkItems>
+          <WorkItem />
+        </WorkItems>
+        <IL_Adjustments>
+          <IL_Adjustment />
+        </IL_Adjustments>
+        <IL_Payment />
+        <IL_TempVariables />
+        <IL_ITI_note />
+        <IL_ITI_portfolio />
+        <IL_contact suffix="" ssn="666724863" middle_initial="A" last_name="CAPUTO" first_name="JULIE" email="experian-star-test-data@merrickbank.com" birth_date="01/20/1959" cell_phone="5617366450" home_phone="5617871250" ac_role_tp_c="PR" con_id="46090">
+          <IL_contact_employment business_name="Acme Inc" business_phone="8015550000" salary="7550" title_position="Sales" months_at_job="41" other_income_amt="1620" other_income_source_type_code="RENTAL" self_employed_ind="N" other_income_basis_type_code="MONTH" salary_basis_type_code="MONTH" employment_type_code="CURR" city="Murray" state="UT" zip_code="84107" address_line1="1795 S Commerce Blvd" po_box="" rural_route="" street_name="S Commerce Blvd" street_number="1795" />
+          <IL_contact_employment business_name="United States Navy" business_phone="8015553333" title_position="Damage Controllman L-23" months_at_job="24" salary="3800" other_income_amt="0" employment_type_code="PREV" other_income_basis_type_code="MONTH" salary_basis_type_code="MONTH" self_employed_ind="N" city="Ogden" state="UT" zip_code="84401" address_line1="555 Industrial Way # Suite 387" po_box="" rural_route="" street_name="Industrial Way" street_number="555" />
+          <IL_contact_address city="" residence_monthly_pymnt="" months_at_residence="0" po_box="" rural_route="" state="" street_name="" street_number="" apartment_unit_number="" zip_code="33552" address_type_code="PREV" ownership_type_code="" years_at_residence="0" zip="84003" />
+          <IL_contact_address />
+          <IL_contact_address address_type_code="PATR" address_seq_no="3" street_number="" street_name="" apartment_unit_number="" po_box="" rural_route="" city="" zip_code="" years_at_residence="0" months_at_residence="0" />
+          <IL_contact_address />
+        </IL_contact>
+        <IL_contact suffix="" ssn="666135502" middle_initial="K" last_name="RADLEIN" first_name="LAURIEANN" email="experian-test-data-secondary@merrickbank.com" birth_date="02/14/1968" cell_phone="8015556789" ac_role_tp_c="SEC" con_id="46091">
+          <IL_contact_employment business_name="Sidekick LLC" business_phone="8015551111" salary="3200" title_position="Assistant" months_at_job="62" other_income_amt="1250" other_income_source_type_code="PNSION" self_employed_ind="N" other_income_basis_type_code="MONTH" salary_basis_type_code="MONTH" employment_type_code="CURR" city="" state="" zip_code="" address_line1="" po_box="" rural_route="" street_name="" street_number="" />
+          <IL_contact_address city="MAYS CHAPEL" residence_monthly_pymnt="" months_at_residence="4" po_box="213A" rural_route="" state="MD" street_name="" street_number="" apartment_unit_number="" zip_code="262520119" address_type_code="CURR" ownership_type_code="" years_at_residence="0" />
+          <IL_contact_address city="LOCHLEARN" months_at_residence="52" po_box="" rural_route="" state="MD" street_name="W NORTHWOOD PKWY" street_number="530" apartment_unit_number="" zip_code="26200" address_type_code="PREV" />
+          <IL_contact_address city="BALTIMORE" residence_monthly_pymnt="" months_at_residence="0" po_box="" rural_route="" state="MD" street_name="WOODLEA AVE" street_number="3507" apartment_unit_number="B-29" zip_code="26214" ownership_type_code="" address_type_code="PATR" years_at_residence="0" />
+        </IL_contact>
+        <IL_comments comment_seq_number="1" comment="timothy.morris@favorite-dealer.net:  Hey bro, this is totally good -- so I like need you to get after this! Call me at 1-800-HURRY-UP" user_id="DEALER MSG" comment_type_code="API" related_to="" time_stamp="2025-12-11 23:02:08.528" />
+        <IL_comments comment_seq_number="2" comment="Reported SSN: 666724863 Matches a Previous Applicant's SSN: 666724863, Previous Applicant Name: JULIE CAPUTO, Application ID: 447900, Decision: DECLN, Analyst: " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2025-12-11 23:02:09.244" />
+        <IL_comments comment_seq_number="3" comment="Reported SSN: 666724863 Matches a Previous Applicant's SSN: 666724863, Previous Applicant Name: JULIE CAPUTO, Application ID: 447901, Decision: DECLN, Analyst: timothy.morris@merrickbank.com" user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2025-12-11 23:02:09.246" />
+        <IL_comments comment_seq_number="4" comment="Reported SSN: 666724863 Matches a Previous Applicant's SSN: 666724863, Previous Applicant Name: JULIE CAPUTO, Application ID: 448316, Decision: NONE, Analyst: timothy.morris@merrickbank.com" user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2025-12-11 23:02:09.248" />
+        <IL_comments comment_seq_number="5" comment="Reported SSN: 666724863 Matches a Previous Applicant's SSN: 666724863, Previous Applicant Name: JULIE CAPUTO, Application ID: 448323, Decision: , Analyst: timothy.morris@merrickbank.com" user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2025-12-11 23:02:09.250" />
+        <IL_comments comment_seq_number="6" comment="Reported SSN: 666135502 Matches a Previous Applicant's SSN: 666135502, Previous Applicant Name: LAURIEANN RADLEIN, Application ID: 447840, Decision: DECLN, Analyst: " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2025-12-11 23:02:09.265" />
+        <IL_comments comment_seq_number="7" comment="Reported SSN: 666135502 Matches a Previous Applicant's SSN: 666135502, Previous Applicant Name: LAURIEANN RADLEIN, Application ID: 448344, Decision: , Analyst: " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2025-12-11 23:02:09.267" />
+        <IL_comments comment_seq_number="8" comment="Reported SSN: 666135502 Matches a Previous Applicant's SSN: 666135502, Previous Applicant Name: LAURIEANN RADLEIN, Application ID: 448356, Decision: , Analyst: " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2025-12-11 23:02:09.269" />
+        <IL_comments comment_seq_number="9" comment="Reported SSN: 666135502 Matches a Previous Applicant's SSN: 666135502, Previous Applicant Name: LAURIEANN RADLEIN, Application ID: 448359, Decision: , Analyst: " user_id="System" comment_type_code="DA" related_to="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" time_stamp="2025-12-11 23:02:09.272" />
+        <IL_rule_flags ILDTI="F" />
+      </IL_application>
+    </CustData>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" ID="SSDUP90-" Description="Duplicate Social Security Number on applications 90 or less days old." Timestamp="2025-12-11 23:02:09.273" Severity="0" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2025-12-11 23:02:09.027" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2025-12-11 23:02:09.038" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2025-12-11 23:02:09.047" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2025-12-11 23:02:09.057" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2025-12-11 23:02:09.067" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2025-12-11 23:02:09.098" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2025-12-11 23:02:09.106" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2025-12-11 23:02:09.115" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2025-12-11 23:02:09.123" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELCO" Timestamp="2025-12-11 23:02:09.133" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELPR" Timestamp="2025-12-11 23:02:09.144" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2025-12-11 23:02:09.154" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2025-12-11 23:02:09.171" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2025-12-11 23:02:09.176" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2025-12-11 23:02:09.182" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2025-12-11 23:02:09.188" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2025-12-11 23:02:09.194" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2025-12-11 23:02:09.204" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2025-12-11 23:02:09.212" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="2025-12-11 23:02:09.213" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2025-12-11 23:02:09.273" Status="true" />
+      <Journal Type="Process" ID="03800" Timestamp="2025-12-11 23:02:09.274" Status="Fail" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-12-11 23:07:23.892" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-12-11 23:09:12.656" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-12-11 23:10:06.839" Status="Opened" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2025-12-11 23:10:31.170" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2025-12-11 23:10:31.171" Status="false" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2025-12-11 23:10:31.474" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2025-12-11 23:10:31.474" Status="false" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-12-16 22:56:42.468" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-12-17 19:35:43.405" Status="Opened" />
+    </Journals>
+    <Audits>
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Street Number (patriot)" To="" Timestamp="2025-12-11 23:10:31.156" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Street Name (patriot)" To="" Timestamp="2025-12-11 23:10:31.156" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Unit (patriot)" To="" Timestamp="2025-12-11 23:10:31.156" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="PO Box (patriot)" To="" Timestamp="2025-12-11 23:10:31.156" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Rural Route (patriot)" To="" Timestamp="2025-12-11 23:10:31.156" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="City (patriot)" To="" Timestamp="2025-12-11 23:10:31.157" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Zip (patriot)" To="" Timestamp="2025-12-11 23:10:31.157" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Years At Residence (patriot)" To="0" From="" Timestamp="2025-12-11 23:10:31.157" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Months At Residence (patriot)" To="0" From="" Timestamp="2025-12-11 23:10:31.157" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Unit (current)" To="dgf" From="" Timestamp="2025-12-11 23:10:31.157" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Years At Residence (current)" To="0" From="" Timestamp="2025-12-11 23:10:31.158" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Years At Residence (patriot)" To="0" From="" Timestamp="2025-12-11 23:10:31.462" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Months At Residence (patriot)" To="0" From="19" Timestamp="2025-12-11 23:10:31.462" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Housing Payment (patriot)" To="" From="1400" Timestamp="2025-12-11 23:10:31.462" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Housing Situation (patriot)" To="" From="R" Timestamp="2025-12-11 23:10:31.462" Source="API" />
+      <Audit UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" XPATH="Years At Residence (current)" To="0" From="" Timestamp="2025-12-11 23:10:31.463" Source="API" />
+    </Audits>
+  </Request>
+  <queues>
+    <queue name="A Work Queue" id="28" />
+    <queue name="A $0 - $50,000 Work Queue" id="30" />
+    <queue name="A $0 - $75,000 Work Queue" id="43" />
+    <queue name="T All Applications" id="45" />
+  </queues>
+</Provenir>

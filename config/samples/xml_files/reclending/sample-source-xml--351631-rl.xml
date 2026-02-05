@@ -1,0 +1,316 @@
+<Provenir Org="" sessionID="" stack="" Version="" ProductType="" ResponseCode="true" transactionID="DE05c141de4_17226d06f08_07ffd17226d0c98a_0a147650.104">
+  <Request ID="351631" UserID="" Workflow="75" Timestamp="" Status="" Trans="WSCLOSE" Readonly="0" Process="05800" Version="" Priority="" Timeout="" Trace="" LockedBy="" UnLockOnExit="0" _LockedBy="" transactionCounter="69" LockedAt="">
+    <CustData>
+      <IL_application app_entry_date="" campaign_num="MARRV" app_source_ind="F" add_TTL_to_amt_fin="" app_cash_down_payment="" app_receive_date="05/18/2020" app_sale_price="10000.00" app_type_code="RV" client_id="" dlr_address_line1="1743 W Hwy 72" dlr_city="Fredericktown" dlr_email="sarah@72westmotors.com" dlr_fax="7278220500" dlr_name="72 West Motors" dlr_phone="5737836500" dlr_state="MO" dlr_zipcode="63645" duplicate_app_id="" EODRet="ILPROCESS" fsp_name="Priority One" fsp_phone="7278227171" individual_joint_app_ind="J" last_update_by="" loan_amount_requested="10000.00" opt_out_ind="" process_date="2020-5-18 13:47:34.126" pymnt_prot_plan="" requested_term_months="" sec_user_signature_ind="" signature_ind="" supervisor_rev_ind="" tied_app_id="" trade_allowance="" trade_financed_by="" trade_make="" trade_model="" trade_net_tradein_amount="" trade_payoff_amount="" trade_year="" trade1_engine_size_CC="" trade1_HP_Marine="" trade2_engine_size_CC="" trade2_HP_Marine="" trade2_make="" trade2_model="" trade2_year="" trade3_engine_size_CC="" trade3_HP_Marine="" trade3_make="" trade3_model="" trade3_year="" trade4_engine_size_CC="" trade4_HP_Marine="" trade4_make="" trade4_model="" trade4_year="" TU_access_code="" dlr_num_rv="603622" dlr_num_marine="" dlr_num_ht="" dlr_num_or="" app_invoice_amount="" parent_dealer_number="603622" dealer_count="3.0" app_counted="Y" duplicate_app_ind="Y">
+        <IL_contact ac_role_tp_c="PR" con_id="23215" first_name="vada" middle_initial="s" last_name="baughmann" suffix="" birth_date="05/10/1978" ssn="666541374" home_phone="" cell_phone="" ssn_last_4="1374">
+          <IL_contact_address address_type_code="CURR" address_seq_no="" ownership_type_code="" street_number="204" street_name="edith" apartment_unit_number="" po_box="" rural_route="" city="latrobe" state="PA" zip_code="15650" residence_monthly_pymnt="" years_at_residence="" months_at_residence="" />
+          <IL_contact_employment employment_type_code="CURR" employment_seq_no="" business_phone="" business_name="" title_position="" years_at_job="" months_at_job="" salary="10000.00" other_income_amt="" other_income_source_type_code="" />
+          <IL_contact_address address_type_code="PREV" address_seq_no="" />
+          <IL_contact_employment employment_type_code="PREV" employment_seq_no="" />
+        </IL_contact>
+        <IL_contact ac_role_tp_c="SEC" con_id="23216" first_name="janet " middle_initial="l" last_name="bremner" suffix="" birth_date="01/05/1978" ssn="666145512" home_phone="" cell_phone="" ssn_last_4="5512">
+          <IL_contact_address address_type_code="CURR" address_seq_no="" ownership_type_code="" street_number="2" street_name="east" apartment_unit_number="" po_box="" rural_route="" city="newport beach" state="CA" zip_code="92663" residence_monthly_pymnt="" years_at_residence="" months_at_residence="" />
+          <IL_contact_address address_type_code="PREV" address_seq_no="" />
+          <IL_contact_employment employment_type_code="CURR" employment_seq_no="" business_phone="" business_name="" title_position="" years_at_job="" months_at_job="" salary="10000.00" other_income_amt="" other_income_source_type_code="" />
+          <IL_contact_employment employment_type_code="PREV" employment_seq_no="" />
+        </IL_contact>
+        <IL_app_decision_info regular_pymt_amount1="" monthly_debt="" monthly_income="" debt_to_income_ratio="" manual_adj_monthly_debt="" manual_adj_monthly_income="" manual_adj_DTI_ratio="" manual_adj_DTI_notes="" decision_type_code="NONE" decision_date="" TU_trans_risk_auto_score="" TU_trans_risk_auto_score2="" experian_fico_score_v8="" experian_fico_score_v8_2="" FICO_decline_code1="" FICO_decline_code2="" FICO_decline_code3="" FICO_decline_code4="" FICO_decline_code5="" FICO2_decline_code1="" FICO2_decline_code2="" FICO2_decline_code3="" FICO2_decline_code4="" FICO2_decline_code5="" risk_model_score="" Risk_Model_decline_code1="" Risk_Model_decline_code2="" policy_override_employee_code="" override_type_code="" experian_bankruptcy_score="" experian_bankruptcy_score2="" TU_bankruptcy_score="" TU_bankruptcy_score2="" CB_bankruptcy_decline_code1="" CB_bankruptcy_decline_code2="" CB_bankruptcy_decline_code3="" CB_bankruptcy_decline_code4="" CB2_bankruptcy_decline_code1="" CB2_bankruptcy_decline_code2="" CB2_bankruptcy_decline_code3="" CB2_bankruptcy_decline_code4="" override_type_code_notes="" />
+        <IL_collateral coll1_new_used_demo="N" coll1_year="2020" coll1_make="large" coll1_model="rv" coll2_year="" coll2_make="" coll2_model="" coll2_HP_Marine="" coll3_year="" coll3_make="" coll3_model="" coll3_HP_Marine="" coll4_year="" coll4_make="" coll4_model="" coll_is_motorhome="" coll_is_harley="" engine_size_CC="" coll_value_book_used="" coll_value_book_page="" coll1_value="" coll2_value="" coll3_value="" coll_option1_desc="" coll_option1="" coll_option2_desc="" coll_option2="" coll_option3_desc="" coll_option3="" coll_option4_desc="" coll_option4="" coll_option5_desc="" coll_option5="" coll_option6_desc="" coll_option6="" coll_option7_desc="" coll_option7="" coll_option8_desc="" coll_option8="" coll_option9_desc="" coll_option9="" coll_option_total_value="" coll_combined_value="" />
+        <IL_fund_dlr_ach dlr_num="603622" dlr_name="72 West Motors        " dlr_aba="081918425" dlr_account_num="1124870" dlr_check_or_sav="22" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="First State Comm." dlr_bank_phone="5737564547" dlr_fsp_yn="Y" dlr_fsp_num="900016" />
+        <IL_ITI_control />
+        <IL_ITI_line />
+        <IL_ITI_loan_add_collateral />
+        <IL_ITI_add_tickler />
+        <IL_ITI_note />
+        <IL_ITI_note_code_status />
+        <IL_ITI_note_misc />
+        <IL_ITI_note_payment />
+        <IL_ITI_note_variable />
+        <IL_ITI_payment_sched />
+        <IL_ITI_portfolio />
+        <IL_application_verification />
+        <IL_fund_checklist additional_collateral_records="" additional_cosigners="" additional_payment_schedules="" app_signed_borrower1="" app_signed_borrower2="" applicant_paystub_expire="" change_dlr_default_MR="" chk_requested_by="" cl_diisability_mb_lienholder="" coapplicant_paystub_expire="" collateral_ages_within_policy="Y" collateral_percent_used_confirmed="" collateral_ws_purch_agreement="" collateral_ws_unit_confirmation="" credit_bureau_expire="" ct_addendum_signed_borr1="" ct_addendum_signed_borr2="" ct_address_confirmed="" ct_amt_financed_within_policy="" ct_apr_within_guidelines="" ct_cash_down_payment="" ct_cash_proceeds="" ct_collateral_confirmed="" ct_cash_downct_contract_state_payment="" ct_correct_contract_state="" ct_down_pymt_percentage="" ct_fee_amendment_letter="" ct_fee_fedex="" ct_fee_Florida_doc_stamp_tax="" ct_fee_sales_tax="" ct_fee_ucc1="" ct_first_pymnt_by_dlr="" ct_initials_presented="" ct_itemization_confirmed="" ct_loan_to_value_percentage="" ct_net_tradein_allowance="" ct_note_date="" ct_note_pymt_amount="" ct_participation_percentage="" ct_participation_proceeds="" ct_POA_in_titled_state="" ct_pymt_schedule_confirmed="" ct_rate_over_split="" ct_sale_price="" ct_signed_borrower1="" ct_signed_borrower2="" ct_titled_in_state="" ct_total_dealer_proceeds="" ct_UCC_prin_refund="" ct_verified_against_program="" ct_vin_confirmed="" dl_borrower1="" dl_borrower1_dob_confirmed="" dl_borrower2="" dl_borrower2_dob_confirmed="" fund_this_loan_indicator="" funding_contact_code="" guarantee_of_lien="" inc_fund_expiration_date="" ins_deductible_within_policy="" ins_mb_lienholder="" ins_motor_vin_confirm="" ins_rv_boat_vin_confirm="" ins_trailer_vin_confirm="" loan_1st_pymt_not7days="" loan_amount_approved="" loan_amount_within_policy="" loan_BKR_Score_within_policy="" loan_Credit_pulled_within_30days="" loan_down_pymt_approved="" loan_down_pymt_within_policy="" loan_DTI_ratio_within_policy="" loan_FICO_within_policy="" loan_LTV_within_policy="" loan_note_date_in_range="" loan_officer_open_acct_code="" loan_officer_responsible_code="" loan_Paystub_within_30days="" loan_Paystub2_within_30days="" loan_Paystub3_within_30days="" loan_Paystub4_within_30days="" loan_reference1="" loan_reference2="" loan_reference3="" loan_status_equals_approved="" loan_stips_signed_by_officer="" loan_term_within_policy="" loan_unit_confirmed="" motor_title_mb_lienholder="" motor_title_vin_confirm="" motor_ucc1_mb_lienholder="" motor_ucc1_vin_confirm="" new_motor_invoice_confirmed="" new_motor_vin_confirmed="" new_motor2_invoice_confirmed="" new_motor2_vin_confirmed="" new_rv_boat_invoice_confirmed="" new_rv_boat_vin_confirmed="" new_trailer_invoice_confirmed="" new_trailer_vin_confirmed="" payoff_amount="" payoff_loan_number="" payoff_loan_verified="" rv_boat_title_mb_lienholder="" rv_boat_title_vin_confirm="" rv_boat_ucc1_mb_lienholder="" rv_boat_ucc1_vin_confirm="" sa_borrower2_birthdate="" sa_borrower2_BKR_score="" sa_borrower2_bus_phone="" sa_borrower2_bus_phone_ext="" sa_borrower2_cell_phone="" sa_borrower2_email="" sa_borrower2_FICO_score="" sa_borrower2_home_phone="" sa_borrower2_name="" sa_borrower2_ssn="" sa_borrower2_Vantage_score="" sa_borrower3_birthdate="" sa_borrower3_BKR_score="" sa_borrower3_bus_phone="" sa_borrower3_bus_phone_ext="" sa_borrower3_cell_phone="" sa_borrower3_email="" sa_borrower3_FICO_score="" sa_borrower3_home_phone="" sa_borrower3_name="" sa_borrower3_ssn="" sa_borrower3_Vantage_score="" sa_borrower4_birthdate="" sa_borrower4_BKR_score="" sa_borrower4_bus_phone="" sa_borrower4_bus_phone_ext="" sa_borrower4_cell_phone="" sa_borrower4_email="" sa_borrower4_FICO_score="" sa_borrower4_home_phone="" sa_borrower4_name="" sa_borrower4_ssn="" sa_borrower4_Vantage_score="" trailer_title_mb_lienholder="" trailer_ucc1_mb_lienholder="" trailer_ucc1_vin_confirm="" ucc1_filed_by_Merrick="" warranty_mb_lienholder="" warranty_motor_vin_confirm="" warranty_rv_boat_vin_confirm="" warranty_term="" warranty_trailer_vin_confirm="" contract_gap_amount="" contract_credit_disability_amount="" contract_credit_life_amount="" />
+        <IL_TempVariables />
+        <IL_rule_flags />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income type="" frequency="" baseRate="" unitsPerPeriod="" grossUpIncome="" baseMonthlyIncome="" ytdAmount="" periodEndDate="" ytdMonthlyIncome="" sourceApplicant="" dtiIncomeType="" notes="" manual_adj_monthly_debt="" />
+        </IL_Incomes>
+        <IL_comments comment_seq_number="1" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughman, Application ID: 351630, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.409" />
+        <IL_comments comment_seq_number="2" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughman, Application ID: 351340, Decision: DECLN" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.410" />
+        <IL_comments comment_seq_number="3" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughman, Application ID: 351405, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.410" />
+        <IL_comments comment_seq_number="4" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughmann, Application ID: 351409, Decision: DECLN" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.411" />
+        <IL_comments comment_seq_number="5" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughman, Application ID: 351507, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.412" />
+        <IL_comments comment_seq_number="6" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: Vada baughman, Application ID: 351508, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.412" />
+        <IL_comments comment_seq_number="7" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351630, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.435" />
+        <IL_comments comment_seq_number="8" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351427, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.436" />
+        <IL_comments comment_seq_number="9" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremmer, Application ID: 351454, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.437" />
+        <IL_comments comment_seq_number="10" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351489, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.437" />
+        <IL_comments comment_seq_number="11" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet Bremner, Application ID: 351543, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.438" />
+        <IL_comments comment_seq_number="12" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet Bremner, Application ID: 351544, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.438" />
+        <IL_comments comment_seq_number="13" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351565, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.439" />
+        <IL_comments comment_seq_number="14" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351572, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.440" />
+        <IL_comments comment_seq_number="15" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351573, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.440" />
+        <IL_comments comment_seq_number="16" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351574, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.441" />
+        <IL_comments comment_seq_number="17" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet Bremner, Application ID: 351576, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.441" />
+        <IL_comments comment_seq_number="18" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351577, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.441" />
+        <IL_comments comment_seq_number="19" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet Bremner, Application ID: 351578, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.443" />
+        <IL_comments comment_seq_number="20" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351579, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.443" />
+        <IL_comments comment_seq_number="21" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351580, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.443" />
+        <IL_comments comment_seq_number="22" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351581, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.443" />
+        <IL_comments comment_seq_number="23" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351586, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.444" />
+        <IL_comments comment_seq_number="24" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351587, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.444" />
+        <IL_comments comment_seq_number="25" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351588, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.444" />
+        <IL_comments comment_seq_number="26" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351589, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.445" />
+        <IL_comments comment_seq_number="27" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351609, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.445" />
+        <IL_comments comment_seq_number="28" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351627, Decision: DECLN" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.445" />
+        <IL_comments comment_seq_number="29" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351628, Decision: DECLN" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:35:19.446" />
+        <IL_comments comment_seq_number="30" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughman, Application ID: 351630, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.279" />
+        <IL_comments comment_seq_number="31" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughman, Application ID: 351340, Decision: DECLN" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.280" />
+        <IL_comments comment_seq_number="32" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughman, Application ID: 351405, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.280" />
+        <IL_comments comment_seq_number="33" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughmann, Application ID: 351409, Decision: DECLN" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.280" />
+        <IL_comments comment_seq_number="34" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: vada baughman, Application ID: 351507, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.281" />
+        <IL_comments comment_seq_number="35" comment="Reported SSN: 666541374 Matches a Previous Applicant's SSN: 666541374, Previous Applicant Name: Vada baughman, Application ID: 351508, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.281" />
+        <IL_comments comment_seq_number="36" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351630, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.287" />
+        <IL_comments comment_seq_number="37" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351427, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.288" />
+        <IL_comments comment_seq_number="38" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremmer, Application ID: 351454, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.288" />
+        <IL_comments comment_seq_number="39" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351489, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.288" />
+        <IL_comments comment_seq_number="40" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet Bremner, Application ID: 351543, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.289" />
+        <IL_comments comment_seq_number="41" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet Bremner, Application ID: 351544, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.289" />
+        <IL_comments comment_seq_number="42" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351565, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.290" />
+        <IL_comments comment_seq_number="43" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351572, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.290" />
+        <IL_comments comment_seq_number="44" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351573, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.290" />
+        <IL_comments comment_seq_number="45" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351574, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.291" />
+        <IL_comments comment_seq_number="46" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet Bremner, Application ID: 351576, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.291" />
+        <IL_comments comment_seq_number="47" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351577, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.291" />
+        <IL_comments comment_seq_number="48" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet Bremner, Application ID: 351578, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.292" />
+        <IL_comments comment_seq_number="49" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351579, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.292" />
+        <IL_comments comment_seq_number="50" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351580, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.293" />
+        <IL_comments comment_seq_number="51" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351581, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.293" />
+        <IL_comments comment_seq_number="52" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351586, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.293" />
+        <IL_comments comment_seq_number="53" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351587, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.294" />
+        <IL_comments comment_seq_number="54" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351588, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.294" />
+        <IL_comments comment_seq_number="55" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351589, Decision: APPRV" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.295" />
+        <IL_comments comment_seq_number="56" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351609, Decision:" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.295" />
+        <IL_comments comment_seq_number="57" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: Janet bremner, Application ID: 351627, Decision: DECLN" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.295" />
+        <IL_comments comment_seq_number="58" comment="Reported SSN: 666145512 Matches a Previous Applicant's SSN: 666145512, Previous Applicant Name: janet bremner, Application ID: 351628, Decision: DECLN" user_id="System" comment_type_code="DA" time_stamp="2020-5-18 13:47:34.296" />
+      </IL_application>
+    </CustData>
+    <Reports />
+    <Messages>
+      <Message Timestamp="2020-5-18 13:35:41.636" Source="TCP.Experian.MarineRVExperianPullARFandTTYPrimary.readFrom" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:35:41.645" Source="TCP.Experian.MarineRVExperianPullARFandTTYPrimary" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:35:41.650" Source="PullCoBorrowerEXReport" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:35:41.651" Source="06800" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:35:41.652" Source="75" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:35:41.652" Source="WorkflowManager" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:35:41.661" Source="TransactionManager" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:47:45.747" Source="TCP.Experian.MarineRVExperianPullARFandTTYPrimary.readFrom" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:47:45.755" Source="TCP.Experian.MarineRVExperianPullARFandTTYPrimary" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:47:45.762" Source="PullCoBorrowerEXReport" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:47:45.762" Source="06800" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:47:45.763" Source="75" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:47:45.764" Source="WorkflowManager" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:47:45.767" Source="TransactionManager" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:59:29.797" Source="TCP.Experian.MarineRVExperianPullARFandTTYPrimary.readFrom" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:59:29.804" Source="TCP.Experian.MarineRVExperianPullARFandTTYPrimary" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:59:29.808" Source="PullCoBorrowerEXReport" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:59:29.808" Source="06800" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:59:29.808" Source="75" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:59:29.809" Source="WorkflowManager" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2020-5-18 13:59:29.817" Source="TransactionManager" Number="0" Description="Failed to run readFrom profile: Internal Error" />
+      <Message Timestamp="2022-10-3 8:00:55.535" Source="WebService.Outsystems.RecLend PUT Application.readFrom" Number="0" Description="Failed to run REST profile: Error making web service call: Web Service Returned non-OK status 400" />
+    </Messages>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" ID="SSDUP90-" Description="Duplicate Social Security Number on applications 90 or less days old." Timestamp="2020-5-18 13:47:34.296" Severity="0" Override="1" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2020-5-18 13:35:19.361" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2020-5-18 13:35:19.362" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2020-5-18 13:35:19.363" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2020-5-18 13:35:19.365" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2020-5-18 13:35:19.366" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2020-5-18 13:35:19.367" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2020-5-18 13:35:19.370" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2020-5-18 13:35:19.371" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2020-5-18 13:35:19.371" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="Mon May 18 13:35:19 MDT 2020" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2020-5-18 13:35:19.373" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2020-5-18 13:35:19.374" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2020-5-18 13:35:19.374" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2020-5-18 13:35:19.375" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2020-5-18 13:35:19.375" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2020-5-18 13:35:19.378" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2020-5-18 13:35:19.378" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="Mon May 18 13:35:19 MDT 2020" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2020-5-18 13:35:19.446" Status="true" />
+      <Journal Type="Process" ID="03800" Timestamp="Mon May 18 13:35:19 MDT 2020" Status="Fail" />
+      <Journal Type="Process" ID="03800" Timestamp="Mon May 18 13:35:39 MDT 2020" Status="Pass" />
+      <Journal Type="Rule" ID="IFADR" Timestamp="2020-5-18 13:35:39.964" Status="false" />
+      <Journal Type="Rule" ID="IFNAM" Timestamp="2020-5-18 13:35:40.123" Status="false" />
+      <Journal Type="Rule" ID="IFSSN" Timestamp="2020-5-18 13:35:40.463" Status="false" />
+      <Journal Type="Process" ID="05800" Timestamp="Mon May 18 13:35:40 MDT 2020" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By kzimmerman" Timestamp="2020-5-18 13:47:22.491" Status="Opened" />
+      <Journal Type="MP" ID="REPRR" Timestamp="2020-5-18 13:47:34.126" Status="" />
+      <Journal Type="Rule" ID="MSADD" Timestamp="2020-5-18 13:47:34.248" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2020-5-18 13:47:34.249" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2020-5-18 13:47:34.249" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2020-5-18 13:47:34.250" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2020-5-18 13:47:34.250" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2020-5-18 13:47:34.251" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2020-5-18 13:47:34.260" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2020-5-18 13:47:34.261" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2020-5-18 13:47:34.261" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="Mon May 18 13:47:34 MDT 2020" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2020-5-18 13:47:34.263" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2020-5-18 13:47:34.264" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2020-5-18 13:47:34.264" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2020-5-18 13:47:34.265" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2020-5-18 13:47:34.265" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2020-5-18 13:47:34.271" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2020-5-18 13:47:34.272" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="Mon May 18 13:47:34 MDT 2020" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2020-5-18 13:47:34.296" Status="true" />
+      <Journal Type="Process" ID="03800" Timestamp="Mon May 18 13:47:34 MDT 2020" Status="Fail" />
+      <Journal Type="Process" ID="03800" Timestamp="Mon May 18 13:47:43 MDT 2020" Status="Pass" />
+      <Journal Type="Rule" ID="IFADR" Timestamp="2020-5-18 13:47:43.943" Status="false" />
+      <Journal Type="Rule" ID="IFNAM" Timestamp="2020-5-18 13:47:44.94" Status="false" />
+      <Journal Type="Rule" ID="IFSSN" Timestamp="2020-5-18 13:47:44.533" Status="false" />
+      <Journal Type="Process" ID="05800" Timestamp="Mon May 18 13:47:44 MDT 2020" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By kzimmerman" Timestamp="2020-5-18 13:59:16.501" Status="Opened" />
+      <Journal Type="Rule" ID="IFADR" Timestamp="2020-5-18 13:59:28.48" Status="false" />
+      <Journal Type="Rule" ID="IFNAM" Timestamp="2020-5-18 13:59:28.195" Status="false" />
+      <Journal Type="Rule" ID="IFSSN" Timestamp="2020-5-18 13:59:28.539" Status="false" />
+      <Journal Type="Process" ID="05800" Timestamp="Mon May 18 13:59:28 MDT 2020" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By kzimmerman" Timestamp="2020-5-19 11:21:25.3" Status="Opened" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2026-02-05 16:39:47.303" Status="Opened" />
+    </Journals>
+    <Traces />
+    <Audits>
+      <Audit Timestamp="Mon May 18 13:33:24 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@dlr_num_rv" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="603622">
+        <From />
+        <To>603622</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:33:34 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_new_used_demo" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="N">
+        <From />
+        <To>N</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:33:34 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_year" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="2020">
+        <From />
+        <To>2020</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:33:34 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_make" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="large">
+        <From />
+        <To>large</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:33:34 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_model" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="rv">
+        <From />
+        <To>rv</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:33:41 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@app_sale_price" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="10000.00">
+        <From />
+        <To>10000.00</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:33:41 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@loan_amount_requested" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="10000.00">
+        <From />
+        <To>10000.00</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/@first_name" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="vada">
+        <From />
+        <To>vada</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/@middle_initial" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="s">
+        <From />
+        <To>s</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/@last_name" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="baughmann">
+        <From />
+        <To>baughmann</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/@birth_date" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="05/10/1978">
+        <From />
+        <To>05/10/1978</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/@ssn" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="666541374">
+        <From />
+        <To>666541374</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/IL_contact_address[1]/@street_number" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="204">
+        <From />
+        <To>204</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/IL_contact_address[1]/@street_name" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="edith">
+        <From />
+        <To>edith</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/IL_contact_address[1]/@city" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="latrobe">
+        <From />
+        <To>latrobe</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/IL_contact_address[1]/@state" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="PA">
+        <From />
+        <To>PA</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/IL_contact_address[1]/@zip_code" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="15650">
+        <From />
+        <To>15650</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[1]/IL_contact_employment[1]/@salary" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="10000.00">
+        <From />
+        <To>10000.00</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/@first_name" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="janet ">
+        <From />
+        <To>janet </To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/@middle_initial" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="l">
+        <From />
+        <To>l</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/@last_name" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="bremner">
+        <From />
+        <To>bremner</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/@birth_date" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="01/05/1978">
+        <From />
+        <To>01/05/1978</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/@ssn" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="666145512">
+        <From />
+        <To>666145512</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/IL_contact_address[1]/@street_number" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="2">
+        <From />
+        <To>2</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/IL_contact_address[1]/@street_name" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="east">
+        <From />
+        <To>east</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/IL_contact_address[1]/@city" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="newport beach">
+        <From />
+        <To>newport beach</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/IL_contact_address[1]/@state" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="CA">
+        <From />
+        <To>CA</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/IL_contact_address[1]/@zip_code" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="92663">
+        <From />
+        <To>92663</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_contact[2]/IL_contact_employment[1]/@salary" UserID="kzimmerman" Source="Webstation" Action="U" From="" To="10000.00">
+        <From />
+        <To>10000.00</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:35:28 MDT 2020" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[1]/@Override" UserID="kzimmerman" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Mon May 18 13:47:43 MDT 2020" XPATH="Provenir[1]/Request[1]/Rules[1]/Rule[1]/@Override" UserID="kzimmerman" Source="Webstation" Action="U" From="0" To="1">
+        <From>0</From>
+        <To>1</To>
+      </Audit>
+    </Audits>
+  </Request>
+</Provenir>

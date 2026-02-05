@@ -1,0 +1,64 @@
+<Provenir transactionID="DE049f5cafd_19bdc49c3d1_07ffd19bdc4b3d81_0a5b0f0c.4" error="" Org="" shred_version="1.0">
+  <api traceId="" dealer_number="604904" />
+  <Request Trans="ILPROCESSDEALERAPP" ID="448507" Workflow="75" Process="01800" Priority="" Status="" LockedBy="" UserID="" Version="0" Readonly="0" _LockedBy="" LockedAt="">
+    <CustData>
+      <IL_application app_cash_down_payment="2500" app_sale_price="2500" requested_term_months="25" loan_amount_requested="2500" trade_allowance="2500" trade_payoff_amount="" app_type_code="RV" individual_joint_app_ind="J" trade_net_tradein_amount="2500.0" app_receive_date="01/21/2026" app_source_ind="P" app_entry_date="2026-01-21 00:20:53.654" client_id="" parent_dealer_number="604904" esign_eligible="N" application_eligible="true" dlr_broker="N" dlr_num_ht="" dlr_num_marine="" dlr_num_mc="" dlr_num_or="" dlr_num_rv="604904" dlr_num_trailer="" dlr_address_line1="3108 Industrial Park Rd" dlr_city="Van Buren" dlr_email="astarr@merrickbank.com" dlr_fax="9996663333" dlr_name="Rocky Ridge RV of Van Buren" dlr_phone="4793833760" dlr_state="AR" dlr_zipcode="72956" fsp_name="Disney Financial" fsp_phone="2225556663" dealer_count="18.0" app_counted="Y">
+        <IL_collateral coll1_make="Big" coll1_mileage="" coll1_model="Model" coll1_value="" coll1_VIN="" coll1_year="2026" coll1_type="rv" coll_option_total_value="0" coll_option1="" coll_option1_desc="" coll_option2="" coll_option2_desc="" coll4_new_used_demo="" coll3_new_used_demo="" coll2_new_used_demo="" coll_option3="" coll_option3_desc="" coll_option4="" coll_option4_desc="" coll_option5="" coll_option5_desc="" coll_option6="" coll_option6_desc="" coll_option7="" coll_option7_desc="" coll_option8="" coll_option8_desc="" coll1_new_used_demo="N" />
+        <IL_app_decision_info />
+        <IL_fund_dlr_ach dlr_aba="082901017" dlr_account_num="510026024" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="Citizens Bank and Trust" dlr_bank_phone="" dlr_check_or_sav="22" dlr_name="Rocky Ridge RV of Van Buren" dlr_num="604904" dlr_fsp_num="910222" dlr_fsp_yn="Y" pre_note_date="null" />
+        <IL_ITI_control />
+        <IL_application_verification />
+        <IL_fund_checklist loan_officer_responsible_code="" />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income />
+        </IL_Incomes>
+        <WorkItems>
+          <WorkItem />
+        </WorkItems>
+        <IL_Adjustments>
+          <IL_Adjustment />
+        </IL_Adjustments>
+        <IL_Payment />
+        <IL_TempVariables />
+        <IL_ITI_note />
+        <IL_ITI_portfolio />
+        <IL_contact suffix="" ssn="666121212" middle_initial="" last_name="Ktest" first_name="Amy" email="amyktest@icloud.com" birth_date="12/29/2025" cell_phone="8019898989" ac_role_tp_c="PR" con_id="46159">
+          <IL_contact_employment business_name="Boss" business_phone="8047878787" salary="123456" title_position="Job" months_at_job="26" other_income_amt="" other_income_source_type_code="" self_employed_ind="" other_income_basis_type_code="MONTH" salary_basis_type_code="MONTH" employment_type_code="CURR" city="" state="" zip_code="" address_line1="" po_box="" rural_route="" street_name="" street_number="" />
+          <IL_contact_address city="City" residence_monthly_pymnt="2500" months_at_residence="14" po_box="" rural_route="" state="UT" street_name="Street in Street field" street_number="123" apartment_unit_number="" zip_code="84115" address_type_code="CURR" ownership_type_code="O" />
+          <IL_contact_address city="Previous City" months_at_residence="42" state="UT" street_name="Previous Street" street_number="456" zip_code="84115" address_type_code="PREV" />
+        </IL_contact>
+        <IL_contact suffix="" ssn="666454545" middle_initial="" last_name="CoK" first_name="CoAmy" email="" birth_date="12/29/2025" cell_phone="8017878787" ac_role_tp_c="SEC" con_id="46160">
+          <IL_contact_employment business_name="Co Company" business_phone="8018989898" salary="152121" title_position="Co Boss" months_at_job="27" other_income_amt="" other_income_source_type_code="" self_employed_ind="" other_income_basis_type_code="MONTH" salary_basis_type_code="MONTH" employment_type_code="CURR" city="" state="" zip_code="" address_line1="" po_box="" rural_route="" street_name="" street_number="" />
+          <IL_contact_address city="City" residence_monthly_pymnt="" months_at_residence="" po_box="" rural_route="" state="UT" street_name="Street" street_number="456" apartment_unit_number="" zip_code="84115" address_type_code="CURR" ownership_type_code="" />
+          <IL_contact_address city="Salt Lake City" residence_monthly_pymnt="2500" months_at_residence="26" state="UT" street_name="South Street" street_number="123" zip_code="84115" ownership_type_code="O" address_type_code="PATR" />
+        </IL_contact>
+      </IL_application>
+    </CustData>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_0797a110cc68c2ad" ID="SAUMA" Description="Secondary applicant &lt; 18 years old." Timestamp="2026-01-21 00:20:54.185" Severity="0" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2026-01-21 00:20:54.182" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2026-01-21 00:20:54.183" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2026-01-21 00:20:54.183" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2026-01-21 00:20:54.184" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2026-01-21 00:20:54.184" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2026-01-21 00:20:54.185" Status="true" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2026-01-21 00:20:54.186" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2026-01-21 00:20:54.186" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2026-01-21 00:20:54.187" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELCO" Timestamp="2026-01-21 00:20:54.188" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELPR" Timestamp="2026-01-21 00:20:54.189" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2026-01-21 00:20:54.190" Status="Fail" />
+      <Journal UserID="TIMOTHY.MORRIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2026-02-05 16:33:36.666" Status="Opened" />
+    </Journals>
+  </Request>
+  <queues>
+    <queue name="A Work Queue" id="28" />
+    <queue name="A $0 - $25,000 Work Queue" id="29" />
+    <queue name="A $0 - $50,000 Work Queue" id="30" />
+    <queue name="A $0 - $75,000 Work Queue" id="43" />
+    <queue name="T All Applications" id="45" />
+  </queues>
+</Provenir>

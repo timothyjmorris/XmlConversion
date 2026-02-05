@@ -1,11 +1,12 @@
 
-
-
+select count(*) from app_base --12239 / 13022
+-- 792 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_base -------------------------------------------------------------------------------------------------------------------------------------
-SET IDENTITY_INSERT sandbox.app_base ON;
 
-	INSERT INTO sandbox.app_base
+SET IDENTITY_INSERT dbo.app_base ON;
+
+	INSERT INTO dbo.app_base
 		(app_id, product_line_enum, app_source_enum, app_type_enum, booked_date, decision_enum, decision_date, funding_date, ip_address, receive_date, retain_until_date, sub_type_enum)
 		SELECT 
 			a.app_id, 
@@ -55,20 +56,22 @@ SET IDENTITY_INSERT sandbox.app_base ON;
 			END AS sub_type_enum
 		FROM IL_application AS a
 		LEFT JOIN IL_app_decision_info AS d ON d.app_id = a.app_id
-		LEFT JOIN IL_ITI_control AS c ON c.app_id = a.app_id;
+		LEFT JOIN IL_ITI_control AS c ON c.app_id = a.app_id
+		-- ack, we've already added conflicting app_ids
+		WHERE a.app_id NOT IN (SELECT app_id FROM dbo.app_base);
 		
-SET IDENTITY_INSERT sandbox.app_base OFF;
+SET IDENTITY_INSERT dbo.app_base OFF;
 
 -- Reseed table to be next app_id
-DECLARE	@max	int	= (SELECT MAX(app_id) FROM sandbox.app_base);
-DBCC CHECKIDENT ('sandbox.app_base', RESEED, @max);
+DECLARE	@max	int	= (SELECT MAX(app_id) FROM dbo.app_base);
+DBCC CHECKIDENT ('dbo.app_base', RESEED, @max);
 
-UPDATE STATISTICS sandbox.app_base;
+UPDATE STATISTICS dbo.app_base;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_operational_cc ---------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO sandbox.app_operational_rl
+INSERT INTO dbo.app_operational_rl
 	(app_id, assigned_credit_analyst, assigned_funding_analyst, cb_score_factor_code_pr_1, cb_score_factor_code_pr_2, cb_score_factor_code_pr_3, cb_score_factor_code_pr_4, 
 	 cb_score_factor_code_pr_5, cb_score_factor_type_pr_1, cb_score_factor_type_pr_2, cb_score_factor_type_pr_3, cb_score_factor_type_pr_4, cb_score_factor_type_pr_5, 
 	 cb_score_factor_code_sec_1, cb_score_factor_code_sec_2, cb_score_factor_code_sec_3, cb_score_factor_code_sec_4, cb_score_factor_code_sec_5, cb_score_factor_type_sec_1, 
@@ -245,14 +248,15 @@ INSERT INTO sandbox.app_operational_rl
 			ELSE NULL
 		END AS [status]
 	FROM IL_application AS a
+	INNER JOIN dbo.app_base AS ab ON ab.app_id = a.app_id
 	LEFT JOIN IL_app_decision_info AS d ON d.app_id = a.app_id
 	LEFT JOIN IL_ITI_control AS c ON c.app_id = a.app_id
 	LEFT JOIN IL_fund_checklist AS f ON f.app_id = a.app_id;
 
 	-- Add monthly housing payments here to avoid dupes & weirdness from having it all in one query above
-	UPDATE sandbox.app_operational_rl
+	UPDATE dbo.app_operational_rl
 		SET housing_monthly_payment_pr = residence_monthly_pymnt
-		FROM sandbox.app_operational_rl
+		FROM dbo.app_operational_rl
 		INNER JOIN 
 			(SELECT a.app_id, residence_monthly_pymnt
 			FROM IL_application AS a
@@ -262,11 +266,11 @@ INSERT INTO sandbox.app_operational_rl
 				c.ac_role_tp_c = 'PR' AND 
 				ca.address_type_code = 'CURR' AND
 				ca.residence_monthly_pymnt > 0) AS subquery
-			ON sandbox.app_operational_rl.app_id = subquery.app_id;
+			ON dbo.app_operational_rl.app_id = subquery.app_id;
 	
-	UPDATE sandbox.app_operational_rl
+	UPDATE dbo.app_operational_rl
 		SET housing_monthly_payment_pr = residence_monthly_pymnt
-		FROM sandbox.app_operational_rl
+		FROM dbo.app_operational_rl
 		INNER JOIN 
 			(SELECT a.app_id, residence_monthly_pymnt
 			FROM IL_application AS a
@@ -276,14 +280,14 @@ INSERT INTO sandbox.app_operational_rl
 				c.ac_role_tp_c = 'SEC' AND 
 				ca.address_type_code = 'CURR' AND
 				ca.residence_monthly_pymnt > 0) AS subquery
-			ON sandbox.app_operational_rl.app_id = subquery.app_id;
+			ON dbo.app_operational_rl.app_id = subquery.app_id;
 
-UPDATE STATISTICS sandbox.app_operational_rl;
+UPDATE STATISTICS dbo.app_operational_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_transactional_rl -------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO sandbox.app_transactional_rl
+INSERT INTO dbo.app_transactional_rl
 	(app_id, audit_type_enum, duplicate_app_flag, fund_loan_indicator_enum, pending_verification_flag, supervisor_review_indicator_enum, suppress_ach_funding_flag)
 	SELECT DISTINCT
 		a.app_id,
@@ -320,6 +324,7 @@ INSERT INTO sandbox.app_transactional_rl
 			ELSE 0
 		END AS suppress_ach_funding_flag
 	FROM IL_application AS a
+	INNER JOIN dbo.app_base AS ab ON ab.app_id = a.app_id
 	INNER JOIN IL_fund_checklist AS f ON f.app_id = a.app_id
 	INNER JOIN IL_fund_dlr_ach AS d ON d.app_id = a.app_id
 	LEFT JOIN IL_app_decision_info AS i ON i.app_id = a.app_id
@@ -331,11 +336,12 @@ INSERT INTO sandbox.app_transactional_rl
 		LEN(a.supervisor_rev_ind) > 0 OR
 		LEN(d.suppress_ach) > 0;
 		
-UPDATE STATISTICS sandbox.app_transactional_rl;
+UPDATE STATISTICS dbo.app_transactional_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_pricing_rl -------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_pricing_rl
+
+INSERT INTO dbo.app_pricing_rl
 	(app_id, add_total_to_financed_flag, cash_down_payment_amount, debt_to_income_ratio, invoice_amount, loan_amount, loan_term_months, manual_adj_dti_ratio, 
 	 manual_adj_monthly_debt, manual_adj_monthly_income, military_apr, monthly_debt, monthly_income, mrv_grade_pr, mrv_grade_sec, regular_payment_amount, 
 	 selling_price, tradein_allowance, tradein_down_payment_amount, tradein_payoff_amount)
@@ -385,15 +391,17 @@ INSERT INTO sandbox.app_pricing_rl
 			WHEN trade_payoff_amount > 0 THEN trade_payoff_amount
 		END AS tradein_payoff_amount
 	FROM IL_application AS a
+	INNER JOIN dbo.app_base AS ab ON ab.app_id = a.app_id
 	LEFT JOIN IL_app_decision_info AS d ON d.app_id = a.app_id
 	LEFT JOIN IL_ITI_control AS c ON c.app_id = a.app_id
 	LEFT JOIN IL_fund_checklist AS f ON f.app_id = a.app_id;
 	
-UPDATE STATISTICS sandbox.app_pricing_rl;
+UPDATE STATISTICS dbo.app_pricing_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_funding_rl -------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_funding_rl
+
+INSERT INTO dbo.app_funding_rl
 	(app_id, amount_financed_within_policy_flag, collateral_ages_within_policy_flag, credit_bureau_expire_date, credit_pulled_within_30_days_flag, 
 	 creditscore_within_policy_flag, dealer_proceeds_amount, down_payment_within_policy_flag, dti_within_policy_flag, first_payment_not_in_7_days_flag, 
 	 loan_amount_approved_flag, loan_amount_within_policy_flag, loanpro_loan_id, ltv_within_policy_flag, 
@@ -484,6 +492,7 @@ INSERT INTO sandbox.app_funding_rl
 		-- DOES THIS COLUMN BELONG? not reconciling it to anything (is it the same as "finance_charge" in Fund Checklist?)
 		NULL AS validated_finance_charge
 	FROM IL_application AS a
+	INNER JOIN dbo.app_base AS ab ON ab.app_id = a.app_id
 	LEFT JOIN IL_app_decision_info AS d ON d.app_id = a.app_id
 	LEFT JOIN IL_ITI_control AS c ON c.app_id = a.app_id
 	LEFT JOIN IL_fund_checklist AS f ON f.app_id = a.app_id
@@ -496,9 +505,9 @@ INSERT INTO sandbox.app_funding_rl
 
 
 	-- Add funding LoanPro customer id's here to avoid dupes & weirdness from having it all in one query above
-	UPDATE sandbox.app_funding_rl
+	UPDATE dbo.app_funding_rl
 		SET loanpro_customer_id_pr = loanpro_customer_id
-		FROM sandbox.app_funding_rl
+		FROM dbo.app_funding_rl
 		INNER JOIN 
 			(SELECT a.app_id, loanpro_customer_id
 			FROM IL_application AS a
@@ -506,11 +515,11 @@ INSERT INTO sandbox.app_funding_rl
 			WHERE
 				c.ac_role_tp_c = 'PR' AND 
 				c.loanpro_customer_id > 0) AS subquery
-			ON sandbox.app_funding_rl.app_id = subquery.app_id;
+			ON dbo.app_funding_rl.app_id = subquery.app_id;
 
-	UPDATE sandbox.app_funding_rl
+	UPDATE dbo.app_funding_rl
 		SET loanpro_customer_id_sec = loanpro_customer_id
-		FROM sandbox.app_funding_rl
+		FROM dbo.app_funding_rl
 		INNER JOIN 
 			(SELECT a.app_id, loanpro_customer_id
 			FROM IL_application AS a
@@ -518,13 +527,14 @@ INSERT INTO sandbox.app_funding_rl
 			WHERE
 				c.ac_role_tp_c = 'SEC' AND 
 				c.loanpro_customer_id > 0) AS subquery
-			ON sandbox.app_funding_rl.app_id = subquery.app_id;
+			ON dbo.app_funding_rl.app_id = subquery.app_id;
 			
-UPDATE STATISTICS sandbox.app_funding_rl;
+UPDATE STATISTICS dbo.app_funding_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_funding_checklist_rl ---------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_funding_checklist_rl
+
+INSERT INTO dbo.app_funding_checklist_rl
 	(app_id, addendum_signed_pr_enum, addendum_signed_sec_enum, address_confirmed_flag, applicant_references_checked_flag, apr_within_guidelines_flag, 
 	 check_requested_by_user, collateral_percent_used_confirmed_enum, collateral_worksheet_unit_confirmed_enum, contract_signed_pr_flag, 
 	 contract_signed_sec_flag, correct_contract_state_flag, credit_app_signed_pr_enum, credit_app_signed_sec_enum, down_payment_approved_flag, 
@@ -832,6 +842,7 @@ INSERT INTO sandbox.app_funding_checklist_rl
 			ELSE NULL
 		END	AS verified_against_program_flag
 	FROM IL_application AS a
+	INNER JOIN dbo.app_base AS ab ON ab.app_id = a.app_id
 	LEFT JOIN IL_app_decision_info AS d ON d.app_id = a.app_id
 	LEFT JOIN IL_ITI_control AS c ON c.app_id = a.app_id
 	LEFT JOIN IL_fund_checklist AS f ON f.app_id = a.app_id
@@ -840,11 +851,12 @@ INSERT INTO sandbox.app_funding_checklist_rl
 		LEN(f.ct_pymt_schedule_confirmed) > 0 OR LEN(f.chk_requested_by) > 0 OR LEN(f.ct_signed_borrower1) > 0 OR 
 		LEN(f.loan_down_pymt_approved) > 0 OR LEN(f.ct_address_confirmed) > 0 OR LEN(f.loan_unit_confirmed) > 0;
 
-UPDATE STATISTICS sandbox.app_funding_checklist_rl;
+UPDATE STATISTICS dbo.app_funding_checklist_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_funding_contract_rl ----------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_funding_contract_rl
+
+INSERT INTO dbo.app_funding_contract_rl
 	(app_id, apr, cash_down_payment, cash_proceeds, contract_state, down_payment_percentage, document_tax_fee, document_prep_fee, finance_charge, 
 	 first_payment_date, first_payment_by_dealer, income_expiration_date, license_fee, loan_to_value_percentage, loan_to_value_percentage_with_fees, 
 	 net_tradein_allowance, note_signed_date, note_payment_amount, other_dealer_fee_1, other_dealer_fee_2, other_dealer_fee_3, 
@@ -951,6 +963,7 @@ INSERT INTO sandbox.app_funding_contract_rl
 			ELSE NULL
 		END AS ucc_principal_refund		
 	FROM IL_application AS a
+	INNER JOIN dbo.app_base AS ab ON ab.app_id = a.app_id
 	LEFT JOIN IL_ITI_note AS n ON n.app_id = a.app_id
 	LEFT JOIN IL_ITI_payment_sched AS p ON p.app_id = a.app_id
 	LEFT JOIN IL_fund_checklist AS f ON f.app_id = a.app_id
@@ -960,11 +973,12 @@ INSERT INTO sandbox.app_funding_contract_rl
 		LEN(f.ct_pymt_schedule_confirmed) > 0 OR LEN(f.chk_requested_by) > 0 OR LEN(f.ct_signed_borrower1) > 0 OR 
 		LEN(f.loan_down_pymt_approved) > 0 OR LEN(f.ct_address_confirmed) > 0 OR LEN(f.loan_unit_confirmed) > 0;
 
-UPDATE STATISTICS sandbox.app_funding_contract_rl;
+UPDATE STATISTICS dbo.app_funding_contract_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_warranties_rl: credit disability ---------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_warranties_rl
+
+INSERT INTO dbo.app_warranties_rl
 	(app_id, amount, company_name, merrick_lienholder_flag, term_months, policy_number, warranty_type_enum)
 	SELECT DISTINCT
 		a.app_id,
@@ -985,7 +999,7 @@ INSERT INTO sandbox.app_warranties_rl
 	WHERE p.credit_disability_company <> '' AND p.credit_disability_amount > 0;
 
 -- app_warranties_rl: credit life ---------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_warranties_rl
+INSERT INTO dbo.app_warranties_rl
 	(app_id, amount, company_name, merrick_lienholder_flag, term_months, policy_number, warranty_type_enum)
 	SELECT DISTINCT
 		a.app_id,
@@ -1006,7 +1020,7 @@ INSERT INTO sandbox.app_warranties_rl
 	WHERE p.credit_life_company <> '' AND p.credit_life_amount > 0;
 
 -- app_warranties_rl: extended warranty --------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_warranties_rl
+INSERT INTO dbo.app_warranties_rl
 	(app_id, amount, company_name, merrick_lienholder_flag, term_months, policy_number, warranty_type_enum)
 	SELECT DISTINCT
 		a.app_id,
@@ -1027,7 +1041,7 @@ INSERT INTO sandbox.app_warranties_rl
 	WHERE p.ext_warranty_company <> '' AND p.ext_warranty_amount > 0;
 
 -- app_warranties_rl: gap insurance ---------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_warranties_rl
+INSERT INTO dbo.app_warranties_rl
 	(app_id, amount, company_name, merrick_lienholder_flag, term_months, policy_number, warranty_type_enum)
 	SELECT DISTINCT
 		a.app_id,
@@ -1048,7 +1062,7 @@ INSERT INTO sandbox.app_warranties_rl
 	WHERE p.gap_company <> '' AND p.gap_amount > 0;
 
 -- app_warranties_rl: other ------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_warranties_rl
+INSERT INTO dbo.app_warranties_rl
 	(app_id, amount, company_name, merrick_lienholder_flag, term_months, policy_number, warranty_type_enum)
 	SELECT DISTINCT
 		a.app_id,
@@ -1069,7 +1083,7 @@ INSERT INTO sandbox.app_warranties_rl
 	WHERE p.other_company <> '' AND p.other_amount > 0;
 
 -- app_warranties_rl: road side assistance ------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_warranties_rl
+INSERT INTO dbo.app_warranties_rl
 	(app_id, amount, company_name, merrick_lienholder_flag, term_months, policy_number, warranty_type_enum)
 	SELECT DISTINCT
 		a.app_id,
@@ -1090,7 +1104,7 @@ INSERT INTO sandbox.app_warranties_rl
 	WHERE p.road_side_company <> '' AND p.road_side_amount > 0;
 
 -- app_warranties_rl: service contract ---------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_warranties_rl
+INSERT INTO dbo.app_warranties_rl
 	(app_id, amount, company_name, merrick_lienholder_flag, term_months, policy_number, warranty_type_enum)
 	SELECT DISTINCT
 		a.app_id,
@@ -1110,11 +1124,11 @@ INSERT INTO sandbox.app_warranties_rl
 	INNER JOIN IL_backend_policies AS p ON p.app_id = a.app_id
 	WHERE p.service_contract_company <> '' AND p.service_contract_amount > 0;
 
-UPDATE STATISTICS sandbox.app_warranties_rl;
+UPDATE STATISTICS dbo.app_warranties_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_policy_exceptions_rl: capacity -----------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_policy_exceptions_rl
+INSERT INTO dbo.app_policy_exceptions_rl
 	(app_id, notes, policy_exception_type_enum, reason_code)
 	SELECT 
 		a.app_id,
@@ -1126,7 +1140,7 @@ INSERT INTO sandbox.app_policy_exceptions_rl
 	WHERE LEN(d.override_capacity) > 0;
 
 -- app_policy_exceptions_rl: collateral ----------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_policy_exceptions_rl
+INSERT INTO dbo.app_policy_exceptions_rl
 	(app_id, notes, policy_exception_type_enum, reason_code)
 	SELECT 
 		a.app_id,
@@ -1138,7 +1152,7 @@ INSERT INTO sandbox.app_policy_exceptions_rl
 	WHERE LEN(d.override_collateral_program) > 0;
 
 -- app_policy_exceptions_rl: credit --------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_policy_exceptions_rl
+INSERT INTO dbo.app_policy_exceptions_rl
 	(app_id, notes, policy_exception_type_enum, reason_code)
 	SELECT 
 		a.app_id,
@@ -1149,11 +1163,11 @@ INSERT INTO sandbox.app_policy_exceptions_rl
 	INNER JOIN IL_app_decision_info AS d ON d.app_id = a.app_id
 	WHERE LEN(d.override_credit) > 0;
 
-UPDATE STATISTICS sandbox.app_policy_exceptions_rl;
+UPDATE STATISTICS dbo.app_policy_exceptions_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_collateral_rl: #1 ------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_collateral_rl
+INSERT INTO dbo.app_collateral_rl
 	(app_id, collateral_type_enum, [length], make, mileage, model, motor_size, used_flag, option_1_description, 
 	 option_1_value, option_2_description, option_2_value, sort_order, vin, wholesale_value, [year])
 	SELECT
@@ -1211,7 +1225,7 @@ INSERT INTO sandbox.app_collateral_rl
 	WHERE c.coll1_year > 0 AND c.coll1_make <> '';
 	
 -- app_collateral_rl: #2 ------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_collateral_rl
+INSERT INTO dbo.app_collateral_rl
 	(app_id, collateral_type_enum, [length], make, mileage, model, motor_size, used_flag, option_1_description, 
 	 option_1_value, option_2_description, option_2_value, sort_order, vin, wholesale_value, [year])
 	SELECT
@@ -1260,7 +1274,7 @@ INSERT INTO sandbox.app_collateral_rl
 	WHERE c.coll2_year > 0 AND c.coll2_make <> '';
 	
 -- app_collateral_rl: #3 ------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_collateral_rl
+INSERT INTO dbo.app_collateral_rl
 	(app_id, collateral_type_enum, [length], make, mileage, model, motor_size, used_flag, option_1_description, 
 	 option_1_value, option_2_description, option_2_value, sort_order, vin, wholesale_value, [year])
 	SELECT
@@ -1317,7 +1331,7 @@ INSERT INTO sandbox.app_collateral_rl
 	
 
 -- app_collateral_rl: #4 ------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_collateral_rl
+INSERT INTO dbo.app_collateral_rl
 	(app_id, collateral_type_enum, [length], make, mileage, model, motor_size, used_flag, option_1_description, 
 	 option_1_value, option_2_description, option_2_value, sort_order, vin, wholesale_value, [year])
 	SELECT
@@ -1369,11 +1383,11 @@ INSERT INTO sandbox.app_collateral_rl
 	WHERE c.coll4_year > 0 AND c.coll4_make <> '';
 	
 
-UPDATE STATISTICS sandbox.app_collateral_rl;
+UPDATE STATISTICS dbo.app_collateral_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- app_dealer_rl --------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.app_dealer_rl
+INSERT INTO dbo.app_dealer_rl
 	(app_id, broker_flag, bank_account_num, bank_account_type_enum, bank_routing_num, bank_phone, bank_name, dealer_address_line_1, 
  	 dealer_city, dealer_email, dealer_fax, dealer_name, dealer_num_child, dealer_num_parent, dealer_phone, dealer_state, dealer_zip, 
 	 fsp_email, fsp_fax, fsp_name, fsp_num, fsp_phone)
@@ -1456,13 +1470,14 @@ INSERT INTO sandbox.app_dealer_rl
 	FROM IL_application AS a
 	LEFT JOIN IL_fund_dlr_ach AS d ON d.app_id = a.app_id;
 
-UPDATE STATISTICS sandbox.app_dealer_rl;
+UPDATE STATISTICS dbo.app_dealer_rl;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 -- contact_base ---------------------------------------------------------------------------------------------------------------------------------
-SET IDENTITY_INSERT sandbox.contact_base ON;
 
-	INSERT INTO sandbox.contact_base
+SET IDENTITY_INSERT dbo.app_contact_base ON;
+
+	INSERT INTO dbo.app_contact_base
 		(con_id, app_id, birth_date, cell_phone, contact_type_enum, email, esign_consent_flag, first_name, fraud_type_enum, home_phone, last_name, 
 		 middle_initial, mother_maiden_name, paperless_flag, sms_consent_flag, ssn, suffix)
 		SELECT 
@@ -1471,7 +1486,8 @@ SET IDENTITY_INSERT sandbox.contact_base ON;
 			-- Set NULL dates so we can preserve NOT NULL constraint (these exist in PRD for AUTHU from 2008 and past)
 			CASE
 				WHEN c.birth_date IS NULL THEN '1900-01-01'
-				ELSE c.birth_date
+				WHEN ISDATE(c.birth_date) = 1 THEN c.birth_date
+				ELSE '1900-01-01'
 			END AS birth_date,
 			CASE
 				WHEN LEN(c.cell_phone) > 0	THEN RTRIM(REPLACE(REPLACE(REPLACE(c.cell_phone, '-', ''), ')', ''), '(', ''))
@@ -1516,18 +1532,18 @@ SET IDENTITY_INSERT sandbox.contact_base ON;
 			-- Have to filter out all the blank SEC rows somehow
 			LEN(c.ssn) > 0;
 
-SET IDENTITY_INSERT sandbox.contact_base OFF;
+SET IDENTITY_INSERT dbo.app_contact_base OFF;
 
 -- Reseed table to be next app_id
-DECLARE	@max2	int	= (SELECT MAX(con_id) FROM sandbox.contact_base);
-DBCC CHECKIDENT ('sandbox.contact_base', RESEED, @max2);
+DECLARE	@max2	int	= (SELECT MAX(con_id) FROM dbo.app_contact_base);
+DBCC CHECKIDENT ('dbo.app_contact_base', RESEED, @max2);
 
-UPDATE STATISTICS sandbox.contact_base;
+UPDATE STATISTICS dbo.app_contact_base;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
-
 -- contact_address ------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.contact_address
+
+INSERT INTO dbo.app_contact_address
 	(con_id, address_type_enum, city, months_at_address, ownership_type_enum, po_box, rural_route, [state], street_name, street_number, unit, zip)
 	SELECT 
 		ca.con_id,
@@ -1539,7 +1555,7 @@ INSERT INTO sandbox.contact_address
 	END AS address_type_enum,
 	ca.city,
 	CASE
-		WHEN ca.months_at_residence > 0 OR ca.years_at_residence > 0	THEN CAST(ca.months_at_residence + (ca.years_at_residence * 12) AS smallint) 
+		WHEN (ca.months_at_residence > 0 OR ca.years_at_residence > 0) AND ca.years_at_residence < 1000	THEN CAST(ca.months_at_residence + (ca.years_at_residence * 12) AS int) 
 		ELSE NULL
 	END AS months_at_address,
 	CASE
@@ -1572,7 +1588,7 @@ INSERT INTO sandbox.contact_address
 		WHEN ca.apartment_unit_number <> '' THEN ca.apartment_unit_number
 		ELSE NULL
 	END AS unit,
-	ca.zip_code AS zip
+	LEFT(ca.zip_code, 9) AS zip
 	FROM IL_contact AS c
 	INNER JOIN IL_application AS a ON a.app_id = c.app_id
 	INNER JOIN IL_contact_address AS ca ON ca.con_id = c.con_id
@@ -1583,12 +1599,12 @@ INSERT INTO sandbox.contact_address
 			-- Have to filter out all of the blank PREV contact_address rows;
 			LEN(ca.zip_code) > 0;
 
-UPDATE STATISTICS sandbox.contact_address;
+UPDATE STATISTICS dbo.app_contact_address;
 
--------------------------------------------------------------------------------------------------------------------------------------------------
-
+--------------------------------------------------------------------------------------------------------------------------------------------------
 -- contact_employment ----------------------------------------------------------------------------------------------------------------------------
-INSERT INTO sandbox.contact_employment
+
+INSERT INTO dbo.app_contact_employment
 	(con_id, address_line_1, city, business_name, employment_type_enum, income_type_enum, job_title, monthly_salary, months_at_job, 
 	 other_monthly_income, other_income_type_enum, other_income_source_detail, phone, self_employed_flag, [state], street_name, street_number, unit, zip)
 	SELECT 
@@ -1671,7 +1687,7 @@ INSERT INTO sandbox.contact_employment
 			-- Have to filter out all of the blank PREV contact_address rows;
 			LEN(e.zip_code) > 0;
 
-UPDATE STATISTICS sandbox.contact_employment;
+UPDATE STATISTICS dbo.app_contact_employment;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 

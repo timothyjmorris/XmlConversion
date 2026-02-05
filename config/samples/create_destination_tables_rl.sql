@@ -1,58 +1,75 @@
 /* -----------------------------------------------------------------------------------------------------------------------------------------
 TEAR DOWN TABLES
-	DROP TABLE IF EXISTS sandbox.app_operational_rl;
-	DROP TABLE IF EXISTS sandbox.app_pricing_rl;
-	DROP TABLE IF EXISTS sandbox.app_transactional_rl;
-	DROP TABLE IF EXISTS sandbox.app_funding_rl;
-	DROP TABLE IF EXISTS sandbox.app_funding_checklist_rl;
-	DROP TABLE IF EXISTS sandbox.app_funding_contract_rl;
-	DROP TABLE IF EXISTS sandbox.app_warranties_rl;
-	DROP TABLE IF EXISTS sandbox.app_policy_exceptions_rl;
-	DROP TABLE IF EXISTS sandbox.app_collateral_rl;
-	DROP TABLE IF EXISTS sandbox.app_dealer_rl;	
+	DROP TABLE IF EXISTS dbo.app_operational_rl;
+	DROP TABLE IF EXISTS dbo.app_pricing_rl;
+	DROP TABLE IF EXISTS dbo.app_transactional_rl;
+	DROP TABLE IF EXISTS dbo.app_funding_rl;
+	DROP TABLE IF EXISTS dbo.app_funding_checklist_rl;
+	DROP TABLE IF EXISTS dbo.app_funding_contract_rl;
+	DROP TABLE IF EXISTS dbo.app_warranties_rl;
+	DROP TABLE IF EXISTS dbo.app_policy_exceptions_rl;
+	DROP TABLE IF EXISTS dbo.app_collateral_rl;
+	DROP TABLE IF EXISTS dbo.app_dealer_rl;	
 -------------------------------------------------------------------------------------------------------------------------------------------- */
 
-CREATE TABLE sandbox.app_operational_rl (
-	app_id								int				NOT NULL CONSTRAINT FK_app_operational_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
-	assigned_credit_analyst				varchar(80)		NULL,
-	assigned_funding_analyst			varchar(80)		NULL,
-	cb_score_factor_code_pr_1			varchar(10)		NULL,
-	cb_score_factor_code_pr_2			varchar(10)		NULL,
-	cb_score_factor_code_pr_3			varchar(10)		NULL,
-	cb_score_factor_code_pr_4			varchar(10)		NULL,
-	cb_score_factor_code_pr_5			varchar(10)		NULL,
-	cb_score_factor_type_pr_1			varchar(25)		NULL,
-	cb_score_factor_type_pr_2			varchar(25)		NULL,
-	cb_score_factor_type_pr_3			varchar(25)		NULL,
-	cb_score_factor_type_pr_4			varchar(25)		NULL,
-	cb_score_factor_type_pr_5			varchar(25)		NULL,
-	cb_score_factor_code_sec_1			varchar(10)		NULL,
-	cb_score_factor_code_sec_2			varchar(10)		NULL,
-	cb_score_factor_code_sec_3			varchar(10)		NULL,
-	cb_score_factor_code_sec_4			varchar(10)		NULL,
-	cb_score_factor_code_sec_5			varchar(10)		NULL,
-	cb_score_factor_type_sec_1			varchar(25)		NULL,
-	cb_score_factor_type_sec_2			varchar(25)		NULL,
-	cb_score_factor_type_sec_3			varchar(25)		NULL,
-	cb_score_factor_type_sec_4			varchar(25)		NULL,
-	cb_score_factor_type_sec_5			varchar(25)		NULL,
-	joint_app_flag						bit				NOT NULL CONSTRAINT DF_app_operational_rl_joint_app_flag DEFAULT(0),
-	last_updated_by						varchar(80)		NULL,
-	last_updated_date					datetime		NULL,
-	housing_monthly_payment_pr			int				NULL,
-	housing_monthly_payment_sec			int				NULL,
-	mrv_lead_indicator_pr_enum			smallint		NULL	 CONSTRAINT FK_app_operational_rl_mrv_lead_indicator_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	mrv_lead_indicator_sec_enum			smallint		NULL	 CONSTRAINT FK_app_operational_rl_mrv_lead_indicator_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	priority_enum						smallint		NULL	 CONSTRAINT FK_app_operational_rl_priority_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	process_enum						smallint		NULL	 CONSTRAINT FK_app_operational_rl_process_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	regb_end_date						datetime		NULL,
-	regb_start_date						datetime		NULL	 CONSTRAINT DF_app_operational_rl_regb_start_date DEFAULT GETUTCDATE(),
-	status_enum							smallint		NULL	 CONSTRAINT FK_app_operational_rl_status_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+CREATE TABLE dbo.app_operational_rl (
+	app_id									int				NOT NULL CONSTRAINT FK_app_operational_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,	
+	assigned_credit_analyst					varchar(80)		NULL,
+	assigned_funding_analyst				varchar(80)		NULL,
+	cb_score_factor_code_pr_1				varchar(10)		NULL,
+	cb_score_factor_code_pr_2				varchar(10)		NULL,
+	cb_score_factor_code_pr_3				varchar(10)		NULL,
+	cb_score_factor_code_pr_4				varchar(10)		NULL,
+	cb_score_factor_code_pr_5				varchar(10)		NULL,
+	cb_score_factor_type_pr_1				varchar(25)		NULL,
+	cb_score_factor_type_pr_2				varchar(25)		NULL,
+	cb_score_factor_type_pr_3				varchar(25)		NULL,
+	cb_score_factor_type_pr_4				varchar(25)		NULL,
+	cb_score_factor_type_pr_5				varchar(25)		NULL,
+	cb_score_factor_code_sec_1				varchar(10)		NULL,
+	cb_score_factor_code_sec_2				varchar(10)		NULL,
+	cb_score_factor_code_sec_3				varchar(10)		NULL,
+	cb_score_factor_code_sec_4				varchar(10)		NULL,
+	cb_score_factor_code_sec_5				varchar(10)		NULL,
+	cb_score_factor_type_sec_1				varchar(25)		NULL,
+	cb_score_factor_type_sec_2				varchar(25)		NULL,
+	cb_score_factor_type_sec_3				varchar(25)		NULL,
+	cb_score_factor_type_sec_4				varchar(25)		NULL,
+	cb_score_factor_type_sec_5				varchar(25)		NULL,
+	joint_app_flag							bit				NOT NULL CONSTRAINT DF_app_operational_rl_joint_app_flag DEFAULT(0),
+	last_bureau_pulled_type					varchar(5)		NULL,
+	last_updated_by							varchar(80)		NULL,
+	last_updated_date						datetime		NULL,
+	housing_monthly_payment_pr				int				NULL,
+	housing_monthly_payment_sec				int				NULL,
+	mrv_lead_indicator_pr_enum				smallint		NULL	 CONSTRAINT FK_app_operational_rl_mrv_lead_indicator_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
+	mrv_lead_indicator_sec_enum				smallint		NULL	 CONSTRAINT FK_app_operational_rl_mrv_lead_indicator_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
+	priority_enum							smallint		NULL	 CONSTRAINT FK_app_operational_rl_priority_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
+	process_enum							smallint		NULL	 CONSTRAINT FK_app_operational_rl_process_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
+	regb_end_date							datetime		NULL,
+	regb_start_date							datetime		NULL	 CONSTRAINT DF_app_operational_rl_regb_start_date DEFAULT GETUTCDATE(),	
+	risk_model_score_factor_code_pr_1		varchar(10)		NULL,
+	risk_model_score_factor_code_pr_2		varchar(10)		NULL,
+	risk_model_score_factor_code_pr_3		varchar(10)		NULL,
+	risk_model_score_factor_code_pr_4		varchar(10)		NULL,
+	risk_model_score_factor_type_pr_1		varchar(25)		NULL,
+	risk_model_score_factor_type_pr_2		varchar(25)		NULL,
+	risk_model_score_factor_type_pr_3		varchar(25)		NULL,
+	risk_model_score_factor_type_pr_4		varchar(25)		NULL,
+	risk_model_score_factor_code_sec_1		varchar(10)		NULL,
+	risk_model_score_factor_code_sec_2		varchar(10)		NULL,
+	risk_model_score_factor_code_sec_3		varchar(10)		NULL,
+	risk_model_score_factor_code_sec_4		varchar(10)		NULL,
+	risk_model_score_factor_type_sec_1		varchar(25)		NULL,
+	risk_model_score_factor_type_sec_2		varchar(25)		NULL,
+	risk_model_score_factor_type_sec_3		varchar(25)		NULL,
+	risk_model_score_factor_type_sec_4		varchar(25)		NULL,
+	status_enum								smallint		NULL	 CONSTRAINT FK_app_operational_rl_status_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
 	CONSTRAINT PK_app_operational_rl_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 
-CREATE TABLE sandbox.app_pricing_rl (
-	app_id								int				NOT NULL CONSTRAINT FK_app_pricing_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
+CREATE TABLE dbo.app_pricing_rl (
+	app_id								int				NOT NULL CONSTRAINT FK_app_pricing_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,	
 	add_total_to_financed_flag			bit				NULL,
 	cash_down_payment_amount			decimal(12,2)	NULL,
 	debt_to_income_ratio				decimal(12,2)	NULL,
@@ -76,11 +93,13 @@ CREATE TABLE sandbox.app_pricing_rl (
 );
 
 -- Calculated system values/not editable
-CREATE TABLE sandbox.app_funding_rl (
-	app_id									int				NOT NULL CONSTRAINT FK_app_funding_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
+CREATE TABLE dbo.app_funding_rl (
+	app_id									int				NOT NULL CONSTRAINT FK_app_funding_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,
+	account_number							int				NULL,	
 	amount_financed_within_policy_flag		bit				NULL,
+	boarding_date							datetime		NULL,
 	collateral_ages_within_policy_flag		bit				NULL,
-	credit_bureau_expire_date				smalldatetime	NULL,
+	credit_bureau_expire_date				date			NULL,
 	credit_pulled_within_30_days_flag		bit				NULL,
 	creditscore_within_policy_flag			bit				NULL,
 	dealer_proceeds_amount					decimal(12,2)	NULL,	-- from [IL_fund_dlr_ach]
@@ -104,67 +123,68 @@ CREATE TABLE sandbox.app_funding_rl (
 	total_of_payments_amount				decimal(12,2)	NULL,
 	-- mathcorp
 	validated_finance_charge				decimal(12,2)	NULL,
+	verification_number						varchar(10)		NULL,	
 	CONSTRAINT PK_app_funding_rl_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 
 -- Decisions made or validation to approve a loan for funding
-CREATE TABLE sandbox.app_funding_checklist_rl (
-	app_id										int				NOT NULL CONSTRAINT FK_app_funding_checklist_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
-	addendum_signed_pr_enum						smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_addendum_signed_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	addendum_signed_sec_enum					smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_addendum_signed_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
+CREATE TABLE dbo.app_funding_checklist_rl (
+	app_id										int				NOT NULL CONSTRAINT FK_app_funding_checklist_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,
+	addendum_signed_pr_enum						smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_addendum_signed_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	addendum_signed_sec_enum					smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_addendum_signed_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
 	address_confirmed_flag						bit				NULL,
 	applicant_references_checked_flag			bit				NULL,
 	apr_within_guidelines_flag					bit				NULL,
 	check_requested_by_user						varchar(80)		NULL,
-	collateral_percent_used_confirmed_enum		smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_collateral_percent_used_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	collateral_worksheet_unit_confirmed_enum	smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_collateral_worksheet_unit_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
+	collateral_percent_used_confirmed_enum		smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_collateral_percent_used_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	collateral_worksheet_unit_confirmed_enum	smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_collateral_worksheet_unit_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
 	contract_signed_pr_flag						bit				NULL,
 	contract_signed_sec_flag					bit				NULL,
 	correct_contract_state_flag					bit				NULL,
-	credit_app_signed_pr_enum					smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_credit_app_signed_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	credit_app_signed_sec_enum					smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_credit_app_signed_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
+	credit_app_signed_pr_enum					smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_credit_app_signed_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	credit_app_signed_sec_enum					smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_credit_app_signed_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
 	down_payment_approved_flag					bit				NULL,
-	drivers_license_confirmed_pr_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_drivers_license_confirmed_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	drivers_license_confirmed_sec_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_drivers_license_confirmed_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	drivers_license_dob_confirmed_pr_enum		smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_drivers_license_dob_confirmed_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	drivers_license_dob_confirmed_sec_enum		smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_drivers_license_dob_confirmed_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	guarantee_of_lien_enum						smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_guarantee_of_lien_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
+	drivers_license_confirmed_pr_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_drivers_license_confirmed_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	drivers_license_confirmed_sec_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_drivers_license_confirmed_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	drivers_license_dob_confirmed_pr_enum		smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_drivers_license_dob_confirmed_pr_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	drivers_license_dob_confirmed_sec_enum		smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_drivers_license_dob_confirmed_sec_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	guarantee_of_lien_enum						smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_guarantee_of_lien_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
 	initials_presented_flag						bit				NULL,
-	insurance_deductible_within_policy_enum		smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_deductible_within_policy_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	insurance_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	insurance_motor_vin_confirm_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_motor_vin_confirm_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	insurance_rv_boat_vin_confirm_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_rv_boat_vin_confirm_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	insurance_trailer_vin_confirm_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_trailer_vin_confirm_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
+	insurance_deductible_within_policy_enum		smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_deductible_within_policy_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	insurance_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	insurance_motor_vin_confirm_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_motor_vin_confirm_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	insurance_rv_boat_vin_confirm_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_rv_boat_vin_confirm_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	insurance_trailer_vin_confirm_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_insurance_trailer_vin_confirm_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
 	itemization_confirmed_flag					bit				NULL,
-	motor_title_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_motor_title_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	motor_title_vin_confirmed_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_motor_title_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	motor_ucc_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_motor_ucc_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	motor_ucc_vin_enum							smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_motor_ucc_vin_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	new_motor_1_invoice_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_new_motor_1_invoice_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	new_motor_2_invoice_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_new_motor_2_invoice_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	new_rv_boat_invoice_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_new_rv_boat_invoice_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	new_trailer_invoice_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_new_trailer_invoice_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
+	motor_title_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_motor_title_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	motor_title_vin_confirmed_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_motor_title_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	motor_ucc_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_motor_ucc_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	motor_ucc_vin_enum							smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_motor_ucc_vin_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	new_motor_1_invoice_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_new_motor_1_invoice_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	new_motor_2_invoice_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_new_motor_2_invoice_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	new_rv_boat_invoice_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_new_rv_boat_invoice_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	new_trailer_invoice_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_new_trailer_invoice_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
 	payment_schedule_confirmed_flag				bit				NULL,
-	payoff_mb_loan_verified_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_payoff_mb_loan_verified_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
+	payoff_mb_loan_verified_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_payoff_mb_loan_verified_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
 	paystub_expire_date_pr						smalldatetime	NULL,
 	paystub_expire_date_sec						smalldatetime	NULL,
-	rv_boat_title_mb_lienholder_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_rv_boat_title_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	rv_boat_title_vin_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_rv_boat_title_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	rv_boat_ucc_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_rv_boat_ucc_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	rv_boat_ucc_vin_confirmed_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_rv_boat_ucc_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
+	rv_boat_title_mb_lienholder_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_rv_boat_title_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	rv_boat_title_vin_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_rv_boat_title_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	rv_boat_ucc_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_rv_boat_ucc_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	rv_boat_ucc_vin_confirmed_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_rv_boat_ucc_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
 	unit_confirmed_flag							bit				NULL,
-	trailer_title_mb_lienholder_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_trailer_title_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	trailer_title_vin_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_trailer_title_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	trailer_ucc_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_trailer_ucc_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	trailer_ucc_vin_confirmed_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_trailer_ucc_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
-	ucc_filed_by_mb_enum						smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_ucc_filed_by_mb_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION, 
+	trailer_title_mb_lienholder_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_trailer_title_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	trailer_title_vin_confirmed_enum			smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_trailer_title_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	trailer_ucc_mb_lienholder_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_trailer_ucc_mb_lienholder_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	trailer_ucc_vin_confirmed_enum				smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_trailer_ucc_vin_confirmed_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
+	ucc_filed_by_mb_enum						smallint		NULL	 CONSTRAINT FK_app_funding_checklist_rl_ucc_filed_by_mb_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION, 
 	verified_against_program_flag				bit				NULL,
 	CONSTRAINT PK_app_funding_checklist_rl_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 
 -- See "Required Funding Fields Check()" script if enforcing database constraints
-CREATE TABLE sandbox.app_funding_contract_rl (
-	app_id								int				NOT NULL CONSTRAINT FK_app_funding_contract_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
+CREATE TABLE dbo.app_funding_contract_rl (
+	app_id								int				NOT NULL CONSTRAINT FK_app_funding_contract_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,
 	apr									decimal(12,2)	NULL,
 	cash_down_payment					decimal(12,2)	NULL,
 	cash_proceeds						decimal(12,2)	NULL,
@@ -207,30 +227,30 @@ CREATE TABLE sandbox.app_funding_contract_rl (
 );
 
 -- AKA "Backend Policies", composite PK - may have multiples
-CREATE TABLE sandbox.app_warranties_rl (
-	app_id								int				NOT NULL CONSTRAINT FK_app_warranties_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
+CREATE TABLE dbo.app_warranties_rl (
+	app_id								int				NOT NULL CONSTRAINT FK_app_warranties_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,
 	amount								decimal(12,2)	NOT NULL CONSTRAINT DF_app_warranties_rl_amount DEFAULT (0),
 	company_name						varchar(50)		NOT NULL,
 	merrick_lienholder_flag				bit				NOT NULL CONSTRAINT DF_app_warranties_rl_merrick_lienholder_flag DEFAULT (0),
 	term_months							smallint		NOT NULL CONSTRAINT DF_app_warranties_rl_term_months DEFAULT (0),
 	policy_number						varchar(30)		NULL,
-	warranty_type_enum					smallint		NOT NULL CONSTRAINT FK_app_warranties_rl_warranty_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION
+	warranty_type_enum					smallint		NOT NULL CONSTRAINT FK_app_warranties_rl_warranty_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION
 	CONSTRAINT PK_app_warranties_rl_app_id PRIMARY KEY CLUSTERED (app_id, warranty_type_enum)
 );
 
 -- Composite PK - may have multiples
-CREATE TABLE sandbox.app_policy_exceptions_rl (
-	app_id								int				NOT NULL CONSTRAINT FK_app_policy_exceptions_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
+CREATE TABLE dbo.app_policy_exceptions_rl (
+	app_id								int				NOT NULL CONSTRAINT FK_app_policy_exceptions_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,
 	notes								varchar(1000)	NULL,
-	policy_exception_type_enum			smallint		NOT NULL CONSTRAINT FK_app_policy_exceptions_rl_policy_exception_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+	policy_exception_type_enum			smallint		NOT NULL CONSTRAINT FK_app_policy_exceptions_rl_policy_exception_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
 	reason_code							varchar(20)		NOT NULL,
 	CONSTRAINT PK_app_policy_exceptions_rl_app_id PRIMARY KEY CLUSTERED (app_id, policy_exception_type_enum)
 );
 
 -- Composite PK - may have multiples
-CREATE TABLE sandbox.app_collateral_rl (
-	app_id								int				NOT NULL CONSTRAINT FK_app_collateral_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
-	collateral_type_enum				smallint		NOT NULL CONSTRAINT FK_app_collateral_rl_collateral_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+CREATE TABLE dbo.app_collateral_rl (
+	app_id								int				NOT NULL CONSTRAINT FK_app_collateral_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,
+	collateral_type_enum				smallint		NOT NULL CONSTRAINT FK_app_collateral_rl_collateral_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
 	[length]							smallint		NULL,
 	make								varchar(50)		NOT NULL,
 	mileage								int				NULL,
@@ -250,45 +270,45 @@ CREATE TABLE sandbox.app_collateral_rl (
 
 -- This is a snapshot for the last updated dealer used, preserved with the state of the application for reference after booking
 -- (also mostly replaces IL_fund_dlr_ach)
-CREATE TABLE sandbox.app_dealer_rl (
-	app_id								int				NOT NULL CONSTRAINT FK_app_dealer_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,
+CREATE TABLE dbo.app_dealer_rl (
+	app_id								int				NOT NULL CONSTRAINT FK_app_dealer_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,
 	broker_flag							bit				NOT NULL CONSTRAINT DF_app_dealer_rl_broker_flag DEFAULT (0),
 	bank_account_num					varchar(20)		NULL,
-	bank_account_type_enum				smallint		NULL	 CONSTRAINT FK_app_dealer_rl_bank_account_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
-	bank_routing_num					char(9)			NULL,
-	bank_phone							char(10)		NULL,
+	bank_account_type_enum				smallint		NULL	 CONSTRAINT FK_app_dealer_rl_bank_account_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
+	bank_routing_num					varchar(9)		NULL,
+	bank_phone							varchar(10)		NULL,
 	bank_name							varchar(50)		NULL,
 	dealer_address_line_1				varchar(100)	NOT NULL,
 	dealer_city							varchar(50)		NOT NULL,
 	dealer_email						varchar(100)	NULL,
-	dealer_fax							char(10)		NULL,
+	dealer_fax							varchar(10)		NULL,
 	dealer_name							varchar(100)	NOT NULL,
 	dealer_num_child					int				NOT NULL,
 	dealer_num_parent					int				NOT NULL,	
-	dealer_phone						char(10)		NOT NULL,
+	dealer_phone						varchar(10)		NOT NULL,
 	dealer_state						char(2)			NOT NULL,
 	dealer_zip							varchar(9)		NOT NULL,	
 	fsp_email							varchar(100)	NULL,
-	fsp_fax								char(10)		NULL,
+	fsp_fax								varchar(10)		NULL,
 	fsp_name							varchar(100)	NULL,
 	fsp_num								int				NULL,	
-	fsp_phone							char(10)		NULL,	
+	fsp_phone							varchar(10)		NULL,	
 	CONSTRAINT PK_app_dealer_rl_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 
 -- "Transactional" values only exist until loan is decisioned (cleaned out by a separate job)
 -- NOTE: app_id is both the FK & PK (not expecting JOINs to this table)
-CREATE TABLE sandbox.app_transactional_rl (
-	app_id								int				NOT NULL CONSTRAINT FK_app_transactional_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES sandbox.app_base(app_id) ON DELETE CASCADE,	
-	audit_type_enum						smallint		NULL	 CONSTRAINT FK_app_transactional_rl_audit_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+CREATE TABLE dbo.app_transactional_rl (
+	app_id								int				NOT NULL CONSTRAINT FK_app_transactional_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,	
+	audit_type_enum						smallint		NULL	 CONSTRAINT FK_app_transactional_rl_audit_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
 	duplicate_app_flag					bit				NULL	 CONSTRAINT DF_app_transactional_rl_duplicate_app_flag DEFAULT (0),
 	[error_message]						varchar(255)	NULL,
 	assess_florida_doc_fee_flag			bit				NULL,
 	assess_tennessee_doc_fee_flag		bit				NULL,
-	fund_loan_indicator_enum			smallint		NULL	 CONSTRAINT FK_app_transactional_rl_fund_loan_indicator_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+	fund_loan_indicator_enum			smallint		NULL	 CONSTRAINT FK_app_transactional_rl_fund_loan_indicator_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
 	locked_by_user						varchar(80)		NULL,
 	pending_verification_flag			bit				NULL	 CONSTRAINT DF_app_transactional_rl_pending_verification_flag DEFAULT (0),
-	supervisor_review_indicator_enum	smallint		NULL	 CONSTRAINT FK_app_transactional_rl_supervisor_review_indicator_enum__app_enums_enum_id FOREIGN KEY REFERENCES sandbox.app_enums(enum_id) ON DELETE NO ACTION,
+	supervisor_review_indicator_enum	smallint		NULL	 CONSTRAINT FK_app_transactional_rl_supervisor_review_indicator_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
 	suppress_ach_funding_flag			bit				NOT NULL CONSTRAINT DF_app_transactional_rl_supress_ach_funding_flag DEFAULT (0),
 	CONSTRAINT PK_app_transactional_rl_app_id PRIMARY KEY CLUSTERED (app_id)
 );

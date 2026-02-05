@@ -1,13 +1,9 @@
-/* --------------------------------------------------------------------------------------------------------------------
--- File: insert_enum_values.sql
--- Purpose: Insert enum values for credit application XML extraction
--- Source: Extracted from migrate_table_logic.sql lines 5-298
--- 
--- NOTE: This file may not be needed in production since enum data is already set up.
---       This is provided for reference and testing environments only.
--------------------------------------------------------------------------------------------------------------------- */
-
 DELETE FROM dbo.app_enums;
+
+
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (600, 'product_line', 'CC');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (601, 'product_line', 'RCLI');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (602, 'product_line', 'RL');
 
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (1, 'app_source_cc', 'INTERNET');	-- I
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (2, 'app_source_cc', 'MAILED-IN');	-- M
@@ -52,12 +48,13 @@ INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (48, 'sub_type_rl', 'UTV
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (50, 'decision_type_cc', 'APPROVED');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (51, 'decision_type_cc', 'DECLINED');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (52, 'decision_type_cc', 'DECLINED-NC');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (53, 'decision_type_cc', 'FAILED-DEBIT'); 
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (53, 'decision_type_cc', 'FAILED-DEBIT');		-- FDBIT
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (54, 'decision_type_cc', 'FAILED-GIACT');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (55, 'decision_type_cc', 'NOCHK');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (56, 'decision_type_cc', 'NO DECISION');		-- NONE
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (57, 'decision_type_cc', 'PENDING-DEPOSIT');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (58, 'decision_type_cc', 'APPROVED-PENDING-DEPOSIT'); 
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (59, 'decision_type_cc', 'PENDING NOVA'); 
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (60, 'decision_type_cc', 'WITHDRAWN');
 
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (65, 'decision_type_rl', 'APPROVED');		-- APPRV
@@ -71,7 +68,8 @@ INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (71, 'bank_account_type'
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (80, 'priority_cc', 'Alloy Error');			-- Alloy Error
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (81, 'priority_cc', 'Offline Step-Up');		-- Offline Step-Up
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (82, 'priority_cc', 'Step-Up Received');	-- Step-Up Received
-
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (83, 'priority_cc', 'TU Doc R');			-- TU Document Verification - Received
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (84, 'priority_cc', 'TU Doc P');			-- TU Document Verification - Pending
 
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (90, 'process_cc', '00025');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (92, 'process_cc', '00050');
@@ -122,7 +120,7 @@ INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (116, 'process_cc', '990
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (117, 'process_cc', '99500');
 */
 
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (130, 'funding_source_sc', 'ACH');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (140, 'funding_source_sc', 'ACH');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (131, 'funding_source_sc', 'Check');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (132, 'funding_source_sc', 'Debit');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (133, 'funding_source_sc', 'Mail CC/MO');
@@ -278,10 +276,6 @@ INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (421, 'collateral_type_r
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (422, 'collateral_type_rl', 'UTILITY VEHICLE');		-- utility_vehicle
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (423, 'collateral_type_rl', 'UNDETERMINED');		-- Could not resolve
 
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (600, 'product_line', 'CC');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (601, 'product_line', 'RCLI');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (602, 'product_line', 'RL');
-
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (610, 'decision_rl', 'APPROVED');							-- APPRV
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (611, 'decision_rl', 'DECLINED');							-- DECLN
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (612, 'decision_rl', 'PENDING');							-- 
@@ -332,4 +326,17 @@ INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (701, 'supervisor_review
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (706, 'audit_flag_rl', 'REVIEWED');	--	R
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (707, 'audit_flag_rl', 'PENDING');	--	P
 
-UPDATE STATISTICS sandbox.app_enums;
+
+-- b_othr_inc_basis_tp_c, other_income_source_type_code, b_salary_basis_tp_c, salary_basis_type_code
+/*
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (380, 'income_basis_type', 'ANNUAL');	-- ANNUM 
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (381, 'income_basis_type', 'MONTH');	-- MONTH, MONTHL
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (382, 'income_basis_type', 'OTHER');	-- OTHER (RL other type includes: child_, disabi, invest, pensio rental, second, social, vetera)
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (383, 'income_basis_type', 'WEEK');		-- WEEK
+*/
+
+
+-- b_job_title_tp_c, title_position
+
+
+UPDATE STATISTICS dbo.app_enums;
