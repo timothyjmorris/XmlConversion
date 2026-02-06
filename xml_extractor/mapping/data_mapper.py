@@ -210,6 +210,11 @@ class DataMapper(DataMapperInterface):
         # Build element name cache at initialization (Task 5: Contract-Driven XPath Element Names)
         # Pre-compute child_table -> XML element name mappings from relationships array
         self._element_name_cache = self._build_element_name_cache()
+        
+        # Initialize XML tree references (used by extraction methods like _extract_from_authu_contact)
+        self._current_xml_root = None
+        self._current_xml_tree = None
+        self._current_contract = None
     
     def _build_enum_type_cache(self) -> Dict[str, Optional[str]]:
         """
@@ -528,6 +533,8 @@ class DataMapper(DataMapperInterface):
             # Set XML root for contact extraction and CURR address extraction
             if xml_root is not None:
                 self._current_xml_root = xml_root
+                # Also set _current_xml_tree for AUTHU contact extraction
+                self._current_xml_tree = xml_root
             
             # Store contract for use in element filtering
             self._current_contract = contract
@@ -596,7 +603,7 @@ class DataMapper(DataMapperInterface):
 
         Args:
             xml_data: Flattened XML data dictionary from XMLParser
-            app_id: Pre-validated application identifier
+            app_id: Pre-validated application identifier (converted to string if needed)
             valid_contacts: Pre-validated contact list with deduplication applied
             xml_root: Original XML root for contact/address extraction
 
@@ -607,12 +614,17 @@ class DataMapper(DataMapperInterface):
             This method assumes pre-validation of app_id and contacts. For full validation
             including contact extraction and deduplication, use apply_mapping_contract directly.
         """
+        # Defensive: Convert app_id to string if it's an integer (can be called with either type)
+        app_id = str(app_id)
+        
         # Clear validation errors from previous app (important for reused mapper instances)
         self._validation_errors = []
         
-        # Set the XML root for contact extraction
+        # Set the XML root and tree for contact extraction and AUTHU contact extraction
         if xml_root is not None:
             self._current_xml_root = xml_root
+            # Also set _current_xml_tree for AUTHU contact extraction
+            self._current_xml_tree = xml_root
         
         # Load the mapping contract using centralized configuration
         mapping_contract = self._config_manager.load_mapping_contract(self._mapping_contract_path)
@@ -917,11 +929,19 @@ class DataMapper(DataMapperInterface):
         """
         try:
             # Handle special mapping types that require custom extraction logic
-            if hasattr(mapping, 'mapping_type') and mapping.mapping_type == 'last_valid_pr_contact':
+            # Check if last_valid_pr_contact or authu_contact is in the mapping type list
+            mapping_types = mapping.mapping_type if mapping.mapping_type else []
+            if isinstance(mapping_types, str):
+                mapping_types = [mapping_types]
+            
+            if 'last_valid_pr_contact' in mapping_types:
                 return self._extract_from_last_valid_pr_contact(mapping)
             
+            if 'authu_contact' in mapping_types:
+                return self._extract_from_authu_contact(mapping)
+            
             # For calculated fields, skip XML extraction entirely - return sentinel value to trigger expression evaluation
-            if hasattr(mapping, 'mapping_type') and mapping.mapping_type and 'calculated_field' in mapping.mapping_type:
+            if 'calculated_field' in mapping_types:
                 return "__CALCULATED_FIELD_SENTINEL__"
             
             # Handle application-level attributes that need to be threaded to app_contact_base

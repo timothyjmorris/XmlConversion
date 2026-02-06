@@ -1,12 +1,8 @@
 {
     "database": {
         "driver": "ODBC Driver 17 for SQL Server",
-        "_server": "localhost\\SQLEXPRESS",
-        "_database": "XmlConversionDB",
         "server": "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com",
         "database": "MACDEVOperational",        
-        "username": "vscode",
-        "password": "express",
         "trusted_connection": true,
         "connection_timeout": 30,
         "command_timeout": 300,

@@ -47,9 +47,9 @@ This plan guides the onboarding of the RecLending (IL) product line to the XML D
 
 ### Tasks
 - [x] Run full test suite - 100% pass required → **216 passed, 5 skipped**
-- [ ] Run `env_prep/appxml_staging_orchestrator.py` 
-- [ ] Run `production_processor.py` with manual smoke validation
-- [ ] Capture baseline performance metrics
+- [x] Run `env_prep/appxml_staging_orchestrator.py` 
+- [x] Run `production_processor.py` with manual smoke validation
+- [x] Capture baseline performance metrics
 - [x] Document any failing tests with root cause → `authu_contact` added to supported_types
 
 ### Acceptance Criteria
@@ -137,8 +137,8 @@ NULL enums where sibling data suggests they should have values.
 - [x] SQL validation scripts in `diagnostics/` folder → `diagnostics/cc_data_validation.sql`
 - [x] Python utility for source-to-destination comparison → `diagnostics/validate_source_to_dest.py`
 - [ ] Bug list with severity and fix recommendations
-- [ ] Fixes applied and regression tests added
-- [ ] `authu_contact` mapping type implemented or field removed from contract
+- [x] Fixes applied and regression tests added
+- [x] `authu_contact` mapping type implemented or field removed from contract
 
 ### Acceptance Criteria
 - All validation categories have working queries ✅

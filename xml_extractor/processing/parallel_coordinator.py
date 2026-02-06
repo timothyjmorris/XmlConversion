@@ -453,6 +453,25 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
         )
         
         if not validation_result.is_valid or not validation_result.can_process:
+            # Log validation failure to processing_log so app is not re-attempted
+            failure_message = f"validation: {validation_result.validation_errors}"
+            try:
+                _worker_migration_engine.execute_bulk_insert(
+                    records=[{
+                        'app_id': work_item.app_id,
+                        'status': 'failed',
+                        'failure_reason': failure_message[:500],  # Truncate to column size
+                        'processing_time': datetime.utcnow(),
+                        'session_id': _worker_session_id,
+                        'app_id_start': _worker_app_id_start,
+                        'app_id_end': _worker_app_id_end
+                    }],
+                    table_name='processing_log',
+                    enable_identity_insert=False
+                )
+            except Exception as log_error:
+                logging.error(f"Failed to log validation failure for app_id {work_item.app_id}: {log_error}")
+            
             return WorkResult(
                 sequence=work_item.sequence,
                 app_id=work_item.app_id,
@@ -470,6 +489,24 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
         parsing_duration = parse_end - parse_start
         
         if root is None or not xml_data:
+            # Log parsing failure to processing_log so app is not re-attempted
+            try:
+                _worker_migration_engine.execute_bulk_insert(
+                    records=[{
+                        'app_id': work_item.app_id,
+                        'status': 'failed',
+                        'failure_reason': 'parsing: Failed to parse XML or extract elements',
+                        'processing_time': datetime.utcnow(),
+                        'session_id': _worker_session_id,
+                        'app_id_start': _worker_app_id_start,
+                        'app_id_end': _worker_app_id_end
+                    }],
+                    table_name='processing_log',
+                    enable_identity_insert=False
+                )
+            except Exception as log_error:
+                logging.error(f"Failed to log parsing failure for app_id {work_item.app_id}: {log_error}")
+            
             return WorkResult(
                 sequence=work_item.sequence,
                 app_id=work_item.app_id,
@@ -493,6 +530,24 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
             _worker_mapper.logger.debug(f"PERF Timing: Mapping logic for app_id {work_item.app_id} took {mapping_duration:.4f} seconds")
 
         if not mapped_data:
+            # Log mapping failure to processing_log so app is not re-attempted
+            try:
+                _worker_migration_engine.execute_bulk_insert(
+                    records=[{
+                        'app_id': work_item.app_id,
+                        'status': 'failed',
+                        'failure_reason': 'mapping: No data mapped from XML',
+                        'processing_time': datetime.utcnow(),
+                        'session_id': _worker_session_id,
+                        'app_id_start': _worker_app_id_start,
+                        'app_id_end': _worker_app_id_end
+                    }],
+                    table_name='processing_log',
+                    enable_identity_insert=False
+                )
+            except Exception as log_error:
+                logging.error(f"Failed to log mapping failure for app_id {work_item.app_id}: {log_error}")
+            
             return WorkResult(
                 sequence=work_item.sequence,
                 app_id=work_item.app_id,
@@ -527,6 +582,24 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
         total_inserted = sum(insertion_results.values())
         
         if total_inserted == 0:
+            # Log insertion failure to processing_log so app is not re-attempted
+            try:
+                _worker_migration_engine.execute_bulk_insert(
+                    records=[{
+                        'app_id': work_item.app_id,
+                        'status': 'failed',
+                        'failure_reason': 'insertion: No records were inserted into database',
+                        'processing_time': datetime.utcnow(),
+                        'session_id': _worker_session_id,
+                        'app_id_start': _worker_app_id_start,
+                        'app_id_end': _worker_app_id_end
+                    }],
+                    table_name='processing_log',
+                    enable_identity_insert=False
+                )
+            except Exception as log_error:
+                logging.error(f"Failed to log insertion failure for app_id {work_item.app_id}: {log_error}")
+            
             return WorkResult(
                 sequence=work_item.sequence,
                 app_id=work_item.app_id,
@@ -576,6 +649,9 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
         
         # Log the failure to processing_log so we don't retry this app_id
         # This prevents repeatedly attempting to process failed applications
+        # DIAGNOSTIC: Always log to stderr so we can see failures even if DB logging fails
+        import sys
+        print(f"[WORKER FAILURE] app_id={work_item.app_id} error_stage={error_stage} error={str(e)[:100]}", file=sys.stderr)
         try:
             failure_message = f"{error_stage}: {str(e)}"
             _worker_migration_engine.execute_bulk_insert(
@@ -591,9 +667,11 @@ def _process_work_item(work_item: WorkItem) -> WorkResult:
                 table_name='processing_log',
                 enable_identity_insert=False
             )
+            print(f"[WORKER FAILURE] app_id={work_item.app_id} logged to processing_log successfully", file=sys.stderr)
         except Exception as log_error:
             # If logging fails, at least log to Python logs (logging already imported at module level)
             logging.error(f"Failed to log failure for app_id {work_item.app_id}: {log_error}")
+            print(f"[WORKER FAILURE] app_id={work_item.app_id} FAILED to log: {log_error}", file=sys.stderr)
         
         return WorkResult(
             sequence=work_item.sequence,

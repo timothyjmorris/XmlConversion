@@ -72,14 +72,17 @@ class BaselineEstablisher:
         """
         try:
             with self.migration_engine.get_connection() as conn:
-                cursor = conn.cursor()
                 
+                cursor = conn.cursor()
+#
+# Commenting out until this respects the schema in the mapping contract
+#                 
                 # Clear processing log first (no FK constraints)
-                cursor.execute("DELETE FROM processing_log")
+#                cursor.execute("DELETE FROM processing_log")
                 
                 # Truncate or delete based on production requirements
                 # Using DELETE to respect constraints; TRUNCATE would fail without turning off FK
-                cursor.execute("DELETE FROM app_base")
+#                cursor.execute("DELETE FROM app_base")
                 
                 # Get count to verify
                 cursor.execute("SELECT COUNT(*) FROM app_base")

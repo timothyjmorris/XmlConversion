@@ -58,12 +58,17 @@ class ProductionProcessor:
         The ProductionProcessor implements a contract-driven schema isolation pattern where
         all database operations respect the target_schema specified in MappingContract:
         
-        1. Source Access (Read-Only - Always [dbo]):
-           - app_xml table (source XML data): [dbo].[app_xml] (hardcoded schema)
+        1. Source XML Access (Schema-Isolated - Uses target_schema):
+           - Staging table (source XML data): [{target_schema}].[app_xml_staging]
            - Used to extract XML documents for processing
-           - Never written to by processor; read-only access
+           - Schema follows target_schema since staging is part of migration workflow
+           
+        2. Source Application Access (Read-Only - Always [dbo]):
+           - Application table: [dbo].[application] (hardcoded schema)
+           - Used to validate app_ids exist in source system
+           - Read-only access to production data
         
-        2. Target Output (Schema-Isolated - Uses target_schema):
+        3. Target Output (Schema-Isolated - Uses target_schema):
            - All output tables (app_base, contact_base, etc.): [{target_schema}].[table_name]
            - Example: target_schema="sandbox" → [sandbox].[app_base], [sandbox].[contact_base]
            - Example: target_schema="dbo" → [dbo].[app_base], [dbo].[contact_base]
@@ -442,7 +447,7 @@ class ProductionProcessor:
 
                 query = f"""
                     SELECT {top_clause} ax.app_id, ax.[{source_column}]
-                    FROM [dbo].[{source_table}] AS ax
+                    FROM [{self.target_schema}].[{source_table}] AS ax
                     {join_clause}
                     {where_clause}
                     ORDER BY ax.app_id
@@ -458,6 +463,7 @@ class ProductionProcessor:
                 query_duration = time.time() - query_start
                 
                 seen_app_ids = set()
+                skipped_empty = []  # Track apps skipped due to empty XML
                 for row in rows:
                     app_id = row[0]
                     xml_content = row[1]
@@ -479,8 +485,20 @@ class ProductionProcessor:
                             continue
                         seen_app_ids.add(app_id)
                         xml_records.append((app_id, xml_content))
+                    else:
+                        # Log apps with empty/null XML content
+                        skipped_empty.append(app_id)
+                        self.logger.warning(f"app_id {app_id}: Skipped - empty or null XML content")
                 
                 self.logger.info(f"Extracted {len(xml_records)} XML records (excluding already processed and failed)")
+                
+                # Log summary if we skipped any apps with empty XML
+                if skipped_empty:
+                    self.logger.warning(f"Skipped {len(skipped_empty)} apps with empty/null XML content")
+                    if len(skipped_empty) <= 20:
+                        self.logger.warning(f"  Empty XML app_ids: {', '.join(map(str, skipped_empty))}")
+                    else:
+                        self.logger.warning(f"  Empty XML app_ids (first 20): {', '.join(map(str, skipped_empty[:20]))}")
                 
                 # Log if we found any duplicates
                 if len(seen_app_ids) < len(rows):
@@ -786,8 +804,8 @@ class ProductionProcessor:
             migration_engine = MigrationEngine(self.connection_string)
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
-                # Source table always in [dbo] schema (read-only access)
-                cursor.execute(f"SELECT COUNT(*) FROM [dbo].[{source_table}] WHERE [{source_column}] IS NOT NULL")
+                # Source table uses target_schema (staging table is part of migration schema)
+                cursor.execute(f"SELECT COUNT(*) FROM [{self.target_schema}].[{source_table}] WHERE [{source_column}] IS NOT NULL")
                 total_records = cursor.fetchone()[0]
                 
                 if limit:
