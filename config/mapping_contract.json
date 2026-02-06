@@ -188,8 +188,8 @@
       "mapping_type": [
         "boolean_to_bit"
       ],
-      "nullable": true,
-      "required": false,
+      "nullable": false,
+      "required": true,
       "default_value": "0"
     },
     {

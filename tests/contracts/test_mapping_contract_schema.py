@@ -263,4 +263,36 @@ def test_contract_field_mappings_vs_db_schema(contract):
     if mismatches:
         with open(DIFF_OUTPUT_PATH, "w", encoding="utf-8") as f:
             json.dump(mismatches, f, indent=2)
+        
+        # Print detailed output to console for visibility
+        print("\n" + "="*80)
+        print("CONTRACT/DATABASE SCHEMA MISMATCHES DETECTED")
+        print("="*80)
+        
+        mismatches_by_table = {}
+        for mismatch in mismatches:
+            table = mismatch.get("table", "unknown")
+            if table not in mismatches_by_table:
+                mismatches_by_table[table] = []
+            mismatches_by_table[table].append(mismatch)
+        
+        for table in sorted(mismatches_by_table.keys()):
+            print(f"\n[{table}]")
+            for mismatch in mismatches_by_table[table]:
+                col = mismatch.get("column", "unknown")
+                prop = mismatch.get("property", "issue")
+                contract_val = mismatch.get("contract_value")
+                db_val = mismatch.get("db_value")
+                recommendation = mismatch.get("recommendation")
+                
+                print(f"  {col}.{prop}:")
+                print(f"    Contract:      {contract_val!r}")
+                print(f"    Database:      {db_val!r}")
+                print(f"    Recommended:   {recommendation!r}")
+        
+        print(f"\n[RESOLUTION]")
+        print(f"  Update mapping_contract.json to match database schema.")
+        print(f"  Full details saved to: {DIFF_OUTPUT_PATH}")
+        print("="*80 + "\n")
+    
     assert not mismatches, f"Contract/DB schema mismatches found. See {DIFF_OUTPUT_PATH} for details."

@@ -49,8 +49,9 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
         parser = XMLParser(mapping_contract=cls.contract)
         xml_root = parser.parse_xml_stream(cls.sample_xml)
         cls.parsed_xml = parser.extract_elements(xml_root)
-        # Set _current_xml_root for DataMapper to match production logic
+        # Set _current_xml_root/_current_xml_tree for DataMapper to match production logic
         cls.mapper._current_xml_root = xml_root
+        cls.mapper._current_xml_tree = xml_root
 
     def test_all_mapping_types_supported(self):
         """

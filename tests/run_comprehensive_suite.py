@@ -160,6 +160,7 @@ class TestSuiteRunner:
         print(f"Categories: {', '.join(categories)}")
         
         overall_success = True
+        critical_success = True  # Track only critical categories
         category_timeouts = {
             'unit': 60,        # 1 minute for unit tests
             'integration': 180, # 3 minutes for integration tests
@@ -167,18 +168,27 @@ class TestSuiteRunner:
             'contracts': 30    # 30 seconds for contract tests
         }
         
+        # Critical categories that must pass
+        critical_categories = ['unit', 'contracts', 'integration']
+        
         for category in categories:
             timeout = category_timeouts.get(category, 300)
             success = self.run_category(category, timeout)
             if not success:
                 overall_success = False
                 
+                # Track failures in critical categories
+                if category in critical_categories:
+                    critical_success = False
+                
                 # For critical categories, consider stopping
                 if category in ['unit', 'contracts']:
                     print(f"CRITICAL CATEGORY {category.upper()} FAILED")
                     print(f"   Consider fixing {category} tests before proceeding")
         
-        return overall_success
+        # Return success based on critical categories only (unit, contracts, integration)
+        # E2E is optional/future and should not block commits
+        return critical_success
     
     def generate_summary_report(self) -> None:
         """Generate comprehensive summary report."""
