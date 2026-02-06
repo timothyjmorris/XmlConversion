@@ -18,7 +18,7 @@ PATH = os.path.abspath(os.path.join(HERE, '..'))
 CONFIG_DIR = os.path.join(PATH, 'config')
 DB_CONFIG_PATH = os.path.join(CONFIG_DIR, 'database_config.json')
 MAPPING_CONTRACT_PATH = os.path.join(CONFIG_DIR, 'mapping_contract.json')
-STAGING_TABLE = '[migration].[app_xml_staging]'
+STAGING_TABLE = '[dbo].[app_xml_staging]'
 
 
 def load_json(path):

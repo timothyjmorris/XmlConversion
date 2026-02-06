@@ -2,7 +2,7 @@
 
 **Status**: Active Working Document  
 **Created**: 2026-02-05  
-**Last Updated**: 2026-02-05
+**Last Updated**: 2026-02-06
 
 ## Overview
 
@@ -43,14 +43,17 @@ This plan guides the onboarding of the RecLending (IL) product line to the XML D
 ## Phase 0: Stabilization Baseline
 
 **Goal**: Establish verified baseline before any changes  
-**Status**: ✅ COMPLETE (2026-02-05)
+**Status**: ✅ COMPLETE (2026-02-06)
 
 ### Tasks
-- [x] Run full test suite - 100% pass required → **216 passed, 5 skipped**
-- [x] Run `env_prep/appxml_staging_orchestrator.py` 
+- [x] Run full test suite - 100% pass required → **214 passed, 0 failed**
+- [ ] **BLOCKER**: Fix `env_prep/appxml_staging_orchestrator.py` - currently not working, needed for environment setup
 - [x] Run `production_processor.py` with manual smoke validation
 - [x] Capture baseline performance metrics
 - [x] Document any failing tests with root cause → `authu_contact` added to supported_types
+- [x] Verify AUTHU mapping end-to-end (XML → mapper → DB)
+- [x] Fix contract/schema mismatch alignment and visibility
+- [x] Ensure commit-time tests enforce pass/fail correctly
 
 ### Acceptance Criteria
 - All tests pass ✅
@@ -115,6 +118,10 @@ NULL enums where sibling data suggests they should have values.
 | Bug | Description | Impact | Status |
 |-----|-------------|--------|--------|
 | `authu_contact` not implemented | ~~Mapping type `["char_to_bit", "authu_contact"]` extracts from PR contact, not AUTHU contact~~ | `auth_user_issue_card_flag` in `app_operational_cc` may be incorrect | **FIXED** |
+| `use_alloy_service_flag` contract mismatch | Contract marked column nullable/optional while DB is NOT NULL | Contract/schema validation failed | **FIXED** |
+| Contract/schema mismatch visibility | Failures only written to diff file; unclear in console | Slows triage | **FIXED** |
+| Test suite exit code | Suite returned non-zero when E2E had zero tests | Pre-commit blocked commits | **FIXED** |
+| `sc_bank_account_type_num` mapping missing | Enum not populated when `sc_ach_amount` has value | Data quality gap in `app_operational_cc` | **FIXED** |
 
 #### Bug Fix: `authu_contact` Mapping Type (2025-02-06)
 
@@ -131,19 +138,30 @@ NULL enums where sibling data suggests they should have values.
 **Tests Added**:
 - `tests/unit/test_authu_contact_mapping.py` - 4 test cases covering extraction scenarios
 
-**Test Baseline After Fix**: 220 passed, 5 skipped
+**Test Baseline After Fix**: 214 passed, 0 failed
 
 ### Deliverables
 - [x] SQL validation scripts in `diagnostics/` folder → `diagnostics/cc_data_validation.sql`
 - [x] Python utility for source-to-destination comparison → `diagnostics/validate_source_to_dest.py`
-- [ ] Bug list with severity and fix recommendations
+- [x] Batch failure summarization outputs JSON from latest metrics batch
+- [x] Pre-commit test enforcement added (blocks commits on critical test failures)
 - [x] Fixes applied and regression tests added
 - [x] `authu_contact` mapping type implemented or field removed from contract
+- [ ] Bug list with severity and fix recommendations (no open bugs at present; keep as periodic audit)
 
 ### Acceptance Criteria
 - All validation categories have working queries ✅
-- Known anomalies documented with explanations
+- Known anomalies documented with explanations (none currently open)
 - Critical bugs fixed before Phase 1
+
+### CC Data Validation Tracking List
+
+| Item | Validation Tool | Status | Notes |
+|------|------------------|--------|-------|
+| AUTHU issue_card_ind → auth_user_issue_card_flag | `diagnostics/validate_source_to_dest.py` + targeted DB checks | ✅ Verified | Confirmed in `migration` schema data |
+| sc_bank_account_type_enum populated | `diagnostics/validate_source_to_dest.py` (adjacent mismatch check) | ✅ Verified | Confirmed populated in data |
+| Missing enum/value pairs | `diagnostics/cc_data_validation.sql` | ✅ Clean | No open anomalies reported |
+| Sparse rows (>80% NULL) | `diagnostics/cc_data_validation.sql` | ✅ Clean | No open anomalies reported |
 
 ---
 
@@ -406,6 +424,10 @@ Dual-use implementation:
 ### 5.1 Load RL Sample XML
 
 - Use existing 15 samples in `config/samples/xml_files/reclending/`
+- **Curated E2E RL fixtures (initial):**
+    - `sample-source-xml--325725-e2e--rl.xml`
+    - `sample-source-xml--409321-e2e-rl.xml`
+- Extend these two files with any missing combinations/elements as needed
 - Load via `load_xml_to_db.py` (may need RL variant: `load_xml_to_db_rl.py`)
 
 ### 5.2 Create `generate_mock_xml_rl.py`
@@ -418,6 +440,22 @@ Dual-use implementation:
 
 - `tests/integration/test_data_mapper_rl_product.py`
 - `tests/e2e/test_pipeline_reclending_integration.py`
+
+### 5.5 CC E2E Test Parity (Manual → Curated)
+
+**Goal**: Convert the two CC manual E2E tests into deterministic, file-backed tests using the full application pipeline.
+
+**Approach**:
+- Curate 2 specific CC XML files with predictable content
+- Process via full pipeline: `production_processor.py` with `--product-line CC`
+- Validate end-to-end: XML source → parsing → mapping → database writes
+- Assert key outputs (row counts, enum values, calculated fields) against curated expected results
+
+**Deliverables**:
+- [ ] Curated CC XML fixtures (2 files) with stable IDs and documented expected outputs
+- [ ] E2E test suite that processes XML and validates database state
+- [ ] Documentation of expected transformation results
+- [ ] Update test runner to include CC E2E suite
 
 ### 5.4 Data Validation
 

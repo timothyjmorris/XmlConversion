@@ -24,6 +24,7 @@ import logging
 import sys
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
+from decimal import Decimal
 from lxml import etree
 import pyodbc
 
@@ -44,6 +45,7 @@ class ValidationResult:
     source_fields: Dict[str, Any] = field(default_factory=dict)
     dest_fields: Dict[str, Any] = field(default_factory=dict)
     mismatches: List[Dict[str, Any]] = field(default_factory=list)
+    smell_tasks: List[Dict[str, str]] = field(default_factory=list)
 
 
 def build_connection_string(server: str, database: str, trusted: bool = True) -> str:
@@ -74,6 +76,165 @@ def parse_xml_attributes(xml_content: str, xpath: str) -> Dict[str, str]:
     except Exception as e:
         logger.warning(f"XPath extraction failed for {xpath}: {e}")
     return {}
+
+
+def _get_xml_elements(xml_content: str, xpath: str) -> List[etree._Element]:
+    """Return XML elements for the given XPath, or empty list on failure."""
+    try:
+        root = etree.fromstring(xml_content.encode('utf-8') if isinstance(xml_content, str) else xml_content)
+        return root.xpath(xpath)
+    except Exception as e:
+        logger.warning(f"XPath extraction failed for {xpath}: {e}")
+        return []
+
+
+def _add_smell_task(result: ValidationResult, title: str, reason: str, xpath: str) -> None:
+    result.smell_tasks.append({
+        'title': title,
+        'reason': reason,
+        'xpath': xpath
+    })
+
+
+def detect_smells(xml_content: str, result: ValidationResult) -> None:
+    """Detect suspicious patterns: default/fallback values in destination that may indicate mapping issues.
+    
+    Check for values that look like defaults (BLANK, UNKNOWN, MISSING, 00000, etc.) and verify
+    whether the source XML actually had those values or if they were injected as fallbacks.
+    """
+    
+    dest = result.dest_fields
+    
+    # 1) app_pricing_cc: campaign_num = 'BLANK' (check source)
+    if dest.get('app_pricing_cc', {}).get('campaign_num') == 'BLANK':
+        pricing = _get_xml_elements(xml_content, "/Provenir/Request/CustData/application/marketing_info")
+        has_campaign = pricing and any((el.attrib.get('campaign_num') or '').strip() for el in pricing)
+        if not has_campaign:
+            _add_smell_task(
+                result,
+                "campaign_num = 'BLANK' (default)",
+                "Destination has default 'BLANK'; verify if source campaign_num was empty or missing.",
+                "/Provenir/Request/CustData/application/marketing_info/@campaign_num"
+            )
+    
+    # 2) app_pricing_cc: marketing_segment = 'UNKNOWN' (check source)
+    if dest.get('app_pricing_cc', {}).get('marketing_segment') == 'UNKNOWN':
+        seg_elements = _get_xml_elements(xml_content, "/Provenir/Request/CustData/application/marketing_info")
+        has_segment = seg_elements and any((el.attrib.get('marketing_segment') or '').strip() for el in seg_elements)
+        if not has_segment:
+            _add_smell_task(
+                result,
+                "marketing_segment = 'UNKNOWN' (fallback)",
+                "Destination has fallback 'UNKNOWN'; verify if source had no matching segment enum.",
+                "/Provenir/Request/CustData/application/marketing_info/@marketing_segment"
+            )
+    
+    # 3) population_assignment_enum is NULL or 229 (default enum value for missing)
+    if dest.get('app_operational_cc', {}).get('population_assignment_enum') in (None, 229):
+        app_nodes = _get_xml_elements(xml_content, "/Provenir/Request/CustData/application")
+        has_pop_assign = app_nodes and any((el.attrib.get('population_assignment_code') or '').strip() for el in app_nodes)
+        if not has_pop_assign:
+            _add_smell_task(
+                result,
+                "population_assignment_enum missing or default (229)",
+                "Enum is NULL or set to default 229; verify source had no population_assignment_code.",
+                "/Provenir/Request/CustData/application/@population_assignment_code"
+            )
+    
+    # 4) app_contact_base: first_name or last_name = 'UNKNOWN' (check source)
+    contact = dest.get('app_contact_base', {})
+    if contact.get('first_name') == 'UNKNOWN' or contact.get('last_name') == 'UNKNOWN':
+        contact_els = _get_xml_elements(xml_content, "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']")
+        has_names = contact_els and any(
+            ((el.attrib.get('first_name') or '').strip() and (el.attrib.get('last_name') or '').strip())
+            for el in contact_els
+        )
+        if not has_names:
+            _add_smell_task(
+                result,
+                "Contact name is 'UNKNOWN' (fallback)",
+                "Primary contact has default name; verify if source name fields were empty.",
+                "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']/@first_name | @last_name"
+            )
+    
+    # 5) app_contact_base: ssn = '000000000' (check source)
+    if contact.get('ssn') == '000000000':
+        contact_els = _get_xml_elements(xml_content, "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']")
+        has_ssn = contact_els and any((el.attrib.get('ssn') or '').strip() and el.attrib.get('ssn') != '000000000' for el in contact_els)
+        if not has_ssn:
+            _add_smell_task(
+                result,
+                "SSN = '000000000' (default/missing)",
+                "Contact SSN is all zeros (default); verify if source had no SSN or used zeros.",
+                "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']/@ssn"
+            )
+    
+    # 6) app_contact_base: birth_date = '1900-01-01' (check source)
+    if contact.get('birth_date') and str(contact.get('birth_date')).startswith('1900-01-01'):
+        contact_els = _get_xml_elements(xml_content, "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']")
+        has_birth = contact_els and any((el.attrib.get('birth_date') or '').strip() for el in contact_els)
+        if not has_birth:
+            _add_smell_task(
+                result,
+                "birth_date = '1900-01-01' (default)",
+                "Birth date is default epoch; verify if source had no birth_date.",
+                "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']/@birth_date"
+            )
+    
+    # 7) app_contact_address: city = 'MISSING' or state = 'XX' or zip = '00000'
+    address = dest.get('app_contact_address', {})
+    if address.get('city') == 'MISSING' or address.get('state') == 'XX' or address.get('zip') == '00000':
+        addr_els = _get_xml_elements(xml_content, "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']/contact_address[@address_tp_c='CURR']")
+        has_full_addr = addr_els and any(
+            ((el.attrib.get('city') or '').strip() and 
+             (el.attrib.get('state') or '').strip() and 
+             (el.attrib.get('zip') or '').strip())
+            for el in addr_els
+        )
+        if not has_full_addr:
+            _add_smell_task(
+                result,
+                "Address has default/missing values (MISSING, XX, 00000)",
+                "Current address has defaults; verify source had incomplete address data.",
+                "/Provenir/Request/CustData/application/contact[@ac_role_tp_c='PR']/contact_address[@address_tp_c='CURR']/@city | @state | @zip"
+            )
+    
+    # 8) priority_enum is NULL (should usually be populated)
+    if dest.get('app_operational_cc', {}).get('priority_enum') is None:
+        request_els = _get_xml_elements(xml_content, "/Provenir/Request")
+        has_priority = request_els and any((el.attrib.get('priority') or '').strip() for el in request_els)
+        if has_priority:
+            _add_smell_task(
+                result,
+                "priority_enum is NULL (but source has priority)",
+                "Request has priority attribute but destination enum is NULL; check enum mapping.",
+                "/Provenir/Request/@Priority"
+            )
+    
+    # 9) ACH banking checks: sc_ach_amount > 0 but banking details are NULL
+    ops = dest.get('app_operational_cc', {})
+    if _is_positive_amount(ops.get('sc_ach_amount')):
+        if ops.get('sc_bank_aba') is None:
+            _add_smell_task(
+                result,
+                "ACH amount present but sc_bank_aba is NULL",
+                "ACH amount has value but no routing number; verify source had bank routing data.",
+                "/Provenir/Request/CustData/application//savings_acct[@acct_type='ACH']/@bank_aba"
+            )
+        if ops.get('sc_bank_account_num') is None:
+            _add_smell_task(
+                result,
+                "ACH amount present but sc_bank_account_num is NULL",
+                "ACH amount has value but no account number; verify source had account data.",
+                "/Provenir/Request/CustData/application//savings_acct[@acct_type='ACH']/@account_num"
+            )
+        if ops.get('sc_bank_account_type_enum') is None:
+            _add_smell_task(
+                result,
+                "ACH amount present but sc_bank_account_type_enum is NULL",
+                "ACH amount has value but account type enum is missing; check account type mapping.",
+                "/Provenir/Request/CustData/application//savings_acct[@acct_type='ACH']/@account_type"
+            )
 
 
 def fetch_dest_data(conn, table: str, schema: str, app_id: int) -> Dict[str, Any]:
@@ -112,6 +273,18 @@ def count_non_null_columns(row: Dict[str, Any], exclude_keys: List[str] = None) 
     """Count non-NULL columns in a row."""
     exclude = set(exclude_keys or ['app_id'])
     return sum(1 for k, v in row.items() if k not in exclude and v is not None)
+
+
+def _is_positive_amount(value: Any) -> bool:
+    """Return True if value can be interpreted as a positive numeric amount."""
+    if value is None:
+        return False
+    if isinstance(value, (int, float, Decimal)):
+        return value > 0
+    try:
+        return float(str(value)) > 0
+    except (ValueError, TypeError):
+        return False
 
 
 def validate_app(conn, app_id: int, schema: str = 'dbo') -> ValidationResult:
@@ -160,7 +333,7 @@ def validate_app(conn, app_id: int, schema: str = 'dbo') -> ValidationResult:
     # Specific validation: sc_ach_amount vs sc_bank_account_type_enum
     if 'app_operational_cc' in result.dest_fields:
         ops = result.dest_fields['app_operational_cc']
-        if ops.get('sc_ach_amount') is not None and ops.get('sc_bank_account_type_enum') is None:
+        if _is_positive_amount(ops.get('sc_ach_amount')) and ops.get('sc_bank_account_type_enum') is None:
             result.issues.append("Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL")
             result.mismatches.append({
                 'type': 'adjacent_mismatch',
@@ -171,6 +344,9 @@ def validate_app(conn, app_id: int, schema: str = 'dbo') -> ValidationResult:
                 'value2': None
             })
             result.status = 'WARN' if result.status == 'PASS' else result.status
+
+    # Smell-based verification tasks
+    detect_smells(xml_content, result)
     
     return result
 
@@ -181,7 +357,7 @@ def validate_sample(conn, sample_size: int, schema: str = 'dbo') -> List[Validat
     cursor.execute(f"""
         SELECT TOP {sample_size} app_id 
         FROM [{schema}].app_base 
-        ORDER BY NEWID()
+        ORDER BY CRYPT_GEN_RANDOM(12)
     """)
     app_ids = [row[0] for row in cursor.fetchall()]
     
@@ -195,23 +371,23 @@ def validate_sample(conn, sample_size: int, schema: str = 'dbo') -> List[Validat
 
 
 def print_summary(results: List[ValidationResult]):
-    """Print summary of validation results."""
-    total = len(results)
-    passed = sum(1 for r in results if r.status == 'PASS')
-    warned = sum(1 for r in results if r.status == 'WARN')
-    failed = sum(1 for r in results if r.status == 'FAIL')
+    """Print summary of validation results (problems only)."""
+    problem_results = [r for r in results if r.status != 'PASS' or r.issues or r.mismatches or r.smell_tasks]
+    total = len(problem_results)
+    warned = sum(1 for r in problem_results if r.status == 'WARN')
+    failed = sum(1 for r in problem_results if r.status == 'FAIL')
     
     print("\n" + "=" * 60)
-    print("VALIDATION SUMMARY")
+    print("VALIDATION SUMMARY (PROBLEMS ONLY)")
     print("=" * 60)
-    print(f"Total validated: {total}")
-    print(f"  PASS: {passed} ({100*passed/total:.1f}%)")
-    print(f"  WARN: {warned} ({100*warned/total:.1f}%)")
-    print(f"  FAIL: {failed} ({100*failed/total:.1f}%)")
+    print(f"Total problems: {total}")
+    if total > 0:
+        print(f"  WARN: {warned} ({100*warned/total:.1f}%)")
+        print(f"  FAIL: {failed} ({100*failed/total:.1f}%)")
     
     # Aggregate issues
     issue_counts = {}
-    for r in results:
+    for r in problem_results:
         for issue in r.issues:
             # Normalize issue text for counting
             key = issue.split(':')[0] if ':' in issue else issue[:50]
@@ -223,11 +399,21 @@ def print_summary(results: List[ValidationResult]):
             print(f"  {count:4d} - {issue}")
     
     # Show sample failures
-    failures = [r for r in results if r.status == 'FAIL']
+    failures = [r for r in problem_results if r.status == 'FAIL']
     if failures:
         print(f"\nSample Failures (first 5):")
         for r in failures[:5]:
             print(f"  app_id {r.app_id}: {', '.join(r.issues[:3])}")
+
+    # Show smell-based verification tasks
+    smell_results = [r for r in problem_results if r.smell_tasks]
+    if smell_results:
+        print(f"\nVerification Task List (first 5 apps with smells):")
+        for r in smell_results[:5]:
+            print(f"  app_id {r.app_id}:")
+            for task in r.smell_tasks[:5]:
+                print(f"    - {task['title']}: {task['reason']}")
+                print(f"      XPath: {task['xpath']}")
 
 
 def main():
@@ -254,16 +440,24 @@ def main():
         with pyodbc.connect(conn_str) as conn:
             if args.app_id:
                 result = validate_app(conn, args.app_id, args.schema)
-                print(f"\nValidation Result for app_id {args.app_id}:")
-                print(f"  Status: {result.status}")
-                if result.issues:
-                    print(f"  Issues:")
-                    for issue in result.issues:
-                        print(f"    - {issue}")
-                if result.mismatches:
-                    print(f"  Mismatches:")
-                    for m in result.mismatches:
-                        print(f"    - {m['type']}: {m['field1']}={m['value1']}, {m['field2']}={m['value2']}")
+                if result.status != 'PASS' or result.issues or result.mismatches or result.smell_tasks:
+                    print(f"\nValidation Result for app_id {args.app_id}:")
+                    print(f"  Status: {result.status}")
+                    if result.issues:
+                        print(f"  Issues:")
+                        for issue in result.issues:
+                            print(f"    - {issue}")
+                    if result.mismatches:
+                        print(f"  Mismatches:")
+                        for m in result.mismatches:
+                            print(f"    - {m['type']}: {m['field1']}={m['value1']}, {m['field2']}={m['value2']}")
+                    if result.smell_tasks:
+                        print(f"  Verification Tasks:")
+                        for task in result.smell_tasks[:10]:
+                            print(f"    - {task['title']}: {task['reason']}")
+                            print(f"      XPath: {task['xpath']}")
+                else:
+                    print(f"\nValidation Result for app_id {args.app_id}: no issues detected.")
                 results = [result]
             else:
                 results = validate_sample(conn, args.sample, args.schema)
@@ -275,9 +469,11 @@ def main():
                         'app_id': r.app_id,
                         'status': r.status,
                         'issues': r.issues,
-                        'mismatches': r.mismatches
+                        'mismatches': r.mismatches,
+                        'smell_tasks': r.smell_tasks
                     }
                     for r in results
+                    if r.status != 'PASS' or r.issues or r.mismatches or r.smell_tasks
                 ]
                 with open(args.output, 'w') as f:
                     json.dump(output_data, f, indent=2, default=str)
