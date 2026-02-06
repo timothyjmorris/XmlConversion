@@ -191,7 +191,7 @@ CREATE TABLE dbo.app_transactional_cc (
 	ex_freeze_code					varchar(4)		NULL,
 	fraud_review_flag				bit				NULL	 CONSTRAINT DF_app_transactional_cc_fraud_review_flag DEFAULT (0),
 	iovation_blackbox				varchar(MAX)	NULL,
-	locked_by_user					varchar(150)	NULL,
+	locked_by_user					varchar(80)	NULL,
 	locked_date						datetime		NULL,
 	pending_verification_flag		bit				NULL	 CONSTRAINT DF_app_transactional_cc_pending_verification_flag DEFAULT (0),
 	provenir_transaction			varchar(40)		NULL,

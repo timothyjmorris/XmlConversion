@@ -156,7 +156,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "iovation_blackbox",
       "data_type": "string",
-      "data_length": "max",
+      "data_length": -1,
       "nullable": true,
       "required": false
     },
@@ -292,7 +292,7 @@
       "mapping_type": ["enum"],
 	    "exclude_default_when_record_empty": true,
       "nullable": true,
-      "required": true
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application",
@@ -1561,7 +1561,7 @@
       "data_type": "bit",
       "mapping_type": ["char_to_bit"],
       "nullable": true,
-      "required": true,
+      "required": false,
       "default_value": "0"
     },
     {

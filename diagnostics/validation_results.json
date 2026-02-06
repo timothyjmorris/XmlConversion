@@ -1,0 +1,1176 @@
+[
+  {
+    "app_id": 167772,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 142317,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 200578,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 252236,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 296779,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 291716,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 227026,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 226907,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 173429,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 227361,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 200461,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 167816,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 326220,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 304750,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 280186,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 230715,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 154265,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 222489,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 248531,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 193990,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 133412,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 304981,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 325402,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 204070,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 142310,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 244950,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 280047,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 207907,
+    "status": "WARN",
+    "issues": [
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 170661,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 222755,
+    "status": "WARN",
+    "issues": [
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 145040,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 296968,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 307871,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 241655,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 252014,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 296814,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 241547,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 170502,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 208341,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 276027,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 177137,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 307786,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 157411,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 222324,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 304921,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 312518,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "app_pricing_cc: Sparse row - only 5/40 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 289349,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 287307,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 119211,
+    "status": "WARN",
+    "issues": [
+      "No data in app_operational_cc",
+      "No data in app_pricing_cc"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 132736,
+    "status": "WARN",
+    "issues": [
+      "No data in app_operational_cc",
+      "No data in app_pricing_cc"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 170678,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 311054,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 173468,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 272250,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 222606,
+    "status": "WARN",
+    "issues": [
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 287291,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 230590,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 208480,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 154483,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 157421,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 157475,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 241606,
+    "status": "WARN",
+    "issues": [
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 297016,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 227082,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 193829,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 174272,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 294166,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 237715,
+    "status": "WARN",
+    "issues": [
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 308064,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 212091,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 208471,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 167607,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 132741,
+    "status": "WARN",
+    "issues": [
+      "No data in app_operational_cc",
+      "No data in app_pricing_cc"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 252299,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 154413,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 223504,
+    "status": "WARN",
+    "issues": [
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 304689,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 279974,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 289416,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 222473,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 283621,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 132819,
+    "status": "WARN",
+    "issues": [
+      "No data in app_operational_cc",
+      "No data in app_pricing_cc"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 275831,
+    "status": "WARN",
+    "issues": [
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 223497,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 237691,
+    "status": "WARN",
+    "issues": [
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 245159,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 133262,
+    "status": "WARN",
+    "issues": [
+      "No data in app_operational_cc",
+      "No data in app_pricing_cc"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 275867,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 227419,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 307644,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 6/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 133260,
+    "status": "WARN",
+    "issues": [
+      "No data in app_operational_cc",
+      "No data in app_pricing_cc"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 307936,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 215868,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 167767,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  },
+  {
+    "app_id": 272311,
+    "status": "WARN",
+    "issues": [
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 222310,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 272204,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 7/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 204296,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 8/48 columns populated"
+    ],
+    "mismatches": []
+  },
+  {
+    "app_id": 227099,
+    "status": "WARN",
+    "issues": [
+      "app_operational_cc: Sparse row - only 9/48 columns populated",
+      "Adjacent mismatch: sc_ach_amount has value but sc_bank_account_type_enum is NULL"
+    ],
+    "mismatches": [
+      {
+        "type": "adjacent_mismatch",
+        "table": "app_operational_cc",
+        "field1": "sc_ach_amount",
+        "value1": "0.00",
+        "field2": "sc_bank_account_type_enum",
+        "value2": null
+      }
+    ]
+  },
+  {
+    "app_id": 204105,
+    "status": "PASS",
+    "issues": [],
+    "mismatches": []
+  }
+]

@@ -1090,6 +1090,19 @@ class DataMapper(DataMapperInterface):
                         source_value=str(current_value),
                         target_type=mapping.data_type
                     )
+            
+            # Apply final data type transformation after all mapping types complete
+            # This ensures extraction-type mapping types (like last_valid_pr_contact) 
+            # can pass raw values through the chain without premature type coercion
+            if current_value is not None and not isinstance(current_value, (int, float, bool)) and mapping.data_type not in ['string', None]:
+                # Only transform if value is still a string and target is a numeric/date type
+                if isinstance(current_value, str) and StringUtils.safe_string_check(current_value):
+                    if self.logger.isEnabledFor(logging.DEBUG):
+                        self.logger.debug(f"Applying final data type transformation for {mapping.target_column}: {current_value} -> {mapping.data_type}")
+                    if mapping.data_type == 'decimal' and mapping.data_length is not None:
+                        current_value = self._transform_to_decimal_with_precision(current_value, mapping.data_length)
+                    else:
+                        current_value = self.transform_data_types(current_value, mapping.data_type)
         else:
             # If no mapping types, apply standard data type transformation
             if not StringUtils.safe_string_check(current_value):
@@ -1183,9 +1196,22 @@ class DataMapper(DataMapperInterface):
             result = self._extract_from_last_valid_pr_contact(mapping)
             if result is not None:
                 self.logger.info(f"last_valid_pr_contact returned: {result} for {mapping.target_column}")
-                # Apply data type transformation to the extracted value
-                return self.transform_data_types(result, mapping.data_type)
+                # Don't apply data type transformation here - let subsequent mapping types handle it
+                # (e.g., enum will convert 'C'/'S' to 70/71 before data_type applies)
+                return result
             self.logger.info(f"last_valid_pr_contact returned None for {mapping.target_column}")
+            return None
+        
+        elif mapping_type == 'authu_contact':
+            # Extract value from AUTHU (authorized user) contact instead of PR contact
+            self.logger.debug(f"Processing authu_contact mapping for {mapping.target_column}")
+            result = self._extract_from_authu_contact(mapping)
+            if result is not None:
+                self.logger.debug(f"authu_contact returned: {result} for {mapping.target_column}")
+                # Don't apply data type transformation here - let subsequent mapping types handle it
+                # (e.g., char_to_bit will convert 'Y'/'N' to 1/0)
+                return result
+            self.logger.debug(f"authu_contact returned None for {mapping.target_column}")
             return None
         
         elif mapping_type == 'curr_address_only':
@@ -2254,6 +2280,82 @@ class DataMapper(DataMapperInterface):
             
         except Exception as e:
             self.logger.debug(f"Failed to extract from last valid PR contact: {e}")
+            return None
+    
+    def _extract_from_authu_contact(self, mapping: 'FieldMapping') -> Optional[str]:
+        """
+        Extract a value from the AUTHU (Authorized User) contact instead of the primary PR contact.
+        
+        This is similar to _extract_from_last_valid_pr_contact but uses the second contact type
+        in the valid_contact_types array (AUTHU) instead of the first (PR).
+        
+        Used for fields like auth_user_issue_card_flag that need data from authorized user contacts.
+        
+        Args:
+            mapping: The FieldMapping object containing xml_path and xml_attribute
+            
+        Returns:
+            The extracted value or None if not found
+        """
+        try:
+            if self._current_xml_tree is None:
+                self.logger.debug("No XML tree available for AUTHU contact extraction")
+                return None
+            
+            # Get the contact type attribute and valid values from contract
+            # _valid_contact_type_config is a tuple of (attribute_name, valid_values)
+            contact_type_attr, valid_contact_types = self._valid_contact_type_config
+            
+            if len(valid_contact_types) < 2:
+                self.logger.debug("No AUTHU contact type defined in contract")
+                return None
+            
+            authu_contact_type = valid_contact_types[1]  # AUTHU is second in the array
+            self.logger.debug(f"Looking for {contact_type_attr}='{authu_contact_type}' contact for {mapping.target_column}")
+            
+            # Get all contacts from the XML
+            contacts = self._current_xml_tree.xpath('.//contact')
+            self.logger.debug(f"Found {len(contacts)} total contacts")
+            
+            # Find contacts of the AUTHU type using the contract-defined attribute
+            authu_contacts = []
+            for contact in contacts:
+                contact_type = contact.get(contact_type_attr)
+                if contact_type == authu_contact_type:
+                    authu_contacts.append(contact)
+            
+            self.logger.debug(f"Found {len(authu_contacts)} {authu_contact_type} contacts")
+            
+            if not authu_contacts:
+                self.logger.debug(f"No {authu_contact_type} contacts found")
+                return None
+            
+            # Use the last AUTHU contact (matching the pattern from PR contact extraction)
+            last_authu_contact = authu_contacts[-1]
+            selected_con_id = last_authu_contact.get('con_id', 'unknown')
+            self.logger.debug(f"Selected {authu_contact_type} contact con_id: {selected_con_id}")
+            
+            # Handle different paths within the contact
+            if 'app_prod_bcard' in mapping.xml_path:
+                # Look for app_prod_bcard element within this contact
+                app_prod_bcard_elements = last_authu_contact.xpath('.//app_prod_bcard')
+                self.logger.debug(f"Found {len(app_prod_bcard_elements)} app_prod_bcard elements for AUTHU con_id {selected_con_id}")
+                if app_prod_bcard_elements:
+                    # Get the last app_prod_bcard element
+                    app_prod_bcard = app_prod_bcard_elements[-1]
+                    value = app_prod_bcard.get(mapping.xml_attribute)
+                    self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' from app_prod_bcard for AUTHU con_id {selected_con_id}")
+                    return value
+                else:
+                    self.logger.debug(f"No app_prod_bcard elements found for AUTHU con_id {selected_con_id}")
+            
+            # Try to extract directly from the contact element
+            value = last_authu_contact.get(mapping.xml_attribute)
+            self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' directly from AUTHU contact con_id {selected_con_id}")
+            return value
+            
+        except Exception as e:
+            self.logger.debug(f"Failed to extract from AUTHU contact: {e}")
             return None
     
     def get_transformation_stats(self):

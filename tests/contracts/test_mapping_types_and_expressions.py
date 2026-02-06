@@ -62,7 +62,8 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
         supported_types = {
             'identity_insert', 'enum', 'char_to_bit', 'numbers_only', 'last_valid_pr_contact',
             'curr_address_only', 'calculated_field', 'extract_numeric', 'boolean_to_bit',
-            'default_getutcdate_if_null'
+            'default_getutcdate_if_null',
+            'authu_contact'  # Modifier for AUTHU contact extraction - see implementation-plan.md Phase 0.5
         }
         found_types = set()
         for mapping in self.contract.mappings:

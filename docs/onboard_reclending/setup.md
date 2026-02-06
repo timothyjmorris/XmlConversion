@@ -1,16 +1,16 @@
-# Introduction
-  While the RecLending product line has much less volumne in production that needs to be migrated, there are definitely additional complexities that will have to be accounted for. This document outlines those known differences and suggestions for how to accommodate. 
+# RecLending Requirements & Background Reference
 
-  This document is a brain-dump. This needs to be converted to "executable specifications", ask questions for approaches and clarifications to provide options to refine this directional document and create executable specs and plan.
+> **Note**: This document provides domain requirements and background context for the RecLending onboarding effort. For the active implementation plan with phased tasks and acceptance criteria, see [implementation-plan.md](implementation-plan.md).
 
-  **IMPORTANT**: DO NO HARM. This app currently has been hardened to work with the CreditCard product line as a default. Since this app will also now support RecLending, we need to first evaluate current testing regime so that we can meaningful harden that to ensure absolutely no current functionality is changed without us making a decision about it first. All mapping types need to be exercised for intent, with boundary and edge cases included. This applies to new functionality being built in also, to ensure that as we evolve, we get what we want and it doesn't impact 'core' known functionality.
+## Introduction
 
-  There were initially 3 documents created that need to be analyzed/re-evaluated and updated to create a clear and actionable plan that will guide us through safely and correctly adding the new product line. I'm ok if we start with them or just thrown them away.  The plan anb analysis should include any areas that are unknown or unclear and how we will iterate through that safely, and brought to my attention.
-    1. mapping-contract-rl-analysis.md
-    2. mapping-contract-rl-reconciliation.md
-    3. mapping-contract-rl-plan.md
+While the RecLending product line has much less volume in production that needs to be migrated, there are additional complexities that must be accounted for. This document outlines those known differences and requirements.
 
-  We can use this current 'onboard_reclending' folder for WIP and intermediate documentation. Some of what is created must find it's way formally into our folder structure.
+### Guiding Principles
+
+1. **DO NO HARM** - The app currently works with CreditCard as default. No CC functionality changes without explicit decision.
+2. **Verify new features** - Test-first development with acceptance criteria.
+3. **Small batches** - Work in phases with incremental delivery.
 
 ## Priority for Shared Functionality
   This document uncovers and summarizes work on 4 new destination tables that all product lines need to support, which will need new `mapping_type`'s. 
@@ -37,8 +37,19 @@
 ## Testing and Acceptance Criteria
   My hope is that based on what we _know_ about current functionality and the additional requirements for RecLending, that our test-first approach will include Acceptance Criteria derived from our plan and used build and test our product as a living and guiding list of requirements that help us determine when we're done and provides the confidence to make incremental adjustments.
 
-  Something I've really only done manually, is validate or reconcile data.  We need to expand and "prove" that the data outcome was correct.
+  Something I've really only done manually, is validate or reconcile data.  We need to expand and "prove" that the data outcome was correct. We need to secondarily account for verifying destination data against xml. This might be done with some testing, or a utility. I need some options here.
+
   Note: not all tests have to begin automated; work in smaller batches to provide incremental solutions. There is an opportunity to create some other SQL scripts (to find patterns, like certain data that is expected to be together, or fallback defaults/enums we don't really want to see) or Python utility to help discover anomolous or unexpected behaviour outside of what the mapping_contract expects (which can happen from unexpected structures or data for sure). It would be helpful to be able to compare the source app_xml to the destination data model to start with (which can be expanded to include some risk-based sampling).
+
+  I am ok with simpler bullet-point requirements over full Gherkin-style BDD.
+
+### Current Tests
+  We have a variety of tests that you will need to compare against functionality in code to find gaps and suggests "meaningful" tests. Code coverage is not the deliverable, software that performs correctly is. Being able to release with confidence is the goal, and that implies a responsible level of coverage. 
+    def test_all_mapping_types_supported(self):
+  - All tests in the [full test suite](../../tests/run_comprehensive_suite.py) pass except for one test (`test_all_mapping_types_supported`), which should be easy to reconcile.
+  - There are two very helpful e2e tests that are run manually.
+  - There are a few tests that check for RL schema so that it will be excluded. The application and tests of course will need to be adjusted so that product lines check and only use the appropriate schema.
+
 
 ## Updating Current Documentation
   It is very **important** that as we build and refine new functionality or features, that our documentation remains accurate and relevant. These include ADRs/decisions, feature lists, readme's, etc
@@ -92,17 +103,16 @@
   ```
 
 ## Mapping Contract
-  Obviously, we'll need to support an additional mapping contract. One way we could do that is to 
-  - incorporate the "product_line=RL" into our CLI (default to CC)
+  Obviously, we'll need to support an additional mapping contract.
+  - incorporate "product_line=RL" into our CLI (default to CC)
   - which points to `mapping_contract_rl.json`
-  
-  So I'm not sure if at that point we need to put product_line inside of the mapping_contract as initially thought, or maybe it would help just for clarity. Even though there's some similarity and possible enum reusability, we'll have two json contracts.
+  - if it's helpful, we can include a specific node in the contract to additionally call out the product line.
 
   I've created a spreadsheet as the initial source for the mapping contract, which includes source-to-destination, mapping type, and expressions for calculated fields. The mapping type's that are set simply as 'enums' will need you to derive those lists from [script](../../config/samples/migrate_table_logic_rl.sql).
   
   We use the **structure** for the [CC mapping contract](../../config/mapping_contract.json), but not the content - except probably the `enum_mappings` section.
 
-  Once that's setup, I think we can create a new RL mirror of a test we have for CC that compares the JSON contract to the actual database schema for column/field and type reconciliation, [test](../../tests/contracts/test_mapping_contract_schema.py).
+  Once that's setup, I think we can create a new RL mirror of a test we have for CC that compares the JSON contract to the actual database schema for column/field and type reconciliation, [test](../../tests/contracts/test_mapping_contract_schema.py). The SQL script is there for early reference, the database and the mapping contract wil be the source of truth and direction.
 
   In the spirit of TDD and writing failing tests first, I think this will be very helpful to start and reconcile for all of our new mapping types and expression functionality [test](../../tests/contracts/test_mapping_types_and_expressions.py)
 
@@ -139,7 +149,7 @@ The schema is a similar nested structure with everything we need in the "IL_appl
 
 
 ## Calculated Fields
-  - We need have a `TRIM()` function for calculated_field types - if it's not already built in. We need it to help evaluate if a field is really empty an also for character-padded fields
+  - If it's not already implicit in our handling of strings with spaces before/after, we need have a `TRIM()` function for calculated_field types. We need it to help evaluate if a field is really empty an also for character-padded fields
   - Confirm that `ELSE ''` returns `NULL` in a calculated_field type - and doesn't result in a value being inserted into the database. Otherwise, we'll need `EMPTY` or something.
   - We'll need a new mapping type to support the scenerio where we have a field in each contact-type with each one going to a different fixed destination column. For example
   -  - `<IL_address ac_role_tp_c="PR" residence_monthly_pymnt="944.38" />` -> `app_operational_rl.housing_monthly_payment_pr`
