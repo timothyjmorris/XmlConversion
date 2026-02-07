@@ -628,6 +628,35 @@ class TestRelationshipsValidation(unittest.TestCase):
         self.assertTrue(result.is_valid)
         self.assertEqual(result.error_count, 0)
 
+    def test_kv_row_creating_table_does_not_require_relationship(self):
+        """KV row-creating tables (add_score/add_indicator/add_history/add_report_lookup) are exempt."""
+        contract = {
+            "element_filtering": {
+                "filter_rules": [
+                    {"element_type": "contact"},
+                    {"element_type": "address"}
+                ]
+            },
+            "table_insertion_order": [
+                "app_base",
+                "scores",
+                "processing_log"
+            ],
+            "relationships": [
+                # No relationship entry for scores is required
+            ],
+            "enum_mappings": {},
+            "mappings": [
+                {"target_table": "scores", "mapping_type": ["add_score(InstantID_Score)"]}
+            ]
+        }
+        validator = MappingContractValidator(contract)
+
+        result = validator.validate_contract()
+
+        self.assertTrue(result.is_valid)
+        self.assertEqual(result.error_count, 0)
+
 
 class TestEnumMappingsValidation(unittest.TestCase):
     """Test _validate_enum_mappings() - Step 5."""

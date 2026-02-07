@@ -93,6 +93,9 @@ Impact with 16 workers processing 2000 apps:
   Performance Impact:
     ⚠️  HIGH LATENCY DETECTED (84.5ms per query)
 
+=============================================================================
+3,000 apps/min will take 62 hours to process 11MM
+=============================================================================
 
 LATEST
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -105,10 +108,19 @@ python .\env_prep\appxml_staging_orchestrator.py --batch 500 --workers 16
 
 python production_processor.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --log-level ERROR --workers 16 --limit 2000
 
-# 10 instances ~4,900 apps/min
+# 2025-12-16: 4,900 apps/min with 10 instances
 python launch_parallel_instances.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --log-level ERROR --instances 13 --workers 16 --limit 13000
 
-# 2025-02-06, 16 workers / 13 instances with 3,900 apps/min :-(
+(added indexes)
+# 2025-02-06: 3,900 apps/min, default with 16 workers / 13 instances
+
+(after scores)
+# 2025-02-06: 2,670 apps/min, default with 16 workers / 13 instances --batch-size 500
+# 2025-02-06: 2,430 apps/min, default with 16 workers / 13 instances --batch-size 250
+# 2025-02-06: 2,760 apps/min, default with 16 workers / 13 instances --batch-size 1000
+(removed indexes, no effect)
+
+
 
 # Get last batch failures (output to metrics folder)
 python .\diagnostics\summarize_failures.py

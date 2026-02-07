@@ -183,11 +183,17 @@ class MappingContractValidator:
         
         Checks:
             1. All relationships have required fields (child_table, foreign_key_column)
-            2. All tables in table_insertion_order (except processing_log) exist in relationships
-            3. No orphaned table references
+            2. All relationship child tables exist in table_insertion_order
+            3. All non-root, non-metadata tables in table_insertion_order exist in relationships,
+               EXCEPT for key/value (row-creating) tables produced by mapping types like
+               add_score/add_indicator/add_history/add_report_lookup.
         
-        Rationale: table_insertion_order lists all destination tables. If a table is
-        in insertion order but not in relationships, processing will fail.
+        Rationale:
+        - relationships primarily describes XML structure for extracting nested/related tables.
+        - table_insertion_order describes FK dependency order for database inserts.
+        Some destination tables are app-scoped key/value tables that are derived from
+        other XML sections and do not have a fixed parent/child XML path; those tables
+        should still be insert-ordered but do not require a relationships entry.
         
         Adds errors to self.errors list for integrity violations.
         """
@@ -214,6 +220,37 @@ class MappingContractValidator:
                 example_fix='{\n  "relationships": [\n    {"parent_table": "app_base", "child_table": "app_contact_base", "foreign_key_column": "app_id"}\n  ]\n}'
             ))
             return
+
+        def _is_kv_row_creating_table(table_name: str) -> bool:
+            """Return True if all mappings to table_name are row-creating KV mappings."""
+            mappings = self._get_attr(self.contract, "mappings", []) or []
+            table_mappings = [
+                m for m in mappings
+                if self._get_attr(m, "target_table") == table_name
+            ]
+            if not table_mappings:
+                return False
+
+            row_creating_prefixes = (
+                "add_score",
+                "add_indicator",
+                "add_history",
+                "add_report_lookup",
+            )
+
+            def _is_row_creating_mapping(mapping: Any) -> bool:
+                mapping_type = self._get_attr(mapping, "mapping_type", [])
+                if mapping_type is None:
+                    mapping_type = []
+                elif isinstance(mapping_type, str):
+                    mapping_type = [mapping_type]
+
+                return any(
+                    str(mt).strip().startswith(row_creating_prefixes)
+                    for mt in (mapping_type or [])
+                )
+
+            return all(_is_row_creating_mapping(m) for m in table_mappings)
         
         # Extract all child_table values from relationships (using helper for dict/object compatibility)
         child_tables = set()
@@ -243,6 +280,17 @@ class MappingContractValidator:
                     example_fix=f'{{"parent_table": "...", "child_table": "{child_table}", "foreign_key_column": "app_id"}}'
                 ))
         
+        # Cross-reference: ensure every relationship child table appears in table_insertion_order
+        for child_table in child_tables:
+            if child_table not in table_insertion_order:
+                self.errors.append(MappingContractValidationError(
+                    category="relationships",
+                    message=f"Relationship child_table '{child_table}' not found in table_insertion_order",
+                    contract_location="relationships / table_insertion_order",
+                    fix_guidance=f"Add '{child_table}' to table_insertion_order (in FK dependency order)",
+                    example_fix=f'"table_insertion_order": ["...", "{child_table}", "..."]'
+                ))
+
         # Cross-reference: check all tables in table_insertion_order exist in relationships
         # Exclude 'processing_log' (metadata table, not part of relationships)
         # Exclude 'app_base' (root table, appears as parent not child)
@@ -253,12 +301,18 @@ class MappingContractValidator:
                 continue
             
             if table not in child_tables:
+                if _is_kv_row_creating_table(table):
+                    continue
                 self.errors.append(MappingContractValidationError(
                     category="relationships",
                     message=f"Table '{table}' appears in table_insertion_order but not in relationships",
                     contract_location="table_insertion_order / relationships",
-                    fix_guidance=f"Add a relationship entry with child_table='{table}' to the relationships array",
-                    example_fix=f'{{"parent_table": "...", "child_table": "{table}", "foreign_key_column": "..."}}'
+                    fix_guidance=(
+                        f"Either add a relationships entry with child_table='{table}', or ensure "
+                        f"'{table}' is a key/value (row-creating) table produced only by add_score/" 
+                        f"add_indicator/add_history/add_report_lookup mappings."
+                    ),
+                    example_fix=f'{{"parent_table": "...", "child_table": "{table}", "foreign_key_column": "...", "xml_parent_path": "...", "xml_child_path": "..."}}'
                 ))
     
     def _validate_enum_mappings(self) -> None:

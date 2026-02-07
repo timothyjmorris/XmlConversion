@@ -4,7 +4,7 @@
   "source_table": "app_xml_staging",
   "source_column": "app_XML",
   "source_application_table": "application",
-  "target_schema": "migration",
+  "target_schema": "dbo",
   "table_insertion_order": [
     "app_base",
     "app_contact_base",

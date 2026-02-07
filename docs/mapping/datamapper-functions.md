@@ -36,6 +36,18 @@
 - `_apply_single_mapping_type()` - Apply single mapping type transformation
 - `_apply_calculated_field_mapping()` - Evaluate calculated field expressions
 
+### **KV (ROW-CREATING) MAPPING TYPES**
+- `_extract_kv_table_records()` - Dispatch extraction for KV-style destination tables
+- `_extract_score_records()` - `add_score(<identifier>)` → `scores(app_id, score_identifier, score)`
+- `_extract_indicator_records()` - `add_indicator(<name>)` → `indicators(app_id, indicator, value='1')`
+- `_extract_history_records()` - `add_history` → `app_historical_lookup(app_id, name, source, value)`
+- `_extract_report_lookup_records()` - `add_report_lookup(<source_report_key?>)` → `app_report_results_lookup(app_id, name, value, source_report_key?)`
+
+### **KV SUPPORT UTILITIES**
+- `_parse_mapping_type_function()` - Parse function-like mapping types (e.g., `add_score(TU_TIE)`)
+- `_derive_source_from_xml_path()` - Derive lookup `source` from rightmost XML path segment
+- `_is_meaningful_kv_value()` - Treat empty/"Null"/"None" as missing for KV rows
+
 ### **ENUM PROCESSING**
 - `_apply_enum_mapping()` - Map string value to enum integer
 - `_determine_enum_type()` - Determine enum type from column name
