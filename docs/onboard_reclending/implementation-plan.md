@@ -267,7 +267,7 @@ NULL enums where sibling data suggests they should have values.
 ## Phase 2: CLI & Contract Infrastructure
 
 **Goal**: Support multiple product lines via CLI and contracts  
-**Status**: 🔄 IN PROGRESS (started 2026-02-07)
+**Status**: ✅ COMPLETE (2026-02-07)
 
 ### 2.1 Product Line CLI Support
 
@@ -321,94 +321,144 @@ Archive CSV to docs/onboard_reclending/archived/
 - Mirror structure of existing `test_mapping_contract_schema.py`
 
 ### Deliverables
-- [ ] CLI `--product-line` argument implemented
-- [ ] `config/mapping_contract_rl.json` created and validated
-- [ ] Contract schema tests passing
-- [ ] CSV archived to `docs/onboard_reclending/archived/`
+- [x] CLI `--product-line` argument implemented (`--product-line RL` / `CC`)
+- [x] `config/mapping_contract_rl.json` created and validated (353 mappings, 16 tables, 24 enum sets)
+- [x] Contract schema tests passing (`tests/contracts/test_mapping_contract_schema_rl.py` — 2/2)
+- [x] CSV archived to `docs/onboard_reclending/` (alongside generation scripts)
+- [x] `enum_name` architecture: shared/reusable enums without aliases (FieldMapping.enum_name field)
+- [x] XML coverage audit against sample XML (264/333 contract attrs matched, 0 case mismatches)
+- [x] Contract generation tools archived: `generate_rl_contract.py`, `apply_schema_corrections_rl.py`, `deduplicate_rl_contract.py`, `fix_rl_enums.py`
+
+### Key Decisions Made
+- **`enum_name` field on FieldMapping**: Shared enums (e.g., `y_n_d_enum` used by 37 columns) resolved via explicit `enum_name` in contract rather than column-name convention or aliases
+- **Source application table**: `IL_application` (not `application_rl`) — used for INNER JOIN filtering in production_processor
+- **Product line enum**: `602` for RL (not 601)
+- **XML element paths**: `IL_contact_address` and `IL_contact_employment` (matching actual XML structure)
 
 ### Acceptance Criteria
-- CLI correctly routes to product-specific contracts
-- Contract validates against DDL with 0 mismatches
-- CC functionality unchanged
+- CLI correctly routes to product-specific contracts ✅
+- Contract validates against DDL with 0 mismatches ✅
+- CC functionality unchanged ✅ (179 unit tests pass)
 
-**Phase 2 Status**: 🔄 IN PROGRESS (2026-02-07)
+**Phase 2 Status**: ✅ COMPLETE (2026-02-07)
 
 ---
 
 ## Phase 3: RL-Specific Mapping Types
 
-**Goal**: Implement complex RL transformation patterns
+**Goal**: Implement complex RL transformation patterns  
+**Status**: 🔄 IN PROGRESS
+
+### Architecture Impact Summary
+
+All three row-creating types follow the proven KV extraction pattern from Phase 1 (`add_score`, `add_history`, etc.) but introduce **multi-column grouped records** — a new pattern for the DataMapper.
+
+**CC Impact**: None of these mapping types exist in the CC contract. Changes are additive dispatch branches in `_apply_single_mapping_type()` and new table routing in the `_process_table_records()` method. No existing CC code paths are modified.
+
+**Shared code touched**: `data_mapper.py` dispatch logic (additive only).
 
 ### 3.1 `policy_exceptions(enum)` Mapping Type
 
-**Contract syntax**:
+**Status**: 🔴 Needs implementation  
+**CC Impact**: None (additive)
+
+**Contract syntax in v1** (4 entries: `630`, `631`, `632`, `()`):
 ```json
 {
-    "source_field": "override_capacity",
-    "mapping_type": "policy_exceptions(630)",
-    "notes_field": "capacity_exception_notes",
-    "fallback_notes_field": "override_type_code_notes"
+    "mapping_type": ["policy_exceptions(630)"],
+    "xml_attribute": "override_capacity",
+    "target_table": "app_policy_exceptions_rl",
+    "target_column": "reason_code"
 }
 ```
 
 **Implementation requirements**:
+- Add `app_policy_exceptions_rl` to table routing in `_process_table_records()`
+- New `_extract_policy_exception_records()` method
+- Parse `policy_exceptions(N)` param as `policy_exception_type_enum` composite PK discriminator
+- Special case: `policy_exceptions()` (empty param) maps the `notes` field
 - COALESCE logic for notes (specific notes → fallback notes)
-- Handle multiple reason_codes with same notes
-- Insert to `app_policy_exceptions_rl` with composite PK
+- Composite PK: `(app_id, policy_exception_type_enum)`
 
 ### 3.2 `warranty_field(enum)` Mapping Type
 
-**Pattern**: 5-field set per warranty type
+**Status**: 🔴 Needs implementation  
+**CC Impact**: None (additive)
 
+**Pattern**: 5-field set per warranty type (29 mappings → 7 warranty types)
+
+**Contract syntax in v1** (groups of 4-5 fields per enum):
 ```json
 {
-    "mapping_type": "warranty_field(623)",
-    "field_pattern": "gap"
+    "mapping_type": ["warranty_field(623)"],
+    "xml_attribute": "gap_amount",
+    "target_table": "app_warranties_rl",
+    "target_column": "amount"
 }
 ```
-
-**Derives**: `gap_amount`, `gap_company`, `gap_policy`, `gap_term`, `gap_lien`
 
 **Implementation requirements**:
-- Handle `term_months` default (0 if empty)
-- Handle `merrick_lienholder_flag` conversion ('Y' → 1, else 0)
-- Insert to `app_warranties_rl` with composite PK
+- Add `app_warranties_rl` to table routing
+- New `_extract_warranty_records()` method
+- Group mappings by `warranty_field(N)` param → one record per warranty_type_enum
+- Support chained types: `["char_to_bit", "warranty_field(623)"]` for `merrick_lienholder_flag`
+- Only emit record if at least one field in the group has data
+- Composite PK: `(app_id, warranty_type_enum)`
 
-### 3.3 `contact_type_to_field` Mapping Type
+### 3.3 `add_collateral(N)` Mapping Type
 
-**Purpose**: Route PR/SEC contact values to different columns
+**Status**: 🔴 Needs implementation (most complex)  
+**CC Impact**: None (additive)
 
+**Pattern**: Multi-field groups per collateral position (44 mappings → 4 positions)
+
+**Contract syntax in v1**:
 ```json
 {
-    "source_field": "residence_monthly_pymnt",
-    "mapping_type": "contact_type_to_field",
-    "pr_destination": "housing_monthly_payment_pr",
-    "sec_destination": "housing_monthly_payment_sec",
-    "role_attribute": "ac_role_tp_c"
+    "mapping_type": ["add_collateral(1)", "calculated_field"],
+    "xml_attribute": "app_type_code",
+    "target_table": "app_collateral_rl",
+    "target_column": "collateral_type_enum",
+    "expression": "CASE WHEN TRIM(app_type_code) = 'MARINE' THEN 412 ..."
 }
 ```
 
-### 3.4 Dynamic Collateral Enum
+**Implementation requirements**:
+- Add `app_collateral_rl` to table routing
+- New `_extract_collateral_records()` method
+- Group mappings by `add_collateral(N)` param → one record per sort_order
+- **Chained mapping types within groups**: `calculated_field`, `char_to_bit`, `numbers_only`
+- Cross-element context: `collateral_type_enum` CASE expression references `IL_application.app_type_code` / `sub_type_code` (must use `_build_app_level_context`)
+- Only emit record if group has meaningful data
+- Composite PK: `(app_id, collateral_type_enum, sort_order)`
 
-**Purpose**: Derive `collateral_type_enum` from `app_type_code` + `sub_type_code`
+### 3.4 `last_valid_sec_contact` Mapping Type
 
-Implement as calculated field expression:
-```sql
-CASE 
-    WHEN TRIM(IL_application.app_type_code) = 'MARINE' THEN 412 
-    WHEN TRIM(IL_application.app_type_code) = 'RV' THEN 413
-    ... 
-END
-```
+**Status**: 🟡 Needs mirror of existing PR logic  
+**CC Impact**: None (additive)
+
+`last_valid_pr_contact` is fully implemented. Need `_extract_from_last_valid_sec_contact()` that selects the SEC contact instead of PR.
+
+### 3.5 Dynamic Collateral Enum (via calculated_field)
+
+**Status**: 🟢 Engine exists, blocked by `add_collateral` routing  
+**CC Impact**: None
+
+The `calculated_field` handler and expression engine already work. The collateral enum CASE expressions are in the contract. This will work automatically once `add_collateral` routing provides cross-element context.
 
 ### Deliverables
-- [ ] DataMapper handlers for each mapping type
-- [ ] Unit tests with edge cases
-- [ ] Integration tests with RL sample XML
+- [ ] `_extract_policy_exception_records()` + table routing
+- [ ] `_extract_warranty_records()` + table routing + chained type support
+- [ ] `_extract_collateral_records()` + table routing + cross-element context
+- [ ] `_extract_from_last_valid_sec_contact()` + dispatch branch
+- [ ] Unit tests for each mapping type with edge cases
+- [ ] Integration tests with RL sample XML (app 325725)
 
 ### Acceptance Criteria
 - All mapping types handle edge cases correctly
 - Composite PK tables insert correctly via `table_insertion_order`
+- Chained mapping types within row-creating groups work (char_to_bit + warranty_field, calculated_field + add_collateral)
+- No CC test regressions (full suite green)
 
 ---
 
@@ -569,9 +619,11 @@ Tests that need updating for multi-product support:
 - [ ] Unit tests passing
 
 ### Phase 2: CLI & Contract
-- [ ] `--product-line` CLI working
-- [ ] `mapping_contract_rl.json` validated against DDL
-- [ ] CSV archived
+- [x] `--product-line` CLI working
+- [x] `mapping_contract_rl.json` validated against DDL (353 mappings, 0 schema mismatches)
+- [x] CSV archived alongside generation tools in `docs/onboard_reclending/`
+- [x] `enum_name` architecture for shared enums
+- [x] XML coverage audit passed (0 case mismatches)
 
 ### Phase 3: RL Mapping Types
 - [ ] `policy_exceptions(enum)` implemented

@@ -38,6 +38,7 @@ error handling throughout the transformation pipeline.
 Mapping Types Supported:
 - calculated_field: Evaluates SQL-like expressions with cross-element references
 - last_valid_pr_contact: Extracts from the most recent valid PR (Primary Responsible) contact
+- last_valid_sec_contact: Extracts from the most recent valid SEC (Secondary) contact
 - curr_address_only: Filters to current (CURR) addresses only, excluding PREV/MAIL addresses
 - enum: Maps string values to integer codes using configurable enum mappings
 - char_to_bit: Converts Y/N or boolean values to database bit fields
@@ -937,6 +938,9 @@ class DataMapper(DataMapperInterface):
             if 'last_valid_pr_contact' in mapping_types:
                 return self._extract_from_last_valid_pr_contact(mapping)
             
+            if 'last_valid_sec_contact' in mapping_types:
+                return self._extract_from_last_valid_sec_contact(mapping)
+            
             if 'authu_contact' in mapping_types:
                 return self._extract_from_authu_contact(mapping)
             
@@ -966,7 +970,7 @@ class DataMapper(DataMapperInterface):
                 # For app_contact_address and app_contact_employment tables, context_data contains {'attributes': {...}}
                 # BUT skip this for special mapping types that have their own handling
                 if (mapping.target_table in ['app_contact_address', 'app_contact_employment'] and 
-                    mapping.mapping_type not in ['curr_address_only', 'last_valid_pr_contact']):
+                    mapping.mapping_type not in ['curr_address_only', 'last_valid_pr_contact', 'last_valid_sec_contact']):
                     # Extract directly from context attributes
                     if mapping.xml_attribute and 'attributes' in context_data:
                         attributes = context_data['attributes']
@@ -1220,6 +1224,16 @@ class DataMapper(DataMapperInterface):
                 # (e.g., enum will convert 'C'/'S' to 70/71 before data_type applies)
                 return result
             self.logger.info(f"last_valid_pr_contact returned None for {mapping.target_column}")
+            return None
+        
+        elif mapping_type == 'last_valid_sec_contact':
+            # Extract value from the last valid SEC (secondary) contact
+            self.logger.debug(f"Processing last_valid_sec_contact mapping for {mapping.target_column}")
+            result = self._extract_from_last_valid_sec_contact(mapping)
+            if result is not None:
+                self.logger.debug(f"last_valid_sec_contact returned: {result} for {mapping.target_column}")
+                return result
+            self.logger.debug(f"last_valid_sec_contact returned None for {mapping.target_column}")
             return None
         
         elif mapping_type == 'authu_contact':
@@ -2502,6 +2516,99 @@ class DataMapper(DataMapperInterface):
             
         except Exception as e:
             self.logger.debug(f"Failed to extract from last valid PR contact: {e}")
+            return None
+    
+    def _extract_from_last_valid_sec_contact(self, mapping, context_data=None):
+        """
+        Extract value from the last valid secondary contact.
+        
+        CONTRACT-DRIVEN: Secondary contact type is determined by second element in contact type array.
+        For example: ["PR", "SEC"] → SEC is secondary, ["PR", "AUTHU"] → AUTHU is secondary
+        
+        Mirrors _extract_from_last_valid_pr_contact but selects valid_contact_types[1].
+        """
+        self.logger.debug(f"ENTERING _extract_from_last_valid_sec_contact for field {mapping.target_column}")
+        try:
+            if not hasattr(self, '_current_xml_root') or self._current_xml_root is None:
+                self.logger.debug("No XML root available for last_valid_sec_contact extraction")
+                return None
+            
+            # Get secondary contact type from contract (second in array)
+            contact_type_attr, valid_contact_types = self._valid_contact_type_config
+            if len(valid_contact_types) < 2:
+                self.logger.warning("No secondary contact type in contract - cannot extract")
+                return None
+            
+            sec_contact_type = valid_contact_types[1]  # Second in array = secondary
+            self.logger.debug(f"Using secondary contact type: {sec_contact_type} (attr: {contact_type_attr})")
+            
+            # Find all secondary contacts using dynamic attribute and value
+            xpath_query = f'.//contact[@{contact_type_attr}="{sec_contact_type}"]'
+            sec_contacts = self._current_xml_root.xpath(xpath_query)
+            self.logger.debug(f"Found {len(sec_contacts)} {sec_contact_type} contacts via xpath")
+            if not sec_contacts:
+                self.logger.debug(f"No {sec_contact_type} contacts found in XML")
+                return None
+            
+            # Find the last VALID secondary contact (non-empty con_id AND contact_type)
+            last_valid_sec = None
+            for contact in reversed(sec_contacts):
+                con_id = contact.get('con_id', '').strip()
+                contact_type = contact.get(contact_type_attr, '').strip()
+                if con_id and contact_type:
+                    last_valid_sec = contact
+                    break
+            
+            if last_valid_sec is None:
+                self.logger.debug(f"No valid {sec_contact_type} contacts found")
+                return None
+            
+            selected_con_id = last_valid_sec.get('con_id', 'UNKNOWN')
+            self.logger.debug(f"Selected last VALID {sec_contact_type} contact: con_id={selected_con_id}")
+            
+            # Check if mapping refers to address data (child element extraction)
+            address_element_name = self._get_child_element_name('contact_address')
+            
+            if mapping.target_table == 'app_contact_address' or address_element_name in mapping.xml_path:
+                # Look for address elements within this contact
+                address_elements = last_valid_sec.xpath(f'.//{address_element_name}')
+                
+                # Filter to preferred address type from contract
+                address_type_attr, preferred_address_type = self._preferred_address_type_config
+                preferred = [addr for addr in address_elements 
+                            if addr.get(address_type_attr) == preferred_address_type]
+                target_addresses = preferred if preferred else address_elements
+                
+                if target_addresses:
+                    selected_address = None
+                    for addr in target_addresses:
+                        if addr.get(mapping.xml_attribute):
+                            selected_address = addr
+                            break
+                    if selected_address is None:
+                        selected_address = target_addresses[-1]
+                    value = selected_address.get(mapping.xml_attribute)
+                    if value is not None and mapping.data_type == 'decimal' and mapping.data_length is not None:
+                        try:
+                            from decimal import Decimal, ROUND_HALF_UP
+                            val = Decimal(str(value)).quantize(Decimal('0.' + '0' * mapping.data_length), rounding=ROUND_HALF_UP)
+                            return float(val)
+                        except Exception:
+                            return value
+                    return value
+            
+            # Extract directly from the contact element
+            value = last_valid_sec.get(mapping.xml_attribute)
+            self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' from {sec_contact_type} contact con_id {selected_con_id}")
+            
+            # Enforce string truncation
+            max_length = getattr(mapping, 'data_length', None)
+            if max_length and value is not None and mapping.data_type and mapping.data_type == 'string':
+                value = str(value)[:max_length]
+            return value
+            
+        except Exception as e:
+            self.logger.debug(f"Failed to extract from last valid SEC contact: {e}")
             return None
     
     def _extract_from_authu_contact(self, mapping: 'FieldMapping') -> Optional[str]:

@@ -1581,8 +1581,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "collateral_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["add_collateral(1)",
-        "calculated_field"],
+      "mapping_type": ["calculated_field", "add_collateral(1)"],
       "expression": "CASE WHEN TRIM(IL_application.app_type_code) = 'MARINE' THEN 412 WHEN TRIM(IL_application.app_type_code) = 'RV' THEN 419 WHEN TRIM(IL_application.app_type_code) = 'HT' THEN 415 WHEN TRIM(IL_application.app_type_code) = 'UT' THEN 421 WHEN TRIM(IL_application.app_type_code) = 'MC' THEN 416 WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'ATV' THEN 410 WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'UTV' THEN 422 WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'PWC' THEN 418 WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'SNOWMOBILE' THEN 420 WHEN TRIM(IL_application.app_type_code) IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
@@ -1615,8 +1614,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "used_flag",
       "data_type": "bit",
-      "mapping_type": ["add_collateral(1)",
-        "char_to_bit"],
+      "mapping_type": ["char_to_bit", "add_collateral(1)"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -1649,8 +1647,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "year",
       "data_type": "smallint",
-      "mapping_type": ["add_collateral(1)",
-        "numbers_only"],
+      "mapping_type": ["numbers_only", "add_collateral(1)"],
       "nullable": false,
       "required": false
     },
@@ -1704,8 +1701,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "collateral_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["add_collateral(2)",
-        "calculated_field"],
+      "mapping_type": ["calculated_field", "add_collateral(2)"],
       "expression": "CASE WHEN TRIM(IL_collateral.coll2_HP_Marine) IS NOT EMPTY THEN 413 WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.wholesale_value IS NOT EMPTY THEN 413 WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.make IS NOT EMPTY THEN 413 WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'ATV' THEN 410 WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'UTV' THEN 422 WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'PWC' THEN 418 WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'SNOWMOBILE' THEN 420 END",
       "nullable": false,
       "required": false
@@ -1738,8 +1734,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "used_flag",
       "data_type": "bit",
-      "mapping_type": ["add_collateral(2)",
-        "char_to_bit"],
+      "mapping_type": ["char_to_bit", "add_collateral(2)"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -1772,8 +1767,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "year",
       "data_type": "smallint",
-      "mapping_type": ["add_collateral(2)",
-        "numbers_only"],
+      "mapping_type": ["numbers_only", "add_collateral(2)"],
       "nullable": false,
       "required": false
     },
@@ -1827,8 +1821,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "collateral_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["add_collateral(3)",
-        "calculated_field"],
+      "mapping_type": ["calculated_field", "add_collateral(3)"],
       "expression": "CASE WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.coll3_make IN ('BT', 'BEAR', 'BOATMATE', 'BACKTRACK', 'TRAILSTAR', 'MAGIC TILT', 'MARINE MASTER', 'SHORELANDER', 'SHORELANDR', 'EZ LOADER', 'KARAVAN', 'MCCLAIN', 'ESCORT', 'ROAD RUNNER', 'LOAD RITE', 'LOADRITE', 'MAGIC LOADER', 'MALIBU', 'ZIEMAN', 'TRACKER', 'DIAMOND CITY', 'RANGER', 'WESCO', 'TRAILER') THEN 420 WHEN TRIM(IL_collateral.coll3_HP_Marine) IS NOT EMPTY THEN 413 WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.coll3_make IN ('MERCURY', 'YAMAHA', 'MERCRUISER') THEN 413 WHEN TRIM(IL_application.app_type_code) IS NOT EMPTY AND IL_application.wholesale_value IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
@@ -1861,8 +1854,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "used_flag",
       "data_type": "bit",
-      "mapping_type": ["add_collateral(3)",
-        "char_to_bit"],
+      "mapping_type": ["char_to_bit", "add_collateral(3)"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -1895,8 +1887,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "year",
       "data_type": "smallint",
-      "mapping_type": ["add_collateral(3)",
-        "numbers_only"],
+      "mapping_type": ["numbers_only", "add_collateral(3)"],
       "nullable": false,
       "required": false
     },
@@ -1950,8 +1941,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "collateral_type_enum",
       "data_type": "smallint",
-      "mapping_type": ["add_collateral(4)",
-        "calculated_field"],
+      "mapping_type": ["calculated_field", "add_collateral(4)"],
       "expression": "CASE WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.coll4_make IN ('MERCURY', 'YAMAHA', 'MERCRUISER') THEN 413 WHEN TRIM(IL_application.app_type_code) = 'MARINE' THEN 417 WHEN TRIM(IL_application.app_type_code) = 'OR' THEN 417 WHEN TRIM(IL_application.app_type_code) IS NOT EMPTY AND IL_application.wholesale_value IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
@@ -1984,8 +1974,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "used_flag",
       "data_type": "bit",
-      "mapping_type": ["add_collateral(4)",
-        "char_to_bit"],
+      "mapping_type": ["char_to_bit", "add_collateral(4)"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -2018,8 +2007,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "year",
       "data_type": "smallint",
-      "mapping_type": ["add_collateral(4)",
-        "numbers_only"],
+      "mapping_type": ["numbers_only", "add_collateral(4)"],
       "nullable": false,
       "required": false
     },
