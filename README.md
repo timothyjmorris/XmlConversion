@@ -6,7 +6,8 @@ A high-performance, contract-driven ETL pipeline that transforms deeply nested X
 
 - **[Operator Guide](docs/operator-guide.md)** - Production operations, commands, troubleshooting
 - **[Deployment Guide](docs/deployment-guide.md)** - Package installation and environment setup
-- **[Architecture Guide](ARCHITECTURE.md)** - System design and technical details
+- **[Architecture Guide](docs/architecture.md)** - System design and technical details
+- **[Post Validation](docs/operations/post-validation.md)** - End-to-end KV mapping validation + reconciliation + safe backfill
 - **[Bug Fixes](docs/decisions/bug-fixes.md)** - Critical bugs resolved
 - **[Performance Findings](docs/decisions/performance-findings.md)** - Configuration and optimization decisions
 
@@ -117,7 +118,8 @@ docs/
 │   └── [IL/RL docs]                        # RecLending product line mapping
 ├── onboard_reclending/                     # RecLending onboarding materials
 ├── operations/
-│   └── production-deployment.md            # Production deployment specifics
+│   ├── appxml-staging-runbook.md           # AppXML staging operations
+│   └── post-validation.md                  # Post-validation workflow (KV mapping checks)
 └── [other technical docs]                  # Architecture, testing, validation
 
 # Tests

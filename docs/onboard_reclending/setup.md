@@ -174,6 +174,11 @@ The schema is a similar nested structure with everything we need in the "IL_appl
   > See [create-reclending-tables](/config/samples/create_destination_tables_rl.sql) as the authoritative table definitions and [mac-data-model-dictionary-guide](../mac-data-model-dictionary-guide.md) as a guide -- the guide **MUST BE UPDATED** to reflect the actual tables.
 
 
+## [app_report_results_lookup] Table
+  **Purpose**: similar to the historical lookup, this moves attributes to another key-pair table. This is not an archive table. The name for the pair will be the source attribute.  Call it `add_report_lookup`.
+
+  
+
 ## [scores] Table
   **Purpose**: this is an existing table that supports all product line loan applications. It is a key/value pair that stores numeric scores from credit bureau's and risk models by a type or tag. Only one type is allowed per app_id, enforced by table constraint - so we should fail gracefully from that (without consequence) - or potentially update the value. 
   We'll need a specific new `mapping_type` for the mapping_contract. I suggest passing it the name of the score being created from the attribute value being used, like `add_score(TU_TIE)`. There won't be any spaces in the name and the value will need to be coerced to an integer, 0 is allowed but non-meangingful empty rows are disallowed.

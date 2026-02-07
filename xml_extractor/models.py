@@ -54,14 +54,29 @@ class FieldMapping:
             raise ValueError("xml_path cannot be empty")
         if not self.target_table:
             raise ValueError("target_table cannot be empty")
-        if not self.target_column:
-            raise ValueError("target_column cannot be empty")
         # Normalize mapping_type to always be a list
         if self.mapping_type is not None:
             if isinstance(self.mapping_type, str):
                 self.mapping_type = [mt.strip() for mt in self.mapping_type.split(",")]
             elif not isinstance(self.mapping_type, list):
                 self.mapping_type = [self.mapping_type]
+
+        # target_column is required for normal column mappings, but row-creating mapping
+        # types (key/value tables) intentionally leave target_column blank.
+        if not self.target_column:
+            row_creating_prefixes = (
+                'add_score',
+                'add_indicator',
+                'add_history',
+                'add_report_lookup',
+            )
+            mapping_types = self.mapping_type or []
+            allows_empty = any(
+                str(mt).strip().startswith(row_creating_prefixes)
+                for mt in mapping_types
+            )
+            if not allows_empty:
+                raise ValueError("target_column cannot be empty")
 
 
 @dataclass
@@ -170,6 +185,27 @@ class MappingContract:
     
     def __post_init__(self):
         """Validate mapping contract configuration."""
+        # Normalize nested structures when MappingContract is constructed from raw JSON.
+        # Several tests (and some diagnostics) build MappingContract(**json_dict) directly.
+        # In that case, element_filtering/mappings/relationships may be plain dicts.
+        if self.element_filtering is not None and isinstance(self.element_filtering, dict):
+            raw_rules = self.element_filtering.get('filter_rules') or []
+            if isinstance(raw_rules, list) and raw_rules:
+                rules: List[FilterRule] = [
+                    (FilterRule(**r) if isinstance(r, dict) else r)
+                    for r in raw_rules
+                ]
+                self.element_filtering = ElementFiltering(filter_rules=rules)
+            else:
+                # Treat empty/missing rules as "no filtering".
+                self.element_filtering = None
+
+        if self.mappings and any(isinstance(m, dict) for m in self.mappings):
+            self.mappings = [FieldMapping(**m) if isinstance(m, dict) else m for m in self.mappings]
+
+        if self.relationships and any(isinstance(r, dict) for r in self.relationships):
+            self.relationships = [RelationshipMapping(**r) if isinstance(r, dict) else r for r in self.relationships]
+
         if not self.source_table:
             raise ValueError("source_table cannot be empty")
         if not self.source_column:

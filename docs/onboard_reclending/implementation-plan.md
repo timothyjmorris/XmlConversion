@@ -219,11 +219,29 @@ NULL enums where sibling data suggests they should have values.
 - Derive `source` from rightmost path segment wrapped in `[]`
 - Only insert if value non-empty
 
+### 1.4 `add_report_lookup` Mapping Type
+
+**Contract syntax**:
+```json
+{
+    "source_field": "InstantID_Score",
+    "mapping_type": "add_report_lookup",
+    "destination_table": "app_report_results_lookup"
+}
+```
+
+**Implementation requirements**:
+- Insert to `app_report_results_lookup` table
+- Derive `name` from XML attribute name
+- Only insert if value non-empty
+- Support `source_report_key` when needed (e.g., InstantID = `IDV`)
+
 ### Deliverables
 - [ ] DataMapper handlers for each mapping type
 - [ ] Unit tests: `tests/unit/mapping/test_add_score_mapping.py`
 - [ ] Unit tests: `tests/unit/mapping/test_add_indicator_mapping.py`
 - [ ] Unit tests: `tests/unit/mapping/test_add_history_mapping.py`
+- [ ] Unit tests: `tests/unit/mapping/test_add_report_lookup_mapping.py`
 - [ ] Integration tests with real XML
 - [ ] Update `docs/mapping/datamapper-functions.md`
 

@@ -80,6 +80,23 @@ def compare_contract_to_schema(contract, schema):
     for mapping in contract.get("mappings", []):
         tbl = mapping["target_table"]
         col = mapping["target_column"]
+
+        # Row-creating mapping types intentionally leave target_column blank.
+        # These do not correspond 1:1 to a destination column and should not be
+        # validated as column mappings against INFORMATION_SCHEMA.
+        if not col:
+            mapping_types = mapping.get('mapping_type') or []
+            if isinstance(mapping_types, str):
+                mapping_types = [mt.strip() for mt in mapping_types.split(',') if mt.strip()]
+            row_creating_prefixes = (
+                'add_score',
+                'add_indicator',
+                'add_history',
+                'add_report_lookup',
+            )
+            if any(str(mt).strip().startswith(row_creating_prefixes) for mt in mapping_types):
+                continue
+
         contract_type = mapping.get("data_type")
         contract_nullable = mapping.get("nullable")
         contract_required = mapping.get("required")
@@ -216,7 +233,9 @@ def test_field_mappings_validation(contract):
             target_table = mapping.get('target_table', '')
             valid_tables = [
                 'app_base', 'app_operational_cc', 'app_pricing_cc', 'app_transactional_cc', 'app_solicited_cc',
-                'app_contact_base', 'app_contact_address', 'app_contact_employment'
+                'app_contact_base', 'app_contact_address', 'app_contact_employment',
+                # Shared key/value-style tables (row-creating mappings)
+                'scores', 'indicators', 'app_historical_lookup', 'app_report_results_lookup'
             ]
             if target_table and target_table not in valid_tables:
                 errors.append(f"Mapping {i} invalid target table: {target_table}")

@@ -122,7 +122,14 @@ class BulkInsertStrategy:
                     batch_inserted, used_fast_path, batch_elapsed = self._try_fast_insert(cursor, sql, batch_data, table_name)
 
                     if not used_fast_path:
-                        batch_inserted, batch_elapsed = self._fallback_individual_insert(cursor, sql, batch_data, table_name)
+                        batch_inserted, batch_elapsed = self._fallback_individual_insert(
+                            cursor,
+                            sql,
+                            batch_data,
+                            table_name,
+                            qualified_table_name,
+                            columns,
+                        )
                 except pyodbc.Error as batch_err:
                     # Dump failing SQL + sample params for diagnostics before re-raising
                     try:
@@ -247,13 +254,26 @@ class BulkInsertStrategy:
             return len(batch_data), True, elapsed  # Success
         except pyodbc.Error as e:
             error_str = str(e).lower()
+            # For key/value-style tables, duplicates should not fail processing.
+            # Fall back to per-row insert/update-on-duplicate handling.
+            if table_name in ('scores', 'indicators', 'app_historical_lookup', 'app_report_results_lookup') and self._is_duplicate_key_error(error_str):
+                self.logger.debug(f"executemany hit duplicate key for {table_name}, falling back to individual upsert path: {e}")
+                return 0, False, 0.0
             if "cast specification" in error_str or "converting" in error_str:
                 self.logger.debug(f"executemany failed with type error for {table_name}, falling back: {e}")
                 return 0, False, 0.0  # Signal fallback needed
             else:
                 raise  # Re-raise non-type-conversion errors
     
-    def _fallback_individual_insert(self, cursor, sql: str, batch_data: List[Tuple], table_name: str) -> Tuple[int, float]:
+    def _fallback_individual_insert(
+        self,
+        cursor,
+        sql: str,
+        batch_data: List[Tuple],
+        table_name: str,
+        qualified_table_name: str,
+        columns: List[str],
+    ) -> Tuple[int, float]:
         """
         Insert records individually, handling constraint violations gracefully.
         
@@ -275,6 +295,22 @@ class BulkInsertStrategy:
                     con_id = record_values[0] if len(record_values) > 0 else None
                     self.logger.warning(f"Skipping duplicate app_contact_base (con_id={con_id})")
                     continue
+                # Key/value tables: duplicates are expected during re-processing; update in-place.
+                if table_name in ('scores', 'indicators', 'app_historical_lookup', 'app_report_results_lookup') and self._is_duplicate_key_error(error_str):
+                    updated = self._try_update_on_duplicate(
+                        cursor,
+                        table_name,
+                        qualified_table_name,
+                        columns,
+                        record_values,
+                    )
+                    if updated:
+                        # Count as successfully applied (even though it was an UPDATE)
+                        batch_inserted += 1
+                        continue
+                    # If we couldn't build a safe update, just skip the duplicate row
+                    self.logger.warning(f"Skipping duplicate row for {table_name} (no safe upsert key available)")
+                    continue
                 else:
                     raise record_error
 
@@ -285,6 +321,78 @@ class BulkInsertStrategy:
         )
 
         return batch_inserted, elapsed
+
+    def _is_duplicate_key_error(self, error_str: str) -> bool:
+        """Detect SQL Server duplicate key violations from pyodbc error text."""
+        if not error_str:
+            return False
+        # Common SQL Server duplicate key indicators (2601 = unique index, 2627 = PK)
+        return (
+            'cannot insert duplicate key' in error_str
+            or 'duplicate key' in error_str
+            or 'primary key constraint' in error_str
+            or 'unique index' in error_str
+            or '2601' in error_str
+            or '2627' in error_str
+        )
+
+    def _try_update_on_duplicate(
+        self,
+        cursor,
+        table_name: str,
+        qualified_table_name: str,
+        columns: List[str],
+        record_values: Tuple,
+    ) -> bool:
+        """Attempt an UPDATE for a duplicate key record for known key/value tables."""
+        try:
+            record = {columns[i]: (record_values[i] if i < len(record_values) else None) for i in range(len(columns))}
+
+            if table_name == 'scores':
+                key_cols = ['app_id', 'score_identifier']
+                set_cols = ['score']
+            elif table_name == 'indicators':
+                key_cols = ['app_id', 'indicator']
+                set_cols = ['value']
+            elif table_name == 'app_report_results_lookup':
+                key_cols = ['app_id', 'name']
+                # Some schemas include source_report_key; update it when provided.
+                set_cols = ['value', 'source_report_key']
+            elif table_name == 'app_historical_lookup':
+                # Historical lookup is typically keyed by (app_id, name, source). If source isn't present,
+                # fall back to (app_id, name).
+                key_cols = ['app_id', 'name', 'source'] if 'source' in record else ['app_id', 'name']
+                set_cols = ['value']
+            else:
+                return False
+
+            if not all(col in record for col in key_cols):
+                return False
+
+            present_set_cols = [c for c in set_cols if c in record]
+            if not present_set_cols:
+                return False
+
+            set_clause = ', '.join(f"[{col}] = ?" for col in present_set_cols)
+            set_params = [record[col] for col in present_set_cols]
+
+            where_fragments: List[str] = []
+            where_params: List[Any] = []
+            for col in key_cols:
+                val = record.get(col)
+                if val is None:
+                    where_fragments.append(f"[{col}] IS NULL")
+                else:
+                    where_fragments.append(f"[{col}] = ?")
+                    where_params.append(val)
+
+            where_clause = ' AND '.join(where_fragments)
+            update_sql = f"UPDATE {qualified_table_name} SET {set_clause} WHERE {where_clause}"
+            cursor.execute(update_sql, tuple(set_params + where_params))
+            return True
+        except Exception as e:
+            self.logger.debug(f"Update-on-duplicate failed for {table_name}: {e}")
+            return False
     
     def _handle_database_error(self, e: Exception, table_name: str) -> None:
         """

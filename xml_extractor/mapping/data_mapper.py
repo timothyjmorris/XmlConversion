@@ -61,7 +61,7 @@ import logging
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, ROUND_HALF_UP, InvalidOperation
 
 from ..interfaces import DataMapperInterface
 from ..models import MappingContract, FieldMapping
@@ -1554,6 +1554,11 @@ class DataMapper(DataMapperInterface):
             # Extract app_contact_employment elements directly from XML data
             self.logger.debug(f"Extracting app_contact_employment with {len(mappings)} mappings")
             records = self._extract_contact_employment_records(xml_data, mappings, app_id, valid_contacts)
+        elif table_name in {'scores', 'indicators', 'app_historical_lookup', 'app_report_results_lookup'}:
+            # Row-creating mapping types that intentionally do not map to a single target column.
+            # These mappings create one record per mapped attribute (key/value-style tables).
+            self.logger.debug(f"Extracting key/value records for {table_name} with {len(mappings)} mappings")
+            records = self._extract_kv_table_records(xml_data, mappings, app_id)
         else:
             # Create single record for app-level tables
             # Check if this table has calculated field mappings that need enhanced context
@@ -1571,6 +1576,172 @@ class DataMapper(DataMapperInterface):
                     record['app_id'] = int(app_id) if app_id.isdigit() else app_id
                 records.append(record)
         
+        return records
+
+    def _extract_kv_table_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], app_id: str) -> List[Dict[str, Any]]:
+        """Extract records for key/value-style tables using add_* mapping types."""
+        if not mappings:
+            return []
+
+        table_name = mappings[0].target_table
+        if table_name == 'scores':
+            return self._extract_score_records(xml_data, mappings, app_id)
+        if table_name == 'indicators':
+            return self._extract_indicator_records(xml_data, mappings, app_id)
+        if table_name == 'app_historical_lookup':
+            return self._extract_history_records(xml_data, mappings, app_id)
+        if table_name == 'app_report_results_lookup':
+            return self._extract_report_lookup_records(xml_data, mappings, app_id)
+        return []
+
+    def _parse_mapping_type_function(self, mapping_type: str) -> Tuple[str, Optional[str]]:
+        """Parse function-like mapping types, e.g., add_score(TU_TIE) -> ('add_score', 'TU_TIE')."""
+        if not mapping_type:
+            return ('', None)
+        mapping_type = str(mapping_type).strip()
+        match = re.match(r'^(?P<name>[A-Za-z_][A-Za-z0-9_]*)\((?P<param>[^)]+)\)$', mapping_type)
+        if match:
+            return (match.group('name'), match.group('param').strip())
+        return (mapping_type, None)
+
+    def _derive_source_from_xml_path(self, xml_path: str) -> str:
+        """Derive 'source' for history/report lookups from the rightmost XML path segment."""
+        if not xml_path:
+            return ''
+        trimmed = str(xml_path).strip()
+        if trimmed.endswith('/'):
+            trimmed = trimmed[:-1]
+        return trimmed.rsplit('/', 1)[-1] if '/' in trimmed else trimmed
+
+    def _is_meaningful_kv_value(self, value: Any) -> bool:
+        """Meaningful data check for key/value tables (non-empty, not literal 'Null')."""
+        if not StringUtils.safe_string_check(value):
+            return False
+        lowered = str(value).strip().lower()
+        return lowered not in {'null', 'none'}
+
+    def _extract_score_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], app_id: str) -> List[Dict[str, Any]]:
+        records: List[Dict[str, Any]] = []
+        normalized_app_id: Any = int(app_id) if str(app_id).isdigit() else app_id
+
+        for mapping in mappings:
+            mapping_types = getattr(mapping, 'mapping_type', None) or []
+            add_score_types = [mt for mt in mapping_types if str(mt).strip().startswith('add_score')]
+            if not add_score_types:
+                continue
+
+            name, identifier = self._parse_mapping_type_function(add_score_types[0])
+            if name != 'add_score' or not identifier:
+                continue
+
+            raw_value = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+            if raw_value is None:
+                continue
+
+            score_value = self.transform_data_types(raw_value, mapping.data_type)
+            if score_value is None:
+                continue
+
+            records.append({
+                'app_id': normalized_app_id,
+                'score_identifier': identifier,
+                'score': score_value,
+            })
+
+        return records
+
+    def _extract_indicator_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], app_id: str) -> List[Dict[str, Any]]:
+        records: List[Dict[str, Any]] = []
+        normalized_app_id: Any = int(app_id) if str(app_id).isdigit() else app_id
+        truthy_values = {'y', 'yes', 'true', 't', '1'}
+
+        for mapping in mappings:
+            mapping_types = getattr(mapping, 'mapping_type', None) or []
+            add_indicator_types = [mt for mt in mapping_types if str(mt).strip().startswith('add_indicator')]
+            if not add_indicator_types:
+                continue
+
+            name, indicator_name = self._parse_mapping_type_function(add_indicator_types[0])
+            if name != 'add_indicator' or not indicator_name:
+                continue
+
+            raw_value = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+            if raw_value is None:
+                continue
+
+            normalized = str(raw_value).strip().lower()
+            if normalized not in truthy_values:
+                continue
+
+            records.append({
+                'app_id': normalized_app_id,
+                'indicator': indicator_name,
+                'value': '1',
+            })
+
+        return records
+
+    def _extract_history_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], app_id: str) -> List[Dict[str, Any]]:
+        records: List[Dict[str, Any]] = []
+        normalized_app_id: Any = int(app_id) if str(app_id).isdigit() else app_id
+
+        for mapping in mappings:
+            mapping_types = getattr(mapping, 'mapping_type', None) or []
+            if not any(str(mt).strip() == 'add_history' for mt in mapping_types):
+                continue
+
+            raw_value = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+            if not self._is_meaningful_kv_value(raw_value):
+                continue
+
+            source = self._derive_source_from_xml_path(getattr(mapping, 'xml_path', '') or '')
+            name = getattr(mapping, 'xml_attribute', None) or ''
+            if not name:
+                continue
+
+            records.append({
+                'app_id': normalized_app_id,
+                'name': f'[{name}]',
+                'source': f'[{source}]' if source else None,
+                'value': str(raw_value).strip(),
+            })
+
+        return records
+
+    def _extract_report_lookup_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], app_id: str) -> List[Dict[str, Any]]:
+        records: List[Dict[str, Any]] = []
+        normalized_app_id: Any = int(app_id) if str(app_id).isdigit() else app_id
+
+        for mapping in mappings:
+            mapping_types = getattr(mapping, 'mapping_type', None) or []
+            add_report_types = [mt for mt in mapping_types if str(mt).strip().startswith('add_report_lookup')]
+            if not add_report_types:
+                continue
+
+            name, source_report_key_param = self._parse_mapping_type_function(add_report_types[0])
+            if name != 'add_report_lookup':
+                continue
+
+            raw_value = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+            if not self._is_meaningful_kv_value(raw_value):
+                continue
+
+            name = getattr(mapping, 'xml_attribute', None) or ''
+            if not name:
+                continue
+
+            source_report_key = source_report_key_param
+
+            record = {
+                'app_id': normalized_app_id,
+                'name': name,
+                'value': str(raw_value).strip(),
+            }
+            if source_report_key is not None:
+                record['source_report_key'] = source_report_key
+
+            records.append(record)
+
         return records
 
     def _create_record_from_mappings(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], context_data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -2059,19 +2230,17 @@ class DataMapper(DataMapperInterface):
         if value is None:
             return None
         try:
-            # Handle string values that might be numeric
+            # Handle string values that might be numeric (including decimals) and round.
             if isinstance(value, str):
                 value = value.strip()
                 if not value:
                     return None
-                # Check if the string contains only digits (optionally with leading minus)
-                if not value.isdigit() and not (value.startswith('-') and value[1:].isdigit()):
-                    self.logger.warning(f"Invalid integer value '{value}' - contains non-numeric characters")
-                    return None
+                # Remove common thousands separators
+                value = value.replace(",", "")
             # Use decimal for proper rounding (round half up)
             val = Decimal(str(value)).quantize(Decimal('1'), rounding=ROUND_HALF_UP)
             return int(val)
-        except (ValueError, TypeError) as e:
+        except (InvalidOperation, ValueError, TypeError) as e:
             self.logger.warning(f"Failed to convert '{value}' to integer: {e}")
             return None
     
@@ -2291,6 +2460,36 @@ class DataMapper(DataMapperInterface):
             # This handles banking attributes and other contact-level attributes
             value = last_valid_primary_contact.get(mapping.xml_attribute)
             self.logger.debug(f"Extracted {mapping.xml_attribute}='{value}' directly from contact con_id {selected_con_id}")
+
+            # For history mappings, we care about capturing the attribute if it exists on ANY valid
+            # primary contact, not strictly the last valid PR contact.
+            if mapping.target_table == 'app_historical_lookup':
+                needs_fallback = False
+                if value is None:
+                    needs_fallback = True
+                else:
+                    value_str = str(value).strip()
+                    if not value_str or value_str.lower() in {'null', 'none'}:
+                        needs_fallback = True
+
+                if needs_fallback:
+                    for contact in reversed(primary_contacts):
+                        con_id = contact.get('con_id', '').strip()
+                        contact_type = contact.get(contact_type_attr, '').strip()
+                        if not con_id or not contact_type:
+                            continue
+                        candidate = contact.get(mapping.xml_attribute)
+                        if candidate is None:
+                            continue
+                        candidate_str = str(candidate).strip()
+                        if not candidate_str or candidate_str.lower() in {'null', 'none'}:
+                            continue
+                        value = candidate
+                        self.logger.debug(
+                            f"History fallback: using {mapping.xml_attribute} from primary contact con_id={con_id}"
+                        )
+                        break
+
             # Enforce string truncation for all string fields
             # Enforce string truncation using contract data_length
             max_length = getattr(mapping, 'data_length', None)

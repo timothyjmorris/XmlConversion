@@ -58,7 +58,7 @@ select * from app_enums
 	ALTER INDEX ALL ON  app_xml		REBUILD;
 
 	-- Processing Log (error tracking, resumability)
-	CREATE TABLE migration.processing_log (
+	CREATE TABLE dbo.processing_log (
 		log_id				int				NOT NULL CONSTRAINT PK_processing_log_log_id PRIMARY KEY IDENTITY(1, 1),
 		app_id				int				NOT NULL,
 		[status]			varchar(20)		NOT NULL,
@@ -71,24 +71,24 @@ select * from app_enums
 
 	-- On processing_log  
 	CREATE NONCLUSTERED INDEX IX_processing_log_app_id 
-		ON migration.processing_log(app_id);
+		ON dbo.processing_log(app_id);
 
 	-- This is used to for an XML fragment of "/Provenir/Request/CustData" to speed up load time
-	CREATE TABLE migration.app_xml_staging (
+	CREATE TABLE dbo.app_xml_staging (
 	  app_id		int				NOT NULL PRIMARY KEY,	-- IDENTITY not needed
 	  app_XML		varchar(MAX)		NULL,
 	  extracted_at	datetime2		NOT NULL DEFAULT (SYSUTCDATETIME())
 	);
 	
 	-- For getting batches of xml
-	CREATE NONCLUSTERED INDEX IX_app_xml_staging_app_id ON migration.app_xml_staging (app_id) INCLUDE (app_xml);
+	CREATE NONCLUSTERED INDEX IX_app_xml_staging_app_id ON dbo.app_xml_staging (app_id) INCLUDE (app_xml);
 
 
 	-- LOAD UP!
 	-- python .\env_prep\appxml_staging_extractor.py --batch 500 --limit 15000 --source-table app_XML --source-column  app_XML --metrics metrics\appxml_w0.json
 
 	-- and xml staging table after it's loaded up
-	ALTER INDEX ALL ON  migration.app_xml_staging		REBUILD;
+	ALTER INDEX ALL ON  dbo.app_xml_staging		REBUILD;
 
 
 -- INSPECT -----------------------------------------------------------------------------------------------------------------------
@@ -96,26 +96,26 @@ select * from app_enums
 -- do-over
 /*
 
-truncate table migration.processing_log;
-delete from migration.app_base;
+truncate table dbo.processing_log;
+delete from dbo.app_base;
 
 */
 
 -- 12240
-SELECT DISTINCT COUNT(app_id) FROM migration.app_xml_staging;
-SELECT COUNT(*) FROM migration.processing_log;
-SELECT * FROM migration.processing_log where status <> 'success'
+SELECT DISTINCT COUNT(app_id) FROM dbo.app_xml_staging;
+SELECT COUNT(*) FROM dbo.processing_log;
+SELECT * FROM dbo.processing_log where status <> 'success'
 
-SELECT DISTINCT COUNT(app_id) FROM migration.app_base;
-SELECT MAX(app_id) FROM migration.app_base;
+SELECT DISTINCT COUNT(app_id) FROM dbo.app_base;
+SELECT MAX(app_id) FROM dbo.app_base;
 SELECT COUNT(*) FROM app_xml
 
 
-select top 100 app_id, cast(app_xml as xml) as xml from migration.app_xml_staging where app_id in (157303)
+select top 100 app_id, cast(app_xml as xml) as xml from dbo.app_xml_staging where app_id in (157303)
 
 
 SELECT TOP 10 app_id, CAST(app_xml AS xml) AS XML 
-FROM migration.app_xml_staging 
+FROM dbo.app_xml_staging 
 WHERE app_id = 124294
 ORDER BY app_id DESC
 
@@ -124,10 +124,10 @@ UNION
 SELECT app_id FROM IL_application WHERE app_id = 124294
 
 -- Did all of the staged xml apps make it in?
-SELECT s.app_id, CAST(x.app_xml AS xml) AS XML
-FROM migration.app_xml_staging AS s
-LEFT JOIN dbo.app_XML AS x ON x.app_id = s.app_id
-WHERE s.app_id NOT IN (SELECT app_id FROM migration.app_base)
+	SELECT s.app_id, CAST(x.app_xml AS xml) AS XML
+	FROM dbo.app_xml_staging AS s
+	LEFT JOIN dbo.app_XML AS x ON x.app_id = s.app_id
+	WHERE s.app_id NOT IN (SELECT app_id FROM dbo.app_base)
 
 -- DELETE FROM app_xml_staging
 
@@ -150,6 +150,6 @@ WHERE s.app_id NOT IN (SELECT app_id FROM migration.app_base)
 	
 	select count(*)
 	--delete
-	from migration.app_xml_staging
+	from dbo.app_xml_staging
 	where app_id in (select app_id from IL_application)
 

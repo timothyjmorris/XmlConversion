@@ -645,10 +645,25 @@ class ConfigManager(ConfigurationManagerInterface):
                 errors.append(f"Field mapping {i}: xml_path is required")
             if not mapping.target_table:
                 errors.append(f"Field mapping {i}: target_table is required")
-            if not mapping.target_column:
-                errors.append(f"Field mapping {i}: target_column is required")
             if not mapping.data_type:
                 errors.append(f"Field mapping {i}: data_type is required")
+
+            # target_column is required for normal column mappings, but row-creating
+            # mapping types intentionally leave target_column blank.
+            if not mapping.target_column:
+                row_creating_prefixes = (
+                    'add_score',
+                    'add_indicator',
+                    'add_history',
+                    'add_report_lookup',
+                )
+                mapping_types = getattr(mapping, 'mapping_type', None) or []
+                allows_empty = any(
+                    str(mt).strip().startswith(row_creating_prefixes)
+                    for mt in mapping_types
+                )
+                if not allows_empty:
+                    errors.append(f"Field mapping {i}: target_column is required")
         
         # Validate relationship mappings
         for i, relationship in enumerate(contract.relationships):
@@ -669,7 +684,11 @@ class ConfigManager(ConfigurationManagerInterface):
             table_key = mapping.target_table
             if table_key not in table_columns:
                 table_columns[table_key] = set()
-            
+
+            # Row-creating mappings may share an intentionally blank target_column.
+            if not mapping.target_column:
+                continue
+
             if mapping.target_column in table_columns[table_key]:
                 errors.append(f"Duplicate target column '{mapping.target_column}' in table '{mapping.target_table}'")
             else:

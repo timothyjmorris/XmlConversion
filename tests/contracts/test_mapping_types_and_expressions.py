@@ -64,7 +64,9 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
             'identity_insert', 'enum', 'char_to_bit', 'numbers_only', 'last_valid_pr_contact',
             'curr_address_only', 'calculated_field', 'extract_numeric', 'boolean_to_bit',
             'default_getutcdate_if_null',
-            'authu_contact'  # Modifier for AUTHU contact extraction - see implementation-plan.md Phase 0.5
+            'authu_contact',  # Modifier for AUTHU contact extraction - see implementation-plan.md Phase 0.5
+            # Shared key/value mapping types (Phase 1)
+            'add_score', 'add_indicator', 'add_history', 'add_report_lookup'
         }
         found_types = set()
         for mapping in self.contract.mappings:
@@ -75,7 +77,21 @@ class TestMappingTypesAndExpressions(unittest.TestCase):
                     # Fallback for string format
                     for mt in str(mapping.mapping_type).split(','):
                         found_types.add(mt.strip())
-        missing = found_types - supported_types
+
+        # Normalize function-like mapping types so the supported set can be stable
+        normalized_found = set()
+        for mt in found_types:
+            mt_str = str(mt).strip()
+            if mt_str.startswith('add_score('):
+                normalized_found.add('add_score')
+            elif mt_str.startswith('add_indicator('):
+                normalized_found.add('add_indicator')
+            elif mt_str.startswith('add_report_lookup('):
+                normalized_found.add('add_report_lookup')
+            else:
+                normalized_found.add(mt_str)
+
+        missing = normalized_found - supported_types
         self.assertEqual(len(missing), 0, f"Unsupported mapping types found: {missing}")
 
     def test_all_mapping_types_exercised(self):

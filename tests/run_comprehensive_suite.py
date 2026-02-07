@@ -45,7 +45,19 @@ class TestSuiteRunner:
         test_files = list(test_path.glob("test_*.py"))
         if not test_files:
             print(f"WARNING: No test files found in {test_path}")
-            # Still run pytest to capture summary (may be skipped, but summary will show zero)
+            # E2E tests in this repo are often "manual_*" scripts, not pytest-collected tests.
+            # If no pytest-style tests exist, treat this category as a SKIP (not a failure).
+            if category == 'e2e':
+                self.results[category]['time'] = 0
+                self.results[category]['passed'] = 0
+                self.results[category]['failed'] = 0
+                self.results[category]['details'] = {
+                    'success': True,
+                    'skipped': True,
+                    'reason': 'No pytest test_*.py files found under tests/e2e'
+                }
+                print(f"SKIPPING {category.upper()} TESTS (no pytest-collected tests found)")
+                return True
         else:
             print(f"Found {len(test_files)} test file(s) in {test_path}")
 
@@ -108,6 +120,7 @@ class TestSuiteRunner:
 
             self.results[category]['details'] = {
                 'success': success,
+                'skipped': False,
                 'stdout': result.stdout,
                 'stderr': result.stderr,
                 'returncode': result.returncode
@@ -213,8 +226,10 @@ class TestSuiteRunner:
             total_cat = results['passed'] + results['failed']
             if total_cat > 0 or (results['passed'] == 0 and results['failed'] == 0):
                 # Always show summary, even if zero
+                details = results.get('details') if isinstance(results.get('details'), dict) else {}
+                is_skipped = bool(details.get('skipped'))
                 success_rate = (results['passed'] / total_cat) * 100 if total_cat > 0 else 0.0
-                status = "OK" if results['failed'] == 0 else "BAD"
+                status = "SKIP" if is_skipped else ("OK" if results['failed'] == 0 else "BAD")
                 print(f"   {status} {category.upper():12} {results['passed']:3}P {results['failed']:3}F {success_rate:5.1f}% {results['time']:6.1f}s")
             else:
                 print(f"   {category.upper():12} No tests found")

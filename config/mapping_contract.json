@@ -14,45 +14,40 @@
     "app_solicited_cc",
     "app_contact_address",
     "app_contact_employment",
+    "app_report_results_lookup",
+    "app_historical_lookup",
+    "scores",
+    "indicators",
     "processing_log"
   ],
   "element_filtering": {
     "filter_rules": [
       {
-        "element_type": "contact",
-        "description": "Filter contacts by con_id and valid contact type. Array order determines priority (first = highest) - used for deduplication and primary contact identification.",
-        "xml_parent_path": "/Provenir/Request/CustData/application",
-        "xml_child_path": "/Provenir/Request/CustData/application/contact",
+        "element_type": "contact", 
+        "description": "Filter contacts by con_id and valid contact type. Array order determines priority (first = highest) - used for deduplication and primary contact identification.", 
+        "xml_parent_path": "/Provenir/Request/CustData/application", 
+        "xml_child_path": "/Provenir/Request/CustData/application/contact", 
         "required_attributes": {
           "con_id": true,
-          "ac_role_tp_c": [
-            "PR",
-            "AUTHU"
-          ]
+          "ac_role_tp_c": ["PR", "AUTHU"]
         }
       },
       {
-        "element_type": "address",
-        "description": "Filter address elements by valid address type",
-        "xml_parent_path": "/Provenir/Request/CustData/application/contact",
-        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address",
+        "element_type": "address", 
+        "description": "Filter address elements by valid address type", 
+        "xml_parent_path": "/Provenir/Request/CustData/application/contact", 
+        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_address", 
         "required_attributes": {
-          "address_tp_c": [
-            "CURR",
-            "PREV"
-          ]
+          "address_tp_c": ["CURR", "PREV"]
         }
       },
       {
-        "element_type": "employment",
-        "description": "Filter employment elements by valid employment_type",
-        "xml_parent_path": "/Provenir/Request/CustData/application/contact",
-        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_employment",
+        "element_type": "employment", 
+        "description": "Filter employment elements by valid employment_type", 
+        "xml_parent_path": "/Provenir/Request/CustData/application/contact", 
+        "xml_child_path": "/Provenir/Request/CustData/application/contact/contact_employment", 
         "required_attributes": {
-          "employment_tp_c": [
-            "CURR",
-            "PREV"
-          ]
+          "employment_tp_c": ["CURR", "PREV"]
         }
       }
     ]
@@ -64,9 +59,7 @@
       "target_table": "app_base",
       "target_column": "app_id",
       "data_type": "int",
-      "mapping_type": [
-        "identity_insert"
-      ],
+      "mapping_type": ["identity_insert"],
       "nullable": false,
       "required": true
     },
@@ -87,9 +80,7 @@
       "target_table": "app_base",
       "target_column": "app_source_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -99,9 +90,7 @@
       "target_table": "app_base",
       "target_column": "app_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -111,9 +100,7 @@
       "target_table": "app_base",
       "target_column": "product_line_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": false,
       "required": true,
       "description": "Product line enum mapping; mapper will map empty->600 via enum_mappings or raise if missing."
@@ -124,9 +111,7 @@
       "target_table": "app_base",
       "target_column": "decision_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -185,9 +170,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "use_alloy_service_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "boolean_to_bit"
-      ],
+      "mapping_type": ["boolean_to_bit"],
       "nullable": false,
       "required": true,
       "default_value": "0"
@@ -208,9 +191,7 @@
       "target_table": "app_operational_cc",
       "target_column": "signature_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": false,
       "required": true,
       "default_value": "0"
@@ -221,9 +202,7 @@
       "target_table": "app_operational_cc",
       "target_column": "process_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -287,14 +266,462 @@
       "default_value": "GETUTCDATE()"
     },
     {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "bank_debt_to_intome_ratio",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "EX_DIE_score",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(EX_DIE)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "EX_EVS_score",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },    
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "EX_FICO_08_score",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(AJ)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "EX_FICO_08_score",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "EX_TIE_score",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(EX_TIE)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "experian_fico_score",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "GIACT_Response",
+      "target_table": "app_report_results_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_report_lookup(GIACT)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "InstantID_Score",
+      "target_table": "app_report_results_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_report_lookup(IDV)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "intrnl_fraud_address_ind",
+      "target_table": "indicators",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_indicator(internal_fraud_address_ind)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "intrnl_fraud_ssn_ind",
+      "target_table": "indicators",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_indicator(internal_fraud_ssn_ind)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "prescreen_fico_score",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(prescreen_fico_score)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "prescreen_risk_score",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(prescreen_risk_score)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_score",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_score_JB",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_score_JH",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "risk_model_score_LP",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "supervisor_rev_ind",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "TU_DIE_score",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(TU_DIE)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "TU_FICO_09_Score",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(00W83)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "TU_FICO_09_Score",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "TU_L2C_score",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "TU_TIE_score",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(TU_TIE)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "Vantage_Score_EX",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(V4)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "Vantage_Score_EX",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "Vantage_Score_TU",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(00V60)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "Vantage_Score_TU",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "VeridQA_Result",
+      "target_table": "app_report_results_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_report_lookup(VERID)"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "mailing_city",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "mailing_po_box",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "mailing_rural_route",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "mailing_state",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "mailing_street_name",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "mailing_street_number",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "mailing_unit",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "Patriot_Act_city",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "Patriot_Act_rural_route",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "Patriot_Act_state",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "Patriot_Act_street_name",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "Patriot_Act_street_number",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "Patriot_Act_street_suffix",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "Patriot_Act_street_tp_c",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "Patriot_Act_unit",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
+      "xml_attribute": "Patriot_Act_zip",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/app_product",
+      "xml_attribute": "DIE_Plus_Score",
+      "target_table": "scores",
+      "target_column": "",
+      "data_type": "int",
+      "mapping_type": ["add_score(DIEPLUS)"],
+      "nullable": true,
+      "required": false
+    },
+    {
       "xml_path": "/Provenir/Request/CustData/application",
       "xml_attribute": "ssn_match_flag",
       "target_table": "app_operational_cc",
       "target_column": "ssn_match_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -316,9 +743,7 @@
       "target_table": "app_pricing_cc",
       "target_column": "population_assignment_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "exclude_default_when_record_empty": true,
       "nullable": true,
       "required": false
@@ -382,9 +807,7 @@
       "target_column": "housing_monthly_payment",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "nullable": true,
       "required": false
     },
@@ -394,9 +817,17 @@
       "target_table": "app_pricing_cc",
       "target_column": "credit_line",
       "data_type": "smallint",
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/application/contact/app_prod_bcard",
+      "xml_attribute": "recur_payment_credit_line",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact", "add_history"],
       "nullable": true,
       "required": false
     },
@@ -406,9 +837,7 @@
       "target_table": "app_contact_base",
       "target_column": "con_id",
       "data_type": "int",
-      "mapping_type": [
-        "identity_insert"
-      ],
+      "mapping_type": ["identity_insert"],
       "nullable": false,
       "required": true
     },
@@ -442,9 +871,7 @@
       "target_table": "app_contact_base",
       "target_column": "ssn",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "data_length": 9,
       "nullable": false,
       "required": true,
@@ -468,9 +895,7 @@
       "target_table": "app_contact_base",
       "target_column": "contact_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": false,
       "required": true
     },
@@ -515,6 +940,76 @@
       "required": false
     },
     {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "CPS_Spouse_Address1",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact", "add_history"],
+      "nullable": true,
+      "required": false
+    },
+	  {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "CPS_Spouse_City",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact", "add_history"],
+      "nullable": true,
+      "required": false
+    },
+	  {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "CPS_Spouse_Name",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact", "add_history"],
+      "nullable": true,
+      "required": false
+    },
+	  {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "CPS_Spouse_State",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact", "add_history"],
+      "nullable": true,
+      "required": false
+    },
+	  {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "CPS_Spouse_Zipcode",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["last_valid_pr_contact", "add_history"],
+      "nullable": true,
+      "required": false
+    },
+	  {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "drivers_license",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+	  {
+      "xml_path": "/Provenir/Request/CustData/application/contact",
+      "xml_attribute": "drivers_license_state",
+      "target_table": "app_historical_lookup",
+      "target_column": "",
+      "data_type": "string",
+      "mapping_type": ["add_history"],
+      "nullable": true,
+      "required": false
+    },
+    {
       "xml_path": "/Provenir/Request/CustData/application/contact/contact_address",
       "xml_attribute": "city",
       "target_table": "app_contact_address",
@@ -544,9 +1039,7 @@
       "target_table": "app_contact_address",
       "target_column": "address_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": false,
       "required": true
     },
@@ -616,9 +1109,7 @@
       "target_table": "app_contact_address",
       "target_column": "zip",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "data_length": 9,
       "default_value": "00000",
       "exclude_default_when_record_empty": true,
@@ -631,9 +1122,7 @@
       "target_table": "app_contact_address",
       "target_column": "months_at_address",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "months_at_residence + (years_at_residence * 12)",
       "nullable": true,
       "required": false
@@ -644,9 +1133,7 @@
       "target_table": "app_contact_address",
       "target_column": "ownership_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -657,10 +1144,7 @@
       "target_column": "home_phone",
       "data_type": "string",
       "data_length": 10,
-      "mapping_type": [
-        "curr_address_only",
-        "numbers_only"
-      ],
+      "mapping_type": ["curr_address_only", "numbers_only"],
       "nullable": true,
       "required": false
     },
@@ -671,10 +1155,7 @@
       "target_column": "cell_phone",
       "data_type": "string",
       "data_length": 10,
-      "mapping_type": [
-        "curr_address_only",
-        "numbers_only"
-      ],
+      "mapping_type": ["curr_address_only", "numbers_only"],
       "nullable": true,
       "required": false
     },
@@ -684,9 +1165,7 @@
       "target_table": "app_contact_employment",
       "target_column": "employment_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": false,
       "required": true
     },
@@ -717,9 +1196,7 @@
       "target_column": "monthly_salary",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN b_salary_basis_tp_c = 'ANNUM' THEN b_salary / 12 WHEN b_salary_basis_tp_c = 'MONTH' THEN b_salary * 12 WHEN b_salary_basis_tp_c = 'HOURLY' THEN b_salary WHEN b_salary_basis_tp_c = '' THEN b_salary ELSE b_salary END",
       "nullable": true,
       "required": false
@@ -730,9 +1207,7 @@
       "target_table": "app_contact_employment",
       "target_column": "months_at_job",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "b_months_at_job + (b_years_at_job * 12)",
       "nullable": true,
       "required": false
@@ -753,9 +1228,7 @@
       "target_table": "app_contact_employment",
       "target_column": "income_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -765,9 +1238,7 @@
       "target_table": "app_contact_employment",
       "target_column": "other_income_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -777,9 +1248,7 @@
       "target_table": "app_contact_employment",
       "target_column": "self_employed_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": false,
       "required": true,
       "default_value": 0
@@ -790,9 +1259,7 @@
       "target_table": "app_contact_employment",
       "target_column": "income_source_nontaxable_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": 0
@@ -803,9 +1270,7 @@
       "target_table": "app_contact_employment",
       "target_column": "phone",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "data_length": 10,
       "nullable": true,
       "required": false
@@ -866,9 +1331,7 @@
       "target_table": "app_contact_employment",
       "target_column": "zip",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "data_length": 9,
       "nullable": true,
       "required": false
@@ -907,9 +1370,7 @@
       "target_table": "app_pricing_cc",
       "target_column": "card_late_payment_fee",
       "data_type": "tinyint",
-      "mapping_type": [
-        "extract_numeric"
-      ],
+      "mapping_type": ["extract_numeric"],
       "nullable": true,
       "required": false
     },
@@ -1016,9 +1477,7 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_1",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn1_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
       "data_length": 25,
       "nullable": true,
@@ -1030,9 +1489,7 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_2",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn2_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn2_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
       "data_length": 25,
       "nullable": true,
@@ -1044,9 +1501,7 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_3",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn3_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn3_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
       "data_length": 25,
       "nullable": true,
@@ -1058,9 +1513,7 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_4",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn4_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn4_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
       "data_length": 25,
       "nullable": true,
@@ -1072,9 +1525,7 @@
       "target_table": "app_operational_cc",
       "target_column": "cb_score_factor_type_5",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'BL' THEN '00Q88' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'CV' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'EV' THEN 'EV' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'JB' THEN '00227' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'L2' THEN '00337' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.population_assignment = 'SO' THEN '00A9Q' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'DN' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HD' THEN '00W83' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HE' THEN 'AJ' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HU' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HV' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'HW' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'LB' THEN '00V60' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'SB' THEN 'FT' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND app_product.decision_model LIKE 'TU%' THEN '00227' WHEN app_product.adverse_actn5_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' WHEN app_product.adverse_actn5_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN '00W83' ELSE '' END",
       "data_length": 25,
       "nullable": true,
@@ -1086,9 +1537,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "analyst_review_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1099,9 +1548,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "booking_paused_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1112,9 +1559,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "disclosures_read_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1125,9 +1570,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "duplicate_ssn_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1138,9 +1581,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "fraud_review_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1151,9 +1592,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "pending_verification_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1164,9 +1603,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "supervisor_review_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1238,9 +1675,7 @@
       "target_table": "app_solicited_cc",
       "target_column": "ssn",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "data_length": 9,
       "nullable": true,
       "required": false
@@ -1281,9 +1716,7 @@
       "target_table": "app_solicited_cc",
       "target_column": "zip",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "data_length": 9,
       "nullable": true,
       "required": false
@@ -1344,9 +1777,7 @@
       "target_table": "app_operational_cc",
       "target_column": "status_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -1384,9 +1815,7 @@
       "target_table": "app_operational_cc",
       "target_column": "priority_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -1416,9 +1845,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "sc_ach_sent_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1429,9 +1856,7 @@
       "target_table": "app_transactional_cc",
       "target_column": "sc_debit_refund_failed_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1451,9 +1876,7 @@
       "target_table": "app_operational_cc",
       "target_column": "verification_source_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -1522,9 +1945,7 @@
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_type_1",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'SB' WHEN app_product.risk_model_reason1_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
       "data_length": 25,
       "nullable": true,
@@ -1536,9 +1957,7 @@
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_type_2",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'SB' WHEN app_product.risk_model_reason2_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
       "data_length": 25,
       "nullable": true,
@@ -1550,9 +1969,7 @@
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_type_3",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'SB' WHEN app_product.risk_model_reason3_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
       "data_length": 25,
       "nullable": true,
@@ -1564,9 +1981,7 @@
       "target_table": "app_operational_cc",
       "target_column": "risk_model_score_factor_type_4",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'BL' THEN 'ben_lomond' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'JB' THEN 'jupiter_bowl' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'LB' THEN 'lightbox' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SB' THEN 'SB' WHEN app_product.risk_model_reason4_tp_c IS NOT EMPTY AND application.population_assignment = 'SO' THEN 'solitude' ELSE '' END",
       "data_length": 25,
       "nullable": true,
@@ -1578,9 +1993,7 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_bank_aba",
       "data_type": "string",
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "data_length": 9,
       "nullable": true,
       "required": false
@@ -1591,9 +2004,7 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_bank_account_num",
       "data_type": "string",
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "data_length": 17,
       "nullable": true,
       "required": false
@@ -1604,10 +2015,7 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_bank_account_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "last_valid_pr_contact",
-        "enum"
-      ],
+      "mapping_type": ["last_valid_pr_contact", "enum"],
       "nullable": true,
       "required": false
     },
@@ -1617,9 +2025,7 @@
       "target_table": "app_operational_cc",
       "target_column": "sc_debit_funding_source_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -1676,10 +2082,7 @@
       "target_table": "app_operational_cc",
       "target_column": "auth_user_issue_card_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "authu_contact",
-        "char_to_bit"
-      ],
+      "mapping_type": ["authu_contact", "char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": null
@@ -1690,9 +2093,7 @@
       "target_table": "app_operational_cc",
       "target_column": "auth_user_spouse_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1713,9 +2114,7 @@
       "target_table": "app_pricing_cc",
       "target_column": "decision_model_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -1745,9 +2144,7 @@
       "target_table": "app_pricing_cc",
       "target_column": "account_number",
       "data_type": "string",
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "data_length": 16,
       "nullable": true,
       "required": false
@@ -1758,9 +2155,7 @@
       "target_table": "app_pricing_cc",
       "target_column": "credit_line_possible",
       "data_type": "smallint",
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "nullable": true,
       "required": false
     },
@@ -1770,9 +2165,7 @@
       "target_table": "app_pricing_cc",
       "target_column": "credit_line_max",
       "data_type": "smallint",
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "nullable": true,
       "required": false
     },
@@ -1783,9 +2176,7 @@
       "target_column": "min_payment_due",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "nullable": true,
       "required": false
     },
@@ -1795,9 +2186,7 @@
       "target_table": "app_pricing_cc",
       "target_column": "sc_multran_account_num",
       "data_type": "string",
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "data_length": 16,
       "nullable": true,
       "required": false
@@ -1946,9 +2335,7 @@
       "target_table": "app_contact_base",
       "target_column": "esign_consent_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "boolean_to_bit"
-      ],
+      "mapping_type": ["boolean_to_bit"],
       "nullable": false,
       "required": true,
       "default_value": 0
@@ -1959,9 +2346,7 @@
       "target_table": "app_contact_base",
       "target_column": "paperless_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "boolean_to_bit"
-      ],
+      "mapping_type": ["boolean_to_bit"],
       "nullable": false,
       "required": true,
       "default_value": 0
@@ -1972,9 +2357,7 @@
       "target_table": "app_contact_base",
       "target_column": "sms_consent_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "boolean_to_bit"
-      ],
+      "mapping_type": ["boolean_to_bit"],
       "nullable": false,
       "required": true,
       "default_value": 0
@@ -1985,9 +2368,7 @@
       "target_table": "app_contact_base",
       "target_column": "fraud_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },

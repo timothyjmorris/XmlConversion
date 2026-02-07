@@ -39,6 +39,12 @@
 
 ---
 
+## Post Validation (Data Checks)
+
+After schema/contract changes or performance work, run the post-validation workflow:
+
+- See `docs/operations/post-validation.md`
+
 ## Tool Selection Guide
 
 | Scenario | Use This Tool | Why |

@@ -10,14 +10,20 @@ with actual database insertion and validation.
     - parse xml
     - map fields + transform
     - insert into db
+
+    
+To insert the same app_id, set $env:XMLCONVERSION_E2E_APP_ID = "443306" in PowerShell or export XMLCONVERSION_E2E_APP_ID=443306 in bash before running the test.
+
 """
 
 import unittest
 import logging
 import tempfile
+import os
 import sys
 import pyodbc
 import json
+from lxml import etree
 
 from pathlib import Path
 from datetime import datetime
@@ -59,12 +65,26 @@ class TestEndToEndIntegration(unittest.TestCase):
         cls._qualify_table = _qualify_table
 
         cls.setup_test_database()
+
+        # Use a per-run app_id so the test can be re-run safely without DELETEs.
+        # Override via env var if you want a stable ID for troubleshooting.
+        env_app_id = os.environ.get("XMLCONVERSION_E2E_APP_ID", "").strip()
+        if env_app_id.isdigit():
+            # Explicit override should be honored exactly (even 443306).
+            cls.test_app_id = int(env_app_id)
+        else:
+            # MMDDhhmmss fits within SQL int (<= 1231235959)
+            cls.test_app_id = int(datetime.utcnow().strftime("%m%d%H%M%S"))
+            # Avoid colliding with the fixture's intrinsic app_id on repeated runs.
+            if cls.test_app_id == 443306:
+                cls.test_app_id += 1
     
     @classmethod
     def tearDownClass(cls):
         """Clean up test database."""
         # Comment out cleanup to leave test data for inspection
-        print("Test data left in database for inspection (app_id=443306)")
+        test_app_id = getattr(cls, "test_app_id", 443306)
+        print(f"Test data left in database for inspection (app_id={test_app_id})")
         # if cls.test_db_path and cls.test_db_path.exists():
         #     try:
         #         cls.test_db_path.unlink()
@@ -92,6 +112,14 @@ class TestEndToEndIntegration(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         # Note: Cleanup moved to setUpClass to preserve data after tests
+
+        # Use a per-run app_id to avoid duplicate key failures.
+        self.test_app_id = getattr(self.__class__, "test_app_id", 443306)
+
+        # Use per-run con_ids as well (contact tables are often unique on con_id).
+        con_id_base = 900_000_000 + (int(self.test_app_id) % 100_000_000)
+        self.pr_con_id = con_id_base
+        self.authu_con_id = con_id_base + 1
         
         # Load sample XML
         sample_path = Path(__file__).parent.parent.parent / "config" / "samples" / "sample-source-xml-contact-test.xml"
@@ -99,7 +127,15 @@ class TestEndToEndIntegration(unittest.TestCase):
             self.skipTest("Sample XML file not found")
         
         with open(sample_path, 'r', encoding='utf-8-sig') as f:
-            self.sample_xml = f.read()
+            original_xml = f.read()
+
+        # Rewrite known con_id values so repeated runs don't collide on unique constraints.
+        xml_root = etree.fromstring(original_xml.encode("utf-8"))
+        for el in xml_root.xpath("//*[@con_id='738936']"):
+            el.attrib["con_id"] = str(self.pr_con_id)
+        for el in xml_root.xpath("//*[@con_id='738937']"):
+            el.attrib["con_id"] = str(self.authu_con_id)
+        self.sample_xml = etree.tostring(xml_root, encoding="utf-8").decode("utf-8")
         
         # Initialize components with real mapping contract
         self.validator = PreProcessingValidator()
@@ -113,15 +149,18 @@ class TestEndToEndIntegration(unittest.TestCase):
     
     def cleanup_test_data(self):
         """Clean up any existing test data to avoid duplicate key errors."""
+        if os.environ.get("XMLCONVERSION_E2E_ALLOW_DB_DELETE", "").strip() != "1":
+            print("[INFO] Skipping DB cleanup (set XMLCONVERSION_E2E_ALLOW_DB_DELETE=1 to enable)")
+            return
         try:
             with pyodbc.connect(self.connection_string) as conn:
                 cursor = conn.cursor()
                 
                 # Clean up test app (FK cascade delete)
-                cursor.execute(f"DELETE FROM {self._qualify_table('app_base')} WHERE app_id = 443306")
+                cursor.execute(f"DELETE FROM {self._qualify_table('app_base')} WHERE app_id = ?", self.test_app_id)
                 
                 conn.commit()
-                print("[CLEANUP] Cleaned up existing test data for app_id 443306")
+                print(f"[CLEANUP] Cleaned up existing test data for app_id {self.test_app_id}")
         except Exception as e:
             print(f"[WARNING] Cleanup warning: {e}")
     
@@ -146,6 +185,9 @@ class TestEndToEndIntegration(unittest.TestCase):
         self.assertEqual(len(validation_result.valid_contacts), 2, "Should find 2 valid contacts")
         print(f"[OK] Validation passed: app_id={validation_result.app_id}, contacts={len(validation_result.valid_contacts)}")
 
+        app_id_for_insert = str(self.test_app_id)
+        print(f"[INFO] Using app_id override for insertion: {app_id_for_insert}")
+
         # Step 2: Parse XML
         print("\n[STEP 2] Parsing XML...")
         root = self.parser.parse_xml_stream(self.sample_xml)
@@ -158,12 +200,21 @@ class TestEndToEndIntegration(unittest.TestCase):
         print("\n[STEP 3] Mapping data using contracts...")
         mapped_data = self.mapper.map_xml_to_database(
             xml_data,
-            validation_result.app_id,
+            app_id_for_insert,
             validation_result.valid_contacts,
             root
         )
         self.assertIn("app_base", mapped_data, "Should map app_base data")
         self.assertIn("app_contact_base", mapped_data, "Should map app_contact_base data")
+        # Shared Phase 1 row-creating mapping types (key/value tables)
+        self.assertIn("scores", mapped_data, "Should map scores data (add_score)")
+        self.assertIn("indicators", mapped_data, "Should map indicators data (add_indicator)")
+        self.assertIn("app_historical_lookup", mapped_data, "Should map app_historical_lookup data (add_history)")
+        self.assertIn(
+            "app_report_results_lookup",
+            mapped_data,
+            "Should map app_report_results_lookup data (add_report_lookup)",
+        )
         print(f"[OK] Mapping completed: {len(mapped_data)} tables mapped")
         for table_name, records in mapped_data.items():
             print(f"   - {table_name}: {len(records)} records")
@@ -172,7 +223,9 @@ class TestEndToEndIntegration(unittest.TestCase):
         print("\n[STEP 4] Inserting into database...")
         table_order = [
             "app_base", "app_operational_cc", "app_pricing_cc", "app_transactional_cc", "app_solicited_cc",
-            "app_contact_base", "app_contact_address", "contact_employment"
+            "app_contact_base", "app_contact_address", "app_contact_employment",
+            # Shared key/value-style tables
+            "app_report_results_lookup", "app_historical_lookup", "scores", "indicators"
         ]
         for table_name in table_order:
             records = mapped_data.get(table_name, [])
@@ -188,41 +241,42 @@ class TestEndToEndIntegration(unittest.TestCase):
     
     def verify_database_contents(self):
         """Verify the data was inserted correctly using actual table names from contract."""
+        app_id = int(self.test_app_id)
         with pyodbc.connect(self.connection_string) as conn:
             cursor = conn.cursor()
             
             # Check app_base table (not "application")
-            cursor.execute(f"SELECT COUNT(*) FROM {self._qualify_table('app_base')} WHERE app_id = 443306")
+            cursor.execute(f"SELECT COUNT(*) FROM {self._qualify_table('app_base')} WHERE app_id = ?", app_id)
             app_count = cursor.fetchone()[0]
             self.assertEqual(app_count, 1, "Should have 1 app_base record")
             
-            cursor.execute(f"SELECT app_id, receive_date FROM {self._qualify_table('app_base')} WHERE app_id = 443306")
+            cursor.execute(f"SELECT app_id, receive_date FROM {self._qualify_table('app_base')} WHERE app_id = ?", app_id)
             app_record = cursor.fetchone()
-            self.assertEqual(app_record[0], 443306, "Should have correct app_id")
+            self.assertEqual(app_record[0], app_id, "Should have correct app_id")
             
             print(f"[OK] app_base verified: {app_count} record, app_id={app_record[0]}")
             
             # Check app_contact_base table (not "contact")
-            cursor.execute(f"SELECT COUNT(*) FROM {self._qualify_table('app_contact_base')} WHERE app_id = 443306")
+            cursor.execute(f"SELECT COUNT(*) FROM {self._qualify_table('app_contact_base')} WHERE app_id = ?", app_id)
             contact_count = cursor.fetchone()[0]
             self.assertEqual(contact_count, 2, "Should have 2 contact records")
             
             cursor.execute(f"""
                 SELECT con_id, contact_type_enum, first_name 
                 FROM {self._qualify_table('app_contact_base')} 
-                WHERE app_id = 443306
+                WHERE app_id = {app_id}
                 ORDER BY con_id
             """)
             contacts = cursor.fetchall()
             
             # Verify PR contact (should be TOM - the last valid one)
             pr_contact = [c for c in contacts if c[1] == 281][0]  # 281 = PR
-            self.assertEqual(pr_contact[0], 738936, "PR contact should have con_id 738936")
+            self.assertEqual(pr_contact[0], self.pr_con_id, f"PR contact should have con_id {self.pr_con_id}")
             self.assertEqual(pr_contact[2], "TOM", "PR contact should be TOM (last valid)")
             
             # Verify AUTHU contact
             authu_contact = [c for c in contacts if c[1] == 280][0]  # 280 = AUTHU
-            self.assertEqual(authu_contact[0], 738937, "AUTHU contact should have con_id 738937")
+            self.assertEqual(authu_contact[0], self.authu_con_id, f"AUTHU contact should have con_id {self.authu_con_id}")
             self.assertEqual(authu_contact[2], "AUTH", "AUTHU contact should be AUTH")
             
             print(f"[OK] Contacts verified: {contact_count} records")
@@ -233,7 +287,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             cursor.execute(f"""
                 SELECT home_phone, cell_phone 
                 FROM {self._qualify_table('app_contact_base')} 
-                WHERE con_id = 738936
+                WHERE app_id = {app_id} AND con_id = {self.pr_con_id}
             """)
             phone_record = cursor.fetchone()
             home_phone = phone_record[0]
@@ -249,7 +303,7 @@ class TestEndToEndIntegration(unittest.TestCase):
             self.assertEqual(cell_phone.strip(), '5555555555', f"cell_phone should be '5555555555' but got '{cell_phone}'")
             
             # Check app_operational_cc table for calculated fields
-            cursor.execute(f"SELECT cb_score_factor_type_1, cb_score_factor_type_2, assigned_to, backend_fico_grade, cb_score_factor_code_1, meta_url, priority_enum, housing_monthly_payment FROM {self._qualify_table('app_operational_cc')} WHERE app_id = 443306")
+            cursor.execute(f"SELECT cb_score_factor_type_1, cb_score_factor_type_2, assigned_to, backend_fico_grade, cb_score_factor_code_1, meta_url, priority_enum, housing_monthly_payment FROM {self._qualify_table('app_operational_cc')} WHERE app_id = ?", app_id)
             operational_record = cursor.fetchone()
             self.assertIsNotNone(operational_record, "Should have app_operational_cc record")
             
@@ -300,7 +354,7 @@ class TestEndToEndIntegration(unittest.TestCase):
                 SELECT ca.con_id, ca.city, ca.months_at_address 
                 FROM {self._qualify_table('app_contact_address')} ca
                 INNER JOIN {self._qualify_table('app_contact_base')} cb ON ca.con_id = cb.con_id
-                WHERE cb.app_id = 443306 
+                WHERE cb.app_id = {app_id} 
                 ORDER BY ca.con_id, ca.months_at_address
             """)
             address_records = cursor.fetchall()
@@ -323,7 +377,7 @@ class TestEndToEndIntegration(unittest.TestCase):
                 SELECT ce.con_id, ce.business_name, ce.monthly_salary, ce.months_at_job 
                 FROM {self._qualify_table('app_contact_employment')} ce
                 INNER JOIN {self._qualify_table('app_contact_base')} cb ON ce.con_id = cb.con_id
-                WHERE cb.app_id = 443306 
+                WHERE cb.app_id = {app_id} 
                 ORDER BY ce.con_id
             """)
             employment_records = cursor.fetchall()
@@ -358,6 +412,101 @@ class TestEndToEndIntegration(unittest.TestCase):
             print(f"[OK] contact_employment calculated fields verified: {len(employment_records)} records")
             for record in employment_records:
                 print(f"   - {record[1]}: monthly_salary={record[2]}, months_at_job={record[3]}")
+
+            # Verify shared Phase 1 key/value mapping types
+            # 1) add_score -> scores
+            cursor.execute(
+                f"""
+                SELECT score_identifier, score
+                FROM {self._qualify_table('scores')}
+                WHERE app_id = {app_id}
+                """
+            )
+            score_rows = cursor.fetchall()
+            self.assertGreater(len(score_rows), 0, "Should have at least one scores record")
+            score_by_id = {row[0]: row[1] for row in score_rows}
+            self.assertEqual(score_by_id.get("EX_DIE"), 956, "EX_DIE score should be 956")
+            self.assertEqual(score_by_id.get("EX_TIE"), 929, "EX_TIE score should be 929")
+            self.assertEqual(score_by_id.get("AJ"), 910, "AJ (EX_FICO_08) score should be 910")
+            self.assertEqual(score_by_id.get("prescreen_fico_score"), 915, "prescreen_fico_score should be 915")
+            self.assertEqual(score_by_id.get("prescreen_risk_score"), 978, "prescreen_risk_score should be 978")
+
+            # Score coercion/rounding (DIE_Plus_Score="978.14" -> 978)
+            self.assertEqual(score_by_id.get("DIEPLUS"), 978, "DIEPLUS score should be 978 (rounded)")
+
+            # Vantage scores should exist in scores AND history
+            self.assertEqual(score_by_id.get("V4"), 911, "V4 (Vantage_Score_EX) score should be 911")
+            self.assertEqual(score_by_id.get("00V60"), 988, "00V60 (Vantage_Score_TU) score should be 988")
+            print(f"[OK] scores verified: {len(score_rows)} records")
+
+            # 2) add_indicator -> indicators
+            cursor.execute(
+                f"""
+                SELECT indicator, value
+                FROM {self._qualify_table('indicators')}
+                WHERE app_id = {app_id}
+                """
+            )
+            indicator_rows = cursor.fetchall()
+            self.assertGreater(len(indicator_rows), 0, "Should have at least one indicators record")
+            indicator_by_name = {row[0]: row[1] for row in indicator_rows}
+            self.assertEqual(indicator_by_name.get("internal_fraud_address_ind"), "1")
+            self.assertEqual(indicator_by_name.get("internal_fraud_ssn_ind"), "1")
+            print(f"[OK] indicators verified: {len(indicator_rows)} records")
+
+            # 3) add_history -> app_historical_lookup
+            cursor.execute(
+                f"""
+                SELECT name, source, value
+                FROM {self._qualify_table('app_historical_lookup')}
+                WHERE app_id = {app_id} AND name = '[supervisor_rev_ind]'
+                """
+            )
+            hist = cursor.fetchone()
+            self.assertIsNotNone(hist, "Should have historical lookup for [supervisor_rev_ind]")
+            self.assertEqual(hist[2], "Y", "[supervisor_rev_ind] value should be 'Y'")
+            self.assertEqual(hist[1], "[app_product]", "Historical source should be [app_product]")
+            print("[OK] app_historical_lookup verified: supervisor_rev_ind")
+
+            cursor.execute(
+                f"""
+                SELECT name, value
+                FROM {self._qualify_table('app_historical_lookup')}
+                WHERE app_id = {app_id} AND name IN ('[Vantage_Score_EX]', '[Vantage_Score_TU]')
+                """
+            )
+            vantage_hist = cursor.fetchall()
+            vantage_by_name = {row[0]: row[1] for row in vantage_hist}
+            self.assertEqual(vantage_by_name.get("[Vantage_Score_EX]"), "911")
+            self.assertEqual(vantage_by_name.get("[Vantage_Score_TU]"), "988")
+            print("[OK] app_historical_lookup verified: Vantage scores")
+
+            # 4) add_report_lookup -> app_report_results_lookup
+            cursor.execute(
+                f"""
+                SELECT name, value, source_report_key
+                FROM {self._qualify_table('app_report_results_lookup')}
+                WHERE app_id = {app_id} AND name = 'InstantID_Score'
+                """
+            )
+            rpt = cursor.fetchone()
+            self.assertIsNotNone(rpt, "Should have report lookup for InstantID_Score")
+            self.assertEqual(rpt[1], "950", "InstantID_Score value should be '950'")
+            self.assertEqual(rpt[2], "IDV", "InstantID_Score source_report_key should be 'IDV'")
+            print("[OK] app_report_results_lookup verified: InstantID_Score")
+
+            cursor.execute(
+                f"""
+                SELECT name, value, source_report_key
+                FROM {self._qualify_table('app_report_results_lookup')}
+                WHERE app_id = {app_id} AND name = 'GIACT_Response'
+                """
+            )
+            giact = cursor.fetchone()
+            self.assertIsNotNone(giact, "Should have report lookup for GIACT_Response")
+            self.assertEqual(giact[1], "9 save me!", "GIACT_Response value should be '9 save me!'")
+            self.assertEqual(giact[2], "GIACT", "GIACT_Response source_report_key should be 'GIACT'")
+            print("[OK] app_report_results_lookup verified: GIACT_Response")
     
     def test_curr_address_filtering_logic(self):
         """Test that CURR address filtering works correctly for housing_monthly_payment."""
@@ -448,12 +597,12 @@ class TestEndToEndIntegration(unittest.TestCase):
         
         # Verify it's the LAST valid PR contact (TOM, not MARK)
         pr_contact = pr_contacts[0]
-        self.assertEqual(pr_contact['con_id'], '738936', "PR contact should have con_id 738936")
+        self.assertEqual(pr_contact['con_id'], str(self.pr_con_id), f"PR contact should have con_id {self.pr_con_id}")
         self.assertEqual(pr_contact['first_name'], 'TOM', "Should be TOM (last valid), not MARK")
         
         # Verify AUTHU contact
         authu_contact = authu_contacts[0]
-        self.assertEqual(authu_contact['con_id'], '738937', "AUTHU contact should have con_id 738937")
+        self.assertEqual(authu_contact['con_id'], str(self.authu_con_id), f"AUTHU contact should have con_id {self.authu_con_id}")
         self.assertEqual(authu_contact['first_name'], 'AUTH', "Should be AUTH")
 
 
