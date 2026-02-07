@@ -177,7 +177,7 @@ The schema is a similar nested structure with everything we need in the "IL_appl
 ## [app_report_results_lookup] Table
   **Purpose**: similar to the historical lookup, this moves attributes to another key-pair table. This is not an archive table. The name for the pair will be the source attribute.  Call it `add_report_lookup`.
 
-  
+
 
 ## [scores] Table
   **Purpose**: this is an existing table that supports all product line loan applications. It is a key/value pair that stores numeric scores from credit bureau's and risk models by a type or tag. Only one type is allowed per app_id, enforced by table constraint - so we should fail gracefully from that (without consequence) - or potentially update the value. 
@@ -282,7 +282,7 @@ The schema is a similar nested structure with everything we need in the "IL_appl
 
 
 ```json
-"code_to_email_enum": {
+"officer_code_to_email_enum": {
 	"6009": "abbey.harrison@merrickbank.com",
 	"6019": "alejandro.sanabria@merrickbank.com",
 	"6012": "ashley.hille@merrickbank.com",

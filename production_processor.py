@@ -111,7 +111,8 @@ class ProductionProcessor:
                  app_id_start: int = None, app_id_end: int = None,
                  batch_processor: BatchProcessorInterface = None,
                  enable_instrumentation: bool = False,
-                 modulo_shard: int = None, modulo_instance: int = None):
+                 modulo_shard: int = None, modulo_instance: int = None,
+                 product_line: str = "CC"):
         """
         Initialize production processor.
         
@@ -132,6 +133,10 @@ class ProductionProcessor:
             app_id_end: Ending app_id for range processing (optional, for non-overlapping instances)
             batch_processor: BatchProcessorInterface implementation (optional). If None, ParallelCoordinator
                           used for production. Can also use MockProcessor for unit tests.
+            enable_instrumentation: Enable performance instrumentation.
+            modulo_shard: Total number of shards (instances) for modulo-based sharding.
+            modulo_instance: Current shard index for modulo-based sharding.
+            product_line: Product Code (CC or RL) to determine mapping contract.
         """
         self.server = server
         self.database = database
@@ -150,6 +155,7 @@ class ProductionProcessor:
         self.enable_instrumentation = enable_instrumentation
         self.modulo_shard = modulo_shard
         self.modulo_instance = modulo_instance
+        self.product_line = product_line.upper()
         
         # Validate modulo sharding configuration
         if (self.modulo_shard is None) != (self.modulo_instance is None):
@@ -179,12 +185,15 @@ class ProductionProcessor:
         # Set up production logging
         self._setup_logging(log_level)
         
-        # Initialize components
-        self.mapping_contract_path = str(project_root / "config" / "mapping_contract.json")
+        # Determine mapping contract from product line
+        if self.product_line == "RL":
+            self.mapping_contract_path = str(project_root / "config" / "mapping_contract_rl.json")
+        else:
+            self.mapping_contract_path = str(project_root / "config" / "mapping_contract.json")
         
         # Load mapping contract using config_manager (contract-driven schema isolation)
         self.config_manager = get_config_manager()
-        self.mapping_contract = self.config_manager.load_mapping_contract()
+        self.mapping_contract = self.config_manager.load_mapping_contract(contract_path=self.mapping_contract_path)
         
         # Validate mapping contract structure (fail-fast on config errors)
         self._validate_contract()
@@ -193,6 +202,7 @@ class ProductionProcessor:
         self.target_schema = self.mapping_contract.target_schema if self.mapping_contract else 'dbo'
         
         self.logger.info(f"ProductionProcessor initialized:")
+        self.logger.info(f"  Product Line: {self.product_line}")
         self.logger.info(f"  Server: {server}")
         self.logger.info(f"  Database: {database}")
         self.logger.info(f"  Target Schema: {self.target_schema}")
@@ -1024,6 +1034,11 @@ def main():
     parser.add_argument("--modulo-instance", type=int, default=None,
                        help="Instance ID (0 to N-1) for modulo sharding (processes app_id %% N == instance_id)")
     
+    # Product line selection
+    parser.add_argument("--product-line", default="CC",
+                       choices=["CC", "RL"],
+                       help="Product line to process (CC or RL), determines mapping contract")
+    
     args = parser.parse_args()
     
     # Handle limit defaults and range mode interaction
@@ -1064,9 +1079,9 @@ def main():
             app_id_end=args.app_id_end,
             enable_instrumentation=args.enable_instrumentation,
             modulo_shard=args.modulo_shard,
-            modulo_instance=args.modulo_instance
+            modulo_instance=args.modulo_instance,
+            product_line=args.product_line
         )
-        
         # Run processing with calculated limit
         results = processor.run_full_processing(limit=processing_limit)
         

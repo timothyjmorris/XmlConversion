@@ -575,7 +575,8 @@ class ConfigManager(ConfigurationManagerInterface):
                     expression=mapping_data.get('expression'),
                     description=mapping_data.get('description'),
                     required=mapping_data.get('required'),
-                    nullable=mapping_data.get('nullable')
+                    nullable=mapping_data.get('nullable'),
+                    enum_name=mapping_data.get('enum_name')
                 )
                 mappings.append(field_mapping)
             
@@ -656,6 +657,9 @@ class ConfigManager(ConfigurationManagerInterface):
                     'add_indicator',
                     'add_history',
                     'add_report_lookup',
+                    'policy_exceptions',
+                    'warranty_field',
+                    'add_collateral',
                 )
                 mapping_types = getattr(mapping, 'mapping_type', None) or []
                 allows_empty = any(
@@ -680,6 +684,16 @@ class ConfigManager(ConfigurationManagerInterface):
         
         # Check for duplicate target columns within the same table
         table_columns = {}
+        # Row-creating mapping types legitimately repeat column names across
+        # different rows (each row represents a distinct DB record discriminated
+        # by sort_order, warranty_type_enum, policy_exception_type_enum, etc.)
+        row_creating_prefixes = (
+            'add_score', 'add_indicator', 'add_history', 'add_report_lookup',
+            'policy_exceptions', 'warranty_field', 'add_collateral',
+        )
+        # Contact-split mapping types also repeat column names (PR vs SEC contact)
+        contact_split_types = ('last_valid_pr_contact', 'last_valid_sec_contact')
+
         for mapping in contract.mappings:
             table_key = mapping.target_table
             if table_key not in table_columns:
@@ -687,6 +701,19 @@ class ConfigManager(ConfigurationManagerInterface):
 
             # Row-creating mappings may share an intentionally blank target_column.
             if not mapping.target_column:
+                continue
+
+            # Skip duplicate check for row-creating and contact-split mapping types
+            mapping_types = mapping.mapping_type or []
+            is_row_creating = any(
+                str(mt).strip().startswith(row_creating_prefixes)
+                for mt in mapping_types
+            )
+            is_contact_split = any(
+                str(mt).strip() in contact_split_types
+                for mt in mapping_types
+            )
+            if is_row_creating or is_contact_split:
                 continue
 
             if mapping.target_column in table_columns[table_key]:

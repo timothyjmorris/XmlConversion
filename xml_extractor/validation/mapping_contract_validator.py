@@ -355,10 +355,12 @@ class MappingContractValidator:
             if "enum" in mapping_type:
                 target_column = self._get_attr(mapping, "target_column")
                 target_table = self._get_attr(mapping, "target_table")
+                enum_name = self._get_attr(mapping, "enum_name")
                 if target_column:
                     enum_mapped_columns.append({
                         "column": target_column,
-                        "table": target_table
+                        "table": target_table,
+                        "enum_name": enum_name
                     })
         
         # If no enum mappings used, no validation needed
@@ -377,15 +379,23 @@ class MappingContractValidator:
             return
         
         # Validate each enum-mapped column has definition in enum_mappings
+        # Columns may specify an explicit enum_name to share a definition with other columns
         for enum_col in enum_mapped_columns:
             column_name = enum_col["column"]
             table_name = enum_col["table"]
+            enum_name = enum_col.get("enum_name")
             
-            if column_name not in enum_mappings:
+            # Resolution order: explicit enum_name > column_name match
+            resolved = enum_name if enum_name and enum_name in enum_mappings else (
+                column_name if column_name in enum_mappings else None
+            )
+            
+            if resolved is None:
+                hint = f" (enum_name='{enum_name}' also not found)" if enum_name else ""
                 self.errors.append(MappingContractValidationError(
                     category="enum_mappings",
-                    message=f"Column '{column_name}' uses mapping_type=['enum'] but not defined in enum_mappings",
+                    message=f"Column '{column_name}' uses mapping_type=['enum'] but not defined in enum_mappings{hint}",
                     contract_location=f"mappings (target_table='{table_name}', target_column='{column_name}') / enum_mappings",
-                    fix_guidance=f"Add enum definition for '{column_name}' to enum_mappings section",
-                    example_fix=f'"{column_name}": {{"VALUE1": 1, "VALUE2": 2}}'
+                    fix_guidance=f"Add enum definition for '{enum_name or column_name}' to enum_mappings section, or set enum_name on the mapping",
+                    example_fix=f'"{enum_name or column_name}": {{"VALUE1": 1, "VALUE2": 2}}'
                 ))

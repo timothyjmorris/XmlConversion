@@ -47,6 +47,7 @@ class FieldMapping:
     required: Optional[bool] = None
     nullable: Optional[bool] = None
     exclude_default_when_record_empty: Optional[bool] = None
+    enum_name: Optional[str] = None
 
     def __post_init__(self):
         """Validate field mapping configuration and normalize mapping_type."""
@@ -69,6 +70,9 @@ class FieldMapping:
                 'add_indicator',
                 'add_history',
                 'add_report_lookup',
+                'policy_exceptions',
+                'warranty_field',
+                'add_collateral',
             )
             mapping_types = self.mapping_type or []
             allows_empty = any(

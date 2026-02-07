@@ -256,11 +256,18 @@ NULL enums where sibling data suggests they should have values.
 
 **Phase 1 Status**: ✅ COMPLETE (2026-02-06)
 
+**Performance Baseline** (2026-02-07):
+- **2,700 apps/min** (pyodbc fast_executemany-optimized, 6 workers, 1000 batch size)
+- Acceptable for production; ~2.5 days to process 11MM records
+- Lower than target 3,000 app/min but stable and resilient
+- Room for incremental optimization in Phase 3+ if needed
+
 ---
 
 ## Phase 2: CLI & Contract Infrastructure
 
-**Goal**: Support multiple product lines via CLI and contracts
+**Goal**: Support multiple product lines via CLI and contracts  
+**Status**: 🔄 IN PROGRESS (started 2026-02-07)
 
 ### 2.1 Product Line CLI Support
 
@@ -323,6 +330,8 @@ Archive CSV to docs/onboard_reclending/archived/
 - CLI correctly routes to product-specific contracts
 - Contract validates against DDL with 0 mismatches
 - CC functionality unchanged
+
+**Phase 2 Status**: 🔄 IN PROGRESS (2026-02-07)
 
 ---
 

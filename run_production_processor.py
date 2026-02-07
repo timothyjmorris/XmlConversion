@@ -467,6 +467,9 @@ def main():
                        help="SQL Server instance (default: localhost\\SQLEXPRESS)")
     parser.add_argument("--database", default="XmlConversionDB",
                        help="Database name (default: XmlConversionDB)")
+    parser.add_argument("--product-line", default="CC",
+                       choices=["CC", "RL"],
+                       help="Product Line to process: 'CC' (Credit Card) or 'RL' (Rec Lending). Default: CC")
     parser.add_argument("--username", help="SQL Server username (uses Windows auth if not provided)")
 
     parser.add_argument("--password", help="SQL Server password")
@@ -511,6 +514,7 @@ def main():
     processor_kwargs = {
         'server': args.server,
         'database': args.database,
+        'product_line': args.product_line,
         'username': args.username,
         'password': args.password,
         'workers': args.workers,

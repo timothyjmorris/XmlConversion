@@ -1,0 +1,496 @@
+﻿xml_path,xml_attribute,target_table,target_column,mapping_type,expression
+/Provenir/Request,ID,app_base,app_id,identity_insert,
+/Provenir/Request,status,app_operational_rl,status_enum,enum,
+/Provenir/Request,process,app_operational_rl,process_enum,enum,
+/Provenir/Request,priority,app_operational_rl,priority_enum,enum,
+/Provenir/Request,status,app_operational_rl,status_enum,enum,
+/Provenir/Request,lastupdatedby,app_operational_rl,last_updated_by,,
+/Provenir/Request/CustData/IL_application,add_ttl_to_amt_fin,app_pricing_rl,add_total_to_financed_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application,app_cash_down_payment,app_pricing_rl,cash_down_payment_amount,,
+/Provenir/Request/CustData/IL_application,app_entry_date,app_base,receive_date,,
+/Provenir/Request/CustData/IL_application,app_receive_date,app_operational_rl,regb_start_date,calculated_field,"CASE 
+ WHEN app_entry_date IS NOT EMPTY THEN app_entry_date 
+ ELSE app_receive_date 
+END"
+/Provenir/Request/CustData/IL_application,app_invoice_amount,app_pricing_rl,invoice_amount,,
+/Provenir/Request/CustData/IL_application,app_sale_price,app_pricing_rl,selling_price,,
+/Provenir/Request/CustData/IL_application,app_source_ind,app_base,app_source_enum,enum,
+/Provenir/Request/CustData/IL_application,app_type_code,app_base,app_type_enum,enum,
+/Provenir/Request/CustData/IL_application,assigned_analyst,app_operational_rl,assigned_credit_analyst,,
+/Provenir/Request/CustData/IL_application,client_id,app_operational_rl,client_app_id,,
+/Provenir/Request/CustData/IL_application,dlr_address_line1,app_dealer_rl,dealer_address_line_1,,
+/Provenir/Request/CustData/IL_application,dlr_broker,app_dealer_rl,broker_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application,dlr_city,app_dealer_rl,dealer_city,,
+/Provenir/Request/CustData/IL_application,dlr_email,app_dealer_rl,dealer_email,,
+/Provenir/Request/CustData/IL_application,dlr_fax,app_dealer_rl,dealer_fax,,
+/Provenir/Request/CustData/IL_application,dlr_name,app_dealer_rl,dealer_name,,
+/Provenir/Request/CustData/IL_application,dlr_num_marine,app_dealer_rl,dealer_num_child,,"CASE 
+ WHEN TRIM(dlr_num_marine) IS NOT EMPTY THEN TRIM(dlr_num_marine) 
+ WHEN TRIM(dlr_num_rv) IS NOT EMPTY THEN TRIM(dlr_num_rv) 
+ WHEN TRIM(dlr_num_or) IS NOT EMPTY THEN TRIM(dlr_num_or) 
+ WHEN TRIM(dlr_num_ht) IS NOT EMPTY THEN TRIM(dlr_num_ht) 
+ WHEN TRIM(dlr_num_trailer) IS NOT EMPTY THEN TRIM(dlr_num_trailer) 
+ WHEN TRIM(dlr_num_mc) IS NOT EMPTY THEN TRIM(dlr_num_mc) 
+ ELSE EMPTY 
+END"
+/Provenir/Request/CustData/IL_application,dlr_phone,app_dealer_rl,dealer_phone,numbers_only,
+/Provenir/Request/CustData/IL_application,dlr_state,app_dealer_rl,dealer_state,,
+/Provenir/Request/CustData/IL_application,dlr_zipcode,app_dealer_rl,dealer_zip,numbers_only,
+/Provenir/Request/CustData/IL_application,duplicate_app_ind,app_transactional_rl,duplicate_app_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application,fsp_name,app_dealer_rl,fsp_name,,
+/Provenir/Request/CustData/IL_application,fsp_phone,app_dealer_rl,fsp_phone,numbers_only,
+/Provenir/Request/CustData/IL_application,individual_joint_app_ind,app_operational_rl,joint_app_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application,last_update_time,app_operational_rl,last_updated_date,,
+/Provenir/Request/CustData/IL_application,loan_amount_requested,app_pricing_rl,loan_amount,,
+/Provenir/Request/CustData/IL_application,loanpro_loan_id,app_funding_rl,loanpro_loan_id,,
+/Provenir/Request/CustData/IL_application,mapr,app_pricing_rl,military_apr,,
+/Provenir/Request/CustData/IL_application,opt_out_ind,,,,
+/Provenir/Request/CustData/IL_application,parent_dealer_number,app_dealer_rl,dealer_num_parent,,
+/Provenir/Request/CustData/IL_application,requested_term_months,app_pricing_rl,loan_term_months,,
+/Provenir/Request/CustData/IL_application,sub_type_code,app_base,sub_type_enum,enum,
+/Provenir/Request/CustData/IL_application,supervisor_rev_ind,app_transactional_rl,supervisor_review_indicator_enum,supervisor_review_indicator_enum,
+/Provenir/Request/CustData/IL_application,trade_allowance,app_pricing_rl,tradein_allowance,,
+/Provenir/Request/CustData/IL_application,trade_net_tradein_amount,app_pricing_rl,tradein_down_payment_amount,,
+/Provenir/Request/CustData/IL_application,trade_payoff_amount,app_pricing_rl,tradein_payoff_amount,,
+/Provenir/Request/CustData/IL_application/IL_contact,con_id,contact_base,con_id,identity_insert,
+/Provenir/Request/CustData/IL_application/IL_contact,ac_role_tp_c,contact_base,contact_type_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_contact,birth_date,contact_base,birth_date,,
+/Provenir/Request/CustData/IL_application/IL_contact,cell_phone,contact_base,cell_phone,numbers_only,
+/Provenir/Request/CustData/IL_application/IL_contact,email,contact_base,email,,
+/Provenir/Request/CustData/IL_application/IL_contact,first_name,contact_base,first_name,,
+/Provenir/Request/CustData/IL_application/IL_contact,home_phone,contact_base,home_phone,numbers_only,
+/Provenir/Request/CustData/IL_application/IL_contact,last_name,contact_base,last_name,,
+/Provenir/Request/CustData/IL_application/IL_contact,loanpro_customer_id,app_funding_rl,loanpro_customer_id_pr,contact-by-type-to-fixed-field,filtered by ac_role_tp_c=PR
+/Provenir/Request/CustData/IL_application/IL_contact,loanpro_customer_id,app_funding_rl,loanpro_customer_id_sec,contact-by-type-to-fixed-field,filtered by ac_role_tp_c=SEC
+/Provenir/Request/CustData/IL_application/IL_contact,middle_initial,contact_base,middle_initial,,
+/Provenir/Request/CustData/IL_application/IL_contact,ssn,contact_base,ssn,,
+/Provenir/Request/CustData/IL_application/IL_contact,suffix,contact_base,suffix,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,address_type_code,contact_address,address_type_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,apartment_unit_number,contact_address,unit,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,city,contact_address,city,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,months_at_residence,contact_address,months_at_address,calculated_field,"CASE
+ WHEN (months_at_residence > 0 OR years_at_residence > 0) THEN (months_at_residence + (years_at_residence * 12)) 
+ ELSE EMPTY 
+END"
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,ownership_type_code,contact_address,ownership_type_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,po_box,contact_address,po_box,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,residence_monthly_pymnt,app_operational_rl,housing_monthly_payment_pr,contact-by-type-to-fixed-field,filtered by ac_role_tp_c=PR
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,residence_monthly_pymnt,app_operational_rl,housing_monthly_payment_sec,contact-by-type-to-fixed-field,filtered by ac_role_tp_c=SEC
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,rural_route,contact_address,rural_route,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,state,contact_address,state,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,street_name,contact_address,street_name,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,street_number,contact_address,street_number,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address,zip_code,contact_address,zip,numbers_only,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,address_line1,contact_employment,address_line_1,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,business_name,contact_employment,business_name,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,business_phone,contact_employment,phone,numbers_only,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,city,contact_employment,city,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,employment_type_code,contact_employment,employment_type_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,months_at_job,contact_employment,months_at_job,calculated_field,"CASE
+ WHEN (months_at_job > 0 OR years_at_job > 0) THEN (months_at_job + (years_at_job * 12)) 
+END"
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,other_income_amt,contact_employment,other_monthly_income,calculated_field,other_income_basis_type_code
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,other_income_source_type_code,contact_employment,other_income_type_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,salary,contact_employment,monthly_salary,calculated_field,"CASE
+ WHEN TRIM(salary_basis_type_code) = 'ANNUM' THEN (e.salary / 12) 
+ WHEN TRIM(salary_basis_type_code) = 'MONTH' THEN salary 
+ ELSE salary 
+END"
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,self_employed_ind,contact_employment,self_employed_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,state,contact_employment,state,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,street_name,contact_employment,street_name,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,street_number,contact_employment,street_number,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,title_position,contact_employment,job_title,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,unit,contact_employment,unit,,
+/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment,zip_code,contact_employment,zip,numbers_only,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,debt_to_income_ratio,app_pricing_rl,debt_to_income_ratio,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,decision_date,app_base,decision_date,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,decision_type_code,app_base,decision_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,manual_adj_DTI_ratio,app_pricing_rl,manual_adj_dti_ratio,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,manual_adj_monthly_debt,app_pricing_rl,manual_adj_monthly_debt,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,manual_adj_monthly_income,app_pricing_rl,manual_adj_monthly_income,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,monthly_debt,app_pricing_rl,monthly_debt,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,monthly_income,app_pricing_rl,monthly_income,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRV_Grade_P,app_pricing_rl,mrv_grade_pr,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRV_Grade_S,app_pricing_rl,mrv_grade_sec,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRV_Lead_Indicator_P,app_operational_rl,mrv_lead_indicator_pr_enum,"calculated_field, enum","CASE
+ WHEN TRIM(MRV_Lead_Indicator_P) = 'MRV' THEN 640
+ WHEN RTRIM(MRV_Lead_Indicator_P) = 'Vantage' THEN 641
+ ELSE EMPTY 
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRV_Lead_Indicator_S,app_operational_rl,mrv_lead_indicator_sec_enum,"calculated_field, enum","CASE
+ WHEN TRIM(MRV_Lead_Indicator_S) = 'MRV' THEN 640
+ WHEN RTRIM(MRV_Lead_Indicator_S) = 'Vantage' THEN 641
+ ELSE EMPTY 
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVP_Decline_Code_1,app_operational_rl,risk_model_score_factor_code_pr_1,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVP_Decline_Code_1,app_operational_rl,risk_model_score_factor_type_pr_1,calculated_field,"CASE 
+  WHEN TRIM(MRVP_Decline_Code_1) IS NOT EMPTY THEN 'MRV1'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVP_Decline_Code_2,app_operational_rl,risk_model_score_factor_code_pr_2,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVP_Decline_Code_2,app_operational_rl,risk_model_score_factor_type_pr_2,calculated_field,"CASE 
+  WHEN TRIM(MRVP_Decline_Code_2) IS NOT EMPTY THEN 'MRV1'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVP_Decline_Code_3,app_operational_rl,risk_model_score_factor_code_pr_3,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVP_Decline_Code_3,app_operational_rl,risk_model_score_factor_type_pr_3,calculated_field,"CASE 
+  WHEN TRIM(MRVP_Decline_Code_3) IS NOT EMPTY THEN 'MRV1'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVP_Decline_Code_4,app_operational_rl,risk_model_score_factor_code_pr_4,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVP_Decline_Code_4,app_operational_rl,risk_model_score_factor_type_pr_4,calculated_field,"CASE 
+  WHEN TRIM(MRVP_Decline_Code_4) IS NOT EMPTY THEN 'MRV1'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVS_Decline_Code_1,app_operational_rl,risk_model_score_factor_code_sec_1,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVS_Decline_Code_1,app_operational_rl,risk_model_score_factor_type_sec_1,calculated_field,"CASE 
+  WHEN TRIM(MRVS_Decline_Code_1) IS NOT EMPTY THEN 'MRV1'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVS_Decline_Code_2,app_operational_rl,risk_model_score_factor_code_sec_2,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVS_Decline_Code_2,app_operational_rl,risk_model_score_factor_type_sec_2,calculated_field,"CASE 
+  WHEN TRIM(MRVS_Decline_Code_2) IS NOT EMPTY THEN 'MRV1'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVS_Decline_Code_3,app_operational_rl,risk_model_score_factor_code_sec_3,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVS_Decline_Code_3,app_operational_rl,risk_model_score_factor_type_sec_3,calculated_field,"CASE 
+  WHEN TRIM(MRVS_Decline_Code_2) IS NOT EMPTY THEN 'MRV1'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVS_Decline_Code_4,app_operational_rl,risk_model_score_factor_code_sec_4,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRVS_Decline_Code_4,app_operational_rl,risk_model_score_factor_type_sec_4,calculated_field,"CASE 
+  WHEN TRIM(MRVS_Decline_Code_2) IS NOT EMPTY THEN 'MRV1'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,capacity_exception_notes,app_policy_exceptions_rl,"notes, policy_exception_type_enum = 630, reason_code = IL_app_decision_info.override_capacity",policy_exceptions(630),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,override_capacity,app_policy_exceptions_rl,,policy_exceptions(630),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,collateral_program_exception_notes,app_policy_exceptions_rl,"notes, policy_exception_type_enum = 631, reason_code = IL_app_decision_info.override_collateral_program",policy_exceptions(631),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,override_collateral_program,app_policy_exceptions_rl,,policy_exceptions(631),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,credit_exception_notes,app_policy_exceptions_rl,"notes, policy_exception_type_enum = 632, reason_code = IL_app_decision_info.override_credit",policy_exceptions(632),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,override_credit,app_policy_exceptions_rl,,policy_exceptions(632),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,override_type_code_notes,app_policy_exceptions_rl,,policy_exceptions(),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,pending_verif_ind,app_transactional_rl,pending_verification_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,regb_closed_days_num,app_operational_rl,regb_end_date,calculated_field,"CASE 
+ WHEN IL_app_decision_info.regb_closed_days_num > 0 AND IL_application.app_entry_date IS NOT EMPTY THEN DATEADD(day, d.regb_closed_days_num, IL_application.app_entry_date) 
+ WHEN IL_app_decision_info.regb_closed_days_num > 0 AND IL_application.app_receive_date IS NOT EMPTY THEN DATEADD(day, d.regb_closed_days_num, IL_application.app_receive_date) 
+ ELSE EMPTY 
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,regular_pymt_amount1,app_pricing_rl,regular_payment_amount,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code1,app_operational_rl,cb_score_factor_code_pr_1,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code1,app_operational_rl,cb_score_factor_type_pr_1,calculated_field,"CASE 
+  WHEN TRIM(Vantage4P_decline_code1) IS NOT EMPTY AND IL_application.app_entry_date > '2020-01-01' THEN 'V4'
+  WHEN score_factor_code_PR_1 IS NOT EMPTY THEN score_factor_code_PR_1
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code2,app_operational_rl,cb_score_factor_code_pr_2,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code2,app_operational_rl,cb_score_factor_type_pr_2,calculated_field,"CASE 
+  WHEN TRIM(Vantage4P_decline_code_2) IS NOT EMPTY THEN 'V4'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code3,app_operational_rl,cb_score_factor_code_pr_3,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code3,app_operational_rl,cb_score_factor_type_pr_3,calculated_field,"CASE 
+  WHEN TRIM(Vantage4P_decline_code_3) IS NOT EMPTY THEN 'V4'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code4,app_operational_rl,cb_score_factor_code_pr_4,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code4,app_operational_rl,cb_score_factor_type_pr_4,calculated_field,"CASE 
+  WHEN TRIM(Vantage4P_decline_code_4) IS NOT EMPTY THEN 'V4'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code5,app_operational_rl,cb_score_factor_code_pr_5,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4P_decline_code5,app_operational_rl,cb_score_factor_type_pr_5,calculated_field,"CASE 
+  WHEN TRIM(Vantage4P_decline_code_5) IS NOT EMPTY THEN 'V4'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code1,app_operational_rl,cb_score_factor_code_sec_1,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code1,app_operational_rl,cb_score_factor_type_sec_1,calculated_field,"CASE 
+  WHEN TRIM(Vantage4P_decline_code_1) IS NOT EMPTY THEN 'V4'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code2,app_operational_rl,cb_score_factor_code_sec_2,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code2,app_operational_rl,cb_score_factor_type_sec_2,calculated_field,"CASE 
+  WHEN TRIM(Vantage4S_decline_code_2) IS NOT EMPTY THEN 'V4'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code3,app_operational_rl,cb_score_factor_code_sec_3,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code3,app_operational_rl,cb_score_factor_type_sec_3,calculated_field,"CASE 
+  WHEN TRIM(Vantage4S_decline_code_3) IS NOT EMPTY THEN 'V4'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code4,app_operational_rl,cb_score_factor_code_sec_4,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code4,app_operational_rl,cb_score_factor_type_sec_4,calculated_field,"CASE 
+  WHEN TRIM(Vantage4S_decline_code_4) IS NOT EMPTY THEN 'V4'
+  ELSE EMPTY
+END"
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code5,app_operational_rl,cb_score_factor_code_sec_5,,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,Vantage4S_decline_code5,app_operational_rl,cb_score_factor_type_sec_5,calculated_field,"CASE 
+  WHEN TRIM(Vantage4S_decline_code_5) IS NOT EMPTY THEN 'V4'
+  ELSE EMPTY
+END"
+,coll1_type,app_collateral_rl,collateral_type_enum,"add_collateral(1), calculated_field","CASE 
+ WHEN TRIM(IL_application.app_type_code) = 'MARINE' THEN 412
+ WHEN TRIM(IL_application.app_type_code) = 'RV' THEN 419 
+ WHEN TRIM(IL_application.app_type_code) = 'HT' THEN 415 
+ WHEN TRIM(IL_application.app_type_code) = 'UT' THEN 421 
+ WHEN TRIM(IL_application.app_type_code) = 'MC' THEN 416 
+ WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'ATV' THEN 410
+ WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'UTV' THEN 422
+ WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'PWC' THEN 418 
+ WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'SNOWMOBILE' THEN 420 
+ WHEN TRIM(IL_application.app_type_code) IS NOT EMPTY THEN 423
+END"
+/Provenir/Request/CustData/IL_application/IL_collateral,coll1_make,app_collateral_rl,make,add_collateral(1),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll1_model,app_collateral_rl,model,add_collateral(1),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll1_new_used_demo,app_collateral_rl,used_flag,"add_collateral(1), char_to_bit",
+/Provenir/Request/CustData/IL_application/IL_collateral,coll1_value,app_collateral_rl,wholesale_value,add_collateral(1),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll1_VIN,app_collateral_rl,vin,add_collateral(1),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll1_year,app_collateral_rl,year,"add_collateral(1), numbers_only",
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option1,app_collateral_rl,option_1_value,add_collateral(1),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option1_desc,app_collateral_rl,option_1_description,add_collateral(1),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option2,app_collateral_rl,option_2_value,add_collateral(1),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option2_desc,app_collateral_rl,option_2_description,add_collateral(1),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll2_type,app_collateral_rl,collateral_type_enum,"add_collateral(2), calculated_field","CASE 
+ WHEN TRIM(IL_collateral.coll2_HP_Marine) IS NOT EMPTY THEN 413
+ WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.wholesale_value IS NOT EMPTY THEN 413
+ WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.make IS NOT EMPTY THEN 413 
+ WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'ATV' THEN 410
+ WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'UTV' THEN 422
+ WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'PWC' THEN 418 
+ WHEN TRIM(IL_application.app_type_code) = 'OR' AND TRIM(IL_application.sub_type_code) = 'SNOWMOBILE' THEN 420 
+END"
+/Provenir/Request/CustData/IL_application/IL_collateral,coll2_make,app_collateral_rl,make,add_collateral(2),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll2_model,app_collateral_rl,model,add_collateral(2),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll2_new_used_demo,app_collateral_rl,used_flag,"add_collateral(2), char_to_bit",
+/Provenir/Request/CustData/IL_application/IL_collateral,coll2_value,app_collateral_rl,wholesale_value,add_collateral(2),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll2_VIN,app_collateral_rl,vin,add_collateral(2),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll2_year,app_collateral_rl,year,"add_collateral(2), numbers_only",
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option3,app_collateral_rl,option_1_value,add_collateral(2),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option3_desc,app_collateral_rl,option_1_description,add_collateral(2),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option4,app_collateral_rl,option_2_value,add_collateral(2),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option4_desc,app_collateral_rl,option_2_description,add_collateral(2),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll3_type,app_collateral_rl,collateral_type_enum,"add_collateral(3), calculated_field","CASE 
+ WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.coll3_make IN ('BT', 'BEAR', 'BOATMATE', 'BACKTRACK', 'TRAILSTAR', 'MAGIC TILT', 'MARINE MASTER', 'SHORELANDER', 'SHORELANDR', 'EZ LOADER', 'KARAVAN', 'MCCLAIN', 'ESCORT', 'ROAD RUNNER', 'LOAD RITE', 'LOADRITE', 'MAGIC LOADER', 'MALIBU', 'ZIEMAN', 'TRACKER', 'DIAMOND CITY', 'RANGER', 'WESCO', 'TRAILER') THEN 420
+ WHEN TRIM(IL_collateral.coll3_HP_Marine) IS NOT EMPTY THEN 413 
+ WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.coll3_make IN ('MERCURY', 'YAMAHA', 'MERCRUISER') THEN 413 
+ WHEN TRIM(IL_application.app_type_code) IS NOT EMPTY AND IL_application.wholesale_value IS NOT EMPTY THEN 423 
+END"
+/Provenir/Request/CustData/IL_application/IL_collateral,coll3_make,app_collateral_rl,make,add_collateral(3),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll3_model,app_collateral_rl,model,add_collateral(3),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll3_new_used_demo,app_collateral_rl,used_flag,"add_collateral(3), char_to_bit",
+/Provenir/Request/CustData/IL_application/IL_collateral,coll3_value,app_collateral_rl,wholesale_value,add_collateral(3),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll3_VIN,app_collateral_rl,vin,add_collateral(3),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll3_year,app_collateral_rl,year,"add_collateral(3), numbers_only",
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option5,app_collateral_rl,option_1_value,add_collateral(3),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option5_desc,app_collateral_rl,option_1_description,add_collateral(3),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option6,app_collateral_rl,option_2_value,add_collateral(3),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option6_desc,app_collateral_rl,option_2_description,add_collateral(3),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll4_type,app_collateral_rl,collateral_type_enum,"add_collateral(4), calculated_field","CASE 
+ WHEN TRIM(IL_application.app_type_code) = 'MARINE' AND IL_collateral.coll4_make IN ('MERCURY', 'YAMAHA', 'MERCRUISER') THEN 413 
+ WHEN TRIM(IL_application.app_type_code) = 'MARINE' THEN 417
+ WHEN TRIM(IL_application.app_type_code) = 'OR' THEN 417
+ WHEN TRIM(IL_application.app_type_code) IS NOT EMPTY AND IL_application.wholesale_value IS NOT EMPTY THEN 423 
+END"
+/Provenir/Request/CustData/IL_application/IL_collateral,coll4_make,app_collateral_rl,make,add_collateral(4),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll4_model,app_collateral_rl,model,add_collateral(4),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll4_new_used_demo,app_collateral_rl,used_flag,"add_collateral(4), char_to_bit",
+/Provenir/Request/CustData/IL_application/IL_collateral,coll4_value,app_collateral_rl,wholesale_value,add_collateral(4),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll4_VIN,app_collateral_rl,vin,add_collateral(4),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll4_year,app_collateral_rl,year,"add_collateral(4), numbers_only",
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option7,app_collateral_rl,option_1_value,add_collateral(4),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option7_desc,app_collateral_rl,option_1_description,add_collateral(4),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option8,app_collateral_rl,option_2_value,add_collateral(4),
+/Provenir/Request/CustData/IL_application/IL_collateral,coll_option8_desc,app_collateral_rl,option_2_description,add_collateral(4),
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,app_signed_borrower1,app_funding_checklist_rl,credit_app_signed_pr_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,app_signed_borrower2,app_funding_checklist_rl,credit_app_signed_sec_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,applicant_paystub_expire,app_funding_checklist_rl,paystub_expire_date_pr,extract_date,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,chk_requested_by,app_funding_checklist_rl,check_requested_by_user,check_requested_by_user,"CASE
+ WHEN chk_requested_by LIKE '%WENDY%' OR chk_requested_by LIKE '%DOTSON%' THEN 'WENDY.DOTSON@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%POTEZ%' THEN 'ALYSSA.RAPOTEZ@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%ANGIE%' THEN 'ANGIE.HAYS@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%ASHLEY%' OR chk_requested_by LIKE '%HAASE%' THEN 'ASHLEY.HAASE@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%SIPLINGER%' THEN 'BRIANN.SIPLINGER@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%CHARISSA%' THEN 'CHARISSA.GREEN@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%CINDY%' OR chk_requested_by LIKE '%BEASON%' THEN 'CINDY.BEASON@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%DIANA%' OR chk_requested_by LIKE '%JOHNS%'  THEN 'DIANA.JOHNS@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%JONA%' THEN 'JONA.KELLER@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%KATIE%' OR chk_requested_by LIKE '%VANCE%'  THEN 'KATIE.VANCE@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%KARISSA%' THEN 'KARISSA.WHITE@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%KRISTY%' THEN 'KRISTY.LOTTE@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%MARIA%' OR chk_requested_by LIKE '%CAMPOS%' THEN 'MARIA.CAMPOS@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%HDYE%' OR chk_requested_by LIKE '%HYDE%'  THEN 'MIA.HYDE@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%PRESTON%' THEN 'MICHELLE.PRESTON@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE 'PAM%' OR chk_requested_by LIKE '%MIETCHEN%'  THEN 'PAM.MIETCHEN@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%BITTLE%' THEN 'SHERRY.BITTLE@MERRICKBANK.COM'
+ WHEN chk_requested_by LIKE '%CARTER%' THEN 'SHAUNA.CARTER@MERRICKBANK.COM'
+ ELSE officer_code_to_email_enum
+END"
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,coapplicant_paystub_expire,app_funding_checklist_rl,paystub_expire_date_sec,extract_date,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,collateral_ages_within_policy,app_funding_rl,collateral_ages_within_policy_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,collateral_percent_used_confirmed,app_funding_checklist_rl,collateral_percent_used_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,collateral_ws_unit_confirmation,app_funding_checklist_rl,collateral_worksheet_unit_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,credit_bureau_expire,app_funding_rl,credit_bureau_expire_date,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_addendum_signed_borr1,app_funding_checklist_rl,addendum_signed_pr_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_addendum_signed_borr2,app_funding_checklist_rl,addendum_signed_sec_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_address_confirmed,app_funding_checklist_rl,address_confirmed_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_amt_financed_within_policy,app_funding_rl,amount_financed_within_policy_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_apr_within_guidelines,app_funding_checklist_rl,apr_within_guidelines_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_cash_down_payment,app_funding_contract_rl,cash_down_payment,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_cash_proceeds,app_funding_contract_rl,cash_proceeds,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_contract_state,app_funding_contract_rl,contract_state,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_correct_contract_state,app_funding_checklist_rl,correct_contract_state_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_down_pymt_percentage,app_funding_contract_rl,down_payment_percentage,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_fee_Florida_doc_stamp_tax,app_funding_contract_rl,document_tax_fee,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_fee_ucc1,app_funding_contract_rl,ucc_fee,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_first_pymnt_by_dlr,app_funding_contract_rl,first_payment_by_dealer,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_initials_presented,app_funding_checklist_rl,initials_presented_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_itemization_confirmed,app_funding_checklist_rl,itemization_confirmed_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_loan_to_value_percentage,app_funding_contract_rl,loan_to_value_percentage,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_loan_to_value_percentage_with_fees,app_funding_contract_rl,loan_to_value_percentage_with_fees,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_net_tradein_allowance,app_funding_contract_rl,net_tradein_allowance,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_note_date,app_funding_contract_rl,note_signed_date,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_note_pymt_amount,app_funding_contract_rl,note_payment_amount,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_participation_percentage,app_funding_rl,participation_percentage,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_participation_proceeds,app_funding_rl,participation_proceeds,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_pymt_schedule_confirmed,app_funding_checklist_rl,payment_schedule_confirmed_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_rate_over_split,app_funding_contract_rl,apr,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_sale_price,app_funding_contract_rl,sale_price,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_signed_borrower1,app_funding_checklist_rl,contract_signed_pr_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_signed_borrower2,app_funding_checklist_rl,contract_signed_sec_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_titled_in_state,app_funding_contract_rl,titled_in_state,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_total_dealer_proceeds,app_funding_contract_rl,dealer_proceeds_amount,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_UCC_prin_refund,app_funding_contract_rl,ucc_principal_refund,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ct_verified_against_program,app_funding_checklist_rl,verified_against_program_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,dl_borrower1,app_funding_checklist_rl,drivers_license_confirmed_pr_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,dl_borrower1_dob_confirmed,app_funding_checklist_rl,drivers_license_dob_confirmed_pr_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,dl_borrower2,app_funding_checklist_rl,drivers_license_confirmed_sec_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,dl_borrower2_dob_confirmed,app_funding_checklist_rl,drivers_license_dob_confirmed_sec_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,document_prep_fee,app_funding_contract_rl,document_prep_fee,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,finance_charge,app_funding_contract_rl,finance_charge,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,fund_this_loan_indicator,app_transactional_rl,fund_loan_indicator_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,funding_contact_code,app_operational_rl,assigned_funding_analyst,officer_code_to_email_enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,guarantee_of_lien,app_funding_checklist_rl,guarantee_of_lien_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,inc_fund_expiration_date,app_funding_contract_rl,income_expiration_date,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ins_deductible_within_policy,app_funding_checklist_rl,insurance_deductible_within_policy_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ins_mb_lienholder,app_funding_checklist_rl,insurance_mb_lienholder_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ins_motor_vin_confirm,app_funding_checklist_rl,insurance_motor_vin_confirm_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ins_rv_boat_vin_confirm,app_funding_checklist_rl,insurance_rv_boat_vin_confirm_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ins_trailer_vin_confirm,app_funding_checklist_rl,insurance_trailer_vin_confirm_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,license_fee,app_funding_contract_rl,license_fee,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_1st_pymt_not7days,app_funding_rl,first_payment_not_in_7_days_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_amount_approved,app_funding_rl,loan_amount_approved_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_amount_within_policy,app_funding_rl,loan_amount_within_policy_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_Credit_pulled_within_30days,app_funding_rl,credit_pulled_within_30_days_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_down_pymt_approved,app_funding_checklist_rl,down_payment_approved_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_down_pymt_within_policy,app_funding_rl,down_payment_within_policy_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_DTI_ratio_within_policy,app_funding_rl,dti_within_policy_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_FICO_within_policy,app_funding_rl,creditscore_within_policy_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_LTV_within_policy,app_funding_rl,ltv_within_policy_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_note_date_in_range,app_funding_rl,note_date_in_range_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_Paystub_within_30days,app_funding_rl,paystub_within_30days_pr_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_Paystub2_within_30days,app_funding_rl,paystub_within_30days_sec_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_reference1,app_funding_checklist_rl,applicant_references_checked_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_term_within_policy,app_funding_rl,term_within_policy_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,loan_unit_confirmed,app_funding_checklist_rl,unit_confirmed_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,motor_title_mb_lienholder,app_funding_checklist_rl,motor_title_mb_lienholder_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,motor_title_vin_confirm,app_funding_checklist_rl,motor_title_vin_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,motor_ucc1_mb_lienholder,app_funding_checklist_rl,motor_ucc_mb_lienholder_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,motor_ucc1_vin_confirm,app_funding_checklist_rl,motor_ucc_vin_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,new_motor_invoice_confirmed,app_funding_checklist_rl,new_motor_1_invoice_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,new_motor2_invoice_confirmed,app_funding_checklist_rl,new_motor_2_invoice_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,new_rv_boat_invoice_confirmed,app_funding_checklist_rl,new_rv_boat_invoice_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,new_trailer_invoice_confirmed,app_funding_checklist_rl,new_trailer_invoice_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,other_dealer_fees_1,app_funding_contract_rl,other_dealer_fee_1,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,other_dealer_fees_2,app_funding_contract_rl,other_dealer_fee_2,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,other_dealer_fees_3,app_funding_contract_rl,other_dealer_fee_3,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,other_dealer_fees_4,app_funding_contract_rl,other_dealer_fee_4,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,other_dealer_fees_5,app_funding_contract_rl,other_dealer_fee_5,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,other_dealer_fees_6,app_funding_contract_rl,other_dealer_fee_6,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,other_public_official_fee_1,app_funding_contract_rl,other_public_official_fee_1,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,other_public_official_fee_2,app_funding_contract_rl,other_public_official_fee_2,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,other_public_official_fee_3,app_funding_contract_rl,other_public_official_fee_3,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,payoff_amount,app_funding_contract_rl,payoff_mb_loan_amount,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,payoff_loan_number,app_funding_contract_rl,payoff_mb_loan_number,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,payoff_loan_verified,app_funding_checklist_rl,payoff_mb_loan_verified_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,registration_fee,app_funding_contract_rl,registration_fee,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,rv_boat_title_mb_lienholder,app_funding_checklist_rl,rv_boat_title_mb_lienholder_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,rv_boat_title_vin_confirm,app_funding_checklist_rl,rv_boat_title_vin_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,rv_boat_ucc1_mb_lienholder,app_funding_checklist_rl,rv_boat_ucc_mb_lienholder_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,rv_boat_ucc1_vin_confirm,app_funding_checklist_rl,rv_boat_ucc_vin_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,subtotal,app_funding_rl,subtotal,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,taxes,app_funding_contract_rl,taxes,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,title_fee,app_funding_contract_rl,title_fee,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,total_amount_finances,app_funding_contract_rl,total_amount_financed,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,total_of_payments,app_funding_rl,total_of_payments_amount,,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,trailer_title_mb_lienholder,app_funding_checklist_rl,trailer_title_mb_lienholder_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,trailer_title_vin_confirm,app_funding_checklist_rl,trailer_title_vin_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,trailer_ucc1_mb_lienholder,app_funding_checklist_rl,trailer_ucc_mb_lienholder_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,trailer_ucc1_vin_confirm,app_funding_checklist_rl,trailer_ucc_vin_confirmed_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_fund_checklist,ucc1_filed_by_Merrick,app_funding_checklist_rl,ucc_filed_by_mb_enum,enum,
+/Provenir/Request/CustData/IL_application/IL_ITI_control,funding_date,app_base,funding_date,,
+/Provenir/Request/CustData/IL_application/IL_ITI_note,payment_date,app_funding_contract_rl,first_payment_date,,
+/Provenir/Request/CustData/IL_application/IL_ITI_note,product_number,app_funding_rl,product_number,,
+/Provenir/Request/CustData/IL_application/IL_fund_dlr_ach,dlr_aba,app_dealer_rl,bank_routing_num,,
+/Provenir/Request/CustData/IL_application/IL_fund_dlr_ach,dlr_account_num,app_dealer_rl,bank_account_num,,
+/Provenir/Request/CustData/IL_application/IL_fund_dlr_ach,dlr_bank_name,app_dealer_rl,bank_name,,
+/Provenir/Request/CustData/IL_application/IL_fund_dlr_ach,dlr_bank_phone,app_dealer_rl,bank_phone,,
+/Provenir/Request/CustData/IL_application/IL_fund_dlr_ach,dlr_check_or_sav,app_dealer_rl,bank_account_type_enum,bank_account_type_enum,
+/Provenir/Request/CustData/IL_application/IL_fund_dlr_ach,dlr_fsp_num,app_dealer_rl,fsp_num,,
+/Provenir/Request/CustData/IL_application/IL_fund_dlr_ach,dlr_proceeds_amount,app_funding_contract_rl,total_dealer_proceeds,,
+/Provenir/Request/CustData/IL_application/IL_fund_dlr_ach,suppress_ach,app_transactional_rl,suppress_ach_funding_flag,char_to_bit,
+/Provenir/Request/CustData/IL_application/IL_backend_policies,gap_company,app_warranties_rl,company_name,warranty_field(623),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,gap_amount,app_warranties_rl,amount,warranty_field(623),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,gap_term,app_warranties_rl,term_months,warranty_field(623),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,gap_policy,app_warranties_rl,policy_number,warranty_field(623),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,gap_lien,app_warranties_rl,merrick_lienholder_flag,"char_to_bit, warranty_field(623)",
+/Provenir/Request/CustData/IL_application/IL_backend_policies,service_contract_company,app_warranties_rl,company_name,warranty_field(626),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,service_contract_amount,app_warranties_rl,amount,warranty_field(626),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,service_contract_term,app_warranties_rl,term_months,warranty_field(626),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,service_contract_policy,app_warranties_rl,policy_number,warranty_field(626),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,ext_warranty_company,app_warranties_rl,company_name,warranty_field(622),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,ext_warranty_amount,app_warranties_rl,amount,warranty_field(622),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,ext_warranty_term,app_warranties_rl,term_months,warranty_field(622),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,ext_warranty_policy,app_warranties_rl,policy_number,warranty_field(622),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,road_side_company,app_warranties_rl,company_name,warranty_field(625),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,road_side_amount,app_warranties_rl,amount,warranty_field(625),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,road_side_term,app_warranties_rl,term_months,warranty_field(625),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,road_side_policy,app_warranties_rl,policy_number,warranty_field(625),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,credit_life_company,app_warranties_rl,company_name,warranty_field(621),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,credit_life_amount,app_warranties_rl,amount,warranty_field(621),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,credit_life_term,app_warranties_rl,term_months,warranty_field(621),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,credit_life_policy,app_warranties_rl,policy_number,warranty_field(621),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,credit_disability_company,app_warranties_rl,company_name,warranty_field(620),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,credit_disability_amount,app_warranties_rl,amount,warranty_field(620),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,credit_disability_term,app_warranties_rl,term_months,warranty_field(620),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,credit_disability_policy,app_warranties_rl,policy_number,warranty_field(620),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,other_company,app_warranties_rl,company_name,warranty_field(624),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,other_amount,app_warranties_rl,amount,warranty_field(624),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,other_term,app_warranties_rl,term_months,warranty_field(624),
+/Provenir/Request/CustData/IL_application/IL_backend_policies,other_policy,app_warranties_rl,policy_number,warranty_field(624),
+/Provenir/Request/CustData/IL_application/IL_ITI_control,funding_date,app_base,funding_date,,
+/Provenir/Request/CustData/IL_application/IL_ITI_control,account_number,app_funding_rl,account_number,,
+/Provenir/Request/CustData/IL_application/IL_ITI_control,boarding_datetime,app_funding_rl,boarding_date,,
+/Provenir/Request/CustData/IL_application/IL_ITI_control,verification_number,app_funding_rl,verification_number,,
+/Provenir/Request/CustData/IL_application,tied_app_id,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application,tied_app_indicator,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_contact,drivers_license,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_contact,drivers_license_expiration,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_contact,drivers_license_state,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_bankruptcy_score,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_bankruptcy_score2,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_fico_score,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_fico_score_10t,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_fico_score_10t_2,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_fico_score_f9,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_fico_score_f9_2,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_fico_score_v8,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_fico_score_v8_2,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_fico_score2,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_Vantage_score,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_Vantage_score2,app_historical_lookup,,add_history,
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_vantage4_score,app_historical_lookup,,add_score(V4P),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,experian_vantage4_score2,app_historical_lookup,,add_score(V4S),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,CRI_score_p,scores,,add_score(CRI_pr),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,CRI_score_s,scores,,add_score(CRI_sec),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRV_Score_P,scores,,add_score(MRV_pr),
+/Provenir/Request/CustData/IL_application/IL_app_decision_info,MRV_Score_S,scores,,add_score(MRV_sec),

@@ -1330,8 +1330,11 @@ class DataMapper(DataMapperInterface):
         
         str_value = str(value).strip() if value is not None else ''
 
-        # Determine enum type from target column name
-        enum_type = self._determine_enum_type(mapping.target_column)
+        # Determine enum type: explicit enum_name takes priority over column name convention
+        if getattr(mapping, 'enum_name', None):
+            enum_type = mapping.enum_name
+        else:
+            enum_type = self._determine_enum_type(mapping.target_column)
         
         # Contract guarantee: Enum mapping exists for this target_column (validated at startup)
         # Note: enum_type can be None if column name doesn't match any pattern

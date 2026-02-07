@@ -74,14 +74,14 @@ select * from app_enums
 		ON dbo.processing_log(app_id);
 
 	-- This is used to for an XML fragment of "/Provenir/Request/CustData" to speed up load time
-	CREATE TABLE dbo.app_xml_staging (
+	CREATE TABLE dbo.app_xml_staging_rl (
 	  app_id		int				NOT NULL PRIMARY KEY,	-- IDENTITY not needed
 	  app_XML		varchar(MAX)		NULL,
 	  extracted_at	datetime2		NOT NULL DEFAULT (SYSUTCDATETIME())
 	);
 	
 	-- For getting batches of xml
-	CREATE NONCLUSTERED INDEX IX_app_xml_staging_app_id ON dbo.app_xml_staging (app_id) INCLUDE (app_xml);
+	CREATE NONCLUSTERED INDEX IX_app_xml_staging_rl_app_id ON dbo.app_xml_staging_rl (app_id) INCLUDE (app_xml);
 
 
 	-- LOAD UP!
@@ -98,15 +98,19 @@ select * from app_enums
 
 truncate table dbo.processing_log;
 delete from dbo.app_base;
+-- VERY IMPORTANT: DROP INDEXES before insert
 
 */
 
 -- 12240
-SELECT DISTINCT COUNT(app_id) FROM dbo.app_xml_staging;
+SELECT COUNT(*) FROM dbo.app_xml_staging;
+-- 791
+SELECT COUNT(*) FROM dbo.app_xml_staging_rl;
+
 SELECT COUNT(*) FROM dbo.processing_log;
 SELECT * FROM dbo.processing_log where status <> 'success'
 
-SELECT DISTINCT COUNT(app_id) FROM dbo.app_base;
+SELECT COUNT(*) FROM dbo.app_base;
 SELECT MAX(app_id) FROM dbo.app_base;
 SELECT COUNT(*) FROM app_xml
 
@@ -153,3 +157,7 @@ SELECT app_id FROM IL_application WHERE app_id = 124294
 	from dbo.app_xml_staging
 	where app_id in (select app_id from IL_application)
 
+	select count(*)
+	--delete
+	from dbo.app_xml_staging_rl
+	where app_id in (select app_id from application)

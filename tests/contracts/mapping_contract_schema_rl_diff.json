@@ -1,0 +1,12 @@
+[
+  {
+    "table": "app_operational_rl",
+    "column": "MRV_lead_indicator_pr_enum",
+    "issue": "Missing in DB schema"
+  },
+  {
+    "table": "app_operational_rl",
+    "column": "MRV_lead_indicator_sec_enum",
+    "issue": "Missing in DB schema"
+  }
+]
