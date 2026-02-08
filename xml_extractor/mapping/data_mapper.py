@@ -1582,7 +1582,7 @@ class DataMapper(DataMapperInterface):
             self.logger.debug(f"Extracting app_contact_employment with {len(mappings)} mappings")
             records = self._extract_contact_employment_records(xml_data, mappings, app_id, valid_contacts)
         elif table_name in {'scores', 'indicators', 'app_historical_lookup', 'app_report_results_lookup',
-                          'app_policy_exceptions_rl'}:
+                          'app_policy_exceptions_rl', 'app_warranties_rl'}:
             # Row-creating mapping types that intentionally do not map to a single target column.
             # These mappings create one record per mapped attribute (key/value-style tables).
             self.logger.debug(f"Extracting key/value records for {table_name} with {len(mappings)} mappings")
@@ -1622,6 +1622,8 @@ class DataMapper(DataMapperInterface):
             return self._extract_report_lookup_records(xml_data, mappings, app_id)
         if table_name == 'app_policy_exceptions_rl':
             return self._extract_policy_exception_records(xml_data, mappings, app_id)
+        if table_name == 'app_warranties_rl':
+            return self._extract_warranty_records(xml_data, mappings, app_id)
         return []
 
     def _parse_mapping_type_function(self, mapping_type: str) -> Tuple[str, Optional[str]]:
@@ -1830,6 +1832,70 @@ class DataMapper(DataMapperInterface):
                 'reason_code': str(raw_value).strip(),
                 'notes': shared_notes,
             })
+
+        return records
+
+    def _extract_warranty_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], app_id: str) -> List[Dict[str, Any]]:
+        """Extract records for app_warranties_rl using warranty_field(N) mapping types.
+
+        Creates one row per warranty type enum (620–626). Each row contains
+        {app_id, warranty_type_enum, company_name, amount, term_months, policy_number}.
+        GAP (623) additionally carries merrick_lienholder_flag via a char_to_bit combo.
+        Only creates a row when at least one field in the warranty group has meaningful data.
+
+        Row structure: {app_id, warranty_type_enum, <target_column>: <value>, ...}
+        """
+        records: List[Dict[str, Any]] = []
+        normalized_app_id: Any = int(app_id) if str(app_id).isdigit() else app_id
+
+        # Group mappings by their enum parameter
+        groups: Dict[str, List] = {}  # param -> list of mappings
+        for mapping in mappings:
+            mapping_types = getattr(mapping, 'mapping_type', None) or []
+            wf_types = [mt for mt in mapping_types if str(mt).strip().startswith('warranty_field')]
+            if not wf_types:
+                continue
+            name, param = self._parse_mapping_type_function(wf_types[0])
+            if name != 'warranty_field' or not param:
+                continue
+            groups.setdefault(param, []).append(mapping)
+
+        # Create one row per warranty group that has meaningful data
+        for param, group_mappings in groups.items():
+            try:
+                enum_value = int(param)
+            except ValueError:
+                self.logger.warning(f"Invalid warranty_field enum param: {param}")
+                continue
+
+            row_data: Dict[str, Any] = {}
+            has_meaningful_data = False
+
+            for mapping in group_mappings:
+                raw_value = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+
+                # Check if this mapping has a char_to_bit combo (e.g., gap_lien)
+                mapping_types = getattr(mapping, 'mapping_type', None) or []
+                has_char_to_bit = 'char_to_bit' in mapping_types
+
+                if has_char_to_bit:
+                    # Apply char_to_bit conversion — always produces 0 or 1
+                    row_data[mapping.target_column] = self._apply_bit_conversion(raw_value)
+                elif self._is_meaningful_kv_value(raw_value):
+                    row_data[mapping.target_column] = str(raw_value).strip()
+                    has_meaningful_data = True
+
+            if not has_meaningful_data:
+                continue  # Skip rows with no meaningful non-bit data
+
+            row_data['app_id'] = normalized_app_id
+            row_data['warranty_type_enum'] = enum_value
+
+            # Ensure merrick_lienholder_flag is always present (DB NOT NULL, defaults to 0)
+            if 'merrick_lienholder_flag' not in row_data:
+                row_data['merrick_lienholder_flag'] = 0
+
+            records.append(row_data)
 
         return records
 

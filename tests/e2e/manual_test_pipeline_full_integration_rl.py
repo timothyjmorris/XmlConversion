@@ -234,6 +234,7 @@ class TestRecLendingEndToEnd(unittest.TestCase):
             "app_dealer_rl",
             "app_contact_address",
             "app_contact_employment",
+            "app_warranties_rl",
             "app_historical_lookup",
             "scores",
         ]
@@ -260,7 +261,7 @@ class TestRecLendingEndToEnd(unittest.TestCase):
             "app_contact_address",
             "app_contact_employment",
             # app_collateral_rl — add_collateral(N) not yet implemented
-            # app_warranties_rl — warranty_field(N) not yet implemented
+            "app_warranties_rl",
             "app_policy_exceptions_rl",
             "app_funding_rl",
             "app_funding_contract_rl",
@@ -344,6 +345,10 @@ class TestRecLendingEndToEnd(unittest.TestCase):
             # ── app_policy_exceptions_rl ──────────────────────────────
             if "app_policy_exceptions_rl" in inserted_tables:
                 self._verify_policy_exceptions(cursor, app_id)
+
+            # ── app_warranties_rl ─────────────────────────────────────
+            if "app_warranties_rl" in inserted_tables:
+                self._verify_warranties(cursor, app_id)
 
             # ── app_funding_rl ────────────────────────────────────────
             if "app_funding_rl" in inserted_tables:
@@ -654,6 +659,87 @@ class TestRecLendingEndToEnd(unittest.TestCase):
         print(f"[OK] app_policy_exceptions_rl verified: {len(exceptions)} records")
         for exc in exceptions:
             print(f"   - type={exc[0]}: reason_code='{exc[1]}', notes='{exc[2][:50]}...'")
+
+    def _verify_warranties(self, cursor, app_id):
+        """Verify app_warranties_rl records (7 warranty types from E2E XML).
+
+        Expected values from sample XML IL_backend_policies:
+          620 Credit Disability: Disability Insurance, $31, 91mo, DI-3191
+          621 Credit Life:       Life Game and Insurance, $67, 120mo, LGI-67120
+          622 Extended Warranty: EXPRESS SERVICE, $80, 60mo, ES-VSC1017789
+          623 GAP:               Old Navy, $100, 48mo, ON-65487, merrick_lien=0 (N)
+          624 Other:             Other Insurance Thing, $168, 60mo, OIT-16860
+          625 Roadside:          Karl's Towing, $59, 54mo, KT-35954
+          626 Service Contract:  GOOD SAM SERVICE, $141, 72mo, GSS-X1VGHTYY
+        """
+        cursor.execute(
+            f"""
+            SELECT warranty_type_enum, company_name, amount, term_months,
+                   policy_number, merrick_lienholder_flag
+            FROM {self._qualify_table('app_warranties_rl')}
+            WHERE app_id = ?
+            ORDER BY warranty_type_enum
+            """,
+            app_id,
+        )
+        rows = cursor.fetchall()
+
+        self.assertEqual(len(rows), 7,
+                         f"Should have 7 warranty records, got {len(rows)}")
+
+        by_type = {r[0]: {
+            "company_name": r[1], "amount": r[2], "term_months": r[3],
+            "policy_number": r[4], "merrick_lienholder_flag": r[5],
+        } for r in rows}
+
+        # 620 - Credit Disability
+        self.assertEqual(by_type[620]["company_name"], "Disability Insurance")
+        self.assertEqual(by_type[620]["amount"], 31)
+        self.assertEqual(by_type[620]["term_months"], 91)
+        self.assertEqual(by_type[620]["policy_number"], "DI-3191")
+
+        # 621 - Credit Life
+        self.assertEqual(by_type[621]["company_name"], "Life Game and Insurance")
+        self.assertEqual(by_type[621]["amount"], 67)
+        self.assertEqual(by_type[621]["term_months"], 120)
+        self.assertEqual(by_type[621]["policy_number"], "LGI-67120")
+
+        # 622 - Extended Warranty
+        self.assertEqual(by_type[622]["company_name"], "EXPRESS SERVICE")
+        self.assertEqual(by_type[622]["amount"], 80)
+        self.assertEqual(by_type[622]["term_months"], 60)
+        self.assertEqual(by_type[622]["policy_number"], "ES-VSC1017789")
+
+        # 623 - GAP (includes merrick_lienholder_flag)
+        self.assertEqual(by_type[623]["company_name"], "Old Navy")
+        self.assertEqual(by_type[623]["amount"], 100)
+        self.assertEqual(by_type[623]["term_months"], 48)
+        self.assertEqual(by_type[623]["policy_number"], "ON-65487")
+        self.assertEqual(by_type[623]["merrick_lienholder_flag"], True,
+                         "GAP merrick_lienholder_flag should be True (Y→1)")
+
+        # 624 - Other
+        self.assertEqual(by_type[624]["company_name"], "Other Insurance Thing")
+        self.assertEqual(by_type[624]["amount"], 168)
+        self.assertEqual(by_type[624]["term_months"], 60)
+        self.assertEqual(by_type[624]["policy_number"], "OIT-16860")
+
+        # 625 - Roadside Assistance
+        self.assertEqual(by_type[625]["company_name"], "Karl's Towing")
+        self.assertEqual(by_type[625]["amount"], 59)
+        self.assertEqual(by_type[625]["term_months"], 54)
+        self.assertEqual(by_type[625]["policy_number"], "KT-35954")
+
+        # 626 - Service Contract
+        self.assertEqual(by_type[626]["company_name"], "GOOD SAM SERVICE")
+        self.assertEqual(by_type[626]["amount"], 141)
+        self.assertEqual(by_type[626]["term_months"], 72)
+        self.assertEqual(by_type[626]["policy_number"], "GSS-X1VGHTYY")
+
+        print(f"[OK] app_warranties_rl verified: {len(rows)} records")
+        for r in rows:
+            print(f"   - type={r[0]}: company='{r[1]}', amount={r[2]}, "
+                  f"term={r[3]}, policy='{r[4]}'")
 
     def _verify_funding(self, cursor, app_id):
         """Verify app_funding_rl record with loanpro_customer_id fields."""
