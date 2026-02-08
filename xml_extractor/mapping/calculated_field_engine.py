@@ -431,7 +431,16 @@ class CalculatedFieldEngine:
             return False
     
     def _find_field_case_insensitive(self, field_name: str, element_data: Dict[str, Any]) -> Optional[str]:
-        """Find the actual field name in element_data case-insensitively."""
+        """Find the actual field name in element_data case-insensitively.
+        
+        Handles qualified field references like 'app_product.field_name' or
+        'IL_application.app_entry_date'.
+        """
+        # Direct match first (fastest path)
+        if field_name in element_data:
+            return field_name
+        
+        # Case-insensitive lookup
         field_upper = field_name.upper()
         for key in element_data.keys():
             if key.upper() == field_upper:
@@ -512,7 +521,7 @@ class CalculatedFieldEngine:
         # Replace field names with safe variable names and add to namespace
         safe_expression = expression
         for field_name in element_data.keys():
-            if field_name in expression:
+            if field_name in safe_expression:
                 safe_var_name = re.sub(r'[^a-zA-Z0-9_]', '_', field_name)
                 # Convert to float for arithmetic - we've already checked it's not None
                 safe_namespace[safe_var_name] = ValidationUtils.safe_float_conversion(
@@ -533,38 +542,6 @@ class CalculatedFieldEngine:
         except Exception as e:
             self.logger.warning(f"Arithmetic evaluation failed for '{expression}': {e}")
             return None
-    
-    def _find_field_case_insensitive(self, field_name: str, element_data: Dict[str, Any]) -> Optional[str]:
-        """
-        Find the actual field name in element_data using case-insensitive lookup.
-        Also handles qualified field references like 'app_product.field_name'.
-        
-        Args:
-            field_name: The field name to find (may be qualified with dots)
-            element_data: Dictionary containing field values
-            
-        Returns:
-            The actual field name if found, None otherwise
-        """
-        # Handle qualified references (e.g., 'app_product.adverse_actn1_type_cd')
-        if '.' in field_name:
-            # Look for the qualified reference directly
-            if field_name in element_data:
-                return field_name
-            
-            # Try case-insensitive qualified lookup
-            field_name_upper = field_name.upper()
-            for key in element_data.keys():
-                if key.upper() == field_name_upper:
-                    return key
-        else:
-            # Simple field name lookup
-            field_name_upper = field_name.upper()
-            for key in element_data.keys():
-                if key.upper() == field_name_upper:
-                    return key
-        
-        return None
     
     def validate_expression(self, expression: str) -> bool:
         """

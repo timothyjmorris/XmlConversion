@@ -161,3 +161,43 @@ SELECT app_id FROM IL_application WHERE app_id = 124294
 	--delete
 	from dbo.app_xml_staging_rl
 	where app_id in (select app_id from application)
+
+
+-- MIGRATION SCHEMA -----------------------------------------------------
+SELECT MAX(app_id) FROM migration.app_base;
+
+delete from migration.app_base where app_id = 207033732
+
+
+-- delete from migration.app_base where app_id = 325725
+select * from migration.app_base where app_id = 325725
+
+
+
+select cl.motor_ucc_vin_confirmed_enum, * 
+from migration.app_base as a
+left join migration.app_operational_rl as o on o.app_id = a.app_id
+left join migration.app_dealer_rl as d on d.app_id = a.app_id
+left join migration.app_funding_rl as f on f.app_id = a.app_id
+left join migration.app_funding_checklist_rl as cl on cl.app_id = a.app_id
+left join migration.app_funding_contract_rl as ct on ct.app_id = a.app_id
+left join migration.app_pricing_rl as p on p.app_id = a.app_id
+left join migration.app_transactional_rl as t on t.app_id = a.app_id
+left join migration.app_contact_base as c on c.app_id = a.app_id
+left join migration.app_contact_address as ca on ca.con_id = c.con_id
+left join migration.app_contact_employment as ce on ce.con_id = c.con_id
+where a.app_id = 325725
+
+select * from migration.scores where app_id = 325725
+select * from migration.Indicators where app_id = 325725
+select * from migration.app_historical_lookup where app_id = 325725
+select * from migration.app_report_results_lookup where app_id = 325725
+select * from migration.app_policy_exceptions_rl where app_id = 325725
+select * from migration.app_warranties_rl where app_id = 325725
+
+
+
+-- are we missing mappings for new fsp_email, fsp_fax, fsp_num
+-- where is monthly_payment_amount?
+-- what about motor_ucc_vin_enum?
+-- assees_ _doc_fee_flag

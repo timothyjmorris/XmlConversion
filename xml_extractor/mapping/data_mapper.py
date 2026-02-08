@@ -47,6 +47,7 @@ Mapping Types Supported:
 - extract_numeric/numbers_only: Extracts numeric values from formatted strings
 - default_getutcdate_if_null: Provides current timestamp for missing datetime fields
 - identity_insert: Handles auto-increment fields during bulk inserts
+- policy_exceptions(N): Creates rows in app_policy_exceptions_rl with enum discriminator
 
 The engine processes XML data through a multi-stage pipeline:
 1. Pre-flight validation (app_id and contact requirements)
@@ -284,7 +285,7 @@ class DataMapper(DataMapperInterface):
           → element name = "contact_address"
         - IL Lending product: xml_child_path = ".../IL_contact/IL_contact_address"
           → element name = "IL_contact_address"
-        - Both products use child_table = "contact_address" (stable destination table)
+        - Both products use child_table = "app_contact_address" (stable destination table)
         
         The cache maps child_table name → XML element name for performance.
         
@@ -328,7 +329,7 @@ class DataMapper(DataMapperInterface):
         initialization for O(1) lookup performance.
         
         Args:
-            child_table_name: The destination table name (e.g., 'contact_address')
+            child_table_name: The destination table name (e.g., 'app_contact_address')
             
         Returns:
             XML element name from xml_child_path (e.g., 'contact_address' or 'IL_contact_address')
@@ -336,13 +337,13 @@ class DataMapper(DataMapperInterface):
         
         Example:
             # Standard contract relationships:
-            # child_table='contact_address', xml_child_path='.../contact/contact_address'
-            element_name = mapper._get_child_element_name('contact_address')
+            # child_table='app_contact_address', xml_child_path='.../contact/contact_address'
+            element_name = mapper._get_child_element_name('app_contact_address')
             # Returns: 'contact_address'
             
             # IL Lending contract relationships:
-            # child_table='contact_address', xml_child_path='.../IL_contact/IL_contact_address'
-            element_name = mapper._get_child_element_name('contact_address')
+            # child_table='app_contact_address', xml_child_path='.../IL_contact/IL_contact_address'
+            element_name = mapper._get_child_element_name('app_contact_address')
             # Returns: 'IL_contact_address'
         """
         # Use cached element name for O(1) lookup
@@ -837,15 +838,24 @@ class DataMapper(DataMapperInterface):
         
         This bypasses the XMLParser's limitation of only keeping the last element
         for each path, allowing us to get all contacts.
+        
+        Contract-Driven Element Names:
+        - Contact element name derived from relationships cache (e.g., 'contact' or 'IL_contact')
+        - Contact type attribute derived from element_filtering (e.g., 'ac_role_tp_c')
+        - Child element names derived from relationships cache (e.g., 'contact_address' or 'IL_contact_address')
         """
         contacts = []
         try:
-            # Use XPath to find all contact elements
-            contact_elements = xml_root.xpath('.//contact[@ac_role_tp_c]')
-            
             # Get dynamic element names from contract (Task 5: Contract-Driven XPath Element Names)
-            employment_element = self._get_child_element_name('contact_employment')
-            address_element = self._get_child_element_name('contact_address')
+            contact_element = self._get_child_element_name('app_contact_base')
+            employment_element = self._get_child_element_name('app_contact_employment')
+            address_element = self._get_child_element_name('app_contact_address')
+            
+            # Get contact type attribute name from contract's element_filtering (cached at init)
+            contact_type_attr = self._valid_contact_type_config[0]
+            
+            # Use XPath to find all contact elements with the type attribute
+            contact_elements = xml_root.xpath(f'.//{contact_element}[@{contact_type_attr}]')
             
             for contact_elem in contact_elements:
                 # Extract all attributes as a dictionary
@@ -1571,7 +1581,8 @@ class DataMapper(DataMapperInterface):
             # Extract app_contact_employment elements directly from XML data
             self.logger.debug(f"Extracting app_contact_employment with {len(mappings)} mappings")
             records = self._extract_contact_employment_records(xml_data, mappings, app_id, valid_contacts)
-        elif table_name in {'scores', 'indicators', 'app_historical_lookup', 'app_report_results_lookup'}:
+        elif table_name in {'scores', 'indicators', 'app_historical_lookup', 'app_report_results_lookup',
+                          'app_policy_exceptions_rl'}:
             # Row-creating mapping types that intentionally do not map to a single target column.
             # These mappings create one record per mapped attribute (key/value-style tables).
             self.logger.debug(f"Extracting key/value records for {table_name} with {len(mappings)} mappings")
@@ -1609,14 +1620,19 @@ class DataMapper(DataMapperInterface):
             return self._extract_history_records(xml_data, mappings, app_id)
         if table_name == 'app_report_results_lookup':
             return self._extract_report_lookup_records(xml_data, mappings, app_id)
+        if table_name == 'app_policy_exceptions_rl':
+            return self._extract_policy_exception_records(xml_data, mappings, app_id)
         return []
 
     def _parse_mapping_type_function(self, mapping_type: str) -> Tuple[str, Optional[str]]:
-        """Parse function-like mapping types, e.g., add_score(TU_TIE) -> ('add_score', 'TU_TIE')."""
+        """Parse function-like mapping types, e.g., add_score(TU_TIE) -> ('add_score', 'TU_TIE').
+        
+        Also handles empty parens: policy_exceptions() -> ('policy_exceptions', '').
+        """
         if not mapping_type:
             return ('', None)
         mapping_type = str(mapping_type).strip()
-        match = re.match(r'^(?P<name>[A-Za-z_][A-Za-z0-9_]*)\((?P<param>[^)]+)\)$', mapping_type)
+        match = re.match(r'^(?P<name>[A-Za-z_][A-Za-z0-9_]*)\((?P<param>[^)]*)\)$', mapping_type)
         if match:
             return (match.group('name'), match.group('param').strip())
         return (mapping_type, None)
@@ -1758,6 +1774,62 @@ class DataMapper(DataMapperInterface):
                 record['source_report_key'] = source_report_key
 
             records.append(record)
+
+        return records
+
+    def _extract_policy_exception_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping], app_id: str) -> List[Dict[str, Any]]:
+        """Extract records for app_policy_exceptions_rl using policy_exceptions(N) mapping types.
+
+        Creates one row per enum value (630=Capacity, 631=Collateral/Program, 632=Credit).
+        The policy_exceptions() entry (empty param) provides the shared notes field.
+        Only creates a row if the reason_code has meaningful data.
+
+        Row structure: {app_id, policy_exception_type_enum, reason_code, notes}
+        """
+        records: List[Dict[str, Any]] = []
+        normalized_app_id: Any = int(app_id) if str(app_id).isdigit() else app_id
+
+        # First pass: extract shared notes from the empty-param entry
+        shared_notes = None
+        for mapping in mappings:
+            mapping_types = getattr(mapping, 'mapping_type', None) or []
+            pe_types = [mt for mt in mapping_types if str(mt).strip().startswith('policy_exceptions')]
+            if not pe_types:
+                continue
+            name, param = self._parse_mapping_type_function(pe_types[0])
+            if name == 'policy_exceptions' and not param:
+                raw = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+                if self._is_meaningful_kv_value(raw):
+                    shared_notes = str(raw).strip()
+                break
+
+        # Second pass: create rows for each enum-parameterized entry
+        for mapping in mappings:
+            mapping_types = getattr(mapping, 'mapping_type', None) or []
+            pe_types = [mt for mt in mapping_types if str(mt).strip().startswith('policy_exceptions')]
+            if not pe_types:
+                continue
+
+            name, param = self._parse_mapping_type_function(pe_types[0])
+            if name != 'policy_exceptions' or not param:
+                continue  # Skip the notes-only entry
+
+            raw_value = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+            if not self._is_meaningful_kv_value(raw_value):
+                continue  # Skip rows without meaningful reason_code
+
+            try:
+                enum_value = int(param)
+            except ValueError:
+                self.logger.warning(f"Invalid policy_exceptions enum param: {param}")
+                continue
+
+            records.append({
+                'app_id': normalized_app_id,
+                'policy_exception_type_enum': enum_value,
+                'reason_code': str(raw_value).strip(),
+                'notes': shared_notes,
+            })
 
         return records
 
@@ -2372,7 +2444,7 @@ class DataMapper(DataMapperInterface):
         """Get fallback value for failed conversion."""
         return None
     
-    def _extract_from_last_valid_pr_contact(self, mapping, context_data=None):
+    def _extract_from_last_valid_pr_contact(self, mapping):
         """
         Extract value from the last valid primary contact with enhanced debugging.
         
@@ -2394,8 +2466,11 @@ class DataMapper(DataMapperInterface):
             primary_contact_type = valid_contact_types[0]  # First in array = primary
             self.logger.debug(f"Using primary contact type: {primary_contact_type} (attr: {contact_type_attr})")
             
-            # Find all primary contacts using dynamic attribute and value
-            xpath_query = f'.//contact[@{contact_type_attr}="{primary_contact_type}"]'
+            # CONTRACT-DRIVEN: Get dynamic contact element name (e.g., 'contact' for CC, 'IL_contact' for RL)
+            contact_element_name = self._get_child_element_name('app_contact_base')
+            
+            # Find all primary contacts using dynamic element name, attribute, and value
+            xpath_query = f'.//{contact_element_name}[@{contact_type_attr}="{primary_contact_type}"]'
             primary_contacts = self._current_xml_root.xpath(xpath_query)
             self.logger.debug(f"Found {len(primary_contacts)} {primary_contact_type} contacts via xpath")
             if not primary_contacts:
@@ -2421,7 +2496,7 @@ class DataMapper(DataMapperInterface):
             # Extract the requested attribute directly from the contact or its child elements
             # CONTRACT-DRIVEN: Check if mapping refers to address data (either in target_table or xml_path)
             # Get dynamic element name for address elements
-            address_element_name = self._get_child_element_name('contact_address')
+            address_element_name = self._get_child_element_name('app_contact_address')
             
             if mapping.target_table == 'app_contact_address' or address_element_name in mapping.xml_path:
                 # Look for address elements within this contact using dynamic element name
@@ -2518,7 +2593,7 @@ class DataMapper(DataMapperInterface):
             self.logger.debug(f"Failed to extract from last valid PR contact: {e}")
             return None
     
-    def _extract_from_last_valid_sec_contact(self, mapping, context_data=None):
+    def _extract_from_last_valid_sec_contact(self, mapping):
         """
         Extract value from the last valid secondary contact.
         
@@ -2542,8 +2617,11 @@ class DataMapper(DataMapperInterface):
             sec_contact_type = valid_contact_types[1]  # Second in array = secondary
             self.logger.debug(f"Using secondary contact type: {sec_contact_type} (attr: {contact_type_attr})")
             
-            # Find all secondary contacts using dynamic attribute and value
-            xpath_query = f'.//contact[@{contact_type_attr}="{sec_contact_type}"]'
+            # CONTRACT-DRIVEN: Get dynamic contact element name (e.g., 'contact' for CC, 'IL_contact' for RL)
+            contact_element_name = self._get_child_element_name('app_contact_base')
+            
+            # Find all secondary contacts using dynamic element name, attribute, and value
+            xpath_query = f'.//{contact_element_name}[@{contact_type_attr}="{sec_contact_type}"]'
             sec_contacts = self._current_xml_root.xpath(xpath_query)
             self.logger.debug(f"Found {len(sec_contacts)} {sec_contact_type} contacts via xpath")
             if not sec_contacts:
@@ -2567,7 +2645,7 @@ class DataMapper(DataMapperInterface):
             self.logger.debug(f"Selected last VALID {sec_contact_type} contact: con_id={selected_con_id}")
             
             # Check if mapping refers to address data (child element extraction)
-            address_element_name = self._get_child_element_name('contact_address')
+            address_element_name = self._get_child_element_name('app_contact_address')
             
             if mapping.target_table == 'app_contact_address' or address_element_name in mapping.xml_path:
                 # Look for address elements within this contact
@@ -2769,23 +2847,43 @@ class DataMapper(DataMapperInterface):
         if app_id:
             context['app_id'] = app_id
         
-        # Add application and app_product data with dotted prefixes for cross-element references
+        # Add application and related element data for cross-element references.
+        # CONTRACT-DRIVEN: Uses source_application_table to identify the application element
+        # (e.g., 'application' for CC, 'IL_application' for RL).
+        # All child elements (e.g., IL_app_decision_info, app_product) are also included
+        # so calculated_field expressions can reference their attributes directly.
+        app_element_name = 'application'  # Default for CC
+        try:
+            contract = self._config_manager.load_mapping_contract(self._mapping_contract_path)
+            if contract and hasattr(contract, 'source_application_table') and contract.source_application_table:
+                app_element_name = contract.source_application_table
+        except Exception:
+            pass  # Fall back to default
+        
         for path, element in xml_data.items():
             if isinstance(element, dict) and 'attributes' in element:
                 attrs = element['attributes']
-                if path.endswith('/application'):
-                    # Add application fields with 'application.' prefix
+                last_segment = path.rstrip('/').split('/')[-1]
+                
+                if last_segment == app_element_name:
+                    # Application-level fields (e.g., IL_application, application)
+                    # Add with both canonical 'application.' prefix and element-specific prefix
                     for key, value in attrs.items():
                         if key and value is not None:
                             context[f'application.{key.lower()}'] = value
+                            # Also add element-specific prefix for expressions like
+                            # 'IL_application.app_entry_date'
+                            if last_segment != 'application':
+                                context[f'{last_segment}.{key}'] = value
                     # Also add without prefix for direct access
                     context.update(attrs)
-                elif path.endswith('/app_product'):
-                    # Add app_product fields with 'app_product.' prefix
+                else:
+                    # All other child elements (IL_app_decision_info, app_product, etc.)
+                    # Add with element-name prefix for qualified references
                     for key, value in attrs.items():
                         if key and value is not None:
-                            context[f'app_product.{key.lower()}'] = value
-                    # Also add without prefix for direct access
+                            context[f'{last_segment}.{key.lower()}'] = value
+                    # Also flatten attributes for direct access (e.g., MRV_lead_indicator_p)
                     context.update(attrs)
         
         self.logger.debug(f"Built app-level context with {len(context)} keys")
