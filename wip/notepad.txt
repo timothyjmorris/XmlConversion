@@ -126,4 +126,4 @@ python launch_parallel_instances.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.
 python .\diagnostics\summarize_failures.py
 
 # validate
-python .\diagnostics\validate_source_to_dest.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --schema migration --output ./diagnostics/validate_source_to_dest_results.json --sample 20
+python .\diagnostics\validate_source_to_dest.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --schema dbo --output ./diagnostics/validate_source_to_dest_results.json --sample 20

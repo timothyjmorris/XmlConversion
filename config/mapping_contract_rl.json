@@ -27,40 +27,19 @@
   "element_filtering": {
     "filter_rules": [
       {
-        "element_type": "contact",
-        "description": "Filter contacts by con_id and valid contact type. Array order determines priority (first = highest).",
-        "xml_parent_path": "/Provenir/Request/CustData/IL_application",
-        "xml_child_path": "/Provenir/Request/CustData/IL_application/IL_contact",
-        "required_attributes": {
+        "element_type": "contact", "description": "Filter contacts by con_id and valid contact type. Array order determines priority (first = highest).", "xml_parent_path": "/Provenir/Request/CustData/IL_application", "xml_child_path": "/Provenir/Request/CustData/IL_application/IL_contact", "required_attributes": {
           "con_id": true,
-          "ac_role_tp_c": [
-            "PR",
-            "SEC"
-          ]
+          "ac_role_tp_c": ["PR", "SEC"]
         }
       },
       {
-        "element_type": "address",
-        "description": "Filter address elements by valid address type",
-        "xml_parent_path": "/Provenir/Request/CustData/IL_application/IL_contact",
-        "xml_child_path": "/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address",
-        "required_attributes": {
-          "address_type_code": [
-            "CURR",
-            "PREV"
-          ]
+        "element_type": "address", "description": "Filter address elements by valid address type", "xml_parent_path": "/Provenir/Request/CustData/IL_application/IL_contact", "xml_child_path": "/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_address", "required_attributes": {
+          "address_type_code": ["CURR", "PREV"]
         }
       },
       {
-        "element_type": "employment",
-        "description": "Filter employment elements by valid employment_type",
-        "xml_parent_path": "/Provenir/Request/CustData/IL_application/IL_contact",
-        "xml_child_path": "/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment",
-        "required_attributes": {
-          "employment_type_code": [
-            "CURR",
-            "PREV"
-          ]
+        "element_type": "employment", "description": "Filter employment elements by valid employment_type", "xml_parent_path": "/Provenir/Request/CustData/IL_application/IL_contact", "xml_child_path": "/Provenir/Request/CustData/IL_application/IL_contact/IL_contact_employment", "required_attributes": {
+          "employment_type_code": ["CURR", "PREV"]
         }
       }
     ]
@@ -165,9 +144,7 @@
       "target_table": "app_base",
       "target_column": "app_id",
       "data_type": "int",
-      "mapping_type": [
-        "identity_insert"
-      ],
+      "mapping_type": ["identity_insert"],
       "nullable": false,
       "required": true
     },
@@ -177,9 +154,7 @@
       "target_table": "app_operational_rl",
       "target_column": "status_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -189,9 +164,7 @@
       "target_table": "app_operational_rl",
       "target_column": "process_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -201,9 +174,7 @@
       "target_table": "app_operational_rl",
       "target_column": "priority_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -223,9 +194,7 @@
       "target_table": "app_pricing_rl",
       "target_column": "add_total_to_financed_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -257,9 +226,7 @@
       "target_table": "app_operational_rl",
       "target_column": "regb_start_date",
       "data_type": "datetime",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN app_entry_date IS NOT EMPTY THEN app_entry_date ELSE app_receive_date END",
       "nullable": true,
       "required": false
@@ -290,9 +257,7 @@
       "target_table": "app_base",
       "target_column": "app_source_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -302,9 +267,7 @@
       "target_table": "app_base",
       "target_column": "app_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -314,9 +277,7 @@
       "target_table": "app_base",
       "target_column": "product_line_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": false,
       "required": true,
       "description": "Product line enum mapping; all RL apps map empty->602 via enum_mappings."
@@ -357,9 +318,7 @@
       "target_table": "app_dealer_rl",
       "target_column": "broker_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -420,9 +379,7 @@
       "target_table": "app_dealer_rl",
       "target_column": "dealer_phone",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "nullable": false,
       "required": false,
       "data_length": 10
@@ -443,9 +400,7 @@
       "target_table": "app_dealer_rl",
       "target_column": "dealer_zip",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "nullable": false,
       "required": false,
       "data_length": 9
@@ -456,9 +411,7 @@
       "target_table": "app_transactional_rl",
       "target_column": "duplicate_app_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -479,9 +432,7 @@
       "target_table": "app_dealer_rl",
       "target_column": "fsp_phone",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "nullable": true,
       "required": false,
       "data_length": 10
@@ -492,9 +443,7 @@
       "target_table": "app_operational_rl",
       "target_column": "joint_app_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -561,9 +510,7 @@
       "target_table": "app_base",
       "target_column": "sub_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -573,9 +520,7 @@
       "target_table": "app_transactional_rl",
       "target_column": "supervisor_review_indicator_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -615,9 +560,7 @@
       "target_table": "app_contact_base",
       "target_column": "con_id",
       "data_type": "int",
-      "mapping_type": [
-        "identity_insert"
-      ],
+      "mapping_type": ["identity_insert"],
       "nullable": false,
       "required": true
     },
@@ -627,9 +570,7 @@
       "target_table": "app_contact_base",
       "target_column": "contact_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": false,
       "required": false
     },
@@ -648,9 +589,7 @@
       "target_table": "app_contact_base",
       "target_column": "cell_phone",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "nullable": true,
       "required": false,
       "data_length": 10
@@ -681,9 +620,7 @@
       "target_table": "app_contact_base",
       "target_column": "home_phone",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "nullable": true,
       "required": false,
       "data_length": 10
@@ -704,9 +641,7 @@
       "target_table": "app_funding_rl",
       "target_column": "loanpro_customer_id_pr",
       "data_type": "int",
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "nullable": true,
       "required": false
     },
@@ -716,9 +651,7 @@
       "target_table": "app_funding_rl",
       "target_column": "loanpro_customer_id_sec",
       "data_type": "int",
-      "mapping_type": [
-        "last_valid_sec_contact"
-      ],
+      "mapping_type": ["last_valid_sec_contact"],
       "nullable": true,
       "required": false
     },
@@ -758,9 +691,7 @@
       "target_table": "app_contact_address",
       "target_column": "address_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": false,
       "required": false
     },
@@ -790,9 +721,7 @@
       "target_table": "app_contact_address",
       "target_column": "months_at_address",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN (months_at_residence > 0 OR years_at_residence > 0) THEN (months_at_residence + (years_at_residence * 12)) END",
       "nullable": true,
       "required": false
@@ -803,9 +732,7 @@
       "target_table": "app_contact_address",
       "target_column": "ownership_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -826,9 +753,7 @@
       "target_column": "housing_monthly_payment_pr",
       "data_type": "int",
       "data_length": 2,
-      "mapping_type": [
-        "last_valid_pr_contact"
-      ],
+      "mapping_type": ["last_valid_pr_contact"],
       "nullable": true,
       "required": false
     },
@@ -839,9 +764,7 @@
       "target_column": "housing_monthly_payment_sec",
       "data_type": "int",
       "data_length": 2,
-      "mapping_type": [
-        "last_valid_sec_contact"
-      ],
+      "mapping_type": ["last_valid_sec_contact"],
       "nullable": true,
       "required": false
     },
@@ -891,9 +814,7 @@
       "target_table": "app_contact_address",
       "target_column": "zip",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "nullable": true,
       "required": false,
       "data_length": 9
@@ -924,9 +845,7 @@
       "target_table": "app_contact_employment",
       "target_column": "phone",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "nullable": true,
       "required": false,
       "data_length": 10
@@ -947,9 +866,7 @@
       "target_table": "app_contact_employment",
       "target_column": "employment_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": false,
       "required": false
     },
@@ -959,9 +876,7 @@
       "target_table": "app_contact_employment",
       "target_column": "months_at_job",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN (months_at_job > 0 OR years_at_job > 0) THEN (months_at_job + (years_at_job * 12)) END",
       "nullable": true,
       "required": false
@@ -982,9 +897,7 @@
       "target_table": "app_contact_employment",
       "target_column": "other_income_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -995,9 +908,7 @@
       "target_column": "monthly_salary",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN salary_basis_type_code = 'ANNUM' THEN (salary / 12) WHEN salary_basis_type_code = 'MONTH' THEN salary ELSE salary END",
       "nullable": true,
       "required": false
@@ -1008,9 +919,7 @@
       "target_table": "app_contact_employment",
       "target_column": "self_employed_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -1071,9 +980,7 @@
       "target_table": "app_contact_employment",
       "target_column": "zip",
       "data_type": "string",
-      "mapping_type": [
-        "numbers_only"
-      ],
+      "mapping_type": ["numbers_only"],
       "nullable": true,
       "required": false,
       "data_length": 9
@@ -1103,9 +1010,7 @@
       "target_table": "app_base",
       "target_column": "decision_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -1183,9 +1088,7 @@
       "target_table": "app_operational_rl",
       "target_column": "mrv_lead_indicator_pr_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRV_lead_indicator_p = 'MRV' THEN 640 WHEN MRV_lead_indicator_p = 'Vantage' THEN 641 END",
       "nullable": true,
       "required": false
@@ -1196,9 +1099,7 @@
       "target_table": "app_operational_rl",
       "target_column": "mrv_lead_indicator_sec_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRV_lead_indicator_s = 'MRV' THEN 640 WHEN MRV_lead_indicator_s = 'Vantage' THEN 641 END",
       "nullable": true,
       "required": false
@@ -1219,9 +1120,7 @@
       "target_table": "app_operational_rl",
       "target_column": "risk_model_score_factor_type_pr_1",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRVP_Decline_Code_1 IS NOT EMPTY THEN 'MRV1' END",
       "nullable": true,
       "required": false,
@@ -1243,9 +1142,7 @@
       "target_table": "app_operational_rl",
       "target_column": "risk_model_score_factor_type_pr_2",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRVP_Decline_Code_2 IS NOT EMPTY THEN 'MRV1' END",
       "nullable": true,
       "required": false,
@@ -1267,9 +1164,7 @@
       "target_table": "app_operational_rl",
       "target_column": "risk_model_score_factor_type_pr_3",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRVP_Decline_Code_3 IS NOT EMPTY THEN 'MRV1' END",
       "nullable": true,
       "required": false,
@@ -1291,9 +1186,7 @@
       "target_table": "app_operational_rl",
       "target_column": "risk_model_score_factor_type_pr_4",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRVP_Decline_Code_4 IS NOT EMPTY THEN 'MRV1' END",
       "nullable": true,
       "required": false,
@@ -1315,9 +1208,7 @@
       "target_table": "app_operational_rl",
       "target_column": "risk_model_score_factor_type_sec_1",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRVS_Decline_Code_1 IS NOT EMPTY THEN 'MRV1' END",
       "nullable": true,
       "required": false,
@@ -1339,9 +1230,7 @@
       "target_table": "app_operational_rl",
       "target_column": "risk_model_score_factor_type_sec_2",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRVS_Decline_Code_2 IS NOT EMPTY THEN 'MRV1' END",
       "nullable": true,
       "required": false,
@@ -1363,9 +1252,7 @@
       "target_table": "app_operational_rl",
       "target_column": "risk_model_score_factor_type_sec_3",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRVS_Decline_Code_3 IS NOT EMPTY THEN 'MRV1' END",
       "nullable": true,
       "required": false,
@@ -1387,9 +1274,7 @@
       "target_table": "app_operational_rl",
       "target_column": "risk_model_score_factor_type_sec_4",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN MRVS_Decline_Code_4 IS NOT EMPTY THEN 'MRV1' END",
       "nullable": true,
       "required": false,
@@ -1401,9 +1286,7 @@
       "target_table": "app_policy_exceptions_rl",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "policy_exceptions(630)"
-      ],
+      "mapping_type": ["policy_exceptions(630)"],
       "nullable": true,
       "required": false
     },
@@ -1413,9 +1296,7 @@
       "target_table": "app_policy_exceptions_rl",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "policy_exceptions(631)"
-      ],
+      "mapping_type": ["policy_exceptions(631)"],
       "nullable": true,
       "required": false
     },
@@ -1425,9 +1306,7 @@
       "target_table": "app_policy_exceptions_rl",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "policy_exceptions(632)"
-      ],
+      "mapping_type": ["policy_exceptions(632)"],
       "nullable": true,
       "required": false
     },
@@ -1437,9 +1316,7 @@
       "target_table": "app_policy_exceptions_rl",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "policy_exceptions()"
-      ],
+      "mapping_type": ["policy_exceptions()"],
       "nullable": true,
       "required": false
     },
@@ -1449,9 +1326,7 @@
       "target_table": "app_transactional_rl",
       "target_column": "pending_verification_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -1462,10 +1337,8 @@
       "target_table": "app_operational_rl",
       "target_column": "regb_end_date",
       "data_type": "datetime",
-      "mapping_type": [
-        "calculated_field"
-      ],
-      "expression": "CASE WHEN IL_app_decision_info.regb_closed_days_num > 0 AND IL_application.app_entry_date IS NOT EMPTY THEN DATEADD(day, regb_closed_days_num, IL_application.app_entry_date) WHEN IL_app_decision_info.regb_closed_days_num > 0 AND IL_application.app_receive_date IS NOT EMPTY THEN DATEADD(day, regb_closed_days_num, IL_application.app_receive_date) END",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN IL_app_decision_info.regb_closed_days_num > 0 AND IL_application.app_entry_date IS NOT EMPTY THEN DATEADD(day, IL_app_decision_info.regb_closed_days_num, IL_application.app_entry_date) WHEN IL_app_decision_info.regb_closed_days_num > 0 AND IL_application.app_receive_date IS NOT EMPTY THEN DATEADD(day, IL_app_decision_info.regb_closed_days_num, IL_application.app_receive_date) END",
       "nullable": true,
       "required": false
     },
@@ -1495,9 +1368,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_pr_1",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4P_decline_code1 IS NOT EMPTY AND IL_application.app_entry_date > '2020-01-01' THEN 'V4' WHEN score_factor_code_pr_1 IS NOT EMPTY THEN score_factor_code_pr_1 END",
       "nullable": true,
       "required": false,
@@ -1519,9 +1390,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_pr_2",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4P_decline_code2 IS NOT EMPTY THEN 'V4' END",
       "nullable": true,
       "required": false,
@@ -1543,9 +1412,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_pr_3",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4P_decline_code3 IS NOT EMPTY THEN 'V4' END",
       "nullable": true,
       "required": false,
@@ -1567,9 +1434,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_pr_4",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4P_decline_code4 IS NOT EMPTY THEN 'V4' END",
       "nullable": true,
       "required": false,
@@ -1591,9 +1456,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_pr_5",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4P_decline_code5 IS NOT EMPTY THEN 'V4' END",
       "nullable": true,
       "required": false,
@@ -1615,9 +1478,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_sec_1",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4S_decline_code1 IS NOT EMPTY THEN 'V4' END",
       "nullable": true,
       "required": false,
@@ -1639,9 +1500,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_sec_2",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4S_decline_code2 IS NOT EMPTY THEN 'V4' END",
       "nullable": true,
       "required": false,
@@ -1663,9 +1522,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_sec_3",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4S_decline_code3 IS NOT EMPTY THEN 'V4' END",
       "nullable": true,
       "required": false,
@@ -1687,9 +1544,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_sec_4",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4S_decline_code4 IS NOT EMPTY THEN 'V4' END",
       "nullable": true,
       "required": false,
@@ -1711,9 +1566,7 @@
       "target_table": "app_operational_rl",
       "target_column": "cb_score_factor_type_sec_5",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
+      "mapping_type": ["calculated_field"],
       "expression": "CASE WHEN Vantage4S_decline_code5 IS NOT EMPTY THEN 'V4' END",
       "nullable": true,
       "required": false,
@@ -1725,10 +1578,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "collateral_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field",
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["calculated_field", "add_collateral(1)"],
       "expression": "CASE WHEN IL_application.app_type_code = 'MARINE' THEN 412 WHEN IL_application.app_type_code = 'RV' THEN 419 WHEN IL_application.app_type_code = 'HT' THEN 415 WHEN IL_application.app_type_code = 'UT' THEN 421 WHEN IL_application.app_type_code = 'MC' THEN 416 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'ATV' THEN 410 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'UTV' THEN 422 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'PWC' THEN 418 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'SNOWMOBILE' THEN 420 WHEN IL_application.app_type_code IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
@@ -1739,9 +1589,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "make",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["add_collateral(1)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -1752,9 +1600,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "model",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["add_collateral(1)"],
       "nullable": true,
       "required": false,
       "data_length": 50
@@ -1765,10 +1611,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "used_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit",
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["char_to_bit", "add_collateral(1)"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -1780,9 +1623,7 @@
       "target_column": "wholesale_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["add_collateral(1)"],
       "nullable": true,
       "required": false
     },
@@ -1792,9 +1633,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "mileage",
       "data_type": "int",
-      "mapping_type": [
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["add_collateral(1)"],
       "nullable": true,
       "required": false
     },
@@ -1804,9 +1643,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "vin",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["add_collateral(1)"],
       "nullable": true,
       "required": false,
       "data_length": 60
@@ -1817,10 +1654,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "year",
       "data_type": "smallint",
-      "mapping_type": [
-        "numbers_only",
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["numbers_only", "add_collateral(1)"],
       "nullable": false,
       "required": false
     },
@@ -1831,9 +1665,7 @@
       "target_column": "option_1_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["add_collateral(1)"],
       "nullable": true,
       "required": false
     },
@@ -1843,9 +1675,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "option_1_description",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["add_collateral(1)"],
       "nullable": true,
       "required": false,
       "data_length": 100
@@ -1857,9 +1687,7 @@
       "target_column": "option_2_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["add_collateral(1)"],
       "nullable": true,
       "required": false
     },
@@ -1869,9 +1697,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "option_2_description",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(1)"
-      ],
+      "mapping_type": ["add_collateral(1)"],
       "nullable": true,
       "required": false,
       "data_length": 100
@@ -1882,10 +1708,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "collateral_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field",
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["calculated_field", "add_collateral(2)"],
       "expression": "CASE WHEN IL_collateral.coll2_HP_Marine > '0' THEN 413 WHEN IL_application.app_type_code = 'MARINE' AND IL_collateral.coll2_value IS NOT EMPTY THEN 413 WHEN IL_application.app_type_code = 'MARINE' AND IL_collateral.make IS NOT EMPTY THEN 413 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'ATV' THEN 410 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'UTV' THEN 422 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'PWC' THEN 418 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'SNOWMOBILE' THEN 420 WHEN IL_collateral.coll2_value IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
@@ -1896,9 +1719,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "make",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["add_collateral(2)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -1909,9 +1730,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "model",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["add_collateral(2)"],
       "nullable": true,
       "required": false,
       "data_length": 50
@@ -1922,10 +1741,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "used_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit",
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["char_to_bit", "add_collateral(2)"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -1937,9 +1753,7 @@
       "target_column": "wholesale_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["add_collateral(2)"],
       "nullable": true,
       "required": false
     },
@@ -1949,9 +1763,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "motor_size",
       "data_type": "smallint",
-      "mapping_type": [
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["add_collateral(2)"],
       "nullable": true,
       "required": false
     },
@@ -1961,9 +1773,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "vin",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["add_collateral(2)"],
       "nullable": true,
       "required": false,
       "data_length": 60
@@ -1974,10 +1784,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "year",
       "data_type": "smallint",
-      "mapping_type": [
-        "numbers_only",
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["numbers_only", "add_collateral(2)"],
       "nullable": false,
       "required": false
     },
@@ -1988,9 +1795,7 @@
       "target_column": "option_1_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["add_collateral(2)"],
       "nullable": true,
       "required": false
     },
@@ -2000,9 +1805,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "option_1_description",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["add_collateral(2)"],
       "nullable": true,
       "required": false,
       "data_length": 100
@@ -2014,9 +1817,7 @@
       "target_column": "option_2_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["add_collateral(2)"],
       "nullable": true,
       "required": false
     },
@@ -2026,9 +1827,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "option_2_description",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(2)"
-      ],
+      "mapping_type": ["add_collateral(2)"],
       "nullable": true,
       "required": false,
       "data_length": 100
@@ -2039,10 +1838,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "collateral_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field",
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["calculated_field", "add_collateral(3)"],
       "expression": "CASE WHEN IL_collateral.coll3_make LIKE '%BT%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%BEAR%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%BOATMATE%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%BACKTRACK%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%TRAILSTAR%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MAGIC TILT%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MARINE MASTER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%SHORELANDER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%SHORELANDR%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%EZ LOADER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%KARAVAN%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MCCLAIN%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%ESCORT%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%ROAD RUNNER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%LOAD RITE%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%LOADRITE%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MAGIC LOADER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MALIBU%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%ZIEMAN%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%TRACKER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%DIAMOND CITY%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%RANGER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%WESCO%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%TRAILER%' THEN 420 WHEN IL_collateral.coll3_model LIKE '%TRAILER%' THEN 420 WHEN IL_collateral.coll3_HP_Marine > '0' THEN 413 WHEN IL_collateral.coll3_make LIKE '%MERCURY%' THEN 413 WHEN IL_collateral.coll3_make LIKE '%YAMAHA%' THEN 413 WHEN IL_collateral.coll3_make LIKE '%MERCRUISER%' THEN 413 WHEN IL_application.app_type_code IS NOT EMPTY AND IL_collateral.coll3_value IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
@@ -2053,9 +1849,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "make",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["add_collateral(3)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -2066,9 +1860,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "model",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["add_collateral(3)"],
       "nullable": true,
       "required": false,
       "data_length": 50
@@ -2079,10 +1871,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "used_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit",
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["char_to_bit", "add_collateral(3)"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -2094,9 +1883,7 @@
       "target_column": "wholesale_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["add_collateral(3)"],
       "nullable": true,
       "required": false
     },
@@ -2106,9 +1893,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "motor_size",
       "data_type": "smallint",
-      "mapping_type": [
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["add_collateral(3)"],
       "nullable": true,
       "required": false
     },
@@ -2118,9 +1903,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "vin",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["add_collateral(3)"],
       "nullable": true,
       "required": false,
       "data_length": 60
@@ -2131,10 +1914,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "year",
       "data_type": "smallint",
-      "mapping_type": [
-        "numbers_only",
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["numbers_only", "add_collateral(3)"],
       "nullable": false,
       "required": false
     },
@@ -2145,9 +1925,7 @@
       "target_column": "option_1_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["add_collateral(3)"],
       "nullable": true,
       "required": false
     },
@@ -2157,9 +1935,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "option_1_description",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["add_collateral(3)"],
       "nullable": true,
       "required": false,
       "data_length": 100
@@ -2171,9 +1947,7 @@
       "target_column": "option_2_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["add_collateral(3)"],
       "nullable": true,
       "required": false
     },
@@ -2183,9 +1957,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "option_2_description",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(3)"
-      ],
+      "mapping_type": ["add_collateral(3)"],
       "nullable": true,
       "required": false,
       "data_length": 100
@@ -2196,10 +1968,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "collateral_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "calculated_field",
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["calculated_field", "add_collateral(4)"],
       "expression": "CASE WHEN IL_collateral.coll4_make LIKE '%MERCURY%' THEN 413 WHEN IL_collateral.coll4_make LIKE '%YAMAHA%' THEN 413 WHEN IL_collateral.coll4_make LIKE '%MERCRUISER%' THEN 413 WHEN IL_collateral.coll4_model LIKE '%TRAILER%' THEN 420 WHEN IL_collateral.coll4_make LIKE '%MAGIC TILT%' THEN 420 WHEN IL_application.app_type_code = 'MARINE' THEN 417 WHEN IL_application.app_type_code = 'OR' THEN 417 WHEN IL_application.app_type_code IS NOT EMPTY AND IL_collateral.coll4_value IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
@@ -2210,9 +1979,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "make",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["add_collateral(4)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -2223,9 +1990,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "model",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["add_collateral(4)"],
       "nullable": true,
       "required": false,
       "data_length": 50
@@ -2236,10 +2001,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "used_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit",
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["char_to_bit", "add_collateral(4)"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -2251,9 +2013,7 @@
       "target_column": "wholesale_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["add_collateral(4)"],
       "nullable": true,
       "required": false
     },
@@ -2263,9 +2023,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "vin",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["add_collateral(4)"],
       "nullable": true,
       "required": false,
       "data_length": 60
@@ -2276,10 +2034,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "year",
       "data_type": "smallint",
-      "mapping_type": [
-        "numbers_only",
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["numbers_only", "add_collateral(4)"],
       "nullable": false,
       "required": false
     },
@@ -2290,9 +2045,7 @@
       "target_column": "option_1_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["add_collateral(4)"],
       "nullable": true,
       "required": false
     },
@@ -2302,9 +2055,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "option_1_description",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["add_collateral(4)"],
       "nullable": true,
       "required": false,
       "data_length": 100
@@ -2316,9 +2067,7 @@
       "target_column": "option_2_value",
       "data_type": "decimal",
       "data_length": 2,
-      "mapping_type": [
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["add_collateral(4)"],
       "nullable": true,
       "required": false
     },
@@ -2328,9 +2077,7 @@
       "target_table": "app_collateral_rl",
       "target_column": "option_2_description",
       "data_type": "string",
-      "mapping_type": [
-        "add_collateral(4)"
-      ],
+      "mapping_type": ["add_collateral(4)"],
       "nullable": true,
       "required": false,
       "data_length": 100
@@ -2341,9 +2088,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "credit_app_signed_pr_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2354,9 +2099,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "credit_app_signed_sec_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2367,9 +2110,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "paystub_expire_date_pr",
       "data_type": "datetime",
-      "mapping_type": [
-        "extract_date"
-      ],
+      "mapping_type": ["extract_date"],
       "nullable": true,
       "required": false
     },
@@ -2379,10 +2120,9 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "check_requested_by_user",
       "data_type": "string",
-      "mapping_type": [
-        "calculated_field"
-      ],
-      "expression": "CASE WHEN chk_requested_by LIKE '%WENDY%' OR chk_requested_by LIKE '%DOTSON%' THEN 'WENDY.DOTSON@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%POTEZ%' THEN 'ALYSSA.RAPOTEZ@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%ANGIE%' THEN 'ANGIE.HAYS@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%ASHLEY%' OR chk_requested_by LIKE '%HAASE%' THEN 'ASHLEY.HAASE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%SIPLINGER%' THEN 'BRIANN.SIPLINGER@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%CHARISSA%' THEN 'CHARISSA.GREEN@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%CINDY%' OR chk_requested_by LIKE '%BEASON%' THEN 'CINDY.BEASON@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%DIANA%' OR chk_requested_by LIKE '%JOHNS%' THEN 'DIANA.JOHNS@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%JONA%' THEN 'JONA.KELLER@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%KATIE%' OR chk_requested_by LIKE '%VANCE%' THEN 'KATIE.VANCE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%KARISSA%' THEN 'KARISSA.WHITE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%KRISTY%' THEN 'KRISTY.LOTTE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%MARIA%' OR chk_requested_by LIKE '%CAMPOS%' THEN 'MARIA.CAMPOS@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%HDYE%' OR chk_requested_by LIKE '%HYDE%' THEN 'MIA.HYDE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%PRESTON%' THEN 'MICHELLE.PRESTON@MERRICKBANK.COM' WHEN chk_requested_by LIKE 'PAM%' OR chk_requested_by LIKE '%MIETCHEN%' THEN 'PAM.MIETCHEN@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%BITTLE%' THEN 'SHERRY.BITTLE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%CARTER%' THEN 'SHAUNA.CARTER@MERRICKBANK.COM' ELSE officer_code_to_email_enum END",
+      "mapping_type": ["calculated_field", "enum"],
+      "expression": "CASE WHEN chk_requested_by LIKE '%WENDY%' OR chk_requested_by LIKE '%DOTSON%' THEN 'WENDY.DOTSON@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%POTEZ%' THEN 'ALYSSA.RAPOTEZ@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%ANGIE%' THEN 'ANGIE.HAYS@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%ASHLEY%' OR chk_requested_by LIKE '%HAASE%' THEN 'ASHLEY.HAASE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%SIPLINGER%' THEN 'BRIANN.SIPLINGER@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%CHARISSA%' THEN 'CHARISSA.GREEN@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%CINDY%' OR chk_requested_by LIKE '%BEASON%' THEN 'CINDY.BEASON@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%DIANA%' OR chk_requested_by LIKE '%JOHNS%' THEN 'DIANA.JOHNS@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%JONA%' THEN 'JONA.KELLER@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%KATIE%' OR chk_requested_by LIKE '%VANCE%' THEN 'KATIE.VANCE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%KARISSA%' THEN 'KARISSA.WHITE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%KRISTY%' THEN 'KRISTY.LOTTE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%MARIA%' OR chk_requested_by LIKE '%CAMPOS%' THEN 'MARIA.CAMPOS@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%HDYE%' OR chk_requested_by LIKE '%HYDE%' THEN 'MIA.HYDE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%PRESTON%' THEN 'MICHELLE.PRESTON@MERRICKBANK.COM' WHEN chk_requested_by LIKE 'PAM%' OR chk_requested_by LIKE '%MIETCHEN%' THEN 'PAM.MIETCHEN@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%BITTLE%' THEN 'SHERRY.BITTLE@MERRICKBANK.COM' WHEN chk_requested_by LIKE '%CARTER%' THEN 'SHAUNA.CARTER@MERRICKBANK.COM' END",
+      "enum_name": "officer_code_to_email_enum",
       "nullable": true,
       "required": false,
       "data_length": 80
@@ -2393,9 +2133,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "paystub_expire_date_sec",
       "data_type": "datetime",
-      "mapping_type": [
-        "extract_date"
-      ],
+      "mapping_type": ["extract_date"],
       "nullable": true,
       "required": false
     },
@@ -2405,9 +2143,7 @@
       "target_table": "app_funding_rl",
       "target_column": "collateral_ages_within_policy_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2418,9 +2154,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "collateral_percent_used_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2431,9 +2165,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "collateral_worksheet_unit_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2453,9 +2185,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "addendum_signed_pr_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2466,9 +2196,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "addendum_signed_sec_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2479,9 +2207,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "address_confirmed_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2492,9 +2218,7 @@
       "target_table": "app_funding_rl",
       "target_column": "amount_financed_within_policy_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2505,9 +2229,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "apr_within_guidelines_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2548,9 +2270,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "correct_contract_state_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2601,9 +2321,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "initials_presented_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2614,9 +2332,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "itemization_confirmed_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2696,9 +2412,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "payment_schedule_confirmed_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2729,9 +2443,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "contract_signed_pr_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2742,9 +2454,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "contract_signed_sec_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2784,9 +2494,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "verified_against_program_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -2797,9 +2505,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "drivers_license_confirmed_pr_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2810,9 +2516,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "drivers_license_dob_confirmed_pr_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2823,9 +2527,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "drivers_license_confirmed_sec_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2836,9 +2538,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "drivers_license_dob_confirmed_sec_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2869,9 +2569,7 @@
       "target_table": "app_transactional_rl",
       "target_column": "fund_loan_indicator_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -2881,9 +2579,7 @@
       "target_table": "app_operational_rl",
       "target_column": "assigned_funding_analyst",
       "data_type": "string",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "officer_code_to_email_enum",
@@ -2895,9 +2591,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "guarantee_of_lien_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2917,9 +2611,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "insurance_deductible_within_policy_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2930,9 +2622,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "insurance_mb_lienholder_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2943,9 +2633,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "insurance_motor_vin_confirm_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2956,9 +2644,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "insurance_rv_boat_vin_confirm_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2969,9 +2655,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "insurance_trailer_vin_confirm_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -2992,9 +2676,7 @@
       "target_table": "app_funding_rl",
       "target_column": "first_payment_not_in_7_days_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3005,9 +2687,7 @@
       "target_table": "app_funding_rl",
       "target_column": "loan_amount_approved_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3018,9 +2698,7 @@
       "target_table": "app_funding_rl",
       "target_column": "loan_amount_within_policy_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3031,9 +2709,7 @@
       "target_table": "app_funding_rl",
       "target_column": "credit_pulled_within_30_days_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3044,9 +2720,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "down_payment_approved_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3057,9 +2731,7 @@
       "target_table": "app_funding_rl",
       "target_column": "down_payment_within_policy_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3070,9 +2742,7 @@
       "target_table": "app_funding_rl",
       "target_column": "dti_within_policy_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3083,9 +2753,7 @@
       "target_table": "app_funding_rl",
       "target_column": "creditscore_within_policy_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3096,9 +2764,7 @@
       "target_table": "app_funding_rl",
       "target_column": "ltv_within_policy_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3109,9 +2775,7 @@
       "target_table": "app_funding_rl",
       "target_column": "note_date_in_range_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3122,9 +2786,7 @@
       "target_table": "app_funding_rl",
       "target_column": "paystub_within_30days_pr_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3135,9 +2797,7 @@
       "target_table": "app_funding_rl",
       "target_column": "paystub_within_30days_sec_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3148,9 +2808,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "applicant_references_checked_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3161,9 +2819,7 @@
       "target_table": "app_funding_rl",
       "target_column": "term_within_policy_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3174,9 +2830,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "unit_confirmed_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": true,
       "required": false,
       "default_value": "0"
@@ -3187,9 +2841,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "motor_title_mb_lienholder_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3200,9 +2852,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "motor_title_vin_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3213,9 +2863,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "motor_ucc_mb_lienholder_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3226,9 +2874,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "motor_ucc_vin_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3239,9 +2885,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "new_motor_1_invoice_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3252,9 +2896,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "new_motor_2_invoice_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3265,9 +2907,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "new_rv_boat_invoice_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3278,9 +2918,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "new_trailer_invoice_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3401,9 +3039,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "payoff_mb_loan_verified_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3424,9 +3060,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "rv_boat_title_mb_lienholder_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3437,9 +3071,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "rv_boat_title_vin_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3450,9 +3082,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "rv_boat_ucc_mb_lienholder_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3463,9 +3093,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "rv_boat_ucc_vin_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3526,9 +3154,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "trailer_title_mb_lienholder_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3539,9 +3165,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "trailer_title_vin_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3552,9 +3176,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "trailer_ucc_mb_lienholder_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3565,9 +3187,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "trailer_ucc_vin_confirmed_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3578,9 +3198,7 @@
       "target_table": "app_funding_checklist_rl",
       "target_column": "ucc_filed_by_mb_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false,
       "enum_name": "y_n_d_enum"
@@ -3593,6 +3211,17 @@
       "data_type": "datetime",
       "nullable": true,
       "required": false
+    },
+    {
+      "xml_path": "/Provenir",
+      "xml_attribute": "ipaddress",
+      "target_table": "app_base",
+      "target_column": "ip_address",
+      "data_type": "string",
+      "data_length": 39,
+      "nullable": true,
+      "required": false,
+      "description": "IP address from Provenir root element"
     },
     {
       "xml_path": "/Provenir/Request/CustData/IL_application/IL_ITI_note",
@@ -3659,9 +3288,7 @@
       "target_table": "app_dealer_rl",
       "target_column": "bank_account_type_enum",
       "data_type": "smallint",
-      "mapping_type": [
-        "enum"
-      ],
+      "mapping_type": ["enum"],
       "nullable": true,
       "required": false
     },
@@ -3690,12 +3317,32 @@
       "target_table": "app_transactional_rl",
       "target_column": "suppress_ach_funding_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit"
-      ],
+      "mapping_type": ["char_to_bit"],
       "nullable": false,
       "required": false,
       "default_value": "0"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/IL_application/IL_fund_checklist",
+      "xml_attribute": "ct_fee_assess_Florida_Fee",
+      "target_table": "app_transactional_rl",
+      "target_column": "assess_florida_doc_fee_flag",
+      "data_type": "bit",
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "description": "Florida document fee assessment flag from funding checklist"
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/IL_application/IL_fund_checklist",
+      "xml_attribute": "ct_fee_assess_Tennessee_Fee",
+      "target_table": "app_transactional_rl",
+      "target_column": "assess_tennessee_doc_fee_flag",
+      "data_type": "bit",
+      "mapping_type": ["char_to_bit"],
+      "nullable": true,
+      "required": false,
+      "description": "Tennessee document fee assessment flag from funding checklist"
     },
     {
       "xml_path": "/Provenir/Request/CustData/IL_application/IL_backend_policies",
@@ -3703,9 +3350,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "company_name",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(623)"
-      ],
+      "mapping_type": ["warranty_field(623)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -3716,9 +3361,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "amount",
       "data_type": "decimal",
-      "mapping_type": [
-        "warranty_field(623)"
-      ],
+      "mapping_type": ["warranty_field(623)"],
       "nullable": false,
       "required": false
     },
@@ -3728,9 +3371,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "term_months",
       "data_type": "smallint",
-      "mapping_type": [
-        "warranty_field(623)"
-      ],
+      "mapping_type": ["warranty_field(623)"],
       "nullable": false,
       "required": false
     },
@@ -3740,9 +3381,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "policy_number",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(623)"
-      ],
+      "mapping_type": ["warranty_field(623)"],
       "nullable": true,
       "required": false,
       "data_length": 30
@@ -3753,10 +3392,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "merrick_lienholder_flag",
       "data_type": "bit",
-      "mapping_type": [
-        "char_to_bit",
-        "warranty_field(623)"
-      ],
+      "mapping_type": ["char_to_bit", "warranty_field(623)"],
       "nullable": false,
       "required": false,
       "default_value": "0"
@@ -3767,9 +3403,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "company_name",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(626)"
-      ],
+      "mapping_type": ["warranty_field(626)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -3780,9 +3414,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "amount",
       "data_type": "decimal",
-      "mapping_type": [
-        "warranty_field(626)"
-      ],
+      "mapping_type": ["warranty_field(626)"],
       "nullable": false,
       "required": false
     },
@@ -3792,9 +3424,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "term_months",
       "data_type": "smallint",
-      "mapping_type": [
-        "warranty_field(626)"
-      ],
+      "mapping_type": ["warranty_field(626)"],
       "nullable": false,
       "required": false
     },
@@ -3804,9 +3434,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "policy_number",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(626)"
-      ],
+      "mapping_type": ["warranty_field(626)"],
       "nullable": true,
       "required": false,
       "data_length": 30
@@ -3817,9 +3445,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "company_name",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(622)"
-      ],
+      "mapping_type": ["warranty_field(622)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -3830,9 +3456,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "amount",
       "data_type": "decimal",
-      "mapping_type": [
-        "warranty_field(622)"
-      ],
+      "mapping_type": ["warranty_field(622)"],
       "nullable": false,
       "required": false
     },
@@ -3842,9 +3466,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "term_months",
       "data_type": "smallint",
-      "mapping_type": [
-        "warranty_field(622)"
-      ],
+      "mapping_type": ["warranty_field(622)"],
       "nullable": false,
       "required": false
     },
@@ -3854,9 +3476,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "policy_number",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(622)"
-      ],
+      "mapping_type": ["warranty_field(622)"],
       "nullable": true,
       "required": false,
       "data_length": 30
@@ -3867,9 +3487,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "company_name",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(625)"
-      ],
+      "mapping_type": ["warranty_field(625)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -3880,9 +3498,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "amount",
       "data_type": "decimal",
-      "mapping_type": [
-        "warranty_field(625)"
-      ],
+      "mapping_type": ["warranty_field(625)"],
       "nullable": false,
       "required": false
     },
@@ -3892,9 +3508,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "term_months",
       "data_type": "smallint",
-      "mapping_type": [
-        "warranty_field(625)"
-      ],
+      "mapping_type": ["warranty_field(625)"],
       "nullable": false,
       "required": false
     },
@@ -3904,9 +3518,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "policy_number",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(625)"
-      ],
+      "mapping_type": ["warranty_field(625)"],
       "nullable": true,
       "required": false,
       "data_length": 30
@@ -3917,9 +3529,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "company_name",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(621)"
-      ],
+      "mapping_type": ["warranty_field(621)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -3930,9 +3540,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "amount",
       "data_type": "decimal",
-      "mapping_type": [
-        "warranty_field(621)"
-      ],
+      "mapping_type": ["warranty_field(621)"],
       "nullable": false,
       "required": false
     },
@@ -3942,9 +3550,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "term_months",
       "data_type": "smallint",
-      "mapping_type": [
-        "warranty_field(621)"
-      ],
+      "mapping_type": ["warranty_field(621)"],
       "nullable": false,
       "required": false
     },
@@ -3954,9 +3560,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "policy_number",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(621)"
-      ],
+      "mapping_type": ["warranty_field(621)"],
       "nullable": true,
       "required": false,
       "data_length": 30
@@ -3967,9 +3571,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "company_name",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(620)"
-      ],
+      "mapping_type": ["warranty_field(620)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -3980,9 +3582,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "amount",
       "data_type": "decimal",
-      "mapping_type": [
-        "warranty_field(620)"
-      ],
+      "mapping_type": ["warranty_field(620)"],
       "nullable": false,
       "required": false
     },
@@ -3992,9 +3592,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "term_months",
       "data_type": "smallint",
-      "mapping_type": [
-        "warranty_field(620)"
-      ],
+      "mapping_type": ["warranty_field(620)"],
       "nullable": false,
       "required": false
     },
@@ -4004,9 +3602,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "policy_number",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(620)"
-      ],
+      "mapping_type": ["warranty_field(620)"],
       "nullable": true,
       "required": false,
       "data_length": 30
@@ -4017,9 +3613,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "company_name",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(624)"
-      ],
+      "mapping_type": ["warranty_field(624)"],
       "nullable": false,
       "required": false,
       "data_length": 50
@@ -4030,9 +3624,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "amount",
       "data_type": "decimal",
-      "mapping_type": [
-        "warranty_field(624)"
-      ],
+      "mapping_type": ["warranty_field(624)"],
       "nullable": false,
       "required": false
     },
@@ -4042,9 +3634,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "term_months",
       "data_type": "smallint",
-      "mapping_type": [
-        "warranty_field(624)"
-      ],
+      "mapping_type": ["warranty_field(624)"],
       "nullable": false,
       "required": false
     },
@@ -4054,9 +3644,7 @@
       "target_table": "app_warranties_rl",
       "target_column": "policy_number",
       "data_type": "string",
-      "mapping_type": [
-        "warranty_field(624)"
-      ],
+      "mapping_type": ["warranty_field(624)"],
       "nullable": true,
       "required": false,
       "data_length": 30
@@ -4095,9 +3683,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4107,9 +3693,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4119,9 +3703,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4131,9 +3713,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4143,9 +3723,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4155,9 +3733,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4167,9 +3743,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4179,9 +3753,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4191,9 +3763,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4203,9 +3773,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4215,9 +3783,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4227,9 +3793,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4239,9 +3803,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4251,9 +3813,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4263,9 +3823,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4275,9 +3833,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4287,9 +3843,7 @@
       "target_table": "app_historical_lookup",
       "target_column": "",
       "data_type": "string",
-      "mapping_type": [
-        "add_history"
-      ],
+      "mapping_type": ["add_history"],
       "nullable": true,
       "required": false
     },
@@ -4298,10 +3852,8 @@
       "xml_attribute": "experian_vantage4_score",
       "target_table": "app_historical_lookup",
       "target_column": "",
-      "data_type": "string",
-      "mapping_type": [
-        "add_score(V4P)"
-      ],
+      "data_type": "int",
+      "mapping_type": ["add_score(V4P)"],
       "nullable": true,
       "required": false
     },
@@ -4310,10 +3862,8 @@
       "xml_attribute": "experian_vantage4_score2",
       "target_table": "app_historical_lookup",
       "target_column": "",
-      "data_type": "string",
-      "mapping_type": [
-        "add_score(V4S)"
-      ],
+      "data_type": "int",
+      "mapping_type": ["add_score(V4S)"],
       "nullable": true,
       "required": false
     },
@@ -4322,10 +3872,8 @@
       "xml_attribute": "CRI_score_p",
       "target_table": "scores",
       "target_column": "",
-      "data_type": "string",
-      "mapping_type": [
-        "add_score(CRI_pr)"
-      ],
+      "data_type": "int",
+      "mapping_type": ["add_score(CRI_pr)"],
       "nullable": true,
       "required": false
     },
@@ -4334,10 +3882,8 @@
       "xml_attribute": "CRI_score_s",
       "target_table": "scores",
       "target_column": "",
-      "data_type": "string",
-      "mapping_type": [
-        "add_score(CRI_sec)"
-      ],
+      "data_type": "int",
+      "mapping_type": ["add_score(CRI_sec)"],
       "nullable": true,
       "required": false
     },
@@ -4346,10 +3892,8 @@
       "xml_attribute": "MRV_score_p",
       "target_table": "scores",
       "target_column": "",
-      "data_type": "string",
-      "mapping_type": [
-        "add_score(MRV_pr)"
-      ],
+      "data_type": "int",
+      "mapping_type": ["add_score(MRV_pr)"],
       "nullable": true,
       "required": false
     },
@@ -4358,10 +3902,8 @@
       "xml_attribute": "MRV_score_s",
       "target_table": "scores",
       "target_column": "",
-      "data_type": "string",
-      "mapping_type": [
-        "add_score(MRV_sec)"
-      ],
+      "data_type": "int",
+      "mapping_type": ["add_score(MRV_sec)"],
       "nullable": true,
       "required": false
     }

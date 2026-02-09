@@ -376,7 +376,7 @@ class TestRecLendingEndToEnd(unittest.TestCase):
     def _verify_app_base(self, cursor, app_id):
         """Verify app_base record."""
         cursor.execute(
-            f"SELECT app_id, receive_date, app_type_enum, decision_enum "
+            f"SELECT app_id, receive_date, app_type_enum, decision_enum, ip_address "
             f"FROM {self._qualify_table('app_base')} WHERE app_id = ?",
             app_id,
         )
@@ -386,8 +386,12 @@ class TestRecLendingEndToEnd(unittest.TestCase):
 
         # app_type_enum: MARINE → 39
         self.assertEqual(row[2], 39, f"app_type_enum should be 39 (MARINE), got {row[2]}")
+        
+        # ip_address: from Provenir/@ipaddress
+        expected_ip = "52.201.112.6:49934, 10.254.22.57"
+        self.assertEqual(row[4], expected_ip, f"ip_address should be '{expected_ip}', got {row[4]}")
 
-        print(f"[OK] app_base verified: app_id={row[0]}, receive_date={row[1]}, app_type_enum={row[2]}, decision_enum={row[3]}")
+        print(f"[OK] app_base verified: app_id={row[0]}, receive_date={row[1]}, app_type_enum={row[2]}, decision_enum={row[3]}, ip_address={row[4]}")
 
     def _verify_contacts(self, cursor, app_id):
         """Verify app_contact_base records (PR + SEC)."""
@@ -672,20 +676,23 @@ class TestRecLendingEndToEnd(unittest.TestCase):
           Coll1: year=2025, make="ALL WATER", model="LONG BOY", VIN="4b5et6egt69",
                  new_used_demo="U"→used_flag=1, collateral_type_enum=412 (BOAT),
                  option_1_value=789.53, option_2_description="Sweet sound system",
-                 coll1_mileage="836"→mileage=836
+                 coll1_mileage="836"→mileage=836, coll1_value="22500.00"→wholesale_value=22500.00
           Coll2: year=2023, make="Coll2 Make", model="Coll2 Model", VIN="Coll2 VIN",
                  coll2_HP_Marine="115.00"→collateral_type_enum=413 (ENGINE),
-                 motor_size=115, used_flag=0 (no new_used_demo → default)
+                 motor_size=115, used_flag=0 (no new_used_demo → default),
+                 coll2_value="2500.50"→wholesale_value=2500.50
           Coll3: year=2025, make="MERCURY", model="ring-ding-ding", VIN="newvin",
                  collateral_type_enum=413 (ENGINE, via OR-expanded expression),
-                 used_flag=0 (no new_used_demo → default), no HP_Marine→motor_size=NULL
+                 used_flag=0 (no new_used_demo → default), no HP_Marine→motor_size=NULL,
+                 coll3_value="750.25"→wholesale_value=750.25
           Coll4: year=2022, make="Coll4 Make", model="Coll4 Model", VIN="Coll4 VIN",
-                 collateral_type_enum=417 (OTHER TRAILER), used_flag=0
+                 collateral_type_enum=417 (OTHER TRAILER), used_flag=0,
+                 coll4_value="250.00"→wholesale_value=250.00
         """
         cursor.execute(
             f"""
             SELECT collateral_type_enum, make, model, vin, year, used_flag,
-                   sort_order, mileage, motor_size
+                   sort_order, mileage, motor_size, wholesale_value
             FROM {self._qualify_table('app_collateral_rl')}
             WHERE app_id = ?
             ORDER BY sort_order
@@ -702,7 +709,7 @@ class TestRecLendingEndToEnd(unittest.TestCase):
         by_sort = {r[6]: {
             "collateral_type_enum": r[0], "make": r[1], "model": r[2],
             "vin": r[3], "year": r[4], "used_flag": r[5],
-            "mileage": r[7], "motor_size": r[8],
+            "mileage": r[7], "motor_size": r[8], "wholesale_value": r[9],
         } for r in rows}
 
         # Slot 1 → 412 - BOAT (coll1: primary unit, used_flag=1 from U→1)
@@ -717,6 +724,8 @@ class TestRecLendingEndToEnd(unittest.TestCase):
                          "coll1_mileage='836' → mileage=836")
         self.assertIsNone(by_sort[1]["motor_size"],
                           "coll1 has no HP_Marine → motor_size=NULL")
+        self.assertAlmostEqual(by_sort[1]["wholesale_value"], 22500.00, places=2,
+                              msg="coll1_value='22500.00' → wholesale_value=22500.00")
 
         # Slot 2 → 413 - ENGINE (coll2: marine engine from coll2_HP_Marine)
         self.assertEqual(by_sort[2]["collateral_type_enum"], 413)
@@ -728,6 +737,8 @@ class TestRecLendingEndToEnd(unittest.TestCase):
                          "coll2_HP_Marine='115.00' → motor_size=115")
         self.assertIsNone(by_sort[2]["mileage"],
                           "coll2 has no mileage attribute → NULL")
+        self.assertAlmostEqual(by_sort[2]["wholesale_value"], 2500.50, places=2,
+                              msg="coll2_value='2500.50' → wholesale_value=2500.50")
 
         # Slot 3 → 413 - ENGINE (coll3: engine make MERCURY via OR-expanded expression)
         self.assertEqual(by_sort[3]["collateral_type_enum"], 413)
@@ -737,6 +748,8 @@ class TestRecLendingEndToEnd(unittest.TestCase):
         self.assertEqual(by_sort[3]["year"], 2025)
         self.assertIsNone(by_sort[3]["motor_size"],
                           "coll3 has no HP_Marine in E2E XML → motor_size=NULL")
+        self.assertAlmostEqual(by_sort[3]["wholesale_value"], 750.25, places=2,
+                              msg="coll3_value='750.25' → wholesale_value=750.25")
 
         # Slot 4 → 417 - OTHER TRAILER (coll4)
         self.assertEqual(by_sort[4]["collateral_type_enum"], 417)
@@ -744,12 +757,14 @@ class TestRecLendingEndToEnd(unittest.TestCase):
         self.assertEqual(by_sort[4]["model"], "Coll4 Model")
         self.assertEqual(by_sort[4]["vin"], "Coll4 VIN")
         self.assertEqual(by_sort[4]["year"], 2022)
+        self.assertAlmostEqual(by_sort[4]["wholesale_value"], 250.00, places=2,
+                              msg="coll4_value='250.00' → wholesale_value=250.00")
 
         print(f"[OK] app_collateral_rl verified: {len(rows)} records (all 4 groups populated)")
         for r in rows:
             print(f"   - sort={r[6]} type={r[0]}: make='{r[1]}', model='{r[2]}', "
                   f"vin='{r[3]}', year={r[4]}, used_flag={r[5]}, "
-                  f"mileage={r[7]}, motor_size={r[8]}")
+                  f"mileage={r[7]}, motor_size={r[8]}, wholesale_value={r[9]}")
 
     def _verify_warranties(self, cursor, app_id):
         """Verify app_warranties_rl records (7 warranty types from E2E XML).
@@ -851,10 +866,13 @@ class TestRecLendingEndToEnd(unittest.TestCase):
     def _verify_funding_checklist(self, cursor, app_id):
         """Verify app_funding_checklist_rl record.
 
-        Checks motor_ucc_vin_confirmed_enum (y_n_d_enum: Y → 660).
+        Checks:
+        - motor_ucc_vin_confirmed_enum (y_n_d_enum: Y → 660)
+        - check_requested_by_user (calculated_field + enum fallback pattern)
+          XML: chk_requested_by="WENDY" → should match CASE expression → "WENDY.DOTSON@MERRICKBANK.COM"
         """
         cursor.execute(
-            f"SELECT motor_ucc_vin_confirmed_enum "
+            f"SELECT motor_ucc_vin_confirmed_enum, check_requested_by_user "
             f"FROM {self._qualify_table('app_funding_checklist_rl')} WHERE app_id = ?",
             app_id,
         )
@@ -864,9 +882,18 @@ class TestRecLendingEndToEnd(unittest.TestCase):
         # motor_ucc_vin_confirmed: XML value="Y", y_n_d_enum Y → 660
         if row[0] is not None:
             self.assertEqual(row[0], 660, f"motor_ucc_vin_confirmed_enum should be 660, got {row[0]}")
-            print(f"[OK] app_funding_checklist_rl verified: motor_ucc_vin_confirmed_enum={row[0]} ✓")
+            print(f"[OK] app_funding_checklist_rl motor_ucc_vin_confirmed_enum={row[0]} ✓")
         else:
             print(f"[WARN] app_funding_checklist_rl motor_ucc_vin_confirmed_enum is NULL (expected 660)")
+        
+        # Phase 4: check_requested_by_user - CASE expression or enum mapping
+        # XML has chk_requested_by="6010" (officer code)
+        # Calculated field won't match (no WENDY in "6010") → returns NULL
+        # Enum fallback maps "6010" → "wendy.dotson@merrickbank.com"
+        expected_email = "wendy.dotson@merrickbank.com"
+        self.assertEqual(row[1], expected_email, 
+                        f"check_requested_by_user should be '{expected_email}' (from chk_requested_by='6010' via enum), got {row[1]}")
+        print(f"[OK] app_funding_checklist_rl check_requested_by_user='{row[1]}' ✓")
 
     def _verify_scores(self, cursor, app_id):
         """Verify scores records (add_score mapping type).

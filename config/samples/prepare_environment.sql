@@ -174,7 +174,7 @@ select * from migration.app_base where app_id = 325725
 
 
 
-select cl.motor_ucc_vin_confirmed_enum, * 
+select * 
 from migration.app_base as a
 left join migration.app_operational_rl as o on o.app_id = a.app_id
 left join migration.app_dealer_rl as d on d.app_id = a.app_id
@@ -188,8 +188,7 @@ left join migration.app_contact_address as ca on ca.con_id = c.con_id
 left join migration.app_contact_employment as ce on ce.con_id = c.con_id
 where a.app_id = 325725
 
-select * from migration.scores where app_id = 325725
-select * from migration.Indicators where app_id = 325725
+
 select e1.value, coll.* 
 from migration.app_collateral_rl  as coll
 left join migration.app_enums as e1 on e1.enum_id = coll.collateral_type_enum
@@ -197,12 +196,10 @@ select * from migration.app_historical_lookup where app_id = 325725
 select * from migration.app_report_results_lookup where app_id = 325725
 select * from migration.app_policy_exceptions_rl where app_id = 325725
 select * from migration.app_warranties_rl where app_id = 325725
-
-
-where app_id = 325725
+select * from migration.scores where app_id = 325725
+select * from migration.Indicators where app_id = 325725
 
 
 -- are we missing mappings for new fsp_email, fsp_fax, fsp_num
 -- where is monthly_payment_amount?
--- what about motor_ucc_vin_enum?
 -- assees_ _doc_fee_flag

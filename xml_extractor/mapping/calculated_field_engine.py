@@ -5,6 +5,7 @@ Provides safe expression evaluation for calculated field mappings with
 - Support for arithmetic operations, comparisons and conditional logic. 
 - Expression can use SQL syntax for conditionals (CASE/WHEN/THEN/ELSE/END)
 - Supports datetime comparisons with function `DATE('yyyy-mm-dd hh:mm:ss')`
+- Supports date arithmetic with function `DATEADD(day, number, date_field)`
 - 'Empty-check' evalutions with `IS EMPTY` / `IS NOT EMPTY` and `''`
 - Handles 'cross element' references with dot notation (e.g., 'contact.field_name')
 
@@ -12,6 +13,7 @@ Examples for 'calculated_field' as a mapping_type in the mapping contract:
     "expression": "b_months_at_job + (b_years_at_job * 12)"
     "expression": "CASE WHEN b_salary_basis_tp_c = 'ANNUM' THEN b_salary / 12 WHEN b_salary_basis_tp_c = 'MONTH' THEN b_salary * 12 WHEN b_salary_basis_tp_c = 'HOURLY' THEN b_salary WHEN b_salary_basis_tp_c = '' THEN b_salary ELSE b_salary END"
     "expression": "CASE WHEN app_product.adverse_actn1_type_cd IS NOT EMPTY AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.population_assignment = 'CM' THEN 'AJ' WHEN app_product.adverse_actn1_type_cd LIKE 'V4_%' AND application.app_receive_date > DATE('2023-10-11 00:00:00') AND application.app_type_code = 'SECURE' THEN 'V4' ELSE '' END"
+    "expression": "DATEADD(day, 30, IL_application.app_entry_date)"
 """
 
 import re
@@ -19,7 +21,7 @@ import logging
 
 from typing import Dict, Any, Optional, Union, List
 from decimal import Decimal
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from ..exceptions import DataTransformationError
 from ..utils import ValidationUtils
@@ -39,7 +41,7 @@ class CalculatedFieldEngine:
     - Logical: AND, OR, NOT
     - Conditional: CASE WHEN ... THEN ... ELSE ... END
     - String operations: LIKE pattern matching
-    - Date operations: DATE('yyyy-mm-dd hh:mm:ss') constructor
+    - Date operations: DATE('yyyy-mm-dd hh:mm:ss') constructor, DATEADD(day, number, date_field) for date arithmetic
     - Null checking: IS EMPTY, IS NOT EMPTY
     - Cross-element references: table.field or element.subfield notation
 
@@ -368,6 +370,130 @@ class CalculatedFieldEngine:
                 # If all parsing fails, return None
                 return None
     
+    def _extract_dateadd_value(self, expr: str, element_data: Dict[str, Any]) -> Optional[datetime]:
+        """Extract date value from DATEADD() function call or return None if not a DATEADD() call.
+        
+        Supports: DATEADD(day, number, date_field)
+        - unit: Must be 'day' (only days supported for now)
+        - number: Integer or field reference (NULL/empty defaults to 0)
+        - date_field: Field reference or DATE() function
+        
+        Examples:
+            DATEADD(day, 30, IL_application.app_entry_date)
+            DATEADD(day, regb_closed_days_num, IL_application.app_receive_date)
+        """
+        expr = expr.strip()
+        if not (expr.upper().startswith('DATEADD(') and expr.endswith(')')):
+            return None
+        
+        # Extract the content from DATEADD(content)
+        content = expr[8:-1].strip()
+        
+        # Split by commas, but respect nested function calls
+        parts = self._split_function_args(content)
+        
+        if len(parts) != 3:
+            logging.warning(f"DATEADD requires exactly 3 arguments, got {len(parts)}: {expr}")
+            return None
+        
+        unit, number_expr, date_expr = [p.strip() for p in parts]
+        
+        # Validate unit is 'day'
+        if unit.lower() not in ['day', "'day'", '"day"']:
+            logging.warning(f"DATEADD only supports 'day' unit, got: {unit}")
+            return None
+        
+        # Evaluate the number of days
+        try:
+            # Check if it's a literal number
+            if number_expr.replace('-', '').replace('.', '').isdigit():
+                days_to_add = int(float(number_expr))
+            else:
+                # It's a field reference
+                days_value = element_data.get(number_expr)
+                if days_value is None or str(days_value).strip() == '':
+                    # NULL or empty defaults to 0
+                    days_to_add = 0
+                else:
+                    days_to_add = int(float(days_value))
+        except (ValueError, TypeError) as e:
+            logging.warning(f"Could not convert days value '{number_expr}' to integer: {e}")
+            return None
+        
+        # Evaluate the date
+        # First check if it's a DATE() function call
+        if date_expr.upper().startswith('DATE('):
+            base_date = self._extract_date_value(date_expr, element_data)
+        else:
+            # It's a field reference
+            date_value = element_data.get(date_expr)
+            if date_value is None:
+                return None
+            
+            # Try to parse as datetime
+            if isinstance(date_value, datetime):
+                base_date = date_value
+            else:
+                date_str = str(date_value)
+                try:
+                    # Try common formats
+                    base_date = datetime.strptime(date_str, '%Y-%m-%d')
+                except ValueError:
+                    for fmt in ['%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M:%S.%f']:
+                        try:
+                            base_date = datetime.strptime(date_str, fmt)
+                            break
+                        except ValueError:
+                            continue
+                    else:
+                        logging.warning(f"Could not parse date value '{date_str}'")
+                        return None
+        
+        if base_date is None:
+            return None
+        
+        # Add the days
+        result_date = base_date + timedelta(days=days_to_add)
+        return result_date
+    
+    def _split_function_args(self, content: str) -> List[str]:
+        """Split function arguments by commas, respecting nested parentheses.
+        
+        Example: "day, 30, DATE('2023-01-01')" -> ["day", "30", "DATE('2023-01-01')"]
+        """
+        parts = []
+        current = []
+        paren_depth = 0
+        quote_char = None
+        
+        for char in content:
+            if quote_char:
+                # Inside a quoted string
+                current.append(char)
+                if char == quote_char:
+                    quote_char = None
+            elif char in ("'", '"'):
+                # Start of quoted string
+                quote_char = char
+                current.append(char)
+            elif char == '(':
+                paren_depth += 1
+                current.append(char)
+            elif char == ')':
+                paren_depth -= 1
+                current.append(char)
+            elif char == ',' and paren_depth == 0:
+                # Top-level comma - split here
+                parts.append(''.join(current))
+                current = []
+            else:
+                current.append(char)
+        
+        if current:
+            parts.append(''.join(current))
+        
+        return parts
+    
     def _matches_like_pattern(self, value: str, pattern: str) -> bool:
         """Check if value matches SQL LIKE pattern with % and _ wildcards."""
         # Convert SQL LIKE pattern to regex
@@ -460,6 +586,14 @@ class CalculatedFieldEngine:
         Supports cross-element field references like 'contact.field_name'.
         """
         expression = expression.strip()
+        
+        # Check if it's a DATEADD() function call
+        if expression.upper().startswith('DATEADD('):
+            date_result = self._extract_dateadd_value(expression, element_data)
+            if date_result:
+                # Return as ISO format string (YYYY-MM-DD)
+                return date_result.strftime('%Y-%m-%d')
+            return None
         
         # If it's a simple field reference (including dotted cross-element references)
         if expression in element_data:

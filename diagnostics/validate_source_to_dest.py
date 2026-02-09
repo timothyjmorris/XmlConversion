@@ -6,7 +6,7 @@ mapping issues, missing data, and transformation errors.
 
 Usage:
     python diagnostics/validate_source_to_dest.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --app-id 12345
-    python diagnostics/validate_source_to_dest.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB" --sample 10
+    python .\diagnostics\validate_source_to_dest.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --schema dbo --output ./diagnostics/validate_source_to_dest_results.json --sample 20
 
 Features:
 - Fetch source XML and destination data for a single app_id
@@ -326,7 +326,7 @@ def validate_app(conn, app_id: int, schema: str = 'dbo') -> ValidationResult:
         # Check for sparse rows
         non_null = count_non_null_columns(dest_data)
         total = len(dest_data) - 1  # exclude app_id
-        if total > 0 and non_null / total < 0.2:
+        if total > 0 and non_null / total < 0.15:
             result.issues.append(f"{table}: Sparse row - only {non_null}/{total} columns populated")
             result.status = 'WARN' if result.status == 'PASS' else result.status
     

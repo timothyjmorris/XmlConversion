@@ -1102,6 +1102,35 @@ class DataMapper(DataMapperInterface):
                 self.logger.debug(f"No mapping_type for {mapping.target_column}")
 
         current_value = value
+        
+        # Store original value for conditional enum fallback pattern
+        # SPECIAL CASE: If value is the calculated_field sentinel, extract real XML value from context
+        # When ["calculated_field", "enum"] chain and calculated_field returns NULL,
+        # enum should operate on original XML value (not the sentinel or NULL)
+        if value == "__CALCULATED_FIELD_SENTINEL__" and context_data and mapping.xml_attribute:
+            # Extract the actual XML value from context for enum fallback
+            original_value = self._get_attribute_case_insensitive(context_data, mapping.xml_attribute)
+            
+            # SAFEGUARD: Handle nested structures (e.g., contact/address tables with 'attributes' key)
+            if original_value is None and 'attributes' in context_data:
+                original_value = self._get_attribute_case_insensitive(context_data['attributes'], mapping.xml_attribute)
+            
+            # SAFEGUARD: Warn if attribute not found in context (potential silent data loss)
+            if original_value is None:
+                self.logger.warning(
+                    f"Enum fallback: Could not extract '{mapping.xml_attribute}' from context for {mapping.target_column}. "
+                    f"Context keys: {list(context_data.keys())[:10]}. Column will be excluded if enum fails."
+                )
+            else:
+                # SAFEGUARD: Normalize to string and strip whitespace for enum lookup
+                # Enums expect string keys, and XML may have leading/trailing spaces
+                if original_value is not None:
+                    original_value = str(original_value).strip() if str(original_value).strip() else None
+                
+                if self.logger.isEnabledFor(logging.DEBUG):
+                    self.logger.debug(f"Extracted real XML value for enum fallback: '{original_value}' (was sentinel)")
+        else:
+            original_value = value
 
         # Apply mapping types if present
         if mapping_types:
@@ -1109,13 +1138,62 @@ class DataMapper(DataMapperInterface):
                 if self.logger.isEnabledFor(logging.DEBUG):
                     self.logger.debug(f"Applying mapping type {i+1}/{len(mapping_types)}: '{mapping_type}' to value: {current_value}")
                 try:
+                    # CONDITIONAL ENUM FALLBACK PATTERN (RL Phase 4):
+                    # If this is an enum following a calculated_field that returned None,
+                    # restore the original XML value so enum can attempt mapping
+                    if (mapping_type == 'enum' and i > 0 and 
+                        mapping_types[i-1] == 'calculated_field' and 
+                        current_value is None):
+                        if self.logger.isEnabledFor(logging.DEBUG):
+                            self.logger.debug(f"Enum fallback triggered: restoring original value '{original_value}' for enum mapping")
+                        current_value = original_value
+                        
+                        # SAFEGUARD: Warn if original_value is also None (double failure)
+                        if current_value is None:
+                            self.logger.warning(
+                                f"Enum fallback: Both calculated_field and original XML extraction returned None for {mapping.target_column}. "
+                                f"Column will be excluded from INSERT."
+                            )
+                    
+                    # CONDITIONAL ENUM FALLBACK PATTERN (RL Phase 4):
+                    # If this is an enum following a calculated_field that returned a meaningful value,
+                    # skip the enum since we already have a valid result.
+                    # Check for meaningful value: not None AND not empty string (after strip)
+                    elif (mapping_type == 'enum' and i > 0 and 
+                          mapping_types[i-1] == 'calculated_field' and 
+                          current_value is not None and 
+                          (not isinstance(current_value, str) or current_value.strip() != '')):
+                        if self.logger.isEnabledFor(logging.DEBUG):
+                            self.logger.debug(f"Skipping enum: calculated_field already returned meaningful value '{current_value}'")
+                        continue  # Skip enum, keep the calculated value
+                    
                     current_value = self._apply_single_mapping_type(current_value, mapping_type, mapping, context_data)
                     if self.logger.isEnabledFor(logging.DEBUG):
                         self.logger.debug(f"Result after '{mapping_type}': {current_value}")
+                    
+                    # SAFEGUARD: Log INFO when enum fallback fails (helps diagnose production issues)
+                    if (mapping_type == 'enum' and i > 0 and 
+                        mapping_types[i-1] == 'calculated_field' and 
+                        current_value is None and original_value is not None):
+                        self.logger.info(
+                            f"Enum mapping returned None for value '{original_value}' on {mapping.target_column}. "
+                            f"Value not found in enum '{mapping.enum_name}'. Column will be excluded."
+                        )
+                    
+                    # CONDITIONAL ENUM FALLBACK PATTERN (RL Phase 4):
+                    # If current transformation returned None, check if we should break or continue
+                    # Don't break if: 1) mapping type allows None (enum, default_getutcdate_if_null)
+                    #                 2) next mapping type is enum (for fallback pattern)
                     if current_value is None and mapping_type not in ['enum', 'default_getutcdate_if_null']:
-                        if self.logger.isEnabledFor(logging.DEBUG):
-                            self.logger.debug(f"Breaking transformation chain at '{mapping_type}' due to None value")
-                        break
+                        # Check if next mapping type is enum (fallback pattern)
+                        next_is_enum = (i + 1 < len(mapping_types) and mapping_types[i + 1] == 'enum')
+                        if not next_is_enum:
+                            if self.logger.isEnabledFor(logging.DEBUG):
+                                self.logger.debug(f"Breaking transformation chain at '{mapping_type}' due to None value")
+                            break
+                        else:
+                            if self.logger.isEnabledFor(logging.DEBUG):
+                                self.logger.debug(f"Continuing to enum fallback despite None from '{mapping_type}'")
                 except Exception as e:
                     self.logger.warning(f"Transformation failed at step '{mapping_type}' for {mapping.target_column}: {e}")
                     raise DataTransformationError(
