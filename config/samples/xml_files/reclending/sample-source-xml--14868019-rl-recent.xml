@@ -1,0 +1,436 @@
+<Provenir ipaddress="10.20.50.2" transactionID="DE079b952c8_18a4ec677a3_07ffc18a4ec7482f_0a141248.10808" appone_trans_id="10113124" product="rl" app_source="API" Org="" shred_version="48.0" updatedCollateral="Y" a1_date="Fri, 06 Oct 2023 21:46:58 GMT" resetRegB="" error="" fundingErrorMessage="">
+  <Request ID="14868019" Process="99800" LockedBy="" UserID="SGage@merrickbank.com" Priority="" Status="" Workflow="75" Trans="ILFUNDTHISLOAN" transactionCounter="53" Readonly="0" _LockedBy="SGAGE@MERRICKBANK.COM" LockedAt="" LastUpdatedBy="VNAVARRETE@MERRICKBANK.COM">
+    <CustData>
+      <IL_application client_id="9398378" app_cash_down_payment="1874.00" app_sale_price="17443.00" requested_term_months="72" loan_amount_requested="19999.58" trade_allowance="0.00" trade_payoff_amount="0.00" parent_dealer_number="603563" individual_joint_app_ind="I" trade_net_tradein_amount="0.0" app_entry_date="2023-9-5 9:37:53.198" app_receive_date="09/05/2023" app_source_ind="A" campaign_num="MARRV" tied_app_id="" tied_app_indicator="" add_TTL_to_amt_fin="N" app_type_code="OR" sub_type_code="PWC" dlr_name="RV Financing USA" dealer_number="400007" dlr_address_line1="2115 Lexington Rd Ste 210" dlr_city="Louisville" dlr_state="KY" dlr_zipcode="40206" dlr_email="" dlr_phone="8559785626" esign_eligible="Y" dlr_broker="Y" dlr_num_marine="" dlr_fax="8558602969" fsp_name="" fsp_phone="" app_invoice_amount="" dealer_count="32503.0" app_counted="Y" duplicate_app_ind="N" assigned_analyst="ddamasco" dlr_num_rv="" dlr_num_mc="" dlr_num_or="400007" dlr_num_ht="" dlr_num_trailer="" EODRet="ILREPROCESS" process_date="2023-10-2 8:45:51.181" supervisor_rev_ind="" mapr="17.95">
+        <IL_collateral coll1_value="8050" coll1_year="2018" coll1_mileage="0" coll1_make="SEA-DOO" coll1_model="BRP RXPX 300" coll_option_total_value="1515.00" coll3_year="2017" coll3_value="420" coll3_make="MAGIC TILT" coll3_model="TRAILER" coll3_HP_Marine="150.00" coll4_year="" coll4_value="0.00" coll4_model="" coll4_make="" coll1_new_used_demo="U" coll_is_motorhome="N" coll2_new_used_demo="" coll3_new_used_demo="U" coll4_new_used_demo="U" coll_combined_value="15015" coll2_year="2017" coll2_make="SEA-DOO" coll2_model="BRP GTI" coll2_value="5030" coll_option1_desc="&lt;15%" coll_option1="1515" coll1_VIN="YDV28600B818" coll2_VIN="YDV40359A717" coll3_VIN="1M5BW1316H1E35422" />
+        <IL_app_decision_info experian_vantage4_score="646" MRV_lead_indicator_p="MRV" MRV_score_p="449.0" MRVReasons="[STRING* (&quot;als5400&quot;, &quot;bcc5620&quot;, &quot;all8370&quot;, &quot;iqt9420&quot;)]" CRI_score_p="534.0" MRVP_decline_code1="als5400" MRVP_decline_code2="bcc5620" MRVP_decline_code3="all8370" MRVP_decline_code4="iqt9420" vantage_score_used="646.0" experian_fico_score_v8="0" experian_fico_score_f9="663" mrv_score_used="449.0" experian_fico_score_10t="0644" monthly_income="3166" regular_pymt_amount1="455.58" manual_adj_monthly_debt="1166.58" monthly_debt="1166.58" debt_to_income_ratio="36.85" manual_adj_monthly_income="3405.740740740741" manual_adj_DTI_ratio="34.25" decision_type_code="APPRV" decision_date="2023-10-2 8:47:22.807" pending_verif_ind="N" Vantage4P_decline_code1="V4_31" Vantage4P_decline_code2="V4_29" Vantage4P_decline_code3="V4_62" Vantage4P_decline_code4="V4_85" regb_closed_days_num="0" TU_trans_risk_auto_score="" TU_trans_risk_auto_score2="" experian_fico_score_v8_2="" FICO_decline_code1="" FICO_decline_code2="" FICO_decline_code3="" FICO_decline_code4="" FICO_decline_code5="" FICO2_decline_code1="" FICO2_decline_code2="" FICO2_decline_code3="" FICO2_decline_code4="" FICO2_decline_code5="" risk_model_score="" Risk_Model_decline_code1="" Risk_Model_decline_code2="" policy_override_employee_code="" override_type_code="" experian_bankruptcy_score="" experian_bankruptcy_score2="" TU_bankruptcy_score="" TU_bankruptcy_score2="" CB_bankruptcy_decline_code1="" CB_bankruptcy_decline_code2="" CB_bankruptcy_decline_code3="" CB_bankruptcy_decline_code4="" CB2_bankruptcy_decline_code1="" CB2_bankruptcy_decline_code2="" CB2_bankruptcy_decline_code3="" CB2_bankruptcy_decline_code4="" override_type_code_notes="" />
+        <IL_fund_dlr_ach dlr_name="RV Financing USA      " dlr_num="400007" dlr_aba="083000137" dlr_account_num="238859117" dlr_check_or_sav="22" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="JP Morgan Chase" dlr_bank_phone="(502) 566-1870" dlr_fsp_yn="N" dlr_fsp_num="" dlr_proceeds_amount="20799.56" />
+        <IL_letters_faxes seq_no="1" letter_type_code="881" letter_sent_date="09/05/2023" decline_reason_code1="220" decline_reason_code2="227" decline_reason_code3="" decline_reason_code4="" send_letter_ind="Y" send_fax_ind="Y" letter_sent_ind="Y" fax_sent_ind="Y" fax_notes="Can relook at MAX loan of 20K. Thanks!" ready_to_send="Y" email_sent_ind="N" cb_score_suppress="" cb_disclosure_suppress="" />
+        <IL_ITI_control funding_date="2023-10-06" specification_record_flag_hdr="1" institution_number="15" account_number="5016957" vendor_id="38" verification_number="021468" boarding_date="100623" release_level="19026" class_code="05" />
+        <IL_application_verification />
+        <IL_fund_checklist fund_this_loan_indicator="Y" total_of_payments="32801.76" total_amount_financed="19999.58" title_fee="700" term="" taxes="1735.58" subtotal="15569.00" warranty_term="" payoff_amount="0" registration_fee="0" loan_officer_responsible_code="6103" loan_officer_open_acct_code="" license_fee="0" ct_sale_price="17443" ct_rate_over_split="17.95" ct_total_dealer_proceeds="20799.56" ct_cash_proceeds="19999.58" ct_cash_down_payment="1874" collateral_ages_within_policy="Y" ct_participation_percentage="4.00" payoff_loan_verified="Y" ct_loan_to_value_percentage="103.69" applicant_paystub_expire="10/23/2023" loan_Paystub_within_30days="Y" funding_contact_code="6060" finance_charge="12802.18" ct_note_pymt_amount="455.58" ct_note_date="10/05/2023" ct_net_tradein_allowance="0" other_public_official_fee_1="0" other_public_official_fee_2="0" other_public_official_fee_3="0" fl_contract_doc_tax="0" contract_credit_life_amount="0" contract_credit_disability_amount="0" contract_gap_amount="0" document_prep_fee="495" other_dealer_fees_1="1500" other_dealer_fees_2="0" other_dealer_fees_3="0" other_dealer_fees_4="0" other_dealer_fees_5="0" other_dealer_fees_6="0" ct_fee_ucc1="0" ct_UCC_prin_refund="0" ct_first_pymnt_by_dlr="0" coapplicant_paystub_expire="01/01/1900" chk_requested_by="6060" ct_apr_within_guidelines="Y" ct_correct_contract_state="Y" ct_contract_state="GF" ct_titled_in_state="LA" ct_address_confirmed="Y" ct_pymt_schedule_confirmed="Y" ct_itemization_confirmed="Y" ct_initials_presented="N" ct_signed_borrower1="Y" ct_signed_borrower2="D" ct_verified_against_program="Y" ct_addendum_signed_borr1="D" ct_addendum_signed_borr2="D" app_signed_borrower1="Y" dl_borrower1="Y" dl_borrower1_dob_confirmed="Y" app_signed_borrower2="D" dl_borrower2="D" dl_borrower2_dob_confirmed="D" loan_amount_within_policy="Y" loan_down_pymt_approved="Y" loan_unit_confirmed="Y" loan_reference1="Y" new_rv_boat_invoice_confirmed="D" new_motor_invoice_confirmed="D" new_trailer_invoice_confirmed="D" new_motor2_invoice_confirmed="D" collateral_ws_unit_confirmation="Y" collateral_percent_used_confirmed="D" rv_boat_title_vin_confirm="Y" rv_boat_title_mb_lienholder="Y" motor_title_vin_confirm="Y" motor_title_mb_lienholder="Y" trailer_title_vin_confirm="Y" trailer_title_mb_lienholder="Y" rv_boat_ucc1_vin_confirm="D" rv_boat_ucc1_mb_lienholder="D" motor_ucc1_vin_confirm="D" motor_ucc1_mb_lienholder="D" trailer_ucc1_vin_confirm="D" trailer_ucc1_mb_lienholder="D" ucc1_filed_by_Merrick="D" guarantee_of_lien="D" ins_mb_lienholder="Y" ins_deductible_within_policy="D" ins_rv_boat_vin_confirm="D" ins_motor_vin_confirm="D" ins_trailer_vin_confirm="D" inc_fund_expiration_date="10/13/2023" loan_note_date_in_range="Y" ct_participation_proceeds="799.98" ct_fee_fedex="0.00" ct_fee_Florida_doc_stamp_tax="0.00" ct_fee_sales_tax="0.00" ct_down_pymt_percentage="10.74" loan_down_pymt_within_policy="Y" ct_loan_to_value_percentage_with_fees="76.13" loan_LTV_within_policy="Y" loan_DTI_ratio_within_policy="Y" loan_FICO_within_policy="Y" loan_1st_pymt_not7days="Y" credit_bureau_expire="10/20/2023" loan_Credit_pulled_within_30days="Y" error_message="" mathCorpFC="12802.18" loan_term_within_policy="Y" ct_amt_financed_within_policy="Y" />
+        <IL_TempVariables TempFaxSeqNo="" TempOriginalProcess="20800" TempFaxStatusType="" TempFaxWithStips="" TempFaxLetterCode="" TempFaxReasonCode1="" TempFaxReasonCode2="" TempFaxReasonCode3="" TempFaxReasonCode4="" TempFaxNotes="" TempFaxLoanOfficer="" TempFaxExtension="" TempFaxDealer="" />
+        <IL_rule_flags DELAT="F" DELIL="F" DELRV="F" CCJTH="F" INSILH="F" INSSLR="T" NLABD="F" REVDT="F" TOJOB="F" ILDTI="F" />
+        <IL_backend_policies service_contract_amount="1500" service_contract_company="UNITED STATES WARRANTY" service_contract_policy="" service_contract_term="48" service_contract_lien="Y" />
+        <IL_Incomes>
+          <IL_Income baseMonthlyIncome="3120.00" ytdMonthlyIncome="3405.74" sourceApplicant="primary" id="1" dtiIncomeType="ytd" type="paystub" frequency="weekly" baseRate="18" unitsPerPeriod="40" periodEndDate="09/03/2023" payDate="09/08/2023" grossUpIncome="0" ytdAmount="27586.5" notes="" />
+        </IL_Incomes>
+        <IL_ITI_line name_line_pointer_1="001" address_pointer="00" />
+        <IL_ITI_loan_add_collateral addenda_number1="001" address_pointer1="00" collateral_ident1="YDV28600B818" UCC_file_number1="" date_orig_fin_stmt1="" date_last_review1="10/05/23" date_next_review1="" status1="" addenda_number2="002" collateral_ident2="YDV40359A717" UCC_file_number2="" date_orig_fin_stmt2="" date_last_review2="10/05/23" date_next_review2="" status2="" addenda_number3="003" address_pointer2="00" collateral_ident3="1M5BW1316H1E35422" UCC_file_number3="" date_orig_fin_stmt3="" date_last_review3="10/05/23" date_next_review3="" status3="" addenda_number4="" address_pointer3="00" collateral_ident4="" UCC_file_number4="" date_orig_fin_stmt4="" date_last_review4="" date_next_review4="" status4="" address_pointer4="" />
+        <IL_ITI_loan_add_tickler addenda_number1="001" description1="BINDER/PENDING" next_tickler_date1="12/04/23" notification_type1="N" />
+        <IL_ITI_note payment_date="11/04/23" name_line_pointer1="001" address_pointer="00" apr="17.9500" payment_code="2" payment_frequency="M" product_number="4015520" rate_index="" />
+        <IL_ITI_note_code_status secured_unsecured_code="S" NAICS_code="441210" />
+        <IL_ITI_note_misc recourse_code="A" CRA_type_code="7" source_code="400007" />
+        <IL_ITI_note_variable floor_rate="" next_rate_change_date="" />
+        <IL_ITI_payment_sched next_regular_pymt_date1="11/04/23" number_regular_pymts1="72" regular_pymt_frequency1="M" />
+        <IL_ITI_note_payment />
+        <IL_Indicators>
+          <IL_Indicator ID="CreditBureauPulledP" value="1" />
+          <IL_Indicator ID="ValidCreditScoreP" value="1" />
+          <IL_Indicator ID="MLA" value="N" />
+        </IL_Indicators>        
+      </IL_application>
+	  <IL_contact con_id="24065" ac_role_tp_c="PR" first_name="Ovella " middle_initial="" last_name="Brazelton" suffix="" ssn="666089298" birth_date="05/10/1978" drivers_license="8283645243" drivers_license_state="WY" drivers_license_expiration="" email="JOHN.DOE@GMAIL.COM" home_phone="9706452443" cell_phone="" bankruptcy_declared_ind="" property_repossessed_ind="" relationship_to_applicant="" ssn_last_4="9298">
+          <IL_contact_address address_seq_no="" address_type_code="CURR" street_number="5244" street_name="FLEETWOOD ST" apartment_unit_number="1E" po_box="" rural_route="" city="CLAYTON" state="MO" zip_code="63105" mortgage_holder_landlord="KHAN FAMILY PARTNERSHIP" mortgage_landlord_phone="4029812344" years_at_residence="5" months_at_residence="5" ownership_type_code="R" residence_monthly_pymnt="2400.00" />
+          <IL_contact_employment employment_seq_no="" employment_type_code="CURR" business_name="BIG SKY STEEL" supervisor="Tom the truck driver" title_position="TEACHER" self_employed_ind="N" address_line1="5199 HIGHWAY N" city="COTTLEVILLE" state="MO" zip_code="63304" business_phone="6368514600" salary="4500.00" salary_basis_type_code="MONTH" other_income_amt="330.00" other_income_basis_type_code="MONTH" other_income_source_type_code="OTHER" years_at_job="3" months_at_job="3" />          
+      </IL_contact>
+    </CustData>
+    <Documents />
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_0796e110cc68c2b9" ID="MRADD" Description="Mismatch reported address to CB address." Timestamp="2023-10-2 8:45:53.712" Severity="68" Override="1" AllowOverride="1" OverrideBy="DDAMASCO@MERRICKBANK.COM" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2023-9-5 9:37:53.807" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2023-9-5 9:37:53.807" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2023-9-5 9:37:53.807" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2023-9-5 9:37:53.807" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2023-9-5 9:37:53.807" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2023-9-5 9:37:53.807" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2023-9-5 9:37:53.807" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2023-9-5 9:37:53.807" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2023-9-5 9:37:53.823" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2023-9-5 9:37:53.823" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2023-9-5 9:37:53.823" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2023-9-5 9:37:53.823" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2023-9-5 9:37:53.823" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2023-9-5 9:37:53.823" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2023-9-5 9:37:53.823" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2023-9-5 9:37:53.823" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2023-9-5 9:37:53.823" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="2023-9-5 9:37:53.823" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2023-9-5 9:37:54.338" Status="false" />
+      <Journal Type="Process" ID="03800" Timestamp="2023-9-5 9:37:54.338" Status="Pass" />
+      <Journal Type="Rule" ID="IFADR" Timestamp="2023-9-5 9:37:54.354" Status="false" />
+      <Journal Type="Rule" ID="IFNAM" Timestamp="2023-9-5 9:37:54.354" Status="false" />
+      <Journal Type="Rule" ID="IFSSN" Timestamp="2023-9-5 9:37:54.448" Status="false" />
+      <Journal Type="Process" ID="05800" Timestamp="2023-9-5 9:37:54.448" Status="Pass" />
+      <Journal Type="Rule" ID="CBERR" Timestamp="2023-9-5 9:37:55.526" Status="false" />
+      <Journal Type="Rule" ID="CRFRZ" Timestamp="2023-9-5 9:37:55.526" Status="false" />
+      <Journal Type="Rule" ID="ILDEC" Timestamp="2023-9-5 9:37:55.526" Status="false" />
+      <Journal Type="Process" ID="BureauAndCreditScore" Timestamp="2023-9-5 9:37:55.526" Status="Pass" />
+      <Journal Type="Rule" ID="SCOREBLK" Timestamp="2023-9-5 9:37:55.526" Status="false" />
+      <Journal Type="Rule" ID="MINTRADE" Timestamp="2023-9-5 9:37:55.526" Status="false" />
+      <Journal Type="Process" ID="06800" Timestamp="2023-9-5 9:37:57.307" Status="Pass" />
+      <Journal Type="Rule" ID="CBSCOREP" Timestamp="2023-9-5 9:37:57.307" Status="false" />
+      <Journal Type="Process" ID="MRVFLOORP" Timestamp="2023-9-5 9:37:57.307" Status="false" />
+      <Journal Type="Process" ID="ScoreCutsPrimary" Timestamp="2023-9-5 9:37:57.307" Status="false" />
+      <Journal Type="Process" ID="ScoreCuts" Timestamp="2023-9-5 9:37:57.307" Status="false" />
+      <Journal Type="Process" ID="06850" Timestamp="2023-9-5 9:37:57.307" Status="Pass" />
+      <Journal Type="Rule" ID="MLAMISS" Timestamp="2023-9-5 9:37:57.354" Status="false" />
+      <Journal Type="Process" ID="06900" Timestamp="2023-9-5 9:37:57.354" Status="Pass" />
+      <Journal Type="Rule" ID="DELMB" Timestamp="2023-9-5 9:37:57.354" Status="false" />
+      <Journal Type="Rule" ID="CCCPP" Timestamp="2023-9-5 9:37:57.354" Status="false" />
+      <Journal Type="Rule" ID="CBAIF" Timestamp="2023-9-5 9:37:57.354" Status="false" />
+      <Journal Type="Rule" ID="CBPML" Timestamp="2023-9-5 9:37:57.370" Status="false" />
+      <Journal Type="Rule" ID="DELINQ" Timestamp="2023-9-5 9:37:57.370" Status="false" />
+      <Journal Type="Rule" ID="EFSTM" Timestamp="2023-9-5 9:37:57.370" Status="false" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-9-5 9:37:57.370" Status="false" />
+      <Journal Type="Process" ID="PullTLOPSRecLending" Timestamp="2023-9-5 9:37:57.838" Status="Pass" />
+      <Journal Type="Rule" ID="MRADD" Timestamp="2023-9-5 9:37:57.838" Status="true" />
+      <Journal Type="Rule" ID="MRDOB" Timestamp="2023-9-5 9:37:57.838" Status="false" />
+      <Journal Type="Rule" ID="MRNAM" Timestamp="2023-9-5 9:37:57.838" Status="false" />
+      <Journal Type="Rule" ID="MRSSN" Timestamp="2023-9-5 9:37:57.838" Status="false" />
+      <Journal Type="Rule" ID="OFACL" Timestamp="2023-9-5 9:37:57.838" Status="false" />
+      <Journal Type="Rule" ID="OPENBK" Timestamp="2023-9-5 9:37:57.838" Status="false" />
+      <Journal Type="Rule" ID="THINF" Timestamp="2023-9-5 9:37:57.838" Status="false" />
+      <Journal Type="Rule" ID="EXFRAUD" Timestamp="2023-9-5 9:37:57.838" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-9-5 9:37:57.838" Status="false" />
+      <Journal Type="Rule" ID="NEWDL" Timestamp="2023-9-5 9:37:57.838" Status="false" />
+      <Journal Type="Process" ID="07800" Timestamp="2023-9-5 9:37:57.838" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90+" Timestamp="2023-9-5 9:37:58.182" Status="false" />
+      <Journal Type="Rule" ID="DTI5%" Timestamp="2023-9-5 9:37:58.182" Status="true" />
+      <Journal Type="Process" ID="08800" Timestamp="2023-9-5 9:37:58.182" Status="Fail" />
+      <Journal UserID="Ddamasco@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-9-5 10:28:28.127" Status="Opened" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-9-5 10:28:35.455" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-9-5 10:28:35.455" Status="false" />
+      <Journal UserID="DDAMASCO@MERRICKBANK.COM" Type="TM" ID="Decline Application" Timestamp="2023-9-5 10:29:16.21" Status="" />
+      <Journal Type="Process" ID="30800" Timestamp="2023-9-5 10:29:16.427" Status="Pass" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2023-9-5 10:29:16.724" Status=" Pass" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-9-5 10:29:26.375" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-9-5 10:29:26.375" Status="false" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-9-5 10:29:41.974" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-9-5 10:29:41.974" Status="false" />
+      <Journal UserID="DDAMASCO@MERRICKBANK.COM" Type="TM" ID="Send Letter/Fax" Timestamp="2023-9-5 10:30:06.315" Status="" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2023-9-5 10:30:06.628" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2023-9-5 10:30:06.706" Status="Pass" />
+      <Journal UserID="lcarrillo@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-10-2 8:17:37.984" Status="Opened" />
+      <Journal UserID="Ddamasco@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-10-2 8:44:51.255" Status="Opened" />
+      <Journal Type="MP" ID="Reprocess" Timestamp="2023-10-2 8:45:26.896" Status="Request" UserID="DDAMASCO@MERRICKBANK.COM" />
+      <Journal Type="Rule" ID="MSADD" Timestamp="2023-10-2 8:45:26.959" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2023-10-2 8:45:26.959" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2023-10-2 8:45:26.959" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2023-10-2 8:45:26.959" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2023-10-2 8:45:26.959" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2023-10-2 8:45:26.959" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2023-10-2 8:45:26.974" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2023-10-2 8:45:26.974" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2023-10-2 8:45:26.974" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2023-10-2 8:45:26.974" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2023-10-2 8:45:26.974" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2023-10-2 8:45:26.974" Status="true" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2023-10-2 8:45:26.974" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2023-10-2 8:45:26.974" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2023-10-2 8:45:26.974" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2023-10-2 8:45:26.974" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2023-10-2 8:45:26.974" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="2023-10-2 8:45:26.974" Status="Fail" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2023-10-2 8:45:27.646" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2023-10-2 8:45:27.724" Status="Pass" />
+      <Journal Type="Process" ID="30800" Timestamp="2023-10-2 8:45:27.724" Status="Pass" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-10-2 8:45:48.728" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-10-2 8:45:48.728" Status="false" />
+      <Journal Type="MP" ID="Reprocess" Timestamp="2023-10-2 8:45:51.181" Status="Request" UserID="DDAMASCO@MERRICKBANK.COM" />
+      <Journal Type="Rule" ID="MSADD" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2023-10-2 8:45:51.259" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2023-10-2 8:45:51.259" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2023-10-2 8:45:51.275" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2023-10-2 8:45:51.275" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="2023-10-2 8:45:51.275" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2023-10-2 8:45:51.462" Status="false" />
+      <Journal Type="Process" ID="03800" Timestamp="2023-10-2 8:45:51.462" Status="Pass" />
+      <Journal Type="Rule" ID="IFADR" Timestamp="2023-10-2 8:45:51.478" Status="false" />
+      <Journal Type="Rule" ID="IFNAM" Timestamp="2023-10-2 8:45:51.494" Status="false" />
+      <Journal Type="Rule" ID="IFSSN" Timestamp="2023-10-2 8:45:51.650" Status="false" />
+      <Journal Type="Process" ID="05800" Timestamp="2023-10-2 8:45:51.650" Status="Pass" />
+      <Journal Type="Rule" ID="ILDEC" Timestamp="2023-10-2 8:45:51.665" Status="false" />
+      <Journal Type="Rule" ID="SCOREBLK" Timestamp="2023-10-2 8:45:51.665" Status="false" />
+      <Journal Type="Rule" ID="MINTRADE" Timestamp="2023-10-2 8:45:51.665" Status="false" />
+      <Journal Type="Process" ID="06800" Timestamp="2023-10-2 8:45:53.634" Status="Pass" />
+      <Journal Type="Rule" ID="CBSCOREP" Timestamp="2023-10-2 8:45:53.634" Status="false" />
+      <Journal Type="Process" ID="MRVFLOORP" Timestamp="2023-10-2 8:45:53.634" Status="false" />
+      <Journal Type="Process" ID="ScoreCutsPrimary" Timestamp="2023-10-2 8:45:53.634" Status="false" />
+      <Journal Type="Process" ID="ScoreCuts" Timestamp="2023-10-2 8:45:53.634" Status="false" />
+      <Journal Type="Process" ID="06850" Timestamp="2023-10-2 8:45:53.634" Status="Pass" />
+      <Journal Type="Rule" ID="MLAMISS" Timestamp="2023-10-2 8:45:53.681" Status="false" />
+      <Journal Type="Process" ID="06900" Timestamp="2023-10-2 8:45:53.681" Status="Pass" />
+      <Journal Type="Rule" ID="DELMB" Timestamp="2023-10-2 8:45:53.697" Status="false" />
+      <Journal Type="Rule" ID="CCCPP" Timestamp="2023-10-2 8:45:53.697" Status="false" />
+      <Journal Type="Rule" ID="CBAIF" Timestamp="2023-10-2 8:45:53.697" Status="false" />
+      <Journal Type="Rule" ID="CBPML" Timestamp="2023-10-2 8:45:53.697" Status="false" />
+      <Journal Type="Rule" ID="DELINQ" Timestamp="2023-10-2 8:45:53.697" Status="false" />
+      <Journal Type="Rule" ID="EFSTM" Timestamp="2023-10-2 8:45:53.697" Status="false" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-10-2 8:45:53.697" Status="false" />
+      <Journal Type="Process" ID="PullTLOPSRecLending" Timestamp="2023-10-2 8:45:53.712" Status="Pass" />
+      <Journal Type="Rule" ID="MRADD" Timestamp="2023-10-2 8:45:53.712" Status="true" />
+      <Journal Type="Rule" ID="MRDOB" Timestamp="2023-10-2 8:45:53.712" Status="false" />
+      <Journal Type="Rule" ID="MRNAM" Timestamp="2023-10-2 8:45:53.712" Status="false" />
+      <Journal Type="Rule" ID="MRSSN" Timestamp="2023-10-2 8:45:53.712" Status="false" />
+      <Journal Type="Rule" ID="OFACL" Timestamp="2023-10-2 8:45:53.712" Status="false" />
+      <Journal Type="Rule" ID="OPENBK" Timestamp="2023-10-2 8:45:53.712" Status="false" />
+      <Journal Type="Rule" ID="THINF" Timestamp="2023-10-2 8:45:53.712" Status="false" />
+      <Journal Type="Rule" ID="EXFRAUD" Timestamp="2023-10-2 8:45:53.712" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-10-2 8:45:53.712" Status="false" />
+      <Journal Type="Rule" ID="NEWDL" Timestamp="2023-10-2 8:45:53.712" Status="false" />
+      <Journal Type="Process" ID="07800" Timestamp="2023-10-2 8:45:53.728" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90+" Timestamp="2023-10-2 8:45:53.915" Status="false" />
+      <Journal Type="Process" ID="08800" Timestamp="2023-10-2 8:45:53.915" Status="Fail" />
+      <Journal UserID="DDAMASCO@MERRICKBANK.COM" Type="TM" ID="Approve Application with Stips" Timestamp="2023-10-2 8:47:22.807" Status="" />
+      <Journal Type="Process" ID="20800" Timestamp="2023-10-2 8:47:22.807" Status="Pass" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-10-2 8:49:38.559" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-10-2 8:49:38.559" Status="false" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-10-2 8:50:28.499" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-10-2 8:50:28.499" Status="false" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-10-2 8:50:36.265" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-10-2 8:50:36.265" Status="false" />
+      <Journal UserID="DDAMASCO@MERRICKBANK.COM" Type="TM" ID="Send Letter/Fax" Timestamp="2023-10-2 8:51:06.769" Status="" />
+      <Journal Type="Process" ID="00011" Timestamp="2023-10-2 8:51:06.769" Status="Fail" />
+      <Journal UserID="DDAMASCO@MERRICKBANK.COM" Type="TM" ID="Send Letter/Fax" Timestamp="2023-10-2 8:51:28.988" Status="" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2023-10-2 8:51:29.269" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2023-10-2 8:51:29.550" Status="Pass" />
+      <Journal UserID="cstanford@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-10-6 8:08:26.422" Status="Opened" />
+      <Journal UserID="Ddamasco@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-10-6 8:14:05.333" Status="Opened" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2023-10-6 8:15:26.122" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2023-10-6 8:15:26.122" Status="false" />
+      <Journal UserID="cstanford@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-10-6 9:38:36.393" Status="Opened" />
+      <Journal UserID="vnavarrete@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-10-6 11:17:13.599" Status="Opened" />
+      <Journal UserID="VNAVARRETE@MERRICKBANK.COM" Type="TM" ID="Calculate Funding Proceeds" Timestamp="2023-10-6 11:19:45.493" Status="" />
+      <Journal UserID="VNAVARRETE@MERRICKBANK.COM" Type="TM" ID="Calculate Funding Proceeds" Timestamp="2023-10-6 11:23:16.705" Status="" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2023-10-6 11:23:16.814" Status="false" />
+      <Journal Type="Rule" ID="DUPFSSN" Timestamp="2023-10-6 11:23:16.986" Status="false" />
+      <Journal Type="Process" ID="MLAAPR" Timestamp="2023-10-6 11:23:16.986" Status="false" />
+      <Journal UserID="VNAVARRETE@MERRICKBANK.COM" Type="TM" ID="Calculate Funding Proceeds" Timestamp="2023-10-6 11:23:31.924" Status="" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2023-10-6 11:23:31.955" Status="false" />
+      <Journal Type="Rule" ID="DUPFSSN" Timestamp="2023-10-6 11:23:32.127" Status="false" />
+      <Journal Type="Process" ID="MLAAPR" Timestamp="2023-10-6 11:23:32.127" Status="false" />
+      <Journal UserID="VNAVARRETE@MERRICKBANK.COM" Type="TM" ID="Send to Funding Pending" Timestamp="2023-10-6 11:23:43.309" Status="" />
+      <Journal UserID="VNAVARRETE@MERRICKBANK.COM" Type="TM" ID="Calculate Funding Proceeds" Timestamp="2023-10-6 11:33:06.664" Status="" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2023-10-6 11:33:06.711" Status="false" />
+      <Journal Type="Rule" ID="DUPFSSN" Timestamp="2023-10-6 11:33:06.883" Status="false" />
+      <Journal Type="Process" ID="MLAAPR" Timestamp="2023-10-6 11:33:06.883" Status="false" />
+      <Journal UserID="VNAVARRETE@MERRICKBANK.COM" Type="TM" ID="Fund this loan" Timestamp="2023-10-6 11:34:21.169" Status="" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2023-10-6 11:34:21.216" Status="false" />
+      <Journal Type="Rule" ID="DUPFSSN" Timestamp="2023-10-6 11:34:21.388" Status="false" />
+      <Journal Type="Process" ID="MLAAPR" Timestamp="2023-10-6 11:34:21.388" Status="false" />
+      <Journal UserID="ahaase@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-10-6 15:17:20.232" Status="Opened" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2023-10-6 15:45:18.816" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2023-10-6 15:45:18.895" Status="Pass" />
+      <Journal UserID="BMCCAIN@MerrickBank.com" Type="Script" ID="App Opened" Timestamp="2023-10-9 12:38:53.190" Status="Opened" />
+      <Journal UserID="SGage@merrickbank.com" Type="Script" ID="App Opened" Timestamp="2023-10-26 13:56:36.863" Status="Opened" />
+    </Journals>
+    <Audits>
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Loan Officer Code" To="6103" From="" Timestamp="2023-9-5 10:28:35.440" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Include TTL" To="N" From="" Timestamp="2023-9-5 10:28:35.440" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Requested Amount" To="25000.00" From="40955.01" Timestamp="2023-9-5 10:29:26.344" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Requested Amount" To="40955.01" From="25000.00" Timestamp="2023-9-5 10:29:41.958" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Letter Type Code (1)" To="881" From="881" Timestamp="2023-9-5 10:30:06.300" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Reason Code 1 (1)" To="220" From="220" Timestamp="2023-9-5 10:30:06.300" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Reason Code 2 (1)" To="227" From="" Timestamp="2023-9-5 10:30:06.300" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Reason Code 3 (1)" To="" From="" Timestamp="2023-9-5 10:30:06.300" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Reason Code 4 (1)" To="" From="" Timestamp="2023-9-5 10:30:06.300" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Ready To Send (1)" To="Y" From="N" Timestamp="2023-9-5 10:30:06.300" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Fax Notes (1)" To="Can relook at MAX loan of 20K. Thanks!" From="" Timestamp="2023-9-5 10:30:06.300" Source="API" />
+      <Audit UserID="LCARRILLO@MERRICKBANK.COM" XPATH="New Comment" To="giving decline to DG" From="" Timestamp="2023-10-2 8:18:34.917" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Dealer Number" To="400007" From="504358" Timestamp="2023-10-2 8:45:23.474" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Requested Amount" To="18623.58" From="40955.01" Timestamp="2023-10-2 8:45:48.712" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Cash Sale Price" To="17443.00" From="40000.00" Timestamp="2023-10-2 8:45:48.712" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Down Payment Cash" To="1750.00" From="4000.00" Timestamp="2023-10-2 8:45:48.712" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Term" To="0" From="" Timestamp="2023-10-2 8:45:48.712" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 1 Year" To="" From="2019" Timestamp="2023-10-2 8:46:06.590" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 1 Make" To="" From="SKEETER" Timestamp="2023-10-2 8:46:06.590" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 1 Model" To="" From="ZX 200" Timestamp="2023-10-2 8:46:06.590" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 1 Value" To="0" From="40000.00" Timestamp="2023-10-2 8:46:06.590" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 3 Year" To="" From="2020" Timestamp="2023-10-2 8:46:10.450" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 3 Make" To="" From="MERCURY" Timestamp="2023-10-2 8:46:10.450" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 3 Model" To="" From="150XL" Timestamp="2023-10-2 8:46:10.450" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 4 Year" To="" From="2019" Timestamp="2023-10-2 8:46:17.374" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 4 Make" To="" From="BT" Timestamp="2023-10-2 8:46:17.374" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 4 Model" To="" From="BT" Timestamp="2023-10-2 8:46:17.374" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 1 Year" To="2018" From="" Timestamp="2023-10-2 8:46:38.941" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 1 Make" To="SEADOO" From="" Timestamp="2023-10-2 8:46:38.941" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 1 Model" To="RXPX 300" From="" Timestamp="2023-10-2 8:46:38.941" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 2 Year" To="2017" From="" Timestamp="2023-10-2 8:47:03.694" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 2 Make" To="SEADOO" From="" Timestamp="2023-10-2 8:47:03.694" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 2 Model" To="ROTAX" From="" Timestamp="2023-10-2 8:47:03.694" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 3 Year" To="2017" From="" Timestamp="2023-10-2 8:47:16.416" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 3 Make" To="MAGIC TILT" From="" Timestamp="2023-10-2 8:47:16.416" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="New Comment" To="ADD verifies on bureau" From="" Timestamp="2023-10-2 8:47:52.183" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="MRADD" To="1" From="0" Timestamp="2023-10-2 8:47:53.471" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 1 Value" To="8050" From="0" Timestamp="2023-10-2 8:48:25.886" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 2 Model" To="GTI" From="ROTAX" Timestamp="2023-10-2 8:48:41.495" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 2 Value" To="5030" From="" Timestamp="2023-10-2 8:48:41.495" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Collateral 3 Value" To="420" From="0.00" Timestamp="2023-10-2 8:48:47.862" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Description Option 1" To="&lt;15%" From="" Timestamp="2023-10-2 8:49:21.442" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Value Option 1" To="1515" From="" Timestamp="2023-10-2 8:49:21.442" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Requested Amount" To="18018.00" From="18623.58" Timestamp="2023-10-2 8:49:38.543" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="collateral Status" To="pass" Timestamp="2023-10-2 8:49:55.14" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="New Comment" To="VERIFIED NADA ADV NOT IN LINE" From="" Timestamp="2023-10-2 8:49:55.624" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Applicant Type (Income)" To="primary" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Income Use" To="base" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Income Type" To="paystub" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Frequency" To="weekly" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Base Rate" To="18" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Units Per Period" To="40" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Period End Date" To="09/03/2023" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Pay Date" To="09/08/2023" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Gross Up Income" To="0" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="YTD Amount" To="27586.5" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Income Notes" To="" Timestamp="2023-10-2 8:50:28.483" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Applicant Type (Income)" To="primary" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Income Use" To="ytd" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Income Type" To="paystub" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Frequency" To="weekly" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Base Rate" To="18" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Units Per Period" To="40" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Period End Date" To="09/03/2023" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Pay Date" To="09/08/2023" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Gross Up Income" To="0" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="YTD Amount" To="27586.5" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Income Notes" To="" Timestamp="2023-10-2 8:50:36.249" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Send Letter (2)" To="N" From="Y" Timestamp="2023-10-2 8:51:06.769" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Letter Type Code (3)" To="895" From="895" Timestamp="2023-10-2 8:51:28.988" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Reason Code 1 (3)" To="799" From="926" Timestamp="2023-10-2 8:51:28.988" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Reason Code 2 (3)" To="" From="952" Timestamp="2023-10-2 8:51:28.988" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Reason Code 3 (3)" To="" From="" Timestamp="2023-10-2 8:51:28.988" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Reason Code 4 (3)" To="" From="" Timestamp="2023-10-2 8:51:28.988" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Ready To Send (3)" To="Y" From="N" Timestamp="2023-10-2 8:51:28.988" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Fax Notes (3)" To="$18,018.00 is 120% of nada, you may add TT&amp;L up to the MAX of 20K. Thanks!" From="" Timestamp="2023-10-2 8:51:28.988" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="capacity Status" To="pass" Timestamp="2023-10-6 8:15:04.912" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="New Comment" To="Income was verified" From="" Timestamp="2023-10-6 8:15:05.590" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Requested Amount" To="19999.58" From="18018.00" Timestamp="2023-10-6 8:15:26.106" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="Down Payment Cash" To="1874.00" From="1750.00" Timestamp="2023-10-6 8:15:26.106" Source="API" />
+      <Audit UserID="DDAMASCO@MERRICKBANK.COM" XPATH="decision Status" To="pass" Timestamp="2023-10-6 8:15:45.600" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Funding Contact" To="6060" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Amount Financed" To="0" From="" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Fiannce Charge" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Note Payment" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="First Payment Date" To="01/01/1900" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Signed Date" To="01/01/1900" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Sale Price" To="0" From="" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Cash Down Payment" To="0" From="" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Trade Down Payment" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="License Fee" To="0" From="" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Title Fee" To="0" From="" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Registration Fee" To="0" From="" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Taxes" To="0" From="" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Public Official Fee 1" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Public Official Fee 2" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Public Official Fee 3" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Florida Doc Tax" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Credit Life Insurance" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Credit Disability Insurance" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Gap Coverage" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Document Prep" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Dealer Fee 1" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Dealer Fee 2" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Dealer Fee 3" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Dealer Fee 4" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Dealer Fee 5" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Dealer Fee 6" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Contract UCC1 Fee" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="UCC Principal Refund" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="First Payment By Dealer" To="0" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Payoff Loan Amount" To="0" From="" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 2 Paystub Expiration" To="01/01/1900" Timestamp="2023-10-6 11:19:37.680" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Requested By" To="" Timestamp="2023-10-6 11:19:37.696" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Sub Type" To="PWC" From="" Timestamp="2023-10-6 11:19:37.696" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral 1 Make" To="SEA-DOO" From="SEADOO" Timestamp="2023-10-6 11:20:48.280" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral 1 Model" To="BRP RXPX 300" From="RXPX 300" Timestamp="2023-10-6 11:20:48.280" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral 2 Make" To="SEA-DOO" From="SEADOO" Timestamp="2023-10-6 11:20:48.280" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral 2 Model" To="BRP GTI" From="GTI" Timestamp="2023-10-6 11:20:48.280" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral 3 Model" To="TRAILER" From="" Timestamp="2023-10-6 11:20:48.280" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral 1 VIN" To="YDV28600B818" From="" Timestamp="2023-10-6 11:20:48.280" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral 2 VIN" To="YDV40359A717" From="" Timestamp="2023-10-6 11:20:48.280" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral 3 VIN" To="1M5BW1316H1E35422" From="" Timestamp="2023-10-6 11:20:48.280" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Amount (service_contract)" To="1500" From="" Timestamp="2023-10-6 11:22:03.631" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Company (service_contract)" To="UNITED STATES WARRANTY" From="" Timestamp="2023-10-6 11:22:03.631" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Term (service_contract)" To="48" From="" Timestamp="2023-10-6 11:22:03.631" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Merrick Lienholder (service_contract)" To="Y" From="" Timestamp="2023-10-6 11:22:03.631" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="APR Within Guidelines" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Amount Financed" To="19999.58" From="0" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Fiannce Charge" To="12802.18" From="0" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Note Payment" To="455.58" From="0" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="First Payment Date" To="11/04/2023" From="01/01/1900" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Signed Date" To="10/05/2023" From="01/01/1900" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Sale Price" To="17443" From="0" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Cash Down Payment" To="1874" From="0" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Title Fee" To="700" From="0" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Taxes" To="1735.58" From="0" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Document Prep" To="495" From="0" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Dealer Fee 1" To="1500" From="0" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Correct Contract State" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Contract State" To="GF" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Titled In State" To="LA" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Address Confirmed" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Payment Schedule Confirmed" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Itemization Confirmed" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Initials Presented" To="N" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 1 Signed" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 2 Signed" To="D" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Verified Against Program" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 1 Addendum Signed" To="D" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 2 addendum Signed" To="D" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 1 Signed App" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 1 Drivers License" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 1 DOB Confirmed" To="Y" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 2 Signed App" To="D" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 2 Drivers License" To="D" Timestamp="2023-10-6 11:23:10.830" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Borrower 2 DOB Confirmed" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Loan Amount Within Policy" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Down Payment Approved" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Unit Confirmed" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="References Complete" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Unit Invoice Confirmed" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Motor Invoice Confirmed" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Trailer Invoice Confirmed" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Motor 2 Invoice Confirmed" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral Worksheet Unit Confirmed" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Collateral Percent Used Confirmed" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Unit Title VIN Confirmed" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Unit Title MB Lienholder" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Motor Title VIN Confirmed" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Motor Title MB Lienholder" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Trailer Title VIN Confirmed" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Trailer Title MB Lienholder" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Unit UCC1 Title VIN Confirmed" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Unit UCC1 Title MB Lienholder" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Motor UCC1 Title Vin Confirmed" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Motor UCC1 Title MB Lienholder" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Trailer UCC1 Title VIN Confirmed" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Trailer UCC1 Title MB Lienholder" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="UCC1 Filed by Merrick" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Guarantee or Power Of Attorney" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Insurance MB as Lienholder" To="Y" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Deductable within Policy" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Unit VIN Confirm" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Motor VIN Confirm" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Trailer VIN Confirm" To="D" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Requested By" To="6060" From="" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="Funding Expiration Date" To="10/13/2023" Timestamp="2023-10-6 11:23:10.845" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="New Comment" To="ALL COLLAT IS BEING TITLED IN LA, SO NO UCC FEE" From="" Timestamp="2023-10-6 11:23:27.377" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="funding Status" To="fail" Timestamp="2023-10-6 11:23:43.559" Source="API" />
+      <Audit UserID="VNAVARRETE@MERRICKBANK.COM" XPATH="funding Status" To="pass" From="fail" Timestamp="2023-10-6 11:34:21.810" Source="API" />
+    </Audits>
+  </Request>
+</Provenir>

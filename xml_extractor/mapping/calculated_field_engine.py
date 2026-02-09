@@ -414,9 +414,16 @@ class CalculatedFieldEngine:
             except ValueError:
                 return False
         
-        # If both are strings, do string comparison
+        # If both are strings, try numeric comparison first (avoids
+        # lexicographic traps like "0.00" > "0" returning True).
         if isinstance(left_val, str) and isinstance(right_val, str):
-            return compare_func(left_val, right_val)
+            try:
+                left_num = float(left_val)
+                right_num = float(right_val)
+                return compare_func(left_num, right_num)
+            except (ValueError, TypeError):
+                # Not numeric — fall back to string comparison
+                return compare_func(left_val, right_val)
         
         # Fall back to numeric comparison
         return self._safe_numeric_compare(left_val, right_val, compare_func)

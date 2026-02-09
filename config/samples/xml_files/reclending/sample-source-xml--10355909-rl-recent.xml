@@ -1,0 +1,642 @@
+<Provenir Org="" sessionID="" stack="" Version="" ProductType="" transactionID="DE05ae27781_1713f9858fe_07ffd1713f989e96_0a141249.26989" ResponseCode="true">
+  <Request ID="10355909" UserID="" Workflow="75" Timestamp="3/6/2020 3:49:20 PM" Status="" Readonly="0" Process="99800" Version="" Priority="" Timeout="0" Trace="" LockedBy="" Trans="ILFUNDTHISLOAN" _LockedBy="" UnLockOnExit="0" SequenceTransmissionNumber="5" transactionCounter="1">
+    <CustData>
+      <IL_application client_id="4558011" submitting_fsp="HIGHLANDS Financial " app_type_code="HT" dlr_num_rv="" dlr_num_marine="" dlr_num_mc="" dlr_num_ht="800000" campaign_num="MARRV" app_source_ind="A" individual_joint_app_ind="I" tied_app_indicator="N" tied_app_id="" app_receive_date="03/06/2020" app_entry_date="" process_date="" last_update_time="" last_update_by="" signature_ind="" sec_user_signature_ind="" TU_access_code="" requested_term_months="120" app_sale_price="14995.00" app_cash_down_payment="1500.00" app_invoice_amount="" trade_year="" trade_make="" trade_model="" trade_financed_by="" trade_payoff_amount="0.00" trade_net_tradein_amount="0.00" loan_amount_requested="15045.19" duplicate_app_ind="N" opt_out_ind="" pymnt_prot_plan="" dlr_name="Highlands Financial Inc" dlr_address_line1="7340 E Caley Ave, Ste 215W" dlr_city="Centennial" dlr_state="CO" dlr_zipcode="80111" dlr_email="agorka@hfico.com" dlr_phone="3034718325" dlr_fax="3034718496" EODRet="IL_WEB_APP" supervisor_rev_ind="" trade_allowance="0.00" trade1_HP_Marine="" trade1_engine_size_CC="" trade2_year="" trade2_make="" trade2_model="" trade2_HP_Marine="" trade2_engine_size_CC="" trade3_year="" trade3_make="" trade3_model="" trade3_HP_Marine="" trade3_engine_size_CC="" trade4_year="" trade4_make="" trade4_model="" trade4_HP_Marine="" trade4_engine_size_CC="" add_TTL_to_amt_fin="" duplicate_app_id="" fsp_name="" fsp_phone="" dealer_count="2064.0" app_counted="Y" mapr="17.95">
+        <IL_app_decision_info decision_type_code="APPRV" decision_date="2020-3-6 15:51:10.320" TU_trans_risk_auto_score="" experian_fico_score="" FICO_decline_code1="40" FICO_decline_code2="19" FICO_decline_code3="15" FICO_decline_code4="16" risk_model_score="" Risk_Model_decline_code1="" Risk_Model_decline_code2="" regb_closed_days_num="0" regb_newinfo_startdate="" regb_closed_days2_num="" monthly_debt="860.61" monthly_income="5000" debt_to_income_ratio="17.21" pending_verif_ind="N" letter_requested_ind="" policy_override_employee_code="" override_type_code="" experian_bankruptcy_score="" manual_adj_monthly_debt="860.61" manual_adj_monthly_income="4050.71" manual_adj_DTI_ratio="21.25" manual_adj_DTI_notes="" TU_bankruptcy_score="" experian_fico_score2="" FICO2_decline_code1="" FICO2_decline_code2="" FICO2_decline_code3="" FICO2_decline_code4="" TU_trans_risk_auto_score2="" CB_bankruptcy_decline_code1="" CB_bankruptcy_decline_code2="" CB_bankruptcy_decline_code3="" CB_bankruptcy_decline_code4="" experian_bankruptcy_score2="" TU_bankruptcy_score2="" CB2_bankruptcy_decline_code1="" CB2_bankruptcy_decline_code2="" CB2_bankruptcy_decline_code3="" CB2_bankruptcy_decline_code4="" override_type_code_notes="" regular_pymt_amount1="270.61" FICO_decline_code1_TU="" FICO_decline_code2_TU="" FICO_decline_code3_TU="" FICO_decline_code4_TU="" FICO2_decline_code1_TU="" FICO2_decline_code2_TU="" FICO2_decline_code3_TU="" FICO2_decline_code4_TU="" CB_bankruptcy_decline_code1_TU="" CB_bankruptcy_decline_code2_TU="" CB_bankruptcy_decline_code3_TU="" CB_bankruptcy_decline_code4_TU="" CB2_bankruptcy_decline_code1_TU="" CB2_bankruptcy_decline_code2_TU="" CB2_bankruptcy_decline_code3_TU="" CB2_bankruptcy_decline_code4_TU="" TU_Vantage_score="" TU_Vantage_score2="" experian_Vantage_score="" experian_Vantage_score2="" max_qualifying_pymt="737.50" experian_fico_score_v8="599" Tied_App_Dec_Verif="" FICO_decline_code5="08" />
+        <IL_collateral coll1_new_used_demo="U" coll1_year="2014" coll1_make="JACKSON" coll1_model="STOCK GN 24'" coll1_VIN="1J9DG2220E1026479" coll1_value="0.00" coll1_invoice_wholesale_ind="0.00" engine_size_CC="" coll_is_harley="N" coll2_new_used_demo="" coll2_year="" coll2_make="" coll2_model="" coll2_HP_Marine="" coll2_VIN="" coll2_value="11900.00" coll2_invoice_wholesale_ind="0.00" coll3_new_used_demo="" coll3_year="" coll3_make="" coll3_model="" coll3_VIN="" coll3_value="0.00" coll3_invoice_wholesale_ind="0.00" coll4_new_used_demo="" coll4_year="" coll4_make="" coll4_model="" coll4_VIN="" coll4_value="0.00" coll4_invoice_wholesale_ind="0.00" coll_value_book_used="N" coll_value_book_page="" coll_option1="0.00" coll_option2="0.00" coll_option3="0.00" coll_option4="0.00" coll_option5="0.00" coll_option6="0.00" coll_option7="0.00" coll_option8="0.00" coll_option9="0.00" coll_option1_desc="75% of the comp average" coll_option2_desc="" coll_option3_desc="" coll_option4_desc="" coll_option5_desc="" coll_option6_desc="" coll_option7_desc="" coll_option8_desc="" coll_option9_desc="" coll_combined_value="11900.00" coll_option_total_value="0.00" marina_street_number="" marina_street_name="" marina_po_box="" marina_rural_route="" marina_city="" marina_state="" marina_zip="" coll3_HP_Marine="" coll_is_motorhome="" />
+        <IL_fund_dlr_ach dlr_num="800000" dlr_name="Highlands Financial In" dlr_aba="102000021" dlr_account_num="103658607256" dlr_proceeds_amount="15571.77" dlr_check_or_sav="22" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_fsp_yn="N" dlr_fsp_num="" dlr_bank_name="US Bank" dlr_bank_phone="(303) 741-4959" />
+        <IL_letters_faxes seq_no="1" letter_type_code="895" letter_sent_date="03/06/2020" decline_reason_code1="725" decline_reason_code2="952" decline_reason_code3="" decline_reason_code4="" send_letter_ind="Y" send_fax_ind="Y" letter_sent_ind="Y" fax_sent_ind="Y" fax_notes="Please fax all stips for further approval prior to contracting.  You can also email stips to, rec.lending@merrickbank.com Thanks for the application. " ready_to_send="Y" cb_score_suppress="" cb_disclosure_suppress="" />
+        <IL_ITI_control account_number="4019378" vendor_id="38" verification_number="025976" boarding_date="041020" release_level="19026" specification_record_flag="" branch_number="" class_code="04" interest_method="" institution_number="15" record_type="" responsibility_code="" opened_by_responsibility_code="" note_date="" add_collateral_records="" add_coborrowers="" add_pymt_schedules="" specification_record_flag_hdr="1" />
+        <IL_ITI_line name_line_pointer_1="001" name_line_pointer_2="" name_line_pointer_3="" address_pointer="00" />
+        <IL_ITI_loan_add_collateral addenda_number1="001" address_pointer1="00" collateral_ident1="1J9DG2220E1026479" UCC_file_number1="" date_orig_fin_stmt1="" date_last_review1="04/04/20" date_next_review1="" status1="" addenda_number2="" address_pointer2="" collateral_ident2="" UCC_file_number2="" date_orig_fin_stmt2="" date_last_review2="" date_next_review2="" status2="" addenda_number3="" address_pointer3="" collateral_ident3="" UCC_file_number3="" date_orig_fin_stmt3="" date_last_review3="" date_next_review3="" status3="" addenda_number4="" address_pointer4="" collateral_ident4="" UCC_file_number4="" date_orig_fin_stmt4="" date_last_review4="" date_next_review4="" status4="" officer_responsible_code1="" />
+        <IL_ITI_loan_add_tickler addenda_number1="001" description1="BINDER/PENDING" tickler_frequency1="" next_tickler_date1="06/03/20" notification_type1="N" responsibility_code1="" addenda_number2="" description2="" tickler_frequency2="" next_tickler_date2="" notification_type2="" responsibility_code2="" />
+        <IL_ITI_note address_pointer="00" apr="17.9500" insurance_plan1="" insurance_premium1="" insurance_premium2="" miscellaneous_code="" name_line_pointer1="001" name_line_pointer2="" name_line_pointer3="" payment_code="2" payment_date="05/04/20" payment_frequency="M" product_number="4015420" rate_adjuster="" rate_index="" />
+        <IL_ITI_note_code_status secured_unsecured_code="S" NAICS_code="441210" loan_rating_code1="" />
+        <IL_ITI_note_misc recourse_code="A" CRA_type_code="7" source_code="800000" />
+        <IL_ITI_note_payment late_charge_days="" late_charge_final_flag="" late_charge_method="" late_charge_min_amount="" late_charge_percent="" statement_day="" />
+        <IL_ITI_note_variable floor_rate="" next_pymt_change_date="" next_rate_change_date="" pymt_change_forecast_days="" />
+        <IL_ITI_payment_sched next_regular_pymt_date1="05/04/20" number_regular_pymts1="120" regular_pymt_frequency1="M" />
+        <IL_application_verification cust_interview_options_confirm="" cust_interview_down_pymt="" cust_interview_sales_price="" cust_interview_housing_pymt="" cust_interview_auto_pymt="" cust_interview_derog_trades="" cust_interview_notes="" v_employ_name="" v_employ_phone="" v_employ_spokewith="" v_employ_hiredate="" v_employ_salary="" v_employ_performance="" v_mtg_lender_name="" v_mtg_phone="" v_mtg_spokewith="" v_mtg_times_15to29="" v_mtg_times_30to59="" v_mtg_times_60andup="" v_mtg_date_acct_open="" v_rent_name="" v_rent_phone="" v_rent_spokewith="" v_rent_times_1to29="" v_rent_times_30to59="" v_rent_times_60andup="" v_rent_term_of_lease="" v_auto_lender_name="" v_auto_phone="" v_auto_spokewith="" v_auto_times_1to29="" v_auto_times_30to59="" v_auto_times_60andup="" v_auto_date_acct_open="" v_verifier_name="" v_employ_name_coapp="" v_employ_phone_coapp="" v_employ_spokewith_coapp="" v_employ_hiredate_coapp="" v_employ_salary_coapp="" v_employ_performance_coapp="" verification_notes="" />
+        <IL_fund_checklist ct_correct_contract_state="Y" ct_address_confirmed="Y" ct_amt_financed_within_policy="Y" ct_cash_proceeds="15045.19" ct_participation_percentage="3.50" ct_participation_proceeds="526.58" ct_fee_ucc1="0.00" ct_fee_fedex="0.00" ct_fee_Florida_doc_stamp_tax="0.00" ct_total_dealer_proceeds="15571.77" ct_sale_price="14995.00" ct_cash_down_payment="1500.00" ct_down_pymt_percentage="10.00" ct_loan_to_value_percentage="113.40" ct_apr_within_guidelines="Y" ct_rate_over_split="17.95" ct_collateral_confirmed="" ct_vin_confirmed="" ct_pymt_schedule_confirmed="Y" ct_itemization_confirmed="Y" ct_initials_presented="N" ct_signed_borrower1="Y" ct_signed_borrower2="D" ct_note_date="04/04/2020" ct_verified_against_program="Y" ct_addendum_signed_borr1="D" ct_addendum_signed_borr2="D" app_signed_borrower1="Y" app_signed_borrower2="D" dl_borrower1="Y" dl_borrower2="D" dl_borrower1_dob_confirmed="Y" dl_borrower2_dob_confirmed="D" loan_officer_responsible_code="6019" loan_officer_open_acct_code="" loan_amount_approved="Y" loan_down_pymt_approved="Y" loan_unit_confirmed="Y" loan_status_equals_approved="" loan_stips_signed_by_officer="" loan_reference1="Y" loan_reference2="" loan_reference3="" collateral_ws_unit_confirmation="D" collateral_ws_purch_agreement="" rv_boat_title_vin_confirm="Y" rv_boat_title_mb_lienholder="Y" rv_boat_ucc1_vin_confirm="D" rv_boat_ucc1_mb_lienholder="D" motor_title_vin_confirm="D" motor_title_mb_lienholder="D" motor_ucc1_vin_confirm="D" motor_ucc1_mb_lienholder="D" trailer_title_vin_confirm="D" trailer_title_mb_lienholder="D" trailer_ucc1_vin_confirm="D" trailer_ucc1_mb_lienholder="D" ins_mb_lienholder="Y" ins_deductible_within_policy="D" ins_rv_boat_vin_confirm="D" ins_motor_vin_confirm="D" ins_trailer_vin_confirm="D" cl_diisability_mb_lienholder="" warranty_mb_lienholder="" warranty_term="" warranty_rv_boat_vin_confirm="" warranty_motor_vin_confirm="" warranty_trailer_vin_confirm="" change_dlr_default_MR="" sa_borrower2_name="" sa_borrower2_ssn="" sa_borrower2_home_phone="" sa_borrower2_cell_phone="" sa_borrower2_bus_phone="" sa_borrower2_bus_phone_ext="" sa_borrower2_birthdate="" sa_borrower2_email="" sa_borrower3_name="" sa_borrower3_ssn="" sa_borrower3_home_phone="" sa_borrower3_cell_phone="" sa_borrower3_bus_phone="" sa_borrower3_bus_phone_ext="" sa_borrower3_birthdate="" sa_borrower3_email="" sa_borrower4_name="" sa_borrower4_ssn="" sa_borrower4_home_phone="" sa_borrower4_cell_phone="" sa_borrower4_bus_phone="" sa_borrower4_bus_phone_ext="" sa_borrower4_birthdate="" sa_borrower4_email="" additional_collateral_records="" additional_cosigners="" additional_payment_schedules="" fund_this_loan_indicator="Y" sa_borrower2_FICO_score="" sa_borrower2_BKR_score="" sa_borrower3_FICO_score="" sa_borrower3_BKR_score="" sa_borrower4_FICO_score="" sa_borrower4_BKR_score="" loan_amount_within_policy="Y" loan_down_pymt_within_policy="Y" loan_LTV_within_policy="Y" loan_term_within_policy="Y" loan_FICO_within_policy="Y" loan_BKR_Score_within_policy="" loan_Credit_pulled_within_30days="Y" loan_Paystub_within_30days="Y" loan_DTI_ratio_within_policy="Y" ct_net_tradein_allowance="0.00" loan_Paystub2_within_30days="" loan_Paystub3_within_30days="" loan_Paystub4_within_30days="" ct_fee_sales_tax="0.00" ucc1_filed_by_Merrick="D" new_rv_boat_invoice_confirmed="D" new_rv_boat_vin_confirmed="" new_trailer_invoice_confirmed="D" new_trailer_vin_confirmed="" new_motor_invoice_confirmed="D" new_motor_vin_confirmed="" new_motor2_invoice_confirmed="D" new_motor2_vin_confirmed="" chk_requested_by="CINDY BEASON" funding_contact_code="5049" ct_note_pymt_amount="270.61" inc_fund_expiration_date="" ct_first_pymnt_by_dlr="0.00" applicant_paystub_expire="05/24/2020" coapplicant_paystub_expire="" credit_bureau_expire="4/20/2020" payoff_loan_number="" payoff_amount="0.00" guarantee_of_lien="D" ct_contract_state="GF" loan_1st_pymt_not7days="Y" ct_fee_amendment_letter="" collateral_ages_within_policy="Y" collateral_percent_used_confirmed="Y" ct_cash_downct_contract_state_payment="" ct_POA_in_titled_state="" ct_titled_in_state="TX" ct_UCC_prin_refund="0.00" loan_note_date_in_range="Y" payoff_loan_verified="Y" sa_borrower2_Vantage_score="" sa_borrower3_Vantage_score="" sa_borrower4_Vantage_score="" contract_gap_amount="" contract_credit_disability_amount="" contract_credit_life_amount="" finance_charge="17428.01" mathCorpFC="17428.01" total_of_payments="32473.20" subtotal="13495.00" license_fee="" title_fee="64.00" registration_fee="" taxes="937.19" other_public_official_fee_1="" other_public_official_fee_2="" other_public_official_fee_3="" fl_tn_contract_doc_tax="" document_prep_fee="499.00" other_dealer_fees_1="50.00" other_dealer_fees_2="" other_dealer_fees_3="" other_dealer_fees_4="" other_dealer_fees_5="" other_dealer_fees_6="" total_amount_financed="15045.19" ct_fee_assess_Florida_Fee="" error_message="" />
+        <IL_TempVariables TempOriginalProcess="20800" TempOriginalStatus="" TempFaxReasonCode1="" TempFaxReasonCode2="" TempFaxReasonCode3="" TempFaxReasonCode4="" TempFaxStatusType="" TempFaxLoanOfficer="" TempFaxExtension="" TempFaxWithStips="" TempFaxNotes="" TempFaxSeqNo="" TempFaxDealer="" TempLettersFileName="" TempFaxLetterCode="" />
+        <IL_ITI_add_tickler />
+        <IL_rule_flags DELAT="F" DELIL="F" DELRV="F" CCJTH="F" ILDTI="F" INSILH="F" INSSLR="F" NLABD="F" REVDT="F" TOJOB="F" />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income type="social_security" frequency="annual" baseRate="16180.00" unitsPerPeriod="1" grossUpIncome="1" baseMonthlyIncome="1618.00" ytdAmount="" periodEndDate="" ytdMonthlyIncome="0.00" sourceApplicant="applicant" dtiIncomeType="base" notes="" manual_adj_monthly_debt="" />
+          <IL_Income notes="" dtiIncomeType="base" sourceApplicant="applicant" ytMonthlyIncome="" ytdAmount="" baseMonthlyIncome="2432.71" grossUpIncome="0" periodEndDate="" unitsPerPeriod="1" baseRate="29192.57" frequency="annual" type="retirement_pension" manual_adj_monthly_debt="" ytdMonthlyIncome="0.00" />
+        </IL_Incomes>
+        <IL_Indicators>
+          <IL_Indicator ID="MLA" value="N" />
+        </IL_Indicators>
+        <IL_contact con_id="24065" ac_role_tp_c="PR" first_name="Ovella " middle_initial="" last_name="Brazelton" suffix="" ssn="666089298" birth_date="05/10/1978" drivers_license="8283645243" drivers_license_state="WY" drivers_license_expiration="" email="JOHN.DOE@GMAIL.COM" home_phone="9706452443" cell_phone="" bankruptcy_declared_ind="" property_repossessed_ind="" relationship_to_applicant="" ssn_last_4="9298">
+          <IL_contact_address address_seq_no="" address_type_code="CURR" street_number="5244" street_name="FLEETWOOD ST" apartment_unit_number="1E" po_box="" rural_route="" city="CLAYTON" state="MO" zip_code="63105" mortgage_holder_landlord="KHAN FAMILY PARTNERSHIP" mortgage_landlord_phone="4029812344" years_at_residence="5" months_at_residence="5" ownership_type_code="R" residence_monthly_pymnt="2400.00" />
+          <IL_contact_employment employment_seq_no="" employment_type_code="CURR" business_name="BIG SKY STEEL" supervisor="Tom the truck driver" title_position="TEACHER" self_employed_ind="N" address_line1="5199 HIGHWAY N" city="COTTLEVILLE" state="MO" zip_code="63304" business_phone="6368514600" salary="4500.00" salary_basis_type_code="MONTH" other_income_amt="330.00" other_income_basis_type_code="MONTH" other_income_source_type_code="OTHER" years_at_job="3" months_at_job="3" />          
+      </IL_contact>
+      </IL_application>
+    </CustData>
+    <Messages />
+    <Rules />
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2020-3-6 15:49:39.315" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2020-3-6 15:49:39.317" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2020-3-6 15:49:39.317" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2020-3-6 15:49:39.318" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2020-3-6 15:49:39.319" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2020-3-6 15:49:39.320" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2020-3-6 15:49:39.323" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2020-3-6 15:49:39.323" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2020-3-6 15:49:39.324" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="Fri Mar 06 15:49:39 MST 2020" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2020-3-6 15:49:39.325" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2020-3-6 15:49:39.326" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2020-3-6 15:49:39.326" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2020-3-6 15:49:39.327" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2020-3-6 15:49:39.328" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2020-3-6 15:49:39.330" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2020-3-6 15:49:39.331" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="Fri Mar 06 15:49:39 MST 2020" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2020-3-6 15:49:39.344" Status="false" />
+      <Journal Type="Process" ID="03800" Timestamp="Fri Mar 06 15:49:39 MST 2020" Status="Pass" />
+      <Journal Type="Rule" ID="IFADR" Timestamp="2020-3-6 15:49:39.350" Status="false" />
+      <Journal Type="Rule" ID="IFNAM" Timestamp="2020-3-6 15:49:39.357" Status="false" />
+      <Journal Type="Rule" ID="IFSSN" Timestamp="2020-3-6 15:49:39.470" Status="false" />
+      <Journal Type="Process" ID="05800" Timestamp="Fri Mar 06 15:49:39 MST 2020" Status="Pass" />
+      <Journal Type="Rule" ID="CBERR" Timestamp="2020-3-6 15:49:40.152" Status="false" />
+      <Journal Type="Rule" ID="CRFRZ" Timestamp="2020-3-6 15:49:40.152" Status="false" />
+      <Journal Type="Process" ID="06800" Timestamp="Fri Mar 06 15:49:40 MST 2020" Status="Pass" />
+      <Journal Type="Rule" ID="ILDEC" Timestamp="2020-3-6 15:49:40.158" Status="false" />
+      <Journal Type="Rule" ID="MLAMISS" Timestamp="2020-3-6 15:49:40.166" Status="false" />
+      <Journal Type="Process" ID="06900" Timestamp="Fri Mar 06 15:49:40 MST 2020" Status="Pass" />
+      <Journal Type="Rule" ID="FICOP" Timestamp="2020-3-6 15:49:40.181" Status="false" />
+      <Journal Type="Rule" ID="DELMB" Timestamp="2020-3-6 15:49:40.182" Status="false" />
+      <Journal Type="Rule" ID="CCCPP" Timestamp="2020-3-6 15:49:40.182" Status="false" />
+      <Journal Type="Rule" ID="CBAIF" Timestamp="2020-3-6 15:49:40.183" Status="false" />
+      <Journal Type="Rule" ID="CBPML" Timestamp="2020-3-6 15:49:40.184" Status="false" />
+      <Journal Type="Rule" ID="DELINQ" Timestamp="2020-3-6 15:49:40.187" Status="false" />
+      <Journal Type="Rule" ID="EFSTM" Timestamp="2020-3-6 15:49:40.188" Status="false" />
+      <Journal Type="Rule" ID="ILDTI" Timestamp="2020-3-6 15:49:40.188" Status="false" />
+      <Journal Type="Rule" ID="MRADD" Timestamp="2020-3-6 15:49:40.189" Status="false" />
+      <Journal Type="Rule" ID="MRDOB" Timestamp="2020-3-6 15:49:40.189" Status="false" />
+      <Journal Type="Rule" ID="MRNAM" Timestamp="2020-3-6 15:49:40.190" Status="false" />
+      <Journal Type="Rule" ID="MRSSN" Timestamp="2020-3-6 15:49:40.190" Status="false" />
+      <Journal Type="Rule" ID="OFACL" Timestamp="2020-3-6 15:49:40.191" Status="false" />
+      <Journal Type="Rule" ID="OPENBK" Timestamp="2020-3-6 15:49:40.191" Status="false" />
+      <Journal Type="Rule" ID="THINF" Timestamp="2020-3-6 15:49:40.192" Status="false" />
+      <Journal Type="Rule" ID="EXFRAUD" Timestamp="2020-3-6 15:49:40.192" Status="false" />
+      <Journal Type="Rule" ID="FICOBLK" Timestamp="2020-3-6 15:49:40.193" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2020-3-6 15:49:40.193" Status="false" />
+      <Journal Type="Rule" ID="NEWDL" Timestamp="2020-3-6 15:49:40.195" Status="false" />
+      <Journal Type="Process" ID="07800" Timestamp="Fri Mar 06 15:49:40 MST 2020" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90+" Timestamp="2020-3-6 15:49:40.208" Status="false" />
+      <Journal Type="Rule" ID="FSPMM" Timestamp="2020-3-6 15:49:40.209" Status="false" />
+      <Journal Type="Process" ID="08800" Timestamp="Fri Mar 06 15:49:40 MST 2020" Status="Fail" />
+      <Journal Type="Script" ID="App Opened By jsanabria" Timestamp="2020-3-6 15:49:52.115" Status="Opened" />
+      <Journal Type="TM" ID="Approve Application with Stips" Timestamp="2020-3-6 15:51:10.317" Status="" />
+      <Journal Type="Process" ID="20800" Timestamp="Fri Mar 06 15:51:10 MST 2020" Status="Pass" />
+      <Journal Type="TM" ID="Send Letter/Fax" Timestamp="2020-3-6 15:51:29.948" Status="" />
+      <Journal Type="Process" ID="00011" Timestamp="Fri Mar 06 15:51:30 MST 2020" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By gvoravongsa" Timestamp="2020-3-11 10:44:55.299" Status="Opened" />
+      <Journal Type="Rule" ID="ILDTI" Timestamp="2020-3-11 10:47:3.660" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2020-3-11 10:47:3.661" Status="false" />
+      <Journal Type="TM" ID="Send Letter/Fax" Timestamp="2020-3-11 10:47:39.103" Status="" />
+      <Journal Type="Process" ID="00011" Timestamp="Wed Mar 11 10:47:39 MDT 2020" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By vnavarrete" Timestamp="2020-3-11 11:11:30.305" Status="Opened" />
+      <Journal Type="TM" ID="Calculate Colateral Value" Timestamp="2020-3-11 11:13:1.366" Status="" />
+      <Journal Type="TM" ID="Calculate Adjusted DTI" Timestamp="2020-3-11 11:15:46.317" Status="" />
+      <Journal Type="Rule" ID="ILDTI" Timestamp="2020-3-11 11:15:46.329" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2020-3-11 11:15:46.329" Status="false" />
+      <Journal Type="Script" ID="App Opened By jsanabria" Timestamp="2020-3-11 11:25:8.871" Status="Opened" />
+      <Journal Type="TM" ID="Send Letter/Fax" Timestamp="2020-3-11 11:29:25.613" Status="" />
+      <Journal Type="Process" ID="00011" Timestamp="Wed Mar 11 11:29:25 MDT 2020" Status="Pass" />
+      <Journal Type="TM" ID="Send Letter/Fax" Timestamp="2020-3-11 11:29:38.125" Status="" />
+      <Journal Type="Process" ID="00011" Timestamp="Wed Mar 11 11:29:38 MDT 2020" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By ddamasco" Timestamp="2020-3-23 13:28:56.775" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By vnavarrete" Timestamp="2020-3-24 11:43:28.617" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By gvoravongsa" Timestamp="2020-3-27 13:29:26.481" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By ddamasco" Timestamp="2020-4-1 12:37:42.395" Status="Opened" />
+      <Journal Type="TM" ID="Calculate Adjusted DTI" Timestamp="2020-4-1 12:38:46.397" Status="" />
+      <Journal Type="Rule" ID="ILDTI" Timestamp="2020-4-1 12:38:46.413" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2020-4-1 12:38:46.413" Status="false" />
+      <Journal Type="TM" ID="Calculate Colateral Value" Timestamp="2020-4-1 12:40:5.645" Status="" />
+      <Journal Type="TM" ID="Calculate Adjusted DTI" Timestamp="2020-4-1 12:40:20.489" Status="" />
+      <Journal Type="Rule" ID="ILDTI" Timestamp="2020-4-1 12:40:20.497" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2020-4-1 12:40:20.498" Status="false" />
+      <Journal Type="Script" ID="App Opened By jsanabria" Timestamp="2020-4-1 13:17:27.177" Status="Opened" />
+      <Journal Type="TM" ID="Send Letter/Fax" Timestamp="2020-4-1 13:17:43.536" Status="" />
+      <Journal Type="Process" ID="00011" Timestamp="Wed Apr 01 13:17:43 MDT 2020" Status="Pass" />
+      <Journal Type="Script" ID="App Opened By PMORLEY" Timestamp="2020-4-9 10:10:47.994" Status="Opened" />
+      <Journal Type="Script" ID="App Opened By jsanabria" Timestamp="2020-4-9 11:22:32.953" Status="Opened" />
+      <Journal Type="TM" ID="Calculate Adjusted DTI" Timestamp="2020-4-9 11:23:1.491" Status="" />
+      <Journal Type="Rule" ID="ILDTI" Timestamp="2020-4-9 11:23:1.514" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2020-4-9 11:23:1.515" Status="false" />
+      <Journal Type="Script" ID="App Opened By cbeason" Timestamp="2020-4-10 11:24:52.142" Status="Opened" />
+      <Journal Type="TM" ID="Calculate Funding Proceeds" Timestamp="2020-4-10 11:58:38.611" Status="" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2020-4-10 11:58:38.671" Status="false" />
+      <Journal Type="Process" ID="MLAAPR" Timestamp="Fri Apr 10 11:58:38 MDT 2020" Status="false" />
+      <Journal Type="TM" ID="Calculate Funding Proceeds" Timestamp="2020-4-10 11:58:59.147" Status="" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2020-4-10 11:58:59.196" Status="false" />
+      <Journal Type="Process" ID="MLAAPR" Timestamp="Fri Apr 10 11:58:59 MDT 2020" Status="false" />
+      <Journal Type="TM" ID="Fund this loan" Timestamp="2020-4-10 11:59:46.660" Status="" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2020-4-10 11:59:46.702" Status="false" />
+      <Journal Type="Process" ID="MLAAPR" Timestamp="Fri Apr 10 11:59:46 MDT 2020" Status="false" />
+      <Journal Type="Process" ID="00011" Timestamp="Fri Apr 10 15:45:08 MDT 2020" Status="Pass" />
+    </Journals>
+    <Traces />
+    <Audits>
+      <Audit Timestamp="Fri Mar 06 15:50:08 MST 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@loan_officer_responsible_code" UserID="jsanabria" Source="Webstation" Action="U" From="" To="6019">
+        <From />
+        <To>6019</To>
+      </Audit>
+      <Audit Timestamp="Fri Mar 06 15:50:08 MST 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@app_invoice_amount" UserID="jsanabria" Source="Webstation" Action="U" From="18500.00" To="">
+        <From>18500.00</From>
+        <To />
+      </Audit>
+      <Audit Timestamp="Fri Mar 06 15:50:08 MST 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@trade_allowance" UserID="jsanabria" Source="Webstation" Action="U" From=".00" To="0.00">
+        <From>.00</From>
+        <To>0.00</To>
+      </Audit>
+      <Audit Timestamp="Fri Mar 06 15:50:08 MST 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@trade_payoff_amount" UserID="jsanabria" Source="Webstation" Action="U" From=".00" To="0.00">
+        <From>.00</From>
+        <To>0.00</To>
+      </Audit>
+      <Audit Timestamp="Fri Mar 06 15:50:08 MST 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@trade_net_tradein_amount" UserID="jsanabria" Source="Webstation" Action="U" From=".00" To="0.00">
+        <From>.00</From>
+        <To>0.00</To>
+      </Audit>
+      <Audit Timestamp="Fri Mar 06 15:51:06 MST 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_comments[3]/@comment" UserID="jsanabria" Source="Webstation" Action="U" From="" To="Good install repay. ">
+        <From />
+        <To>Good install repay. </To>
+      </Audit>
+      <Audit Timestamp="Fri Mar 06 15:51:24 MST 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[1]/@decline_reason_code1" UserID="jsanabria" Source="Webstation" Action="U" From="926" To="725">
+        <From>926</From>
+        <To>725</To>
+      </Audit>
+      <Audit Timestamp="Fri Mar 06 15:51:24 MST 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[1]/@fax_notes" UserID="jsanabria" Source="Webstation" Action="U" From="" To="Please fax all stips for further approval prior to contracting.  You can also email stips to, rec.lending@merrickbank.com Thanks for the application. ">
+        <From />
+        <To>Please fax all stips for further approval prior to contracting.  You can also email stips to, rec.lending@merrickbank.com Thanks for the application.
+</To>
+      </Audit>
+      <Audit Timestamp="Fri Mar 06 15:51:24 MST 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[1]/@ready_to_send" UserID="jsanabria" Source="Webstation" Action="U" From="N" To="Y">
+        <From>N</From>
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:46:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[1]/@type" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="social_security">
+        <From />
+        <To>social_security</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:46:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[1]/@frequency" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="annual">
+        <From />
+        <To>annual</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:46:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[1]/@baseRate" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="16180.00">
+        <From />
+        <To>16180.00</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:46:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[1]/@unitsPerPeriod" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="1">
+        <From />
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:46:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[1]/@grossUpIncome" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="1">
+        <From />
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:46:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[1]/@sourceApplicant" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="applicant">
+        <From />
+        <To>applicant</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:46:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[1]/@dtiIncomeType" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="base">
+        <From />
+        <To>base</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:03 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[2]/@type" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="retirement_pension">
+        <From />
+        <To>retirement_pension</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:03 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[2]/@frequency" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="annual">
+        <From />
+        <To>annual</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:03 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[2]/@baseRate" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="29192.57">
+        <From />
+        <To>29192.57</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:03 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[2]/@unitsPerPeriod" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="1">
+        <From />
+        <To>1</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:03 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[2]/@grossUpIncome" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="0">
+        <From />
+        <To>0</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:03 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[2]/@sourceApplicant" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="applicant">
+        <From />
+        <To>applicant</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:03 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_Incomes[1]/IL_Income[2]/@dtiIncomeType" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="base">
+        <From />
+        <To>base</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:12 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_comments[4]/@comment" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="verified income.">
+        <From />
+        <To>verified income.</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[2]/@letter_type_code" UserID="gvoravongsa" Source="Webstation" Action="U" From="847" To="895">
+        <From>847</From>
+        <To>895</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[2]/@decline_reason_code1" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="952">
+        <From />
+        <To>952</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[2]/@fax_notes" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="Please provide bookout for further approval prior to contracting. Thanks.">
+        <From />
+        <To>Please provide bookout for further approval prior to contracting. Thanks.</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 10:47:35 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[2]/@ready_to_send" UserID="gvoravongsa" Source="Webstation" Action="U" From="N" To="Y">
+        <From>N</From>
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:13:01 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll_value_book_used" UserID="vnavarrete" Source="Webstation" Action="U" From="" To="N">
+        <From />
+        <To>N</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:13:01 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_value" UserID="vnavarrete" Source="Webstation" Action="U" From="0.00" To="13875.00">
+        <From>0.00</From>
+        <To>13875.00</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:13:01 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll_option1_desc" UserID="vnavarrete" Source="Webstation" Action="U" From="" To="75% CSP">
+        <From />
+        <To>75% CSP</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:13:30 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_comments[5]/@comment" UserID="vnavarrete" Source="Webstation" Action="U" From="" To="all comps received are for 2014 models, app states 2013 unit. questioning. using 75% CSP, ADV not in line">
+        <From />
+        <To>all comps received are for 2014 models, app states 2013 unit. questioning. using 75% CSP, ADV not in line</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:15:37 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[3]/@letter_type_code" UserID="vnavarrete" Source="Webstation" Action="U" From="847" To="896">
+        <From>847</From>
+        <To>896</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:15:37 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[3]/@fax_notes" UserID="vnavarrete" Source="Webstation" Action="U" From="" To="You may add TT&amp;L to the above figure. Thanks for the application.">
+        <From />
+        <To>You may add TT&amp;L to the above figure. Thanks for the application.</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:15:37 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[3]/@ready_to_send" UserID="vnavarrete" Source="Webstation" Action="U" From="N" To="">
+        <From>N</From>
+        <To />
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:15:45 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@loan_amount_requested" UserID="vnavarrete" Source="Webstation" Action="U" From="18705.25" To="16650.00">
+        <From>18705.25</From>
+        <To>16650.00</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:15:45 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_app_decision_info[1]/@manual_adj_monthly_income" UserID="vnavarrete" Source="Webstation" Action="U" From="4050.7141666666666" To="4050.71">
+        <From>4050.7141666666666</From>
+        <To>4050.71</To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:28:52 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_comments[6]/@comment" UserID="jsanabria" Source="Webstation" Action="U" From="" To="comparable were consistent and used lowest figure. ">
+        <From />
+        <To>comparable were consistent and used lowest figure. </To>
+      </Audit>
+      <Audit Timestamp="Wed Mar 11 11:29:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[3]/@ready_to_send" UserID="jsanabria" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Mon Mar 23 13:30:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_comments[7]/@comment" UserID="ddamasco" Source="Webstation" Action="U" From="" To="Approval letter returned, LM">
+        <From />
+        <To>Approval letter returned, LM</To>
+      </Audit>
+      <Audit Timestamp="Tue Mar 24 11:44:47 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_comments[8]/@comment" UserID="vnavarrete" Source="Webstation" Action="U" From="" To="2nd call, LM">
+        <From />
+        <To>2nd call, LM</To>
+      </Audit>
+      <Audit Timestamp="Fri Mar 27 13:29:51 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_comments[9]/@comment" UserID="gvoravongsa" Source="Webstation" Action="U" From="" To="3rd attempt, LM. filing w/ declines.">
+        <From />
+        <To>3rd attempt, LM. filing w/ declines.</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:38:16 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_year" UserID="ddamasco" Source="Webstation" Action="U" From="2013" To="2014">
+        <From>2013</From>
+        <To>2014</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:38:16 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_make" UserID="ddamasco" Source="Webstation" Action="U" From="ELITE" To="JACKSON">
+        <From>ELITE</From>
+        <To>JACKSON</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:38:16 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_model" UserID="ddamasco" Source="Webstation" Action="U" From="STOCK GN" To="STOCK GN ">
+        <From>STOCK GN</From>
+        <To>STOCK GN </To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:38:45 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@app_sale_price" UserID="ddamasco" Source="Webstation" Action="U" From="18500.00" To="14995.00">
+        <From>18500.00</From>
+        <To>14995.00</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:38:45 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@app_cash_down_payment" UserID="ddamasco" Source="Webstation" Action="U" From="1850.00" To="1500.00">
+        <From>1850.00</From>
+        <To>1500.00</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:38:45 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@loan_amount_requested" UserID="ddamasco" Source="Webstation" Action="U" From="16650.00" To="15045.19">
+        <From>16650.00</From>
+        <To>15045.19</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:40:04 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_value" UserID="ddamasco" Source="Webstation" Action="U" From="13875.00" To="">
+        <From>13875.00</From>
+        <To />
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:40:04 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll2_value" UserID="ddamasco" Source="Webstation" Action="U" From="0.00" To="11900.00">
+        <From>0.00</From>
+        <To>11900.00</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:40:04 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll_option1_desc" UserID="ddamasco" Source="Webstation" Action="U" From="75% CSP" To="75% of the comp average">
+        <From>75% CSP</From>
+        <To>75% of the comp average</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:40:20 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@loan_amount_requested" UserID="ddamasco" Source="Webstation" Action="U" From="15045.19" To="14280.00">
+        <From>15045.19</From>
+        <To>14280.00</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:41:19 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_comments[10]/@comment" UserID="ddamasco" Source="Webstation" Action="U" From="" To="Received structure/collateral change. Used 75% of the average of the 3 comps received. ADV not in line.">
+        <From />
+        <To>Received structure/collateral change. Used 75% of the average of the 3 comps received. ADV not in line.</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:41:29 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[4]/@letter_type_code" UserID="ddamasco" Source="Webstation" Action="U" From="847" To="896">
+        <From>847</From>
+        <To>896</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:41:29 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[4]/@ready_to_send" UserID="ddamasco" Source="Webstation" Action="U" From="N" To="">
+        <From>N</From>
+        <To />
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:41:41 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_model" UserID="ddamasco" Source="Webstation" Action="U" From="STOCK GN" To="STOCK GN 24'">
+        <From>STOCK GN</From>
+        <To>STOCK GN 24'</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 12:42:07 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[4]/@fax_notes" UserID="ddamasco" Source="Webstation" Action="U" From="" To="Updated structure &amp; collateral. You may add TT&amp;L to the above figure. Thanks!">
+        <From />
+        <To>Updated structure &amp; collateral. You may add TT&amp;L to the above figure. Thanks!</To>
+      </Audit>
+      <Audit Timestamp="Wed Apr 01 13:17:42 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_letters_faxes[4]/@ready_to_send" UserID="jsanabria" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Thu Apr 09 11:23:01 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/@loan_amount_requested" UserID="jsanabria" Source="Webstation" Action="U" From="14280.00" To="15045.19">
+        <From>14280.00</From>
+        <To>15045.19</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:35:02 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_collateral[1]/@coll1_VIN" UserID="cbeason" Source="Webstation" Action="U" From="" To="1J9DG2220E1026479">
+        <From />
+        <To>1J9DG2220E1026479</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@funding_contact_code" UserID="cbeason" Source="Webstation" Action="U" From="" To="5049">
+        <From />
+        <To>5049</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_apr_within_guidelines" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_cash_proceeds" UserID="cbeason" Source="Webstation" Action="U" From="" To="15045.19">
+        <From />
+        <To>15045.19</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@finance_charge" UserID="cbeason" Source="Webstation" Action="U" From="" To="17428.01">
+        <From />
+        <To>17428.01</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_note_pymt_amount" UserID="cbeason" Source="Webstation" Action="U" From="" To="270.61">
+        <From />
+        <To>270.61</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_ITI_note[1]/@payment_date" UserID="cbeason" Source="Webstation" Action="U" From="" To="05/04/2020">
+        <From />
+        <To>05/04/2020</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_note_date" UserID="cbeason" Source="Webstation" Action="U" From="" To="04/04/2020">
+        <From />
+        <To>04/04/2020</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_sale_price" UserID="cbeason" Source="Webstation" Action="U" From="" To="14995.00">
+        <From />
+        <To>14995.00</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_cash_down_payment" UserID="cbeason" Source="Webstation" Action="U" From="" To="1500.00">
+        <From />
+        <To>1500.00</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@title_fee" UserID="cbeason" Source="Webstation" Action="U" From="" To="64.00">
+        <From />
+        <To>64.00</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@taxes" UserID="cbeason" Source="Webstation" Action="U" From="" To="937.19">
+        <From />
+        <To>937.19</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@document_prep_fee" UserID="cbeason" Source="Webstation" Action="U" From="" To="499.00">
+        <From />
+        <To>499.00</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@other_dealer_fees_1" UserID="cbeason" Source="Webstation" Action="U" From="" To="50.00">
+        <From />
+        <To>50.00</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_correct_contract_state" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_contract_state" UserID="cbeason" Source="Webstation" Action="U" From="" To="GF">
+        <From />
+        <To>GF</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_titled_in_state" UserID="cbeason" Source="Webstation" Action="U" From="" To="TX">
+        <From />
+        <To>TX</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_address_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_pymt_schedule_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_itemization_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_initials_presented" UserID="cbeason" Source="Webstation" Action="U" From="" To="N">
+        <From />
+        <To>N</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_signed_borrower1" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_signed_borrower2" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_verified_against_program" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_addendum_signed_borr1" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ct_addendum_signed_borr2" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@app_signed_borrower1" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@dl_borrower1" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@dl_borrower1_dob_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@app_signed_borrower2" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@dl_borrower2" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@dl_borrower2_dob_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@new_rv_boat_invoice_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@new_motor_invoice_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@new_trailer_invoice_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@new_motor2_invoice_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@collateral_ws_unit_confirmation" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@collateral_percent_used_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@rv_boat_title_vin_confirm" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@rv_boat_title_mb_lienholder" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@motor_title_vin_confirm" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@motor_title_mb_lienholder" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@trailer_title_vin_confirm" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@trailer_title_mb_lienholder" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@rv_boat_ucc1_vin_confirm" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@rv_boat_ucc1_mb_lienholder" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@motor_ucc1_vin_confirm" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@motor_ucc1_mb_lienholder" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@trailer_ucc1_vin_confirm" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@trailer_ucc1_mb_lienholder" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ucc1_filed_by_Merrick" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@guarantee_of_lien" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ins_mb_lienholder" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ins_deductible_within_policy" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ins_rv_boat_vin_confirm" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ins_motor_vin_confirm" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@ins_trailer_vin_confirm" UserID="cbeason" Source="Webstation" Action="U" From="" To="D">
+        <From />
+        <To>D</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:38 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@chk_requested_by" UserID="cbeason" Source="Webstation" Action="U" From="" To="CINDY BEASON">
+        <From />
+        <To>CINDY BEASON</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:58 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@loan_amount_approved" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:58 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@loan_amount_within_policy" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:58 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@loan_down_pymt_approved" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:58 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@applicant_paystub_expire" UserID="cbeason" Source="Webstation" Action="U" From="" To="05/24/2020">
+        <From />
+        <To>05/24/2020</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:58 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@loan_unit_confirmed" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+      <Audit Timestamp="Fri Apr 10 11:58:58 MDT 2020" XPATH="Provenir[1]/Request[1]/CustData[1]/IL_application[1]/IL_fund_checklist[1]/@loan_reference1" UserID="cbeason" Source="Webstation" Action="U" From="" To="Y">
+        <From />
+        <To>Y</To>
+      </Audit>
+    </Audits>
+  </Request>
+</Provenir>

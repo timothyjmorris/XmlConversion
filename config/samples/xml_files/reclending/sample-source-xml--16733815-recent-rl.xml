@@ -1,0 +1,332 @@
+<Provenir ipaddress="44.232.55.211:24117, 10.254.22.57" lender_dealer_id="604486" transactionID="DE7eec16c5_1971d293dad_07ffd1971d2b9f37_0a5b109a.62261" appone_trans_id="13161275" product="rl" app_source="API" shred_version="40.0" Org="" resetRegB="" error="" a1_date="Mon, 16 Jun 2025 21:43:01 GMT" fundingErrorMessage="">
+  <Request ID="16733815" Process="99800" LockedBy="" UserID="" Priority="" Status="" Workflow="75" Trans="EOD_ILSENDFAX" Readonly="0" _LockedBy="" LockedAt="" LastUpdatedBy="SERENITY.GAGE@MERRICKBANK.COM">
+    <CustData>
+      <IL_application trailer_subtype="" app_source_ind="A" app_type_code="OR" sub_type_code="PWC" dlr_name="Southeast Financial" dealer_number="400261" dlr_address_line1="131 Belle Forest Circle, Ste 210" dlr_city="Nashville" dlr_state="TN" dlr_zipcode="37221" dlr_email="" dlr_phone="8669008949" parent_dealer_number="604486" esign_eligible="Y" dlr_broker="Y" dlr_num_or="400261" dlr_fax="8553694733" fsp_name="" fsp_phone="" client_id="11878684" app_cash_down_payment="2550.00" app_sale_price="25500.00" requested_term_months="72" loan_amount_requested="24160.15" trade_allowance="0.00" trade_payoff_amount="0.00" individual_joint_app_ind="I" trade_net_tradein_amount="0.0" campaign_num="MARRV" tied_app_id="" tied_app_indicator="" add_TTL_to_amt_fin="N" app_entry_date="2025-06-05 14:46:38.875" app_receive_date="06/05/2025" app_invoice_amount="" dealer_count="389.0" app_counted="Y" assigned_analyst="kaley.gillis@merrickbank.com" duplicate_app_ind="N" last_update_time="2025-06-16 21:13:07.961" supervisor_rev_ind="C">
+        <IL_fund_dlr_ach dlr_num="400261" dlr_name="Southeast Financial   " dlr_aba="064008637" dlr_account_num="5288046" dlr_check_or_sav="22" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="Pinnacle Bank" dlr_bank_phone="" dlr_fsp_yn="N" dlr_fsp_num="" dlr_proceeds_amount="24643.35" />
+        <IL_collateral coll1_new_used_demo="U" coll_is_motorhome="N" coll2_new_used_demo="" coll3_new_used_demo="" coll4_new_used_demo="" coll1_VIN="YAMA1281G222" coll1_year="2022" coll1_mileage="0" coll1_make="YAMAHA" coll1_model="FX SVHO" coll_option_total_value="1240.00" coll1_value="10740" coll2_value="10740" coll3_value="0" coll4_value="0" coll2_year="2022" coll2_make="YAMAHA" coll2_model="FX SVHO" coll_combined_value="22720" coll_option1_desc="&lt;15% options" coll_option1="1240" coll3_year="2022" coll3_make="ZIEMAN" coll3_model="TRAILER" coll2_VIN="YAMA1324G222" coll3_VIN="1ZCS15015PZ366365" />
+        <IL_app_decision_info experian_fico_score_10t="0837" experian_vantage4_score="830" vantage_score_used="830" experian_fico_score_f9="792" Vantage4P_decline_code1="V4_64" Vantage4P_decline_code2="V4_32" Vantage4P_decline_code3="V4_45" Vantage4P_decline_code4="V4_28" Vantage4P_decline_code5="" MRVReasons="als5400, all8370, bcc5620, mtj0316" MRV_lead_indicator_p="Vantage" MRV_score_p="757.0" CRI_score_p="786.0" MRVP_decline_code1="als5400" MRVP_decline_code2="all8370" MRVP_decline_code3="bcc5620" MRVP_decline_code4="mtj0316" monthly_income="60000" regular_pymt_amount1="484.36" manual_adj_monthly_debt="2692.36" monthly_debt="2692.36" debt_to_income_ratio="4.49" manual_adj_DTI_ratio="4.49" max_DTI="47.49" manual_adj_monthly_income="" pending_verif_ind="N" decision_type_code="APPRV" decision_date="2025-06-05 15:08:42.274" regb_closed_days_num="0" />
+        <IL_ITI_control funding_date="2025-06-16" specification_record_flag_hdr="1" institution_number="15" account_number="5027605" vendor_id="38" verification_number="205456" boarding_date="061625" release_level="19026" class_code="05" boarding_datetime="2025-06-16 21:41:20.426" />
+        <IL_application_verification />
+        <IL_fund_checklist fund_this_loan_indicator="Y" total_of_payments="34873.92" total_amount_financed="24160.15" title_fee="0" term="" taxes="0" subtotal="22950.00" warranty_term="" payoff_amount="0" registration_fee="0" loan_officer_responsible_code="6210" loan_officer_open_acct_code="" license_fee="553.15" ct_sale_price="25500" ct_rate_over_split="12.95" ct_total_dealer_proceeds="24643.35" ct_cash_proceeds="24160.15" ct_cash_down_payment="2550" collateral_ages_within_policy="Y" credit_bureau_expire="7/20/2025" loan_Credit_pulled_within_30days="Y" ct_participation_percentage="2.00" payoff_loan_verified="Y" ct_loan_to_value_percentage="101.01" funding_contact_code="6171" finance_charge="10713.77" ct_note_pymt_amount="484.36" ct_note_date="06/12/2025" ct_net_tradein_allowance="0" other_public_official_fee_1="9" other_public_official_fee_2="0" other_public_official_fee_3="0" fl_contract_doc_tax="0" contract_credit_life_amount="0" contract_credit_disability_amount="0" contract_gap_amount="0" document_prep_fee="399" other_dealer_fees_1="249" other_dealer_fees_2="0" other_dealer_fees_3="0" other_dealer_fees_4="0" other_dealer_fees_5="0" other_dealer_fees_6="0" ct_fee_ucc1="0" ct_UCC_prin_refund="0" ct_first_pymnt_by_dlr="0" payoff_loan_number="" chk_requested_by="6171" inc_fund_expiration_date="06/23/2025" ct_apr_within_guidelines="Y" ct_correct_contract_state="Y" ct_contract_state="GF" ct_titled_in_state="AZ" ct_address_confirmed="Y" ct_pymt_schedule_confirmed="Y" ct_itemization_confirmed="Y" ct_initials_presented="N" ct_signed_borrower1="Y" ct_signed_borrower2="D" ct_verified_against_program="Y" ct_addendum_signed_borr1="D" ct_addendum_signed_borr2="D" app_signed_borrower1="Y" dl_borrower1="Y" dl_borrower1_dob_confirmed="Y" app_signed_borrower2="D" dl_borrower2="D" dl_borrower2_dob_confirmed="D" loan_amount_within_policy="Y" loan_down_pymt_approved="Y" applicant_paystub_expire="07/31/2025" coapplicant_paystub_expire="01/01/1900" loan_unit_confirmed="Y" loan_reference1="Y" new_rv_boat_invoice_confirmed="D" new_motor_invoice_confirmed="D" new_trailer_invoice_confirmed="D" new_motor2_invoice_confirmed="D" collateral_ws_unit_confirmation="Y" collateral_percent_used_confirmed="D" rv_boat_title_vin_confirm="D" rv_boat_title_mb_lienholder="D" motor_title_vin_confirm="D" motor_title_mb_lienholder="D" trailer_title_vin_confirm="Y" trailer_title_mb_lienholder="Y" rv_boat_ucc1_vin_confirm="Y" rv_boat_ucc1_mb_lienholder="Y" motor_ucc1_vin_confirm="Y" motor_ucc1_mb_lienholder="Y" trailer_ucc1_vin_confirm="Y" trailer_ucc1_mb_lienholder="Y" ucc1_filed_by_Merrick="D" guarantee_of_lien="D" ins_mb_lienholder="Y" ins_deductible_within_policy="Y" ins_rv_boat_vin_confirm="Y" ins_motor_vin_confirm="D" ins_trailer_vin_confirm="D" loan_note_date_in_range="Y" ct_participation_proceeds="483.20" ct_fee_fedex="0.00" ct_fee_Florida_doc_stamp_tax="0.00" ct_fee_sales_tax="0.00" ct_down_pymt_percentage="10.00" loan_down_pymt_within_policy="Y" ct_loan_to_value_percentage_with_fees="104.58" loan_LTV_within_policy="Y" loan_DTI_ratio_within_policy="Y" loan_FICO_within_policy="Y" loan_1st_pymt_not7days="Y" loan_Paystub_within_30days="Y" error_message="" mathCorpFC="10713.77" loan_term_within_policy="Y" ct_amt_financed_within_policy="Y" />
+        <IL_TempVariables TempFaxSeqNo="" TempOriginalProcess="99800" TempFaxStatusType="" TempFaxWithStips="" TempFaxLetterCode="" TempFaxReasonCode1="" TempFaxReasonCode2="" TempFaxReasonCode3="" TempFaxReasonCode4="" TempFaxNotes="" TempFaxLoanOfficer="" TempFaxExtension="" TempFaxDealer="" />
+        <IL_rule_flags DELAT="F" DELIL="F" DELRV="F" CCJTH="F" INSILH="F" INSSLR="T" NLABD="F" REVDT="F" TOJOB="F" ILDTI="F" />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income baseMonthlyIncome="0.00" ytdMonthlyIncome="0.00" id="1" sourceApplicant="primary" />
+        </IL_Incomes>
+        <IL_ITI_line name_line_pointer_1="001" address_pointer="00" />
+        <IL_ITI_loan_add_collateral addenda_number1="001" address_pointer1="00" collateral_ident1="YAMA1281G222" UCC_file_number1="" date_orig_fin_stmt1="" date_last_review1="06/12/25" date_next_review1="" status1="" addenda_number2="002" collateral_ident2="YAMA1324G222" UCC_file_number2="" date_orig_fin_stmt2="" date_last_review2="06/12/25" date_next_review2="" status2="" addenda_number3="003" address_pointer2="00" collateral_ident3="1ZCS15015PZ366365" UCC_file_number3="" date_orig_fin_stmt3="" date_last_review3="06/12/25" date_next_review3="" status3="" addenda_number4="" address_pointer3="00" collateral_ident4="" UCC_file_number4="" date_orig_fin_stmt4="" date_last_review4="" date_next_review4="" status4="" address_pointer4="" />
+        <IL_ITI_loan_add_tickler addenda_number1="001" description1="BINDER/PENDING" next_tickler_date1="08/11/25" notification_type1="N" />
+        <IL_ITI_note payment_date="07/12/25" name_line_pointer1="001" address_pointer="00" apr="12.9500" payment_code="2" payment_frequency="M" product_number="4015520" rate_index="" />
+        <IL_ITI_note_code_status secured_unsecured_code="S" NAICS_code="441210" />
+        <IL_ITI_note_misc recourse_code="A" CRA_type_code="7" source_code="400261" />
+        <IL_ITI_note_variable floor_rate="" next_rate_change_date="" />
+        <IL_ITI_payment_sched next_regular_pymt_date1="07/12/25" number_regular_pymts1="72" regular_pymt_frequency1="M" />
+        <IL_ITI_note_payment />
+        <IL_Payment />
+        <IL_Indicators>
+          <IL_Indicator ID="CreditBureauPulledP" value="1" />
+          <IL_Indicator ID="ValidCreditScoreP" value="1" />
+          <IL_Indicator ID="MLA" value="N" />
+        </IL_Indicators>
+        <IL_contact con_id="24065" ac_role_tp_c="PR" first_name="Ovella " middle_initial="" last_name="Brazelton" suffix="" ssn="666089298" birth_date="05/10/1978" drivers_license="8283645243" drivers_license_state="WY" drivers_license_expiration="" email="JOHN.DOE@GMAIL.COM" home_phone="9706452443" cell_phone="" bankruptcy_declared_ind="" property_repossessed_ind="" relationship_to_applicant="" ssn_last_4="9298">
+          <IL_contact_address address_seq_no="" address_type_code="CURR" street_number="5244" street_name="FLEETWOOD ST" apartment_unit_number="1E" po_box="" rural_route="" city="CLAYTON" state="MO" zip_code="63105" mortgage_holder_landlord="KHAN FAMILY PARTNERSHIP" mortgage_landlord_phone="4029812344" years_at_residence="5" months_at_residence="5" ownership_type_code="R" residence_monthly_pymnt="2400.00" />
+          <IL_contact_employment employment_seq_no="" employment_type_code="CURR" business_name="BIG SKY STEEL" supervisor="Tom the truck driver" title_position="TEACHER" self_employed_ind="N" address_line1="5199 HIGHWAY N" city="COTTLEVILLE" state="MO" zip_code="63304" business_phone="6368514600" salary="4500.00" salary_basis_type_code="MONTH" other_income_amt="330.00" other_income_basis_type_code="MONTH" other_income_source_type_code="OTHER" years_at_job="3" months_at_job="3" />          
+      </IL_contact>
+      </IL_application>
+    </CustData>
+    <Documents />
+    <Rules>
+      <Rule guid="repoObj_52ccc56b_1956c878ae8_07fef1956c878ae8" ID="RPIVW" Description="Review potential/possible income verification waived" Timestamp="2025-06-05 14:46:44.230" Severity="0" Override="1" AllowOverride="1" OverrideBy="KALEY.GILLIS@MERRICKBANK.COM" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_0796e110cc68c2b9" ID="MRADD" Description="Mismatch reported address to CB address." Timestamp="2025-06-05 14:46:44.721" Severity="68" Override="1" AllowOverride="1" OverrideBy="KALEY.GILLIS@MERRICKBANK.COM" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2025-06-05 14:46:40.375" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2025-06-05 14:46:40.375" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2025-06-05 14:46:40.376" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2025-06-05 14:46:40.376" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2025-06-05 14:46:40.377" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2025-06-05 14:46:40.377" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2025-06-05 14:46:40.377" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2025-06-05 14:46:40.378" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2025-06-05 14:46:40.378" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELCO" Timestamp="2025-06-05 14:46:40.378" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELPR" Timestamp="2025-06-05 14:46:40.379" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2025-06-05 14:46:40.379" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2025-06-05 14:46:40.380" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2025-06-05 14:46:40.381" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2025-06-05 14:46:40.381" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2025-06-05 14:46:40.381" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2025-06-05 14:46:40.382" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2025-06-05 14:46:40.443" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2025-06-05 14:46:40.443" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="2025-06-05 14:46:40.443" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2025-06-05 14:46:40.671" Status="false" />
+      <Journal Type="Process" ID="03800" Timestamp="2025-06-05 14:46:40.671" Status="Pass" />
+      <Journal Type="Rule" ID="IFADR" Timestamp="2025-06-05 14:46:40.739" Status="false" />
+      <Journal Type="Rule" ID="IFNAM" Timestamp="2025-06-05 14:46:40.806" Status="false" />
+      <Journal Type="Rule" ID="IFSSN" Timestamp="2025-06-05 14:46:41.019" Status="false" />
+      <Journal Type="Process" ID="05800" Timestamp="2025-06-05 14:46:41.020" Status="Pass" />
+      <Journal Type="Process" ID="BureauAndCreditScore" Timestamp="2025-06-05 14:46:41.507" Status="Pass" />
+      <Journal Type="Rule" ID="CRFRZ" Timestamp="2025-06-05 14:46:41.508" Status="false" />
+      <Journal Type="Rule" ID="CBERR" Timestamp="2025-06-05 14:46:41.509" Status="false" />
+      <Journal Type="Rule" ID="ILDEC" Timestamp="2025-06-05 14:46:41.510" Status="false" />
+      <Journal Type="Rule" ID="SCOREBLK" Timestamp="2025-06-05 14:46:41.510" Status="false" />
+      <Journal Type="Rule" ID="MINTRADE" Timestamp="2025-06-05 14:46:41.554" Status="false" />
+      <Journal Type="Process" ID="06800" Timestamp="2025-06-05 14:46:43.918" Status="Pass" />
+      <Journal Type="Rule" ID="CBSCOREP" Timestamp="2025-06-05 14:46:43.920" Status="false" />
+      <Journal Type="Process" ID="MRVFLOORP" Timestamp="2025-06-05 14:46:43.920" Status="false" />
+      <Journal Type="Process" ID="ScoreCutsPrimary" Timestamp="2025-06-05 14:46:43.921" Status="false" />
+      <Journal Type="Process" ID="ScoreCuts" Timestamp="2025-06-05 14:46:43.921" Status="false" />
+      <Journal Type="Process" ID="06850" Timestamp="2025-06-05 14:46:43.921" Status="Pass" />
+      <Journal Type="Rule" ID="RPIVW" Timestamp="2025-06-05 14:46:44.230" Status="true" />
+      <Journal Type="Rule" ID="MLAMISS" Timestamp="2025-06-05 14:46:44.231" Status="false" />
+      <Journal Type="Process" ID="06900" Timestamp="2025-06-05 14:46:44.231" Status="Pass" />
+      <Journal Type="Rule" ID="DELMB" Timestamp="2025-06-05 14:46:44.256" Status="false" />
+      <Journal Type="Rule" ID="CCCPP" Timestamp="2025-06-05 14:46:44.264" Status="false" />
+      <Journal Type="Rule" ID="CBAIF" Timestamp="2025-06-05 14:46:44.271" Status="false" />
+      <Journal Type="Rule" ID="CBPML" Timestamp="2025-06-05 14:46:44.280" Status="false" />
+      <Journal Type="Rule" ID="DELINQ" Timestamp="2025-06-05 14:46:44.291" Status="false" />
+      <Journal Type="Rule" ID="EFSTM" Timestamp="2025-06-05 14:46:44.292" Status="false" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2025-06-05 14:46:44.293" Status="false" />
+      <Journal Type="Process" ID="PullTLOPSRecLending" Timestamp="2025-06-05 14:46:44.716" Status="Pass" />
+      <Journal Type="Rule" ID="MRADD" Timestamp="2025-06-05 14:46:44.721" Status="true" />
+      <Journal Type="Rule" ID="MRDOB" Timestamp="2025-06-05 14:46:44.723" Status="false" />
+      <Journal Type="Rule" ID="MRNAM" Timestamp="2025-06-05 14:46:44.725" Status="false" />
+      <Journal Type="Rule" ID="MRSSN" Timestamp="2025-06-05 14:46:44.727" Status="false" />
+      <Journal Type="Rule" ID="OFACL" Timestamp="2025-06-05 14:46:44.727" Status="false" />
+      <Journal Type="Rule" ID="OPENBK" Timestamp="2025-06-05 14:46:44.728" Status="false" />
+      <Journal Type="Rule" ID="THINF" Timestamp="2025-06-05 14:46:44.731" Status="false" />
+      <Journal Type="Rule" ID="EXFRAUD" Timestamp="2025-06-05 14:46:44.732" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2025-06-05 14:46:44.732" Status="false" />
+      <Journal Type="Rule" ID="NEWDL" Timestamp="2025-06-05 14:46:44.794" Status="false" />
+      <Journal Type="Process" ID="07800" Timestamp="2025-06-05 14:46:44.796" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90+" Timestamp="2025-06-05 14:46:45.102" Status="false" />
+      <Journal Type="Process" ID="CRIScoreCut" Timestamp="2025-06-05 14:46:45.103" Status="Pass" />
+      <Journal Type="Process" ID="08800" Timestamp="2025-06-05 14:46:45.104" Status="Fail" />
+      <Journal UserID="KALEY.GILLIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-05 15:07:27.626" Status="Opened" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2025-06-05 15:07:31.571" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2025-06-05 15:07:31.571" Status="false" />
+      <Journal UserID="KALEY.GILLIS@MERRICKBANK.COM" Type="TM" ID="Approve Application with Stips" Timestamp="2025-06-05 15:08:42.271" Status="" />
+      <Journal Type="Process" ID="20800" Timestamp="2025-06-05 15:08:42.274" Status="Pass" />
+      <Journal UserID="KALEY.GILLIS@MERRICKBANK.COM" Type="TM" ID="Send Letter/Fax" Timestamp="2025-06-05 15:08:58.589" Status="" />
+      <Journal Type="Process" ID="00011" Timestamp="2025-06-05 15:08:58.590" Status="Fail" />
+      <Journal UserID="ASHLEY.HILLE@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-05 15:45:15.277" Status="Opened" />
+      <Journal UserID="ASHLEY.HILLE@MERRICKBANK.COM" Type="TM" ID="Supervisor Review Complete" Timestamp="2025-06-05 15:45:32.516" Status="" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2025-06-05 15:45:32.797" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2025-06-05 15:45:33.492" Status="Pass" />
+      <Journal UserID="GINA.VORAVONGSA@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-11 15:30:35.074" Status="Opened" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2025-06-11 15:31:08.469" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2025-06-11 15:31:08.470" Status="false" />
+      <Journal UserID="GINA.VORAVONGSA@MERRICKBANK.COM" Type="TM" ID="Send Letter/Fax" Timestamp="2025-06-11 15:39:50.800" Status="" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2025-06-11 15:39:51.063" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2025-06-11 15:39:51.506" Status="Pass" />
+      <Journal UserID="GINA.VORAVONGSA@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-12 15:11:39.520" Status="Opened" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2025-06-12 15:12:01.735" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2025-06-12 15:12:01.735" Status="false" />
+      <Journal UserID="GINA.VORAVONGSA@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-12 15:12:29.388" Status="Opened" />
+      <Journal UserID="KALEY.GILLIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-12 16:46:11.468" Status="Opened" />
+      <Journal UserID="KALEY.GILLIS@MERRICKBANK.COM" Type="TM" ID="Send Letter/Fax" Timestamp="2025-06-12 16:46:33.204" Status="" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2025-06-12 16:46:33.480" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2025-06-12 16:46:33.868" Status="Pass" />
+      <Journal UserID="KALOSI.PE'A@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-12 16:57:48.332" Status="Opened" />
+      <Journal UserID="EMMA.ALLEN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-16 14:23:53.486" Status="Opened" />
+      <Journal UserID="ASHLEY.HILLE@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-16 15:36:06.434" Status="Opened" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2025-06-16 15:36:36.272" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2025-06-16 15:36:36.272" Status="false" />
+      <Journal UserID="SERENITY.GAGE@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-16 20:58:46.835" Status="Opened" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2025-06-16 21:01:35.415" Status="false" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2025-06-16 21:06:56.362" Status="false" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2025-06-16 21:09:09.575" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2025-06-16 21:09:09.576" Status="false" />
+      <Journal UserID="SERENITY.GAGE@MERRICKBANK.COM" Type="TM" ID="Calculate Funding Proceeds" Timestamp="2025-06-16 21:11:43.307" Status="" />
+      <Journal UserID="SERENITY.GAGE@MERRICKBANK.COM" Type="TM" ID="Calculate Funding Proceeds" Timestamp="2025-06-16 21:12:46.263" Status="" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2025-06-16 21:12:46.436" Status="false" />
+      <Journal Type="Rule" ID="DUPFSSN" Timestamp="2025-06-16 21:12:46.650" Status="false" />
+      <Journal Type="Rule" ID="MLAAPR" Timestamp="2025-06-16 21:12:46.651" Status="false" />
+      <Journal Type="Rule" ID="PHYSADDVRFYPR" Timestamp="2025-06-16 21:12:46.652" Status="false" />
+      <Journal Type="Rule" ID="PHYSADDVRFYCO" Timestamp="2025-06-16 21:12:46.652" Status="false" />
+      <Journal UserID="SERENITY.GAGE@MERRICKBANK.COM" Type="TM" ID="Fund this loan" Timestamp="2025-06-16 21:13:08.019" Status="" />
+      <Journal Type="Rule" ID="BPRTG" Timestamp="2025-06-16 21:13:08.175" Status="false" />
+      <Journal Type="Rule" ID="DUPFSSN" Timestamp="2025-06-16 21:13:09.663" Status="false" />
+      <Journal Type="Rule" ID="MLAAPR" Timestamp="2025-06-16 21:13:09.664" Status="false" />
+      <Journal Type="Rule" ID="PHYSADDVRFYPR" Timestamp="2025-06-16 21:13:09.665" Status="false" />
+      <Journal Type="Rule" ID="PHYSADDVRFYCO" Timestamp="2025-06-16 21:13:09.666" Status="false" />
+      <Journal UserID="BRIAN.MCCAIN@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-06-16 21:27:15.388" Status="Opened" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2025-06-16 21:41:21.713" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2025-06-16 21:41:21.886" Status="Pass" />
+      <Journal UserID="SERENITY.GAGE@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-08-08 21:46:01.387" Status="Opened" />
+      <Journal UserID="SCOTT.GARTON@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2025-12-18 16:14:40.455" Status="Opened" />
+    </Journals>
+    <Audits>
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Loan Officer Code" To="6210" From="" Timestamp="2025-06-05 15:07:31.495" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Include TTL" To="N" From="" Timestamp="2025-06-05 15:07:31.496" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="RPIVW" To="1" From="0" Timestamp="2025-06-05 15:07:56.938" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="New Comment" To="cleared POR with bureau " From="" Timestamp="2025-06-05 15:08:12.720" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="MRADD" To="1" From="0" Timestamp="2025-06-05 15:08:16.097" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="capacity Status" To="pass" Timestamp="2025-06-05 15:08:25.611" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="New Comment" To="waiving income verification due to install repay and job time " From="" Timestamp="2025-06-05 15:08:27.337" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Letter Type Code (1)" To="895" From="895" Timestamp="2025-06-05 15:08:58.531" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Reason Code 1 (1)" To="952" From="926" Timestamp="2025-06-05 15:08:58.532" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Reason Code 2 (1)" To="" From="952" Timestamp="2025-06-05 15:08:58.532" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Reason Code 3 (1)" To="" From="" Timestamp="2025-06-05 15:08:58.532" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Reason Code 4 (1)" To="" From="" Timestamp="2025-06-05 15:08:58.532" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Fax Notes (1)" To="Income verification has been waived. Send stips to rec.lending@merrickbank.com. Provide stips prior to contracting, thanks." From="" Timestamp="2025-06-05 15:08:58.532" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="Requested Amount" To="23808.00" From="26648.00" Timestamp="2025-06-11 15:31:08.394" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="New Comment" To="dealer note: 2 jet skis. updated coll &amp; structure, original loan amt 26,648" From="" Timestamp="2025-06-11 15:32:46.218" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="Collateral 2 Year" To="2022" From="" Timestamp="2025-06-11 15:33:08.426" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="Collateral 2 Make" To="YA" From="" Timestamp="2025-06-11 15:33:08.426" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="Collateral 2 Model" To="FX SVHO" From="" Timestamp="2025-06-11 15:33:08.426" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="Collateral 1 Value" To="10740" From="0" Timestamp="2025-06-11 15:33:24.879" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="Collateral 2 Value" To="10740" From="0" Timestamp="2025-06-11 15:33:35.750" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="Description Option 1" To="&lt;15% options" From="" Timestamp="2025-06-11 15:33:58.778" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="Value Option 1" To="1240" From="" Timestamp="2025-06-11 15:33:58.779" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="New Comment" To="Verified NADA's." From="" Timestamp="2025-06-11 15:38:40.196" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="collateral Status" To="pass" Timestamp="2025-06-11 15:38:47.597" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="Requested Amount" To="24610.15" From="23808.00" Timestamp="2025-06-12 15:12:01.662" Source="API" />
+      <Audit UserID="GINA.VORAVONGSA@MERRICKBANK.COM" XPATH="New Comment" To="updated structure, original loan amt 23,808" From="" Timestamp="2025-06-12 15:12:18.012" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Letter Type Code (3)" To="896" From="896" Timestamp="2025-06-12 16:46:33.145" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Reason Code 1 (3)" To="799" From="799" Timestamp="2025-06-12 16:46:33.145" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Reason Code 2 (3)" To="" From="" Timestamp="2025-06-12 16:46:33.145" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Reason Code 3 (3)" To="" From="" Timestamp="2025-06-12 16:46:33.145" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Reason Code 4 (3)" To="" From="" Timestamp="2025-06-12 16:46:33.145" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Send Fax (3)" To="Y" From="N" Timestamp="2025-06-12 16:46:33.146" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Ready To Send (3)" To="Y" From="N" Timestamp="2025-06-12 16:46:33.146" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Fax Notes (3)" To="UPDATED STRUCTURE. Above reflects the amount requested. Thanks." From="UPDATED STRUCTURE. Above reflects the amount requested. Thanks." Timestamp="2025-06-12 16:46:33.146" Source="API" />
+      <Audit UserID="ASHLEY.HILLE@MERRICKBANK.COM" XPATH="Requested Amount" To="24160.15" From="24610.15" Timestamp="2025-06-16 15:36:36.188" Source="API" />
+      <Audit UserID="ASHLEY.HILLE@MERRICKBANK.COM" XPATH="Cash Sale Price" To="25500.00" From="26000.00" Timestamp="2025-06-16 15:36:36.189" Source="API" />
+      <Audit UserID="ASHLEY.HILLE@MERRICKBANK.COM" XPATH="Down Payment Cash" To="2550.00" From="2600.00" Timestamp="2025-06-16 15:36:36.189" Source="API" />
+      <Audit UserID="ASHLEY.HILLE@MERRICKBANK.COM" XPATH="decision Status" To="pass" Timestamp="2025-06-16 15:36:48.047" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Funding Contact" To="6171" Timestamp="2025-06-16 21:01:35.406" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Amount Financed" To="0" From="" Timestamp="2025-06-16 21:01:35.406" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Fiannce Charge" To="0" Timestamp="2025-06-16 21:01:35.406" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Note Payment" To="0" Timestamp="2025-06-16 21:01:35.407" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="First Payment Date" To="01/01/1900" Timestamp="2025-06-16 21:01:35.407" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Signed Date" To="01/01/1900" Timestamp="2025-06-16 21:01:35.407" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Sale Price" To="0" From="" Timestamp="2025-06-16 21:01:35.407" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Cash Down Payment" To="0" From="" Timestamp="2025-06-16 21:01:35.408" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Trade Down Payment" To="0" Timestamp="2025-06-16 21:01:35.408" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="License Fee" To="0" From="" Timestamp="2025-06-16 21:01:35.408" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Title Fee" To="0" From="" Timestamp="2025-06-16 21:01:35.408" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Registration Fee" To="0" From="" Timestamp="2025-06-16 21:01:35.409" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Taxes" To="0" From="" Timestamp="2025-06-16 21:01:35.409" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Public Official Fee 1" To="0" Timestamp="2025-06-16 21:01:35.409" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Public Official Fee 2" To="0" Timestamp="2025-06-16 21:01:35.409" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Public Official Fee 3" To="0" Timestamp="2025-06-16 21:01:35.409" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Florida Doc Tax" To="0" Timestamp="2025-06-16 21:01:35.410" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Credit Life Insurance" To="0" Timestamp="2025-06-16 21:01:35.410" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Credit Disability Insurance" To="0" Timestamp="2025-06-16 21:01:35.410" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Gap Coverage" To="0" Timestamp="2025-06-16 21:01:35.410" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Document Prep" To="0" Timestamp="2025-06-16 21:01:35.411" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Dealer Fee 1" To="0" Timestamp="2025-06-16 21:01:35.411" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Dealer Fee 2" To="0" Timestamp="2025-06-16 21:01:35.411" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Dealer Fee 3" To="0" Timestamp="2025-06-16 21:01:35.411" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Dealer Fee 4" To="0" Timestamp="2025-06-16 21:01:35.412" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Dealer Fee 5" To="0" Timestamp="2025-06-16 21:01:35.412" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Dealer Fee 6" To="0" Timestamp="2025-06-16 21:01:35.413" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Contract UCC1 Fee" To="0" Timestamp="2025-06-16 21:01:35.413" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="UCC Principal Refund" To="0" Timestamp="2025-06-16 21:01:35.413" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="First Payment By Dealer" To="0" Timestamp="2025-06-16 21:01:35.413" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Payoff Loan Number" To="" Timestamp="2025-06-16 21:01:35.414" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Payoff Loan Amount" To="0" From="" Timestamp="2025-06-16 21:01:35.414" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Requested By" To="" Timestamp="2025-06-16 21:01:35.416" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral 3 Year" To="2022" From="" Timestamp="2025-06-16 21:04:31.037" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral 1 Model" To="FX SVHO" From="FX CRUISER SVHO" Timestamp="2025-06-16 21:04:31.037" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral 2 Make" To="YAMAHA" From="YA" Timestamp="2025-06-16 21:04:31.038" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral 3 Make" To="ZIEMAN" From="" Timestamp="2025-06-16 21:04:31.038" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral 3 Model" To="TRAILER" From="" Timestamp="2025-06-16 21:04:31.038" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral 1 VIN" To="YAMA1281G222" From="" Timestamp="2025-06-16 21:04:31.040" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral 2 VIN" To="YAMA1324G222" From="" Timestamp="2025-06-16 21:04:31.040" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral 3 VIN" To="1ZCS15015PZ366365" From="" Timestamp="2025-06-16 21:04:31.040" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="New Comment" To="dealer files UCC " From="" Timestamp="2025-06-16 21:06:06.779" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Requested By" To="6171" From="" Timestamp="2025-06-16 21:06:56.362" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Funding Expiration Date" To="06/23/2025" Timestamp="2025-06-16 21:06:56.363" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral Street Number" To="8014" Timestamp="2025-06-16 21:06:56.363" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral Street Name" To="SOUTH 50TH LANE" Timestamp="2025-06-16 21:06:56.363" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral City" To="LAVEEN" Timestamp="2025-06-16 21:06:56.364" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral State" To="AZ" Timestamp="2025-06-16 21:06:56.364" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral Zip Code" To="85339" Timestamp="2025-06-16 21:06:56.364" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Middle Initial (primary)" To="N" From="" Timestamp="2025-06-16 21:09:09.497" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Last Name (primary)" To="MUNOZ-SALAZAR" From="MUNOZ" Timestamp="2025-06-16 21:09:09.497" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Street Number (patriot)" To="" Timestamp="2025-06-16 21:09:09.498" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Street Name (patriot)" To="" Timestamp="2025-06-16 21:09:09.498" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Unit (patriot)" To="" Timestamp="2025-06-16 21:09:09.498" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="PO Box (patriot)" To="" Timestamp="2025-06-16 21:09:09.499" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Rural Route (patriot)" To="" Timestamp="2025-06-16 21:09:09.499" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="City (patriot)" To="" Timestamp="2025-06-16 21:09:09.499" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Zip (patriot)" To="" Timestamp="2025-06-16 21:09:09.500" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Years At Residence (patriot)" To="0" From="" Timestamp="2025-06-16 21:09:09.500" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Months At Residence (patriot)" To="0" From="" Timestamp="2025-06-16 21:09:09.500" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Unit (current)" To="" Timestamp="2025-06-16 21:09:09.501" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="PO Box (current)" To="" Timestamp="2025-06-16 21:09:09.501" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Rural Route (current)" To="" Timestamp="2025-06-16 21:09:09.501" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="New Comment" To="updated name per DL" From="" Timestamp="2025-06-16 21:09:26.677" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="APR Within Guidelines" To="Y" Timestamp="2025-06-16 21:11:28.906" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Amount Financed" To="24160.15" From="0" Timestamp="2025-06-16 21:11:28.906" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Fiannce Charge" To="10713.77" From="0" Timestamp="2025-06-16 21:11:28.907" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Note Payment" To="484.36" From="0" Timestamp="2025-06-16 21:11:28.907" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="First Payment Date" To="07/12/2025" From="01/01/1900" Timestamp="2025-06-16 21:11:28.907" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Signed Date" To="06/12/2025" From="01/01/1900" Timestamp="2025-06-16 21:11:28.908" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Sale Price" To="25500" From="0" Timestamp="2025-06-16 21:11:28.908" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Cash Down Payment" To="2550" From="0" Timestamp="2025-06-16 21:11:28.908" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="License Fee" To="533.15" From="0" Timestamp="2025-06-16 21:11:28.908" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Public Official Fee 1" To="9" From="0" Timestamp="2025-06-16 21:11:28.909" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Document Prep" To="399" From="0" Timestamp="2025-06-16 21:11:28.909" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Dealer Fee 1" To="249" From="0" Timestamp="2025-06-16 21:11:28.910" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Correct Contract State" To="Y" Timestamp="2025-06-16 21:11:28.910" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Contract State" To="GF" Timestamp="2025-06-16 21:11:28.911" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Titled In State" To="AZ" Timestamp="2025-06-16 21:11:28.911" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Address Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.912" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Payment Schedule Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.912" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Itemization Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.913" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Initials Presented" To="N" Timestamp="2025-06-16 21:11:28.913" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 1 Signed" To="Y" Timestamp="2025-06-16 21:11:28.913" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 2 Signed" To="D" Timestamp="2025-06-16 21:11:28.914" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Verified Against Program" To="Y" Timestamp="2025-06-16 21:11:28.914" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 1 Addendum Signed" To="D" Timestamp="2025-06-16 21:11:28.914" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 2 addendum Signed" To="D" Timestamp="2025-06-16 21:11:28.915" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 1 Signed App" To="Y" Timestamp="2025-06-16 21:11:28.915" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 1 Drivers License" To="Y" Timestamp="2025-06-16 21:11:28.915" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 1 DOB Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.916" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 2 Signed App" To="D" Timestamp="2025-06-16 21:11:28.916" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 2 Drivers License" To="D" Timestamp="2025-06-16 21:11:28.916" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 2 DOB Confirmed" To="D" Timestamp="2025-06-16 21:11:28.917" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Loan Amount Within Policy" To="Y" Timestamp="2025-06-16 21:11:28.917" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Down Payment Approved" To="Y" Timestamp="2025-06-16 21:11:28.917" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 1 Paystub Expiration" To="07/31/2025" Timestamp="2025-06-16 21:11:28.918" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Borrower 2 Paystub Expiration" To="01/01/1900" Timestamp="2025-06-16 21:11:28.918" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Unit Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.919" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="References Complete" To="Y" Timestamp="2025-06-16 21:11:28.919" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Unit Invoice Confirmed" To="D" Timestamp="2025-06-16 21:11:28.919" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Motor Invoice Confirmed" To="D" Timestamp="2025-06-16 21:11:28.920" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Trailer Invoice Confirmed" To="D" Timestamp="2025-06-16 21:11:28.920" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Motor 2 Invoice Confirmed" To="D" Timestamp="2025-06-16 21:11:28.920" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral Worksheet Unit Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.921" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Collateral Percent Used Confirmed" To="D" Timestamp="2025-06-16 21:11:28.921" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Unit Title VIN Confirmed" To="D" Timestamp="2025-06-16 21:11:28.922" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Unit Title MB Lienholder" To="D" Timestamp="2025-06-16 21:11:28.922" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Motor Title VIN Confirmed" To="D" Timestamp="2025-06-16 21:11:28.923" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Motor Title MB Lienholder" To="D" Timestamp="2025-06-16 21:11:28.923" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Trailer Title VIN Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.924" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Trailer Title MB Lienholder" To="Y" Timestamp="2025-06-16 21:11:28.924" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Unit UCC1 Title VIN Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.925" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Unit UCC1 Title MB Lienholder" To="Y" Timestamp="2025-06-16 21:11:28.925" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Motor UCC1 Title Vin Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.926" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Motor UCC1 Title MB Lienholder" To="Y" Timestamp="2025-06-16 21:11:28.926" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Trailer UCC1 Title VIN Confirmed" To="Y" Timestamp="2025-06-16 21:11:28.927" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Trailer UCC1 Title MB Lienholder" To="Y" Timestamp="2025-06-16 21:11:28.927" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="UCC1 Filed by Merrick" To="D" Timestamp="2025-06-16 21:11:28.928" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Guarantee or Power Of Attorney" To="D" Timestamp="2025-06-16 21:11:28.928" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Insurance MB as Lienholder" To="Y" Timestamp="2025-06-16 21:11:28.928" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Deductable within Policy" To="Y" Timestamp="2025-06-16 21:11:28.929" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Unit VIN Confirm" To="Y" Timestamp="2025-06-16 21:11:28.929" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Motor VIN Confirm" To="D" Timestamp="2025-06-16 21:11:28.929" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="Trailer VIN Confirm" To="D" Timestamp="2025-06-16 21:11:28.930" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="License Fee" To="553.15" From="533.15" Timestamp="2025-06-16 21:12:36.212" Source="API" />
+      <Audit UserID="SERENITY.GAGE@MERRICKBANK.COM" XPATH="funding Status" To="pass" Timestamp="2025-06-16 21:13:12.606" Source="API" />
+    </Audits>
+  </Request>
+  <queues>
+    <queue name="T All Applications" id="45" />
+  </queues>
+</Provenir>

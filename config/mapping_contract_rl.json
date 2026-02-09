@@ -1788,6 +1788,18 @@
     },
     {
       "xml_path": "/Provenir/Request/CustData/IL_application/IL_collateral",
+      "xml_attribute": "coll1_mileage",
+      "target_table": "app_collateral_rl",
+      "target_column": "mileage",
+      "data_type": "int",
+      "mapping_type": [
+        "add_collateral(1)"
+      ],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/IL_application/IL_collateral",
       "xml_attribute": "coll1_VIN",
       "target_table": "app_collateral_rl",
       "target_column": "vin",
@@ -1874,7 +1886,7 @@
         "calculated_field",
         "add_collateral(2)"
       ],
-      "expression": "CASE WHEN IL_collateral.coll2_HP_Marine IS NOT EMPTY THEN 413 WHEN IL_application.app_type_code = 'MARINE' AND IL_collateral.wholesale_value IS NOT EMPTY THEN 413 WHEN IL_application.app_type_code = 'MARINE' AND IL_collateral.make IS NOT EMPTY THEN 413 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'ATV' THEN 410 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'UTV' THEN 422 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'PWC' THEN 418 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'SNOWMOBILE' THEN 420 END",
+      "expression": "CASE WHEN IL_collateral.coll2_HP_Marine > '0' THEN 413 WHEN IL_application.app_type_code = 'MARINE' AND IL_collateral.coll2_value IS NOT EMPTY THEN 413 WHEN IL_application.app_type_code = 'MARINE' AND IL_collateral.make IS NOT EMPTY THEN 413 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'ATV' THEN 410 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'UTV' THEN 422 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'PWC' THEN 418 WHEN IL_application.app_type_code = 'OR' AND IL_application.sub_type_code = 'SNOWMOBILE' THEN 420 WHEN IL_collateral.coll2_value IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
     },
@@ -1925,6 +1937,18 @@
       "target_column": "wholesale_value",
       "data_type": "decimal",
       "data_length": 2,
+      "mapping_type": [
+        "add_collateral(2)"
+      ],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/IL_application/IL_collateral",
+      "xml_attribute": "coll2_HP_Marine",
+      "target_table": "app_collateral_rl",
+      "target_column": "motor_size",
+      "data_type": "smallint",
       "mapping_type": [
         "add_collateral(2)"
       ],
@@ -2019,7 +2043,7 @@
         "calculated_field",
         "add_collateral(3)"
       ],
-      "expression": "CASE WHEN IL_application.app_type_code = 'MARINE' AND IL_collateral.coll3_make IN ('BT', 'BEAR', 'BOATMATE', 'BACKTRACK', 'TRAILSTAR', 'MAGIC TILT', 'MARINE MASTER', 'SHORELANDER', 'SHORELANDR', 'EZ LOADER', 'KARAVAN', 'MCCLAIN', 'ESCORT', 'ROAD RUNNER', 'LOAD RITE', 'LOADRITE', 'MAGIC LOADER', 'MALIBU', 'ZIEMAN', 'TRACKER', 'DIAMOND CITY', 'RANGER', 'WESCO', 'TRAILER') THEN 420 WHEN IL_collateral.coll3_HP_Marine IS NOT EMPTY THEN 413 WHEN IL_application.app_type_code = 'MARINE' AND IL_collateral.coll3_make IN ('MERCURY', 'YAMAHA', 'MERCRUISER') THEN 413 WHEN IL_application.app_type_code IS NOT EMPTY AND IL_application.wholesale_value IS NOT EMPTY THEN 423 END",
+      "expression": "CASE WHEN IL_collateral.coll3_make LIKE '%BT%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%BEAR%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%BOATMATE%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%BACKTRACK%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%TRAILSTAR%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MAGIC TILT%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MARINE MASTER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%SHORELANDER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%SHORELANDR%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%EZ LOADER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%KARAVAN%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MCCLAIN%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%ESCORT%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%ROAD RUNNER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%LOAD RITE%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%LOADRITE%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MAGIC LOADER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%MALIBU%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%ZIEMAN%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%TRACKER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%DIAMOND CITY%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%RANGER%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%WESCO%' THEN 420 WHEN IL_collateral.coll3_make LIKE '%TRAILER%' THEN 420 WHEN IL_collateral.coll3_model LIKE '%TRAILER%' THEN 420 WHEN IL_collateral.coll3_HP_Marine > '0' THEN 413 WHEN IL_collateral.coll3_make LIKE '%MERCURY%' THEN 413 WHEN IL_collateral.coll3_make LIKE '%YAMAHA%' THEN 413 WHEN IL_collateral.coll3_make LIKE '%MERCRUISER%' THEN 413 WHEN IL_application.app_type_code IS NOT EMPTY AND IL_collateral.coll3_value IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
     },
@@ -2070,6 +2094,18 @@
       "target_column": "wholesale_value",
       "data_type": "decimal",
       "data_length": 2,
+      "mapping_type": [
+        "add_collateral(3)"
+      ],
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir/Request/CustData/IL_application/IL_collateral",
+      "xml_attribute": "coll3_HP_Marine",
+      "target_table": "app_collateral_rl",
+      "target_column": "motor_size",
+      "data_type": "smallint",
       "mapping_type": [
         "add_collateral(3)"
       ],
@@ -2164,7 +2200,7 @@
         "calculated_field",
         "add_collateral(4)"
       ],
-      "expression": "CASE WHEN IL_application.app_type_code = 'MARINE' AND IL_collateral.coll4_make IN ('MERCURY', 'YAMAHA', 'MERCRUISER') THEN 413 WHEN IL_application.app_type_code = 'MARINE' THEN 417 WHEN IL_application.app_type_code = 'OR' THEN 417 WHEN IL_application.app_type_code IS NOT EMPTY AND IL_application.wholesale_value IS NOT EMPTY THEN 423 END",
+      "expression": "CASE WHEN IL_collateral.coll4_make LIKE '%MERCURY%' THEN 413 WHEN IL_collateral.coll4_make LIKE '%YAMAHA%' THEN 413 WHEN IL_collateral.coll4_make LIKE '%MERCRUISER%' THEN 413 WHEN IL_collateral.coll4_model LIKE '%TRAILER%' THEN 420 WHEN IL_collateral.coll4_make LIKE '%MAGIC TILT%' THEN 420 WHEN IL_application.app_type_code = 'MARINE' THEN 417 WHEN IL_application.app_type_code = 'OR' THEN 417 WHEN IL_application.app_type_code IS NOT EMPTY AND IL_collateral.coll4_value IS NOT EMPTY THEN 423 END",
       "nullable": false,
       "required": false
     },
@@ -4525,6 +4561,8 @@
     "char_to_bit": {
       "Y": 1,
       "N": 0,
+      "U": 1,
+      "D": 0,
       "J": 1,
       "I": 0,
       "R": 1,

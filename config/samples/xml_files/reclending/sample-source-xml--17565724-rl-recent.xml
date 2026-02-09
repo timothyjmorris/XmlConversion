@@ -1,0 +1,154 @@
+<Provenir ipaddress="74.200.119.13:5809, 10.254.22.57" dt_dealer_id="831402" dt_app_id="BFB2244145" lender_dealer_id="400305" transactionID="DE05edef32d_19c2b0a090f_07ffc19c2b0caf1d_0a5b041c.2388" error="" Org="" product="rl" app_source="API" shred_version="13.0" resetRegB="">
+  <Request ID="17565724" Process="20800" LockedBy="" UserID="" Priority="" Status="" Workflow="75" Trans="ILSENDFAX" Readonly="0" _LockedBy="" LockedAt="" LastUpdatedBy="KALEY.GILLIS@MERRICKBANK.COM">
+    <CustData>
+      <IL_application app_source_ind="D" app_type_code="OR" sub_type_code="ATV" parent_dealer_number="400305" esign_eligible="Y" application_eligible="true" dlr_broker="N" dlr_num_ht="" dlr_num_marine="" dlr_num_mc="" dlr_num_or="400305" dlr_num_rv="" dlr_num_trailer="" dlr_address_line1="15900 E US HWY 40" dlr_city="Kansas City" dlr_email="johnny@dreammachinesofkc.com" dlr_fax="8163507790" dlr_name="Dream Machines Motorsports" dlr_phone="8163507777" dlr_state="MO" dlr_zipcode="64136" fsp_name="" fsp_phone="" requested_term_months="36" app_cash_down_payment="1500" app_sale_price="7494" trade_net_tradein_amount="" app_invoice_amount="0" loan_amount_requested="5228" trade_year="" trade_make="" trade_model="" trade1_HP_Marine="" trade1_engine_size_CC="450" trade_financed_by="" client_id="BFB2244145" campaign_num="MARRV" individual_joint_app_ind="I" opt_out_ind="N" tied_app_id="" tied_app_indicator="" add_TTL_to_amt_fin="N" app_entry_date="2026-02-05 20:41:11.216" app_receive_date="02/05/2026" dealer_count="71.0" app_counted="Y" last_update_time="2026-02-05 20:47:51.109" assigned_analyst="kaley.gillis@merrickbank.com" EODRet="ILPROCESS" duplicate_app_ind="N">
+        <IL_fund_dlr_ach dlr_num="400305" dlr_aba="101105354" dlr_account_num="900109716" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="Equity Bank" dlr_bank_phone="" dlr_check_or_sav="22" dlr_name="Dream Machines Motorsp" dlr_fsp_num="" dlr_fsp_yn="N" pre_note_date="null" />
+        <IL_app_decision_info manual_adj_monthly_income="" monthly_income="7916.67" regular_pymt_amount1="181.1" manual_adj_monthly_debt="206.1" monthly_debt="206.1" debt_to_income_ratio="2.6" manual_adj_DTI_ratio="2.6" max_DTI="47.49" experian_fico_score_10t="0781" experian_vantage4_score="696" vantage_score_used="696" experian_fico_score_f9="778" Vantage4P_decline_code1="V4_31" Vantage4P_decline_code2="V4_04" Vantage4P_decline_code3="V4_62" Vantage4P_decline_code4="V4_42" Vantage4P_decline_code5="" score_factor_type_1_PR="V4" score_factor_type_2_PR="V4" score_factor_type_3_PR="V4" score_factor_type_4_PR="V4" score_factor_type_5_PR="" score_factor_code_1_PR="31" score_factor_code_2_PR="04" score_factor_code_3_PR="62" score_factor_code_4_PR="42" score_factor_code_5_PR="" MRVReasons="als5400, bcc5620, all8370, reh7120" MRV_lead_indicator_p="Vantage" MRV_score_p="554.0" CRI_score_p="611.0" MRVP_decline_code1="als5400" MRVP_decline_code2="bcc5620" MRVP_decline_code3="all8370" MRVP_decline_code4="reh7120" decision_type_code="APPRV" decision_date="2026-02-05 20:47:32.004" pending_verif_ind="N" experian_fico_score_f9_2="0" experian_vantage4_score2="0" />
+        <IL_collateral coll1_year="2025" coll1_make="POLARIS" coll1_model="SPORTSMAN 450 H.O" coll1_VIN="3NESEA507SN207215" coll2_new_used_demo="" coll3_new_used_demo="" coll4_new_used_demo="" coll1_new_used_demo="N" coll_is_motorhome="N" coll2_value="" coll1_value="" coll3_value="" coll4_value="" net_invoice="" options="" allowed_freight="" allowed_discount="" coll_option_total_value="0.00" coll_combined_value="" coll_option1="" coll_option2="" coll_option3="" coll_option4="" coll_option5="" coll_option6="" coll_option7="" coll_option8="" coll_option1_desc="" coll_option2_desc="" coll_option3_desc="" coll_option4_desc="" coll_option5_desc="" coll_option6_desc="" coll_option7_desc="" coll_option8_desc="" />
+        <IL_application_verification />
+        <IL_fund_checklist fund_this_loan_indicator="" ct_cash_down_payment="" ct_cash_proceeds="" ct_rate_over_split="14.95" ct_sale_price="" ct_total_dealer_proceeds="" document_prep_fee="" finance_charge="" license_fee="" loan_amount_approved="" loan_officer_responsible_code="6210" loan_officer_open_acct_code="" payoff_amount="" registration_fee="" payoff_loan_number="" subtotal="" taxes="" term="" title_fee="" total_amount_financed="" total_of_payments="" warranty_term="" collateral_ages_within_policy="Y" credit_bureau_expire="3/22/2026" loan_Credit_pulled_within_30days="Y" ct_participation_percentage="2.50" payoff_loan_verified="Y" ct_loan_to_value_percentage="0.00" />
+        <IL_TempVariables TempOriginalProcess="20800" TempFaxSeqNo="" TempCommDeliveryId="" TempFaxReasonCode1="" TempFaxReasonCode2="" TempFaxReasonCode3="" TempFaxNotes="" TempFaxStatusType="" TempFaxWithStips="" TempFaxLetterCode="" TempFaxLoanOfficer="" TempFaxExtension="" TempFaxDealer="" TempFaxReasonCode4="" />
+        <IL_rule_flags ILDTI="F" DELAT="F" DELIL="F" DELRV="F" CCJTH="F" INSILH="T" INSSLR="T" NLABD="F" REVDT="F" TOJOB="F" />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income baseMonthlyIncome="0.00" ytdMonthlyIncome="0.00" id="1" sourceApplicant="primary" />
+        </IL_Incomes>
+        <IL_letters_faxes />
+        <IL_ITI_control />
+        <IL_ITI_line />
+        <IL_ITI_loan_add_collateral />
+        <IL_ITI_loan_add_tickler />
+        <IL_ITI_note />
+        <IL_ITI_note_code_status />
+        <IL_ITI_note_misc />
+        <IL_ITI_note_payment />
+        <IL_ITI_note_variable />
+        <IL_ITI_payment_sched />
+        <IL_ITI_portfolio />
+        <IL_Indicators>
+          <IL_Indicator ID="CreditBureauPulledP" value="1" />
+          <IL_Indicator ID="ValidCreditScoreP" value="1" />
+          <IL_Indicator ID="MLA" value="N" />
+        </IL_Indicators>
+        <IL_contact con_id="24065" ac_role_tp_c="PR" first_name="Ovella " middle_initial="" last_name="Brazelton" suffix="" ssn="666089298" birth_date="05/10/1978" drivers_license="8283645243" drivers_license_state="WY" drivers_license_expiration="" email="JOHN.DOE@GMAIL.COM" home_phone="9706452443" cell_phone="" bankruptcy_declared_ind="" property_repossessed_ind="" relationship_to_applicant="" ssn_last_4="9298">
+          <IL_contact_address address_seq_no="" address_type_code="CURR" street_number="5244" street_name="FLEETWOOD ST" apartment_unit_number="1E" po_box="" rural_route="" city="CLAYTON" state="MO" zip_code="63105" mortgage_holder_landlord="KHAN FAMILY PARTNERSHIP" mortgage_landlord_phone="4029812344" years_at_residence="5" months_at_residence="5" ownership_type_code="R" residence_monthly_pymnt="2400.00" />
+          <IL_contact_employment employment_seq_no="" employment_type_code="CURR" business_name="BIG SKY STEEL" supervisor="Tom the truck driver" title_position="TEACHER" self_employed_ind="N" address_line1="5199 HIGHWAY N" city="COTTLEVILLE" state="MO" zip_code="63304" business_phone="6368514600" salary="4500.00" salary_basis_type_code="MONTH" other_income_amt="330.00" other_income_basis_type_code="MONTH" other_income_source_type_code="OTHER" years_at_job="3" months_at_job="3" />          
+      </IL_contact>
+      </IL_application>
+    </CustData>
+    <Documents />
+    <Audits>
+      <Audit UserID="SYSTEM" XPATH="dlr_name" To="Dream Machines Motorsp" From="Dream Machines Motorsports" Timestamp="2026-02-05 20:41:11.473" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Loan Officer Code" To="6210" From="" Timestamp="2026-02-05 20:41:54.467" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Include TTL" To="N" From="" Timestamp="2026-02-05 20:41:54.468" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="New Comment" To="Will get permanent resident card if approved" From="" Timestamp="2026-02-05 20:42:01.405" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="SSNIV" To="1" From="0" Timestamp="2026-02-05 20:42:05.104" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="RPIVW" To="1" From="0" Timestamp="2026-02-05 20:45:31.821" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="New Comment" To="Cleared POR with TLO" From="" Timestamp="2026-02-05 20:46:36.579" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="MRADD" To="1" From="0" Timestamp="2026-02-05 20:46:40.341" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="capacity Status" To="pass" Timestamp="2026-02-05 20:46:58.473" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="New Comment" To="waiving income verification based on installment repay history and job time" From="" Timestamp="2026-02-05 20:46:59.948" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Collateral Type" To="U" From="N" Timestamp="2026-02-05 20:47:19.001" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Collateral 1 Model" To="SPORTSMAN 450 H.O" From="SPORTSMAN 450 H.O. - ORANGE RUST BASE" Timestamp="2026-02-05 20:47:19.002" Source="API" />
+      <Audit UserID="KALEY.GILLIS@MERRICKBANK.COM" XPATH="Collateral Type" To="N" From="U" Timestamp="2026-02-05 20:47:25.439" Source="API" />
+    </Audits>
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_079a6110cc68c281" ID="SSNIV" Description="Social Security Number invalid." Timestamp="2026-02-05 20:41:12.454" Severity="0" Override="1" AllowOverride="1" OverrideBy="KALEY.GILLIS@MERRICKBANK.COM" />
+      <Rule guid="repoObj_52ccc56b_1956c878ae8_07fef1956c878ae8" ID="RPIVW" Description="Review potential/possible income verification waived" Timestamp="2026-02-05 20:42:43.653" Severity="0" Override="1" AllowOverride="1" OverrideBy="KALEY.GILLIS@MERRICKBANK.COM" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_0796e110cc68c2b9" ID="MRADD" Description="Mismatch reported address to CB address." Timestamp="2026-02-05 20:42:44.043" Severity="68" Override="1" AllowOverride="1" OverrideBy="KALEY.GILLIS@MERRICKBANK.COM" />
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_0796d110cc68c2ba" ID="MRSSN" Description="Mismatch reported SSN to CB SSN." Timestamp="2026-02-05 20:42:44.052" Severity="69" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2026-02-05 20:41:12.452" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2026-02-05 20:41:12.452" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2026-02-05 20:41:12.452" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2026-02-05 20:41:12.453" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2026-02-05 20:41:12.453" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2026-02-05 20:41:12.453" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2026-02-05 20:41:12.454" Status="true" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2026-02-05 20:41:12.454" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2026-02-05 20:41:12.455" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELCO" Timestamp="2026-02-05 20:41:12.455" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELPR" Timestamp="2026-02-05 20:41:12.456" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2026-02-05 20:41:12.456" Status="Fail" />
+      <Journal UserID="KALEY.GILLIS@MERRICKBANK.COM" Type="Script" ID="App Opened" Timestamp="2026-02-05 20:41:52.134" Status="Opened" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2026-02-05 20:41:54.527" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2026-02-05 20:41:54.528" Status="false" />
+      <Journal Type="Rule" ID="MSADD" Timestamp="2026-02-05 20:42:38.939" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2026-02-05 20:42:38.940" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2026-02-05 20:42:38.940" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2026-02-05 20:42:38.940" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2026-02-05 20:42:38.941" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2026-02-05 20:42:38.941" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2026-02-05 20:42:38.942" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2026-02-05 20:42:38.942" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELCO" Timestamp="2026-02-05 20:42:38.942" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELPR" Timestamp="2026-02-05 20:42:38.943" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2026-02-05 20:42:38.943" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2026-02-05 20:42:38.945" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2026-02-05 20:42:38.945" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2026-02-05 20:42:38.946" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2026-02-05 20:42:38.946" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2026-02-05 20:42:38.946" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2026-02-05 20:42:38.997" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2026-02-05 20:42:38.997" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="2026-02-05 20:42:38.998" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2026-02-05 20:42:39.194" Status="false" />
+      <Journal Type="Process" ID="03800" Timestamp="2026-02-05 20:42:39.194" Status="Pass" />
+      <Journal Type="Rule" ID="IFADR" Timestamp="2026-02-05 20:42:39.254" Status="false" />
+      <Journal Type="Rule" ID="IFNAM" Timestamp="2026-02-05 20:42:39.311" Status="false" />
+      <Journal Type="Rule" ID="IFSSN" Timestamp="2026-02-05 20:42:39.560" Status="false" />
+      <Journal Type="Process" ID="05800" Timestamp="2026-02-05 20:42:39.561" Status="Pass" />
+      <Journal Type="Process" ID="BureauAndCreditScore" Timestamp="2026-02-05 20:42:41.020" Status="Pass" />
+      <Journal Type="Rule" ID="CRFRZ" Timestamp="2026-02-05 20:42:41.021" Status="false" />
+      <Journal Type="Rule" ID="CBERR" Timestamp="2026-02-05 20:42:41.022" Status="false" />
+      <Journal Type="Rule" ID="ILDEC" Timestamp="2026-02-05 20:42:41.023" Status="false" />
+      <Journal Type="Rule" ID="SCOREBLK" Timestamp="2026-02-05 20:42:41.023" Status="false" />
+      <Journal Type="Rule" ID="MINTRADE" Timestamp="2026-02-05 20:42:41.049" Status="false" />
+      <Journal Type="Process" ID="06800" Timestamp="2026-02-05 20:42:43.474" Status="Pass" />
+      <Journal Type="Rule" ID="CBSCOREP" Timestamp="2026-02-05 20:42:43.476" Status="false" />
+      <Journal Type="Process" ID="MRVFLOORP" Timestamp="2026-02-05 20:42:43.476" Status="false" />
+      <Journal Type="Process" ID="ScoreCutsPrimary" Timestamp="2026-02-05 20:42:43.476" Status="false" />
+      <Journal Type="Process" ID="ScoreCuts" Timestamp="2026-02-05 20:42:43.476" Status="false" />
+      <Journal Type="Process" ID="06850" Timestamp="2026-02-05 20:42:43.477" Status="Pass" />
+      <Journal Type="Rule" ID="RPIVW" Timestamp="2026-02-05 20:42:43.653" Status="true" />
+      <Journal Type="Rule" ID="MLAMISS" Timestamp="2026-02-05 20:42:43.653" Status="false" />
+      <Journal Type="Process" ID="06900" Timestamp="2026-02-05 20:42:43.653" Status="Pass" />
+      <Journal Type="Rule" ID="DELMB" Timestamp="2026-02-05 20:42:43.674" Status="false" />
+      <Journal Type="Rule" ID="CCCPP" Timestamp="2026-02-05 20:42:43.680" Status="false" />
+      <Journal Type="Rule" ID="CBAIF" Timestamp="2026-02-05 20:42:43.686" Status="false" />
+      <Journal Type="Rule" ID="CBPML" Timestamp="2026-02-05 20:42:43.691" Status="false" />
+      <Journal Type="Rule" ID="DELINQ" Timestamp="2026-02-05 20:42:43.700" Status="false" />
+      <Journal Type="Rule" ID="EFSTM" Timestamp="2026-02-05 20:42:43.701" Status="false" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2026-02-05 20:42:43.702" Status="false" />
+      <Journal Type="Process" ID="PullTLOPSRecLending" Timestamp="2026-02-05 20:42:44.038" Status="Pass" />
+      <Journal Type="Rule" ID="MRADD" Timestamp="2026-02-05 20:42:44.043" Status="true" />
+      <Journal Type="Rule" ID="MRDOB" Timestamp="2026-02-05 20:42:44.046" Status="false" />
+      <Journal Type="Rule" ID="MRNAM" Timestamp="2026-02-05 20:42:44.048" Status="false" />
+      <Journal Type="Process" ID="PullTLOPSRecLending" Timestamp="2026-02-05 20:42:44.049" Status="Pass" />
+      <Journal Type="Rule" ID="MRSSN" Timestamp="2026-02-05 20:42:44.052" Status="true" />
+      <Journal Type="Rule" ID="OFACL" Timestamp="2026-02-05 20:42:44.053" Status="false" />
+      <Journal Type="Rule" ID="OPENBK" Timestamp="2026-02-05 20:42:44.054" Status="false" />
+      <Journal Type="Rule" ID="THINF" Timestamp="2026-02-05 20:42:44.057" Status="false" />
+      <Journal Type="Rule" ID="EXFRAUD" Timestamp="2026-02-05 20:42:44.057" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2026-02-05 20:42:44.058" Status="false" />
+      <Journal Type="Rule" ID="NEWDL" Timestamp="2026-02-05 20:42:44.108" Status="false" />
+      <Journal Type="Process" ID="07800" Timestamp="2026-02-05 20:42:44.111" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90+" Timestamp="2026-02-05 20:42:44.285" Status="false" />
+      <Journal Type="Process" ID="CRIScoreCut" Timestamp="2026-02-05 20:42:44.286" Status="Pass" />
+      <Journal Type="Process" ID="08800" Timestamp="2026-02-05 20:42:44.286" Status="Fail" />
+      <Journal Type="Rule" ID="RLDTI" Timestamp="2026-02-05 20:42:47.703" Status="false" />
+      <Journal Type="Rule" ID="DTITH" Timestamp="2026-02-05 20:42:47.704" Status="false" />
+      <Journal UserID="KALEY.GILLIS@MERRICKBANK.COM" Type="TM" ID="Approve Application with Stips" Timestamp="2026-02-05 20:47:32.003" Status="" />
+      <Journal Type="Process" ID="20800" Timestamp="2026-02-05 20:47:32.005" Status="Pass" />
+      <Journal UserID="KALEY.GILLIS@MERRICKBANK.COM" Type="API" ID="Letter Type (895)" Timestamp="2026-02-05 20:47:51.774" Status="Communication Created" />
+      <Journal UserID="KALEY.GILLIS@MERRICKBANK.COM" Type="TM" ID="Send Letter/Fax" Timestamp="2026-02-05 20:47:51.829" Status="" />
+      <Journal UserID="MAC" Type="Process" ID="DealertrackUpdate Sent" Timestamp="2026-02-05 20:47:51.944" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2026-02-05 20:47:56.482" Status="Pass" />
+    </Journals>
+  </Request>
+  <queues>
+    <queue name="C Approvals" id="35" />
+    <queue name="T All Applications" id="45" />
+  </queues>
+</Provenir>

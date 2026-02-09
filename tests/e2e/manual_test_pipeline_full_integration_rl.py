@@ -234,6 +234,7 @@ class TestRecLendingEndToEnd(unittest.TestCase):
             "app_dealer_rl",
             "app_contact_address",
             "app_contact_employment",
+            "app_collateral_rl",
             "app_warranties_rl",
             "app_historical_lookup",
             "scores",
@@ -260,7 +261,7 @@ class TestRecLendingEndToEnd(unittest.TestCase):
             "app_dealer_rl",
             "app_contact_address",
             "app_contact_employment",
-            # app_collateral_rl — add_collateral(N) not yet implemented
+            "app_collateral_rl",
             "app_warranties_rl",
             "app_policy_exceptions_rl",
             "app_funding_rl",
@@ -345,6 +346,10 @@ class TestRecLendingEndToEnd(unittest.TestCase):
             # ── app_policy_exceptions_rl ──────────────────────────────
             if "app_policy_exceptions_rl" in inserted_tables:
                 self._verify_policy_exceptions(cursor, app_id)
+
+            # ── app_collateral_rl ─────────────────────────────────────
+            if "app_collateral_rl" in inserted_tables:
+                self._verify_collateral(cursor, app_id)
 
             # ── app_warranties_rl ─────────────────────────────────────
             if "app_warranties_rl" in inserted_tables:
@@ -659,6 +664,92 @@ class TestRecLendingEndToEnd(unittest.TestCase):
         print(f"[OK] app_policy_exceptions_rl verified: {len(exceptions)} records")
         for exc in exceptions:
             print(f"   - type={exc[0]}: reason_code='{exc[1]}', notes='{exc[2][:50]}...'")
+
+    def _verify_collateral(self, cursor, app_id):
+        """Verify app_collateral_rl records.
+
+        Expected from E2E XML (MARINE, sub_type_code=""):
+          Coll1: year=2025, make="ALL WATER", model="LONG BOY", VIN="4b5et6egt69",
+                 new_used_demo="U"→used_flag=1, collateral_type_enum=412 (BOAT),
+                 option_1_value=789.53, option_2_description="Sweet sound system",
+                 coll1_mileage="836"→mileage=836
+          Coll2: year=2023, make="Coll2 Make", model="Coll2 Model", VIN="Coll2 VIN",
+                 coll2_HP_Marine="115.00"→collateral_type_enum=413 (ENGINE),
+                 motor_size=115, used_flag=0 (no new_used_demo → default)
+          Coll3: year=2025, make="MERCURY", model="ring-ding-ding", VIN="newvin",
+                 collateral_type_enum=413 (ENGINE, via OR-expanded expression),
+                 used_flag=0 (no new_used_demo → default), no HP_Marine→motor_size=NULL
+          Coll4: year=2022, make="Coll4 Make", model="Coll4 Model", VIN="Coll4 VIN",
+                 collateral_type_enum=417 (OTHER TRAILER), used_flag=0
+        """
+        cursor.execute(
+            f"""
+            SELECT collateral_type_enum, make, model, vin, year, used_flag,
+                   sort_order, mileage, motor_size
+            FROM {self._qualify_table('app_collateral_rl')}
+            WHERE app_id = ?
+            ORDER BY sort_order
+            """,
+            app_id,
+        )
+        rows = cursor.fetchall()
+
+        # 4 rows: coll1 (412), coll2 (413), coll3 (413), coll4 (417)
+        self.assertEqual(len(rows), 4,
+                         f"Should have 4 collateral records, got {len(rows)}")
+
+        # Index by sort_order for reliable lookup (PK component)
+        by_sort = {r[6]: {
+            "collateral_type_enum": r[0], "make": r[1], "model": r[2],
+            "vin": r[3], "year": r[4], "used_flag": r[5],
+            "mileage": r[7], "motor_size": r[8],
+        } for r in rows}
+
+        # Slot 1 → 412 - BOAT (coll1: primary unit, used_flag=1 from U→1)
+        self.assertEqual(by_sort[1]["collateral_type_enum"], 412)
+        self.assertEqual(by_sort[1]["make"], "ALL WATER")
+        self.assertEqual(by_sort[1]["model"], "LONG BOY")
+        self.assertEqual(by_sort[1]["vin"], "4b5et6egt69")
+        self.assertEqual(by_sort[1]["year"], 2025)
+        self.assertEqual(by_sort[1]["used_flag"], True,
+                         "coll1 used_flag should be 1 (U→1)")
+        self.assertEqual(by_sort[1]["mileage"], 836,
+                         "coll1_mileage='836' → mileage=836")
+        self.assertIsNone(by_sort[1]["motor_size"],
+                          "coll1 has no HP_Marine → motor_size=NULL")
+
+        # Slot 2 → 413 - ENGINE (coll2: marine engine from coll2_HP_Marine)
+        self.assertEqual(by_sort[2]["collateral_type_enum"], 413)
+        self.assertEqual(by_sort[2]["make"], "Coll2 Make")
+        self.assertEqual(by_sort[2]["model"], "Coll2 Model")
+        self.assertEqual(by_sort[2]["vin"], "Coll2 VIN")
+        self.assertEqual(by_sort[2]["year"], 2023)
+        self.assertEqual(by_sort[2]["motor_size"], 115,
+                         "coll2_HP_Marine='115.00' → motor_size=115")
+        self.assertIsNone(by_sort[2]["mileage"],
+                          "coll2 has no mileage attribute → NULL")
+
+        # Slot 3 → 413 - ENGINE (coll3: engine make MERCURY via OR-expanded expression)
+        self.assertEqual(by_sort[3]["collateral_type_enum"], 413)
+        self.assertEqual(by_sort[3]["make"], "MERCURY")
+        self.assertEqual(by_sort[3]["model"], "ring-ding-ding")
+        self.assertEqual(by_sort[3]["vin"], "newvin")
+        self.assertEqual(by_sort[3]["year"], 2025)
+        self.assertIsNone(by_sort[3]["motor_size"],
+                          "coll3 has no HP_Marine in E2E XML → motor_size=NULL")
+
+        # Slot 4 → 417 - OTHER TRAILER (coll4)
+        self.assertEqual(by_sort[4]["collateral_type_enum"], 417)
+        self.assertEqual(by_sort[4]["make"], "Coll4 Make")
+        self.assertEqual(by_sort[4]["model"], "Coll4 Model")
+        self.assertEqual(by_sort[4]["vin"], "Coll4 VIN")
+        self.assertEqual(by_sort[4]["year"], 2022)
+
+        print(f"[OK] app_collateral_rl verified: {len(rows)} records (all 4 groups populated)")
+        for r in rows:
+            print(f"   - sort={r[6]} type={r[0]}: make='{r[1]}', model='{r[2]}', "
+                  f"vin='{r[3]}', year={r[4]}, used_flag={r[5]}, "
+                  f"mileage={r[7]}, motor_size={r[8]}")
 
     def _verify_warranties(self, cursor, app_id):
         """Verify app_warranties_rl records (7 warranty types from E2E XML).

@@ -186,10 +186,24 @@ class BulkInsertStrategy:
         """
         Prepare data tuples from records, handling encoding and null conversions.
         
+        Uses the union of all keys across all records so that rows with
+        different column sets (e.g. collateral slots where only some have
+        motor_size or mileage) still produce a consistent INSERT statement.
+        Missing keys default to None (NULL).
+        
         Returns:
             (columns, data_tuples, sql_statement_template)
         """
-        columns = list(records[0].keys())
+        # Collect union of all keys, preserving insertion order from first
+        # record, then appending any additional keys from later records.
+        seen = set()
+        columns: List[str] = []
+        for record in records:
+            for key in record:
+                if key not in seen:
+                    seen.add(key)
+                    columns.append(key)
+        
         column_list = ', '.join(f"[{col}]" for col in columns)
         placeholders = ', '.join('?' * len(columns))
         

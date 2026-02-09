@@ -1,0 +1,88 @@
+<Provenir ipaddress="52.201.112.6:62783, 10.254.22.57" lender_dealer_id="603724" transactionID="DE13e65eae_19c2b11df51_07ffc19c2b140554_0a5b109a.5019" error="" Org="" appone_trans_id="14425260" product="rl" app_source="API" a1_date="Sun, 08 Feb 2026 23:18:59 GMT" shred_version="1.0">
+  <Request ID="17571870" Process="30800" LockedBy="" UserID="" Priority="" Status="" Workflow="75" Trans="ILPROCESSAPPONEAPP">
+    <CustData>
+      <IL_application parent_dealer_number="603724" trailer_subtype="HT" app_source_ind="A" app_type_code="HT" sub_type_code="" esign_eligible="Y" application_eligible="true" dlr_broker="Y" dlr_num_ht="800091" dlr_num_marine="" dlr_num_mc="" dlr_num_or="" dlr_num_rv="" dlr_num_trailer="" dlr_address_line1="1706 Tennison Pkwy #160" dlr_city="Colleyville" dlr_email="" dlr_fax="8004714842" dlr_name="Rock Solid Funding" dlr_phone="8006071108" dlr_state="TX" dlr_zipcode="76034" fsp_name="" fsp_phone="" client_id="12879669" app_cash_down_payment="3500.00" app_sale_price="35000.00" requested_term_months="180" loan_amount_requested="35597.79" trade_allowance="0.00" trade_payoff_amount="0.00" individual_joint_app_ind="I" trade_net_tradein_amount="0.0" campaign_num="MARRV" tied_app_id="" tied_app_indicator="" add_TTL_to_amt_fin="" app_entry_date="2026-02-08 23:17:13.077" app_receive_date="02/08/2026" app_invoice_amount="" dealer_count="3642.0" app_counted="Y" assigned_analyst="" duplicate_app_ind="N">
+        <IL_fund_dlr_ach dlr_num="800091" dlr_aba="111000614" dlr_account_num="582991595" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="Chase Bank" dlr_bank_phone="" dlr_check_or_sav="22" dlr_name="Rock Solid Funding" dlr_fsp_num="" dlr_fsp_yn="N" pre_note_date="null" />
+        <IL_collateral coll1_new_used_demo="U" coll_is_motorhome="N" coll2_new_used_demo="" coll3_new_used_demo="" coll4_new_used_demo="" coll1_VIN="" coll1_year="2017" coll1_mileage="0" coll1_make="FEATHERLITE" coll1_model="HORSE TRAILER (WITH LIVING QUARTERS)" coll_option_total_value="0.00" coll1_value="0" coll2_value="0" coll3_value="0" coll4_value="0" />
+        <IL_app_decision_info experian_fico_score_10t="0636" experian_vantage4_score="536" vantage_score_used="536" experian_fico_score_f9="634" Vantage4P_decline_code1="V4_43" Vantage4P_decline_code2="V4_68" Vantage4P_decline_code3="V4_24" Vantage4P_decline_code4="V4_04" Vantage4P_decline_code5="V4_84" score_factor_type_1_PR="V4" score_factor_type_2_PR="V4" score_factor_type_3_PR="V4" score_factor_type_4_PR="V4" score_factor_type_5_PR="V4" score_factor_code_1_PR="43" score_factor_code_2_PR="68" score_factor_code_3_PR="24" score_factor_code_4_PR="04" score_factor_code_5_PR="84" MRVReasons="als5400, bcc5620, all8370, iqt9420" MRV_lead_indicator_p="Vantage" MRV_score_p="514.0" CRI_score_p="486.0" MRVP_decline_code1="als5400" MRVP_decline_code2="bcc5620" MRVP_decline_code3="all8370" MRVP_decline_code4="iqt9420" monthly_income="9022" experian_fico_score_f9_2="0" experian_vantage4_score2="0" regular_pymt_amount1="0" manual_adj_monthly_debt="0.00" monthly_debt="4661" decision_type_code="DECLN" decision_date="2026-02-08 23:17:20.967" pending_verif_ind="N" regb_closed_days_num="0" />
+        <IL_ITI_control />
+        <IL_application_verification />
+        <IL_fund_checklist fund_this_loan_indicator="" total_of_payments="" total_amount_financed="" title_fee="" term="" taxes="" subtotal="" warranty_term="" payoff_amount="" registration_fee="" loan_officer_responsible_code="3000" loan_officer_open_acct_code="" license_fee="" ct_sale_price="" ct_rate_over_split="" ct_total_dealer_proceeds="" ct_cash_proceeds="" ct_cash_down_payment="" collateral_ages_within_policy="Y" credit_bureau_expire="3/25/2026" loan_Credit_pulled_within_30days="Y" />
+        <IL_TempVariables TempFaxSeqNo="" TempCommDeliveryId="" TempOriginalProcess="06850" TempFaxReasonCode1="" TempFaxReasonCode2="" TempFaxNotes="" TempFaxStatusType="" TempFaxWithStips="" TempFaxLetterCode="" TempFaxLoanOfficer="" TempFaxExtension="" TempFaxDealer="" TempFaxReasonCode4="" TempFaxReasonCode3="" />
+        <IL_rule_flags />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income />
+        </IL_Incomes>
+        <IL_ITI_line />
+        <IL_ITI_loan_add_collateral />
+        <IL_ITI_loan_add_tickler />
+        <IL_ITI_note />
+        <IL_ITI_note_code_status />
+        <IL_ITI_note_misc />
+        <IL_ITI_note_variable />
+        <IL_ITI_payment_sched />
+        <IL_ITI_portfolio />
+        <IL_ITI_note_payment />
+        <IL_Payment />
+        <IL_Indicators>
+          <IL_Indicator ID="CreditBureauPulledP" value="1" />
+          <IL_Indicator ID="ValidCreditScoreP" value="1" />
+        </IL_Indicators>
+        <IL_contact con_id="24065" ac_role_tp_c="PR" first_name="Ovella " middle_initial="" last_name="Brazelton" suffix="" ssn="666089298" birth_date="05/10/1978" drivers_license="8283645243" drivers_license_state="WY" drivers_license_expiration="" email="JOHN.DOE@GMAIL.COM" home_phone="9706452443" cell_phone="" bankruptcy_declared_ind="" property_repossessed_ind="" relationship_to_applicant="" ssn_last_4="9298">
+          <IL_contact_address address_seq_no="" address_type_code="CURR" street_number="5244" street_name="FLEETWOOD ST" apartment_unit_number="1E" po_box="" rural_route="" city="CLAYTON" state="MO" zip_code="63105" mortgage_holder_landlord="KHAN FAMILY PARTNERSHIP" mortgage_landlord_phone="4029812344" years_at_residence="5" months_at_residence="5" ownership_type_code="R" residence_monthly_pymnt="2400.00" />
+          <IL_contact_employment employment_seq_no="" employment_type_code="CURR" business_name="BIG SKY STEEL" supervisor="Tom the truck driver" title_position="TEACHER" self_employed_ind="N" address_line1="5199 HIGHWAY N" city="COTTLEVILLE" state="MO" zip_code="63304" business_phone="6368514600" salary="4500.00" salary_basis_type_code="MONTH" other_income_amt="330.00" other_income_basis_type_code="MONTH" other_income_source_type_code="OTHER" years_at_job="3" months_at_job="3" />          
+      </IL_contact>
+      </IL_application>
+    </CustData>
+    <Documents />
+    <Rules>
+      <Rule guid="repoObj_0f223e673_1708258f344_07fdc1708258f344" ID="CBSCOREP" Description="Primary Applicant Vantage score is below policy." Timestamp="2026-02-08 23:17:18.030" Severity="98" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2026-02-08 23:17:14.323" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2026-02-08 23:17:14.323" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2026-02-08 23:17:14.324" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2026-02-08 23:17:14.324" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2026-02-08 23:17:14.324" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2026-02-08 23:17:14.325" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2026-02-08 23:17:14.326" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2026-02-08 23:17:14.326" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2026-02-08 23:17:14.327" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELCO" Timestamp="2026-02-08 23:17:14.327" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELPR" Timestamp="2026-02-08 23:17:14.328" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2026-02-08 23:17:14.328" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2026-02-08 23:17:14.329" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2026-02-08 23:17:14.329" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2026-02-08 23:17:14.330" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2026-02-08 23:17:14.330" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2026-02-08 23:17:14.330" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2026-02-08 23:17:14.381" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2026-02-08 23:17:14.381" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="2026-02-08 23:17:14.381" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2026-02-08 23:17:14.581" Status="false" />
+      <Journal Type="Process" ID="03800" Timestamp="2026-02-08 23:17:14.581" Status="Pass" />
+      <Journal Type="Rule" ID="IFADR" Timestamp="2026-02-08 23:17:14.640" Status="false" />
+      <Journal Type="Rule" ID="IFNAM" Timestamp="2026-02-08 23:17:14.697" Status="false" />
+      <Journal Type="Rule" ID="IFSSN" Timestamp="2026-02-08 23:17:14.894" Status="false" />
+      <Journal Type="Process" ID="05800" Timestamp="2026-02-08 23:17:14.894" Status="Pass" />
+      <Journal Type="Process" ID="BureauAndCreditScore" Timestamp="2026-02-08 23:17:15.547" Status="Pass" />
+      <Journal Type="Rule" ID="CRFRZ" Timestamp="2026-02-08 23:17:15.549" Status="false" />
+      <Journal Type="Rule" ID="CBERR" Timestamp="2026-02-08 23:17:15.550" Status="false" />
+      <Journal Type="Rule" ID="ILDEC" Timestamp="2026-02-08 23:17:15.551" Status="false" />
+      <Journal Type="Rule" ID="SCOREBLK" Timestamp="2026-02-08 23:17:15.552" Status="false" />
+      <Journal Type="Rule" ID="MINTRADE" Timestamp="2026-02-08 23:17:15.639" Status="false" />
+      <Journal Type="Process" ID="06800" Timestamp="2026-02-08 23:17:18.028" Status="Pass" />
+      <Journal Type="Rule" ID="CBSCOREP" Timestamp="2026-02-08 23:17:18.030" Status="true" />
+      <Journal Type="Process" ID="ScoreCutsPrimary" Timestamp="2026-02-08 23:17:18.030" Status="true" />
+      <Journal Type="Process" ID="ScoreCuts" Timestamp="2026-02-08 23:17:18.031" Status="true" />
+      <Journal Type="Process" ID="06850" Timestamp="2026-02-08 23:17:18.031" Status="Fail" />
+      <Journal UserID="MAC" Type="Process" ID="AppOneUpdate Sent" Timestamp="2026-02-08 23:17:19.243" Status="Pass" />
+      <Journal Type="Process" ID="00011" Timestamp="2026-02-08 23:17:20.967" Status="Pass" />
+      <Journal Type="Process" ID="30800" Timestamp="2026-02-08 23:17:20.968" Status="Pass" />
+    </Journals>
+  </Request>
+  <queues>
+    <queue name="T All Applications" id="45" />
+  </queues>
+</Provenir>

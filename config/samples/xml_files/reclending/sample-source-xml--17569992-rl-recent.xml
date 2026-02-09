@@ -1,0 +1,71 @@
+<Provenir ipaddress="52.201.112.6:49934, 10.254.22.57" lender_dealer_id="400242" transactionID="DE13e65eae_19c2b11df51_07ffd19c2b1400b4_0a5b109a.4369" error="" Org="" appone_trans_id="14423253" product="rl" app_source="API" shred_version="1.0">
+  <Request ID="17569992" Process="03800" LockedBy="" UserID="" Priority="" Status="" Workflow="75" Trans="ILPROCESSAPPONEAPP">
+    <CustData>
+      <IL_application parent_dealer_number="400242" trailer_subtype="" app_source_ind="A" app_type_code="OR" sub_type_code="UTV" esign_eligible="Y" application_eligible="true" dlr_broker="N" dlr_num_ht="" dlr_num_marine="" dlr_num_mc="" dlr_num_or="400242" dlr_num_rv="" dlr_num_trailer="" dlr_address_line1="11759 Hwy 63 N" dlr_city="Bono" dlr_email="cody.s@jonesborocycle.com;ed.seay@jonesborocycle.com" dlr_fax="8709352889" dlr_name="Jonesboro Cycle &amp; ATV" dlr_phone="8709352887" dlr_state="AR" dlr_zipcode="72416" fsp_name="" fsp_phone="" client_id="12877537" app_cash_down_payment="0.00" app_sale_price="19995.00" requested_term_months="84" loan_amount_requested="23223.00" trade_allowance="0.00" trade_payoff_amount="0.00" individual_joint_app_ind="J" trade_net_tradein_amount="0.0" campaign_num="MARRV" tied_app_id="" tied_app_indicator="" add_TTL_to_amt_fin="" app_entry_date="2026-02-07 22:27:40.557" app_receive_date="02/07/2026" dealer_count="456.0" app_counted="Y" assigned_analyst="" duplicate_app_ind="Y">
+        <IL_fund_dlr_ach dlr_num="400242" dlr_aba="082908573" dlr_account_num="4533303" dlr_ach_ind="Y" dlr_active_dormant="A" dlr_agree_completed="Y" dlr_bank_name="First Community Bank" dlr_bank_phone="" dlr_check_or_sav="22" dlr_name="Jonesboro Cycle &amp; ATV" dlr_fsp_num="" dlr_fsp_yn="N" pre_note_date="null" />
+        <IL_collateral coll1_new_used_demo="N" coll_is_motorhome="N" coll2_new_used_demo="" coll3_new_used_demo="" coll4_new_used_demo="" coll1_VIN="JKARTCJ14SB500414" coll1_year="2025" coll1_mileage="0" coll1_make="KAWASAKI" coll1_model="KRT1000JSFNL TERYX KRK4 1000 LIMITED EDITION" coll_option_total_value="599.00" coll1_value="0" coll2_value="0" coll3_value="0" coll4_value="0" />
+        <IL_app_decision_info />
+        <IL_ITI_control />
+        <IL_application_verification />
+        <IL_fund_checklist fund_this_loan_indicator="" total_of_payments="" total_amount_financed="" title_fee="" term="" taxes="" subtotal="" warranty_term="" payoff_amount="" registration_fee="" loan_officer_responsible_code="" loan_officer_open_acct_code="" license_fee="" ct_sale_price="" ct_rate_over_split="" ct_total_dealer_proceeds="" ct_cash_proceeds="" ct_cash_down_payment="" collateral_ages_within_policy="Y" />
+        <IL_TempVariables />
+        <IL_rule_flags />
+        <IL_backend_policies />
+        <IL_Incomes>
+          <IL_Income />
+        </IL_Incomes>
+        <IL_ITI_line />
+        <IL_ITI_loan_add_collateral />
+        <IL_ITI_loan_add_tickler />
+        <IL_ITI_note />
+        <IL_ITI_note_code_status />
+        <IL_ITI_note_misc />
+        <IL_ITI_note_variable />
+        <IL_ITI_payment_sched />
+        <IL_ITI_portfolio />
+        <IL_ITI_note_payment />
+        <IL_Payment />
+        <IL_contact con_id="24065" ac_role_tp_c="PR" first_name="Ovella " middle_initial="" last_name="Brazelton" suffix="" ssn="666089298" birth_date="05/10/1978" drivers_license="8283645243" drivers_license_state="WY" drivers_license_expiration="" email="JOHN.DOE@GMAIL.COM" home_phone="9706452443" cell_phone="" bankruptcy_declared_ind="" property_repossessed_ind="" relationship_to_applicant="" ssn_last_4="9298">
+          <IL_contact_address address_seq_no="" address_type_code="CURR" street_number="5244" street_name="FLEETWOOD ST" apartment_unit_number="1E" po_box="" rural_route="" city="CLAYTON" state="MO" zip_code="63105" mortgage_holder_landlord="KHAN FAMILY PARTNERSHIP" mortgage_landlord_phone="4029812344" years_at_residence="5" months_at_residence="5" ownership_type_code="R" residence_monthly_pymnt="2400.00" />
+          <IL_contact_employment employment_seq_no="" employment_type_code="CURR" business_name="BIG SKY STEEL" supervisor="Tom the truck driver" title_position="TEACHER" self_employed_ind="N" address_line1="5199 HIGHWAY N" city="COTTLEVILLE" state="MO" zip_code="63304" business_phone="6368514600" salary="4500.00" salary_basis_type_code="MONTH" other_income_amt="330.00" other_income_basis_type_code="MONTH" other_income_source_type_code="OTHER" years_at_job="3" months_at_job="3" />          
+      </IL_contact>
+      </IL_application>
+    </CustData>
+    <Reports />
+    <Documents />
+    <Rules>
+      <Rule guid="repoObj_59fd5c55_110cc68ba48_07979110cc68c2ae" ID="SSDUP90-" Description="Duplicate Social Security Number on applications 90 or less days old." Timestamp="2026-02-07 22:27:42.508" Severity="0" Override="0" AllowOverride="1" />
+    </Rules>
+    <Journals>
+      <Journal Type="Rule" ID="MSADD" Timestamp="2026-02-07 22:27:42.003" Status="false" />
+      <Journal Type="Rule" ID="MSCSZ" Timestamp="2026-02-07 22:27:42.004" Status="false" />
+      <Journal Type="Rule" ID="MSDOB" Timestamp="2026-02-07 22:27:42.004" Status="false" />
+      <Journal Type="Rule" ID="MSNAM" Timestamp="2026-02-07 22:27:42.005" Status="false" />
+      <Journal Type="Rule" ID="MSSSN" Timestamp="2026-02-07 22:27:42.005" Status="false" />
+      <Journal Type="Rule" ID="SAUMA" Timestamp="2026-02-07 22:27:42.005" Status="false" />
+      <Journal Type="Rule" ID="SSNIV" Timestamp="2026-02-07 22:27:42.006" Status="false" />
+      <Journal Type="Rule" ID="ZIPIV" Timestamp="2026-02-07 22:27:42.006" Status="false" />
+      <Journal Type="Rule" ID="MSDLR" Timestamp="2026-02-07 22:27:42.007" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELCO" Timestamp="2026-02-07 22:27:42.008" Status="false" />
+      <Journal Type="Rule" ID="APPGENDELPR" Timestamp="2026-02-07 22:27:42.008" Status="false" />
+      <Journal Type="Process" ID="01800" Timestamp="2026-02-07 22:27:42.009" Status="Pass" />
+      <Journal Type="Rule" ID="CAGTM" Timestamp="2026-02-07 22:27:42.010" Status="false" />
+      <Journal Type="Rule" ID="LRGTM" Timestamp="2026-02-07 22:27:42.010" Status="false" />
+      <Journal Type="Rule" ID="LRLTM" Timestamp="2026-02-07 22:27:42.010" Status="false" />
+      <Journal Type="Rule" ID="PAOSA" Timestamp="2026-02-07 22:27:42.011" Status="false" />
+      <Journal Type="Rule" ID="PAUMA" Timestamp="2026-02-07 22:27:42.011" Status="false" />
+      <Journal Type="Rule" ID="EMPLOY" Timestamp="2026-02-07 22:27:42.061" Status="false" />
+      <Journal Type="Rule" ID="PAROA" Timestamp="2026-02-07 22:27:42.062" Status="false" />
+      <Journal Type="Process" ID="02800" Timestamp="2026-02-07 22:27:42.062" Status="Pass" />
+      <Journal Type="Rule" ID="SSDUP90-" Timestamp="2026-02-07 22:27:42.508" Status="true" />
+      <Journal Type="Process" ID="03800" Timestamp="2026-02-07 22:27:42.508" Status="Fail" />
+    </Journals>
+  </Request>
+  <queues>
+    <queue name="A Work Queue" id="28" />
+    <queue name="A $0 - $25,000 Work Queue" id="29" />
+    <queue name="A $0 - $50,000 Work Queue" id="30" />
+    <queue name="A $0 - $75,000 Work Queue" id="43" />
+    <queue name="T All Applications" id="45" />
+  </queues>
+</Provenir>

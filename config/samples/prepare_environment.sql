@@ -190,11 +190,16 @@ where a.app_id = 325725
 
 select * from migration.scores where app_id = 325725
 select * from migration.Indicators where app_id = 325725
+select e1.value, coll.* 
+from migration.app_collateral_rl  as coll
+left join migration.app_enums as e1 on e1.enum_id = coll.collateral_type_enum
 select * from migration.app_historical_lookup where app_id = 325725
 select * from migration.app_report_results_lookup where app_id = 325725
 select * from migration.app_policy_exceptions_rl where app_id = 325725
 select * from migration.app_warranties_rl where app_id = 325725
 
+
+where app_id = 325725
 
 
 -- are we missing mappings for new fsp_email, fsp_fax, fsp_num

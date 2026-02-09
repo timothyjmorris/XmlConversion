@@ -1581,6 +1581,10 @@ class DataMapper(DataMapperInterface):
             # Extract app_contact_employment elements directly from XML data
             self.logger.debug(f"Extracting app_contact_employment with {len(mappings)} mappings")
             records = self._extract_contact_employment_records(xml_data, mappings, app_id, valid_contacts)
+        elif table_name == 'app_collateral_rl':
+            # Collateral uses add_collateral(N) with calculated_field combos needing cross-element context
+            self.logger.debug(f"Extracting collateral records with {len(mappings)} mappings")
+            records = self._extract_collateral_records(xml_data, mappings, app_id, valid_contacts)
         elif table_name in {'scores', 'indicators', 'app_historical_lookup', 'app_report_results_lookup',
                           'app_policy_exceptions_rl', 'app_warranties_rl'}:
             # Row-creating mapping types that intentionally do not map to a single target column.
@@ -1832,6 +1836,119 @@ class DataMapper(DataMapperInterface):
                 'reason_code': str(raw_value).strip(),
                 'notes': shared_notes,
             })
+
+        return records
+
+    def _extract_collateral_records(self, xml_data: Dict[str, Any], mappings: List[FieldMapping],
+                                    app_id: str, valid_contacts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Extract records for app_collateral_rl using add_collateral(N) mapping types.
+
+        Creates one row per collateral slot (N=1–4). Each slot has 11 fields including
+        combo mapping types:
+          - calculated_field + add_collateral(N) → collateral_type_enum (via CASE expression)
+          - char_to_bit + add_collateral(N)      → used_flag (N/U/D → 0/1)
+          - numbers_only + add_collateral(N)     → year (strip non-numeric)
+
+        Cross-element context is required because calculated_field expressions reference
+        IL_application.app_type_code and IL_application.sub_type_code.
+
+        Only creates a row when at least one non-default field has meaningful data.
+
+        Row structure: {app_id, collateral_type_enum, make, model, used_flag, ...}
+        """
+        records: List[Dict[str, Any]] = []
+        normalized_app_id: Any = int(app_id) if str(app_id).isdigit() else app_id
+
+        # Build cross-element context for calculated_field expressions
+        context_data = self._build_app_level_context(xml_data, valid_contacts, app_id)
+
+        # Group mappings by their slot parameter
+        groups: Dict[str, List] = {}  # param -> list of mappings
+        for mapping in mappings:
+            mapping_types = getattr(mapping, 'mapping_type', None) or []
+            ac_types = [mt for mt in mapping_types if str(mt).strip().startswith('add_collateral')]
+            if not ac_types:
+                continue
+            name, param = self._parse_mapping_type_function(ac_types[0])
+            if name != 'add_collateral' or not param:
+                continue
+            groups.setdefault(param, []).append(mapping)
+
+        # Create one row per collateral group that has meaningful data
+        for param, group_mappings in groups.items():
+            row_data: Dict[str, Any] = {}
+            has_meaningful_data = False
+
+            for mapping in group_mappings:
+                mapping_types = getattr(mapping, 'mapping_type', None) or []
+
+                # Determine which combo types are present alongside add_collateral(N)
+                has_calculated_field = 'calculated_field' in mapping_types
+                has_char_to_bit = 'char_to_bit' in mapping_types
+                has_numbers_only = any(mt in ('numbers_only', 'extract_numeric') for mt in mapping_types)
+
+                if has_calculated_field:
+                    # Evaluate the CASE expression — returns the enum int or None
+                    value = self._apply_calculated_field_mapping(None, mapping, context_data)
+                    if value is not None:
+                        row_data[mapping.target_column] = value
+                        # calculated_field is a derived value, not source data;
+                        # it should not by itself create a row (same logic as char_to_bit)
+                elif has_char_to_bit:
+                    # Extract raw value, then convert via bit map — always produces 0 or 1
+                    raw_value = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+                    row_data[mapping.target_column] = self._apply_bit_conversion(raw_value)
+                elif has_numbers_only:
+                    # Extract raw value, strip non-numeric, then type-transform
+                    raw_value = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+                    if self._is_meaningful_kv_value(raw_value):
+                        extracted = self._extract_numeric_value(str(raw_value).strip())
+                        if extracted is not None:
+                            transformed = self.transform_data_types(str(extracted), mapping.data_type)
+                            row_data[mapping.target_column] = transformed
+                            has_meaningful_data = True
+                else:
+                    # Plain add_collateral(N) — direct value extraction
+                    raw_value = self._extract_value_from_xml(xml_data, mapping, context_data=None)
+                    if self._is_meaningful_kv_value(raw_value):
+                        clean_value = str(raw_value).strip()
+                        # Apply data-type coercion for numeric destination columns
+                        # so the DB driver receives Python ints/floats (not strings).
+                        if mapping.data_type in ('smallint', 'int', 'bigint', 'tinyint', 'decimal', 'float'):
+                            transformed = self.transform_data_types(clean_value, mapping.data_type)
+                            if transformed is not None:
+                                row_data[mapping.target_column] = transformed
+                            else:
+                                row_data[mapping.target_column] = clean_value
+                        else:
+                            row_data[mapping.target_column] = clean_value
+                        if mapping.target_column == 'wholesale_value':
+                            # A wholesale_value of 0 alone should not justify row
+                            # creation.  Only mark meaningful when value > 0 so
+                            # that empty slots with nothing but value="0" are
+                            # skipped (phantom-row prevention).
+                            try:
+                                if float(str(raw_value).strip()) > 0:
+                                    has_meaningful_data = True
+                            except (ValueError, TypeError):
+                                pass  # non-numeric wholesale_value doesn't trigger
+                        else:
+                            has_meaningful_data = True
+
+            if not has_meaningful_data:
+                continue  # Skip slots with no meaningful data
+
+            row_data['app_id'] = normalized_app_id
+
+            # Set sort_order to the slot index N (PK includes sort_order to
+            # distinguish rows with the same collateral_type_enum)
+            row_data['sort_order'] = int(param)
+
+            # Ensure used_flag is always present (DB NOT NULL, defaults to 0)
+            if 'used_flag' not in row_data:
+                row_data['used_flag'] = 0
+
+            records.append(row_data)
 
         return records
 
