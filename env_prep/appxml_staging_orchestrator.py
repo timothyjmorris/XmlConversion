@@ -5,7 +5,11 @@ before the load, recreates the index after, and aggregates per-worker metrics in
 summary file.
 
 Usage (PowerShell):
-python env_prep\appxml_staging_orchestrator.py --workers 8 --batch 2000 --drop-index --metrics-dir metrics
+# For CC staging
+python env_prep\appxml_staging_orchestrator.py --product-line CC --workers 8 --batch 2000 --drop-index --recreate-index --metrics-dir metrics
+
+# For RL staging
+python env_prep\appxml_staging_orchestrator.py --product-line RL --workers 8 --batch 2000 --drop-index --recreate-index --metrics-dir metrics
 """
 
 import argparse
@@ -26,8 +30,15 @@ def ensure_dirs(log_dir, metrics_dir):
     os.makedirs(metrics_dir, exist_ok=True)
 
 
-def launch_worker(rem, workers, batch, extra_args, log_dir, metrics_path):
-    args = [sys.executable, PILOT, '--batch', str(batch), '--mod', str(workers), '--rem', str(rem), '--metrics', metrics_path]
+def launch_worker(product_line, rem, workers, batch, extra_args, log_dir, metrics_path):
+    args = [
+        sys.executable, PILOT,
+        '--product-line', product_line,
+        '--batch', str(batch),
+        '--mod', str(workers),
+        '--rem', str(rem),
+        '--metrics', metrics_path
+    ]
     args += extra_args
     stdout_path = os.path.join(log_dir, f'appxml_{rem}.out')
     stderr_path = os.path.join(log_dir, f'appxml_{rem}.err')
@@ -49,7 +60,7 @@ def wait_for_procs(procs):
 
 
 def aggregate_metrics(metrics_dir, out_path):
-    agg = {'workers': [], 'total_processed': 0, 'total_duration_s': 0.0, 'collected_at': datetime.utcnow().isoformat() + 'Z'}
+    agg = {'workers': [], 'total_processed': 0, 'total_duration_seconds': 0.0, 'collected_at': datetime.utcnow().isoformat() + 'Z'}
     for fname in sorted(os.listdir(metrics_dir)):
         if not fname.lower().endswith('.json'):
             continue
@@ -57,11 +68,20 @@ def aggregate_metrics(metrics_dir, out_path):
         try:
             with open(path, 'r', encoding='utf-8') as f:
                 m = json.load(f)
-            agg['workers'].append({'file': fname, 'processed': m.get('processed', 0), 'duration_s': m.get('duration_s', 0.0), 'rows_per_sec': m.get('rows_per_sec', 0.0)})
+            agg['workers'].append({
+                'file': fname,
+                'processed': m.get('processed', 0),
+                'duration_seconds': m.get('duration_seconds', 0.0),
+                'rows_per_second': m.get('rows_per_second', 0.0)
+            })
             agg['total_processed'] += m.get('processed', 0)
-            agg['total_duration_s'] += m.get('duration_s', 0.0)
+            agg['total_duration_seconds'] += m.get('duration_seconds', 0.0)
         except Exception:
             continue
+    if agg['total_duration_seconds'] > 0:
+        agg['average_rows_per_second'] = agg['total_processed'] / agg['total_duration_seconds']
+    else:
+        agg['average_rows_per_second'] = 0.0
     if agg['workers']:
         try:
             with open(out_path, 'w', encoding='utf-8') as of:
@@ -71,19 +91,28 @@ def aggregate_metrics(metrics_dir, out_path):
     return agg
 
 
-def main(workers, batch, drop_index, recreate_index, metrics_dir, log_dir, extra_args):
+def main(product_line, workers, batch, drop_index, recreate_index, metrics_dir, log_dir, extra_args):
     ensure_dirs(log_dir, metrics_dir)
 
     procs = []
 
-    print(f"Starting {workers} workers, batch={batch}, drop_index={drop_index}, recreate_index={recreate_index}")
+    print("="*80)
+    print(f"XML STAGING ORCHESTRATOR - Product Line: {product_line}")
+    print("="*80)
+    print(f"Workers:           {workers}")
+    print(f"Batch size:        {batch}")
+    print(f"Drop index:        {drop_index}")
+    print(f"Recreate index:    {recreate_index}")
+    print(f"Metrics dir:       {metrics_dir}")
+    print(f"Log dir:           {log_dir}")
+    print("="*80)
 
     for rem in range(workers):
         metrics_path = os.path.join(metrics_dir, f'appxml_{rem}.json')
         worker_args = list(extra_args)
         if drop_index and rem == 0:
             worker_args += ['--drop-index']
-        proc, so, se = launch_worker(rem, workers, batch, worker_args, log_dir, metrics_path)
+        proc, so, se = launch_worker(product_line, rem, workers, batch, worker_args, log_dir, metrics_path)
         procs.append((proc, so, se))
 
     try:
@@ -99,16 +128,24 @@ def main(workers, batch, drop_index, recreate_index, metrics_dir, log_dir, extra
 
     print('All workers finished; aggregating metrics')
     agg = aggregate_metrics(metrics_dir, os.path.join(metrics_dir, 'appxml_aggregate.json'))
-    print(f"Aggregated total_processed={agg.get('total_processed', 0)}")
+    print(f"Aggregated total_processed={agg.get('total_processed', 0)} in {agg.get('total_duration_seconds', 0):.1f}s ({agg.get('average_rows_per_second', 0):.1f} rows/sec)")
 
     if recreate_index:
         print('Recreating staging index (single invocation)')
-        args = [sys.executable, PILOT, '--batch', '1', '--recreate-index']
+        args = [
+            sys.executable, PILOT,
+            '--product-line', product_line,
+            '--batch', '1',
+            '--recreate-index'
+        ]
         subprocess.run(args)
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Orchestrate multiple appxml_staging_extractor.py workers')
+    parser = argparse.ArgumentParser(description='Orchestrate multiple appxml_staging_extractor.py workers - product-line aware')
+    parser.add_argument('--product-line', type=str, required=True,
+                       choices=['CC', 'RL'],
+                       help="Product line to process: 'CC' (Credit Card) or 'RL' (Rec Lending) - REQUIRED")
     parser.add_argument('--workers', type=int, default=8, help='number of worker processes to launch')
     parser.add_argument('--batch', type=int, default=2000, help='batch size passed to worker')
     parser.add_argument('--drop-index', action='store_true', help='drop staging index before load (worker 0 will drop it)')
@@ -119,4 +156,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     extra = args.extra or []
-    main(workers=args.workers, batch=args.batch, drop_index=args.drop_index, recreate_index=args.recreate_index, metrics_dir=args.metrics_dir, log_dir=args.log_dir, extra_args=extra)
+    main(product_line=args.product_line, workers=args.workers, batch=args.batch, drop_index=args.drop_index, recreate_index=args.recreate_index, metrics_dir=args.metrics_dir, log_dir=args.log_dir, extra_args=extra)

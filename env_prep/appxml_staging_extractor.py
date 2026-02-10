@@ -12,13 +12,11 @@ import pyodbc
 from datetime import datetime, timezone
 from lxml import etree
 
-# Hard-coded mapping_contract & app_xml_staging table, that's ok
+# Configuration paths - contract and staging table are product-line driven
 HERE = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.abspath(os.path.join(HERE, '..'))
 CONFIG_DIR = os.path.join(PATH, 'config')
 DB_CONFIG_PATH = os.path.join(CONFIG_DIR, 'database_config.json')
-MAPPING_CONTRACT_PATH = os.path.join(CONFIG_DIR, 'mapping_contract.json')
-STAGING_TABLE = '[dbo].[app_xml_staging]'
 
 
 def load_json(path):
@@ -106,10 +104,10 @@ def parse_request_and_custdata(xml_text):
     }
 
 
-def drop_staging_index(cursor):
-    drop_idx_sql = f"""IF EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_app_xml_staging_app_id' AND object_id = OBJECT_ID(N'{STAGING_TABLE}'))
+def drop_staging_index(cursor, staging_table):
+    drop_idx_sql = f"""IF EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_app_xml_staging_app_id' AND object_id = OBJECT_ID(N'{staging_table}'))
                         BEGIN
-                            DROP INDEX IX_app_xml_staging_app_id ON {STAGING_TABLE};
+                            DROP INDEX IX_app_xml_staging_app_id ON {staging_table};
                         END
                     """
     cursor.execute(drop_idx_sql)
@@ -119,8 +117,8 @@ def drop_staging_index(cursor):
         pass
 
 
-def create_staging_index(cursor):
-    create_idx_sql = f"CREATE INDEX IX_app_xml_staging_app_id ON {STAGING_TABLE} (app_id) INCLUDE (app_xml);"
+def create_staging_index(cursor, staging_table):
+    create_idx_sql = f"CREATE INDEX IX_app_xml_staging_app_id ON {staging_table} (app_id) INCLUDE (app_xml);"
     cursor.execute(create_idx_sql)
     try:
         cursor.commit()
@@ -128,20 +126,57 @@ def create_staging_index(cursor):
         pass
 
 
-def main(batch_size, limit, start_after, mod=None, rem=None, drop_index=False, recreate_index=False, metrics_path=None, source_table_override=None, source_column_override=None, force_source_ok=False):
+def main(product_line, batch_size, limit, start_after, mod=None, rem=None, drop_index=False, recreate_index=False, metrics_path=None, source_table_override=None, source_column_override=None, force_source_ok=False):
+    """
+    Main staging extractor - product-line aware.
+    
+    Args:
+        product_line: 'CC' or 'RL' - determines contract, staging table, and source application table
+    """
+    # Load product-line specific configuration
     db_config = load_json(DB_CONFIG_PATH)
-    mapping = load_json(MAPPING_CONTRACT_PATH)
-
-    source_table = source_table_override or mapping.get('source_table', 'app_xml')
-    source_column = source_column_override or mapping.get('source_column', 'app_XML')
-
-    # Safety: avoid reading from the staging table and inserting back into it accidentally.
+    
+    contract_filename = f'mapping_contract_{product_line.lower()}.json' if product_line == 'RL' else 'mapping_contract.json'
+    contract_path = os.path.join(CONFIG_DIR, contract_filename)
+    
+    if not os.path.exists(contract_path):
+        raise RuntimeError(f"Contract not found: {contract_path}")
+    
+    mapping = load_json(contract_path)
+    
+    # Extract contract-driven configuration
+    target_schema = mapping.get('target_schema', 'migration')
+    staging_table_name = mapping.get('source_table', f'app_xml_staging_{product_line.lower()}')
+    source_application_table = mapping.get('source_application_table')  # 'application' or 'IL_application'
+    
+    if not source_application_table:
+        raise RuntimeError(f"Contract {contract_filename} missing 'source_application_table' field")
+    
+    # Build fully qualified staging table name from contract
+    staging_table = f'[{target_schema}].[{staging_table_name}]'
+    
+    # Source XML always comes from dbo.app_xml (not the staging table)
+    source_table = source_table_override or 'app_xml'
+    source_column = source_column_override or 'app_XML'
+    
+    # Safety: prevent reading from staging tables
     normalized_source = source_table.lower().replace('[', '').replace(']', '').replace('dbo.', '').strip()
-    if normalized_source == 'app_xml_staging' and not force_source_ok:
-        raise RuntimeError("Refusing to read from 'app_xml_staging' as source. Use --source-table to point to original source (e.g. app_xml) or pass --force-source-ok to override.")
+    if 'staging' in normalized_source and not force_source_ok:
+        raise RuntimeError(f"Refusing to read from staging table '{source_table}'. Use --source-table to point to original source (e.g. app_xml) or pass --force-source-ok to override.")
 
     conn_str = build_connection_string(db_config)
-    print(f"Using connection: {conn_str.split(';')[1]} (server info hidden)")
+    
+    print("="*80)
+    print(f"XML STAGING EXTRACTOR - Product Line: {product_line}")
+    print("="*80)
+    print(f"Contract:              {contract_filename}")
+    print(f"Source table:          [dbo].[{source_table}]")
+    print(f"Source column:         {source_column}")
+    print(f"Source app table:      [dbo].[{source_application_table}]")
+    print(f"Staging table:         {staging_table}")
+    print(f"Target schema:         {target_schema}")
+    print(f"Connection:            {conn_str.split(';')[1]} (server info hidden)")
+    print("="*80)
 
     connection = pyodbc.connect(conn_str, autocommit=False)
     cursor = connection.cursor()
@@ -155,7 +190,7 @@ def main(batch_size, limit, start_after, mod=None, rem=None, drop_index=False, r
 
     if drop_index:
         print("Dropping staging nonclustered index before load (if present)")
-        drop_staging_index(cursor)
+        drop_staging_index(cursor, staging_table)
 
     processed_count = 0
     last_app_id = start_after or 0
@@ -170,8 +205,9 @@ def main(batch_size, limit, start_after, mod=None, rem=None, drop_index=False, r
         if mod is not None:
             where_parts.append(f"(s.app_id % {mod}) = {rem}")
 
-        # Exclude orphaned XML - make sure it has a corresponding application using EXISTS (uses indexes and avoids UNION scans)
-        where_parts.append("(EXISTS (SELECT 1 FROM [application] a WITH (NOLOCK) WHERE a.app_id = s.app_id) OR EXISTS (SELECT 1 FROM IL_application ia WITH (NOLOCK) WHERE ia.app_id = s.app_id))")
+        # Product-line specific: Only include records with corresponding application in the correct table
+        # CC uses [application], RL uses [IL_application] - this ensures distinct staging per product line
+        where_parts.append(f"EXISTS (SELECT 1 FROM [dbo].[{source_application_table}] a WITH (NOLOCK) WHERE a.app_id = s.app_id)")
 
         where_clause = ("WHERE " + " AND ".join(where_parts)) if where_parts else ""
         select_sql = f"SELECT {select_clause} s.app_id, s.[{source_column}] FROM [dbo].[{source_table}] s {where_clause} ORDER BY s.app_id"
@@ -215,7 +251,7 @@ def main(batch_size, limit, start_after, mod=None, rem=None, drop_index=False, r
                 break
 
         if parsed_rows:
-            insert_sql = f"INSERT INTO {STAGING_TABLE} (app_id, app_XML) VALUES (?, ?)"
+            insert_sql = f"INSERT INTO {staging_table} (app_id, app_XML) VALUES (?, ?)"
             
             try:
                 cursor.executemany(insert_sql, parsed_rows)
@@ -255,13 +291,16 @@ def main(batch_size, limit, start_after, mod=None, rem=None, drop_index=False, r
     if recreate_index:
         print("Recreating staging index after load")
         try:
-            create_staging_index(cursor)
+            create_staging_index(cursor, staging_table)
         except Exception as e:
             print(f"Failed to recreate index: {e}")
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Stage app_XML extractor to populate app_xml_staging')
+    parser = argparse.ArgumentParser(description='Product-line aware XML staging extractor - populates staging tables with minimal XML')
+    parser.add_argument('--product-line', type=str, required=True,
+                       choices=['CC', 'RL'],
+                       help="Product line to process: 'CC' (Credit Card) or 'RL' (Rec Lending) - REQUIRED")
     parser.add_argument('--batch', type=int, default=1000, help='batch size to fetch from source table')
     parser.add_argument('--limit', type=int, default=0, help='maximum number of reduced rows to insert (0 = unlimited)')
     parser.add_argument('--start-after', type=int, default=0, help='start after this app_id (useful to resume)')
@@ -270,8 +309,8 @@ if __name__ == '__main__':
     parser.add_argument('--drop-index', action='store_true', help='drop nonclustered staging index before load')
     parser.add_argument('--recreate-index', action='store_true', help='recreate staging index after load')
     parser.add_argument('--metrics', type=str, default='', help='path to write metrics JSON (e.g., metrics/appxml_1.json)')
-    parser.add_argument('--source-table', type=str, default='', help='override source table (defaults to mapping_contract source_table)')
-    parser.add_argument('--source-column', type=str, default='', help='override source column (defaults to mapping_contract source_column)')
+    parser.add_argument('--source-table', type=str, default='', help='override source table (defaults to dbo.app_xml)')
+    parser.add_argument('--source-column', type=str, default='', help='override source column (defaults to app_XML)')
     parser.add_argument('--force-source-ok', action='store_true', help='allow using the staging table as a source (dangerous)')
 
     args = parser.parse_args()
@@ -280,4 +319,4 @@ if __name__ == '__main__':
     metrics_path = args.metrics if args.metrics else None
     source_table = args.source_table if args.source_table else None
     source_column = args.source_column if args.source_column else None
-    main(batch_size=args.batch, limit=args.limit or None, start_after=(args.start_after or 0), mod=mod, rem=rem, drop_index=args.drop_index, recreate_index=args.recreate_index, metrics_path=metrics_path, source_table_override=source_table, source_column_override=source_column, force_source_ok=args.force_source_ok)
+    main(product_line=args.product_line, batch_size=args.batch, limit=args.limit or None, start_after=(args.start_after or 0), mod=mod, rem=rem, drop_index=args.drop_index, recreate_index=args.recreate_index, metrics_path=metrics_path, source_table_override=source_table, source_column_override=source_column, force_source_ok=args.force_source_ok)

@@ -74,14 +74,14 @@ select * from app_enums
 		ON dbo.processing_log(app_id);
 
 	-- This is used to for an XML fragment of "/Provenir/Request/CustData" to speed up load time
-	CREATE TABLE dbo.app_xml_staging_rl (
+	CREATE TABLE migration.app_xml_staging_rl (
 	  app_id		int				NOT NULL PRIMARY KEY,	-- IDENTITY not needed
 	  app_XML		varchar(MAX)		NULL,
 	  extracted_at	datetime2		NOT NULL DEFAULT (SYSUTCDATETIME())
 	);
 	
 	-- For getting batches of xml
-	CREATE NONCLUSTERED INDEX IX_app_xml_staging_rl_app_id ON dbo.app_xml_staging_rl (app_id) INCLUDE (app_xml);
+	CREATE NONCLUSTERED INDEX IX_app_xml_staging_rl_app_id ON migration.app_xml_staging_rl (app_id) INCLUDE (app_xml);
 
 
 	-- LOAD UP!
@@ -96,8 +96,9 @@ select * from app_enums
 -- do-over
 /*
 
-truncate table dbo.processing_log;
-delete from dbo.app_base;
+truncate table processing_log;
+delete from app_base where product_line_enum = 602;
+
 -- VERY IMPORTANT: DROP INDEXES before insert
 
 */
@@ -108,14 +109,14 @@ SELECT COUNT(*) FROM dbo.app_xml_staging;
 SELECT COUNT(*) FROM dbo.app_xml_staging_rl;
 
 SELECT COUNT(*) FROM dbo.processing_log;
-SELECT * FROM dbo.processing_log where status <> 'success'
+SELECT * FROM migration.processing_log where status <> 'success'
 
 SELECT COUNT(*) FROM dbo.app_base;
 SELECT MAX(app_id) FROM dbo.app_base;
 SELECT COUNT(*) FROM app_xml
 
 
-select top 100 app_id, cast(app_xml as xml) as xml from dbo.app_xml_staging where app_id in (157303)
+select top 100 app_id, cast(app_xml as xml) as xml from dbo.app_xml_staging where app_id in (116101)
 
 
 SELECT TOP 10 app_id, CAST(app_xml AS xml) AS XML 
@@ -154,27 +155,28 @@ SELECT app_id FROM IL_application WHERE app_id = 124294
 	
 	select count(*)
 	--delete
-	from dbo.app_xml_staging
+	from migration.app_xml_staging
 	where app_id in (select app_id from IL_application)
 
 	select count(*)
 	--delete
-	from dbo.app_xml_staging_rl
+	from migration.app_xml_staging_rl
 	where app_id in (select app_id from application)
 
 
 -- MIGRATION SCHEMA -----------------------------------------------------
-SELECT MAX(app_id) FROM migration.app_base;
+SELECT count(*) FROM migration.app_base where product_line_enum = 602
 
-delete from migration.app_base where app_id = 207033732
+
 
 
 -- delete from migration.app_base where app_id = 325725
-select * from migration.app_base where app_id = 325725
+select * from migration.app_base where product_line_enum = 602 --app_id = 325725
 
 
+select app_id, lockedby, shred_version, cast(app_xml as xml) as xml from app_XML where app_id in (116101)
 
-select * 
+select  top 10 *
 from migration.app_base as a
 left join migration.app_operational_rl as o on o.app_id = a.app_id
 left join migration.app_dealer_rl as d on d.app_id = a.app_id
@@ -186,12 +188,20 @@ left join migration.app_transactional_rl as t on t.app_id = a.app_id
 left join migration.app_contact_base as c on c.app_id = a.app_id
 left join migration.app_contact_address as ca on ca.con_id = c.con_id
 left join migration.app_contact_employment as ce on ce.con_id = c.con_id
-where a.app_id = 325725
+where product_line_enum = 602
+order by a.app_id desc
 
+select * from migration.app_contact_address where con_id = 10557
+select * from migration.app_contact_employment where con_id = 10557
+
+
+select * from migration.app_base where product_line_enum = 602
 
 select e1.value, coll.* 
 from migration.app_collateral_rl  as coll
 left join migration.app_enums as e1 on e1.enum_id = coll.collateral_type_enum
+where make = 'unknown' or model = 'unknown' or year = '9999'
+
 select * from migration.app_historical_lookup where app_id = 325725
 select * from migration.app_report_results_lookup where app_id = 325725
 select * from migration.app_policy_exceptions_rl where app_id = 325725
@@ -201,5 +211,12 @@ select * from migration.Indicators where app_id = 325725
 
 
 -- are we missing mappings for new fsp_email, fsp_fax, fsp_num
--- where is monthly_payment_amount?
--- assees_ _doc_fee_flag
+-- nothing maps to app_funding_contract_rl.monthly_payment_amount
+-- nothing maps to app_funding_rl.validated_finance_charge
+
+
+alter table app_warranties_rl
+alter column company_name varchar(50) null
+
+
+

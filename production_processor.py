@@ -401,9 +401,8 @@ class ProductionProcessor:
         xml_records = []
         
         try:
-            # Load mapping contract to get the source table/column names (contract-driven)
-            config_manager = get_config_manager()
-            mapping_contract = config_manager.load_mapping_contract()
+            # Use the already-loaded mapping contract (product-line aware)
+            mapping_contract = self.mapping_contract
             source_table = mapping_contract.source_table
             source_column = mapping_contract.source_column
 
@@ -806,8 +805,8 @@ class ProductionProcessor:
         
         # Get total record count for progress tracking (use contract-driven source table/column)
         try:
-            config_manager = get_config_manager()
-            mapping_contract = config_manager.load_mapping_contract()
+            # Use the already-loaded mapping contract (product-line aware)
+            mapping_contract = self.mapping_contract
             source_table = mapping_contract.source_table
             source_column = mapping_contract.source_column
 

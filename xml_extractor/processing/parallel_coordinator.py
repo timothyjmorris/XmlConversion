@@ -411,7 +411,7 @@ def _init_worker(connection_string: str, mapping_contract_path: str, progress_di
     logging.basicConfig(level=level)
         
     try:
-        _worker_validator = PreProcessingValidator()
+        _worker_validator = PreProcessingValidator(mapping_contract_path=mapping_contract_path)
         _worker_parser = XMLParser()
         _worker_mapper = DataMapper(mapping_contract_path=mapping_contract_path)
         _worker_migration_engine = MigrationEngine(connection_string)

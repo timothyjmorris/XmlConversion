@@ -97,7 +97,22 @@ Creates one row per collateral slot (`N=1..4`). Supports chained types within a 
 - `calculated_field` for `collateral_type_enum` (uses app-level context)
 - `char_to_bit` for `used_flag`
 - `numbers_only` or `extract_numeric` for `year`
-Rows are created only when the slot contains meaningful data; `wholesale_value=0` alone does not create a row. `sort_order` is set to the slot number and `used_flag` defaults to 0 when missing.
+
+**Meaningful Data Logic:**
+- Rows are created **only** when the slot contains meaningful data  
+- `wholesale_value=0` alone does not create a row
+- `calculated_field` and `char_to_bit` do NOT trigger row creation (they only populate columns in already-created rows)
+- If no meaningful data exists → no row created (even if `default_value` set)
+
+**Default Value Application:**
+- Applied **after** meaningful data check passes
+- For NOT NULL columns (`make`, `year`, `used_flag`): `default_value` fills missing fields  
+- For `collateral_type_enum`: CASE expression with `ELSE` clause ensures value always returned (no `default_value` needed)
+- `sort_order` is set to the slot number
+
+**Removed Redundancies:**
+- `exclude_default_when_record_empty` - Redundant; the meaningful data check already prevents empty record creation
+- `default_value` on `collateral_type_enum` - Redundant; CASE ELSE clause ensures non-NULL return
 
 ## Known Gaps / Items to Track
 

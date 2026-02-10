@@ -731,6 +731,100 @@ class DataMapper(DataMapperInterface):
         self.logger.info(f"Pre-flight validation passed: app_id={app_id}, {contact_status}")
         return True
 
+    def _is_meaningful_contact(self, contact: Dict[str, Any]) -> bool:
+        """
+        Check if contact has enough meaningful data to warrant insertion.
+        
+        A meaningful contact must have:
+        - con_id and ac_role_tp_c (identity fields) - validated by caller
+        - At least ONE of: birth_date, first_name, last_name, ssn
+        
+        This filters out sparse/placeholder contacts common in RL data where
+        contacts exist with only identity fields but no actual personal information.
+        
+        Args:
+            contact: Contact dictionary from XML
+            
+        Returns:
+            True if contact has meaningful data, False if sparse/empty
+        """
+        # Check for at least one meaningful field with non-empty data
+        meaningful_fields = [
+            contact.get('birth_date', '').strip(),
+            contact.get('first_name', '').strip(),
+            contact.get('last_name', '').strip(),
+            contact.get('ssn', '').strip()
+        ]
+        
+        has_meaningful_data = any(field for field in meaningful_fields)
+        
+        if not has_meaningful_data:
+            con_id = contact.get('con_id', '').strip()
+            ac_role_tp_c = contact.get('ac_role_tp_c', '').strip()
+            self.logger.info(
+                f"Excluding sparse contact con_id={con_id}, ac_role_tp_c={ac_role_tp_c}: "
+                f"No meaningful data (missing birth_date, first_name, last_name, and ssn)"
+            )
+        
+        return has_meaningful_data
+    
+    def _has_meaningful_address_data(self, record: Dict[str, Any], source_attributes: Dict[str, Any]) -> bool:
+        """
+        Check if address record has meaningful data beyond just the type enum.
+        
+        Filters blank PREV addresses that only have address_type_enum but no actual address data.
+        Based on legacy migration logic that checked LEN(zip_code) > 0.
+        
+        Args:
+            record: Mapped record dictionary
+            source_attributes: Original XML attributes
+            
+        Returns:
+            True if address has meaningful data, False if blank/placeholder
+        """
+        # Check for at least one meaningful address field with non-empty data
+        meaningful_fields = [
+            record.get('zip', '').strip() if record.get('zip') else '',
+            record.get('city', '').strip() if record.get('city') else '',
+            record.get('street_name', '').strip() if record.get('street_name') else '',
+            record.get('street_number', '').strip() if record.get('street_number') else '',
+            record.get('state', '').strip() if record.get('state') else '',
+            source_attributes.get('zip_code', '').strip(),
+            source_attributes.get('city', '').strip(),
+            source_attributes.get('street_name', '').strip(),
+        ]
+        
+        return any(field for field in meaningful_fields)
+    
+    def _has_meaningful_employment_data(self, record: Dict[str, Any], source_attributes: Dict[str, Any]) -> bool:
+        """
+        Check if employment record has meaningful data beyond just the type enum.
+        
+        Filters blank PREV employments that only have employment_type_enum but no actual employment data.
+        Based on legacy migration logic that checked LEN(zip_code) > 0 for employment addresses.
+        
+        Args:
+            record: Mapped record dictionary
+            source_attributes: Original XML attributes
+            
+        Returns:
+            True if employment has meaningful data, False if blank/placeholder
+        """
+        # Check for at least one meaningful employment field with non-empty data
+        meaningful_fields = [
+            record.get('business_name', '').strip() if record.get('business_name') else '',
+            record.get('monthly_salary') if record.get('monthly_salary') else None,
+            record.get('job_title', '').strip() if record.get('job_title') else '',
+            record.get('zip', '').strip() if record.get('zip') else '',
+            record.get('city', '').strip() if record.get('city') else '',
+            source_attributes.get('business_name', '').strip(),
+            source_attributes.get('zip_code', '').strip(),
+            source_attributes.get('city', '').strip(),
+        ]
+        
+        # Filter out None values and check if any field has data
+        return any(field for field in meaningful_fields if field is not None and str(field).strip())
+
     def _extract_valid_contacts(self, xml_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
         Extract valid contacts using 'last valid element' logic:
@@ -750,6 +844,7 @@ class DataMapper(DataMapperInterface):
             # Only consider contacts with required fields: con_id and contact_type_attribute
             # Note: Using dynamic contact_type_attr from contract instead of hard-coded 'ac_role_tp_c'
             filtered_contacts = []
+            sparse_count = 0
             for contact in contacts:
                 if not isinstance(contact, dict):
                     continue
@@ -760,7 +855,16 @@ class DataMapper(DataMapperInterface):
                 # CONTRACT-DRIVEN: Validate against valid types from element_filtering rules
                 if contact_type_value not in valid_contact_types:
                     continue
+                
+                # NEW: Check for meaningful data (filters sparse/placeholder contacts)
+                if not self._is_meaningful_contact(contact):
+                    sparse_count += 1
+                    continue
+                
                 filtered_contacts.append(contact)
+            
+            if sparse_count > 0:
+                self.logger.info(f"Contact filtering: {len(filtered_contacts)} meaningful, {sparse_count} sparse (excluded)")
 
             # Deduplicate contacts by con_id using priority-based precedence
             # CONTRACT-DRIVEN: Priority determined by array order in element_filtering rules
@@ -846,16 +950,38 @@ class DataMapper(DataMapperInterface):
         """
         contacts = []
         try:
-            # Get dynamic element names from contract (Task 5: Contract-Driven XPath Element Names)
-            contact_element = self._get_child_element_name('app_contact_base')
-            employment_element = self._get_child_element_name('app_contact_employment')
-            address_element = self._get_child_element_name('app_contact_address')
+            # Get contact element name from contract's filter rules (not table name)
+            # Contract-driven: Extracts 'IL_contact' or 'contact' from xml_child_path
+            # Load contract on-demand if not already cached
+            if not hasattr(self, '_contact_element_name_cache'):
+                contact_element = None
+                contract = self._config_manager.load_mapping_contract(self._mapping_contract_path)
+                if contract and contract.element_filtering:
+                    for rule in contract.element_filtering.filter_rules:
+                        if rule.element_type == 'contact':
+                            # Extract element name from path: /Provenir/Request/CustData/IL_application/IL_contact → IL_contact
+                            contact_element = rule.xml_child_path.split('/')[-1]
+                            break
+                
+                if not contact_element:
+                    self.logger.warning("Could not determine contact element name from contract")
+                    return []
+                
+                # Cache for future calls
+                self._contact_element_name_cache = contact_element
+            else:
+                contact_element = self._contact_element_name_cache
             
             # Get contact type attribute name from contract's element_filtering (cached at init)
             contact_type_attr = self._valid_contact_type_config[0]
             
             # Use XPath to find all contact elements with the type attribute
-            contact_elements = xml_root.xpath(f'.//{contact_element}[@{contact_type_attr}]')
+            contact_xpath = f'.//{contact_element}[@{contact_type_attr}]'
+            contact_elements = xml_root.xpath(contact_xpath)
+            
+            # Get dynamic child element names from relationships (for address/employment)
+            employment_element = self._get_child_element_name('app_contact_employment')
+            address_element = self._get_child_element_name('app_contact_address')
             
             for contact_elem in contact_elements:
                 # Extract all attributes as a dictionary
@@ -1649,8 +1775,6 @@ class DataMapper(DataMapperInterface):
                 records.append(record)
                 self.logger.debug(f"Created app_contact_base record for con_id={contact['con_id']}, app_id={app_id}")
             self.logger.debug(f"Returning {len(records)} app_contact_base records")
-            self.logger.debug(f"Created app_contact_base record for con_id={contact['con_id']}, app_id={app_id}")
-            self.logger.debug(f"Returning {len(records)} app_contact_base records")
         elif table_name == 'app_contact_address':
             # Extract app_contact_address elements directly from XML data
             self.logger.debug(f"Extracting app_contact_address with {len(mappings)} mappings")
@@ -2022,9 +2146,30 @@ class DataMapper(DataMapperInterface):
             # distinguish rows with the same collateral_type_enum)
             row_data['sort_order'] = int(param)
 
-            # Ensure used_flag is always present (DB NOT NULL, defaults to 0)
-            if 'used_flag' not in row_data:
-                row_data['used_flag'] = 0
+            # Ensure NOT NULL columns have default values when missing
+            # Apply defaults from mapping contract when columns are absent from row_data
+            for mapping in group_mappings:
+                if mapping.target_column not in row_data and hasattr(mapping, 'default_value') and mapping.default_value:
+                    # Check if this is a conditional default (exclude_default_when_record_empty)
+                    exclude_when_empty = getattr(mapping, 'exclude_default_when_record_empty', False)
+                    # Since we already determined has_meaningful_data=True, we have a valid row
+                    # Apply the default value, transforming to the correct data type
+                    default_val = mapping.default_value
+                    if mapping.data_type in ('smallint', 'int', 'bigint', 'tinyint'):
+                        try:
+                            row_data[mapping.target_column] = int(default_val)
+                        except (ValueError, TypeError):
+                            row_data[mapping.target_column] = default_val
+                    elif mapping.data_type in ('decimal', 'float'):
+                        try:
+                            row_data[mapping.target_column] = float(default_val)
+                        except (ValueError, TypeError):
+                            row_data[mapping.target_column] = default_val
+                    elif mapping.data_type == 'bit':
+                        row_data[mapping.target_column] = 1 if str(default_val).strip() in ('1', 'Y', 'true', 'True') else 0
+                    else:
+                        row_data[mapping.target_column] = str(default_val)
+                    self.logger.debug(f"Applied default value '{default_val}' to {mapping.target_column} for collateral slot {param}")
 
             records.append(row_data)
 
@@ -2316,6 +2461,12 @@ class DataMapper(DataMapperInterface):
                     # Create record from mappings
                     record = self._create_record_from_mappings(xml_data, mappings, context_data)
                     if record:
+                        # Check for meaningful address data (filters blank PREV addresses)
+                        if not self._has_meaningful_address_data(record, attributes):
+                            address_type = attributes.get('address_type_code', attributes.get('address_tp_c', 'UNKNOWN'))
+                            self.logger.debug(f"Skipping blank {address_type} address for con_id {con_id} - no meaningful data")
+                            continue
+                        
                         record['con_id'] = int(con_id) if str(con_id).isdigit() else con_id
                         records.append(record)
                         self.logger.debug(f"Created app_contact_address record for con_id {con_id}")
@@ -2369,6 +2520,12 @@ class DataMapper(DataMapperInterface):
                     # Create record from mappings
                     record = self._create_record_from_mappings(xml_data, mappings, context_data)
                     if record:
+                        # Check for meaningful employment data (filters blank PREV employments)
+                        if not self._has_meaningful_employment_data(record, attributes):
+                            employment_type = attributes.get('employment_type_code', attributes.get('employment_tp_c', 'UNKNOWN'))
+                            self.logger.debug(f"Skipping blank {employment_type} employment for con_id {con_id} - no meaningful data")
+                            continue
+                        
                         record['con_id'] = int(con_id) if str(con_id).isdigit() else con_id
                         records.append(record)
                         self.logger.debug(f"Created app_contact_employment record for con_id {con_id}")

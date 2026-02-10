@@ -198,19 +198,31 @@ class DuplicateContactDetector:
         cursor.execute(query, params)
         existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
         
-        # Filter and track
+        # Filter against database AND in-batch duplicates
         filtered_records = []
-        skipped_count = 0
+        seen_in_batch = set()
+        db_skipped = 0
+        batch_skipped = 0
+        
         for record in records:
-            key = (record.get('con_id'), record.get('address_type_enum'))
+            con_id = record.get('con_id')
+            addr_type = record.get('address_type_enum')
+            key = (con_id, addr_type)
+            
+            # Check if already in database
             if key in existing_keys:
-                self.logger.warning(f"Skipping duplicate app_contact_address (con_id={key[0]}, address_type_enum={key[1]})")
-                skipped_count += 1
+                self.logger.warning(f"Skipping duplicate app_contact_address (con_id={con_id}, address_type_enum={addr_type}) - already in database")
+                db_skipped += 1
+            # Check if duplicate within current batch
+            elif key in seen_in_batch:
+                self.logger.warning(f"Skipping duplicate app_contact_address (con_id={con_id}, address_type_enum={addr_type}) - duplicate within batch")
+                batch_skipped += 1
             else:
                 filtered_records.append(record)
+                seen_in_batch.add(key)
         
-        if skipped_count > 0:
-            self.logger.info(f"Filtered {skipped_count} duplicate app_contact_address records")
+        if db_skipped > 0 or batch_skipped > 0:
+            self.logger.info(f"Filtered {db_skipped + batch_skipped} duplicate app_contact_address records ({db_skipped} from DB, {batch_skipped} in-batch)")
 
         if conn_ctx is not None:
             try:
@@ -257,19 +269,31 @@ class DuplicateContactDetector:
         cursor.execute(query, params)
         existing_keys = {(row[0], row[1]) for row in cursor.fetchall()}
         
-        # Filter and track
+        # Filter against database AND in-batch duplicates
         filtered_records = []
-        skipped_count = 0
+        seen_in_batch = set()
+        db_skipped = 0
+        batch_skipped = 0
+        
         for record in records:
-            key = (record.get('con_id'), record.get('employment_type_enum'))
+            con_id = record.get('con_id')
+            emp_type = record.get('employment_type_enum')
+            key = (con_id, emp_type)
+            
+            # Check if already in database
             if key in existing_keys:
-                self.logger.warning(f"Skipping duplicate app_contact_employment (con_id={key[0]}, employment_type_enum={key[1]})")
-                skipped_count += 1
+                self.logger.warning(f"Skipping duplicate app_contact_employment (con_id={con_id}, employment_type_enum={emp_type}) - already in database")
+                db_skipped += 1
+            # Check if duplicate within current batch
+            elif key in seen_in_batch:
+                self.logger.warning(f"Skipping duplicate app_contact_employment (con_id={con_id}, employment_type_enum={emp_type}) - duplicate within batch")
+                batch_skipped += 1
             else:
                 filtered_records.append(record)
+                seen_in_batch.add(key)
         
-        if skipped_count > 0:
-            self.logger.info(f"Filtered {skipped_count} duplicate app_contact_employment records")
+        if db_skipped > 0 or batch_skipped > 0:
+            self.logger.info(f"Filtered {db_skipped + batch_skipped} duplicate app_contact_employment records ({db_skipped} from DB, {batch_skipped} in-batch)")
 
         if conn_ctx is not None:
             try:

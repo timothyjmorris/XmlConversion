@@ -31,6 +31,7 @@ from dataclasses import dataclass
 from ..parsing.xml_parser import XMLParser
 from ..mapping.data_mapper import DataMapper
 from ..models import MappingContract
+from ..config.config_manager import get_config_manager
 
 
 @dataclass
@@ -85,12 +86,41 @@ class PreProcessingValidator:
     - Enables early rejection of invalid data to optimize processing efficiency
     """
     
-    def __init__(self, mapping_contract: Optional[MappingContract] = None):
-        """Initialize validator with optional mapping contract."""
+    def __init__(self, mapping_contract: Optional[MappingContract] = None, mapping_contract_path: Optional[str] = None):
+        """
+        Initialize validator with optional mapping contract.
+        
+        Args:
+            mapping_contract: Optional pre-loaded mapping contract object
+            mapping_contract_path: Optional path to mapping contract file (for lazy loading)
+        """
         self.logger = logging.getLogger(__name__)
         self.parser = XMLParser()
-        self.mapper = DataMapper()
-        self.mapping_contract = mapping_contract
+        self.mapping_contract_path = mapping_contract_path
+        
+        # Load contract immediately if path provided but no contract object
+        if not mapping_contract and mapping_contract_path:
+            config = get_config_manager()
+            self.mapping_contract = config.load_mapping_contract(mapping_contract_path)
+            if self.mapping_contract:
+                self.logger.debug(f"Loaded contract from {mapping_contract_path}: source_application_table={getattr(self.mapping_contract, 'source_application_table', 'NOT_FOUND')}")
+            else:
+                self.logger.error(f"Failed to load contract from {mapping_contract_path}")
+        elif not mapping_contract and not mapping_contract_path:
+            # Default to CC contract when no contract specified
+            config = get_config_manager()
+            self.mapping_contract_path = 'config/mapping_contract.json'
+            self.mapping_contract = config.load_mapping_contract(self.mapping_contract_path)
+        else:
+            self.mapping_contract = mapping_contract
+        
+        # If contract provided but no path, derive path from contract's source_application_table
+        if self.mapping_contract and not mapping_contract_path:
+            if hasattr(self.mapping_contract, 'source_application_table'):
+                if self.mapping_contract.source_application_table == 'IL_application':
+                    self.mapping_contract_path = 'config/mapping_contract_rl.json'
+                else:
+                    self.mapping_contract_path = 'config/mapping_contract.json'
         
     def validate_xml_for_processing(self, xml_content: str, 
                                   source_record_id: Optional[str] = None) -> ValidationResult:
@@ -148,44 +178,67 @@ class PreProcessingValidator:
             # Step 3.5: Defensive schema and product line validation
             app_id = self._extract_and_validate_app_id(xml_data, errors)
 
-            """
-            I don't think this part of the pre-processor matters anymore because we filter based on the mapping_contract {source_application_table}
-            """
-            # Check for Rec Lending in nested structure
-            has_rec_lending_app = False
-            try:
-                has_rec_lending_app = (
-                    'Provenir' in xml_data and
-                    'Request' in xml_data['Provenir'] and
-                    'CustData' in xml_data['Provenir']['Request'] and
-                    'IL_application' in xml_data['Provenir']['Request']['CustData']
-                )
-            except Exception:
-                pass
-            
-            if has_rec_lending_app:
-                errors.append("Rec Lending application type detected, moving on.")
-
-            # Check for Credit Card application in nested structure
-            has_credit_card_app = False
-            try:
-                has_credit_card_app = (
-                    'Provenir' in xml_data and
-                    'Request' in xml_data['Provenir'] and
-                    'CustData' in xml_data['Provenir']['Request'] and
-                    'application' in xml_data['Provenir']['Request']['CustData']
-                )
-            except Exception:
-                pass
-           
-            if not has_credit_card_app:
-                errors.append("Missing required Credit Card application element: /Provenir/Request/CustData/application.")
+            # Step 4: Validate expected application element based on contract
+            # The contract's source_application_table tells us which element to expect:
+            # - 'application' for Credit Card
+            # - 'IL_application' for Rec Lending
+            if self.mapping_contract and hasattr(self.mapping_contract, 'source_application_table'):
+                expected_app_element = self.mapping_contract.source_application_table
+                
+                # Check if the expected element exists
+                has_expected_element = False
+                try:
+                    has_expected_element = (
+                        'Provenir' in xml_data and
+                        'Request' in xml_data['Provenir'] and
+                        'CustData' in xml_data['Provenir']['Request'] and
+                        expected_app_element in xml_data['Provenir']['Request']['CustData']
+                    )
+                except Exception:
+                    pass
+                
+                if not has_expected_element:
+                    # Check if opposite element exists to provide better error message
+                    opposite_element = 'IL_application' if expected_app_element == 'application' else 'application'
+                    has_opposite_element = False
+                    try:
+                        has_opposite_element = (
+                            'Provenir' in xml_data and
+                            'Request' in xml_data['Provenir'] and
+                            'CustData' in xml_data['Provenir']['Request'] and
+                            opposite_element in xml_data['Provenir']['Request']['CustData']
+                        )
+                    except Exception:
+                        pass
+                    
+                    if has_opposite_element:
+                        product_line_name = "Credit Card" if opposite_element == 'application' else "Rec Lending"
+                        errors.append(f"Wrong product line: Found {product_line_name} XML (/{opposite_element}) but contract expects '{expected_app_element}'. This XML is not compatible with the current contract.")
+                    else:
+                        errors.append(f"Missing required application element: /Provenir/Request/CustData/{expected_app_element}. Contract expects '{expected_app_element}' for this product line.")
+                else:
+                    # Has expected element, but also check if opposite exists (data quality warning)
+                    opposite_element = 'IL_application' if expected_app_element == 'application' else 'application'
+                    has_opposite_element = False
+                    try:
+                        has_opposite_element = (
+                            'Provenir' in xml_data and
+                            'Request' in xml_data['Provenir'] and
+                            'CustData' in xml_data['Provenir']['Request'] and
+                            opposite_element in xml_data['Provenir']['Request']['CustData']
+                        )
+                    except Exception:
+                        pass
+                
+                    if has_opposite_element:
+                        product_line_name = "Credit Card" if opposite_element == 'application' else "Rec Lending"
+                        warnings.append(f"DATA QUALITY: Found {product_line_name} application element (/{opposite_element}) but contract expects '{expected_app_element}'. This record may be in the wrong staging table.")
 
             # Defensive: If app_id is missing or invalid, error is already appended by _extract_and_validate_app_id
 
             # Step 5: Validate contacts and collect valid ones
             valid_contacts = self._validate_and_collect_contacts(
-                xml_data, errors, warnings, skipped_elements
+                xml_data, errors, warnings, skipped_elements, app_id
             )
             
             # Step 6: Validate child elements (addresses, employment)
@@ -315,7 +368,8 @@ class PreProcessingValidator:
     
     def _validate_and_collect_contacts(self, xml_data: Dict[str, Any], 
                                      errors: List[str], warnings: List[str],
-                                     skipped_elements: Dict[str, List[str]]) -> List[Dict[str, Any]]:
+                                      skipped_elements: Dict[str, List[str]],
+                                      app_id: Optional[str] = None) -> List[Dict[str, Any]]:
         """
         Validate contacts and collect valid ones using 'last valid element' approach.
         
@@ -324,21 +378,62 @@ class PreProcessingValidator:
         try:
             # Use DataMapper's improved contact extraction logic
             from xml_extractor.mapping.data_mapper import DataMapper
-            mapper = DataMapper()
+            
+            # Use the contract path stored during initialization
+            if hasattr(self, 'mapping_contract_path') and self.mapping_contract_path:
+                mapper = DataMapper(mapping_contract_path=self.mapping_contract_path)
+            else:
+                mapper = DataMapper()
             
             # Pass the XML root to the mapper for direct parsing
             if hasattr(self, '_current_xml_root'):
                 mapper._current_xml_root = self._current_xml_root
             
-            # Extract valid contacts using "last valid element" approach
-            valid_contacts = mapper._extract_valid_contacts(xml_data)
-            
-            # Navigate to all contacts for validation reporting
+            # First check RAW contacts from XML to determine if we should warn
             all_contacts = self._navigate_to_contacts(xml_data)
             
+            # Extract valid contacts using "last valid element" approach (applies meaningful data filtering)
+            valid_contacts = mapper._extract_valid_contacts(xml_data)
+            
+            # Only warn if PRIMARY (PR) contact is missing or sparse
+            # Sparse secondary contacts (SEC/AUTHU) are normal and should not trigger warnings
             if not all_contacts:
-                warnings.append("DATA QUALITY: No contact elements found in XML - will process application only")
+                # No contacts at all in XML - warn
+                app_id_display = app_id if app_id else "UNKNOWN"
+                warnings.append(f"DATA QUALITY: Application {app_id_display} - No contact elements found in XML - will process application only")
                 return []
+            
+            # Check if raw XML had a PR contact
+            raw_has_pr = any(
+                contact.get('ac_role_tp_c') == 'PR'
+                for contact in all_contacts
+                if isinstance(contact, dict)
+            )
+            
+            # Check if we have any non-PR contacts but no PR
+            has_non_pr_contacts = any(
+                contact.get('ac_role_tp_c') in ['SEC', 'AUTHU']
+                for contact in all_contacts
+                if isinstance(contact, dict)
+            )
+            
+            if has_non_pr_contacts and not raw_has_pr:
+                # Has secondary contacts but no PR - warn
+                app_id_display = app_id if app_id else "UNKNOWN"
+                warnings.append(f"DATA QUALITY: Application {app_id_display} - No PRIMARY (PR) contact found - some fields requiring 'last_valid_pr_contact' will be skipped")
+            
+            # Check if valid contacts include PR
+            valid_has_pr = any(
+                contact.get('ac_role_tp_c') == 'PR'
+                for contact in valid_contacts
+                if isinstance(contact, dict)
+            )
+            
+            if raw_has_pr and not valid_has_pr:
+                # PR contact existed but was filtered for lacking meaningful data - WARN
+                app_id_display = app_id if app_id else "UNKNOWN"
+                warnings.append(f"DATA QUALITY: Application {app_id_display} - PRIMARY (PR) contact missing meaningful data (birth_date, first_name, last_name, ssn) - will process application only")
+                return valid_contacts  # CHANGED: Return valid_contacts (SEC contacts) instead of empty list
             
             # Track validation issues for reporting
             contact_groups = {}
@@ -366,9 +461,9 @@ class PreProcessingValidator:
                     continue
                 
                 # Validate ac_role_tp_c values
-                valid_roles = ['PR', 'AUTHU']
+                valid_roles = ['PR', 'AUTHU', 'SEC']
                 if ac_role_tp_c not in valid_roles:
-                    reason = f"Contact {i+1}: Invalid ac_role_tp_c value: {ac_role_tp_c} (must be PR or AUTHU)"
+                    reason = f"Contact {i+1}: Invalid ac_role_tp_c value: {ac_role_tp_c} (must be PR, AUTHU, or SEC)"
                     skipped_elements['contacts'].append(reason)
                     warnings.append(f"Skipping contact - {reason}")
                     continue
@@ -380,10 +475,13 @@ class PreProcessingValidator:
                 contact_groups[contact_key] = contact
             
             # Report business rule warnings
-            if len(valid_contacts) > 1:
-                pr_contacts = [c for c in valid_contacts if c.get('ac_role_tp_c') == 'PR']
-                if len(pr_contacts) > 1:
-                    warnings.append(f"Multiple primary contacts found ({len(pr_contacts)}), will process all")
+            pr_contacts = [c for c in valid_contacts if c.get('ac_role_tp_c') == 'PR']
+            
+            # Warn if no PR contact found but we have other contacts
+            if len(pr_contacts) == 0 and len(valid_contacts) > 0:
+                warnings.append("DATA QUALITY: No PRIMARY (PR) contact found - some fields requiring 'last_valid_pr_contact' will be skipped")
+            elif len(pr_contacts) > 1:
+                warnings.append(f"Multiple primary contacts found ({len(pr_contacts)}), will process all")
             
             if duplicate_con_ids:
                 warnings.append(f"Duplicate con_ids found: {sorted(list(duplicate_con_ids))}")
@@ -457,7 +555,7 @@ class PreProcessingValidator:
         # Rule: Must have exactly one PR contact
         pr_contacts = [c for c in valid_contacts if c.get('ac_role_tp_c') == 'PR']
         if len(pr_contacts) == 0 and valid_contacts:  # Only warn if we have contacts but no PR
-            warnings.append("DATA QUALITY: No primary contact (ac_role_tp_c='PR') found - some fields requiring 'last_valid_pr_contact' will be skipped")
+            warnings.append("DATA QUALITY: No PRIMARY (PR) contact found - some fields requiring 'last_valid_pr_contact' will be skipped")
         elif len(pr_contacts) > 1:
             warnings.append(f"Multiple primary contacts found ({len(pr_contacts)}), will process all")
         
@@ -499,15 +597,34 @@ class PreProcessingValidator:
         """
         Extract all contact elements directly from XML to handle multiple contacts.
         
-        This is a workaround for the XMLParser limitation where multiple elements
-        with the same path overwrite each other.
+        Uses contract's xpath to find the correct contact elements (IL_contact for RL, contact for CC).
         """
         contacts = []
         
         try:
-            # We need to store the parsed root for this method to work
-            if hasattr(self, '_current_xml_root') and self._current_xml_root is not None:
-                contacts = self._find_all_contacts_in_element(self._current_xml_root)
+            if not hasattr(self, '_current_xml_root') or self._current_xml_root is None:
+                return []
+            
+            # Get contact xpath from contract
+            contact_xpath = None
+            if self.mapping_contract and self.mapping_contract.element_filtering:
+                for rule in self.mapping_contract.element_filtering.filter_rules:
+                    if rule.element_type == 'contact':
+                        # Use the xml_child_path as xpath (e.g., .//IL_contact or .//contact)
+                        element_name = rule.xml_child_path.split('/')[-1]
+                        contact_xpath = f'.//{element_name}'
+                        break
+            
+            # Fallback to 'contact' if no contract
+            if not contact_xpath:
+                contact_xpath = './/contact'
+            
+            # Use xpath to find all contact elements
+            contact_elements = self._current_xml_root.xpath(contact_xpath)
+            
+            for contact_elem in contact_elements:
+                contact_data = dict(contact_elem.attrib)
+                contacts.append(contact_data)
             
             return contacts
             
@@ -520,8 +637,17 @@ class PreProcessingValidator:
         contacts = []
         
         try:
-            # Check if this is a contact element
-            if element.tag == 'contact':
+            # Determine contact element name from contract (IL_contact for RL, contact for CC)
+            contact_element_name = 'contact'  # Default
+            if self.mapping_contract and self.mapping_contract.element_filtering:
+                for rule in self.mapping_contract.element_filtering.filter_rules:
+                    if rule.element_type == 'contact':
+                        # Extract element name from xml_child_path (last segment)
+                        contact_element_name = rule.xml_child_path.split('/')[-1]
+                        break
+            
+            # Check if this is a contact element (using dynamic element name)
+            if element.tag == contact_element_name:
                 contact_data = dict(element.attrib)
                 contacts.append(contact_data)
             
@@ -599,17 +725,17 @@ class PreProcessingValidator:
         for error in errors:
             self.logger.error(f"  ERROR: {error}")
         
-        # Log warnings
-        for warning in warnings:
-            self.logger.warning(f"  WARNING: {warning}")
+        # # Log warnings
+        # for warning in warnings:
+        #     self.logger.warning(f"  WARNING: {warning}")
         
-        # Log skipped elements summary
-        total_skipped = sum(len(items) for items in skipped_elements.values())
-        if total_skipped > 0:
-            self.logger.info(f"  SKIPPED: {total_skipped} elements total")
-            for element_type, items in skipped_elements.items():
-                if items:
-                    self.logger.debug(f"    {element_type}: {len(items)} skipped")
+        # # Log skipped elements summary
+        # total_skipped = sum(len(items) for items in skipped_elements.values())
+        # if total_skipped > 0:
+        #     self.logger.info(f"  SKIPPED: {total_skipped} elements total")
+        #     for element_type, items in skipped_elements.items():
+        #         if items:
+        #             self.logger.debug(f"    {element_type}: {len(items)} skipped")
     
     def validate_batch(self, xml_records: List[Tuple[str, str]]) -> Dict[str, Any]:
         """

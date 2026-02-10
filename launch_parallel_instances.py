@@ -39,7 +39,8 @@ sys.path.insert(0, str(project_root))
 class ParallelInstanceLauncher:
     """Launches and manages multiple production_processor instances with modulo sharding."""
     
-    def __init__(self, num_instances: int, workers_per_instance: int = 4, 
+    def __init__(self, num_instances: int, product_line: str,
+                 workers_per_instance: int = 4, 
                  batch_size: int = 500, limit: Optional[int] = None,
                  server: str = None, database: str = None,
                  log_level: str = "WARNING"):
@@ -48,6 +49,7 @@ class ParallelInstanceLauncher:
         
         Args:
             num_instances: Number of parallel instances to launch (modulo shards)
+            product_line: Product line to process ('CC' or 'RL')
             workers_per_instance: Workers per instance (default: 4)
             batch_size: Batch size for database operations (default: 500)
             limit: Total limit across all instances (evenly distributed)
@@ -56,6 +58,7 @@ class ParallelInstanceLauncher:
             log_level: Logging level for instances
         """
         self.num_instances = num_instances
+        self.product_line = product_line
         self.workers_per_instance = workers_per_instance
         self.batch_size = batch_size
         self.limit = limit
@@ -82,6 +85,7 @@ class ParallelInstanceLauncher:
         print("MULTI-INSTANCE PARALLEL LAUNCHER")
         print("="*80)
         print(f"\nConfiguration:")
+        print(f"  Product Line:        {self.product_line}")
         print(f"  Instances:           {self.num_instances}")
         print(f"  Workers per instance: {self.workers_per_instance}")
         print(f"  Total workers:       {self.num_instances * self.workers_per_instance}")
@@ -127,6 +131,7 @@ class ParallelInstanceLauncher:
         cmd_parts = [
             "python",
             "production_processor.py",
+            "--product-line", self.product_line,
             "--workers", str(self.workers_per_instance),
             "--batch-size", str(self.batch_size),
             "--log-level", self.log_level,
@@ -292,6 +297,9 @@ Examples:
         """
     )
     
+    parser.add_argument("--product-line", type=str, required=True,
+                       choices=["CC", "RL"],
+                       help="Product line to process: 'CC' (Credit Card) or 'RL' (Rec Lending) - REQUIRED")
     parser.add_argument("--instances", type=int, required=True,
                        help="Number of parallel instances to launch")
     parser.add_argument("--workers", type=int, default=4,
@@ -321,7 +329,6 @@ Examples:
         if confirm.lower() != 'y':
             return 0
     
-    # Create launcher
     launcher = ParallelInstanceLauncher(
         num_instances=args.instances,
         workers_per_instance=args.workers,
@@ -329,7 +336,8 @@ Examples:
         limit=args.limit,
         server=args.server,
         database=args.database,
-        log_level=args.log_level
+        log_level=args.log_level,
+        product_line=args.product_line
     )
     
     # Launch all instances

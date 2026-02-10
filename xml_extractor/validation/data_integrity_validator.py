@@ -198,7 +198,7 @@ class DataIntegrityValidator:
             
             # Extract key identifiers from source XML
             app_id = self._extract_app_id_from_xml(source_xml_data)
-            contact_ids = self._extract_contact_ids_from_xml(source_xml_data)
+            contact_ids = self._extract_contact_ids_from_xml(source_xml_data, mapping_contract)
             
             # Validate app_id consistency
             if app_id:
@@ -436,12 +436,13 @@ class DataIntegrityValidator:
             self.logger.warning(f"Failed to extract app_id from XML: {e}")
         return None
     
-    def _extract_contact_ids_from_xml(self, xml_data: Dict[str, Any]) -> List[str]:
+    def _extract_contact_ids_from_xml(self, xml_data: Dict[str, Any], 
+                                      mapping_contract: Optional[MappingContract] = None) -> List[str]:
         """Extract all contact IDs from XML data structure."""
         contact_ids = []
         try:
             # Navigate to contact elements
-            contacts = self._navigate_to_contacts_in_xml(xml_data)
+            contacts = self._navigate_to_contacts_in_xml(xml_data, mapping_contract)
             for contact in contacts:
                 if isinstance(contact, dict) and 'con_id' in contact and contact['con_id']:
                     contact_ids.append(str(contact['con_id']))
@@ -449,10 +450,17 @@ class DataIntegrityValidator:
             self.logger.warning(f"Failed to extract contact IDs from XML: {e}")
         return contact_ids
     
-    def _navigate_to_contacts_in_xml(self, xml_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Navigate to contact elements in XML structure."""
+    def _navigate_to_contacts_in_xml(self, xml_data: Dict[str, Any], 
+                                    mapping_contract: Optional[MappingContract] = None) -> List[Dict[str, Any]]:
+        """Navigate to contact elements in XML structure using contract-driven path."""
         try:
-            path = xml_data.get('Provenir', {}).get('Request', {}).get('CustData', {}).get('application', {}).get('contact', [])
+            # Use contract's source_application_table if available (product-line aware)
+            app_element = 'application'  # Default for CC
+            if mapping_contract and hasattr(mapping_contract, 'source_application_table') and mapping_contract.source_application_table:
+                app_element = mapping_contract.source_application_table
+            
+            # Navigate: /Provenir/Request/CustData/{app_element}/contact
+            path = xml_data.get('Provenir', {}).get('Request', {}).get('CustData', {}).get(app_element, {}).get('contact', [])
             if isinstance(path, dict):
                 return [path]
             elif isinstance(path, list):
