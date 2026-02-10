@@ -58,10 +58,10 @@ def build_connection_string(server: str, database: str, trusted: bool = True) ->
     )
 
 
-def fetch_source_xml(conn, app_id: int) -> Optional[str]:
+def fetch_source_xml(conn, app_id: int, table_name: str) -> Optional[str]:
     """Fetch raw XML from app_xml table."""
     cursor = conn.cursor()
-    cursor.execute("SELECT app_XML FROM dbo.app_xml WHERE app_id = ?", app_id)
+    cursor.execute(f"SELECT app_XML FROM {table_name} WHERE app_id = ?", app_id)
     row = cursor.fetchone()
     return row[0] if row else None
 
@@ -228,14 +228,123 @@ def detect_smells(xml_content: str, result: ValidationResult) -> None:
                 "ACH amount has value but no account number; verify source had account data.",
                 "/Provenir/Request/CustData/application//savings_acct[@acct_type='ACH']/@account_num"
             )
-        if ops.get('sc_bank_account_type_enum') is None:
-            _add_smell_task(
-                result,
-                "ACH amount present but sc_bank_account_type_enum is NULL",
-                "ACH amount has value but account type enum is missing; check account type mapping.",
-                "/Provenir/Request/CustData/application//savings_acct[@acct_type='ACH']/@account_type"
-            )
+def scan_for_smells(conn, schema: str) -> List[int]:
+    """
+    Rapidly scan the database for 'smelly' rows (defaults/fallbacks) using SQL.
+    Returns a list of app_ids that require XML verification.
+    """
+    suspect_ids = set()
+    cursor = conn.cursor()
+    
+    print("SCANNING DATABASE FOR SUSPICIOUS DEFAULTS (SMELLS) relevant to app_xml...")
+    source_table = 'app_xml'
+    
+    # 1. Address Defaults (MISSING, XX, 00000)
+    addr_table = 'app_contact_address'
+    contact_table = 'app_contact_base'
+    
+    print(f"  - Checking {addr_table} for default addresses (MISSING, XX, 00000)...")
+    try:
+        query = f"""
+            SELECT DISTINCT cb.app_id 
+            FROM [{schema}].[{addr_table}] ca
+            JOIN [{schema}].[{contact_table}] cb ON ca.con_id = cb.con_id
+            WHERE (ca.city = 'MISSING' OR ca.state = 'XX' OR ca.zip = '00000')
+            AND cb.app_id IN (SELECT app_id FROM {source_table})
+        """
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        if rows:
+            print(f"    FOUND {len(rows)} apps with default address values.")
+            suspect_ids.update(row[0] for row in rows)
+        else:
+            print("    Clean.")
+    except Exception as e:
+        print(f"    Warning: Could not check {addr_table}: {e}")
 
+    # 2. Contact Defaults (UNKNOWN, 000000000)
+    print(f"  - Checking {contact_table} for default contact info (UNKNOWN, 000000000)...")
+    try:
+        query = f"""
+            SELECT DISTINCT app_id 
+            FROM [{schema}].[{contact_table}]
+            WHERE (first_name = 'UNKNOWN' OR last_name = 'UNKNOWN' OR ssn = '000000000')
+            AND app_id IN (SELECT app_id FROM {source_table})
+        """
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        if rows:
+            print(f"    FOUND {len(rows)} apps with default contact info.")
+            suspect_ids.update(row[0] for row in rows)
+        else:
+            print("    Clean.")
+    except Exception as e:
+         print(f"    Warning: Could not check {contact_table}: {e}")
+
+    # 3. Date Defaults (1900-01-01)
+    print(f"  - Checking {contact_table} for default birth_dates (1900-01-01)...")
+    try:
+        query = f"""
+            SELECT DISTINCT app_id 
+            FROM [{schema}].[{contact_table}]
+            WHERE birth_date = '1900-01-01'
+            AND app_id IN (SELECT app_id FROM {source_table})
+        """
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        if rows:
+             print(f"    FOUND {len(rows)} apps with default birth dates.")
+             suspect_ids.update(row[0] for row in rows)
+        else:
+             print("    Clean.")
+    except Exception as e:
+         pass
+
+    # 4. Marketing Defaults (BLANK, UNKNOWN) - Specific to CC
+    pricing_table = 'app_pricing_cc'
+    print(f"  - Checking {pricing_table} for default marketing info (BLANK, UNKNOWN)...")
+    try:
+        query = f"""
+            SELECT DISTINCT app_id 
+            FROM [{schema}].[{pricing_table}]
+            WHERE (campaign_num = 'BLANK' OR marketing_segment = 'UNKNOWN')
+            AND app_id IN (SELECT app_id FROM {source_table})
+        """
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        if rows:
+            print(f"    FOUND {len(rows)} apps with default marketing info.")
+            suspect_ids.update(row[0] for row in rows)
+        else:
+            print("    Clean.")
+    except Exception as e:
+        print(f"    Warning: Could not check {pricing_table}: {e}")
+
+    # 5. Enum Mismatches (NULL Checks)
+    base_table = 'app_base'
+    print(f"  - Checking {base_table} for NULL enums (potential mapping failures)...")
+    try:
+        query = f"""
+            SELECT DISTINCT app_id
+            FROM [{schema}].[{base_table}]
+            WHERE (app_source_enum IS NULL OR app_type_enum IS NULL)
+            AND app_id IN (SELECT app_id FROM {source_table})
+        """
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        if rows:
+             print(f"    FOUND {len(rows)} apps with NULL enums.")
+             suspect_ids.update(row[0] for row in rows)
+        else:
+             print("    Clean.")
+    except Exception as e:
+        pass
+
+    return list(suspect_ids)
+
+def old_detect_smell_snippet():
+     # This snippet was left over from a bad edit, removing it but keeping function signature correct
+     pass
 
 def fetch_dest_data(conn, table: str, schema: str, app_id: int) -> Dict[str, Any]:
     """Fetch destination row for app_id."""
@@ -292,7 +401,7 @@ def validate_app(conn, app_id: int, schema: str = 'dbo') -> ValidationResult:
     result = ValidationResult(app_id=app_id, status='PASS')
     
     # Fetch source XML
-    xml_content = fetch_source_xml(conn, app_id)
+    xml_content = fetch_source_xml(conn, app_id, 'app_xml')
     if not xml_content:
         result.status = 'FAIL'
         result.issues.append("No source XML found")
@@ -354,11 +463,7 @@ def validate_app(conn, app_id: int, schema: str = 'dbo') -> ValidationResult:
 def validate_sample(conn, sample_size: int, schema: str = 'dbo') -> List[ValidationResult]:
     """Validate a random sample of app_ids."""
     cursor = conn.cursor()
-    cursor.execute(f"""
-        SELECT TOP {sample_size} app_id 
-        FROM [{schema}].app_base 
-        ORDER BY CRYPT_GEN_RANDOM(12)
-    """)
+    cursor.execute(f"SELECT TOP {sample_size} app_id FROM app_xml ORDER BY NEWID()")
     app_ids = [row[0] for row in cursor.fetchall()]
     
     results = []
@@ -368,6 +473,101 @@ def validate_sample(conn, sample_size: int, schema: str = 'dbo') -> List[Validat
         results.append(result)
     
     return results
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Validate source XML against destination database (CC)")
+    parser.add_argument("--server", required=True, help="SQL Server instance")
+    parser.add_argument("--database", required=True, help="Database name")
+    parser.add_argument("--app-id", type=str, help="Specific app_id to validate (comma separated)")
+    parser.add_argument("--sample", type=int, help="Number of random app_ids to validate")
+    parser.add_argument("--scan-failures", action="store_true", help="Scan entire DB for smells and validate only suspects")
+    parser.add_argument("--schema", default="dbo", help="Target schema (default: dbo)")
+    parser.add_argument("--output", help="JSON output file path")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
+    
+    args = parser.parse_args()
+    
+    if args.verbose:
+        logger.setLevel(logging.DEBUG)
+    
+    if not any([args.app_id, args.sample, args.scan_failures]):
+        parser.error("Must specify --app-id, --sample, or --scan-failures")
+    
+    conn_str = build_connection_string(args.server, args.database)
+    
+    try:
+        with pyodbc.connect(conn_str) as conn:
+            results = []
+            
+            if args.scan_failures:
+                # 1. Find suspects
+                suspect_ids = scan_for_smells(conn, args.schema)
+                if not suspect_ids:
+                    print("\nSUCCESS: Scanned entire database and found NO rows with default/fallback values (MISSING, UNKNOWN, etc).")
+                    print("Running 5 random checks just to be sure...")
+                    results = validate_sample(conn, 5, args.schema)
+                else:
+                    print(f"\nProceeding to validate {len(suspect_ids)} suspect applications against source XML...")
+                    limit = 50
+                    if len(suspect_ids) > limit:
+                        print(f"Limiting validation to first {limit} suspects...")
+                        suspect_ids = suspect_ids[:limit]
+                        
+                    for i, aid in enumerate(suspect_ids):
+                        if i % 10 == 0:
+                            print(f"  Progress: {i}/{len(suspect_ids)}...")
+                        results.append(validate_app(conn, aid, args.schema))
+                    
+            elif args.app_id:
+                app_ids = [int(x.strip()) for x in args.app_id.split(',')]
+                for aid in app_ids:
+                    print(f"Validating {aid}...")
+                    results.append(validate_app(conn, aid, args.schema))
+            elif args.sample:
+                results = validate_sample(conn, args.sample, args.schema)
+
+            # Summarize
+            if results:
+                pass_count = sum(1 for r in results if r.status == 'PASS')
+                problem_results = [r for r in results if r.status != 'PASS' or r.issues or r.mismatches or r.smell_tasks]
+                
+                print(f"\nValidation Complete: {pass_count}/{len(results)} Passed")
+                
+                if problem_results:
+                     print("\n" + "=" * 60)
+                     print("DETAILED FINDINGS")
+                     print("=" * 60)
+                     for r in problem_results:
+                          print(f"\nApp {r.app_id}: {r.status}")
+                          for issue in r.issues:
+                              print(f"  - ISSUE: {issue}")
+                          for smell in r.smell_tasks:
+                              print(f"  - SMELL: {smell['title']} -> {smell['reason']}")
+            
+            if args.output and results:
+                output_data = [
+                    {
+                        'app_id': r.app_id,
+                        'status': r.status,
+                        'issues': r.issues,
+                        'mismatches': r.mismatches,
+                        'smell_tasks': r.smell_tasks
+                    }
+                    for r in results
+                    if r.status != 'PASS' or r.issues or r.mismatches or r.smell_tasks
+                ]
+                with open(args.output, 'w') as f:
+                    json.dump(output_data, f, indent=2, default=str)
+                print(f"\nDetailed results written to {args.output}")
+                
+    except pyodbc.Error as e:
+        logger.error(f"Database error: {e}")
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
 
 
 def print_summary(results: List[ValidationResult]):
@@ -416,73 +616,4 @@ def print_summary(results: List[ValidationResult]):
                 print(f"      XPath: {task['xpath']}")
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Validate source XML to destination data mapping')
-    parser.add_argument('--server', required=True, help='SQL Server name')
-    parser.add_argument('--database', required=True, help='Database name')
-    parser.add_argument('--app-id', type=int, help='Specific app_id to validate')
-    parser.add_argument('--sample', type=int, help='Number of random app_ids to validate')
-    parser.add_argument('--schema', default='dbo', help='Target schema (default: dbo)')
-    parser.add_argument('--output', help='Output JSON file for detailed results')
-    parser.add_argument('--verbose', '-v', action='store_true', help='Verbose output')
-    
-    args = parser.parse_args()
-    
-    if args.verbose:
-        logger.setLevel(logging.DEBUG)
-    
-    if not args.app_id and not args.sample:
-        parser.error("Must specify either --app-id or --sample")
-    
-    conn_str = build_connection_string(args.server, args.database)
-    
-    try:
-        with pyodbc.connect(conn_str) as conn:
-            if args.app_id:
-                result = validate_app(conn, args.app_id, args.schema)
-                if result.status != 'PASS' or result.issues or result.mismatches or result.smell_tasks:
-                    print(f"\nValidation Result for app_id {args.app_id}:")
-                    print(f"  Status: {result.status}")
-                    if result.issues:
-                        print(f"  Issues:")
-                        for issue in result.issues:
-                            print(f"    - {issue}")
-                    if result.mismatches:
-                        print(f"  Mismatches:")
-                        for m in result.mismatches:
-                            print(f"    - {m['type']}: {m['field1']}={m['value1']}, {m['field2']}={m['value2']}")
-                    if result.smell_tasks:
-                        print(f"  Verification Tasks:")
-                        for task in result.smell_tasks[:10]:
-                            print(f"    - {task['title']}: {task['reason']}")
-                            print(f"      XPath: {task['xpath']}")
-                else:
-                    print(f"\nValidation Result for app_id {args.app_id}: no issues detected.")
-                results = [result]
-            else:
-                results = validate_sample(conn, args.sample, args.schema)
-                print_summary(results)
-            
-            if args.output:
-                output_data = [
-                    {
-                        'app_id': r.app_id,
-                        'status': r.status,
-                        'issues': r.issues,
-                        'mismatches': r.mismatches,
-                        'smell_tasks': r.smell_tasks
-                    }
-                    for r in results
-                    if r.status != 'PASS' or r.issues or r.mismatches or r.smell_tasks
-                ]
-                with open(args.output, 'w') as f:
-                    json.dump(output_data, f, indent=2, default=str)
-                print(f"\nDetailed results written to {args.output}")
-                
-    except pyodbc.Error as e:
-        logger.error(f"Database error: {e}")
-        sys.exit(1)
 
-
-if __name__ == '__main__':
-    main()

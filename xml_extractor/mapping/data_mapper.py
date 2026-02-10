@@ -2808,6 +2808,8 @@ class DataMapper(DataMapperInterface):
                     '%m/%d/%Y',              # 10/3/2023
                     '%m/%d/%Y %H:%M:%S',     # 10/3/2023 16:26:23
                     '%m/%d/%Y %I:%M:%S %p',  # 4/2/2020 5:53:20 AM
+                    '%d/%m/%Y',              # 14/12/1988 (UK/Intl)
+                    '%d/%m/%Y %H:%M:%S',     # 14/12/1988 16:26:23
                 ]
                 
                 for fmt in formats_to_try:
