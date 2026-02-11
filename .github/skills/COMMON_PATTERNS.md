@@ -1,6 +1,6 @@
 # Common Patterns & Reusable Code Examples
 
-**Last Updated:** January 22, 2026  
+**Last Updated:** February 10, 2026  
 **Purpose:** Provide tested, copy-paste-ready code patterns for extending the system.
 
 ---
@@ -194,53 +194,40 @@ class DataMapper:
 
 **When to use:** Different product lines with different field mappings (avoids code branching)
 
-**In mapping_contract.json:**
-```json
-{
-  "product_line": "healthcare_provider",
-  "source_table": "dbo.app_xml",
-  "target_schema": "healthcare_sandbox",
-  
-  "mappings": {
-    "provider_base": [
-      {
-        "column": "provider_id",
-        "source_path": "provider/npi",  // Different from standard app/id
-        "type": "string"
-      },
-      {
-        "column": "credential_type",
-        "source_path": "provider/credentials/type",
-        "type": "enum",
-        "enum_mappings": {
-          "MD": "physician",
-          "RN": "nurse",
-          "PA": "physician_assistant"
-        }
-      }
-    ],
-    "provider_credentials": [
-      {
-        "column": "credential_id",
-        "source_path": "provider/credentials/credential_id",
-        "type": "string"
-      }
-    ]
-  },
-  
-  "foreign_keys": {
-    "provider_credentials": ["provider_base.provider_id"]
-  }
-}
+**Each product line has its own contract file:**
+- CC (Credit Card): `config/mapping_contract.json`
+- RL (ReCLending): `config/mapping_contract_rl.json`
+
+**Runtime selection via `--product-line` flag:**
+```python
+# In production_processor.py
+if self.product_line == "RL":
+    self.mapping_contract_path = "config/mapping_contract_rl.json"
+else:
+    self.mapping_contract_path = "config/mapping_contract.json"
+
+# Load the correct contract
+self.mapping_contract = config_manager.load_mapping_contract(
+    contract_path=self.mapping_contract_path
+)
+
+# MigrationEngine MUST receive the path to derive schema metadata correctly
+engine = MigrationEngine(
+    connection_string,
+    mapping_contract_path=self.mapping_contract_path
+)
 ```
 
-**DataMapper works unchanged:**
+**DataMapper works unchanged — different contract → different mappings:**
 ```python
-# Same code, different contract → different mappings
-mapper = DataMapper(healthcare_contract)
-result = mapper.map_record(healthcare_xml)
-# Returns provider_base, provider_credentials (not app_base, contact_base)
+mapper = DataMapper(rl_contract)
+result = mapper.map_record(rl_xml)
+# Returns app_base, scores, indicators (RL tables)
 ```
+
+**⚠️ Gotcha (Fixed Feb 2026):** `MigrationEngine.__init__()` previously called
+`config_manager.load_mapping_contract()` WITHOUT a path, always loading the CC
+contract. Fixed by adding `mapping_contract_path` parameter throughout the chain.
 
 ---
 
@@ -360,10 +347,13 @@ class Validator:
 ```python
 from xml_extractor.database.migration_engine import MigrationEngine
 
+# CC pipeline (default contract)
+engine = MigrationEngine(connection_string)
+
+# RL pipeline (explicit contract path)
 engine = MigrationEngine(
-    server='localhost\SQLEXPRESS',
-    database='XmlConversionDB',
-    target_schema='sandbox'
+    connection_string,
+    mapping_contract_path='config/mapping_contract_rl.json'
 )
 
 # One transaction per application
@@ -671,6 +661,7 @@ def measure_throughput(app_records, batch_size=1000, workers=4):
 # Usage
 app_records = load_1000_test_records()
 baseline = measure_throughput(app_records)
+# Typical results: ~2,700/min (DEV RDS), ~1,500/min (local SQLExpress)
 ```
 
 ### Pattern 6.2: Batch-Size Tuning

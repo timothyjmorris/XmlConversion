@@ -1,17 +1,18 @@
 # XML Database Extraction System - Architecture
 
-**Date:** November 6, 2025  
-**Status:** Ready to Baseline in DEV
+**Date:** February 10, 2026  
+**Status:** Production (CC + RL pipelines active)
 
 ---
 
 ## Quick Reference
 
-- **Schema Isolation:** Target schema from MappingContract (sandbox/dbo)
+- **Schema Isolation:** Target schema from MappingContract (sandbox/migration/dbo)
 - **Data Flow:** XML → Parser → Mapper → Engine → DB (atomic transaction per app)
 - **FK Ordering:** app_base → contact_base → child tables → processing_log
 - **Concurrency:** App ID ranges prevent overlap; processing_log prevents reprocessing
-- **Performance:** 1,500-1,600 apps/min sustained (4 workers, batch-size=500)
+- **Performance:** ~2,700 apps/min sustained (4 workers, batch-size=1000, DEV RDS)
+- **Product Lines:** CC (Credit Card) and RL (ReCLending) — each with its own mapping contract
 
 ---
 
@@ -26,6 +27,25 @@
 | Source XML (`app_xml`) | `[dbo]` | Read-only | Raw XML storage (never modified) |
 | Target tables (app_base, contact_base, etc.) | `[target_schema]` | Write | Normalized data output |
 | Audit log (`processing_log`) | `[target_schema]` | Write | Processing audit trail |
+
+### Multi-Product Contract Routing
+
+The system supports multiple product lines, each with its own mapping contract:
+
+| Product Line | Contract File | Source Table | Target Schema |
+|-------------|---------------|--------------|---------------|
+| CC (Credit Card) | `config/mapping_contract.json` | `dbo.app_xml` | per contract |
+| RL (ReCLending) | `config/mapping_contract_rl.json` | `dbo.app_xml_staging_rl` | per contract |
+
+**Critical:** `MigrationEngine` must receive the correct `mapping_contract_path` to derive schema metadata and source table from the right contract. Without it, defaults to the CC contract.
+
+```python
+# CORRECT — explicit contract path
+engine = MigrationEngine(mapping_contract_path='config/mapping_contract_rl.json')
+
+# WRONG — loads CC contract by default
+engine = MigrationEngine()  # Only correct for CC processing
+```
 
 ---
 
@@ -204,10 +224,13 @@
 
 ### Throughput
 
-**Baseline:** 1,500-1,600 applications/minute
+**Baseline:** ~2,700 applications/minute (DEV RDS, Windows Auth)
 - 4 parallel workers
 - batch-size=1000 (App XMLs per SQL fetch)
-- 4-core Windows machine with SQLExpress
+- Remote AWS RDS SQL Server (DEV environment)
+
+**Local SQLExpress:** ~1,500-1,600 applications/minute
+- Same settings, constrained by local disk I/O
 
 **Scaling:**
 - Per additional worker: ~400 apps/min (diminishing returns after 6 workers)
@@ -336,28 +359,41 @@ For >100k applications, use `run_production_processor.py`:
 - How to transform values (enum_mappings, bit_conversions)
 - Where to store output (target_schema)
 - What order to insert (table_insertion_order)
+- Where to read source XML (source_table, source_column)
 
 **Benefits:**
 - Separation of concerns (code doesn't hardcode transformation logic)
-- Easy to support multiple contracts/products
+- Multiple contracts for multiple product lines (CC, RL, future)
 - Audit trail: know exactly how data was transformed
 - Version control: contracts track schema changes
 
 **Implementation:**
-- ConfigManager loads contract from JSON
+- ConfigManager loads contract from JSON via `mapping_contract_path`
 - DataMapper applies mappings to each record
-- MigrationEngine respects target_schema for all operations
+- MigrationEngine derives schema metadata from the correct contract
 - processing_log tracks which contract was used
+
+**Multi-Contract Usage:**
+```python
+# CC pipeline (default)
+config.load_mapping_contract()  # Loads mapping_contract.json
+
+# RL pipeline (explicit path)
+config.load_mapping_contract('config/mapping_contract_rl.json')
+
+# MigrationEngine must receive the path
+engine = MigrationEngine(mapping_contract_path='config/mapping_contract_rl.json')
+```
 
 ---
 
 ## Quick Links
 
 - **Setup:** See `config/samples/create_destination_tables.sql`
-- **Operator Guide:** See `OPERATOR_GUIDE.md`
+- **Operator Guide:** See `docs/operator-guide.md`
 - **Performance Analysis:** See `performance_tuning/FINAL_PERFORMANCE_SUMMARY.md`
-- **Testing:** See `performance_tuning/TESTING_STRATEGY_ATOMIC_LOGGING.md`
-- **Investigation Archive:** See `performance_tuning/DEGRADATION_INVESTIGATION_LOG.md`
+- **Validation Summaries:** See `diagnostics/data_audit/CC_VALIDATION_SUMMARY.md` and `RL_VALIDATION_SUMMARY.md`
+- **Implementation Plan (RL):** See `docs/onboard_reclending/implementation-plan.md`
 
 ---
 

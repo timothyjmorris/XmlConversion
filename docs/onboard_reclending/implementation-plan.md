@@ -2,13 +2,13 @@
 
 **Status**: Active Working Document  
 **Created**: 2026-02-05  
-**Last Updated**: 2026-02-09
+**Last Updated**: 2026-02-10
 
 ## Overview
 
 This plan guides the onboarding of the RecLending (IL) product line to the XML Database Extraction System. It follows a phased approach prioritizing "DO NO HARM" to existing CreditCard functionality while incrementally adding shared and RL-specific capabilities.
 
-### Progress Summary (as of 2026-02-09)
+### Progress Summary (as of 2026-02-10)
 
 | Phase | Status | Completion | Key Achievements |
 |-------|--------|------------|------------------|
@@ -18,17 +18,21 @@ This plan guides the onboarding of the RecLending (IL) product line to the XML D
 | **Phase 2**: CLI & Contract | ✅ Complete | 100% | 353 RL mappings, 0 schema mismatches, enum_name architecture |
 | **Phase 3**: RL Mapping Types | ✅ Complete | 100% | policy_exceptions, warranty_field, add_collateral, last_valid_sec_contact |
 | **Phase 4**: Data Quality & Expression Engine | ✅ Core Complete | 85% | DATEADD() implemented, 3 critical bugs fixed, 45-page docs (enum fallback deferred) |
-| **Phase 5**: RL Integration & Validation | 🔄 In Progress | 15% | E2E test passing with app_id 325725, 14 more samples pending |
+| **Phase 5**: RL Integration & Validation | 🔄 In Progress | 40% | 791 apps processed (790 success), V4 score fix, MigrationEngine contract path fix, validation summaries |
 
-**Overall RL Onboarding Progress**: **~85% Complete**
+**Overall RL Onboarding Progress**: **~90% Complete**
 
 **Current State**: 
 - ✅ Full RL pipeline functional (parse → map → insert → verify)
 - ✅ All 16 RL tables mapping correctly
-- ✅ E2E test validates 100% of RL transformations
+- ✅ E2E test validates 100% of RL transformations (V4P/V4S assertions fixed)
 - ✅ Expression engine upgraded with date arithmetic
 - ✅ Comprehensive documentation for calculated fields
-- 🔄 Remaining: Load 14 additional samples, performance validation, curated CC E2E tests
+- ✅ MigrationEngine `mapping_contract_path` parameter — multi-product schema routing fixed
+- ✅ 791 RL apps processed: 790 success, 1 failed (CC misroute), 0 missing scores
+- ✅ Source-first reconciliation audit: 0 missing rows, 0 value mismatches
+- ✅ Diagnostic suite curated: 25 active tools, validation summaries documented
+- 🔄 Remaining: Mock XML generator, automated integration tests, CC E2E parity
 
 ### Resources
 
@@ -37,7 +41,7 @@ This plan guides the onboarding of the RecLending (IL) product line to the XML D
 | DDL Script | [create_destination_tables_rl.sql](../../config/samples/create_destination_tables_rl.sql) | Authoritative table definitions |
 | DML Script | [migrate_table_logic_rl.sql](../../config/samples/migrate_table_logic_rl.sql) | Enum derivation logic, transformation patterns |
 | CSV Seed | [xml-source-to-database-contract-rl.csv](xml-source-to-database-contract-rl.csv) | Initial mapping data (500 rows) for contract creation |
-| Sample XML | [config/samples/xml_files/reclending/](../../config/samples/xml_files/reclending/) | 15 RL sample files |
+| Sample XML | [config/samples/xml_files/reclending/](../../config/samples/xml_files/reclending/) | 29 RL sample files |
 | Requirements | [setup.md](setup.md) | Domain requirements and background |
 | Mapping Types & Capabilities | [../mapping/mapping-types-and-capabilities.md](../mapping/mapping-types-and-capabilities.md) | Canonical list of mapping types and behaviors |
 
@@ -701,14 +705,13 @@ The original planned work for **conditional enum fallback** (`check_requested_by
 
 **Goal**: Full RL pipeline validation
 
-### 5.1 Load RL Sample XML
+### 5.1 Load RL Sample XML ✅
 
-- Use existing 15 samples in `config/samples/xml_files/reclending/`
-- **Curated E2E RL fixtures (initial):**
+- **29 RL samples** loaded in `config/samples/xml_files/reclending/` (exceeds original 15 target)
+- **Curated E2E RL fixtures:**
     - `sample-source-xml--325725-e2e--rl.xml`
     - `sample-source-xml--409321-e2e-rl.xml`
-- Extend these two files with any missing combinations/elements as needed
-- Load via `load_xml_to_db.py` (may need RL variant: `load_xml_to_db_rl.py`)
+- Full population of 791 apps processed against DEV database (790 success, 1 CC misroute)
 
 ### 5.2 Create `generate_mock_xml_rl.py`
 
@@ -737,22 +740,34 @@ The original planned work for **conditional enum fallback** (`check_requested_by
 - [ ] Documentation of expected transformation results
 - [ ] Update test runner to include CC E2E suite
 
-### 5.4 Data Validation
+### 5.4 Data Validation ✅
 
-- Apply Phase 0.5 validation patterns to RL data
-- Source-to-destination reconciliation
-- Risk-based sampling validation
+- Source-first reconciliation completed: `reconcile_kv_source_first.py` (0 missing, 0 mismatches)
+- Score pipeline deep trace: all 6 types verified (CRI_pr, CRI_sec, MRV_pr, MRV_sec, V4P, V4S)
+- Calculated field verification: 50/50 passed (100% logic match)
+- Heuristic smell scan completed: suspect apps triaged and documented
+- Validation summaries created: `diagnostics/data_audit/CC_VALIDATION_SUMMARY.md`, `RL_VALIDATION_SUMMARY.md`
+- Diagnostic suite curated: 22 one-off scripts deleted, 9 archived, 25 active tools retained
 
 ### Deliverables
-- [ ] RL samples loaded and processed
+- [x] RL samples loaded and processed (29 files, 791 apps, 790 success)
 - [ ] `generate_mock_xml_rl.py` created
-- [ ] Full integration test suite
-- [ ] Validation report
+- [ ] Full integration test suite (automated, not manual)
+- [x] Validation report (CC and RL validation summaries in `diagnostics/data_audit/`)
 
 ### Acceptance Criteria
-- All 15 sample files process without errors
-- Data validation passes all categories
-- Performance within target (3,500+ records/min)
+- [x] All 29 RL sample files process without errors
+- [x] Data validation passes all categories (scores, collateral, warranties, calculated fields)
+- [ ] Performance within target (3,500+ records/min) — requires mock XML generator
+- [ ] CC E2E test parity (curated fixtures)
+
+### Phase 5 Bug Fixes (2026-02-10)
+
+| Bug | Root Cause | Fix | Files Changed |
+|-----|-----------|-----|---------------|
+| V4P/V4S `target_table` mismatch | Contract pointed at `app_historical_lookup` instead of `scores` | Corrected target_table in contract | `mapping_contract_rl.json` |
+| `MigrationEngine` schema routing | Constructor loaded default CC contract, ignoring RL | Added `mapping_contract_path` parameter | `migration_engine.py`, `parallel_coordinator.py`, `production_processor.py` |
+| E2E test stale V4P/V4S assertions | Assertions checked wrong table | Updated `_verify_scores()` and `_verify_historical_lookup()` | `manual_test_pipeline_full_integration_rl.py` |
 
 ---
 
@@ -800,20 +815,20 @@ Tests that need updating for multi-product support:
 ## Acceptance Criteria Checklist
 
 ### Phase 0: Stabilization
-- [ ] All existing tests pass
-- [ ] Production processor smoke test succeeds
-- [ ] Baseline metrics captured
+- [x] All existing tests pass
+- [x] Production processor smoke test succeeds
+- [x] Baseline metrics captured
 
 ### Phase 0.5: CC Data Validation
-- [ ] Validation queries for all 5 categories
-- [ ] Anomalies documented with explanations
-- [ ] Critical bugs fixed
+- [x] Validation queries for all 5 categories
+- [x] Anomalies documented with explanations
+- [x] Critical bugs fixed
 
 ### Phase 1: Shared Functionality
-- [ ] `add_score` implemented with upsert
-- [ ] `add_indicator` implemented with upsert
-- [ ] `add_history` implemented
-- [ ] Unit tests passing
+- [x] `add_score` implemented with upsert
+- [x] `add_indicator` implemented with upsert
+- [x] `add_history` implemented
+- [x] Unit tests passing
 
 ### Phase 2: CLI & Contract
 - [x] `--product-line` CLI working
@@ -849,6 +864,12 @@ Tests that need updating for multi-product support:
 **Status**: ✅ COMPLETE (core functionality) - Enum fallback deferred as non-blocking enhancement
 
 ### Phase 5: RL Integration
-- [ ] All 15 RL samples processed
-- [ ] E2E tests passing
+- [x] All 29 RL samples processed (790 success, 1 CC misroute)
+- [x] E2E test passing (manual, with corrected V4P/V4S assertions)
+- [x] Data validation complete (source-first reconciliation: 0 gaps)
+- [x] MigrationEngine multi-contract routing fixed
+- [x] Validation summaries documented (`diagnostics/data_audit/`)
+- [ ] Automated integration tests (convert manual E2E to pytest)
+- [ ] `generate_mock_xml_rl.py` for performance testing
 - [ ] Performance target met (3,500+ records/min)
+- [ ] CC E2E test parity (curated fixtures)

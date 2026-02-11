@@ -1,6 +1,6 @@
 # System Constraints & Non-Negotiable Principles
 
-**Last Updated:** January 22, 2026  
+**Last Updated:** February 10, 2026  
 **Purpose:** Define architectural constraints that MUST NOT change, and why.
 
 ---
@@ -21,6 +21,8 @@
 - ❌ NEVER create conditional code for "special cases" (use contract enum_mappings instead)
 - ✅ Always extend mapping_contract.json for new fields/rules
 - ✅ Use DataMapper.apply_calculated_fields() for complex logic tied to the contract
+- ✅ Each product line uses its own contract file (`mapping_contract.json` for CC, `mapping_contract_rl.json` for RL)
+- ✅ `MigrationEngine` must receive `mapping_contract_path` to derive schema metadata from the correct contract
 
 **Example - WRONG:**
 ```python
@@ -56,9 +58,11 @@ elif source == "type_B":
 - ❌ NEVER hardcode schema names in code (e.g., `[dbo].table_name`)
 - ❌ NEVER use `sys.tables` to discover schemas dynamically
 - ❌ NEVER execute DDL (CREATE SCHEMA, DROP SCHEMA) in application code
+- ❌ NEVER call `MigrationEngine()` without `mapping_contract_path` for non-default product lines
 - ✅ Always read target_schema from contract config
 - ✅ Pass schema through database operations (MigrationEngine, Validator)
 - ✅ Manage schemas outside application (by you, via SQL scripts or operations)
+- ✅ Pass `mapping_contract_path` to `MigrationEngine` (it derives schema metadata from the contract)
 
 **Example - WRONG:**
 ```python
@@ -377,12 +381,49 @@ Layer 3: Database Constraint Validation
 
 ---
 
+### Gotcha 6: Contract `target_table` Mismatch for Scores (FIXED Feb 2026)
+**What Was Wrong:**
+- RL contract (`mapping_contract_rl.json`) had V4P/V4S score mappings with `target_table: "app_historical_lookup"` instead of `"scores"`
+- Vantage 4 scores were silently dropped because they mapped to the wrong table
+- Other score types (e.g., V3P/V3S, KV-based) worked because their `target_table` was correct
+
+**How It Was Fixed:**
+- Changed `target_table` from `"app_historical_lookup"` to `"scores"` for V4P and V4S mappings in the RL contract
+- All 96 V4P scores across 791 apps now correctly appear in the scores table
+
+**Prevention:**
+- ✅ Validate all `target_table` values in contract against actual database table names
+- ✅ Run source-first reconciliation (`validate_source_to_dest_rl.py`) after contract changes
+- ❌ NEVER assume a mapping is correct without verifying data appears in the target table
+
+---
+
+### Gotcha 7: MigrationEngine Default Contract Routing (FIXED Feb 2026)
+**What Was Wrong:**
+- `MigrationEngine.__init__()` called `config_manager.load_mapping_contract()` without a path
+- This always loaded the default CC contract (`mapping_contract.json`), ignoring the RL contract
+- Schema metadata (column names, types, source table) was derived from the wrong contract
+- RL processing silently used CC column definitions, causing subtle data mismatches
+
+**How It Was Fixed:**
+- Added `mapping_contract_path` parameter to `MigrationEngine.__init__()`
+- Passed through from `production_processor.py` and `parallel_coordinator.py`
+- `MigrationEngine` now loads the correct contract for schema introspection
+
+**Prevention:**
+- ✅ Always pass `mapping_contract_path` when creating `MigrationEngine` for non-CC product lines
+- ✅ Test with both CC and RL contracts to verify correct routing
+- ❌ NEVER rely on default contract loading when processing non-default product lines
+
+---
+
 ## 5. Code Review Checklist
 
 **When reviewing new features or product-line expansions, verify:**
 
 - [ ] All field mappings defined in mapping_contract.json (not hardcoded)
 - [ ] target_schema read from contract (not hardcoded)
+- [ ] MigrationEngine receives `mapping_contract_path` for non-default product lines
 - [ ] Atomic transactions used (all-or-nothing per app_id)
 - [ ] FK ordering respected in insertion sequence
 - [ ] Processing log resume logic tested with failures

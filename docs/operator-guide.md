@@ -6,6 +6,18 @@
 
 ## Quick Start (Most Common Scenarios)
 
+### Product Line Selection
+All commands support `--product-line` to switch between CC (Credit Card, default) and RL (ReCLending):
+```powershell
+    # CC processing (default — can omit the flag)
+    python production_processor.py --server "..." --database "..." --product-line CC
+
+    # RL processing
+    python production_processor.py --server "..." --database "..." --product-line RL
+```
+- CC reads from `dbo.app_xml`, uses `config/mapping_contract.json`
+- RL reads from `dbo.app_xml_staging_rl`, uses `config/mapping_contract_rl.json`
+
 ### Test Run (10k records with defaults)
 ```powershell
     python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB"
@@ -99,18 +111,25 @@ After schema/contract changes or performance work, run the post-validation workf
 
 ### 3. Schema Isolation (Contract-Driven)
 
-Target schema is defined in `config/mapping_contract.json`:
+Target schema is defined in the mapping contract for each product line:
+
+| Product Line | Contract File | Source Table |
+|-------------|---------------|---------------|
+| CC | `config/mapping_contract.json` | `dbo.app_xml` |
+| RL | `config/mapping_contract_rl.json` | `dbo.app_xml_staging_rl` |
+
 ```json
     {
-    "target_schema": "sandbox",  // or "dbo" for production
+    "target_schema": "migration",  // or "dbo" for production
     ...
     }
 ```
 
-- `target_schema: "sandbox"` → All outputs go to `[sandbox].[table_name]`
+- `target_schema: "migration"` → All outputs go to `[migration].[table_name]`
 - `target_schema: "dbo"` → All outputs go to `[dbo].[table_name]`
-- Source XML always read from `[dbo].[app_xml]` (read-only)
+- Source table determined by the contract's `source_table` field
 - Enables safe dev/test/prod isolation in same database
+- **Changing `--product-line` automatically selects the right contract**
 
 ### 4. Resume Capability
 
@@ -188,8 +207,9 @@ Processing automatically skips records already in `processing_log`:
 ## Performance Tuning
 
 ### Expected Throughput
-- **Average**: ~2000~ applications/minute (4 workers, batch-size=1000) on local laptop with SQL Express :P
-- **Peak**: Up to 3,600 applications/minute
+- **DEV RDS (Remote)**: ~2,700 applications/minute (4 workers, batch-size=1000)
+- **Local SQLExpress**: ~1,500-1,600 applications/minute
+- **Peak (Enterprise)**: Up to 3,600 applications/minute
 
 ### Tuning Parameters
 
@@ -213,6 +233,16 @@ Processing automatically skips records already in `processing_log`:
     # Enable connection pooling for network efficiency
     python production_processor.py --server "prod-server" --database "XmlConversionDB" --username "sqluser" --password "password" --enable-pooling
 ```
+
+### Pattern 6: RL (ReCLending) Processing
+```powershell
+    # Process RL apps (uses RL contract and source table automatically)
+    python production_processor.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.us-east-1.rds.amazonaws.com" --database "MACDEVOperational" --product-line RL
+
+    # RL with range mode
+    python production_processor.py --server "..." --database "..." --product-line RL --app-id-start 325000 --app-id-end 326000
+```
+**Key**: `--product-line RL` selects `mapping_contract_rl.json` and reads from `dbo.app_xml_staging_rl`
 
 ---
 
@@ -365,6 +395,6 @@ Need to process XML records?
 
 ---
 
-**System Version**: 1.0  
-**Last Updated**: November 2025  
+**System Version**: 2.0 (Multi-Product)  
+**Last Updated**: February 2026  
 **For detailed API documentation**: See docstrings in `production_processor.py` and `run_production_processor.py`
