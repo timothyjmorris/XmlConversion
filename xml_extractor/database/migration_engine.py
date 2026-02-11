@@ -93,7 +93,8 @@ class MigrationEngine(MigrationEngineInterface):
     - Comprehensive error categorization for downstream processing decisions
     """
     
-    def __init__(self, connection_string: Optional[str] = None, log_level: str = "ERROR"):
+    def __init__(self, connection_string: Optional[str] = None, log_level: str = "ERROR",
+                 mapping_contract_path: Optional[str] = None):
         """
         Initialize the migration engine with injected dependencies.
         
@@ -101,7 +102,11 @@ class MigrationEngine(MigrationEngineInterface):
             connection_string: Optional SQL Server connection string. If None, uses centralized config.
             log_level: Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL).
                       Defaults to ERROR for production use to minimize overhead.
+            mapping_contract_path: Optional path to mapping contract JSON file.
+                                  If None, uses default from centralized configuration.
+                                  Must be provided for non-default contracts (e.g., RL).
         """
+        self._mapping_contract_path = mapping_contract_path
         self.logger = logging.getLogger(__name__)
         # Attach root logger handlers for consistent logging across processes
         root_logger = logging.getLogger()
@@ -125,7 +130,7 @@ class MigrationEngine(MigrationEngineInterface):
         self.target_schema = self._load_target_schema_from_contract()
         # Load source_table from MappingContract so 'source table always in dbo' rule is contract-driven
         try:
-            mapping_contract = self.config_manager.load_mapping_contract()
+            mapping_contract = self.config_manager.load_mapping_contract(self._mapping_contract_path)
             self.source_table = mapping_contract.source_table if mapping_contract and getattr(mapping_contract, 'source_table', None) else 'app_xml'
         except Exception:
             self.source_table = 'app_xml'
@@ -159,7 +164,7 @@ class MigrationEngine(MigrationEngineInterface):
             Target schema name (e.g., "sandbox", "dbo")
         """
         try:
-            mapping_contract = self.config_manager.load_mapping_contract()
+            mapping_contract = self.config_manager.load_mapping_contract(self._mapping_contract_path)
             target_schema = mapping_contract.target_schema if mapping_contract else None
             return target_schema or 'dbo'
         except Exception as e:

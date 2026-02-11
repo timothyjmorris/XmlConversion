@@ -3891,7 +3891,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/IL_application/IL_app_decision_info",
       "xml_attribute": "experian_vantage4_score",
-      "target_table": "app_historical_lookup",
+      "target_table": "scores",
       "target_column": "",
       "data_type": "int",
       "mapping_type": ["add_score(V4P)"],
@@ -3901,7 +3901,7 @@
     {
       "xml_path": "/Provenir/Request/CustData/IL_application/IL_app_decision_info",
       "xml_attribute": "experian_vantage4_score2",
-      "target_table": "app_historical_lookup",
+      "target_table": "scores",
       "target_column": "",
       "data_type": "int",
       "mapping_type": ["add_score(V4S)"],

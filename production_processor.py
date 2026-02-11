@@ -360,7 +360,7 @@ class ProductionProcessor:
     def test_connection(self) -> bool:
         """Test database connection."""
         try:
-            migration_engine = MigrationEngine(self.connection_string)
+            migration_engine = MigrationEngine(self.connection_string, mapping_contract_path=self.mapping_contract_path)
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 cursor.execute("SELECT @@VERSION")
@@ -406,7 +406,7 @@ class ProductionProcessor:
             source_table = mapping_contract.source_table
             source_column = mapping_contract.source_column
 
-            migration_engine = MigrationEngine(self.connection_string)
+            migration_engine = MigrationEngine(self.connection_string, mapping_contract_path=self.mapping_contract_path)
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
 
@@ -810,7 +810,7 @@ class ProductionProcessor:
             source_table = mapping_contract.source_table
             source_column = mapping_contract.source_column
 
-            migration_engine = MigrationEngine(self.connection_string)
+            migration_engine = MigrationEngine(self.connection_string, mapping_contract_path=self.mapping_contract_path)
             with migration_engine.get_connection() as conn:
                 cursor = conn.cursor()
                 # Source table uses target_schema (staging table is part of migration schema)

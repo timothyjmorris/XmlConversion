@@ -414,7 +414,7 @@ def _init_worker(connection_string: str, mapping_contract_path: str, progress_di
         _worker_validator = PreProcessingValidator(mapping_contract_path=mapping_contract_path)
         _worker_parser = XMLParser()
         _worker_mapper = DataMapper(mapping_contract_path=mapping_contract_path)
-        _worker_migration_engine = MigrationEngine(connection_string)
+        _worker_migration_engine = MigrationEngine(connection_string, mapping_contract_path=mapping_contract_path)
         _worker_progress_dict = progress_dict
         # Worker-level instrumentation flag
         _worker_enable_instrumentation = bool(enable_instrumentation)

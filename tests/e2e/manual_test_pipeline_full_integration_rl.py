@@ -121,10 +121,8 @@ class TestRecLendingEndToEnd(unittest.TestCase):
         self.parser = XMLParser()
         self.mapper = DataMapper(mapping_contract_path=RL_CONTRACT_RELPATH)
 
-        # MigrationEngine — override target_schema to RL's "migration"
-        # (MigrationEngine loads target_schema from the DEFAULT contract, not RL)
-        self.migration_engine = MigrationEngine(self.connection_string)
-        self.migration_engine.target_schema = self.target_schema
+        # MigrationEngine — uses RL contract path for correct target_schema
+        self.migration_engine = MigrationEngine(self.connection_string, mapping_contract_path=RL_CONTRACT_RELPATH)
 
     # ------------------------------------------------------------------
     # Cleanup
@@ -898,11 +896,12 @@ class TestRecLendingEndToEnd(unittest.TestCase):
     def _verify_scores(self, cursor, app_id):
         """Verify scores records (add_score mapping type).
 
-        Expected from XML:
+        Expected from XML (all 4 go to scores table per contract):
         - CRI_pr=746 (CRI_score_p="746.0" → scores table)
         - MRV_pr=697 (MRV_score_p="697.0" → scores table)
+        - V4P=771 (experian_vantage4_score="0771" → scores table)
+        - V4S=772 (experian_vantage4_score2="0772" → scores table)
         - CRI_sec, MRV_sec: not in sample XML → no rows
-        - V4P, V4S: go to app_historical_lookup, not scores
         """
         cursor.execute(
             f"""
@@ -925,18 +924,28 @@ class TestRecLendingEndToEnd(unittest.TestCase):
         self.assertIn("MRV_pr", score_by_id, "MRV_pr should be in scores")
         self.assertEqual(score_by_id["MRV_pr"], 697, f"MRV_pr score should be 697, got {score_by_id['MRV_pr']}")
 
+        # experian_vantage4_score="0771" → add_score(V4P) → score_identifier="V4P", score=771
+        self.assertIn("V4P", score_by_id, "V4P should be in scores table (per contract target_table fix)")
+        self.assertEqual(score_by_id["V4P"], 771, f"V4P score should be 771, got {score_by_id['V4P']}")
+
+        # experian_vantage4_score2="0772" → add_score(V4S) → score_identifier="V4S", score=772
+        self.assertIn("V4S", score_by_id, "V4S should be in scores table (per contract target_table fix)")
+        self.assertEqual(score_by_id["V4S"], 772, f"V4S score should be 772, got {score_by_id['V4S']}")
+
         print(f"[OK] scores verified: {len(score_rows)} records")
         for sid, score in sorted(score_by_id.items()):
             print(f"   - {sid}: {score}")
 
     def _verify_historical_lookup(self, cursor, app_id):
-        """Verify app_historical_lookup records (add_history + add_score(V4P/V4S) mapping types).
+        """Verify app_historical_lookup records (add_history + add_indicator mapping types).
 
         Expected records include:
         - add_history: 17 mappings (supervisor_rev_ind, max_DTI, various indicators)
-        - add_score(V4P): experian_vantage4_score="0771" → name="V4P", score=771
-        - add_score(V4S): experian_vantage4_score2="0772" → name="V4S", score=772
         - add_indicator: report_indicator records (from MRV decline codes, etc.)
+
+        Note: V4P/V4S scores previously targeted app_historical_lookup but were
+        corrected to target the scores table (see contract target_table fix).
+        They are now verified in _verify_scores().
         """
         cursor.execute(
             f"""
@@ -956,21 +965,11 @@ class TestRecLendingEndToEnd(unittest.TestCase):
             self.assertEqual(history_by_name["[supervisor_rev_ind]"]["value"], "C",
                              "supervisor_rev_ind should be 'C'")
 
-        # V4P score (add_score → historical): experian_vantage4_score="0771" → score=771
-        if "V4P" in history_by_name:
-            self.assertEqual(history_by_name["V4P"]["value"], "771",
-                             f"V4P value should be '771', got '{history_by_name['V4P']['value']}'")
-            print(f"   - V4P: score={history_by_name['V4P']['value']} ✓")
-        else:
-            print(f"   - [INFO] V4P not in historical lookup (may be expected)")
-
-        # V4S score (add_score → historical): experian_vantage4_score2="0772" → score=772
-        if "V4S" in history_by_name:
-            self.assertEqual(history_by_name["V4S"]["value"], "772",
-                             f"V4S value should be '772', got '{history_by_name['V4S']['value']}'")
-            print(f"   - V4S: score={history_by_name['V4S']['value']} ✓")
-        else:
-            print(f"   - [INFO] V4S not in historical lookup (may be expected)")
+        # V4P and V4S should NOT be in app_historical_lookup (they go to scores table now)
+        self.assertNotIn("V4P", history_by_name,
+                         "V4P should NOT be in app_historical_lookup — it targets scores table per contract fix")
+        self.assertNotIn("V4S", history_by_name,
+                         "V4S should NOT be in app_historical_lookup — it targets scores table per contract fix")
 
         print(f"[OK] app_historical_lookup verified: {len(history_rows)} records")
         for row in history_rows:

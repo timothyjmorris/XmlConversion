@@ -96,8 +96,9 @@ select * from app_enums
 -- do-over
 /*
 
-truncate table processing_log;
-delete from app_base where product_line_enum = 602;
+truncate table dbo.processing_log;
+delete from dbo.app_base where product_line_enum = 602;
+
 
 -- VERY IMPORTANT: DROP INDEXES before insert
 
@@ -213,10 +214,6 @@ select * from migration.Indicators where app_id = 325725
 -- are we missing mappings for new fsp_email, fsp_fax, fsp_num
 -- nothing maps to app_funding_contract_rl.monthly_payment_amount
 -- nothing maps to app_funding_rl.validated_finance_charge
-
-
-alter table app_warranties_rl
-alter column company_name varchar(50) null
 
 
 
