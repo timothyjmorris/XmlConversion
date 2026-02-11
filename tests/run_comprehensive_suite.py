@@ -269,7 +269,7 @@ class TestSuiteRunner:
             e2e_success_rate = (e2e_results['passed'] / e2e_total) * 100
             e2e_acceptable = e2e_success_rate >= 90
             e2e_reasonable = e2e_results['time'] < 600
-            print(f"   E2E Tests:         {'OK' if e2e_acceptable else 'BAD'} ≥90% Pass Rate {'OK' if e2e_reasonable else 'BAD'} <600s Execution")
+            print(f"   E2E Tests:         {'OK' if e2e_acceptable else 'BAD'} >=90% Pass Rate {'OK' if e2e_reasonable else 'BAD'} <600s Execution")
         
         # Contract tests should be perfect
         contract_results = self.results['contracts']
