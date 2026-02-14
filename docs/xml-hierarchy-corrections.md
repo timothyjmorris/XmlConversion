@@ -112,7 +112,7 @@ if not valid_contacts:
 - Documented cascading ID strategy with code examples
 - Added element filtering summary table
 
-#### **Bulk Insert Architecture** (`docs/bulk-insert-architecture.md`)
+#### **Bulk Insert Architecture** (`docs/bulk-insert-architecture-quickstart.md`)
 - No changes needed (focused on database operations)
 
 ## Processing Flow (Corrected)

@@ -69,7 +69,7 @@ Queue:    Parse → Queue → Parse → Queue → Parse → ...
 
 **Create:**
 - PHASE2_3_PROFILING_RESULTS.md
-- PHASE2_3_QUEUE_ARCHITECTURE.md
+- PHASE2_3_QUEUE_architecture-quickstart.md
 - benchmark_queue_optimization.py
 
 **Modify:**

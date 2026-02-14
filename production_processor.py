@@ -8,7 +8,7 @@ QUICK START:
     python production_processor.py --server "localhost\\SQLEXPRESS" --database "XmlConversionDB"
 
 For detailed documentation, see:
-    - ARCHITECTURE.md (design decisions, data flow, FK ordering, atomicity)
+    - architecture-quickstart.md (design decisions, data flow, FK ordering, atomicity)
     - OPERATOR_GUIDE.md (usage patterns, troubleshooting, monitoring)
     - run_production_processor.py (for large datasets >100k, use this orchestrator)
 

@@ -239,7 +239,7 @@ You'll know these skills are working when Copilot:
 
 **Core References:**
 - [XML Database Extraction System README](../../README.md)
-- [System Architecture](../../docs/architecture.md)
+- [System Architecture](../../docs/architecture-project-blueprint.md)
 - [Copilot Instructions](../copilot-instructions.md)
 
 **Performance Data:**

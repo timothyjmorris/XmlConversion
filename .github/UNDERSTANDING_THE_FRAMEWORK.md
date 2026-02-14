@@ -8,7 +8,7 @@
 
 **Current State:**
 - You have an excellent XML Database Extraction System
-- Well-documented (README.md, ARCHITECTURE.md, copilot-instructions.md)
+- Well-documented (README.md, architecture-project-blueprint.md, copilot-instructions.md)
 - Complex constraints (contract-driven, atomicity, schema isolation)
 - Known gotchas (lock contention, OFFSET pagination, failed resume logic)
 - Planning to expand to new product lines
@@ -355,7 +355,7 @@ Performance patterns (2)
 ```
 Team knows system through:
 - README.md (overview)
-- ARCHITECTURE.md (design)
+- architecture-project-blueprint.md (design)
 - Code comments (scattered)
 - Oral tradition (knowledge loss)
 

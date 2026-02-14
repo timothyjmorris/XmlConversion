@@ -522,5 +522,4 @@ When reviewing code or design proposals, ask:
 ## References
 - [system-constraints](../system-constraints/SKILL.md) - Non-negotiable principles
 - [copilot-instructions.md](../../copilot-instructions.md) - Core operating principles
-- [docs/architecture.md](../../../docs/architecture.md) - Design rationale
-
+- [docs/architecture-project-blueprint](../../../docs/architecture-project-blueprint.md) - Design rationale

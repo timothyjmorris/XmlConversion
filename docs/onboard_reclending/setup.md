@@ -54,7 +54,7 @@ While the RecLending product line has much less volume in production that needs 
 ## Updating Current Documentation
   It is very **important** that as we build and refine new functionality or features, that our documentation remains accurate and relevant. These include ADRs/decisions, feature lists, readme's, etc
     - `datamapper-functions.md`, reconcile this now against tests and application functionality first - and then update it as we iterate
-    - `architecture.md`
+    - `architecture-quickstart.md`
     - `deployment-guide.md`
     - `data-intake-and-preparation.md`
     - `exception-hierarchy-guide.md`

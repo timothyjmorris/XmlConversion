@@ -279,7 +279,7 @@ Database insert thread processes queue in background
 - `production_processor.py` - Maybe: add queue-size parameter
 
 ### Create:
-- `performance_tuning/phase_2_investigation/PHASE2_3_QUEUE_ARCHITECTURE.md` - Design doc
+- `performance_tuning/phase_2_investigation/PHASE2_3_QUEUE_architecture-quickstart.md` - Design doc
 - `performance_tuning/phase_2_investigation/PHASE2_3_PROFILING_RESULTS.md` - Baseline profiling
 - `performance_tuning/phase_2_investigation/PHASE2_3_IMPLEMENTATION_LOG.md` - Implementation progress
 - `performance_tuning/benchmarks/benchmark_queue_optimization.py` - Queue parameter tuning

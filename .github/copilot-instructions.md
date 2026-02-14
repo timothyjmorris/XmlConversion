@@ -108,7 +108,7 @@ XML Source → Pre-Processing Validation → XML Parser → Data Mapper → Migr
 - `target_schema: "dbo"` → Production  
 - Source (`app_xml`) always in `dbo` schema
 
-**See [../docs/architecture.md](../docs/architecture.md) for detailed design rationale**
+**See [../docs/architecture-project-blueprint.md](../docs/architecture-project-blueprint.md) for detailed design rationale**
 
 ## Development Workflows
 
@@ -212,7 +212,7 @@ config = get_config_manager()  # Use centralized config, never hardcode
 - **Data mapping**: `xml_extractor/mapping/data_mapper.py`
 
 ### Documentation
-- **Architecture**: [`../docs/architecture.md`](../docs/architecture.md), [`../docs/bulk-insert-architecture.md`](../docs/bulk-insert-architecture.md)
+- **Architecture**: [`../docs/architecture-project-blueprint.md`](../docs/architecture-project-blueprint.md), [`../docs/bulk-insert-architecture-project-blueprint.md`](../docs/bulk-insert-architecture-project-blueprint.md)
 - **Performance**: [`../performance_tuning/FINAL_PERFORMANCE_SUMMARY.md`](../performance_tuning/FINAL_PERFORMANCE_SUMMARY.md)
 - **Operations**: [`../docs/operator-guide.md`](../docs/operator-guide.md), [`../docs/deployment-guide.md`](../docs/deployment-guide.md)
 - **Testing**: [`../docs/testing-philosophy.md`](../docs/testing-philosophy.md), [`../docs/validation-and-testing-strategy.md`](../docs/validation-and-testing-strategy.md)

@@ -11,7 +11,7 @@ KEY FEATURES:
 - FK ordering: Respects table_insertion_order for constraint safety
 - Error recovery: Automatic rollback on failure, proper IDENTITY_INSERT cleanup
 
-For architecture details, see ARCHITECTURE.md (schema isolation, atomicity, FK ordering)
+For architecture details, see architecture-quickstart.md (schema isolation, atomicity, FK ordering)
 """
 
 import logging

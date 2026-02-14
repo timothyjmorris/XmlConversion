@@ -16,7 +16,7 @@ ARCHITECTURE:
 - Worker pool approach: Assigns XML records to workers via multiprocessing.Pool
 - Data flow: XML → Worker → Parser → Mapper → Engine → Database (atomic per app)
 
-For architecture details, see ARCHITECTURE.md (schema isolation, concurrency, atomicity)
+For architecture details, see architecture-quickstart.md (schema isolation, concurrency, atomicity)
 """
 
 import logging

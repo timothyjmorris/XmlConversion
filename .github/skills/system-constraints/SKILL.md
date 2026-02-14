@@ -120,7 +120,7 @@ with engine.get_connection(app_id) as conn:
 ---
 
 ### 1.4 Foreign Key Ordering Strategy
-**Constraint:** Tables must be inserted in FK dependency order (documented in ARCHITECTURE.md).
+**Constraint:** Tables must be inserted in FK dependency order (documented in architecture-project-blueprint.mdoject-blueprint.md).
 
 **Required Order:**
 ```
@@ -449,7 +449,7 @@ When you encounter a new issue that becomes a system constraint:
 1. **Document the gotcha** (what went wrong, how it was fixed)
 2. **Add prevention strategies** (how to avoid reintroducing it)
 3. **Add to code review checklist** (make it visible)
-4. **Update ARCHITECTURE.md** if it affects design decisions
+4. **Update architecture-project-blueprint.md** if it affects design decisions
 
 Example format:
 ```markdown
@@ -462,6 +462,6 @@ Example format:
 ---
 
 ## References
-- [docs/architecture.md](../../../docs/architecture.md) - Detailed design rationale
+- [docs/architecture-project-blueprint](../../../docs/architecture-project-blueprint.md) - Detailed design rationale
 - [copilot-instructions.md](../../copilot-instructions.md) - Core operating principles
 - [config/mapping_contract.json](../../../config/mapping_contract.json) - Contract schema definition

@@ -1,203 +1,158 @@
 # XML Database Extraction System
 
-A high-performance, contract-driven ETL pipeline that transforms deeply nested XML data into normalized Microsoft SQL Server relational structures.
+A high-performance, contract-driven ETL pipeline that transforms deeply nested XML data into normalized Microsoft SQL Server tables.
 
-## 📖 Documentation Quick Links
+## Documentation Quick Links
 
-- **[Operator Guide](docs/operator-guide.md)** - Production operations, commands, troubleshooting
-- **[Deployment Guide](docs/deployment-guide.md)** - Package installation and environment setup
-- **[Architecture Guide](docs/architecture.md)** - System design and technical details
-- **[Post Validation](docs/operations/post-validation.md)** - End-to-end KV mapping validation + reconciliation + safe backfill
-- **[Bug Fixes](docs/decisions/bug-fixes.md)** - Critical bugs resolved
-- **[Performance Findings](docs/decisions/performance-findings.md)** - Configuration and optimization decisions
+- [Operator Guide](docs/operator-guide.md) - Production operations, commands, troubleshooting
+- [Deployment Guide](docs/deployment-guide.md) - Package installation and environment setup
+- [Architecture Quickstart](docs/architecture-quickstart.md) - System design and data flow
+- [Architecture Blueprint](docs/architecture-project-blueprint.md) - Comprehensive architecture reference
+- [Testing Philosophy](docs/testing-philosophy.md) - Production-first testing approach
+- [Validation Strategy](docs/validation-and-testing-strategy.md) - Validation framework and scenarios
+- [Code Exemplars](docs/exemplars.md) - Representative code patterns
 
----
+## Project Name and Description
 
-## Tech Stack
-- **OS:** Windows | **Shell:** PowerShell | **Database:** MS SQL Server  
-- **Language:** Python | **DB Driver:** pyodbc | **Testing:** pytest | **XML:** lxml
+**XML Database Extraction System** is a contract-driven XML-to-database ETL pipeline for Microsoft SQL Server. It reads XML stored in database text columns, applies transformations defined in mapping contracts, and bulk-inserts normalized records with atomic transaction guarantees and schema isolation.
 
----
+## Technology Stack
 
-## 🚀 Quick Start
+- OS: Windows (PowerShell-first)
+- Language: Python 3.13
+- Database: Microsoft SQL Server
+- DB driver: pyodbc
+- XML processing: lxml
+- Testing: pytest
+- Packaging: setuptools
+
+## Project Architecture
+
+**Primary pattern:** Contract-driven Clean Architecture with schema isolation and atomic transactions.
+
+**Pipeline:**
+```
+XML Source -> Pre-Processing Validation -> XML Parser -> Data Mapper -> Migration Engine -> SQL Server
+```
+
+**Key rules:**
+- All transformations are defined in `config/mapping_contract.json` (not code).
+- All database operations respect `target_schema` from the contract.
+- One application = one transaction (all-or-nothing).
+
+See [docs/architecture-quickstart.md](docs/architecture-quickstart.md) for details.
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- Access to MS SQL Server with required schemas and tables
+- Windows environment (PowerShell)
 
 ### Installation
 
-```bash
+```powershell
 # Development installation (editable)
 pip install -e .
-
-# Production installation  
-pip install .
 
 # With development dependencies
 pip install -e ".[dev]"
 ```
 
-See **[Deployment Guide](docs/deployment-guide.md)** for detailed installation options.
+### Configuration
 
----
+- Mapping contracts: `config/mapping_contract.json` (CC) and `config/mapping_contract_rl.json` (RL)
+- Database config template: `config/database_config.json`
 
 ### Basic Usage
 
-```bash
-# Test run (10k records)
+```powershell
+# CC processing (default)
 python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB"
 
-# Gap filling
-python production_processor.py --server "server" --database "db" --limit 50000
+# RL processing
+python production_processor.py --server "localhost\SQLEXPRESS" --database "XmlConversionDB" --product-line RL
 
 # Large dataset processing
 python run_production_processor.py --app-id-start 1 --app-id-end 300000
 ```
 
-For complete operational guidance, see **[Operator Guide](docs/operator-guide.md)**.
+For operational guidance, see [docs/operator-guide.md](docs/operator-guide.md).
 
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-xml_extractor/
-├── __init__.py                        # Main package with core exports
-├── cli.py                             # Command-line interface (xml-extractor command)
-├── models.py                          # Core data classes and models
-├── interfaces.py                      # Abstract interfaces and base classes
-├── exceptions.py                      # Custom exception classes
-├── utils.py                           # Utility functions and helpers
-├── config/                            # Configuration management
-│   └── manager.py                      # Centralized configuration system
-├── database/                          # Database operations and migration
-│   ├── connection_test.py              # Database connectivity testing
-│   └── migration_engine.py             # High-performance bulk insert operations
-├── mapping/                           # Data transformation and mapping
-│   ├── data_mapper.py                  # Core XML-to-database mapping engine
-│   ├── reverse_mapper.py               # Reverse mapping utilities
-│   └── calculated_field_engine.py      # Calculated field expression evaluation
-├── parsing/                           # XML parsing and processing
-│   └── xml_parser.py                   # Memory-efficient XML parser
-└── validation/                        # Multi-layered data validation system
-    ├── data_integrity_validator.py     # End-to-end validation engine
-    ├── element_filter.py               # XML element filtering and validation
-    ├── pre_processing_validator.py     # Pre-extraction validation
-    ├── validation_integration.py       # Validation orchestration
-    ├── validation_models.py            # Validation data structures
-    ├── test_validation_system.py       # Validation system tests
-    └── README.md                       # Validation system documentation
-
-# Production Scripts
-production_processor.py                     # Main production processing script
-
-# Configuration & Samples
-config/
-├── mapping_contract.json       # CRITICAL project contract for field mapping definitions
-├── data-model.md                           # Data model specifications
-├── database_config.json                    # Database configuration
-└── samples/                                # Sample files and documentation
-    ├── configuration_summary.md
-    ├── create_destination_tables.sql
-    ├── enum_handling_guide.md
-    ├── insert_enum_values.sql
-    ├── migrate_table_logic.sql
-    ├── new_datamodel_queries.sql
-    ├── README.md
-    ├── sample-source-xml-contact-test.xml  # Key source file used in tests to validate complex mappings
-    ├── test_mapping_contract.py    
-    └── validate_mapping_contract.sql
-
-# Documentation
-docs/
-├── decisions/                              # Architecture decisions and learnings
-│   ├── bug-fixes.md                        # Critical bugs resolved
-│   └── performance-findings.md             # Configuration and optimization decisions
-├── deployment-guide.md                     # Package installation and setup
-├── operator-guide.md                       # Operations, commands, troubleshooting
-├── mapping/                                # Mapping and contract docs
-│   ├── mapping-principles.md               # Mapping system principles
-│   ├── datamapper-functions.md             # DataMapper function reference
-│   └── [IL/RL docs]                        # RecLending product line mapping
-├── onboard_reclending/                     # RecLending onboarding materials
-├── operations/
-│   ├── appxml-staging-runbook.md           # AppXML staging operations
-│   └── post-validation.md                  # Post-validation workflow (KV mapping checks)
-└── [other technical docs]                  # Architecture, testing, validation
-
-# Tests
-tests/
-├── test_end_to_end_integration.py          # End-to-end integration tests
-├── test_production_xml_batch.py            # Production batch processing tests
-├── test_real_sample_xml_validation.py      # Real XML validation tests
-└── test_xml_validation_scenarios.py        # XML validation scenarios
-
-
-# Build & Dependencies
-setup.py                                    # Package setup configuration
-requirements.txt                            # Python dependencies
-README.md                                   # This file
+xml_extractor/       # Core package (parsing, mapping, database, validation)
+config/              # Mapping contracts and database config
+docs/                # Architecture, operations, and testing documentation
+tests/               # Unit, integration, and e2e tests
+production_processor.py  # Main entry point
+run_production_processor.py  # Orchestrator for large datasets
 ```
 
-## 🏗️ System Architecture
+## Key Features
 
-### Complete XML-to-Database Processing Pipeline
+- Contract-driven transformations (no hardcoded mappings)
+- Schema isolation via `target_schema`
+- Atomic transactions per application
+- FK-ordered bulk inserts with `fast_executemany`
+- Multi-process parallel processing
+- Resume-safe processing via `processing_log`
+- Three-layer validation (pre-processing, mapping, database constraints)
 
-The XML Database Extraction System operates as a comprehensive pipeline that transforms XML content stored in database text columns into normalized relational structures:
+## Development Workflow
 
+- Test-first development required before commit
+- Pre-commit hook runs the comprehensive test suite
+- Contracts must match database schema (validated by tests)
+
+See [docs/DEVELOPMENT_WORKFLOW.md](docs/DEVELOPMENT_WORKFLOW.md) for the full workflow.
+
+## Coding Standards
+
+- Contract-driven design: transformations live in mapping contracts, not code
+- Schema isolation: never hardcode schema names
+- No DDL or destructive SQL in application code
+- Use centralized configuration via `xml_extractor.config.config_manager.get_config_manager`
+- Prefer existing patterns in [docs/exemplars.md](docs/exemplars.md) and [.github/skills/common-patterns/SKILL.md](.github/skills/common-patterns/SKILL.md)
+
+## Testing
+
+- Production-first testing with real XML data
+- Clear separation of unit, integration, and e2e tests
+- Data-driven assertions (query database for truth)
+
+```powershell
+# All tests
+python -m pytest tests/ -v
+
+# Unit tests
+pytest tests/unit -v
+
+# Integration tests
+pytest tests/integration -v
+
+# Quick validation
+python tests/run_integration_suite.py
 ```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   XML Source    │──▶│ Pre-Processing   │───▶│   Extraction    │──▶│  Data Integrity │
-│                 │    │   Validation     │    │   Pipeline      │    │   Validation    │
-│ • Raw XML file  │    │ • ElementFilter  │    │ • XMLParser     │    │ • End-to-End    │
-│ • Provenir data │    │ • Business rules │    │ • DataMapper    │    │ • Referential   │
-└─────────────────┘    └──────────────────┘    └─────────────────┘    └─────────────────┘
-                              │                        │                        │
-                              ▼                        ▼                        ▼
-                       ┌──────────────────┐    ┌───────────────────┐    ┌───────────────────┐
-                       │ ValidationResult │    │ Extracted Tables  │    │ ValidationResult  │
-                       │ • Can process?   │    │ • Relational data │    │ • Quality OK?     │
-                       │ • Early errors   │    │ • Ready for DB    │    │ • Detailed errors │
-                       └──────────────────┘    └───────────────────┘    └───────────────────┘
-```
 
-### Processing Stages
+See [docs/testing-philosophy.md](docs/testing-philosophy.md) and
+[docs/validation-and-testing-strategy.md](docs/validation-and-testing-strategy.md).
 
-1. **XML Source (Database)** → Raw Provenir XML data from database text columns
-2. **Pre-Processing Validation** → ElementFilter + PreProcessingValidator quality gate
-3. **Extraction Pipeline** → XMLParser + DataMapper transformation engine
-4. **Data Integrity Validation** → DataIntegrityValidator quality assurance
-5. **Database Migration** → MigrationEngine bulk insert operations
+## Contributing
 
-### Quality Gates
+1. Review architecture and constraints in [docs/architecture-quickstart.md](docs/architecture-quickstart.md)
+   and [.github/skills/system-constraints/SKILL.md](.github/skills/system-constraints/SKILL.md).
+2. Follow contract-driven patterns in [.github/skills/common-patterns/SKILL.md](.github/skills/common-patterns/SKILL.md).
+3. Add or update tests for every change.
+4. Run the full test suite before committing.
 
-- **Gate 1**: Pre-processing validation (can we process this XML?)
-- **Gate 2**: Data integrity validation (is extracted data quality acceptable?)
-- **Gate 3**: Migration success (were records successfully loaded?)
+See [docs/exemplars.md](docs/exemplars.md) for reference implementations.
 
-### Contract-Driven Architecture
+## License
 
-The system uses a **contract-first approach** where mapping contracts define the exact data structure and validation rules:
-
-- **Mapping Contracts**: JSON specifications defining XML-to-database transformations
-- **Schema-Derived Metadata**: Automatic addition of nullable/required/default_value fields
-- **DataMapper Validation**: Ensures only contract-compliant columns are processed
-- **MigrationEngine Optimization**: Focuses on high-performance bulk insertion of validated data
-
-### Core Components Integration
-
-#### XMLParser (`parsing/xml_parser.py`)
-- **Purpose**: Memory-efficient XML parsing with selective element extraction
-- **Key Features**: Selective parsing, contact deduplication, flattened data structures
-- **Integration**: Provides data to DataMapper and validation components
-
-#### DataMapper (`mapping/data_mapper.py`) 
-- **Purpose**: Core data transformation engine orchestrating XML-to-database conversion
-- **Key Features**: Contract-driven column selection, calculated field evaluation, enum handling
-- **Recent Changes**: Now handles schema-derived nullable/required/default_value validation
-- **Integration**: Receives flattened XML from XMLParser, produces contract-compliant tables for MigrationEngine
-
-#### CalculatedFieldEngine (`mapping/calculated_field_engine.py`)
-- **Purpose**: Safe evaluation of calculated field expressions with cross-element references
-- **Key Features**: SQL-like expression language, safety features, performance optimization
-- **Integration**: Called by DataMapper for complex field calculations
+No license file is present in this repository. Contact the maintainer for licensing details.
 
 #### MigrationEngine (`database/migration_engine.py`)
 - **Purpose**: High-performance bulk insertion engine for contract-compliant relational data
