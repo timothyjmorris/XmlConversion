@@ -1,7 +1,12 @@
-# System Constraints & Non-Negotiable Principles
+---
+name: system-constraints
+description: Non-negotiable architectural principles that protect data integrity in the XML Database Extraction System. Defines contract-driven architecture, schema isolation, atomic transactions, FK ordering, Windows-first requirements, and known gotchas to avoid. Use when reviewing code, making architecture decisions, or preventing bugs.
+metadata:
+  last-updated: "2026-02-14"
+  project: xml-database-extraction
+---
 
-**Last Updated:** February 10, 2026  
-**Purpose:** Define architectural constraints that MUST NOT change, and why.
+# System Constraints & Non-Negotiable Principles
 
 ---
 
@@ -457,6 +462,6 @@ Example format:
 ---
 
 ## References
-- [ARCHITECTURE.md](../../ARCHITECTURE.md) - Detailed design rationale
-- [copilot-instructions.md](..) - Core operating principles
-- [config/mapping_contract.json](../../config/mapping_contract.json) - Contract schema definition
+- [docs/architecture.md](../../../docs/architecture.md) - Detailed design rationale
+- [copilot-instructions.md](../../copilot-instructions.md) - Core operating principles
+- [config/mapping_contract.json](../../../config/mapping_contract.json) - Contract schema definition

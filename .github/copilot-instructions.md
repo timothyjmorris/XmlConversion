@@ -9,9 +9,10 @@ Your mission is to help maintain correctness, completeness, and performance in a
 ### Core Principles
 
 **For decision-making & architecture guidance, see `.github/skills/` directory:**
-- **SYSTEM_CONSTRAINTS.md** — Non-negotiable principles that protect data integrity
-- **DECISION_FRAMEWORKS.md** — How to think about tradeoffs (testing, complexity, performance, scope)
-- **COMMON_PATTERNS.md** — 21 tested patterns for parsing, mapping, validation, database ops, testing
+- **system-constraints** — Non-negotiable principles that protect data integrity
+- **decision-frameworks** — How to think about tradeoffs (testing, complexity, performance, scope)
+- **common-patterns** — 21 tested patterns for parsing, mapping, validation, database ops, testing
+- **refactor** — Repository-specific refactoring guidance (Python, JSON, SQL)
 
 **Core Operating Philosophy:**
 - **Windows-First Environment**: Always use PowerShell commands, never Linux/bash
@@ -65,7 +66,7 @@ Agents: Prefer updating existing canonical docs over creating new summary files.
 - **Never speculate about code** — always inspect files referenced before answering
 - Propose at least **two alternative approaches** with trade-offs
 - Prioritize **incremental delivery** — thin vertical slices end-to-end
-- **Reuse existing patterns** before creating new ones (see COMMON_PATTERNS.md)
+- **Reuse existing patterns** before creating new ones (see `.github/skills/common-patterns/`)
 - **Explain design decisions** in terms of performance, maintainability, domain alignment
 - **Avoid over-engineering** — only make requested changes, keep solutions simple
 - Don't add error handling for scenarios that can't happen
@@ -86,7 +87,7 @@ Focus on understanding the problem first: the goal is to **prove** the system is
 - Prefer extensible test-fixtures and configuration over hard-coded values
 - Every code change must be covered by existing or new tests
 
-**See DECISION_FRAMEWORKS.md "Testing vs. Speed" for detailed guidance**
+**See `.github/skills/decision-frameworks/` for detailed guidance**
 
 ## Architecture Overview
 
@@ -107,7 +108,7 @@ XML Source → Pre-Processing Validation → XML Parser → Data Mapper → Migr
 - `target_schema: "dbo"` → Production  
 - Source (`app_xml`) always in `dbo` schema
 
-**See ARCHITECTURE.md for detailed design rationale**
+**See [../docs/architecture.md](../docs/architecture.md) for detailed design rationale**
 
 ## Development Workflows
 
@@ -147,7 +148,7 @@ python run_production_processor.py --app-id-start 1 --app-id-end 300000
 
 ## Critical Development Patterns
 
-**See `.github/skills/COMMON_PATTERNS.md` for 21 tested code patterns:**
+**See `.github/skills/common-patterns/` for 21 tested code patterns:**
 
 ### 1. Contract-Driven Data Mapping
 - All transformations in `config/mapping_contract.json` (not code)
@@ -188,7 +189,7 @@ config = get_config_manager()  # Use centralized config, never hardcode
 
 ## Common Gotchas & Critical Fixes
 
-**See SYSTEM_CONSTRAINTS.md "Known Gotchas" for detailed explanations**
+**See `.github/skills/system-constraints/` for detailed explanations**
 
 ### Fixed Issues (Don't Reintroduce)
 1. **Lock Contention**: All duplicate detection queries use `WITH (NOLOCK)` to prevent RangeS-U lock serialization
@@ -201,24 +202,17 @@ config = get_config_manager()  # Use centralized config, never hardcode
 6. **Enum mappings return `None` when no match** - columns are excluded from INSERT
 7. **Production processor requires explicit log levels** - use `--log-level INFO` to see progress
 
-## Key File Locations & Status
+## Key File Locations
 
 ### Essential Files
 - **Entry point**: `production_processor.py` (main processing) or `xml_extractor/cli.py` (config status)
-- **Contract**: `config/mapping_contract.json` (defines entire ETL transformation)
-- **Test runner**: `tests/run_integration_suite.py`
-- **Quick start**: `START_HERE.txt` (project overview and commands)
-
-### Performance & Architecture
-- **Performance summary**: `performance_tuning/FINAL_PERFORMANCE_SUMMARY.md`
-- **Detailed analysis**: `performance_tuning/archived_analysis/` (investigation docs)
+- **Contract**: `config/mapping_contract.json` (CC product line), `config/mapping_contract_rl.json` (RL product line)
+- **Test runner**: `tests/run_integration_suite.py` (quick validation), `tests/run_comprehensive_suite.py` (full suite)
 - **Core models**: `xml_extractor/models.py`
 - **Data mapping**: `xml_extractor/mapping/data_mapper.py`
 
-## For Product-Line Expansion
-
-See `.github/skills/` for guidance when extending the system to new product lines:
-- **PRODUCT_LINE_EXPANSION.md** - Step-by-step playbook (Phase 2)
-- **CONTRACT_DRIVEN_DESIGN.md** - Contract philosophy & extension patterns (Phase 2)
-- **TESTING_DATA_INTEGRITY.md** - Validation approach for new features (Phase 3)
-- **PERFORMANCE_PROFILING.md** - How to measure, not guess (Phase 3)
+### Documentation
+- **Architecture**: [`../docs/architecture.md`](../docs/architecture.md), [`../docs/bulk-insert-architecture.md`](../docs/bulk-insert-architecture.md)
+- **Performance**: [`../performance_tuning/FINAL_PERFORMANCE_SUMMARY.md`](../performance_tuning/FINAL_PERFORMANCE_SUMMARY.md)
+- **Operations**: [`../docs/operator-guide.md`](../docs/operator-guide.md), [`../docs/deployment-guide.md`](../docs/deployment-guide.md)
+- **Testing**: [`../docs/testing-philosophy.md`](../docs/testing-philosophy.md), [`../docs/validation-and-testing-strategy.md`](../docs/validation-and-testing-strategy.md)

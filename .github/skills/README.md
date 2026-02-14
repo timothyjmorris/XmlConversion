@@ -1,8 +1,8 @@
 # GitHub Copilot Skills for XML Database Extraction System
 
-**Status:** Phase 1 Complete (Foundational Skills)  
-**Date:** January 22, 2026  
-**Purpose:** Enable AI agents to understand and extend the XML Database Extraction System for new product lines.
+**Status:** Complete (Foundational Skills)  
+**Last Updated:** February 14, 2026  
+**Purpose:** Enable AI agents to understand and extend the XML Database Extraction System.
 
 ---
 
@@ -37,46 +37,31 @@ Where to place docs:
 
 ## Quick Reference: Which Skill to Read?
 
-### I'm Adding a New Product Line
-→ Start with **[PRODUCT_LINE_EXPANSION.md](PRODUCT_LINE_EXPANSION.md)** (once it exists)
-
 ### I Need to Add a New Feature/Field
-→ Check **[COMMON_PATTERNS.md](COMMON_PATTERNS.md)** for copy-paste examples
+→ Check **[common-patterns](common-patterns/SKILL.md)** for copy-paste examples
 
 ### I'm Unsure About an Architecture Decision
-→ See **[DECISION_FRAMEWORKS.md](DECISION_FRAMEWORKS.md)** for decision trees
+→ See **[decision-frameworks](decision-frameworks/SKILL.md)** for decision trees
 
-### I Hit a Strange Bug
-→ Check **[SYSTEM_CONSTRAINTS.md](SYSTEM_CONSTRAINTS.md)** for known gotchas
+### I Hit a Strange Bug or Want to Avoid Known Issues
+→ Check **[system-constraints](system-constraints/SKILL.md)** for non-negotiables and gotchas
 
-### I Need to Make Code Changes
-→ Review **[SYSTEM_CONSTRAINTS.md](SYSTEM_CONSTRAINTS.md)** - "Code Review Checklist"
+### I Need to Refactor Existing Code
+→ Review **[refactor](refactor/SKILL.md)** for refactoring workflow and plan template
+
+### I Need to Make Data-Sensitive Code Changes
+→ Review **[system-constraints](system-constraints/SKILL.md)** for constraints and code review checklist
 
 ---
 
-## Files in This Directory
+## Skills in This Directory
 
-### Phase 1: Foundational Skills ✅ COMPLETE
-
-| File | Purpose | Audience |
+| Skill | Purpose | Audience |
 |------|---------|----------|
-| **[SYSTEM_CONSTRAINTS.md](SYSTEM_CONSTRAINTS.md)** | Non-negotiable principles, known gotchas, code review checklist | All developers, code reviewers |
-| **[DECISION_FRAMEWORKS.md](DECISION_FRAMEWORKS.md)** | How to make trade-off decisions: testing vs speed, complexity vs clarity, performance tuning | Architects, senior developers |
-| **[COMMON_PATTERNS.md](COMMON_PATTERNS.md)** | Tested, reusable code patterns for parsing, mapping, validation, database ops, testing | All developers |
-
-### Phase 2: Product-Line Expansion Tools (TODO)
-
-| File | Purpose | Status |
-|------|---------|--------|
-| **[PRODUCT_LINE_EXPANSION.md](PRODUCT_LINE_EXPANSION.md)** | Step-by-step playbook for adding new product lines | Not yet created |
-| **[CONTRACT_DRIVEN_DESIGN.md](CONTRACT_DRIVEN_DESIGN.md)** | Deep dive into mapping contract philosophy and extension patterns | Not yet created |
-
-### Phase 3: Testing & Performance (TODO)
-
-| File | Purpose | Status |
-|------|---------|--------|
-| **[TESTING_DATA_INTEGRITY.md](TESTING_DATA_INTEGRITY.md)** | How to prove new features work correctly | Not yet created |
-| **[PERFORMANCE_PROFILING.md](PERFORMANCE_PROFILING.md)** | How to measure, baseline, and optimize performance | Not yet created |
+| **[system-constraints](system-constraints/)** | Non-negotiable principles, known gotchas, code review checklist | All developers, code reviewers |
+| **[decision-frameworks](decision-frameworks/)** | How to make trade-off decisions: testing vs speed, complexity vs clarity, performance tuning | Architects, senior developers |
+| **[common-patterns](common-patterns/)** | Tested, reusable code patterns for parsing, mapping, validation, database ops, testing | All developers |
+| **[refactor](refactor/)** | Refactoring guidance tailored to this repo (Python, JSON, SQL) | All developers |
 
 ---
 
@@ -85,14 +70,14 @@ Where to place docs:
 ### When You Ask Copilot to Add a Feature
 
 **Good prompt:**
-> "Add support for healthcare providers to the mapping contract. Use the CONTRACT_DRIVEN_DESIGN pattern and follow SYSTEM_CONSTRAINTS for atomicity."
+> "Add support for healthcare providers to the mapping contract. Follow SYSTEM_CONSTRAINTS for contract-driven design and atomicity."
 
 **Copilot will:**
-1. Read [SYSTEM_CONSTRAINTS.md](SYSTEM_CONSTRAINTS.md) to understand non-negotiables
-2. Check [COMMON_PATTERNS.md](COMMON_PATTERNS.md) for similar examples
+1. Read [system-constraints](system-constraints/SKILL.md) to understand non-negotiables
+2. Check [common-patterns](common-patterns/SKILL.md) for similar examples
 3. Follow contract-driven approach (not hardcode)
-4. Write tests using patterns from COMMON_PATTERNS
-5. Measure performance (if applicable)
+4. Write tests using patterns from common-patterns
+5. Use [decision-frameworks](decision-frameworks/SKILL.md) for trade-off decisions
 
 **Copilot will avoid:**
 - ❌ Hardcoding field mappings in code
@@ -156,29 +141,25 @@ Never sacrifice correctness for performance. Measure before optimizing.
 **Database:** Atomic transactions, bulk insert with batching, resume with duplicate detection  
 **Testing:** Unit tests (isolated logic), integration tests (full pipeline), schema-isolated fixtures  
 
-See [COMMON_PATTERNS.md](COMMON_PATTERNS.md) for copy-paste examples.
+See [common-patterns](common-patterns/SKILL.md) for copy-paste examples.
 
 ---
 
-## Roadmap
+## Continuous Improvement
 
-### Phase 1: Foundation (COMPLETE ✅)
-- ✅ SYSTEM_CONSTRAINTS.md - Non-negotiable principles
-- ✅ DECISION_FRAMEWORKS.md - How we think about tradeoffs
-- ✅ COMMON_PATTERNS.md - Reusable code examples
+### How to Keep Skills Current
 
-### Phase 2: Expansion (NEXT)
-- [ ] PRODUCT_LINE_EXPANSION.md - Playbook for new product lines
-- [ ] CONTRACT_DRIVEN_DESIGN.md - Philosophy + examples
+**After Each Product-Line Expansion:**
+1. Review if agents made good decisions
+2. Document any new patterns discovered
+3. Add new gotchas to system-constraints/SKILL.md
+4. Update common-patterns/SKILL.md with new examples
 
-### Phase 3: Verification (AFTER PHASE 2)
-- [ ] TESTING_DATA_INTEGRITY.md - Test patterns for new features
-- [ ] PERFORMANCE_PROFILING.md - Measurement tools + decision trees
-
-### Phase 4: Continuous Improvement
-- [ ] Review skills after each product-line expansion
-- [ ] Add new gotchas to SYSTEM_CONSTRAINTS
-- [ ] Update decision frameworks based on outcomes
+**Regular Maintenance:**
+- Update "Last Updated" dates when files change
+- Review decision frameworks quarterly
+- Ensure code patterns match current style
+- Remove outdated or inaccurate information
 
 ---
 
@@ -192,15 +173,15 @@ copilot-instructions.md
 ├─ Testing philosophy
 └─ References .github/skills/ for detailed playbooks
 
-.github/skills/*.md
-├─ Specific playbooks (product-line expansion)
+.github/skills/*/SKILL.md
+├─ System constraints (non-negotiables and gotchas)
 ├─ Decision frameworks (architecture tradeoffs)
-├─ Code patterns (copy-paste examples)
-└─ Gotchas (what to avoid)
+├─ Common patterns (copy-paste examples)
+└─ Refactor guidance (repo-specific refactoring)
 ```
 
 **Start here:** `copilot-instructions.md` (principles)  
-**Deep dive:** `.github/skills/*.md` (specific guidance)  
+**Deep dive:** `.github/skills/*/SKILL.md` (specific guidance)  
 **Reference code:** `xml_extractor/` (working examples)
 
 ---
@@ -258,7 +239,7 @@ You'll know these skills are working when Copilot:
 
 **Core References:**
 - [XML Database Extraction System README](../../README.md)
-- [System Architecture](../../ARCHITECTURE.md)
+- [System Architecture](../../docs/architecture.md)
 - [Copilot Instructions](../copilot-instructions.md)
 
 **Performance Data:**
@@ -272,24 +253,22 @@ You'll know these skills are working when Copilot:
 
 ---
 
-## Questions?
-
-If you're unsure which skill to read:
-
-**Q: How do I add a new product line?**  
-A: See PRODUCT_LINE_EXPANSION.md (will be created in Phase 2)
+## Frequently Asked Questions
 
 **Q: How do I know if my approach is right?**  
-A: Check DECISION_FRAMEWORKS.md for decision trees
+A: Check [decision-frameworks](decision-frameworks/SKILL.md) for decision trees
 
-**Q: Can I copy this code pattern?**  
-A: See COMMON_PATTERNS.md for tested examples
+**Q: Can I copy an existing code pattern?**  
+A: Yes! See [common-patterns](common-patterns/SKILL.md) for tested, reusable examples
 
-**Q: What's off-limits?**  
-A: See SYSTEM_CONSTRAINTS.md for non-negotiables
+**Q: What's off-limits or non-negotiable?**  
+A: See [system-constraints](system-constraints/SKILL.md) for non-negotiables
 
-**Q: What went wrong last time?**  
-A: See SYSTEM_CONSTRAINTS.md "Known Gotchas" section
+**Q: What are common bugs to avoid?**  
+A: See [system-constraints](system-constraints/SKILL.md) "Known Gotchas" section
+
+**Q: How do I add a new product line?**  
+A: Follow contract-driven design principles in [system-constraints](system-constraints/SKILL.md) and reference existing patterns in [common-patterns](common-patterns/SKILL.md)
 
 ---
 
@@ -314,5 +293,4 @@ Format:
 
 ---
 
-*Last Updated: January 22, 2026*  
-*Next Review: After first product-line expansion*
+*Last Updated: February 14, 2026*

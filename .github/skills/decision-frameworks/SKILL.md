@@ -1,14 +1,19 @@
-# Decision Frameworks & How We Make Trade-offs
+﻿---
+name: decision-frameworks
+description: Decision-making frameworks for architecture trade-offs in the XML Database Extraction System. Covers testing vs speed, complexity vs clarity, performance optimization, scope management, and configuration decisions. Use when evaluating implementation approaches, optimizing performance, or choosing between design alternatives.
+metadata:
+  last-updated: "2026-02-14"
+  project: xml-database-extraction
+---
 
-**Last Updated:** January 22, 2026  
-**Purpose:** Help AI agents understand the decision-making philosophy for architecture choices, trade-offs, and priorities.
+# Decision Frameworks & How We Make Trade-offs
 
 ---
 
 ## 1. Testing vs. Speed: The Data Integrity Priority
 
 ### Core Philosophy
-**We prioritize evidence over assertion.** Never assume something works—prove it with tests.
+**We prioritize evidence over assertion.** Never assume something worksâ€”prove it with tests.
 
 ### Decision Framework
 
@@ -17,39 +22,39 @@
 **Decision Tree:**
 ```
 Does the change affect data integrity?
-├─ YES
-│  └─ MUST have: unit test + integration test + data-driven assertions
-│     Example: Changing FK ordering → test with intentional FK violations
-│
-├─ NO (cosmetic/perf optimization only)
-│  └─ Unit test sufficient (verify the optimization works)
-│     Example: Adding index → test query plan improvement
-│
-└─ UNCERTAIN
-   └─ Assume YES (data-first mindset)
+â”œâ”€ YES
+â”‚  â””â”€ MUST have: unit test + integration test + data-driven assertions
+â”‚     Example: Changing FK ordering â†’ test with intentional FK violations
+â”‚
+â”œâ”€ NO (cosmetic/perf optimization only)
+â”‚  â””â”€ Unit test sufficient (verify the optimization works)
+â”‚     Example: Adding index â†’ test query plan improvement
+â”‚
+â””â”€ UNCERTAIN
+   â””â”€ Assume YES (data-first mindset)
       Write the test, then optimize if needed
 ```
 
 ### Testing Philosophy
 
 **What We Test For:**
-- ✅ **Robustness:** Can the system handle edge cases, failures, retries?
-- ✅ **Correctness:** Does output match contract expectations?
-- ✅ **Consistency:** Do parallel runs produce same results?
-- ✅ **Atomicity:** Do failures rollback cleanly?
+- âœ… **Robustness:** Can the system handle edge cases, failures, retries?
+- âœ… **Correctness:** Does output match contract expectations?
+- âœ… **Consistency:** Do parallel runs produce same results?
+- âœ… **Atomicity:** Do failures rollback cleanly?
 
 **What We Don't Test For:**
-- ❌ Line-by-line code coverage (testing the implementation, not behavior)
-- ❌ Happy path only (tests must prove robustness)
-- ❌ Mocked dependencies (data-driven assertions use real database)
+- âŒ Line-by-line code coverage (testing the implementation, not behavior)
+- âŒ Happy path only (tests must prove robustness)
+- âŒ Mocked dependencies (data-driven assertions use real database)
 
 ### Test Classification
 
 | Test Type | Speed | Data Verified | Use When |
 |-----------|-------|----------------|----------|
 | **Unit** | <100ms | Function behavior | Isolated logic (enum mapping, calculations) |
-| **Integration** | 1-5s | Database state | Cross-module interactions (Parser→Mapper→Engine) |
-| **End-to-End** | 5-60s | Full pipeline | Entire product line (XML→DB with metrics) |
+| **Integration** | 1-5s | Database state | Cross-module interactions (Parserâ†’Mapperâ†’Engine) |
+| **End-to-End** | 5-60s | Full pipeline | Entire product line (XMLâ†’DB with metrics) |
 
 **Rule:** For data-affecting changes, require both unit + integration tests.
 
@@ -90,17 +95,17 @@ assert status == 'success', f"Expected success, got {status}"  # Proves atomicit
 **Decision Tree:**
 ```
 Will this abstraction be used in more than one place?
-├─ YES (2+ places use it)
-│  └─ CREATE the abstraction
-│     Reduces duplication, improves maintainability
-│
-├─ NO (only used once)
-│  └─ KEEP IT INLINE
-│     Simplicity > abstraction overhead
-│     Exception: Calculation-heavy logic (still inline, but documented)
-│
-└─ MAYBE/FUTURE (hypothetical reuse)
-   └─ DON'T CREATE (YAGNI principle)
+â”œâ”€ YES (2+ places use it)
+â”‚  â””â”€ CREATE the abstraction
+â”‚     Reduces duplication, improves maintainability
+â”‚
+â”œâ”€ NO (only used once)
+â”‚  â””â”€ KEEP IT INLINE
+â”‚     Simplicity > abstraction overhead
+â”‚     Exception: Calculation-heavy logic (still inline, but documented)
+â”‚
+â””â”€ MAYBE/FUTURE (hypothetical reuse)
+   â””â”€ DON'T CREATE (YAGNI principle)
       You Ain't Gonna Need It
       Wait for proven need (second actual use case)
 ```
@@ -122,7 +127,7 @@ def old_validation(record):
 **Example - RIGHT:**
 ```python
 # Replace all callers at once (code refactoring)
-# Search for old_validation() → update 3 files → delete function (from codebase)
+# Search for old_validation() â†’ update 3 files â†’ delete function (from codebase)
 # Clean, explicit, no hidden coupling
 # Note: Deleting code from repo is OK; deleting data is never OK without approval
 ```
@@ -157,7 +162,7 @@ parser.batch_size = 1000  # Data-driven tuning
 ### Reuse Before New
 
 **When extending system:**
-1. Check existing modules first (see [COMMON_PATTERNS.md](COMMON_PATTERNS.md))
+1. Check existing modules first (see [common-patterns](../common-patterns/SKILL.md))
 2. Extend existing abstractions (don't create parallel ones)
 3. Only create new modules when existing ones don't fit
 
@@ -165,17 +170,17 @@ parser.batch_size = 1000  # Data-driven tuning
 ```python
 # Created new validation module instead of extending existing
 xml_extractor/
-├── validation/validator.py      (original, 400 lines)
-├── validation/custom_validator.py  (new, parallel, 300 lines)
+â”œâ”€â”€ validation/validator.py      (original, 400 lines)
+â”œâ”€â”€ validation/custom_validator.py  (new, parallel, 300 lines)
 ```
 
 **Example - RIGHT:**
 ```python
 # Extended existing module
 xml_extractor/
-├── validation/validator.py      (now 600 lines, handles all cases)
-│   ├── three_layer_validation()      (original)
-│   ├── custom_rules_validation()     (new method)
+â”œâ”€â”€ validation/validator.py      (now 600 lines, handles all cases)
+â”‚   â”œâ”€â”€ three_layer_validation()      (original)
+â”‚   â”œâ”€â”€ custom_rules_validation()     (new method)
 ```
 
 ---
@@ -192,23 +197,23 @@ xml_extractor/
 **Decision Tree:**
 ```
 Do we have a baseline measurement?
-├─ NO
-│  └─ MEASURE FIRST
-│     Get baseline (throughput, memory, latency)
-│     Document current state
-│
-├─ YES
-│  └─ Does optimization achieve target improvement?
-│     ├─ TARGET NOT MET
-│     │  └─ Measure impact: +10%? +50%? +500%?
-│     │     If >20% gain with <10% complexity cost → IMPLEMENT
-│     │
-│     ├─ TARGET ALREADY MET
-│     │  └─ DO NOT OPTIMIZE (target already achieved)
-│     │     Simplicity wins
-│     │
-│     └─ TARGET EXCEEDED
-│        └─ DONE (no optimization needed)
+â”œâ”€ NO
+â”‚  â””â”€ MEASURE FIRST
+â”‚     Get baseline (throughput, memory, latency)
+â”‚     Document current state
+â”‚
+â”œâ”€ YES
+â”‚  â””â”€ Does optimization achieve target improvement?
+â”‚     â”œâ”€ TARGET NOT MET
+â”‚     â”‚  â””â”€ Measure impact: +10%? +50%? +500%?
+â”‚     â”‚     If >20% gain with <10% complexity cost â†’ IMPLEMENT
+â”‚     â”‚
+â”‚     â”œâ”€ TARGET ALREADY MET
+â”‚     â”‚  â””â”€ DO NOT OPTIMIZE (target already achieved)
+â”‚     â”‚     Simplicity wins
+â”‚     â”‚
+â”‚     â””â”€ TARGET EXCEEDED
+â”‚        â””â”€ DONE (no optimization needed)
 ```
 
 ### Performance Baselines
@@ -221,7 +226,7 @@ Do we have a baseline measurement?
 - Batch-size sensitivity (test 20, 50, 100, 500, 1000)
 - Worker concurrency sensitivity (test 1, 2, 4, 8)
 
-**Target for expansion:** ≥ 3,500 records/min
+**Target for expansion:** â‰¥ 3,500 records/min
 
 ### Trade-Off Decision Matrix
 
@@ -230,9 +235,9 @@ When optimization requires trade-offs:
 | Trade-Off | Decision | Example |
 |-----------|----------|---------|
 | Speed vs. Memory | **Trade memory for speed** | Chunked processing: fresh process per chunk (use more memory/processes, get better throughput) |
-| Speed vs. Simplicity | **Measure first, then choose** | Batch-size tuning yields 50% gain with no complexity → DO IT. Async parsing adds 20% gain with 200 lines complexity → DON'T |
+| Speed vs. Simplicity | **Measure first, then choose** | Batch-size tuning yields 50% gain with no complexity â†’ DO IT. Async parsing adds 20% gain with 200 lines complexity â†’ DON'T |
 | Speed vs. Correctness | **NEVER sacrifice correctness** | Lock-free validation? No. Use WITH (NOLOCK) instead. |
-| Speed vs. Maintainability | **Choose based on code lifetime** | If feature is one-time → simplicity wins. If feature is core → maintainability wins. |
+| Speed vs. Maintainability | **Choose based on code lifetime** | If feature is one-time â†’ simplicity wins. If feature is core â†’ maintainability wins. |
 
 ---
 
@@ -248,15 +253,15 @@ When optimization requires trade-offs:
 **Decision Tree:**
 ```
 Define vertical slice (one feature, end-to-end):
-├─ 1. Contract extension (mapping_contract.json)
-├─ 2. Schema extension (new tables + FKs)
-├─ 3. Parser/Mapper extension (product-specific logic)
-├─ 4. Validation rules (three-layer validation)
-├─ 5. Integration tests (prove correctness)
-├─ 6. Performance baseline (measure throughput)
-├─ 7. Merge to main
-│
-└─ Repeat for next feature
+â”œâ”€ 1. Contract extension (mapping_contract.json)
+â”œâ”€ 2. Schema extension (new tables + FKs)
+â”œâ”€ 3. Parser/Mapper extension (product-specific logic)
+â”œâ”€ 4. Validation rules (three-layer validation)
+â”œâ”€ 5. Integration tests (prove correctness)
+â”œâ”€ 6. Performance baseline (measure throughput)
+â”œâ”€ 7. Merge to main
+â”‚
+â””â”€ Repeat for next feature
 ```
 
 **Why This Works:**
@@ -273,7 +278,7 @@ Define vertical slice (one feature, end-to-end):
 Slice 1: Create mapping contract for product line
 Slice 2: Add schema (tables, indexes, FKs)
 Slice 3: Extend parser (handle new XML structure)
-Slice 4: Create basic tests (prove XML→DB works)
+Slice 4: Create basic tests (prove XMLâ†’DB works)
 ```
 
 **Phase 2: Enhancement (Week 2)**
@@ -446,7 +451,7 @@ if not result.is_valid:
 
 ### Scenario 4: Throughput Below 3,500 Records/Min
 
-**Decision:** Measure → profile → optimize (in this order)
+**Decision:** Measure â†’ profile â†’ optimize (in this order)
 
 ```
 1. Measure current state (1800 records/min, 80% CPU, 40% memory)
@@ -515,6 +520,7 @@ When reviewing code or design proposals, ask:
 ---
 
 ## References
-- [SYSTEM_CONSTRAINTS.md](SYSTEM_CONSTRAINTS.md) - Non-negotiable principles
-- [copilot-instructions.md](..) - Core operating principles
-- [ARCHITECTURE.md](../../ARCHITECTURE.md) - Design rationale
+- [system-constraints](../system-constraints/SKILL.md) - Non-negotiable principles
+- [copilot-instructions.md](../../copilot-instructions.md) - Core operating principles
+- [docs/architecture.md](../../../docs/architecture.md) - Design rationale
+

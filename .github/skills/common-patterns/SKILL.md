@@ -1,7 +1,13 @@
-# Common Patterns & Reusable Code Examples
+﻿---
+name: common-patterns
+description: Tested, copy-paste-ready code patterns for extending the XML Database Extraction System. Includes 21 patterns for XML parsing, data mapping, validation, database operations, and testing. Use when implementing new features, adding product lines, or needing working examples of contract-driven transformations.
+metadata:
+  last-updated: "2026-02-14"
+  project: xml-database-extraction
+  pattern-count: "21"
+---
 
-**Last Updated:** February 10, 2026  
-**Purpose:** Provide tested, copy-paste-ready code patterns for extending the system.
+# Common Patterns & Reusable Code Examples
 
 ---
 
@@ -218,14 +224,14 @@ engine = MigrationEngine(
 )
 ```
 
-**DataMapper works unchanged — different contract → different mappings:**
+**DataMapper works unchanged â€” different contract â†’ different mappings:**
 ```python
 mapper = DataMapper(rl_contract)
 result = mapper.map_record(rl_xml)
 # Returns app_base, scores, indicators (RL tables)
 ```
 
-**⚠️ Gotcha (Fixed Feb 2026):** `MigrationEngine.__init__()` previously called
+**âš ï¸ Gotcha (Fixed Feb 2026):** `MigrationEngine.__init__()` previously called
 `config_manager.load_mapping_contract()` WITHOUT a path, always loading the CC
 contract. Fixed by adding `mapping_contract_path` parameter throughout the chain.
 
@@ -508,7 +514,7 @@ def test_enum_mapping_invalid():
 
 ### Pattern 5.2: Integration Test - End-to-End Pipeline
 
-**When to use:** Verify full XML→Database pipeline works
+**When to use:** Verify full XMLâ†’Database pipeline works
 
 ```python
 import pytest
@@ -649,12 +655,12 @@ def measure_throughput(app_records, batch_size=1000, workers=4):
     # Compare to target
     TARGET = 3500  # records/min
     if throughput < TARGET:
-        print(f"⚠️  Below target ({TARGET} records/min)")
-        print("   → Measure batch-size sensitivity")
-        print("   → Check worker concurrency")
-        print("   → Profile query plans")
+        print(f"âš ï¸  Below target ({TARGET} records/min)")
+        print("   â†’ Measure batch-size sensitivity")
+        print("   â†’ Check worker concurrency")
+        print("   â†’ Profile query plans")
     else:
-        print(f"✓ Meets target ({TARGET} records/min)")
+        print(f"âœ“ Meets target ({TARGET} records/min)")
     
     return throughput
 
@@ -685,7 +691,7 @@ def tune_batch_size(test_records_5000):
         print(f"  Batch-size {batch_size:4d}: {throughput:6.0f} records/min")
     
     optimal_size = max(results, key=results.get)
-    print(f"\n✓ Optimal batch-size: {optimal_size} ({results[optimal_size]:.0f} records/min)")
+    print(f"\nâœ“ Optimal batch-size: {optimal_size} ({results[optimal_size]:.0f} records/min)")
     
     return optimal_size
 
@@ -694,7 +700,7 @@ def tune_batch_size(test_records_5000):
 # Batch-size   50:    800 records/min
 # Batch-size  100:   1200 records/min
 # Batch-size  500:   1800 records/min
-# Batch-size 1000:   2000 records/min ← OPTIMAL
+# Batch-size 1000:   2000 records/min â† OPTIMAL
 # Batch-size 2000:   1900 records/min (memory pressure)
 ```
 
@@ -702,7 +708,7 @@ def tune_batch_size(test_records_5000):
 
 ## 7. Common Pattern Mistakes
 
-### ❌ WRONG: Mixing Contracts and Code
+### âŒ WRONG: Mixing Contracts and Code
 
 ```python
 # Mapping defined in code (don't do this)
@@ -715,7 +721,7 @@ elif app_type == 'financial':
 # Can't be changed without code deployment
 ```
 
-### ✅ RIGHT: Contract-Driven, Code-Agnostic
+### âœ… RIGHT: Contract-Driven, Code-Agnostic
 
 ```python
 # All mappings in config/mapping_contract.json
@@ -734,7 +740,7 @@ mapper = DataMapper(contract)
 result = mapper.map_record(parsed_xml)
 ```
 
-### ❌ WRONG: Testing Code, Not Behavior
+### âŒ WRONG: Testing Code, Not Behavior
 
 ```python
 def test_mapper():
@@ -746,7 +752,7 @@ def test_mapper():
     assert 'app_base' in result  # Maybe, but doesn't verify correctness
 ```
 
-### ✅ RIGHT: Testing Domain Behavior
+### âœ… RIGHT: Testing Domain Behavior
 
 ```python
 def test_mapper_inserts_correct_data():
@@ -773,6 +779,7 @@ def test_mapper_inserts_correct_data():
 ---
 
 ## References
-- [PRODUCT_LINE_EXPANSION.md](PRODUCT_LINE_EXPANSION.md) - How to use these patterns
-- [CONTRACT_DRIVEN_DESIGN.md](CONTRACT_DRIVEN_DESIGN.md) - Philosophy behind patterns
-- [System code](../../xml_extractor/) - Reference implementations
+- [system-constraints](../system-constraints/SKILL.md) - Non-negotiable principles for pattern usage
+- [decision-frameworks](../decision-frameworks/SKILL.md) - When to use which pattern
+- [System code](../../../xml_extractor/) - Reference implementations
+
