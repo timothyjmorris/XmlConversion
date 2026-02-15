@@ -1,5 +1,5 @@
 # MAC Data Model 2.0 - Dictionary & Usage Guide
-*Last Updated: 2026-01-31*
+*Last Updated: 2026-02-14*
 
 ## Overview
 >The MAC operational data model serves as the source of truth for loan applications across multiple product lines. The design is built on Domain-Driven Design (DDD) principles, creating a system that deeply reflects our business domain, rules, and processes. Some of our goals were to provide intuitive clarity, increase performance, reduce maintenance and allow simple integration for non-operations systems. The design separates concerns into core data, operational state, transactional flags, pricing decisions, funding, contact information and so on. 
@@ -807,7 +807,7 @@ NOTE: this structure enables us to stop using fixed position 1 - 4 to have speci
 | motor_title_mb_lienholder_enum | smallint |  (FK to app_enums) |
 | motor_title_vin_confirmed_enum | smallint |  (FK to app_enums) |
 | motor_ucc_mb_lienholder_enum | smallint |  (FK to app_enums) |
-| motor_ucc_vin_enum | smallint |  (FK to app_enums) |
+| motor_ucc_vin_confirmed_enum | smallint |  (FK to app_enums) |
 | new_motor_1_invoice_confirmed_enum | smallint |  (FK to app_enums) |
 | new_motor_2_invoice_confirmed_enum | smallint |  (FK to app_enums) |
 | new_rv_boat_invoice_confirmed_enum | smallint |  (FK to app_enums) |

@@ -178,18 +178,18 @@ select * from migration.app_base where product_line_enum = 602 --app_id = 325725
 select app_id, lockedby, shred_version, cast(app_xml as xml) as xml from app_XML where app_id in (116101)
 
 select  top 10 *
-from migration.app_base as a
-left join migration.app_operational_rl as o on o.app_id = a.app_id
-left join migration.app_dealer_rl as d on d.app_id = a.app_id
-left join migration.app_funding_rl as f on f.app_id = a.app_id
-left join migration.app_funding_checklist_rl as cl on cl.app_id = a.app_id
-left join migration.app_funding_contract_rl as ct on ct.app_id = a.app_id
-left join migration.app_pricing_rl as p on p.app_id = a.app_id
-left join migration.app_transactional_rl as t on t.app_id = a.app_id
-left join migration.app_contact_base as c on c.app_id = a.app_id
-left join migration.app_contact_address as ca on ca.con_id = c.con_id
-left join migration.app_contact_employment as ce on ce.con_id = c.con_id
-where product_line_enum = 602
+from dbo.app_base as a
+left join dbo.app_operational_rl as o on o.app_id = a.app_id
+left join dbo.app_dealer_rl as d on d.app_id = a.app_id
+left join dbo.app_funding_rl as f on f.app_id = a.app_id
+left join dbo.app_funding_checklist_rl as cl on cl.app_id = a.app_id
+left join dbo.app_funding_contract_rl as ct on ct.app_id = a.app_id
+left join dbo.app_pricing_rl as p on p.app_id = a.app_id
+left join dbo.app_transactional_rl as t on t.app_id = a.app_id
+left join dbo.app_contact_base as c on c.app_id = a.app_id
+left join dbo.app_contact_address as ca on ca.con_id = c.con_id
+left join dbo.app_contact_employment as ce on ce.con_id = c.con_id
+where product_line_enum = 602 and a.app_id = 326272
 order by a.app_id desc
 
 select * from migration.app_contact_address where con_id = 10557
