@@ -113,12 +113,7 @@ python launch_parallel_instances.py --server "mbc-dev-npci-use1-db.cofvo8gypwe9.
 
 (added indexes)
 # 2025-02-06: 3,900 apps/min, default with 16 workers / 13 instances
-
-(after scores)
-# 2025-02-06: 2,670 apps/min, default with 16 workers / 13 instances --batch-size 500
-# 2025-02-06: 2,430 apps/min, default with 16 workers / 13 instances --batch-size 250
-# 2025-02-06: 2,760 apps/min, default with 16 workers / 13 instances --batch-size 1000
-(removed indexes, no effect)
+# 2025-02-17: 3,280 apps/min, default with 16 workers / 13 instances
 
 
 

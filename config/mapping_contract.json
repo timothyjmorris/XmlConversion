@@ -261,9 +261,10 @@
       "target_table": "app_operational_cc",
       "target_column": "regb_start_date",
       "data_type": "datetime",
+      "mapping_type": ["calculated_field"],
+      "expression": "CASE WHEN regb_start_date IS NOT EMPTY THEN regb_start_date ELSE application.app_receive_date END",
       "nullable": true,
-      "required": false,
-      "default_value": "GETUTCDATE()"
+      "required": false
     },
     {
       "xml_path": "/Provenir/Request/CustData/application/app_product",

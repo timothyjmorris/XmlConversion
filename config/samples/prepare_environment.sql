@@ -97,18 +97,17 @@ select * from app_enums
 /*
 
 truncate table migration.processing_log;
-delete from migration.app_base where product_line_enum = 602;
+delete from migration.app_base where product_line_enum = 600;
 
---truncate table migration.app_xml_staging_rl
+--truncate table dbo.app_xml_staging_rl
 
--- VERY IMPORTANT: DROP INDEXES before insert
 
 */
 
 -- 12240
 SELECT COUNT(*) FROM dbo.app_xml_staging;
 -- 791
-SELECT COUNT(*) FROM migration.app_xml_staging_rl;
+SELECT COUNT(*) FROM migration.app_xml_staging;
 select top 100 * from migration.app_xml_staging_rl order by app_id desc
 SELECT COUNT(*) FROM dbo.processing_log;
 SELECT * FROM migration.processing_log where status <> 'success'
@@ -197,7 +196,12 @@ select * from migration.app_contact_address where con_id = 10557
 select * from migration.app_contact_employment where con_id = 10557
 
 
-select * from migration.app_base where product_line_enum = 602
+select top 100 * from migration.app_base where product_line_enum = 600 order by app_id
+
+select top 100 a.app_id, a.receive_date, o.regb_start_date, o.regb_end_date
+from migration.app_base as a
+inner join migration.app_operational_cc as o on o.app_id = a.app_id
+order by a.app_id
 
 select e1.value, coll.* 
 from migration.app_collateral_rl  as coll
