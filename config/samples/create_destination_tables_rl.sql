@@ -36,7 +36,6 @@ CREATE TABLE dbo.app_operational_rl (
 	cb_score_factor_type_sec_3				varchar(25)		NULL,
 	cb_score_factor_type_sec_4				varchar(25)		NULL,
 	cb_score_factor_type_sec_5				varchar(25)		NULL,
-	client_app_id							varchar(50)		NULL,
 	joint_app_flag							bit				NOT NULL CONSTRAINT DF_app_operational_rl_joint_app_flag DEFAULT(0),
 	last_bureau_pulled_type					varchar(5)		NULL,
 	last_updated_by							varchar(80)		NULL,
@@ -301,7 +300,10 @@ CREATE TABLE dbo.app_dealer_rl (
 -- NOTE: app_id is both the FK & PK (not expecting JOINs to this table)
 CREATE TABLE dbo.app_transactional_rl (
 	app_id								int				NOT NULL CONSTRAINT FK_app_transactional_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,	
+	appone_transmission_id				bigint			NULL,
 	audit_type_enum						smallint		NULL	 CONSTRAINT FK_app_transactional_rl_audit_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
+	client_app_id						varchar(50)		NULL,	
+	dealertrack_dealer_id				int				NULL,
 	duplicate_app_flag					bit				NULL	 CONSTRAINT DF_app_transactional_rl_duplicate_app_flag DEFAULT (0),
 	[error_message]						varchar(255)	NULL,
 	assess_florida_doc_fee_flag			bit				NULL,

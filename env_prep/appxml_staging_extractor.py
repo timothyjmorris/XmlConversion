@@ -62,6 +62,11 @@ def parse_request_and_custdata(xml_text):
     if request_node is None:
         return None
 
+    # Get attributes from the root <Provenir> node  - for RecLending
+    appone_trans_id = root.get('appone_trans_id') or ''
+    dt_app_id = root.get('dt_app_id') or ''
+    dt_dealer_id = root.get('dt_dealer_id') or ''
+
     # Get attributes from <Request> node
     app_id = request_node.get('ID') or request_node.get('Id') or request_node.get('id')
     process = request_node.get('Process') or ''
@@ -89,6 +94,9 @@ def parse_request_and_custdata(xml_text):
         return None
 
     return {
+        "appone_trans_id": appone_trans_id,
+        "dt_app_id": dt_app_id,
+        "dt_dealer_id": dt_dealer_id,        
         'app_id': app_id,
         'process': process,
         'status': status,
@@ -231,6 +239,9 @@ def main(product_line, batch_size, limit, start_after, mod=None, rem=None, drop_
 
             # Extract values from dictionary
             app_id_attr = str(parsed['app_id']) if parsed['app_id'] is not None else ''
+            appone_trans_id_attr = str(parsed['appone_trans_id'])
+            dt_app_id_attr = str(parsed['dt_app_id'])
+            dt_dealer_id_attr = str(parsed['dt_dealer_id'])
             process_attr = str(parsed['process'])
             status_attr = str(parsed['status'])
             priority_attr = str(parsed['priority'])
@@ -242,8 +253,7 @@ def main(product_line, batch_size, limit, start_after, mod=None, rem=None, drop_
             use_alloy_service_attr = str(parsed['use_alloy_service'])
             trans_attr = str(parsed['trans'])
 
-
-            minimal_xml = f"<Provenir><Request ID=\"{app_id_attr}\" Process=\"{process_attr}\" Status=\"{status_attr}\" Priority=\"{priority_attr}\" LastUpdatedBy=\"{last_updated_by_attr}\" LockedBy=\"{locked_by_attr}\" btcardtoken=\"{btcardtoken_attr}\" btresponsecode=\"{btresponsecode_attr}\" iovation_blackbox=\"{iovation_blackbox_attr}\" useAlloyService=\"{use_alloy_service_attr}\" Trans=\"{trans_attr}\">{parsed['cust_xml']}</Request></Provenir>"
+            minimal_xml = f"<Provenir appone_trans_id=\"{appone_trans_id_attr}\" dt_app_id=\"{dt_app_id_attr}\" dt_dealer_id=\"{dt_dealer_id_attr}\"><Request ID=\"{app_id_attr}\" Process=\"{process_attr}\" Status=\"{status_attr}\" Priority=\"{priority_attr}\" LastUpdatedBy=\"{last_updated_by_attr}\" LockedBy=\"{locked_by_attr}\" btcardtoken=\"{btcardtoken_attr}\" btresponsecode=\"{btresponsecode_attr}\" iovation_blackbox=\"{iovation_blackbox_attr}\" useAlloyService=\"{use_alloy_service_attr}\" Trans=\"{trans_attr}\">{parsed['cust_xml']}</Request></Provenir>"
             parsed_rows.append((parsed['app_id'], minimal_xml))
             last_app_id = parsed['app_id']
             processed_count += 1

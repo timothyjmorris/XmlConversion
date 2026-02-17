@@ -96,9 +96,10 @@ select * from app_enums
 -- do-over
 /*
 
-truncate table dbo.processing_log;
-delete from dbo.app_base where product_line_enum = 602;
+truncate table migration.processing_log;
+delete from migration.app_base where product_line_enum = 602;
 
+--truncate table migration.app_xml_staging_rl
 
 -- VERY IMPORTANT: DROP INDEXES before insert
 
@@ -107,8 +108,8 @@ delete from dbo.app_base where product_line_enum = 602;
 -- 12240
 SELECT COUNT(*) FROM dbo.app_xml_staging;
 -- 791
-SELECT COUNT(*) FROM dbo.app_xml_staging_rl;
-
+SELECT COUNT(*) FROM migration.app_xml_staging_rl;
+select top 100 * from migration.app_xml_staging_rl order by app_id desc
 SELECT COUNT(*) FROM dbo.processing_log;
 SELECT * FROM migration.processing_log where status <> 'success'
 
@@ -175,7 +176,7 @@ SELECT count(*) FROM migration.app_base where product_line_enum = 602
 select * from migration.app_base where product_line_enum = 602 --app_id = 325725
 
 
-select app_id, lockedby, shred_version, cast(app_xml as xml) as xml from app_XML where app_id in (116101)
+select app_id, cast(app_xml as xml) as xml from migration.app_xml_staging_rl where app_id in (326287)
 
 select  top 10 *
 from dbo.app_base as a
@@ -189,7 +190,7 @@ left join dbo.app_transactional_rl as t on t.app_id = a.app_id
 left join dbo.app_contact_base as c on c.app_id = a.app_id
 left join dbo.app_contact_address as ca on ca.con_id = c.con_id
 left join dbo.app_contact_employment as ce on ce.con_id = c.con_id
-where product_line_enum = 602 and a.app_id = 326272
+where product_line_enum = 602 --and a.app_id = 326272
 order by a.app_id desc
 
 select * from migration.app_contact_address where con_id = 10557

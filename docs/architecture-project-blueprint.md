@@ -155,12 +155,6 @@ The XML Database Extraction System is a **high-performance, contract-driven ETL 
 - Production-first testing with real XML data
 - No hypothetical requirements or speculative code
 
-#### Principle 6: Windows-First Environment
-**"All operations, commands, and tooling optimized for Windows/PowerShell."**
-
-- PowerShell scripts (never bash)
-- Windows paths (`\` separators)
-- Native Windows Authentication for SQL Server
 
 ### 2.3 Architectural Boundaries
 
@@ -196,14 +190,14 @@ The XML Database Extraction System is a **high-performance, contract-driven ETL 
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
-│                    XML Database Extraction System                         │
-│                         (Contract-Driven ETL)                             │
+│                    XML Database Extraction System                        │
+│                         (Contract-Driven ETL)                            │
 └──────────────────────────────────────────────────────────────────────────┘
                                     ↑
                                     │
                     ┌───────────────┴───────────────┐
                     │                               │
-         ┌──────────▼──────────┐       ┌───────────▼──────────┐
+         ┌──────────▼──────────┐       ┌────────────▼─────────┐
          │   Database          │       │  Configuration       │
          │   (MS SQL Server)   │       │  Files (JSON)        │
          │                     │       │                      │
@@ -223,7 +217,7 @@ The XML Database Extraction System is a **high-performance, contract-driven ETL 
                                 │
                 ┌───────────────┼───────────────┐
                 │               │               │
-    ┌───────────▼──────┐  ┌────▼─────────┐  ┌─▼────────────────┐
+    ┌───────────▼──────┐  ┌─────▼────────┐  ┌───▼──────────────┐
     │ Parallel         │  │ Config       │  │ Performance      │
     │ Coordinator      │  │ Manager      │  │ Monitor          │
     │                  │  │              │  │                  │
@@ -235,36 +229,36 @@ The XML Database Extraction System is a **high-performance, contract-driven ETL 
     ┌───────────┴────────────────────────────┐
     │        Worker Process Pipeline         │
     │                                        │
-    │  ┌──────────────────────────────────┐ │
-    │  │  1. Validation Layer             │ │
-    │  │     - PreProcessingValidator     │ │
-    │  │     - ElementFilter              │ │
-    │  └──────────────────────────────────┘ │
+    │  ┌──────────────────────────────────┐  │
+    │  │  1. Validation Layer             │  │
+    │  │     - PreProcessingValidator     │  │
+    │  │     - ElementFilter              │  │
+    │  └──────────────────────────────────┘  │
     │                 ↓                      │
-    │  ┌──────────────────────────────────┐ │
-    │  │  2. Parsing Layer                │ │
-    │  │     - XMLParser (lxml)           │ │
-    │  │     - Element Extraction         │ │
-    │  └──────────────────────────────────┘ │
+    │  ┌──────────────────────────────────┐  │
+    │  │  2. Parsing Layer                │  │
+    │  │     - XMLParser (lxml)           │  │
+    │  │     - Element Extraction         │  │
+    │  └──────────────────────────────────┘  │
     │                 ↓                      │
-    │  ┌──────────────────────────────────┐ │
-    │  │  3. Mapping Layer                │ │
-    │  │     - DataMapper                 │ │
-    │  │     - CalculatedFieldEngine      │ │
-    │  │     - Enum Transformation        │ │
-    │  └──────────────────────────────────┘ │
+    │  ┌──────────────────────────────────┐  │
+    │  │  3. Mapping Layer                │  │
+    │  │     - DataMapper                 │  │
+    │  │     - CalculatedFieldEngine      │  │
+    │  │     - Enum Transformation        │  │
+    │  └──────────────────────────────────┘  │
     │                 ↓                      │
-    │  ┌──────────────────────────────────┐ │
-    │  │  4. Database Layer               │ │
-    │  │     - MigrationEngine            │ │
-    │  │     - BulkInsertStrategy         │ │
-    │  │     - DuplicateContactDetector   │ │
-    │  └──────────────────────────────────┘ │
+    │  ┌──────────────────────────────────┐  │
+    │  │  4. Database Layer               │  │
+    │  │     - MigrationEngine            │  │
+    │  │     - BulkInsertStrategy         │  │
+    │  │     - DuplicateContactDetector   │  │
+    │  └──────────────────────────────────┘  │
     └────────────────────────────────────────┘
                                 │
                 ┌───────────────┴────────────────┐
                 │                                │
-    ┌───────────▼───────────┐       ┌───────────▼───────────┐
+    ┌───────────▼───────────┐       ┌────────────▼──────────┐
     │  SQL Server           │       │  Processing Log       │
     │  Target Schema        │       │  (Audit/Resume)       │
     │                       │       │                       │
@@ -396,7 +390,7 @@ The XML Database Extraction System is a **high-performance, contract-driven ETL 
                              │
         ┌────────────────────┼────────────────────┐
         │                    │                    │
-┌───────▼───────┐   ┌────────▼────────┐   ┌──────▼─────────┐
+┌───────▼───────┐   ┌────────▼────────┐   ┌───────▼────────┐
 │ parsing/      │   │  mapping/       │   │  database/     │
 │ xml_parser.py │   │  data_mapper.py │   │  migration_    │
 │               │   │                 │   │    engine.py   │

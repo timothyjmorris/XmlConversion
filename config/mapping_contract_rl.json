@@ -139,6 +139,36 @@
   ],
   "mappings": [
     {
+      "xml_path": "/Provenir",
+      "xml_attribute": "appone_trans_id",
+      "target_table": "app_transactional_rl",
+      "target_column": "appone_transmission_id",
+      "description": "AppOne; needed for asynchronous update",
+      "data_type": "bigint",
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir",
+      "xml_attribute": "dt_app_id",
+      "target_table": "app_transactional_rl",
+      "target_column": "client_app_id",
+      "description": "Dealertrack; needed for asynchronous update",
+      "data_type": "string",
+      "nullable": true,
+      "required": false
+    },
+    {
+      "xml_path": "/Provenir",
+      "xml_attribute": "dt_dealer_id",
+      "target_table": "app_transactional_rl",
+      "target_column": "dealertrack_dealer_id",
+      "description": "Dealertrack; needed for asynchronous update",
+      "data_type": "int",
+      "nullable": true,
+      "required": false
+    },
+    {
       "xml_path": "/Provenir/Request",
       "xml_attribute": "ID",
       "target_table": "app_base",
@@ -291,16 +321,6 @@
       "nullable": true,
       "required": false,
       "data_length": 80
-    },
-    {
-      "xml_path": "/Provenir/Request/CustData/IL_application",
-      "xml_attribute": "client_id",
-      "target_table": "app_operational_rl",
-      "target_column": "client_app_id",
-      "data_type": "string",
-      "nullable": true,
-      "required": false,
-      "data_length": 50
     },
     {
       "xml_path": "/Provenir/Request/CustData/IL_application",
