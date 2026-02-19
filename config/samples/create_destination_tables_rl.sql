@@ -272,7 +272,8 @@ CREATE TABLE dbo.app_collateral_rl (
 -- (also mostly replaces IL_fund_dlr_ach)
 CREATE TABLE dbo.app_dealer_rl (
 	app_id								int				NOT NULL CONSTRAINT FK_app_dealer_rl_app_id__app_base_app_id FOREIGN KEY REFERENCES dbo.app_base(app_id) ON DELETE CASCADE,
-	broker_flag							bit				NOT NULL CONSTRAINT DF_app_dealer_rl_broker_flag DEFAULT (0),
+	active_flag							bit				NOT NULL CONSTRAINT DF_app_dealer_rl_active_flag DEFAULT (0),
+	broker_flag							bit				NOT NULL CONSTRAINT DF_app_dealer_rl_broker_flag DEFAULT (1),
 	bank_account_num					varchar(20)		NULL,
 	bank_account_type_enum				smallint		NULL	 CONSTRAINT FK_app_dealer_rl_bank_account_type_enum__app_enums_enum_id FOREIGN KEY REFERENCES dbo.app_enums(enum_id) ON DELETE NO ACTION,
 	bank_routing_num					varchar(9)		NULL,
@@ -287,7 +288,7 @@ CREATE TABLE dbo.app_dealer_rl (
 	dealer_num_parent					int				NOT NULL,	
 	dealer_phone						varchar(10)		NULL,
 	dealer_state						char(2)			NULL,
-	dealer_zip							varchar(9)		NULL,	
+	dealer_zip							varchar(9)		NULL,
 	fsp_email							varchar(100)	NULL,
 	fsp_fax								varchar(10)		NULL,
 	fsp_name							varchar(100)	NULL,

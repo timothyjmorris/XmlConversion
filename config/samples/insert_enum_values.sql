@@ -307,15 +307,19 @@ INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (660, 'funding_validatio
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (661, 'funding_validation_indicator_rl', 'NO');				-- N
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (662, 'funding_validation_indicator_rl', 'DOES NOT APPLY');	-- D
 
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (666, 'process_rl', '01800');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (668, 'process_rl', '02800');
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (670, 'process_rl', '03800');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (671, 'process_rl', '05800');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (672, 'process_rl', '06800');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (673, 'process_rl', '06850');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (674, 'process_rl', '08800');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (675, 'process_rl', '20800');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (676, 'process_rl', '30800');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (677, 'process_rl', '40800');
-INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (678, 'process_rl', '99800');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (672, 'process_rl', '05800');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (674, 'process_rl', '06800');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (675, 'process_rl', '06850');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (676, 'process_rl', '06900');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (677, 'process_rl', '07800');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (679, 'process_rl', '08800');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (684, 'process_rl', '20800');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (686, 'process_rl', '30800');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (688, 'process_rl', '40800');
+INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (689, 'process_rl', '99800');
 
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (690, 'status_rl', 'F');	--	F
 INSERT INTO dbo.app_enums (enum_id, type, value) VALUES (691, 'status_rl', 'P');	--	P

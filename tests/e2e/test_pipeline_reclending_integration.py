@@ -693,8 +693,8 @@ class TestRLPipelineScores:
 
         assert by_id["CRI_pr"] == 746
         assert by_id["MRV_pr"] == 697
-        assert by_id["V4P"] == 771
-        assert by_id["V4S"] == 772
+        assert by_id["V4_pr"] == 771
+        assert by_id["V4_sec"] == 772
 
 
 @pytest.mark.integration

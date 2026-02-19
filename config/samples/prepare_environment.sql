@@ -96,8 +96,8 @@ select * from app_enums
 -- do-over
 /*
 
-truncate table migration.processing_log;
-delete from migration.app_base where product_line_enum = 600;
+truncate table dbo.processing_log;
+delete from dbo.app_base where product_line_enum = 602;
 
 --truncate table dbo.app_xml_staging_rl
 
@@ -219,6 +219,3 @@ select * from migration.Indicators where app_id = 325725
 -- are we missing mappings for new fsp_email, fsp_fax, fsp_num
 -- nothing maps to app_funding_contract_rl.monthly_payment_amount
 -- nothing maps to app_funding_rl.validated_finance_charge
-
-
-

@@ -455,7 +455,7 @@ class TestRLDataMapperFullMapping(unittest.TestCase):
     def test_score_v4p(self):
         rows = self.mapped["scores"]
         v4p = next(
-            (r for r in rows if r.get("score_identifier") == "V4P"), None
+            (r for r in rows if r.get("score_identifier") == "V4_pr"), None
         )
         self.assertIsNotNone(v4p, "V4P score must be present (target_table=scores)")
         self.assertEqual(int(v4p["score"]), 771)
@@ -463,7 +463,7 @@ class TestRLDataMapperFullMapping(unittest.TestCase):
     def test_score_v4s(self):
         rows = self.mapped["scores"]
         v4s = next(
-            (r for r in rows if r.get("score_identifier") == "V4S"), None
+            (r for r in rows if r.get("score_identifier") == "V4_sec"), None
         )
         self.assertIsNotNone(v4s, "V4S score must be present (target_table=scores)")
         self.assertEqual(int(v4s["score"]), 772)
@@ -494,8 +494,8 @@ class TestRLDataMapperFullMapping(unittest.TestCase):
         """V4P/V4S now go to scores table, not app_historical_lookup."""
         rows = self.mapped["app_historical_lookup"]
         names = {r.get("name") for r in rows}
-        self.assertNotIn("V4P", names, "V4P targets scores, not historical_lookup")
-        self.assertNotIn("V4S", names, "V4S targets scores, not historical_lookup")
+        self.assertNotIn("V4_pr", names, "V4P targets scores, not historical_lookup")
+        self.assertNotIn("V4_sec", names, "V4S targets scores, not historical_lookup")
 
     def test_historical_lookup_supervisor_rev_ind(self):
         rows = self.mapped["app_historical_lookup"]

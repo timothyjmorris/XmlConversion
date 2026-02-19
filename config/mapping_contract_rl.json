@@ -3914,7 +3914,7 @@
       "target_table": "scores",
       "target_column": "",
       "data_type": "int",
-      "mapping_type": ["add_score(V4P)"],
+      "mapping_type": ["add_score(V4_pr)"],
       "nullable": true,
       "required": false
     },
@@ -3924,7 +3924,7 @@
       "target_table": "scores",
       "target_column": "",
       "data_type": "int",
-      "mapping_type": ["add_score(V4S)"],
+      "mapping_type": ["add_score(V4_sec)"],
       "nullable": true,
       "required": false
     },
@@ -4050,15 +4050,19 @@
       "D": 662
     },
     "process_enum": {
+      "01800": 666,
+      "02800": 668,
       "03800": 670,
-      "05800": 671,
-      "06800": 672,
-      "06850": 673,
-      "08800": 674,
-      "20800": 675,
-      "30800": 676,
-      "40800": 677,
-      "99800": 678
+      "05800": 672,
+      "06800": 674,
+      "06850": 675,
+      "06900": 676,
+      "07800": 677,
+      "08800": 679,
+      "20800": 684,
+      "30800": 686,
+      "40800": 688,
+      "99800": 689
     },
     "status_enum": {
       "F": 690,
