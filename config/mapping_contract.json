@@ -166,17 +166,6 @@
     },
     {
       "xml_path": "/Provenir/Request",
-      "xml_attribute": "useAlloyService",
-      "target_table": "app_transactional_cc",
-      "target_column": "use_alloy_service_flag",
-      "data_type": "bit",
-      "mapping_type": ["boolean_to_bit"],
-      "nullable": false,
-      "required": true,
-      "default_value": "0"
-    },
-    {
-      "xml_path": "/Provenir/Request",
       "xml_attribute": "Trans",
       "target_table": "app_transactional_cc",
       "target_column": "provenir_transaction",

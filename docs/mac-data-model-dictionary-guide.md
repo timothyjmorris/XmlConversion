@@ -657,7 +657,6 @@ SELECT DISTINCT [type] FROM app_enums;
 | sc_ach_sent_flag | bit | Secured card ACH sent (DEFAULT 0) |
 | sc_debit_refund_failed_flag | bit | Debit refund failed (DEFAULT 0) |
 | supervisor_review_flag | bit | Requires supervisor review (DEFAULT 0) |
-| use_alloy_service_flag | bit | Indicates if Alloy tags & rules will be used for the application |
 
 
 ### [app_campaign_cc]

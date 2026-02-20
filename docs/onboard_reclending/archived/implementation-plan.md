@@ -155,7 +155,7 @@ NULL enums where sibling data suggests they should have values.
 | Bug | Description | Impact | Status |
 |-----|-------------|--------|--------|
 | `authu_contact` not implemented | ~~Mapping type `["char_to_bit", "authu_contact"]` extracts from PR contact, not AUTHU contact~~ | `auth_user_issue_card_flag` in `app_operational_cc` may be incorrect | **FIXED** |
-| `use_alloy_service_flag` contract mismatch | Contract marked column nullable/optional while DB is NOT NULL | Contract/schema validation failed | **FIXED** |
+**FIXED** |
 | Contract/schema mismatch visibility | Failures only written to diff file; unclear in console | Slows triage | **FIXED** |
 | Test suite exit code | Suite returned non-zero when E2E had zero tests | Pre-commit blocked commits | **FIXED** |
 | `sc_bank_account_type_num` mapping missing | Enum not populated when `sc_ach_amount` has value | Data quality gap in `app_operational_cc` | **FIXED** |

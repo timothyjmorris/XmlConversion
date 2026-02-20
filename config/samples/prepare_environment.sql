@@ -97,7 +97,7 @@ select * from app_enums
 /*
 
 truncate table dbo.processing_log;
-delete from dbo.app_base where product_line_enum = 602;
+delete from dbo.app_base where product_line_enum = 600;
 
 --truncate table dbo.app_xml_staging_rl
 

@@ -229,7 +229,7 @@ DELETE FROM dbo.app_base WHERE app_id = 443306
 		-- 41
 		--ca.city = 'MISSING' OR
 		-- 0
-		ca.state = 'XX' OR
+		ca.state = 'XX'
 		--ca.zip = '00000'
 
 	ORDER BY a.app_id DESC
@@ -275,7 +275,7 @@ DELETE FROM dbo.app_base WHERE app_id = 443306
 	select count(*) from app_transactional_cc where sc_ach_sent_flag = 1
 	select count(*) from app_transactional_cc where sc_debit_refund_failed_flag = 1
 	select count(*) from app_transactional_cc where supervisor_review_flag = 1
-	select count(*) from app_transactional_cc where use_alloy_service_flag = 1
+
 
 	-- contact
 	select count(*) from app_contact_base where fraud_type_enum is not null
@@ -308,7 +308,7 @@ DELETE FROM dbo.app_base WHERE app_id = 443306
 	-- NOT A PROBLEM: only 'N' and null exists in data
 	select top 100 * from app_contact_employment where self_employed_flag = 1
 	
-	select top 100 * from app_transactional_cc where use_alloy_service_flag = 1
+	
 	select top 100 * from app_transactional_cc where sc_ach_sent_flag = 1
 
 	-- suspect
@@ -331,7 +331,7 @@ DELETE FROM dbo.app_base WHERE app_id = 443306
 	where cast(app_XML as xml).value('(/Provenir/Request/CustData/application/contact/@banking_account_type)[1]', 'varchar(20)') <> ''
 
 	-- No value in data
-	select top 100 * from app_transactional_cc where use_alloy_service_flag = 1
+	
 	select distinct b_self_employed_ind from contact_employment
 	select top 10 app_id, cast(app_XML as xml) as xml,
 	cast(app_XML as xml).value('(/Provenir/Request/CustData/application/contact/contact_employment/@b_self_employed_ind)[1]', 'varchar(20)') as 'value'

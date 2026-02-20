@@ -198,7 +198,6 @@ CREATE TABLE dbo.app_transactional_cc (
 	sc_ach_sent_flag				bit				NULL	 CONSTRAINT DF_app_transactional_cc_sc_ach_sent_flag DEFAULT (0),
 	sc_debit_refund_failed_flag		bit				NULL	 CONSTRAINT DF_app_transactional_cc_sc_debit_refund_failed_flag DEFAULT (0),
 	supervisor_review_flag			bit				NULL	 CONSTRAINT DF_app_transactional_cc_supervisor_review_flag DEFAULT (0),
-	use_alloy_service_flag			bit				NOT NULL CONSTRAINT DF_app_transactional_cc_use_alloy_service_flag DEFAULT (0),
 	CONSTRAINT PK_app_transactional_cc_app_id PRIMARY KEY CLUSTERED (app_id)
 );
 

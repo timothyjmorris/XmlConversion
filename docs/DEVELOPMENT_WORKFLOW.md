@@ -77,7 +77,6 @@ When contract tests fail due to schema mismatches:
 3. **Update the contract** - Edit `config/mapping_contract.json` to match database
 4. **Re-run tests** - Verify the fix resolves the issue
 
-Example: `use_alloy_service_flag` was marked as `nullable: true` in contract but is `NOT NULL` in database → Fix: set `nullable: false, required: true`
 
 ## Quality Gates
 
